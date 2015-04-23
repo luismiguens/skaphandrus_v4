@@ -1,0 +1,167 @@
+<?php
+
+namespace Skaphandrus\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * SkPhotoExpertValidation
+ */
+class SkPhotoExpertValidation
+{
+    /**
+     * @var integer
+     */
+    private $quality;
+
+    /**
+     * @var boolean
+     */
+    private $isValidated;
+
+    /**
+     * @var \DateTime
+     */
+    private $createdAt;
+
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var \Skaphandrus\AppBundle\Entity\SkUsername
+     */
+    private $username;
+
+    /**
+     * @var \Skaphandrus\AppBundle\Entity\SkPhoto
+     */
+    private $photo;
+
+
+    /**
+     * Set quality
+     *
+     * @param integer $quality
+     * @return SkPhotoExpertValidation
+     */
+    public function setQuality($quality)
+    {
+        $this->quality = $quality;
+
+        return $this;
+    }
+
+    /**
+     * Get quality
+     *
+     * @return integer 
+     */
+    public function getQuality()
+    {
+        return $this->quality;
+    }
+
+    /**
+     * Set isValidated
+     *
+     * @param boolean $isValidated
+     * @return SkPhotoExpertValidation
+     */
+    public function setIsValidated($isValidated)
+    {
+        $this->isValidated = $isValidated;
+
+        return $this;
+    }
+
+    /**
+     * Get isValidated
+     *
+     * @return boolean 
+     */
+    public function getIsValidated()
+    {
+        return $this->isValidated;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return SkPhotoExpertValidation
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set username
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkUsername $username
+     * @return SkPhotoExpertValidation
+     */
+    public function setUsername(\Skaphandrus\AppBundle\Entity\SkUsername $username = null)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Get username
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkUsername 
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set photo
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhoto $photo
+     * @return SkPhotoExpertValidation
+     */
+    public function setPhoto(\Skaphandrus\AppBundle\Entity\SkPhoto $photo = null)
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Get photo
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkPhoto 
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+}

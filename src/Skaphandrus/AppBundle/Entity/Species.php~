@@ -1,0 +1,100 @@
+<?php
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of Species
+ *
+ * @author Luis Miguens <luis.miguens@skaphandrus.com>
+ */
+
+
+
+namespace Skaphandrus\AppBundle\Entity;
+
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+
+
+class Species 
+{
+    
+    use ORMBehaviors\Translatable\Translatable;
+    
+    private $id;
+    private $genus;
+    private $createdAt;
+
+    
+    
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Species
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set genus
+     *
+     * @param \Skaphandrus\AppBundle\Entity\Species $genus
+     * @return Species
+     */
+    public function setGenus(\Skaphandrus\AppBundle\Entity\Genus $genus = null)
+    {
+        $this->genus = $genus;
+
+        return $this;
+    }
+
+    /**
+     * Get genus
+     *
+     * @return \Skaphandrus\AppBundle\Entity\Species 
+     */
+    public function getGenus()
+    {
+        return $this->genus;
+    }
+
+   /**
+     * Constructor
+     */
+    public function __construct()
+    {
+      
+        $this->createdAt = new \DateTime(); 
+    }
+    
+    
+}

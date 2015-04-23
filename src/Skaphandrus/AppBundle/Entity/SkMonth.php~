@@ -1,0 +1,72 @@
+<?php
+
+namespace Skaphandrus\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * SkMonth
+ */
+class SkMonth
+{
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $location;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->location = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Add location
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkLocation $location
+     * @return SkMonth
+     */
+    public function addLocation(\Skaphandrus\AppBundle\Entity\SkLocation $location)
+    {
+        $this->location[] = $location;
+
+        return $this;
+    }
+
+    /**
+     * Remove location
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkLocation $location
+     */
+    public function removeLocation(\Skaphandrus\AppBundle\Entity\SkLocation $location)
+    {
+        $this->location->removeElement($location);
+    }
+
+    /**
+     * Get location
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+}

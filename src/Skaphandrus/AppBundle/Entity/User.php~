@@ -1,0 +1,87 @@
+<?php
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of User
+ *
+ * @author Luis Miguens <luis.miguens@skaphandrus.com>
+ */
+
+namespace Skaphandrus\AppBundle\Entity;
+
+use FOS\UserBundle\Model\User as BaseUser;
+
+class User extends BaseUser implements \Symfony\Component\Security\Core\Encoder\EncoderAwareInterface{
+
+    protected $id;
+    protected $algorithm = 'sha512';
+
+    public function getEncoderName() {
+        return $this->algorithm == 'sha1' ? 'legacy' : 'default';
+    }
+
+    public function __construct() {
+        parent::__construct();
+        // your own logic
+    }
+
+    public function setSalt($salt) {
+        $this->salt = $salt;
+    }
+
+
+    /**
+     * Set algorithm
+     *
+     * @param string $algorithm
+     * @return User
+     */
+    public function setAlgorithm($algorithm)
+    {
+        $this->algorithm = $algorithm;
+
+        return $this;
+    }
+
+    /**
+     * Get algorithm
+     *
+     * @return string 
+     */
+    public function getAlgorithm()
+    {
+        return $this->algorithm;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+     
+    //@@@@@@@@@ TEMPORARY APENAS PARA IMPORTACAO DOS UTILIZADORES
+    /** 
+     * Set id
+     *
+     * @return integer 
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        
+        return $this;
+    }
+    //@@@@@@@@@ TEMPORARY APENAS PARA IMPORTACAO DOS UTILIZADORES
+    
+    
+}

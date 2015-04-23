@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Skaphandrus\AppBundle\Entity\SkIdentificationCharacter" table="sk_identification_character">
+    <indexes>
+      <index name="sk_identification_character_FI_1" columns="criteria_id"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="image" type="string" column="image" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <many-to-one field="criteria" target-entity="SkIdentificationCriteria" fetch="LAZY">
+      <join-columns>
+        <join-column name="criteria_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-many field="phylum" target-entity="SkPhylum" mapped-by="character" fetch="LAZY"/>
+    <many-to-many field="species" target-entity="SkSpecies" mapped-by="character" fetch="LAZY"/>
+    <many-to-many field="order" target-entity="SkOrder" mapped-by="character" fetch="LAZY"/>
+    <many-to-many field="genus" target-entity="SkGenus" mapped-by="character" fetch="LAZY"/>
+    <many-to-many field="class" target-entity="SkClass" mapped-by="character" fetch="LAZY"/>
+    <many-to-many field="family" target-entity="SkFamily" mapped-by="character" fetch="LAZY"/>
+  </entity>
+</doctrine-mapping>

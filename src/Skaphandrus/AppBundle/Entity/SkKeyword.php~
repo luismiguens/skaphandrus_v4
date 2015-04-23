@@ -1,0 +1,54 @@
+<?php
+
+namespace Skaphandrus\AppBundle\Entity;
+
+/**
+ * SkKeyword
+ */
+class SkKeyword
+{
+    /**
+     * @var string
+     */
+    private $keyword;
+
+    /**
+     * @var integer
+     */
+    private $id;
+
+
+    /**
+     * Set keyword
+     *
+     * @param string $keyword
+     *
+     * @return SkKeyword
+     */
+    public function setKeyword($keyword)
+    {
+        $this->keyword = $keyword;
+
+        return $this;
+    }
+
+    /**
+     * Get keyword
+     *
+     * @return string
+     */
+    public function getKeyword()
+    {
+        return $this->keyword;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}

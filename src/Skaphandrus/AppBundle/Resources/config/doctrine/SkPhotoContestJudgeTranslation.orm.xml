@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Skaphandrus\AppBundle\Entity\SkPhotoContestJudgeTranslation" table="sk_photo_contest_judge_translation">
+    <indexes>
+      <index name="IDX_7B0F44052C2AC5D3" columns="translatable_id"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="sk_photo_contest_judge_unique_translation" columns="translatable_id,locale"/>
+    </unique-constraints>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="description" type="text" column="description" length="65535" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="locale" type="string" column="locale" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <many-to-one field="translatable" target-entity="SkPhotoContestJudge" fetch="LAZY">
+      <join-columns>
+        <join-column name="translatable_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

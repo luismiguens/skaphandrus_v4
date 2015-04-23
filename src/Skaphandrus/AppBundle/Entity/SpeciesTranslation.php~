@@ -1,0 +1,41 @@
+<?php
+
+namespace Skaphandrus\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+
+/**
+ * SpeciesTranslation
+ */
+class SpeciesTranslation {
+
+    use ORMBehaviors\Translatable\Translation;
+
+    /**
+     * @var string
+     */
+    private $description;
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return SpeciesTranslation
+     */
+    public function setDescription($description) {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription() {
+        return $this->description;
+    }
+
+}

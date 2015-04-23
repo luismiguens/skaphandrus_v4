@@ -1,0 +1,68 @@
+<?php
+
+namespace Skaphandrus\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * SkCountryLanguage
+ */
+class SkCountryLanguage
+{
+    /**
+     * @var string
+     */
+    private $language;
+
+    /**
+     * @var \Skaphandrus\AppBundle\Entity\SkCountry
+     */
+    private $country;
+
+
+    /**
+     * Set language
+     *
+     * @param string $language
+     * @return SkCountryLanguage
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * Get language
+     *
+     * @return string 
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * Set country
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkCountry $country
+     * @return SkCountryLanguage
+     */
+    public function setCountry(\Skaphandrus\AppBundle\Entity\SkCountry $country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkCountry 
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+}

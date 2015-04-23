@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Skaphandrus\AppBundle\Entity\SkPhotoContestAward" table="sk_photo_contest_award">
+    <indexes>
+      <index name="sk_photo_contest_award_FI_1" columns="contest_id"/>
+      <index name="sk_photo_contest_award_FI_2" columns="category_id"/>
+      <index name="sk_photo_contest_award_FI_3" columns="winner_fos_user_id"/>
+      <index name="sk_photo_contest_award_FI_4" columns="winner_photo_id"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="image" type="string" column="image" length="255" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <many-to-one field="winnerPhoto" target-entity="SkPhoto" fetch="LAZY">
+      <join-columns>
+        <join-column name="winner_photo_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="contest" target-entity="SkPhotoContest" fetch="LAZY">
+      <join-columns>
+        <join-column name="contest_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="winnerFosUser" target-entity="FosUser" fetch="LAZY">
+      <join-columns>
+        <join-column name="winner_fos_user_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="category" target-entity="SkPhotoContestCategory" fetch="LAZY">
+      <join-columns>
+        <join-column name="category_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-many field="judge" target-entity="SkPhotoContestJudge" mapped-by="award" fetch="LAZY"/>
+    <many-to-many field="sponsor" target-entity="SkPhotoContestSponsor" inversed-by="award" fetch="LAZY">
+      <join-table name="sk_photo_contest_award_sponsor">
+        <join-columns>
+          <join-column name="award_id" referenced-column-name="id"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="sponsor_id" referenced-column-name="id"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,113 @@
+<?php
+
+namespace Skaphandrus\AppBundle\Entity;
+
+/**
+ * SkClassVernacular
+ */
+class SkClassVernacular
+{
+    /**
+     * @var string
+     */
+    private $locale;
+
+    /**
+     * @var string
+     */
+    private $name;
+
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var \Skaphandrus\AppBundle\Entity\SkClass
+     */
+    private $class;
+
+
+    /**
+     * Set locale
+     *
+     * @param string $locale
+     *
+     * @return SkClassVernacular
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+
+        return $this;
+    }
+
+    /**
+     * Get locale
+     *
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return SkClassVernacular
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set class
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkClass $class
+     *
+     * @return SkClassVernacular
+     */
+    public function setClass(\Skaphandrus\AppBundle\Entity\SkClass $class = null)
+    {
+        $this->class = $class;
+
+        return $this;
+    }
+
+    /**
+     * Get class
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkClass
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
+}
+

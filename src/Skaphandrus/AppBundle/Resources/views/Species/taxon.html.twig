@@ -1,0 +1,14 @@
+<h1> {{ node }} : {{ taxon.name }}!</h1>
+
+<h2>common names</h2>
+<ul>
+    {% for vernacular in vernaculars %}
+        <li>{{ vernacular.locale }} : {{ vernacular.name }}</li>
+        
+        
+        $language = Intl::getLanguageBundle()->getLanguageName('de');
+        
+        
+        
+    {% endfor %}
+</ul>

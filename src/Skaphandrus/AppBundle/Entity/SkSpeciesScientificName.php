@@ -1,0 +1,142 @@
+<?php
+
+namespace Skaphandrus\AppBundle\Entity;
+
+/**
+ * SkSpeciesScientificName
+ */
+class SkSpeciesScientificName
+{
+    /**
+     * @var string
+     */
+    private $aphiaId;
+
+    /**
+     * @var string
+     */
+    private $name;
+
+    /**
+     * @var string
+     */
+    private $author;
+
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var \Skaphandrus\AppBundle\Entity\SkSpecies
+     */
+    private $species;
+
+
+    /**
+     * Set aphiaId
+     *
+     * @param string $aphiaId
+     *
+     * @return SkSpeciesScientificName
+     */
+    public function setAphiaId($aphiaId)
+    {
+        $this->aphiaId = $aphiaId;
+
+        return $this;
+    }
+
+    /**
+     * Get aphiaId
+     *
+     * @return string
+     */
+    public function getAphiaId()
+    {
+        return $this->aphiaId;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return SkSpeciesScientificName
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set author
+     *
+     * @param string $author
+     *
+     * @return SkSpeciesScientificName
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return string
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set species
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkSpecies $species
+     *
+     * @return SkSpeciesScientificName
+     */
+    public function setSpecies(\Skaphandrus\AppBundle\Entity\SkSpecies $species = null)
+    {
+        $this->species = $species;
+
+        return $this;
+    }
+
+    /**
+     * Get species
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkSpecies
+     */
+    public function getSpecies()
+    {
+        return $this->species;
+    }
+}
+

@@ -1,0 +1,68 @@
+<?php
+
+namespace Skaphandrus\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * FosUserGroup
+ */
+class FosUserGroup
+{
+    /**
+     * @var integer
+     */
+    private $fosUserId;
+
+    /**
+     * @var integer
+     */
+    private $fosGroupId;
+
+
+    /**
+     * Set fosUserId
+     *
+     * @param integer $fosUserId
+     * @return FosUserGroup
+     */
+    public function setFosUserId($fosUserId)
+    {
+        $this->fosUserId = $fosUserId;
+
+        return $this;
+    }
+
+    /**
+     * Get fosUserId
+     *
+     * @return integer 
+     */
+    public function getFosUserId()
+    {
+        return $this->fosUserId;
+    }
+
+    /**
+     * Set fosGroupId
+     *
+     * @param integer $fosGroupId
+     * @return FosUserGroup
+     */
+    public function setFosGroupId($fosGroupId)
+    {
+        $this->fosGroupId = $fosGroupId;
+
+        return $this;
+    }
+
+    /**
+     * Get fosGroupId
+     *
+     * @return integer 
+     */
+    public function getFosGroupId()
+    {
+        return $this->fosGroupId;
+    }
+}

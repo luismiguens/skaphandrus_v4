@@ -1,0 +1,4 @@
+services:
+#    skaphandrus_app.example:
+#        class: Skaphandrus\AppBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

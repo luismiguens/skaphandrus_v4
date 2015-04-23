@@ -1,0 +1,229 @@
+<?php
+
+namespace Skaphandrus\AppBundle\Entity;
+
+/**
+ * SkPhotoContest
+ */
+class SkPhotoContest
+{
+    /**
+     * @var string
+     */
+    private $name;
+
+    /**
+     * @var string
+     */
+    private $logo;
+
+    /**
+     * @var string
+     */
+    private $image;
+
+    /**
+     * @var \DateTime
+     */
+    private $beginAt;
+
+    /**
+     * @var \DateTime
+     */
+    private $endAt;
+
+    /**
+     * @var boolean
+     */
+    private $isJudge = '0';
+
+    /**
+     * @var \DateTime
+     */
+    private $createdAt;
+
+    /**
+     * @var integer
+     */
+    private $id;
+
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return SkPhotoContest
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set logo
+     *
+     * @param string $logo
+     *
+     * @return SkPhotoContest
+     */
+    public function setLogo($logo)
+    {
+        $this->logo = $logo;
+
+        return $this;
+    }
+
+    /**
+     * Get logo
+     *
+     * @return string
+     */
+    public function getLogo()
+    {
+        return $this->logo;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return SkPhotoContest
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set beginAt
+     *
+     * @param \DateTime $beginAt
+     *
+     * @return SkPhotoContest
+     */
+    public function setBeginAt($beginAt)
+    {
+        $this->beginAt = $beginAt;
+
+        return $this;
+    }
+
+    /**
+     * Get beginAt
+     *
+     * @return \DateTime
+     */
+    public function getBeginAt()
+    {
+        return $this->beginAt;
+    }
+
+    /**
+     * Set endAt
+     *
+     * @param \DateTime $endAt
+     *
+     * @return SkPhotoContest
+     */
+    public function setEndAt($endAt)
+    {
+        $this->endAt = $endAt;
+
+        return $this;
+    }
+
+    /**
+     * Get endAt
+     *
+     * @return \DateTime
+     */
+    public function getEndAt()
+    {
+        return $this->endAt;
+    }
+
+    /**
+     * Set isJudge
+     *
+     * @param boolean $isJudge
+     *
+     * @return SkPhotoContest
+     */
+    public function setIsJudge($isJudge)
+    {
+        $this->isJudge = $isJudge;
+
+        return $this;
+    }
+
+    /**
+     * Get isJudge
+     *
+     * @return boolean
+     */
+    public function getIsJudge()
+    {
+        return $this->isJudge;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return SkPhotoContest
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}
+

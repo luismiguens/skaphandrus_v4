@@ -1,0 +1,69 @@
+<?php
+
+namespace Skaphandrus\AppBundle\Entity;
+
+/**
+ * SkPhotoKeyword
+ */
+class SkPhotoKeyword
+{
+    /**
+     * @var integer
+     */
+    private $photoId;
+
+    /**
+     * @var integer
+     */
+    private $keywordId;
+
+
+    /**
+     * Set photoId
+     *
+     * @param integer $photoId
+     *
+     * @return SkPhotoKeyword
+     */
+    public function setPhotoId($photoId)
+    {
+        $this->photoId = $photoId;
+
+        return $this;
+    }
+
+    /**
+     * Get photoId
+     *
+     * @return integer
+     */
+    public function getPhotoId()
+    {
+        return $this->photoId;
+    }
+
+    /**
+     * Set keywordId
+     *
+     * @param integer $keywordId
+     *
+     * @return SkPhotoKeyword
+     */
+    public function setKeywordId($keywordId)
+    {
+        $this->keywordId = $keywordId;
+
+        return $this;
+    }
+
+    /**
+     * Get keywordId
+     *
+     * @return integer
+     */
+    public function getKeywordId()
+    {
+        return $this->keywordId;
+    }
+}
+

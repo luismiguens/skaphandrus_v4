@@ -1,0 +1,97 @@
+<?php
+
+namespace Skaphandrus\AppBundle\Entity;
+
+/**
+ * SkEmailNotificationTimeI18n
+ */
+class SkEmailNotificationTimeI18n
+{
+    /**
+     * @var string
+     */
+    private $name;
+
+    /**
+     * @var string
+     */
+    private $culture;
+
+    /**
+     * @var \Skaphandrus\AppBundle\Entity\SkEmailNotificationTime
+     */
+    private $id;
+
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return SkEmailNotificationTimeI18n
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set culture
+     *
+     * @param string $culture
+     *
+     * @return SkEmailNotificationTimeI18n
+     */
+    public function setCulture($culture)
+    {
+        $this->culture = $culture;
+
+        return $this;
+    }
+
+    /**
+     * Get culture
+     *
+     * @return string
+     */
+    public function getCulture()
+    {
+        return $this->culture;
+    }
+
+    /**
+     * Set id
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkEmailNotificationTime $id
+     *
+     * @return SkEmailNotificationTimeI18n
+     */
+    public function setId(\Skaphandrus\AppBundle\Entity\SkEmailNotificationTime $id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get id
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkEmailNotificationTime
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Skaphandrus\AppBundle\Entity\SkSpeciesVernacular" table="sk_species_vernacular">
+    <indexes>
+      <index name="sk_species_vernacular_FI_2" columns="vernacular_id"/>
+      <index name="IDX_D614E5ABB2A1D860" columns="species_id"/>
+    </indexes>
+    <id name="locale" type="string" column="locale" length="255"/>
+    <id name="species" association-key="true"/>
+    <id name="vernacular" association-key="true"/>
+    <one-to-one field="vernacular" target-entity="SkVernacular" fetch="LAZY">
+      <join-columns>
+        <join-column name="vernacular_id" referenced-column-name="id"/>
+      </join-columns>
+    </one-to-one>
+    <one-to-one field="species" target-entity="SkSpecies" fetch="LAZY">
+      <join-columns>
+        <join-column name="species_id" referenced-column-name="id"/>
+      </join-columns>
+    </one-to-one>
+  </entity>
+</doctrine-mapping>
