@@ -51,5 +51,50 @@ class SkVernacular
     {
         return $this->id;
     }
-}
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $species_vernaculars;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->species_vernaculars = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add speciesVernacular
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkSpeciesVernacular $speciesVernacular
+     *
+     * @return SkVernacular
+     */
+    public function addSpeciesVernacular(\Skaphandrus\AppBundle\Entity\SkSpeciesVernacular $speciesVernacular)
+    {
+        $this->species_vernaculars[] = $speciesVernacular;
+
+        return $this;
+    }
+
+    /**
+     * Remove speciesVernacular
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkSpeciesVernacular $speciesVernacular
+     */
+    public function removeSpeciesVernacular(\Skaphandrus\AppBundle\Entity\SkSpeciesVernacular $speciesVernacular)
+    {
+        $this->species_vernaculars->removeElement($speciesVernacular);
+    }
+
+    /**
+     * Get speciesVernaculars
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSpeciesVernaculars()
+    {
+        return $this->species_vernaculars;
+    }
+}

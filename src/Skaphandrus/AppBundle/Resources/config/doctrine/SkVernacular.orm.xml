@@ -9,5 +9,6 @@
         <option name="fixed"/>
       </options>
     </field>
+    <one-to-many field="species_vernaculars" target-entity="SkSpeciesVernacular" mapped-by="vernacular"/>
   </entity>
 </doctrine-mapping>

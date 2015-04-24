@@ -8,7 +8,7 @@ imports:
 
 framework:
     #esi:             ~
-    #translator:      { fallback: "%locale%" }
+    translator:      { fallback: "%locale%" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -199,4 +199,4 @@ sonata_doctrine_orm_admin:
 
 lexik_translation:
     fallback_locale: en      # (required) default locale to use
-    managed_locales: [en]    # (required) locales that the bundle have to manage
+    managed_locales: [en, pt]    # (required) locales that the bundle have to manage

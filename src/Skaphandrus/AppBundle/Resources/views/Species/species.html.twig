@@ -1,0 +1,36 @@
+{% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
+
+{% block body %}
+  <h1>
+    {{ species_sn.name ~ " " ~ species_sn.author }}
+  </h1>
+
+  <p>{{ "species_kingdom"|trans ~ ": " ~ species.genus.family.order.class.phylum.kingdom.name }}</p>
+  <p>{{ "species_phylum"|trans ~ ": " ~ species.genus.family.order.class.phylum.name }}</p>
+  <p>{{ "species_class"|trans ~ ": " ~ species.genus.family.order.class.name }}</p>
+  <p>{{ "species_order"|trans ~ ": " ~ species.genus.family.order.name }}</p>
+  <p>{{ "species_family"|trans ~ ": " ~ species.genus.family.name }}</p>
+  <p>{{ "species_genus"|trans ~ ": " ~ species.genus.name }}</p>
+
+  {% if description is not empty %}
+    <p>{{ "description"|trans ~ ": " ~ description }}</p>
+  {% endif %}
+
+  {% if how_to_find is not empty %}
+    <p>{{ "how_to_find"|trans ~ ": " ~ how_to_find }}</p>
+  {% endif %}
+  
+  {% if vernaculars is not empty %}
+    <h2>{{ "common_names"|trans }}</h2>
+    {% for vernacular in vernaculars %}
+        <p>{{ vernacular.name ~ " - " ~ vernacular.language }}</p>
+    {% endfor %}
+  {% endif %}
+
+  {% for character in species.identification_character %}
+      {{ character.name }}
+  {% endfor %}
+
+
+
+{% endblock %}

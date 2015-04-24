@@ -155,4 +155,43 @@ class SkSpecies
     {
         return $this->character;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $vernacular;
+
+
+    /**
+     * Add vernacular
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkVernacular $vernacular
+     *
+     * @return SkSpecies
+     */
+    public function addVernacular(\Skaphandrus\AppBundle\Entity\SkVernacular $vernacular)
+    {
+        $this->vernacular[] = $vernacular;
+
+        return $this;
+    }
+
+    /**
+     * Remove vernacular
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkVernacular $vernacular
+     */
+    public function removeVernacular(\Skaphandrus\AppBundle\Entity\SkVernacular $vernacular)
+    {
+        $this->vernacular->removeElement($vernacular);
+    }
+
+    /**
+     * Get vernacular
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVernacular()
+    {
+        return $this->vernacular;
+    }
 }

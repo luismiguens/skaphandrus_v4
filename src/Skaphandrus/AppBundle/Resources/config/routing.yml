@@ -29,6 +29,10 @@ index2:
         _locale:  en|fr
 
 ##CONTROLLER SPECIES
+species:
+    path:     /{_locale}/marine-species/info/species/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Species:speciesPage }
+
 taxon:
     path:     /{_locale}/marine-species/{node}/{slug}
     defaults: { _controller: SkaphandrusAppBundle:Species:taxon }

@@ -2,11 +2,18 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+
+
 /**
  * SkSpeciesTranslation
  */
 class SkSpeciesTranslation
 {
+    
+    use ORMBehaviors\Translatable\Translation;
+    
     /**
      * @var string
      */
@@ -16,22 +23,6 @@ class SkSpeciesTranslation
      * @var string
      */
     private $howToFind;
-
-    /**
-     * @var string
-     */
-    private $locale;
-
-    /**
-     * @var integer
-     */
-    private $id;
-
-    /**
-     * @var \Skaphandrus\AppBundle\Entity\SkSpecies
-     */
-    private $translatable;
-
 
     /**
      * Set description
@@ -79,64 +70,6 @@ class SkSpeciesTranslation
     public function getHowToFind()
     {
         return $this->howToFind;
-    }
-
-    /**
-     * Set locale
-     *
-     * @param string $locale
-     *
-     * @return SkSpeciesTranslation
-     */
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
-
-        return $this;
-    }
-
-    /**
-     * Get locale
-     *
-     * @return string
-     */
-    public function getLocale()
-    {
-        return $this->locale;
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set translatable
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkSpecies $translatable
-     *
-     * @return SkSpeciesTranslation
-     */
-    public function setTranslatable(\Skaphandrus\AppBundle\Entity\SkSpecies $translatable = null)
-    {
-        $this->translatable = $translatable;
-
-        return $this;
-    }
-
-    /**
-     * Get translatable
-     *
-     * @return \Skaphandrus\AppBundle\Entity\SkSpecies
-     */
-    public function getTranslatable()
-    {
-        return $this->translatable;
     }
 }
 

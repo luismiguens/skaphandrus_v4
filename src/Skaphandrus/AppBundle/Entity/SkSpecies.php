@@ -2,11 +2,17 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+
 /**
  * SkSpecies
  */
 class SkSpecies
 {
+
+    use ORMBehaviors\Translatable\Translatable;
+    
     /**
      * @var \DateTime
      */
@@ -31,6 +37,11 @@ class SkSpecies
      * @var \Doctrine\Common\Collections\Collection
      */
     private $character;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $species_vernaculars;
 
     /**
      * Constructor
@@ -155,5 +166,38 @@ class SkSpecies
     {
         return $this->character;
     }
-}
 
+    /**
+     * Add speciesVernacular
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkSpeciesVernacular $speciesVernacular
+     *
+     * @return SkSpecies
+     */
+    public function addSpeciesVernacular(\Skaphandrus\AppBundle\Entity\SkSpeciesVernacular $speciesVernacular)
+    {
+        $this->species_vernaculars[] = $speciesVernacular;
+
+        return $this;
+    }
+
+    /**
+     * Remove speciesVernacular
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkSpeciesVernacular $speciesVernacular
+     */
+    public function removeSpeciesVernacular(\Skaphandrus\AppBundle\Entity\SkSpeciesVernacular $speciesVernacular)
+    {
+        $this->species_vernaculars->removeElement($speciesVernacular);
+    }
+
+    /**
+     * Get speciesVernaculars
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSpeciesVernaculars()
+    {
+        return $this->species_vernaculars;
+    }
+}
