@@ -2040,128 +2040,128 @@ CREATE TABLE `sk_species_image_ref`
 
 ################################################################################################
 ###################################### SPECIES TABLES ##########################################
--- 
--- INSERT INTO skaphandrus4.sk_kingdom (id, name) SELECT id, designacao FROM skaphandrus3.sk_reino;
--- INSERT INTO skaphandrus4.sk_phylum (id, kingdom_id, name) SELECT id, reino_id, designacao FROM skaphandrus3.sk_filo;
--- INSERT INTO skaphandrus4.sk_class (id, phylum_id, name) SELECT id, filo_id, designacao FROM skaphandrus3.sk_classe;
--- INSERT INTO skaphandrus4.sk_order (id, class_id, name) SELECT id, classe_id, designacao FROM skaphandrus3.sk_ordem;
--- INSERT INTO skaphandrus4.sk_family (id, order_id, name) SELECT id, ordem_id, designacao FROM skaphandrus3.sk_familia;
--- INSERT INTO skaphandrus4.sk_genus (id, family_id, name) SELECT id, familia_id, designacao FROM skaphandrus3.sk_genero;
--- INSERT INTO skaphandrus4.sk_species (id, genus_id) SELECT id, genero_id FROM skaphandrus3.sk_especie;
--- INSERT INTO skaphandrus4.sk_species_translation (translatable_id, description, how_to_find, locale) SELECT id, descricao, how_to_find, culture FROM skaphandrus3.sk_especie_i18n;
--- INSERT INTO skaphandrus4.sk_kingdom_vernacular (kingdom_id, locale, name) SELECT sk_kingdom_vernacular.kingdom_id, sk_lingua.nome, sk_kingdom_vernacular.name FROM skaphandrus3.sk_kingdom_vernacular,skaphandrus3.sk_lingua WHERE sk_kingdom_vernacular.language_id=sk_lingua.id;
--- INSERT INTO skaphandrus4.sk_phylum_vernacular (phylum_id, locale, name) SELECT sk_phylum_vernacular.phylum_id, sk_lingua.nome, sk_phylum_vernacular.name FROM skaphandrus3.sk_phylum_vernacular,skaphandrus3.sk_lingua WHERE sk_phylum_vernacular.language_id=sk_lingua.id;
--- INSERT INTO skaphandrus4.sk_class_vernacular (class_id, locale, name) SELECT sk_class_vernacular.class_id, sk_lingua.nome, sk_class_vernacular.name FROM skaphandrus3.sk_class_vernacular,skaphandrus3.sk_lingua WHERE sk_class_vernacular.language_id=sk_lingua.id;
--- INSERT INTO skaphandrus4.sk_order_vernacular (order_id, locale, name) SELECT sk_order_vernacular.order_id, sk_lingua.nome, sk_order_vernacular.name FROM skaphandrus3.sk_order_vernacular,skaphandrus3.sk_lingua WHERE sk_order_vernacular.language_id=sk_lingua.id;
--- INSERT INTO skaphandrus4.sk_family_vernacular (family_id, locale, name) SELECT sk_family_vernacular.family_id, sk_lingua.nome, sk_family_vernacular.name FROM skaphandrus3.sk_family_vernacular,skaphandrus3.sk_lingua WHERE sk_family_vernacular.language_id=sk_lingua.id;
--- INSERT INTO skaphandrus4.sk_genus_vernacular (genus_id, locale, name) SELECT sk_genus_vernacular.genus_id, sk_lingua.nome, sk_genus_vernacular.name FROM skaphandrus3.sk_genus_vernacular,skaphandrus3.sk_lingua WHERE sk_genus_vernacular.language_id=sk_lingua.id;
--- INSERT INTO skaphandrus4.sk_species_scientific_name (species_id, aphia_id, name, author) SELECT especie_id, aphia_id, designacao, autor FROM skaphandrus3.sk_especie_designacao;
--- INSERT INTO skaphandrus4.sk_vernacular (id, name) SELECT id, name FROM skaphandrus3.sk_species_vernacular;
--- INSERT INTO skaphandrus4.sk_species_vernacular (species_id, vernacular_id, locale) SELECT sk_species_species_vernacular.species_id, sk_species_species_vernacular.vernacular_id, sk_lingua.nome FROM skaphandrus3.sk_species_species_vernacular,skaphandrus3.sk_lingua WHERE sk_species_species_vernacular.language_id=sk_lingua.id;
--- 
--- 
--- 
--- ####################################################################################################
--- ######################################## SPOTS TABLES ##############################################
--- 
--- INSERT INTO skaphandrus4.sk_continent (id) SELECT id FROM skaphandrus3.sk_continente;
--- INSERT INTO skaphandrus4.sk_continent_translation (translatable_id, name, locale) SELECT id, nome, culture FROM skaphandrus3.sk_continente_i18n;
--- INSERT INTO skaphandrus4.sk_country (id, continent_id, name, fips_code) SELECT id, continente_id, nome, fips_code FROM skaphandrus3.sk_pais;
--- INSERT INTO skaphandrus4.sk_country_translation (translatable_id, locale, overview,geography_and_climate,entry_requirements, health_and_safety,time_zone,  communications, power_and_electricity,  other_informations ) SELECT id, culture,  overview,geography_and_climate,entry_requirements, health_and_safety,time_zone,  communications, power_and_electricity,  other_informations FROM skaphandrus3.sk_pais_i18n;
--- INSERT INTO skaphandrus4.sk_region (id, country_id) SELECT id, pais_id FROM skaphandrus3.sk_zona;
--- INSERT INTO skaphandrus4.sk_region_translation (translatable_id, name, locale) SELECT id, nome, culture FROM skaphandrus3.sk_zona_i18n;
--- INSERT INTO skaphandrus4.sk_location (id, region_id) SELECT id, zona_id FROM skaphandrus3.sk_local;
--- INSERT INTO skaphandrus4.sk_location_translation (translatable_id, name, locale, description, water_temp, suit, visibility, climate, how_to_go, extra_dive) SELECT id, nome, culture, descricao, temp_agua, fato, visibilidade, clima, como_chegar, extra_mergulho FROM skaphandrus3.sk_local_i18n;
--- INSERT INTO skaphandrus4.sk_spot (id, location_id, fos_user_id, max_depth, coordinate, zoom, is_aproved, created_at, updated_at) SELECT id, local_id, username_id, profundidade_maxima, coordenada, zoom, aprovado, created_at, updated_at FROM skaphandrus3.sk_spot;
--- INSERT INTO skaphandrus4.sk_spot_translation (translatable_id, name, description, locale) SELECT id, nome, descricao, culture FROM skaphandrus3.sk_spot_i18n;
--- 
--- 
--- --INSERT INTO skaphandrus4.sk_month (id) SELECT id FROM skaphandrus3.sk_mes;
--- --INSERT INTO skaphandrus4.sk_month_translation (translatable_id, name, locale) SELECT id, nome, culture FROM skaphandrus3.sk_mes_i18n;
--- --INSERT INTO skaphandrus4.sk_country_language(country_id, language) select pais_id, sk_lingua.nome from skaphandrus3.sk_pais_lingua, skaphandrus3.sk_lingua where sk_pais_lingua.lingua_id = sk_lingua.id;
--- --INSERT INTO skaphandrus4.sk_country_currency(country_id, currency) select pais_id, sk_moeda.nome from skaphandrus3.sk_pais_moeda, skaphandrus3.sk_moeda where sk_pais_moeda.moeda_id = sk_moeda.id;
--- --INSERT INTO skaphandrus4.sk_location_month (location_id, month_id) SELECT local_id, mes_id FROM skaphandrus3.sk_local_mes;
--- 
--- ###############################################################################################
--- ######################################  USERS TABLES ##########################################
--- 
--- INSERT INTO skaphandrus4.sk_email_notification_time SELECT * FROM skaphandrus3.sk_email_notification_time;
--- INSERT INTO skaphandrus4.sk_email_notification_time_i18n SELECT * FROM skaphandrus3.sk_email_notification_time_i18n;
--- INSERT INTO skaphandrus4.sf_guard_user SELECT * FROM skaphandrus3.sf_guard_user;
--- --INSERT INTO skaphandrus4.fos_user SELECT * FROM skaphandrus3.sk_username;
--- 
--- 
--- 
--- ####################################################################################################
--- ###################################### PHOTOGRAPHY TABLES ##########################################
--- 
--- INSERT INTO skaphandrus4.sk_photo_machine_brand (id, name) SELECT id, marca FROM skaphandrus3.sk_maquina;
--- INSERT INTO skaphandrus4.sk_photo_machine_model (id, name, brand_id, image, type, megapixels, zoom_optic, mode_exposition, mode_metering, iso, white_balance, focus_macro, lcd, memory) SELECT id, nome, maquina_id, fotografia, tipo_camera, megapixels, zoom_optico, modos_exposicao, modos_metering, iso, balanco_brancos, alcance_focus_macro, tamanho_lcd, armazenamento FROM skaphandrus3.sk_modelo;
--- INSERT INTO skaphandrus4.sk_creative_commons (id, image) SELECT id, imagem FROM skaphandrus3.sk_creative_commons;
--- INSERT INTO skaphandrus4.sk_creative_commons_translation (translatable_id, name, url, locale) SELECT id, nome, url, culture FROM skaphandrus3.sk_creative_commons_i18n;
--- INSERT INTO skaphandrus4.sk_photo (id, model_id, fos_user_id, title, image, description, species_id, spot_id, creative_id, views, created_at  ) SELECT id, modelo_id, username_id, nome, imagem, descricao, especie_id, spot_id, creative_id, views, created_at  FROM skaphandrus3.sk_fotografia;
--- INSERT INTO skaphandrus4.sk_photo_species_validation (photo_id, species_id, fos_user_id, rating ) SELECT id, especie_id, expert_id, quality_status FROM skaphandrus3.sk_fotografia;
--- INSERT INTO skaphandrus4.sk_keyword SELECT * FROM skaphandrus3.sk_keyword;
--- INSERT INTO skaphandrus4.sk_photo_keyword (photo_id, keyword_id) SELECT fotografia_id, keyword_id FROM skaphandrus3.sk_fotografia_keyword;
--- 
--- 
--- ######################################################################################################
--- ###################################### PHOTO CONTEST TABLES ##########################################
--- 
--- INSERT INTO skaphandrus4.sk_photo_contest (id, name, logo, image, begin_at, end_at, is_judge, created_at) SELECT id, name, logo, image, begin_at, end_at, is_judge, created_at FROM skaphandrus3.sk_photo_contest;
--- INSERT INTO skaphandrus4.sk_photo_contest_translation (translatable_id, description,rules, locale) SELECT id, description, rules, culture FROM skaphandrus3.sk_photo_contest_i18n;
--- 
--- INSERT INTO skaphandrus4.sk_photo_contest_judge (id, contest_id, fos_user_id) SELECT id, contest_id, username_id FROM skaphandrus3.sk_photo_contest_judge;
--- INSERT INTO skaphandrus4.sk_photo_contest_judge_translation (translatable_id, description, locale) SELECT id, description, culture FROM skaphandrus3.sk_photo_contest_judge_i18n;
--- 
--- INSERT INTO skaphandrus4.sk_photo_contest_award (id, contest_id, image, category_id, winner_fos_user_id, winner_photo_id) SELECT id, contest_id, image, category_id, winner_username_id, winner_fotografia_id FROM skaphandrus3.sk_photo_contest_award;
--- INSERT INTO skaphandrus4.sk_photo_contest_award_translation (translatable_id, name, description, locale) SELECT id, name, description, culture FROM skaphandrus3.sk_photo_contest_award_i18n;
--- 
--- INSERT INTO skaphandrus4.sk_photo_contest_judge_award (judge_id, award_id) SELECT judge_id, award_id FROM skaphandrus3.sk_photo_contest_judge_award;
--- 
--- INSERT INTO skaphandrus4.sk_photo_contest_category (id, contest_id, image ) SELECT id, contest_id, image FROM skaphandrus3.sk_photo_contest_category;
--- INSERT INTO skaphandrus4.sk_photo_contest_category_translation (translatable_id, name, description, locale) SELECT id, name, description, culture FROM skaphandrus3.sk_photo_contest_category_i18n;
--- 
--- INSERT INTO skaphandrus4.sk_photo_contest_sponsor (id, contest_id, image, name) SELECT id, contest_id, image, name FROM skaphandrus3.sk_photo_contest_sponsor;
--- INSERT INTO skaphandrus4.sk_photo_contest_sponsor_translation (translatable_id, description, locale) SELECT id, description, culture FROM skaphandrus3.sk_photo_contest_sponsor_i18n;
--- 
--- INSERT INTO skaphandrus4.sk_photo_contest_award_sponsor (award_id, sponsor_id) SELECT award_id, sponsor_id FROM skaphandrus3.sk_photo_contest_award_sponsor;
--- 
--- INSERT INTO skaphandrus4.sk_photo_contest_category_photo (category_id, photo_id) SELECT category_id, fotografia_id FROM skaphandrus3.sk_photo_contest_category_fotografia;
--- 
--- INSERT INTO skaphandrus4.sk_photo_contest_vote (fos_user_id, category_id, photo_id, created_at) SELECT username_id, category_id, fotografia_id, created_at FROM skaphandrus3.sk_photo_contest_vote;
--- 
--- INSERT INTO skaphandrus4.sk_photo_contest_category_judge_votation (id, category_id, judge_id, created_at, updated_at) SELECT id, category_id, judge_id, created_at, updated_at FROM skaphandrus3.sk_photo_contest_category_judge_votation;
--- INSERT INTO skaphandrus4.sk_photo_contest_category_judge_photo_vote (id, votation_id, photo_id, points) SELECT id, votation_id, fotografia_id, points FROM skaphandrus3.sk_photo_contest_category_judge_photo_vote;
--- 
--- 
--- 
--- ####################################################################################################
--- ###################################### IDENTIFICATION TABLES #######################################
--- 
--- INSERT INTO skaphandrus4.sk_identification_criteria_type (id) SELECT id FROM skaphandrus3.sk_identification_criteria_type;
--- INSERT INTO skaphandrus4.sk_identification_criteria_type_translation (translatable_id, name, locale) SELECT id, name, culture FROM skaphandrus3.sk_identification_criteria_type_i18n;
--- INSERT INTO skaphandrus4.sk_identification_group (id, phylum_id, class_id, order_id, family_id, genus_id, module_id) SELECT id, phylum_id, class_id, order_id, family_id, genus_id, module_id FROM skaphandrus3.sk_identification_group;
--- INSERT INTO skaphandrus4.sk_identification_criteria (id, type_id, order_by, is_cumulative ) SELECT id, type_id, order_by, is_cumulative FROM skaphandrus3.sk_identification_criteria;
--- INSERT INTO skaphandrus4.sk_identification_criteria_translation (translatable_id, name, locale) SELECT id, name, culture FROM skaphandrus3.sk_identification_criteria_i18n;
--- INSERT INTO skaphandrus4.sk_identification_criteria_group (id, group_id, criteria_id) SELECT id, group_id, criteria_id FROM skaphandrus3.sk_identification_criteria_group;
--- INSERT INTO skaphandrus4.sk_identification_master (id, is_active) SELECT id, is_active FROM skaphandrus3.sk_identification_master;
--- INSERT INTO skaphandrus4.sk_identification_master_translation (translatable_id, name, locale) SELECT id, name, culture FROM skaphandrus3.sk_identification_master_i18n;
--- INSERT INTO skaphandrus4.sk_identification_module (id, appstore_id, googleplay_id, master_id, is_active, is_enabled, image) SELECT id, appstore_id, googleplay_id, master_id, is_active, is_enabled, image_enabled FROM skaphandrus3.sk_identification_module;
--- INSERT INTO skaphandrus4.sk_identification_module_translation (translatable_id, name, locale) SELECT id, name, culture FROM skaphandrus3.sk_identification_module_i18n;
--- INSERT INTO skaphandrus4.sk_identification_character (id, criteria_id, image) SELECT id, criteria_id, image FROM skaphandrus3.sk_identification_character;
--- INSERT INTO skaphandrus4.sk_identification_character_translation (translatable_id, name, locale) SELECT id, name, culture FROM skaphandrus3.sk_identification_character_i18n;
--- INSERT INTO skaphandrus4.sk_identification_species_character (species_id, character_id) SELECT species_id, character_id FROM skaphandrus3.sk_identification_species_character;
--- INSERT INTO skaphandrus4.sk_identification_genus_character (genus_id, character_id) SELECT genus_id, character_id FROM skaphandrus3.sk_identification_genus_character;
--- INSERT INTO skaphandrus4.sk_identification_family_character (family_id, character_id) SELECT family_id, character_id FROM skaphandrus3.sk_identification_family_character;
--- INSERT INTO skaphandrus4.sk_identification_order_character (order_id, character_id) SELECT order_id, character_id FROM skaphandrus3.sk_identification_order_character;
--- INSERT INTO skaphandrus4.sk_identification_class_character (class_id, character_id) SELECT class_id, character_id FROM skaphandrus3.sk_identification_class_character;
--- INSERT INTO skaphandrus4.sk_identification_phylum_character (phylum_id, character_id) SELECT phylum_id, character_id FROM skaphandrus3.sk_identification_phylum_character;
--- 
--- INSERT INTO skaphandrus4.sk_species_image_ref (id, species_id, is_active, is_primary, image_url, image_src) SELECT id, especie_id, is_active, is_primary, image_url, image_src FROM skaphandrus3.sk_especie_image_ref;
--- 
--- 
--- 
--- 
--- # This restores the fkey checks, after having unset them earlier
--- SET FOREIGN_KEY_CHECKS = 1;
+
+INSERT INTO skaphandrus4.sk_kingdom (id, name) SELECT id, designacao FROM skaphandrus3.sk_reino;
+INSERT INTO skaphandrus4.sk_phylum (id, kingdom_id, name) SELECT id, reino_id, designacao FROM skaphandrus3.sk_filo;
+INSERT INTO skaphandrus4.sk_class (id, phylum_id, name) SELECT id, filo_id, designacao FROM skaphandrus3.sk_classe;
+INSERT INTO skaphandrus4.sk_order (id, class_id, name) SELECT id, classe_id, designacao FROM skaphandrus3.sk_ordem;
+INSERT INTO skaphandrus4.sk_family (id, order_id, name) SELECT id, ordem_id, designacao FROM skaphandrus3.sk_familia;
+INSERT INTO skaphandrus4.sk_genus (id, family_id, name) SELECT id, familia_id, designacao FROM skaphandrus3.sk_genero;
+INSERT INTO skaphandrus4.sk_species (id, genus_id) SELECT id, genero_id FROM skaphandrus3.sk_especie;
+INSERT INTO skaphandrus4.sk_species_translation (translatable_id, description, how_to_find, locale) SELECT id, descricao, how_to_find, culture FROM skaphandrus3.sk_especie_i18n;
+INSERT INTO skaphandrus4.sk_kingdom_vernacular (kingdom_id, locale, name) SELECT sk_kingdom_vernacular.kingdom_id, sk_lingua.nome, sk_kingdom_vernacular.name FROM skaphandrus3.sk_kingdom_vernacular,skaphandrus3.sk_lingua WHERE sk_kingdom_vernacular.language_id=sk_lingua.id;
+INSERT INTO skaphandrus4.sk_phylum_vernacular (phylum_id, locale, name) SELECT sk_phylum_vernacular.phylum_id, sk_lingua.nome, sk_phylum_vernacular.name FROM skaphandrus3.sk_phylum_vernacular,skaphandrus3.sk_lingua WHERE sk_phylum_vernacular.language_id=sk_lingua.id;
+INSERT INTO skaphandrus4.sk_class_vernacular (class_id, locale, name) SELECT sk_class_vernacular.class_id, sk_lingua.nome, sk_class_vernacular.name FROM skaphandrus3.sk_class_vernacular,skaphandrus3.sk_lingua WHERE sk_class_vernacular.language_id=sk_lingua.id;
+INSERT INTO skaphandrus4.sk_order_vernacular (order_id, locale, name) SELECT sk_order_vernacular.order_id, sk_lingua.nome, sk_order_vernacular.name FROM skaphandrus3.sk_order_vernacular,skaphandrus3.sk_lingua WHERE sk_order_vernacular.language_id=sk_lingua.id;
+INSERT INTO skaphandrus4.sk_family_vernacular (family_id, locale, name) SELECT sk_family_vernacular.family_id, sk_lingua.nome, sk_family_vernacular.name FROM skaphandrus3.sk_family_vernacular,skaphandrus3.sk_lingua WHERE sk_family_vernacular.language_id=sk_lingua.id;
+INSERT INTO skaphandrus4.sk_genus_vernacular (genus_id, locale, name) SELECT sk_genus_vernacular.genus_id, sk_lingua.nome, sk_genus_vernacular.name FROM skaphandrus3.sk_genus_vernacular,skaphandrus3.sk_lingua WHERE sk_genus_vernacular.language_id=sk_lingua.id;
+INSERT INTO skaphandrus4.sk_species_scientific_name (species_id, aphia_id, name, author) SELECT especie_id, aphia_id, designacao, autor FROM skaphandrus3.sk_especie_designacao;
+INSERT INTO skaphandrus4.sk_vernacular (id, name) SELECT id, name FROM skaphandrus3.sk_species_vernacular;
+INSERT INTO skaphandrus4.sk_species_vernacular (species_id, vernacular_id, locale) SELECT sk_species_species_vernacular.species_id, sk_species_species_vernacular.vernacular_id, sk_lingua.nome FROM skaphandrus3.sk_species_species_vernacular,skaphandrus3.sk_lingua WHERE sk_species_species_vernacular.language_id=sk_lingua.id;
+
+
+
+####################################################################################################
+######################################## SPOTS TABLES ##############################################
+
+INSERT INTO skaphandrus4.sk_continent (id) SELECT id FROM skaphandrus3.sk_continente;
+INSERT INTO skaphandrus4.sk_continent_translation (translatable_id, name, locale) SELECT id, nome, culture FROM skaphandrus3.sk_continente_i18n;
+INSERT INTO skaphandrus4.sk_country (id, continent_id, name, fips_code) SELECT id, continente_id, nome, fips_code FROM skaphandrus3.sk_pais;
+INSERT INTO skaphandrus4.sk_country_translation (translatable_id, locale, overview,geography_and_climate,entry_requirements, health_and_safety,time_zone,  communications, power_and_electricity,  other_informations ) SELECT id, culture,  overview,geography_and_climate,entry_requirements, health_and_safety,time_zone,  communications, power_and_electricity,  other_informations FROM skaphandrus3.sk_pais_i18n;
+INSERT INTO skaphandrus4.sk_region (id, country_id) SELECT id, pais_id FROM skaphandrus3.sk_zona;
+INSERT INTO skaphandrus4.sk_region_translation (translatable_id, name, locale) SELECT id, nome, culture FROM skaphandrus3.sk_zona_i18n;
+INSERT INTO skaphandrus4.sk_location (id, region_id) SELECT id, zona_id FROM skaphandrus3.sk_local;
+INSERT INTO skaphandrus4.sk_location_translation (translatable_id, name, locale, description, water_temp, suit, visibility, climate, how_to_go, extra_dive) SELECT id, nome, culture, descricao, temp_agua, fato, visibilidade, clima, como_chegar, extra_mergulho FROM skaphandrus3.sk_local_i18n;
+INSERT INTO skaphandrus4.sk_spot (id, location_id, fos_user_id, max_depth, coordinate, zoom, is_aproved, created_at, updated_at) SELECT id, local_id, username_id, profundidade_maxima, coordenada, zoom, aprovado, created_at, updated_at FROM skaphandrus3.sk_spot;
+INSERT INTO skaphandrus4.sk_spot_translation (translatable_id, name, description, locale) SELECT id, nome, descricao, culture FROM skaphandrus3.sk_spot_i18n;
+
+
+--INSERT INTO skaphandrus4.sk_month (id) SELECT id FROM skaphandrus3.sk_mes;
+--INSERT INTO skaphandrus4.sk_month_translation (translatable_id, name, locale) SELECT id, nome, culture FROM skaphandrus3.sk_mes_i18n;
+--INSERT INTO skaphandrus4.sk_country_language(country_id, language) select pais_id, sk_lingua.nome from skaphandrus3.sk_pais_lingua, skaphandrus3.sk_lingua where sk_pais_lingua.lingua_id = sk_lingua.id;
+--INSERT INTO skaphandrus4.sk_country_currency(country_id, currency) select pais_id, sk_moeda.nome from skaphandrus3.sk_pais_moeda, skaphandrus3.sk_moeda where sk_pais_moeda.moeda_id = sk_moeda.id;
+--INSERT INTO skaphandrus4.sk_location_month (location_id, month_id) SELECT local_id, mes_id FROM skaphandrus3.sk_local_mes;
+
+###############################################################################################
+######################################  USERS TABLES ##########################################
+
+INSERT INTO skaphandrus4.sk_email_notification_time SELECT * FROM skaphandrus3.sk_email_notification_time;
+INSERT INTO skaphandrus4.sk_email_notification_time_i18n SELECT * FROM skaphandrus3.sk_email_notification_time_i18n;
+INSERT INTO skaphandrus4.sf_guard_user SELECT * FROM skaphandrus3.sf_guard_user;
+--INSERT INTO skaphandrus4.fos_user SELECT * FROM skaphandrus3.sk_username;
+
+
+
+####################################################################################################
+###################################### PHOTOGRAPHY TABLES ##########################################
+
+INSERT INTO skaphandrus4.sk_photo_machine_brand (id, name) SELECT id, marca FROM skaphandrus3.sk_maquina;
+INSERT INTO skaphandrus4.sk_photo_machine_model (id, name, brand_id, image, type, megapixels, zoom_optic, mode_exposition, mode_metering, iso, white_balance, focus_macro, lcd, memory) SELECT id, nome, maquina_id, fotografia, tipo_camera, megapixels, zoom_optico, modos_exposicao, modos_metering, iso, balanco_brancos, alcance_focus_macro, tamanho_lcd, armazenamento FROM skaphandrus3.sk_modelo;
+INSERT INTO skaphandrus4.sk_creative_commons (id, image) SELECT id, imagem FROM skaphandrus3.sk_creative_commons;
+INSERT INTO skaphandrus4.sk_creative_commons_translation (translatable_id, name, url, locale) SELECT id, nome, url, culture FROM skaphandrus3.sk_creative_commons_i18n;
+INSERT INTO skaphandrus4.sk_photo (id, model_id, fos_user_id, title, image, description, species_id, spot_id, creative_id, views, created_at  ) SELECT id, modelo_id, username_id, nome, imagem, descricao, especie_id, spot_id, creative_id, views, created_at  FROM skaphandrus3.sk_fotografia;
+INSERT INTO skaphandrus4.sk_photo_species_validation (photo_id, species_id, fos_user_id, rating ) SELECT id, especie_id, expert_id, quality_status FROM skaphandrus3.sk_fotografia;
+INSERT INTO skaphandrus4.sk_keyword SELECT * FROM skaphandrus3.sk_keyword;
+INSERT INTO skaphandrus4.sk_photo_keyword (photo_id, keyword_id) SELECT fotografia_id, keyword_id FROM skaphandrus3.sk_fotografia_keyword;
+
+
+######################################################################################################
+###################################### PHOTO CONTEST TABLES ##########################################
+
+INSERT INTO skaphandrus4.sk_photo_contest (id, name, logo, image, begin_at, end_at, is_judge, created_at) SELECT id, name, logo, image, begin_at, end_at, is_judge, created_at FROM skaphandrus3.sk_photo_contest;
+INSERT INTO skaphandrus4.sk_photo_contest_translation (translatable_id, description,rules, locale) SELECT id, description, rules, culture FROM skaphandrus3.sk_photo_contest_i18n;
+
+INSERT INTO skaphandrus4.sk_photo_contest_judge (id, contest_id, fos_user_id) SELECT id, contest_id, username_id FROM skaphandrus3.sk_photo_contest_judge;
+INSERT INTO skaphandrus4.sk_photo_contest_judge_translation (translatable_id, description, locale) SELECT id, description, culture FROM skaphandrus3.sk_photo_contest_judge_i18n;
+
+INSERT INTO skaphandrus4.sk_photo_contest_award (id, contest_id, image, category_id, winner_fos_user_id, winner_photo_id) SELECT id, contest_id, image, category_id, winner_username_id, winner_fotografia_id FROM skaphandrus3.sk_photo_contest_award;
+INSERT INTO skaphandrus4.sk_photo_contest_award_translation (translatable_id, name, description, locale) SELECT id, name, description, culture FROM skaphandrus3.sk_photo_contest_award_i18n;
+
+INSERT INTO skaphandrus4.sk_photo_contest_judge_award (judge_id, award_id) SELECT judge_id, award_id FROM skaphandrus3.sk_photo_contest_judge_award;
+
+INSERT INTO skaphandrus4.sk_photo_contest_category (id, contest_id, image ) SELECT id, contest_id, image FROM skaphandrus3.sk_photo_contest_category;
+INSERT INTO skaphandrus4.sk_photo_contest_category_translation (translatable_id, name, description, locale) SELECT id, name, description, culture FROM skaphandrus3.sk_photo_contest_category_i18n;
+
+INSERT INTO skaphandrus4.sk_photo_contest_sponsor (id, contest_id, image, name) SELECT id, contest_id, image, name FROM skaphandrus3.sk_photo_contest_sponsor;
+INSERT INTO skaphandrus4.sk_photo_contest_sponsor_translation (translatable_id, description, locale) SELECT id, description, culture FROM skaphandrus3.sk_photo_contest_sponsor_i18n;
+
+INSERT INTO skaphandrus4.sk_photo_contest_award_sponsor (award_id, sponsor_id) SELECT award_id, sponsor_id FROM skaphandrus3.sk_photo_contest_award_sponsor;
+
+INSERT INTO skaphandrus4.sk_photo_contest_category_photo (category_id, photo_id) SELECT category_id, fotografia_id FROM skaphandrus3.sk_photo_contest_category_fotografia;
+
+INSERT INTO skaphandrus4.sk_photo_contest_vote (fos_user_id, category_id, photo_id, created_at) SELECT username_id, category_id, fotografia_id, created_at FROM skaphandrus3.sk_photo_contest_vote;
+
+INSERT INTO skaphandrus4.sk_photo_contest_category_judge_votation (id, category_id, judge_id, created_at, updated_at) SELECT id, category_id, judge_id, created_at, updated_at FROM skaphandrus3.sk_photo_contest_category_judge_votation;
+INSERT INTO skaphandrus4.sk_photo_contest_category_judge_photo_vote (id, votation_id, photo_id, points) SELECT id, votation_id, fotografia_id, points FROM skaphandrus3.sk_photo_contest_category_judge_photo_vote;
+
+
+
+####################################################################################################
+###################################### IDENTIFICATION TABLES #######################################
+
+INSERT INTO skaphandrus4.sk_identification_criteria_type (id) SELECT id FROM skaphandrus3.sk_identification_criteria_type;
+INSERT INTO skaphandrus4.sk_identification_criteria_type_translation (translatable_id, name, locale) SELECT id, name, culture FROM skaphandrus3.sk_identification_criteria_type_i18n;
+INSERT INTO skaphandrus4.sk_identification_group (id, phylum_id, class_id, order_id, family_id, genus_id, module_id) SELECT id, phylum_id, class_id, order_id, family_id, genus_id, module_id FROM skaphandrus3.sk_identification_group;
+INSERT INTO skaphandrus4.sk_identification_criteria (id, type_id, order_by, is_cumulative ) SELECT id, type_id, order_by, is_cumulative FROM skaphandrus3.sk_identification_criteria;
+INSERT INTO skaphandrus4.sk_identification_criteria_translation (translatable_id, name, locale) SELECT id, name, culture FROM skaphandrus3.sk_identification_criteria_i18n;
+INSERT INTO skaphandrus4.sk_identification_criteria_group (id, group_id, criteria_id) SELECT id, group_id, criteria_id FROM skaphandrus3.sk_identification_criteria_group;
+INSERT INTO skaphandrus4.sk_identification_master (id, is_active) SELECT id, is_active FROM skaphandrus3.sk_identification_master;
+INSERT INTO skaphandrus4.sk_identification_master_translation (translatable_id, name, locale) SELECT id, name, culture FROM skaphandrus3.sk_identification_master_i18n;
+INSERT INTO skaphandrus4.sk_identification_module (id, appstore_id, googleplay_id, master_id, is_active, is_enabled, image) SELECT id, appstore_id, googleplay_id, master_id, is_active, is_enabled, image_enabled FROM skaphandrus3.sk_identification_module;
+INSERT INTO skaphandrus4.sk_identification_module_translation (translatable_id, name, locale) SELECT id, name, culture FROM skaphandrus3.sk_identification_module_i18n;
+INSERT INTO skaphandrus4.sk_identification_character (id, criteria_id, image) SELECT id, criteria_id, image FROM skaphandrus3.sk_identification_character;
+INSERT INTO skaphandrus4.sk_identification_character_translation (translatable_id, name, locale) SELECT id, name, culture FROM skaphandrus3.sk_identification_character_i18n;
+INSERT INTO skaphandrus4.sk_identification_species_character (species_id, character_id) SELECT species_id, character_id FROM skaphandrus3.sk_identification_species_character;
+INSERT INTO skaphandrus4.sk_identification_genus_character (genus_id, character_id) SELECT genus_id, character_id FROM skaphandrus3.sk_identification_genus_character;
+INSERT INTO skaphandrus4.sk_identification_family_character (family_id, character_id) SELECT family_id, character_id FROM skaphandrus3.sk_identification_family_character;
+INSERT INTO skaphandrus4.sk_identification_order_character (order_id, character_id) SELECT order_id, character_id FROM skaphandrus3.sk_identification_order_character;
+INSERT INTO skaphandrus4.sk_identification_class_character (class_id, character_id) SELECT class_id, character_id FROM skaphandrus3.sk_identification_class_character;
+INSERT INTO skaphandrus4.sk_identification_phylum_character (phylum_id, character_id) SELECT phylum_id, character_id FROM skaphandrus3.sk_identification_phylum_character;
+
+INSERT INTO skaphandrus4.sk_species_image_ref (id, species_id, is_active, is_primary, image_url, image_src) SELECT id, especie_id, is_active, is_primary, image_url, image_src FROM skaphandrus3.sk_especie_image_ref;
+
+
+
+
+# This restores the fkey checks, after having unset them earlier
+SET FOREIGN_KEY_CHECKS = 1;
