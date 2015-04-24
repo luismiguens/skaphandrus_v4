@@ -44,6 +44,11 @@ class SkSpecies
     private $species_vernaculars;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $photos;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -199,5 +204,39 @@ class SkSpecies
     public function getSpeciesVernaculars()
     {
         return $this->species_vernaculars;
+    }
+
+    /**
+     * Add photo
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photo
+     *
+     * @return SkSpecies
+     */
+    public function addPhoto(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photo)
+    {
+        $this->photos[] = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Remove photo
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photo
+     */
+    public function removePhoto(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photo)
+    {
+        $this->photos->removeElement($photo);
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
     }
 }

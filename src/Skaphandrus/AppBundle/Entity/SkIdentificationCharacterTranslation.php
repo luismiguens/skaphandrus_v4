@@ -2,31 +2,21 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+
 /**
  * SkIdentificationCharacterTranslation
  */
 class SkIdentificationCharacterTranslation
 {
+
+    use ORMBehaviors\Translatable\Translation;
+
     /**
      * @var string
      */
     private $name;
-
-    /**
-     * @var string
-     */
-    private $locale;
-
-    /**
-     * @var integer
-     */
-    private $id;
-
-    /**
-     * @var \Skaphandrus\AppBundle\Entity\SkIdentificationCharacter
-     */
-    private $translatable;
-
 
     /**
      * Set name
@@ -50,64 +40,6 @@ class SkIdentificationCharacterTranslation
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set locale
-     *
-     * @param string $locale
-     *
-     * @return SkIdentificationCharacterTranslation
-     */
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
-
-        return $this;
-    }
-
-    /**
-     * Get locale
-     *
-     * @return string
-     */
-    public function getLocale()
-    {
-        return $this->locale;
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set translatable
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $translatable
-     *
-     * @return SkIdentificationCharacterTranslation
-     */
-    public function setTranslatable(\Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $translatable = null)
-    {
-        $this->translatable = $translatable;
-
-        return $this;
-    }
-
-    /**
-     * Get translatable
-     *
-     * @return \Skaphandrus\AppBundle\Entity\SkIdentificationCharacter
-     */
-    public function getTranslatable()
-    {
-        return $this->translatable;
     }
 }
 

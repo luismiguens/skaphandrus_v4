@@ -2,11 +2,17 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+
 /**
  * SkSpecies
  */
 class SkSpecies
 {
+
+    use ORMBehaviors\Translatable\Translatable;
+    
     /**
      * @var \DateTime
      */
@@ -31,6 +37,16 @@ class SkSpecies
      * @var \Doctrine\Common\Collections\Collection
      */
     private $character;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $species_vernaculars;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $identification_characters;
 
     /**
      * Constructor
@@ -155,43 +171,111 @@ class SkSpecies
     {
         return $this->character;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $vernacular;
-
 
     /**
-     * Add vernacular
+     * Add speciesVernacular
      *
-     * @param \Skaphandrus\AppBundle\Entity\SkVernacular $vernacular
+     * @param \Skaphandrus\AppBundle\Entity\SkSpeciesVernacular $speciesVernacular
      *
      * @return SkSpecies
      */
-    public function addVernacular(\Skaphandrus\AppBundle\Entity\SkVernacular $vernacular)
+    public function addSpeciesVernacular(\Skaphandrus\AppBundle\Entity\SkSpeciesVernacular $speciesVernacular)
     {
-        $this->vernacular[] = $vernacular;
+        $this->species_vernaculars[] = $speciesVernacular;
 
         return $this;
     }
 
     /**
-     * Remove vernacular
+     * Remove speciesVernacular
      *
-     * @param \Skaphandrus\AppBundle\Entity\SkVernacular $vernacular
+     * @param \Skaphandrus\AppBundle\Entity\SkSpeciesVernacular $speciesVernacular
      */
-    public function removeVernacular(\Skaphandrus\AppBundle\Entity\SkVernacular $vernacular)
+    public function removeSpeciesVernacular(\Skaphandrus\AppBundle\Entity\SkSpeciesVernacular $speciesVernacular)
     {
-        $this->vernacular->removeElement($vernacular);
+        $this->species_vernaculars->removeElement($speciesVernacular);
     }
 
     /**
-     * Get vernacular
+     * Get speciesVernaculars
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getVernacular()
+    public function getSpeciesVernaculars()
     {
-        return $this->vernacular;
+        return $this->species_vernaculars;
+    }
+
+    /**
+     * Add identificationCharacter
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $identificationCharacter
+     *
+     * @return SkSpecies
+     */
+    public function addIdentificationCharacter(\Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $identificationCharacter)
+    {
+        $this->identification_characters[] = $identificationCharacter;
+
+        return $this;
+    }
+
+    /**
+     * Remove identificationCharacter
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $identificationCharacter
+     */
+    public function removeIdentificationCharacter(\Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $identificationCharacter)
+    {
+        $this->identification_characters->removeElement($identificationCharacter);
+    }
+
+    /**
+     * Get identificationCharacters
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIdentificationCharacters()
+    {
+        return $this->identification_characters;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $photos;
+
+
+    /**
+     * Add photo
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photo
+     *
+     * @return SkSpecies
+     */
+    public function addPhoto(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photo)
+    {
+        $this->photos[] = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Remove photo
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photo
+     */
+    public function removePhoto(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photo)
+    {
+        $this->photos->removeElement($photo);
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
     }
 }

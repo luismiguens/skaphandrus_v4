@@ -42,27 +42,48 @@ class SpeciesController extends Controller {
 
         $name = str_replace('-', ' ', $slug);
 
-        $repository = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkSpeciesScientificName");
-        $scientific_name = $repository->findOneBy(array('name' => $name));
+        $scientific_name = $this->getDoctrine()
+            ->getRepository("SkaphandrusAppBundle:SkSpeciesScientificName")
+            ->findOneBy(array('name' => $name));
 
         if ($scientific_name) {
             $species = $scientific_name->getSpecies();
 
+            // Get common names.
             $vernaculars = array();
+            $vernaculars_text = array();
             foreach ($species->getSpeciesVernaculars() as $v) {
+                $vname = $v->getVernacular()->getName();
+                $vlocale = Intl::getLocaleBundle()->getLocaleName($v->getLocale());
+                $vernaculars_text[] = $vname . ' (' . ($vlocale? $vlocale : 'Not recognized') . ')';
+
                 $vernaculars[] = array(
-                    'name' => $v->getVernacular()->getName(),
-                    'language' => Intl::getLocaleBundle()->getLocaleName($v->getLocale()),
+                    'name' => $vname,
+                    'language' => $vlocale,
                 );
             }
+
+            // Get criteria.
+            $criteria = array();
+            foreach ($species->getCharacter() as $c) {
+                $criteria[] = array(
+                    'name' => $c->getCriteria()->translate($locale)->getName(),
+                    'image' => $c->getImage(),
+                );
+            }
+
+            // Get photos.
+            $photos = $species->getPhotos();
 
             return $this->render('SkaphandrusAppBundle:Species:species.html.twig', array(
                 "species" => $species,
                 "species_sn" => $scientific_name,
                 "vernaculars" => $vernaculars,
+                "vernaculars_text" => implode(', ', $vernaculars_text) . '.',
                 "description" => $species->translate($locale)->getDescription(),
                 "how_to_find" => $species->translate($locale)->getHowToFind(),
-                //"characters" => $species->getIdentificationCharacter()->translate($locale)->getName(),
+                "criteria" => $criteria,
+                "photo" => count($photos)? $photos[0]->getPhoto() : NULL,
             ));
         }
         else {

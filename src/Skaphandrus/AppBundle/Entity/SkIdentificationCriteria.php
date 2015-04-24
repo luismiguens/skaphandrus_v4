@@ -2,11 +2,17 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+
 /**
  * SkIdentificationCriteria
  */
 class SkIdentificationCriteria
 {
+
+    use ORMBehaviors\Translatable\Translatable;
+    
     /**
      * @var string
      */
