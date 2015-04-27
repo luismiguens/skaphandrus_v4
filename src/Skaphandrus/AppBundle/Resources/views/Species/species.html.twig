@@ -8,6 +8,8 @@
   {% if photo is not empty %}
     <h2>{{ "photo_path"|trans }}</h2>
     <p>{{ photo.image }}</p>
+    <p>{{ photo.fosuser.id }}</p>
+    <p>{{ photo.fosuser.username }}</p>
   {% endif %}
 
   <h2>{{ "taxonomic_structure"|trans }}</h2>
@@ -48,6 +50,13 @@
     <h2>{{ "photos"|trans }}</h2>
     {% for p in species.photos %}
         <p>{{ p.photo.title }} -> {{ p.photo.image }}</p>
+    {% endfor %}
+  {% endif %}
+
+  {% if users is not empty %}
+    <h2>{{ "user_photos"|trans }}</h2>
+    {% for u in users %}
+        <p>{{ "user_id"|trans }}: {{ u.0.username }} -> {{ "photos_count"|trans }}: {{ u.countable }}</p>
     {% endfor %}
   {% endif %}
 
