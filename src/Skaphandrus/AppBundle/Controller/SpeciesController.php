@@ -11,29 +11,30 @@ class SpeciesController extends Controller {
     public function taxonAction($node, $slug) {
 //unsluify
         $name = $slug;
-        
-        $taxon_name = "Sk" . ucfirst($node);
-        $repository_name = "SkaphandrusAppBundle:" . $taxon_name;
+        $taxon_name = ucfirst($node);
+        $taxon = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:Sk" . $taxon_name)
+            ->findOneBy(array('name' => $name));
 
-        $repository = $this->getDoctrine()->getRepository($repository_name);
-        $criteria = array('name' => $name);
-        $taxon = $repository->findOneBy($criteria);
+        if ($taxon) {
+            // Get common names.
+            $vernaculars = array();
+            $vernaculars_text = array();
+            foreach ($taxon->getVernaculars() as $v) {
+                $vernaculars[] = array(
+                    'name' => $v->getName(),
+                    'language' => '(' . Intl::getLocaleBundle()->getLocaleName($v->getLocale()) . ')',
+                );
+            }
 
-
-        //$genus = new \Skaphandrus\AppBundle\Entity\SkGenus();
-        $vernaculars = $taxon->getVernaculars();
-
-
-
-
-
-
-
-        return $this->render('SkaphandrusAppBundle:Species:taxon.html.twig', array(
-                    "node" => $node,
-                    "taxon" => $taxon,
-                    "vernaculars" => $vernaculars
-        ));
+            return $this->render('SkaphandrusAppBundle:Species:taxon.html.twig', array(
+                "node" => $node,
+                "taxon" => $taxon,
+                "vernaculars" => $vernaculars,
+            ));
+        }
+        else {
+            throw $this->createNotFoundException('The '. $taxon_name .' "'. $name .'" does not exist.');
+        }
     }
 
     public function speciesPageAction($slug) {

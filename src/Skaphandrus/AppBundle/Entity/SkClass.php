@@ -33,6 +33,11 @@ class SkClass
     private $character;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $vernaculars;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -155,5 +160,38 @@ class SkClass
     {
         return $this->character;
     }
-}
 
+    /**
+     * Add vernacular
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkClassVernacular $vernacular
+     *
+     * @return SkClass
+     */
+    public function addVernacular(\Skaphandrus\AppBundle\Entity\SkClassVernacular $vernacular)
+    {
+        $this->vernaculars[] = $vernacular;
+
+        return $this;
+    }
+
+    /**
+     * Remove vernacular
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkClassVernacular $vernacular
+     */
+    public function removeVernacular(\Skaphandrus\AppBundle\Entity\SkClassVernacular $vernacular)
+    {
+        $this->vernaculars->removeElement($vernacular);
+    }
+
+    /**
+     * Get vernaculars
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVernaculars()
+    {
+        return $this->vernaculars;
+    }
+}

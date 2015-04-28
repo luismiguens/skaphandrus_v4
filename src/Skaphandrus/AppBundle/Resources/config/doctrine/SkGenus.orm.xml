@@ -27,5 +27,6 @@
         </inverse-join-columns>
       </join-table>
     </many-to-many>
+    <one-to-many field="vernaculars" target-entity="SkGenusVernacular" mapped-by="genus"/>
   </entity>
 </doctrine-mapping>
