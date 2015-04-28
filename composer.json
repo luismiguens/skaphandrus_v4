@@ -26,6 +26,11 @@
 
         "lexik/translation-bundle": "~2.0",
         
+        "symfony-cmf/symfony-cmf": "1.2.*",
+        "symfony-cmf/simple-cms-bundle": "1.2.*",
+        "symfony-cmf/create-bundle": "1.2.*",
+        "jackalope/jackalope-doctrine-dbal": "1.1.*",
+        
         "sonata-project/doctrine-orm-admin-bundle": "~2.3",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         

@@ -1,9 +1,9 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
 {% block body %}
-  <h1>
+  <h2>
     {{ species_sn.name ~ " " ~ species_sn.author }}
-  </h1>
+  </h2>
 
   {% if photo is not empty %}
     <h2>{{ "photo_path"|trans }}</h2>
