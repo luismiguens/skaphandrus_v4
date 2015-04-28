@@ -11,29 +11,30 @@ class SpeciesController extends Controller {
     public function taxonAction($node, $slug) {
 //unsluify
         $name = $slug;
-        
-        $taxon_name = "Sk" . ucfirst($node);
-        $repository_name = "SkaphandrusAppBundle:" . $taxon_name;
+        $taxon_name = ucfirst($node);
+        $taxon = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:Sk" . $taxon_name)
+            ->findOneBy(array('name' => $name));
 
-        $repository = $this->getDoctrine()->getRepository($repository_name);
-        $criteria = array('name' => $name);
-        $taxon = $repository->findOneBy($criteria);
+        if ($taxon) {
+            // Get common names.
+            $vernaculars = array();
+            $vernaculars_text = array();
+            foreach ($taxon->getVernaculars() as $v) {
+                $vernaculars[] = array(
+                    'name' => $v->getName(),
+                    'language' => '(' . Intl::getLocaleBundle()->getLocaleName($v->getLocale()) . ')',
+                );
+            }
 
-
-        //$genus = new \Skaphandrus\AppBundle\Entity\SkGenus();
-        $vernaculars = $taxon->getVernaculars();
-
-
-
-
-
-
-
-        return $this->render('SkaphandrusAppBundle:Species:taxon.html.twig', array(
-                    "node" => $node,
-                    "taxon" => $taxon,
-                    "vernaculars" => $vernaculars
-        ));
+            return $this->render('SkaphandrusAppBundle:Species:taxon.html.twig', array(
+                "node" => $node,
+                "taxon" => $taxon,
+                "vernaculars" => $vernaculars,
+            ));
+        }
+        else {
+            throw $this->createNotFoundException('The '. $taxon_name .' "'. $name .'" does not exist.');
+        }
     }
 
     public function speciesPageAction($slug) {
@@ -91,6 +92,33 @@ class SpeciesController extends Controller {
         }
         else {
             throw $this->createNotFoundException('The species '. $name .' does not exist.');
+        }
+    }
+
+    public function spotAction($country, $location, $slug) {
+        $name = str_replace('-', ' ', $slug);
+        $locale = $this->get('request')->getLocale();
+
+        $spot = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')
+            ->findOneByName($name);
+
+        if ($spot) {
+
+            $location = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
+            ->findOneByName($location);
+
+            //$country = $location->getCountry();
+
+
+            return $this->render('SkaphandrusAppBundle:Species:spot.html.twig', array(
+                'spot' => $spot,
+                'spot_name' => $spot->translate($locale)->getName(),
+                'location' => $location,
+                'location_name' => $location->translate($locale)->getName(),
+            ));
+        }
+        else {
+            throw $this->createNotFoundException('The spot '. $name .' does not exist.');
         }
     }
 }

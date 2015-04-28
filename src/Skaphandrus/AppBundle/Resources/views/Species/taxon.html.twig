@@ -1,14 +1,13 @@
-<h1> {{ node }} : {{ taxon.name }}!</h1>
+{% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-<h2>common names</h2>
-<ul>
+{% block body %}
+  <h2> {{ node }} : {{ taxon.name }}!</h2>
+
+  {% if vernaculars is not empty %}
+    <h3>{{ "common_names"|trans }}</h3>
     {% for vernacular in vernaculars %}
-        <li>{{ vernacular.locale }} : {{ vernacular.name }}</li>
-        
-        
-        $language = Intl::getLanguageBundle()->getLanguageName('de');
-        
-        
-        
+        <p>{{ vernacular.name ~ " - " ~ vernacular.language }}</p>
     {% endfor %}
-</ul>
+  {% endif %}
+{% endblock %}
+

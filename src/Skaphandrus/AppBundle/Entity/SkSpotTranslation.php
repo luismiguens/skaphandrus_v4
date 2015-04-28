@@ -5,15 +5,14 @@ namespace Skaphandrus\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
-
 /**
  * SkSpotTranslation
  */
 class SkSpotTranslation
 {
-    
+
     use ORMBehaviors\Translatable\Translation;
-    
+
     /**
      * @var string
      */
@@ -23,6 +22,11 @@ class SkSpotTranslation
      * @var string
      */
     private $description;
+
+    /**
+     * @var integer
+     */
+    private $translatable_id;
 
 
     /**
@@ -73,5 +77,27 @@ class SkSpotTranslation
         return $this->description;
     }
 
-}
+    /**
+     * Set translatableId
+     *
+     * @param integer $translatableId
+     *
+     * @return SkSpotTranslation
+     */
+    public function setTranslatableId($translatableId)
+    {
+        $this->translatable_id = $translatableId;
 
+        return $this;
+    }
+
+    /**
+     * Get translatableId
+     *
+     * @return integer
+     */
+    public function getTranslatableId()
+    {
+        return $this->translatable_id;
+    }
+}

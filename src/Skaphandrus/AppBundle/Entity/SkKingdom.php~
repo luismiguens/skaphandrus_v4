@@ -17,6 +17,10 @@ class SkKingdom
      */
     private $id;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $vernaculars;
 
     /**
      * Set name
@@ -50,5 +54,47 @@ class SkKingdom
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->vernaculars = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add vernacular
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkKingdomVernacular $vernacular
+     *
+     * @return SkKingdom
+     */
+    public function addVernacular(\Skaphandrus\AppBundle\Entity\SkKingdomVernacular $vernacular)
+    {
+        $this->vernaculars[] = $vernacular;
+
+        return $this;
+    }
+
+    /**
+     * Remove vernacular
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkKingdomVernacular $vernacular
+     */
+    public function removeVernacular(\Skaphandrus\AppBundle\Entity\SkKingdomVernacular $vernacular)
+    {
+        $this->vernaculars->removeElement($vernacular);
+    }
+
+    /**
+     * Get vernaculars
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVernaculars()
+    {
+        return $this->vernaculars;
     }
 }

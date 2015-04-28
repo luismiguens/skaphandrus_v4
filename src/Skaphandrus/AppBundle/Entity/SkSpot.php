@@ -10,10 +10,9 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
  */
 class SkSpot
 {
+
+    use ORMBehaviors\Translatable\Translatable;
     
-        use ORMBehaviors\Translatable\Translatable;
-        
-        
     /**
      * @var integer
      */
@@ -267,4 +266,3 @@ class SkSpot
     }
     
 }
-
