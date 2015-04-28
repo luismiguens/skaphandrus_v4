@@ -26,11 +26,11 @@ class SkSpotRepository extends EntityRepository {
     public function findOneBySlugJoinedToTranslation($name) {
         $query = $this->getEntityManager()
                         ->createQuery(
-                                'SELECT s, t FROM SkaphandrusAppBundle:SkSpot s
-             JOIN s.translations t
-             WHERE t.name = :name
-             AND t.locale = :locale'
-                        )->setParameter('name', $name)->setParameter('locale', 'en');
+                            'SELECT s, t FROM SkaphandrusAppBundle:SkSpot s
+                            JOIN s.translations t
+                            WHERE t.name = :name
+                            AND t.locale = :locale'
+                            )->setParameter('name', $name)->setParameter('locale', 'en');
         try {
             return $query->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
