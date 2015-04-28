@@ -99,9 +99,14 @@ class SpeciesController extends Controller {
         $name = str_replace('-', ' ', $slug);
         $locale = $this->get('request')->getLocale();
 
-        $spot = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')
-            ->findOneByName($name);
+//        $spot = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')
+//            ->findOneByName($name);
 
+        
+        
+        $spot = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')->findOneBySlugJoinedToTranslation($name);
+        
+        
         if ($spot) {
 
             $location = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
