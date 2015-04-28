@@ -399,5 +399,12 @@ class SkPhotoMachineModel
     {
         return $this->brand;
     }
+    
+    
+        public function __toString(){
+        return $this->getName();
+    }
+    
+    
 }
 

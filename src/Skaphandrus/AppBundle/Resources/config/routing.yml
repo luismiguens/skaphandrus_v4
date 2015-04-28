@@ -1,3 +1,7 @@
+skaphandrus_app_photo_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skphoto.yml"
+    prefix:   /photo_admin
+
 skaphandrus_app_hello:
     path:     /hello/{name}
     defaults: { _controller: SkaphandrusAppBundle:Default:hello }

@@ -1,0 +1,30 @@
+photo_admin:
+    path:     /
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhoto:index" }
+
+photo_admin_show:
+    path:     /{id}/show
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhoto:show" }
+
+photo_admin_new:
+    path:     /new
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhoto:new" }
+
+photo_admin_create:
+    path:     /create
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhoto:create" }
+    methods:  POST
+
+photo_admin_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhoto:edit" }
+
+photo_admin_update:
+    path:     /{id}/update
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhoto:update" }
+    methods:  [POST, PUT]
+
+photo_admin_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhoto:delete" }
+    methods:  [POST, DELETE]

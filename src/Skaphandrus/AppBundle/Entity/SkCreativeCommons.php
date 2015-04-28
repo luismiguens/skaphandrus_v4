@@ -2,11 +2,17 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+
 /**
  * SkCreativeCommons
  */
 class SkCreativeCommons
 {
+    
+        use ORMBehaviors\Translatable\Translatable;
+    
     /**
      * @var string
      */
@@ -51,5 +57,11 @@ class SkCreativeCommons
     {
         return $this->id;
     }
+    
+    public function __toString(){
+        return $this->translate('en')->getName();
+    }
+    
+    
 }
 
