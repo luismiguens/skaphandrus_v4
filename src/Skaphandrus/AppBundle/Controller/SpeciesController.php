@@ -84,6 +84,9 @@ class SpeciesController extends Controller {
                 "how_to_find" => $species->translate($locale)->getHowToFind(),
                 "criteria" => $criteria,
                 "photo" => count($photos)? $photos[0]->getPhoto() : NULL,
+                "users" => $this->getDoctrine()
+                    ->getRepository("SkaphandrusAppBundle:SkPhoto")
+                    ->findPhotosCountByUserForModel($species->getId()),
             ));
         }
         else {
