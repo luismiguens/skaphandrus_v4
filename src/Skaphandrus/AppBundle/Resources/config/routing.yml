@@ -31,11 +31,21 @@ index2:
 ##CONTROLLER SPECIES
 species:
     path:     /{_locale}/marine-species/info/species/{slug}
-    defaults: { _controller: SkaphandrusAppBundle:Species:speciesPage }
+    defaults: { _controller: SkaphandrusAppBundle:Species:speciesPage, _locale: en }
+    requirements:
+        _locale:  en|pt
 
 taxon:
     path:     /{_locale}/marine-species/{node}/{slug}
-    defaults: { _controller: SkaphandrusAppBundle:Species:taxon }
+    defaults: { _controller: SkaphandrusAppBundle:Species:taxon, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+spot:
+    path:     /{_locale}/scuba-dive-locations/info/spot/{country}/{location}/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Species:spot, _locale: en }
+    requirements:
+        _locale:  en|pt
 
 #
 #

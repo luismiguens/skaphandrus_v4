@@ -313,3 +313,4 @@ class SkLocationTranslation
         return $this->translatable;
     }
 }
+

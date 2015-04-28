@@ -2,11 +2,17 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+
 /**
  * SkSpotTranslation
  */
 class SkSpotTranslation
 {
+
+    use ORMBehaviors\Translatable\Translation;
+
     /**
      * @var string
      */
@@ -18,19 +24,9 @@ class SkSpotTranslation
     private $description;
 
     /**
-     * @var string
-     */
-    private $locale;
-
-    /**
      * @var integer
      */
-    private $id;
-
-    /**
-     * @var \Skaphandrus\AppBundle\Entity\SkSpot
-     */
-    private $translatable;
+    private $translatable_id;
 
 
     /**
@@ -82,61 +78,26 @@ class SkSpotTranslation
     }
 
     /**
-     * Set locale
+     * Set translatableId
      *
-     * @param string $locale
+     * @param integer $translatableId
      *
      * @return SkSpotTranslation
      */
-    public function setLocale($locale)
+    public function setTranslatableId($translatableId)
     {
-        $this->locale = $locale;
+        $this->translatable_id = $translatableId;
 
         return $this;
     }
 
     /**
-     * Get locale
-     *
-     * @return string
-     */
-    public function getLocale()
-    {
-        return $this->locale;
-    }
-
-    /**
-     * Get id
+     * Get translatableId
      *
      * @return integer
      */
-    public function getId()
+    public function getTranslatableId()
     {
-        return $this->id;
-    }
-
-    /**
-     * Set translatable
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkSpot $translatable
-     *
-     * @return SkSpotTranslation
-     */
-    public function setTranslatable(\Skaphandrus\AppBundle\Entity\SkSpot $translatable = null)
-    {
-        $this->translatable = $translatable;
-
-        return $this;
-    }
-
-    /**
-     * Get translatable
-     *
-     * @return \Skaphandrus\AppBundle\Entity\SkSpot
-     */
-    public function getTranslatable()
-    {
-        return $this->translatable;
+        return $this->translatable_id;
     }
 }
-

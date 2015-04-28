@@ -2,11 +2,17 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+
 /**
  * SkSpot
  */
 class SkSpot
 {
+
+    use ORMBehaviors\Translatable\Translatable;
+    
     /**
      * @var integer
      */
@@ -255,4 +261,3 @@ class SkSpot
         return $this->location;
     }
 }
-

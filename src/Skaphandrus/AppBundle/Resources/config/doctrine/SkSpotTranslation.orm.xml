@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="Skaphandrus\AppBundle\Entity\SkSpotTranslation" table="sk_spot_translation">
-    <indexes>
+    <!-- <indexes>
       <index name="IDX_spot" columns="translatable_id"/>
     </indexes>
     <unique-constraints>
@@ -9,7 +9,7 @@
     </unique-constraints>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
-    </id>
+    </id> -->
     <field name="name" type="string" column="name" length="255" nullable="false">
       <options>
         <option name="fixed"/>
@@ -20,7 +20,12 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="locale" type="string" column="locale" length="255" nullable="false">
+    <field name="translatable_id" type="integer" column="translatable_id">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <!-- <field name="locale" type="string" column="locale" length="255" nullable="false">
       <options>
         <option name="fixed"/>
       </options>
@@ -29,6 +34,6 @@
       <join-columns>
         <join-column name="translatable_id" referenced-column-name="id"/>
       </join-columns>
-    </many-to-one>
+    </many-to-one> -->
   </entity>
 </doctrine-mapping>
