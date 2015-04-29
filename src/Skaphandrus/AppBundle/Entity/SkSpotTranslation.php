@@ -23,11 +23,6 @@ class SkSpotTranslation
      */
     private $description;
 
-//    /**
-//     * @var integer
-//     */
-//    private $translatable_id;
-
 
     /**
      * Set name
@@ -76,28 +71,4 @@ class SkSpotTranslation
     {
         return $this->description;
     }
-
-//    /**
-//     * Set translatableId
-//     *
-//     * @param integer $translatableId
-//     *
-//     * @return SkSpotTranslation
-//     */
-//    public function setTranslatableId($translatableId)
-//    {
-//        $this->translatable_id = $translatableId;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get translatableId
-//     *
-//     * @return integer
-//     */
-//    public function getTranslatableId()
-//    {
-//        return $this->translatable_id;
-//    }
 }

@@ -45,9 +45,22 @@ taxon:
     requirements:
         _locale:  en|pt
 
+##CONTROLLER SPOT
 spot:
     path:     /{_locale}/scuba-dive-locations/info/spot/{country}/{location}/{slug}
-    defaults: { _controller: SkaphandrusAppBundle:Species:spot, _locale: en }
+    defaults: { _controller: SkaphandrusAppBundle:Spot:spot, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+location:
+    path:     /{_locale}/scuba-dive-locations/info/location/{country}/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Spot:location, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+country:
+    path:     /{_locale}/scuba-dive-locations/info/country/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Spot:country, _locale: en }
     requirements:
         _locale:  en|pt
 

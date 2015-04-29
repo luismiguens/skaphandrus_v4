@@ -1,0 +1,32 @@
+{% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
+
+{% block body %}
+    <h2>{{ spot_translation.name }}, {{ location_translation.name }}, {{ country_name }}</h2>
+
+    <h3>{{ "coordinates"|trans }}</h3>
+    <p>{{ spot.coordinate }}</p>
+
+    <h3>{{ "description" }}</h3>
+    <p>{{ spot_translation.description }}</p>
+
+    <h3>{{ "location_description"|trans }}</h3>
+    <p>{{ location_translation.description }}</p>
+
+    <h3>{{ "location_water_temp"|trans }}</h3>
+    <p>{{ location_translation.waterTemp }}</p>
+
+    <h3>{{ "location_suit"|trans }}</h3>
+    <p>{{ location_translation.suit }}</p>
+
+    <h3>{{ "location_visibility"|trans }}</h3>
+    <p>{{ location_translation.visibility }}</p>
+
+    <h3>{{ "location_climate"|trans }}</h3>
+    <p>{{ location_translation.climate }}</p>
+
+    <h3>{{ "location_how_to_go"|trans }}</h3>
+    <p>{{ location_translation.howToGo }}</p>
+
+    <h3>{{ "location_extra_dive"|trans }}</h3>
+    <p>{{ location_translation.extraDive }}</p>
+{% endblock %}

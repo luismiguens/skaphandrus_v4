@@ -94,36 +94,4 @@ class SpeciesController extends Controller {
             throw $this->createNotFoundException('The species '. $name .' does not exist.');
         }
     }
-
-    public function spotAction($country, $location, $slug) {
-        $name = str_replace('-', ' ', $slug);
-        $locale = $this->get('request')->getLocale();
-
-//        $spot = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')
-//            ->findOneByName($name);
-
-        
-        
-        $spot = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')->findOneBySlugJoinedToTranslation($name);
-        
-        
-        if ($spot) {
-
-            $location = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
-            ->findOneByName($location);
-
-            //$country = $location->getCountry();
-
-
-            return $this->render('SkaphandrusAppBundle:Species:spot.html.twig', array(
-                'spot' => $spot,
-                'spot_name' => $spot->translate($locale)->getName(),
-                'location' => $location,
-                'location_name' => $location->translate($locale)->getName(),
-            ));
-        }
-        else {
-            throw $this->createNotFoundException('The spot '. $name .' does not exist.');
-        }
-    }
 }

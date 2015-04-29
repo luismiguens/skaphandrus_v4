@@ -33,6 +33,11 @@ class SkLocation
      */
     private $region;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $spots;
+
 
     /**
      * Set createdAt
@@ -114,5 +119,47 @@ class SkLocation
     public function getRegion()
     {
         return $this->region;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->spots = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add spot
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkSpot $spot
+     *
+     * @return SkLocation
+     */
+    public function addSpot(\Skaphandrus\AppBundle\Entity\SkSpot $spot)
+    {
+        $this->spots[] = $spot;
+
+        return $this;
+    }
+
+    /**
+     * Remove spot
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkSpot $spot
+     */
+    public function removeSpot(\Skaphandrus\AppBundle\Entity\SkSpot $spot)
+    {
+        $this->spots->removeElement($spot);
+    }
+
+    /**
+     * Get spots
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSpots()
+    {
+        return $this->spots;
     }
 }

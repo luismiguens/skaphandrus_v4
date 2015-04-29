@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Skaphandrus\AppBundle\Entity\SkCountry" table="sk_country">
+  <entity name="Skaphandrus\AppBundle\Entity\SkCountry" repository-class="Skaphandrus\AppBundle\Entity\Repository\SkCountryRepository" table="sk_country">
     <indexes>
       <index name="sk_country_FI_1" columns="continent_id"/>
     </indexes>
@@ -22,5 +22,6 @@
         <join-column name="continent_id" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
+    <one-to-many field="locations" target-entity="SkLocation" mapped-by="country"/>
   </entity>
 </doctrine-mapping>

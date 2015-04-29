@@ -12,30 +12,19 @@ use Doctrine\ORM\EntityRepository;
  */
 class SkSpotRepository extends EntityRepository {
 
-//  public function findOneByName($name) {
-//    return $this->getEntityManager()
-//      ->createQuery(
-//        "SELECT s
-//        FROM SkaphandrusAppBundle:SkSpot s
-//        JOIN SkaphandrusAppBundle:SkSpotTranslation st
-//          WITH s.id = st.translatable_id
-//        WHERE st.name = :name"
-//      )->setParameter('name', $name)->getSingleResult();
-//  }
-
-    public function findOneBySlugJoinedToTranslation($name) {
+    public function findOneBySlugJoinedToTranslation($name, $locale) {
         $query = $this->getEntityManager()
-                        ->createQuery(
-                            'SELECT s, t FROM SkaphandrusAppBundle:SkSpot s
-                            JOIN s.translations t
-                            WHERE t.name = :name
-                            AND t.locale = :locale'
-                            )->setParameter('name', $name)->setParameter('locale', 'en');
+            ->createQuery(
+                'SELECT s, t
+                FROM SkaphandrusAppBundle:SkSpot s
+                JOIN s.translations t
+                WHERE t.name = :name
+                AND t.locale = :locale'
+                )->setParameter('name', $name)->setParameter('locale', $locale);
         try {
             return $query->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
     }
-
 }

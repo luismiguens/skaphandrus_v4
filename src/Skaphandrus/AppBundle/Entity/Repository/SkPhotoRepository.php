@@ -19,7 +19,7 @@ class SkPhotoRepository extends EntityRepository
         FROM SkaphandrusAppBundle:FosUser u
         JOIN SkaphandrusAppBundle:SkPhoto p
           WITH u.id = IDENTITY(p.fosUser)
-        WHERE IDENTITY(p.species) = :id
+        WHERE IDENTITY(p.$model) = :id
         GROUP BY u.id
         ORDER BY countable DESC"
       )->setParameter('id', $id)->getResult();
