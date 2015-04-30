@@ -2,11 +2,17 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+
 /**
  * SkCountry
  */
 class SkCountry
 {
+
+    use ORMBehaviors\Translatable\Translatable;
+
     /**
      * @var string
      */
@@ -27,6 +33,19 @@ class SkCountry
      */
     private $continent;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $regions;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->regions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Set name
@@ -109,5 +128,38 @@ class SkCountry
     {
         return $this->continent;
     }
-}
 
+    /**
+     * Add region
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkRegion $region
+     *
+     * @return SkCountry
+     */
+    public function addRegion(\Skaphandrus\AppBundle\Entity\SkRegion $region)
+    {
+        $this->regions[] = $region;
+
+        return $this;
+    }
+
+    /**
+     * Remove region
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkRegion $region
+     */
+    public function removeRegion(\Skaphandrus\AppBundle\Entity\SkRegion $region)
+    {
+        $this->regions->removeElement($region);
+    }
+
+    /**
+     * Get regions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRegions()
+    {
+        return $this->regions;
+    }
+}

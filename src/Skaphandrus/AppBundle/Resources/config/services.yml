@@ -2,3 +2,10 @@ services:
 #    skaphandrus_app.example:
 #        class: Skaphandrus\AppBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
+
+    utils.twig_extension:
+        class: Skaphandrus\AppBundle\Twig\UtilsExtension
+        public: false
+        arguments: ["@service_container"]
+        tags:
+            - { name: twig.extension }

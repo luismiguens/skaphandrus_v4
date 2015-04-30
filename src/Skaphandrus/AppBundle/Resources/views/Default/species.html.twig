@@ -1,15 +1,18 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
 {% block body %}
-  <h2>
-    {{ species_sn.name ~ " " ~ species_sn.author }}
-  </h2>
 
-  {% if photo is not empty %}
+  {% for sn_name in species.scientificNames %}
+    <h2>
+      {{ sn_name.name }} ({{ sn_name.author }})
+    </h2>
+  {% endfor %}
+
+  {% if species.photos|first is not empty %}
     <h2>{{ "photo_path"|trans }}</h2>
-    <p>{{ photo.image }}</p>
-    <p>{{ photo.fosuser.id }}</p>
-    <p>{{ photo.fosuser.username }}</p>
+    <p>{{ species.photos|first.photo.image }}</p>
+    <p>{{ species.photos|first.fosuser.id }}</p>
+    <p>{# species.photos|first.fosuser.username #}</p>
   {% endif %}
 
   <h2>{{ "taxonomic_structure"|trans }}</h2>
@@ -20,33 +23,32 @@
   <p>{{ "species_family"|trans ~ ": " ~ species.genus.family.name }}</p>
   <p>{{ "species_genus"|trans ~ ": " ~ species.genus.name }}</p>
 
-  {% if description is not empty %}
+  {% if species.translate(app.request.locale).description is not empty %}
     <h2>{{ "description"|trans }}</h2>
-    <p>{{ description }}</p>
+    <p>{{ species.translate(app.request.locale).description }}</p>
   {% endif %}
 
-  {% if how_to_find is not empty %}
+  {% if species.translate(app.request.locale).howToFind is not empty %}
     <h2>{{ "how_to_find"|trans }}</h2>
-    <p>{{ how_to_find }}</p>
+    <p>{{ species.translate(app.request.locale).howToFind }}</p>
   {% endif %}
   
 
-  {% if criteria is not empty %}
+  {% if species.character is not empty %}
     <h2>{{ "species_criteria"|trans }}</h2>
-    {% for c in criteria %}
-        <p>{{ c.name }} -> {{ c.image }}</p>
+    {% for c in species.character %}
+        <p>{{ c.criteria.translate(app.request.locale).name }} -> {{ c.image }}</p>
     {% endfor %}
   {% endif %}
 
   {% if vernaculars is not empty %}
     <h2>{{ "common_names"|trans }}</h2>
-    {# for vernacular in vernaculars %}
+    {% for vernacular in vernaculars %}
         <p>{{ vernacular.name ~ " - " ~ vernacular.language }}</p>
-    {% endfor #}
-    <p>{{ vernaculars_text }}</p>
+    {% endfor %}
   {% endif %}
 
-  {% if species.photos is not empty %}
+  {% if species.photos|first is not empty %}
     <h2>{{ "photos"|trans }}</h2>
     {% for p in species.photos %}
         <p>{{ p.photo.title }} -> {{ p.photo.image }}</p>
@@ -56,7 +58,9 @@
   {% if users is not empty %}
     <h2>{{ "user_photos"|trans }}</h2>
     {% for u in users %}
+      <a href="{{ link_to_user(u.0) }}">
         <p>{{ "user_id"|trans }}: {{ u.0.username }} -> {{ "photos_count"|trans }}: {{ u.countable }}</p>
+      </a>
     {% endfor %}
   {% endif %}
 
