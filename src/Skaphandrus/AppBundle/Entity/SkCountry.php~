@@ -115,4 +115,12 @@ class SkCountry
     {
         return $this->continent;
     }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->locations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 }

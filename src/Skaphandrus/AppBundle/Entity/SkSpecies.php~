@@ -46,7 +46,13 @@ class SkSpecies
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $identification_characters;
+    private $photos;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $scientific_names;
+
 
     /**
      * Constructor
@@ -207,45 +213,6 @@ class SkSpecies
     }
 
     /**
-     * Add identificationCharacter
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $identificationCharacter
-     *
-     * @return SkSpecies
-     */
-    public function addIdentificationCharacter(\Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $identificationCharacter)
-    {
-        $this->identification_characters[] = $identificationCharacter;
-
-        return $this;
-    }
-
-    /**
-     * Remove identificationCharacter
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $identificationCharacter
-     */
-    public function removeIdentificationCharacter(\Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $identificationCharacter)
-    {
-        $this->identification_characters->removeElement($identificationCharacter);
-    }
-
-    /**
-     * Get identificationCharacters
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getIdentificationCharacters()
-    {
-        return $this->identification_characters;
-    }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $photos;
-
-
-    /**
      * Add photo
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photo
@@ -277,5 +244,39 @@ class SkSpecies
     public function getPhotos()
     {
         return $this->photos;
+    }
+
+    /**
+     * Add scientificName
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkSpeciesScientificName $scientificName
+     *
+     * @return SkSpecies
+     */
+    public function addScientificName(\Skaphandrus\AppBundle\Entity\SkSpeciesScientificName $scientificName)
+    {
+        $this->scientific_names[] = $scientificName;
+
+        return $this;
+    }
+
+    /**
+     * Remove scientificName
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkSpeciesScientificName $scientificName
+     */
+    public function removeScientificName(\Skaphandrus\AppBundle\Entity\SkSpeciesScientificName $scientificName)
+    {
+        $this->scientific_names->removeElement($scientificName);
+    }
+
+    /**
+     * Get scientificNames
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getScientificNames()
+    {
+        return $this->scientific_names;
     }
 }

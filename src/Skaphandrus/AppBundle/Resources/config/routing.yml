@@ -32,76 +32,48 @@ index2:
     requirements:
         _locale:  en|fr
 
-##CONTROLLER SPECIES
 species:
     path:     /{_locale}/marine-species/info/species/{slug}
-    defaults: { _controller: SkaphandrusAppBundle:Species:speciesPage, _locale: en }
+    defaults: { _controller: SkaphandrusAppBundle:Default:speciesPage, _locale: en }
     requirements:
         _locale:  en|pt
 
 taxon:
     path:     /{_locale}/marine-species/{node}/{slug}
-    defaults: { _controller: SkaphandrusAppBundle:Species:taxon, _locale: en }
+    defaults: { _controller: SkaphandrusAppBundle:Default:taxon, _locale: en }
     requirements:
         _locale:  en|pt
 
-##CONTROLLER SPOT
 spot:
     path:     /{_locale}/scuba-dive-locations/info/spot/{country}/{location}/{slug}
-    defaults: { _controller: SkaphandrusAppBundle:Spot:spot, _locale: en }
+    defaults: { _controller: SkaphandrusAppBundle:Default:spot, _locale: en }
     requirements:
         _locale:  en|pt
 
 location:
     path:     /{_locale}/scuba-dive-locations/info/location/{country}/{slug}
-    defaults: { _controller: SkaphandrusAppBundle:Spot:location, _locale: en }
+    defaults: { _controller: SkaphandrusAppBundle:Default:location, _locale: en }
     requirements:
         _locale:  en|pt
 
 country:
     path:     /{_locale}/scuba-dive-locations/info/country/{slug}
-    defaults: { _controller: SkaphandrusAppBundle:Spot:country, _locale: en }
+    defaults: { _controller: SkaphandrusAppBundle:Default:country, _locale: en }
     requirements:
         _locale:  en|pt
 
-#
-#
+photo:
+    path:     /{_locale}/underwater-photography/photo/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:photo, _locale: en }
+    requirements:
+        _locale:  en|pt
 
-#kingdom:
-#  url:   /:sf_culture/marine-species/kingdom/:slug/*
-#  param: { module: kingdom, action: index }
-#  
-#phylum:
-#  url:   /:sf_culture/marine-species/phylum/:slug/*
-#  param: { module: phylum, action: index }
-#
-#class:
-#  url:   /:sf_culture/marine-species/class/:slug/*
-#  param: { module: class, action: index }
-#
-#order:
-#  url:   /:sf_culture/marine-species/order/:slug/*
-#  param: { module: order, action: index }
-#
-#family:
-#  url:   /:sf_culture/marine-species/family/:slug/*
-#  param: { module: family, action: index }
-#  
-#genus:
-#  url:   /:sf_culture/marine-species/genus/:slug/*
-#  param: { module: genus, action: index }
-#
-#
-#species:
-#  url:   /:sf_culture/marine-species/info/species/:slug/*
-#  param: { module: species, action: speciesInfo }
-#
-#
-#
-#
-#
-#
-#
+user:
+    path:     /{_locale}/users/username/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:user, _locale: en }
+    requirements:
+        _locale:  en|pt
+
 #
 #################################################################################  
 #### FUN CONTESTS

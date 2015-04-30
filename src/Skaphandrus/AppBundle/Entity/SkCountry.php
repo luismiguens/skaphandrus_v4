@@ -36,8 +36,16 @@ class SkCountry
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $locations;
+    private $regions;
 
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->regions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Set name
@@ -122,44 +130,36 @@ class SkCountry
     }
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->locations = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add location
+     * Add region
      *
-     * @param \Skaphandrus\AppBundle\Entity\SkLocation $location
+     * @param \Skaphandrus\AppBundle\Entity\SkRegion $region
      *
      * @return SkCountry
      */
-    public function addLocation(\Skaphandrus\AppBundle\Entity\SkLocation $location)
+    public function addRegion(\Skaphandrus\AppBundle\Entity\SkRegion $region)
     {
-        $this->locations[] = $location;
+        $this->regions[] = $region;
 
         return $this;
     }
 
     /**
-     * Remove location
+     * Remove region
      *
-     * @param \Skaphandrus\AppBundle\Entity\SkLocation $location
+     * @param \Skaphandrus\AppBundle\Entity\SkRegion $region
      */
-    public function removeLocation(\Skaphandrus\AppBundle\Entity\SkLocation $location)
+    public function removeRegion(\Skaphandrus\AppBundle\Entity\SkRegion $region)
     {
-        $this->locations->removeElement($location);
+        $this->regions->removeElement($region);
     }
 
     /**
-     * Get locations
+     * Get regions
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getLocations()
+    public function getRegions()
     {
-        return $this->locations;
+        return $this->regions;
     }
 }

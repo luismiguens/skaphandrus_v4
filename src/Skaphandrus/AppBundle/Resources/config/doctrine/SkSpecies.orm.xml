@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Skaphandrus\AppBundle\Entity\SkSpecies" table="sk_species">
+  <entity name="Skaphandrus\AppBundle\Entity\SkSpecies" repository-class="Skaphandrus\AppBundle\Entity\Repository\SkSpeciesRepository" table="sk_species">
     <indexes>
       <index name="sk_species_FI_2" columns="genus_id"/>
     </indexes>
@@ -30,5 +30,6 @@
         <order-by-field name="rating" direction="DESC" />
       </order-by>
     </one-to-many>
+    <one-to-many field="scientific_names" target-entity="SkSpeciesScientificName" mapped-by="species"/>
   </entity>
 </doctrine-mapping>

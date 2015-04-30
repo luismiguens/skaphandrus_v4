@@ -1,0 +1,30 @@
+{% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
+
+{% block body %}
+    <h2>{{ country_name }}</h2>
+
+    <h3>{{ "overview"|trans }}</h3>
+    <p>{{ country.translate(app.request.locale).overview }}</p>
+    <h3>{{ "geography_and_climate"|trans }}</h3>
+    <p>{{ country.translate(app.request.locale).geographyAndClimate }}</p>
+    <h3>{{ "entry_requirements"|trans }}</h3>
+    <p>{{ country.translate(app.request.locale).entryRequirements }}</p>
+    <h3>{{ "health_and_safety"|trans }}</h3>
+    <p>{{ country.translate(app.request.locale).healthAndSafety }}</p>
+    <h3>{{ "time_zone"|trans }}</h3>
+    <p>{{ country.translate(app.request.locale).timeZone }}</p>
+    <h3>{{ "communications"|trans }}</h3>
+    <p>{{ country.translate(app.request.locale).communications }}</p>
+    <h3>{{ "power_and_electricity"|trans }}</h3>
+    <p>{{ country.translate(app.request.locale).powerAndElectricity }}</p>
+    <h3>{{ "other_informations"|trans }}</h3>
+    <p>{{ country.translate(app.request.locale).otherInformations }}</p>
+
+    <h3>{{ "locations"|trans }}</h3>
+    {% for l in locations %}
+        {% if l.spots|length > 0 %}
+            <p>{{ l.translate(app.request.locale).name }}: {{ l.spots|length }} {{ "spots"|trans }}</p>
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}

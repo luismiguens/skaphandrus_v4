@@ -23,6 +23,19 @@ class SkRegion
      */
     private $country;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $locations;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->locations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -57,5 +70,38 @@ class SkRegion
     {
         return $this->country;
     }
-}
 
+    /**
+     * Add location
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkLocation $location
+     *
+     * @return SkRegion
+     */
+    public function addLocation(\Skaphandrus\AppBundle\Entity\SkLocation $location)
+    {
+        $this->locations[] = $location;
+
+        return $this;
+    }
+
+    /**
+     * Remove location
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkLocation $location
+     */
+    public function removeLocation(\Skaphandrus\AppBundle\Entity\SkLocation $location)
+    {
+        $this->locations->removeElement($location);
+    }
+
+    /**
+     * Get locations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLocations()
+    {
+        return $this->locations;
+    }
+}

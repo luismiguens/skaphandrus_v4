@@ -12,14 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class SkLocationRepository extends EntityRepository {
 
-    public function findOneBySlugJoinedToTranslation($name, $locale) {
+    public function findBySlug($name, $country, $locale) {
         $query = $this->getEntityManager()
             ->createQuery(
                 'SELECT l, t
                 FROM SkaphandrusAppBundle:SkLocation l
                 JOIN l.translations t
+                JOIN l.region r
                 WHERE t.name = :name
-                AND t.locale = :locale'
+                AND t.locale = :locale
+                AND IDENTITY(r.country) = ' . $this->getEntityManager()->getRepository('SkaphandrusAppBundle:SkCountry')->findBySlug($country)->getId()
                 )->setParameter('name', $name)->setParameter('locale', $locale);
         try {
             return $query->getSingleResult();

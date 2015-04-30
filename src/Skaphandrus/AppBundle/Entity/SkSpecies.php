@@ -49,6 +49,12 @@ class SkSpecies
     private $photos;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $scientific_names;
+
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -238,5 +244,39 @@ class SkSpecies
     public function getPhotos()
     {
         return $this->photos;
+    }
+
+    /**
+     * Add scientificName
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkSpeciesScientificName $scientificName
+     *
+     * @return SkSpecies
+     */
+    public function addScientificName(\Skaphandrus\AppBundle\Entity\SkSpeciesScientificName $scientificName)
+    {
+        $this->scientific_names[] = $scientificName;
+
+        return $this;
+    }
+
+    /**
+     * Remove scientificName
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkSpeciesScientificName $scientificName
+     */
+    public function removeScientificName(\Skaphandrus\AppBundle\Entity\SkSpeciesScientificName $scientificName)
+    {
+        $this->scientific_names->removeElement($scientificName);
+    }
+
+    /**
+     * Get scientificNames
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getScientificNames()
+    {
+        return $this->scientific_names;
     }
 }

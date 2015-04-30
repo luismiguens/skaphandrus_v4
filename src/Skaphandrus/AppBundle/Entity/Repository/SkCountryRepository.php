@@ -3,6 +3,7 @@
 namespace Skaphandrus\AppBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Intl\Intl;
 
 /**
  * SkCountryRepository
@@ -11,17 +12,15 @@ use Doctrine\ORM\EntityRepository;
  * repository methods below.
  */
 class SkCountryRepository extends EntityRepository {
-    public function findSpotsCountByLocationForCountry($country_id) {
-        return $this->getEntityManager()
-            ->createQuery(
-                "SELECT l as location, COUNT(s.id) as spots_number
-                FROM SkaphandrusAppBundle:SkLocation l
-                JOIN l.region r
-                JOIN SkaphandrusAppBundle:SkSpot s
-                    WITH IDENTITY(s.location) = l.id
-                WHERE IDENTITY(r.country) = :country_id
-                GROUP BY l.id
-                ORDER BY spots_number DESC"
-            )->setParameter('country_id', $country_id)->getResult();
+
+    public function findBySlug($slug) {
+        $countries = Intl::getRegionBundle()->getCountryNames();
+        $country = FALSE;
+
+        if ($key = array_search($slug, $countries)) {
+            return $this->findOneByName($key);
+        }
+
+        return NULL;
     }
 }

@@ -22,6 +22,6 @@
         <join-column name="continent_id" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
-    <one-to-many field="locations" target-entity="SkLocation" mapped-by="country"/>
+    <one-to-many field="regions" target-entity="SkRegion" mapped-by="country"/>
   </entity>
 </doctrine-mapping>
