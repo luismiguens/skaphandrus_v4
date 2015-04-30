@@ -13,6 +13,7 @@
 
         <link href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}" rel="stylesheet">
         <link href="{{ asset('bundles/skaphandrusapp/css/style.css') }}" rel="stylesheet">
+        <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
 
     </head>
 
@@ -35,33 +36,38 @@
 
                 {% include 'SkaphandrusAppBundle:Default:heading-content.html.twig' with {'bg': 'white-bg'} %}
 
-                <div class="footer">
-                    <div class="pull-right">
-                        10GB of <strong>250GB</strong> Free.
-                    </div>
-                    <div>
-                        <strong>Copyright</strong> Example Company &copy; 2014-2015
-                    </div>
+
+                        {% block body %}{% endblock %}
+
+
+
+            <div class="footer">
+                <div class="pull-right">
+                    10GB of <strong>250GB</strong> Free.
                 </div>
-
+                <div>
+                    <strong>Copyright</strong> Example Company &copy; 2014-2015
+                </div>
             </div>
+
         </div>
+    </div>
 
 
 
+{% block javascripts %}
+    <!-- Mainly scripts -->
+    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-2.1.1.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-        <!-- Mainly scripts -->
-        <script src="{{ asset('bundles/skaphandrusapp/js/jquery-2.1.1.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
-
-        <!-- Custom and plugin javascript -->
-        <script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
-
-
-    </body>
+    <!-- Custom and plugin javascript -->
+    <script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
+    
+{% endblock %}
+</body>
 
 </html>
 

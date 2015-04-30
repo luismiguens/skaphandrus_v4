@@ -1,0 +1,4 @@
+[{% for book in results -%}
+    {{ {id: book.id, label: book.name, value: book.name}|json_encode|raw }}
+    {%- if not loop.last %},{% endif -%}
+{%- endfor %}]

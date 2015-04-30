@@ -2,11 +2,13 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 /**
  * SkPhoto
  */
-class SkPhoto
-{
+class SkPhoto {
+
     /**
      * @var string
      */
@@ -80,8 +82,7 @@ class SkPhoto
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->keyword = new \Doctrine\Common\Collections\ArrayCollection();
         $this->category = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -93,8 +94,7 @@ class SkPhoto
      *
      * @return SkPhoto
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
@@ -105,8 +105,7 @@ class SkPhoto
      *
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -117,8 +116,7 @@ class SkPhoto
      *
      * @return SkPhoto
      */
-    public function setImage($image)
-    {
+    public function setImage($image) {
         $this->image = $image;
 
         return $this;
@@ -129,8 +127,7 @@ class SkPhoto
      *
      * @return string
      */
-    public function getImage()
-    {
+    public function getImage() {
         return $this->image;
     }
 
@@ -141,8 +138,7 @@ class SkPhoto
      *
      * @return SkPhoto
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -153,8 +149,7 @@ class SkPhoto
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -165,8 +160,7 @@ class SkPhoto
      *
      * @return SkPhoto
      */
-    public function setViews($views)
-    {
+    public function setViews($views) {
         $this->views = $views;
 
         return $this;
@@ -177,8 +171,7 @@ class SkPhoto
      *
      * @return integer
      */
-    public function getViews()
-    {
+    public function getViews() {
         return $this->views;
     }
 
@@ -189,8 +182,7 @@ class SkPhoto
      *
      * @return SkPhoto
      */
-    public function setTakenAt($takenAt)
-    {
+    public function setTakenAt($takenAt) {
         $this->takenAt = $takenAt;
 
         return $this;
@@ -201,8 +193,7 @@ class SkPhoto
      *
      * @return \DateTime
      */
-    public function getTakenAt()
-    {
+    public function getTakenAt() {
         return $this->takenAt;
     }
 
@@ -213,8 +204,7 @@ class SkPhoto
      *
      * @return SkPhoto
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
 
         return $this;
@@ -225,8 +215,7 @@ class SkPhoto
      *
      * @return \DateTime
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->createdAt;
     }
 
@@ -235,8 +224,7 @@ class SkPhoto
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -247,8 +235,7 @@ class SkPhoto
      *
      * @return SkPhoto
      */
-    public function setCreative(\Skaphandrus\AppBundle\Entity\SkCreativeCommons $creative = null)
-    {
+    public function setCreative(\Skaphandrus\AppBundle\Entity\SkCreativeCommons $creative = null) {
         $this->creative = $creative;
 
         return $this;
@@ -259,8 +246,7 @@ class SkPhoto
      *
      * @return \Skaphandrus\AppBundle\Entity\SkCreativeCommons
      */
-    public function getCreative()
-    {
+    public function getCreative() {
         return $this->creative;
     }
 
@@ -271,8 +257,7 @@ class SkPhoto
      *
      * @return SkPhoto
      */
-    public function setModel(\Skaphandrus\AppBundle\Entity\SkPhotoMachineModel $model = null)
-    {
+    public function setModel(\Skaphandrus\AppBundle\Entity\SkPhotoMachineModel $model = null) {
         $this->model = $model;
 
         return $this;
@@ -283,8 +268,7 @@ class SkPhoto
      *
      * @return \Skaphandrus\AppBundle\Entity\SkPhotoMachineModel
      */
-    public function getModel()
-    {
+    public function getModel() {
         return $this->model;
     }
 
@@ -295,8 +279,7 @@ class SkPhoto
      *
      * @return SkPhoto
      */
-    public function setSpot(\Skaphandrus\AppBundle\Entity\SkSpot $spot = null)
-    {
+    public function setSpot(\Skaphandrus\AppBundle\Entity\SkSpot $spot = null) {
         $this->spot = $spot;
 
         return $this;
@@ -307,8 +290,7 @@ class SkPhoto
      *
      * @return \Skaphandrus\AppBundle\Entity\SkSpot
      */
-    public function getSpot()
-    {
+    public function getSpot() {
         return $this->spot;
     }
 
@@ -319,8 +301,7 @@ class SkPhoto
      *
      * @return SkPhoto
      */
-    public function setSpecies(\Skaphandrus\AppBundle\Entity\SkSpecies $species = null)
-    {
+    public function setSpecies(\Skaphandrus\AppBundle\Entity\SkSpecies $species = null) {
         $this->species = $species;
 
         return $this;
@@ -331,8 +312,7 @@ class SkPhoto
      *
      * @return \Skaphandrus\AppBundle\Entity\SkSpecies
      */
-    public function getSpecies()
-    {
+    public function getSpecies() {
         return $this->species;
     }
 
@@ -343,8 +323,7 @@ class SkPhoto
      *
      * @return SkPhoto
      */
-    public function setFosUser(\Skaphandrus\AppBundle\Entity\FosUser $fosUser = null)
-    {
+    public function setFosUser(\Skaphandrus\AppBundle\Entity\FosUser $fosUser = null) {
         $this->fosUser = $fosUser;
 
         return $this;
@@ -355,8 +334,7 @@ class SkPhoto
      *
      * @return \Skaphandrus\AppBundle\Entity\FosUser
      */
-    public function getFosUser()
-    {
+    public function getFosUser() {
         return $this->fosUser;
     }
 
@@ -367,8 +345,7 @@ class SkPhoto
      *
      * @return SkPhoto
      */
-    public function addKeyword(\Skaphandrus\AppBundle\Entity\SkKeyword $keyword)
-    {
+    public function addKeyword(\Skaphandrus\AppBundle\Entity\SkKeyword $keyword) {
         $this->keyword[] = $keyword;
 
         return $this;
@@ -379,8 +356,7 @@ class SkPhoto
      *
      * @param \Skaphandrus\AppBundle\Entity\SkKeyword $keyword
      */
-    public function removeKeyword(\Skaphandrus\AppBundle\Entity\SkKeyword $keyword)
-    {
+    public function removeKeyword(\Skaphandrus\AppBundle\Entity\SkKeyword $keyword) {
         $this->keyword->removeElement($keyword);
     }
 
@@ -389,8 +365,7 @@ class SkPhoto
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getKeyword()
-    {
+    public function getKeyword() {
         return $this->keyword;
     }
 
@@ -401,8 +376,7 @@ class SkPhoto
      *
      * @return SkPhoto
      */
-    public function addCategory(\Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category)
-    {
+    public function addCategory(\Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category) {
         $this->category[] = $category;
 
         return $this;
@@ -413,8 +387,7 @@ class SkPhoto
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category
      */
-    public function removeCategory(\Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category)
-    {
+    public function removeCategory(\Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category) {
         $this->category->removeElement($category);
     }
 
@@ -423,9 +396,77 @@ class SkPhoto
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCategory()
-    {
+    public function getCategory() {
         return $this->category;
     }
-}
 
+    
+    public function getAbsolutePath() {
+        return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
+    }
+
+    public function getWebPath() {
+        return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image;
+    }
+
+    protected function getUploadRootDir() {
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+
+    protected function getUploadDir() {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'uploads';
+    }
+
+    private $file;
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null) {
+        $this->file = $file;
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile() {
+        return $this->file;
+    }
+
+    
+    /**
+     * 
+     * @return type
+     */
+    
+    
+    public function upload() {
+        // the file property can be empty if the field is not required
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        // use the original file name here but you should
+        // sanitize it at least to avoid any security issues
+        // move takes the target directory and then the
+        // target filename to move to
+        $this->getFile()->move(
+                $this->getUploadRootDir(), $this->getFile()->getClientOriginalName()
+        );
+
+        // set the path property to the filename where you've saved the file
+        $this->image = $this->getFile()->getClientOriginalName();
+
+        // clean up the file property as you won't need it anymore
+        $this->file = null;
+    }
+
+}

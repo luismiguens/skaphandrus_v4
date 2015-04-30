@@ -20,3 +20,12 @@ fos_user:
 lexik_translation_edition:
     resource: "@LexikTranslationBundle/Resources/config/routing.yml"
     prefix:   /translations
+    
+#cmf_media_file:
+#    resource: "@CmfMediaBundle/Resources/config/routing/file.xml"
+#
+#cmf_media_image:
+#    resource: "@CmfMediaBundle/Resources/config/routing/image.xml"
+
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"

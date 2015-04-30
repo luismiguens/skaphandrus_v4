@@ -4,43 +4,44 @@ namespace Skaphandrus\AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use Skaphandrus\AppBundle\Entity\SkPhoto;
 use Skaphandrus\AppBundle\Form\SkPhotoType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * SkPhoto controller.
  *
  */
-class SkPhotoController extends Controller
-{
+class SkPhotoController extends Controller {
 
     /**
      * Lists all SkPhoto entities.
      *
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->findAll();
+        $entities = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->findByFosUser(5);
 
         return $this->render('SkaphandrusAppBundle:SkPhoto:index.html.twig', array(
-            'entities' => $entities,
+                    'entities' => $entities,
         ));
     }
+
     /**
      * Creates a new SkPhoto entity.
      *
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         $entity = new SkPhoto();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $entity->upload();
+
             $em->persist($entity);
             $em->flush();
 
@@ -48,8 +49,8 @@ class SkPhotoController extends Controller
         }
 
         return $this->render('SkaphandrusAppBundle:SkPhoto:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -60,8 +61,7 @@ class SkPhotoController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(SkPhoto $entity)
-    {
+    private function createCreateForm(SkPhoto $entity) {
         $form = $this->createForm(new SkPhotoType(), $entity, array(
             'action' => $this->generateUrl('photo_admin_create'),
             'method' => 'POST',
@@ -76,14 +76,22 @@ class SkPhotoController extends Controller
      * Displays a form to create a new SkPhoto entity.
      *
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new SkPhoto();
-        $form   = $this->createCreateForm($entity);
+
+//        $fos_user = new \Skaphandrus\AppBundle\Entity\FosUser();
+//        $fos_user->setId(5);
+//
+//        $entity->setFosUser($fos_user);
+
+        $form = $this->createCreateForm($entity);
+
+
+
 
         return $this->render('SkaphandrusAppBundle:SkPhoto:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -91,8 +99,7 @@ class SkPhotoController extends Controller
      * Finds and displays a SkPhoto entity.
      *
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($id);
@@ -104,8 +111,8 @@ class SkPhotoController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('SkaphandrusAppBundle:SkPhoto:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -113,8 +120,7 @@ class SkPhotoController extends Controller
      * Displays a form to edit an existing SkPhoto entity.
      *
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($id);
@@ -127,21 +133,20 @@ class SkPhotoController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('SkaphandrusAppBundle:SkPhoto:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-    * Creates a form to edit a SkPhoto entity.
-    *
-    * @param SkPhoto $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(SkPhoto $entity)
-    {
+     * Creates a form to edit a SkPhoto entity.
+     *
+     * @param SkPhoto $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(SkPhoto $entity) {
         $form = $this->createForm(new SkPhotoType(), $entity, array(
             'action' => $this->generateUrl('photo_admin_update', array('id' => $entity->getId())),
             'method' => 'PUT',
@@ -151,12 +156,12 @@ class SkPhotoController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing SkPhoto entity.
      *
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($id);
@@ -176,17 +181,17 @@ class SkPhotoController extends Controller
         }
 
         return $this->render('SkaphandrusAppBundle:SkPhoto:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
+
     /**
      * Deletes a SkPhoto entity.
      *
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -212,13 +217,41 @@ class SkPhotoController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('photo_admin_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
+                        ->setAction($this->generateUrl('photo_admin_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => 'Delete'))
+                        ->getForm()
         ;
     }
+
+    public function searchPhotoMachineModelAction(Request $request) {
+        $q = $request->get('term');
+        $em = $this->getDoctrine()->getManager();
+        $models = $em->getRepository('SkaphandrusAppBundle:SkPhotoMachineModel')->findLikeName($q);
+        
+        
+        $results = array();
+    foreach ($models as $model) {
+        $results[] = array(
+            'id' => $model->getId(),
+            'name' => $model->getName(),
+            'label' => sprintf("[%s] %s", $model->getName(), $model->getName())
+        );
+    }
+
+    return new JsonResponse($results);
+        
+
+        //return array('results' => $results);
+    }
+
+    public function getPhotoMachineModelAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $SkPhotoMachineModel = $em->getRepository('SkaphandrusAppBundle:SkPhotoMachineModel')->find($id);
+
+        return new Response($SkPhotoMachineModel->getName());
+    }
+
 }

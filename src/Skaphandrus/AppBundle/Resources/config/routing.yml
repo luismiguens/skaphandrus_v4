@@ -1,6 +1,6 @@
 skaphandrus_app_photo_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skphoto.yml"
-    prefix:   /photo_admin
+    prefix:   /{_locale}/photo
 
 skaphandrus_app_hello:
     path:     /hello/{name}
@@ -50,6 +50,20 @@ spot:
     defaults: { _controller: SkaphandrusAppBundle:Species:spot, _locale: en }
     requirements:
         _locale:  en|pt
+
+
+
+
+
+##################################################################################
+#### AJAX ROUTES
+
+photo_model_ajax_search:
+    path:     /photo_model_ajax_search/{term}
+    defaults: { _controller: SkaphandrusAppBundle:SkPhoto:searchPhotoMachineModel }
+
+
+
 
 #
 #

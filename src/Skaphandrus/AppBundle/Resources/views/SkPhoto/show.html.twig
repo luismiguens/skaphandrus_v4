@@ -11,7 +11,10 @@
             </tr>
             <tr>
                 <th>Image</th>
-                <td>{{ entity.image }}</td>
+                <td>{{ entity.image }}
+                
+                <img src="{{ entity.getWebPath | imagine_filter('my_thumb') }}" />
+                </td>
             </tr>
             <tr>
                 <th>Description</th>
