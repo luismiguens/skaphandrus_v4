@@ -41,10 +41,10 @@
     {% endfor %}
   {% endif %}
 
-  {% if vernaculars is not empty %}
+  {% if species.speciesVernaculars is not empty %}
     <h2>{{ "common_names"|trans }}</h2>
-    {% for vernacular in vernaculars %}
-        <p>{{ vernacular.name ~ " - " ~ vernacular.language }}</p>
+    {% for vernacular in species.speciesVernaculars %}
+        <p>{{ vernacular.vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}</p>
     {% endfor %}
   {% endif %}
 
@@ -58,9 +58,9 @@
   {% if users is not empty %}
     <h2>{{ "user_photos"|trans }}</h2>
     {% for u in users %}
-      <a href="{{ link_to_user(u.0) }}">
-        <p>{{ "user_id"|trans }}: {{ u.0.username }} -> {{ "photos_count"|trans }}: {{ u.countable }}</p>
-      </a>
+        <p>
+          <a href="{{ link_to_user(u.0) }}">{{ "user_id"|trans }}: {{ u.0.username }}</a> ({{ u.countable }} {{ "photos"|trans }})
+        </p>
     {% endfor %}
   {% endif %}
 

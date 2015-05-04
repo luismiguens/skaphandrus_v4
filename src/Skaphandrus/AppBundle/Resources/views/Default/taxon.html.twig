@@ -3,10 +3,10 @@
 {% block body %}
   <h2> {{ node }} : {{ taxon.name }}!</h2>
 
-  {% if vernaculars is not empty %}
+  {% if taxon.vernaculars is not empty %}
     <h3>{{ "common_names"|trans }}</h3>
-    {% for vernacular in vernaculars %}
-        <p>{{ vernacular.name ~ " - " ~ vernacular.language }}</p>
+    {% for vernacular in taxon.vernaculars %}
+        <p>{{ vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}</p>
     {% endfor %}
   {% endif %}
 {% endblock %}

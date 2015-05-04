@@ -79,13 +79,13 @@ country:
         _locale:  en|pt
 
 photo:
-    path:     /{_locale}/underwater-photography/photo/{slug}
+    path:     /{_locale}/underwater-photography/photo/{id}-{slug}
     defaults: { _controller: SkaphandrusAppBundle:Default:photo, _locale: en }
     requirements:
         _locale:  en|pt
 
 user:
-    path:     /{_locale}/users/username/{slug}
+    path:     /{_locale}/users/username/{id}-{username}
     defaults: { _controller: SkaphandrusAppBundle:Default:user, _locale: en }
     requirements:
         _locale:  en|pt

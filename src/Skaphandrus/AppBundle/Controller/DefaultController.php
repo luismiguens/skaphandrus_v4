@@ -81,19 +81,9 @@ class DefaultController extends Controller {
             ->findOneBy(array('name' => $slug));
 
         if ($taxon) {
-            // Get common names, with language names.
-            $vernaculars = array();
-            foreach ($taxon->getVernaculars() as $v) {
-                $vernaculars[] = array(
-                    'name' => $v->getName(),
-                    'language' => '(' . Intl::getLocaleBundle()->getLocaleName($v->getLocale()) . ')',
-                );
-            }
-
             return $this->render('SkaphandrusAppBundle:Default:taxon.html.twig', array(
                 "node" => $node,
                 "taxon" => $taxon,
-                "vernaculars" => $vernaculars,
             ));
         }
         else {
@@ -108,20 +98,8 @@ class DefaultController extends Controller {
             ->findBySlug($slug);
 
         if ($species) {
-            // Get common names, with language names.
-            $vernaculars = array();
-            foreach ($species->getSpeciesVernaculars() as $v) {
-                $vernaculars[] = array(
-                    'name' => $v->getVernacular()->getName(),
-                    'language' => Intl::getLocaleBundle()->getLocaleName($v->getLocale()),
-                );
-            }
-
-            dump($species->getPhotos());
-
             return $this->render('SkaphandrusAppBundle:Default:species.html.twig', array(
                 "species" => $species,
-                "vernaculars" => $vernaculars,
                 "users" => $this->getDoctrine()
                     ->getRepository("SkaphandrusAppBundle:SkPhoto")
                     ->findPhotosCountByUserForModel($species->getId()),
@@ -138,12 +116,8 @@ class DefaultController extends Controller {
             ->findBySlug($slug, $location, $country, $locale);
         
         if ($spot) {
-            $country_name = Intl::getRegionBundle()
-                ->getCountryName($spot->getLocation()->getRegion()->getCountry()->getName());
-            
             return $this->render('SkaphandrusAppBundle:Default:spot.html.twig', array(
                 'spot' => $spot,
-                'country_name' => $country_name,
             ));
         }
         else {
@@ -161,12 +135,8 @@ class DefaultController extends Controller {
             ->findBySlug($name, $country, $locale);
 
         if ($location) {
-            $country_name = Intl::getRegionBundle()
-                ->getCountryName($location->getRegion()->getCountry()->getName());
-
             return $this->render('SkaphandrusAppBundle:Default:location.html.twig', array(
                 'location' => $location,
-                'country_name' => $country_name,
             ));
         }
         else {
@@ -205,14 +175,36 @@ class DefaultController extends Controller {
     /*
      * Photo page.
      */
-    public function photoAction($slug) {
+    public function photoAction($id, $slug) {
+        $title = str_replace('-', ' ', $slug);
 
+        $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
+            ->findOneBy(array('id' => $id, 'title' => $title));
+
+        if ($photo) {
+            return $this->render('SkaphandrusAppBundle:Default:photo.html.twig', array(
+                'photo' => $photo,
+            ));
+        }
+        else {
+            throw $this->createNotFoundException('The photo "'. $title .'" with id "'. $id .'" does not exist.');
+        }
     }
 
     /*
      * User page.
      */
-    public function userAction($slug) {
-        return $this->render('SkaphandrusAppBundle:Default:index.html.twig');
+    public function userAction($id, $username) {
+        $user = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
+            ->findOneBy(array('id' => $id, 'username' => $username));
+
+        if ($user) {
+            return $this->render('SkaphandrusAppBundle:Default:user.html.twig', array(
+                'user' => $user,
+            ));
+        }
+        else {
+            throw $this->createNotFoundException('The user "'. $username .'" with id "'. $id .'" does not exist.');
+        }
     }
 }
