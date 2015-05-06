@@ -1,0 +1,19 @@
+{% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
+
+{% block body %}
+
+    {% if contests|length %}
+        <h3>{{ "contests"|trans }}</h3>
+        {% for contest in contests %}
+            <h4>{{ contest.name }}</h4>
+            
+            {% trans with {'%from%': contest.beginAt|date('d-m-Y'), '%to%': contest.beginAt|date('d-m-Y')} from 'messages' %}
+                <p>from %from% to %to%</p>
+            {% endtrans %}
+            
+            <p>{{ contest.image }}</p>
+            <p>{{ contest.logo }}</p>
+        {% endfor %}
+    {% endif %}
+
+{% endblock %}

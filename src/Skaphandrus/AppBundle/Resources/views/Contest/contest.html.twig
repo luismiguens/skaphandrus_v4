@@ -1,0 +1,32 @@
+{% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
+
+{% block body %}
+    <h2>{{ contest.name }}</h2>
+
+    <h3>{{ "image"|trans }}</h3>
+    <p>{{ contest.image }}</p>
+
+    <h3>{{ "logo"|trans }}</h3>
+    <p>{{ contest.logo }}</p>
+
+    {% trans with {'%from%': contest.beginAt|date('d-m-Y'), '%to%': contest.beginAt|date('d-m-Y')} from 'messages' %}
+        <p>from %from% to %to%</p>
+    {% endtrans %}
+
+    <h3>{{ "description"|trans }}</h3>
+    <p>{{ contest.translate(app.request.locale).description|raw }}</p>
+
+    <h3>{{ "rules"|trans }}</h3>
+    <p>{{ contest.translate(app.request.locale).rules|raw }}</p>
+
+    <h3>{{ "categories"|trans }}</h3>
+    {% for category in contest.categories %}
+        <h4>{{ category.translate(app.request.locale).name }}</h4>
+        <p>{{ category.image }}</p>
+        <p>{{ category.translate(app.request.locale).description }}</p>
+        <h5>{{ "photos_from_category"|trans }}</h5>
+        {% for photo in category.photo %}
+            {{ photo.id }}
+        {% endfor %}
+    {% endfor %}
+{% endblock %}

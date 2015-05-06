@@ -36,9 +36,7 @@ class DefaultController extends Controller {
      * Migração dos utilizadores da base de dados sfUser
      * 
      */
-    public function usersMigrationAction() {
-
-
+    public function usersMigrationActionOld() {
         $dbHost = $this->container->getParameter('database_host');
         $dbUser = $this->container->getParameter('database_user');
         $dbPassword = $this->container->getParameter('database_password');
@@ -52,13 +50,9 @@ class DefaultController extends Controller {
         $result = $mysqli->query('SELECT * FROM sf_guard_user');
         $userSfGuard = $result->fetch_object();
 
-        
-
-        
-        
         while ($userSfGuard = $result->fetch_object()) {
             $userFOS = $um->createUser();
-            $userFOS->SetId($userSfGuard->username);
+            $userFOS->setId($userSfGuard->username);
             $userFOS->setUsername($userSfGuard->username);
             $userFOS->setEmail($userSfGuard->username);
             $userFOS->setPassword($userSfGuard->password);
@@ -68,9 +62,46 @@ class DefaultController extends Controller {
         }
         $em->flush();
 
+        return $this->render('SkaphandrusAppBundle:Default:usersMigration.html.php');
+    }
 
+    /**
+     * Users migration from sfUser database.
+     *
+     * The id is saved accordingly with:
+     * http://www.ens.ro/2012/07/03/symfony2-doctrine-force-entity-id-on-persist/
+     */
+    public function usersMigrationAction() {
+        $dbHost = $this->container->getParameter('database_host');
+        $dbUser = $this->container->getParameter('database_user');
+        $dbPassword = $this->container->getParameter('database_password');
+        $dbName = $this->container->getParameter('database_name');
+        $dbPort = $this->container->getParameter('database_port');
 
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $em->getClassMetaData(get_class(new \Skaphandrus\AppBundle\Entity\FosUser()))
+            ->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
 
+        $mysqli = new \mysqli($dbHost, $dbUser, $dbPassword, $dbName, $dbPort);
+        $result = $mysqli->query('SELECT * FROM sf_guard_user');
+
+        $i = 0;
+        while ($userSfGuard = $result->fetch_object()) {
+            $userFOS = new \Skaphandrus\AppBundle\Entity\FosUser();
+            $userFOS->setId($userSfGuard->username);
+            $userFOS->setUsername($userSfGuard->username);
+            $userFOS->setEmail($userSfGuard->username);
+            $userFOS->setPassword($userSfGuard->password);
+            $userFOS->setSalt($userSfGuard->salt);
+
+            $em->persist($userFOS);
+
+            if ($i % 10 == 1) {
+                $em->flush();
+            }
+            $i++;
+        }
+        $em->flush();
 
         return $this->render('SkaphandrusAppBundle:Default:usersMigration.html.php');
     }
@@ -194,9 +225,9 @@ class DefaultController extends Controller {
     /*
      * User page.
      */
-    public function userAction($id, $username) {
+    public function userAction($id) {
         $user = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-            ->findOneBy(array('id' => $id, 'username' => $username));
+            ->findOneById($id);
 
         if ($user) {
             return $this->render('SkaphandrusAppBundle:Default:user.html.twig', array(
@@ -204,7 +235,7 @@ class DefaultController extends Controller {
             ));
         }
         else {
-            throw $this->createNotFoundException('The user "'. $username .'" with id "'. $id .'" does not exist.');
+            throw $this->createNotFoundException('The user with id "'. $id .'" does not exist.');
         }
     }
 }

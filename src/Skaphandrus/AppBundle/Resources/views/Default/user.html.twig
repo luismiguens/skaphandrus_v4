@@ -1,5 +1,12 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
 {% block body %}
-  {{ user.username }}
+  <h2>{{ "username"|trans }}: {{ user.username }}</h2>
+
+  {% if user.spots|length %}
+    <h3>{{ "spots"|trans }}</h3>
+    {% for spot in user.spots %}
+        <p>{{ spot.coordinate }}</p>
+    {% endfor %}
+  {% endif %}
 {% endblock %}

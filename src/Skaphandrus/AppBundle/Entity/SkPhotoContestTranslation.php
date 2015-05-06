@@ -2,11 +2,17 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+
 /**
  * SkPhotoContestTranslation
  */
 class SkPhotoContestTranslation
 {
+
+    use ORMBehaviors\Translatable\Translation;
+
     /**
      * @var string
      */
@@ -16,21 +22,6 @@ class SkPhotoContestTranslation
      * @var string
      */
     private $rules;
-
-    /**
-     * @var string
-     */
-    private $locale;
-
-    /**
-     * @var integer
-     */
-    private $id;
-
-    /**
-     * @var \Skaphandrus\AppBundle\Entity\SkPhotoContest
-     */
-    private $translatable;
 
 
     /**
@@ -79,64 +70,6 @@ class SkPhotoContestTranslation
     public function getRules()
     {
         return $this->rules;
-    }
-
-    /**
-     * Set locale
-     *
-     * @param string $locale
-     *
-     * @return SkPhotoContestTranslation
-     */
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
-
-        return $this;
-    }
-
-    /**
-     * Get locale
-     *
-     * @return string
-     */
-    public function getLocale()
-    {
-        return $this->locale;
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set translatable
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContest $translatable
-     *
-     * @return SkPhotoContestTranslation
-     */
-    public function setTranslatable(\Skaphandrus\AppBundle\Entity\SkPhotoContest $translatable = null)
-    {
-        $this->translatable = $translatable;
-
-        return $this;
-    }
-
-    /**
-     * Get translatable
-     *
-     * @return \Skaphandrus\AppBundle\Entity\SkPhotoContest
-     */
-    public function getTranslatable()
-    {
-        return $this->translatable;
     }
 }
 

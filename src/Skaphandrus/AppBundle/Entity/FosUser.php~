@@ -22,11 +22,13 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
 
 
     protected $id;
-    
-    
 
-    
     protected $algorithm = 'sha512';
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $spots;
 
     public function getEncoderName() {
         return $this->algorithm == 'sha1' ? 'legacy' : 'default';
@@ -91,4 +93,37 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
     //@@@@@@@@@ TEMPORARY APENAS PARA IMPORTACAO DOS UTILIZADORES
     
     
+    /**
+     * Add spot
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkSpot $spot
+     *
+     * @return FosUser
+     */
+    public function addSpot(\Skaphandrus\AppBundle\Entity\SkSpot $spot)
+    {
+        $this->spots[] = $spot;
+
+        return $this;
+    }
+
+    /**
+     * Remove spot
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkSpot $spot
+     */
+    public function removeSpot(\Skaphandrus\AppBundle\Entity\SkSpot $spot)
+    {
+        $this->spots->removeElement($spot);
+    }
+
+    /**
+     * Get spots
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSpots()
+    {
+        return $this->spots;
+    }
 }

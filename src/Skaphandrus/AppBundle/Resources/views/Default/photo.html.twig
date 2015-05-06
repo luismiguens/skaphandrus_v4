@@ -53,6 +53,7 @@
     {% endif %}
 
     {% if photo.spot is not empty %}
+        <h3>{{ "where_was_taken"|trans }}</h3>
         <p>
             {{ photo.spot.translate(app.request.locale).name }},
             {{ photo.spot.location.translate(app.request.locale).name }},

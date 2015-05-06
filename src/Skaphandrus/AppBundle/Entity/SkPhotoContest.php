@@ -2,11 +2,17 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+
 /**
  * SkPhotoContest
  */
 class SkPhotoContest
 {
+
+    use ORMBehaviors\Translatable\Translatable;
+
     /**
      * @var string
      */
@@ -47,6 +53,19 @@ class SkPhotoContest
      */
     private $id;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $categories;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Set name
@@ -225,5 +244,38 @@ class SkPhotoContest
     {
         return $this->id;
     }
-}
 
+    /**
+     * Add category
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category
+     *
+     * @return SkPhotoContest
+     */
+    public function addCategory(\Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category
+     */
+    public function removeCategory(\Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+}

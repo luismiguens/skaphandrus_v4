@@ -50,7 +50,18 @@ spot:
     requirements:
         _locale:  en|pt
 
+#CONTROLLER CONTEST
+landing_page:
+    path:     /{_locale}/underwater-photo-contest
+    defaults: { _controller: SkaphandrusAppBundle:Contest:landing, _locale: en }
+    requirements:
+        _locale:  en|pt
 
+contest:
+    path:     /{_locale}/underwater-photo-contest/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Contest:contest, _locale: en }
+    requirements:
+        _locale:  en|pt
 
 
 
@@ -85,10 +96,12 @@ photo:
         _locale:  en|pt
 
 user:
-    path:     /{_locale}/users/username/{id}-{username}
+    path:     /{_locale}/users/username/{id}
     defaults: { _controller: SkaphandrusAppBundle:Default:user, _locale: en }
     requirements:
         _locale:  en|pt
+
+
 
 #
 #################################################################################  
