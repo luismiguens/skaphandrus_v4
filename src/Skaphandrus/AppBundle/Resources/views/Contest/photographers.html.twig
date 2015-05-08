@@ -1,0 +1,21 @@
+{% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
+
+{% block body %}
+    <h2>{{ "photographers"|trans }}: {{ contest.name }}</h2>
+
+    {% set total_photo_count = 0 %}
+    {% set all_users = {} %}
+    {% for category in contest.categories %}
+        {# Get photos #}
+        {% set total_photo_count = total_photo_count + category.photo|length %}
+        {% for photo in category.photo %}
+            {# the hash key should be a string for this to work #}
+            {% set all_users = all_users|merge({("u" ~ photo.fosUser.id): photo.fosUser}) %}
+        {% endfor %}
+    {% endfor %}
+
+    {% for photographer in photographers %}
+        <h3><a href="{{ link_to_user(photographer.user) }}">{{ photographer.user.username }}</a></h3>
+        <p>{{ "photos"|trans }}: {{ photographer.photos|length }}</p>
+    {% endfor %}
+{% endblock %}

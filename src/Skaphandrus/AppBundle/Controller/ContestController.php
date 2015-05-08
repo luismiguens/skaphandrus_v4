@@ -35,8 +35,50 @@ class ContestController extends Controller {
         else {
             throw $this->createNotFoundException('The category "'. $category_slug .'" does not exist.');
         }
+    }
 
+    public function photographersAction($contest_slug) {
+        $name = str_replace('-', ' ', $contest_slug);
 
+        $contest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
+            ->findOneByName($name);
+
+        $total_photo_count = 0;
+        $photographers = array();
+        foreach ($contest->getCategories() as $category) {
+            foreach ($category->getPhoto() as $photo) {
+                $photographers[$photo->getFosUser()->getId()] = array(
+                    'user' => $photo->getFosUser(),
+                    'photos' => count($category->getPhoto()),
+                );
+            }
+        }
+
+        if ($contest) {
+            return $this->render('SkaphandrusAppBundle:Contest:photographers.html.twig',array(
+                'contest' => $contest,
+                'photographers' => $photographers,
+            ));
+        }
+        else {
+            throw $this->createNotFoundException('The contest "'. $name .'" does not exist.');
+        }
+    }
+
+    public function sponsorsAction($contest_slug) {
+        $name = str_replace('-', ' ', $contest_slug);
+
+        $contest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
+            ->findOneByName($name);
+
+        if ($contest) {
+            return $this->render('SkaphandrusAppBundle:Contest:sponsors.html.twig',array(
+                'contest' => $contest,
+            ));
+        }
+        else {
+            throw $this->createNotFoundException('The contest "'. $name .'" does not exist.');
+        }
     }
 
     public function contestAction($slug) {
@@ -45,8 +87,13 @@ class ContestController extends Controller {
         $contest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
             ->findOneByName($name);
 
-        return $this->render('SkaphandrusAppBundle:Contest:contest.html.twig',array(
-            'contest' => $contest,
-        ));
+        if ($contest) {
+            return $this->render('SkaphandrusAppBundle:Contest:contest.html.twig',array(
+                'contest' => $contest,
+            ));
+        }
+        else {
+            throw $this->createNotFoundException('The contest "'. $name .'" does not exist.');
+        }
     }
 }

@@ -28,14 +28,29 @@ class UtilsExtension extends \Twig_Extension {
 
     public function getFunctions() {
         return array(
-            // Link helper functions.
-            new \Twig_SimpleFunction('link_to_user', array($this, 'link_to_user')),
-            new \Twig_SimpleFunction('link_to_species', array($this, 'link_to_species')),
-
             // Intl helper functions.
             new \Twig_SimpleFunction('intl_country_name', array($this, 'intl_country_name')),
             new \Twig_SimpleFunction('intl_locale_name', array($this, 'intl_locale_name')),
+            
+            // Link helper functions.
+            new \Twig_SimpleFunction('link_to_user', array($this, 'link_to_user')),
+            new \Twig_SimpleFunction('link_to_species', array($this, 'link_to_species')),
+            new \Twig_SimpleFunction('link_to_contest', array($this, 'link_to_photo_contest')),
+            new \Twig_SimpleFunction('link_to_contest_photos', array($this, 'link_to_contest_photos')),
+
         );
+    }
+
+    /**
+     * Intl helper functions.
+     */
+    
+    public function intl_country_name($country_code) {
+        return Intl::getRegionBundle()->getCountryName($country_code);
+    }
+    
+    public function intl_locale_name($locale_code) {
+        return Intl::getLocaleBundle()->getLocaleName($locale_code);
     }
 
     /*
@@ -61,15 +76,21 @@ class UtilsExtension extends \Twig_Extension {
         ));
     }
 
-    /**
-     * Intl helper functions.
-     */
-    
-    public function intl_country_name($country_code) {
-        return Intl::getRegionBundle()->getCountryName($country_code);
+    public function link_to_contest($contest) {
+        $path_function = $this->getPathFunction();
+        $slug = str_replace(' ', '-', $contest->getName());
+
+        return call_user_func($path_function, 'contests_contest', array(
+            'slug' => $slug,
+        ));
     }
-    
-    public function intl_locale_name($locale_code) {
-        return Intl::getLocaleBundle()->getLocaleName($locale_code);
+
+    public function link_to_contest_photos($category) {
+        $path_function = $this->getPathFunction();
+
+        return call_user_func($path_function, 'contests_photos', array(
+            'contest_slug' => str_replace(' ', '-', $category->getContest()->getName()),
+            'category_slug' => str_replace(' ', '-', $category->translate()->getName()),
+        ));
     }
 }

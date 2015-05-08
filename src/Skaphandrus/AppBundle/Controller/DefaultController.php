@@ -122,8 +122,7 @@ class DefaultController extends Controller {
     }
 
     public function speciesPageAction($slug) {
-        $request = $this->get('request');
-        $locale = $request->getLocale();
+        $locale = $this->get('request')->getLocale();
         $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
             ->findBySlug($slug);
 

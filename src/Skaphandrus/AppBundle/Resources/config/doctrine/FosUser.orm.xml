@@ -10,5 +10,6 @@
         </id>
         <field name="algorithm" column="algorithm" type="string" length="255" />
         <one-to-many field="spots" target-entity="SkSpot" mapped-by="fosUser"/>
+        <one-to-many field="photos" target-entity="SkPhoto" mapped-by="fosUser"/>
     </entity>
 </doctrine-mapping>
