@@ -20,13 +20,46 @@
     <p>{{ contest.translate(app.request.locale).rules|raw }}</p>
 
     <h3>{{ "categories"|trans }}</h3>
+    {% set total_photo_count = 0 %}
+    {% set all_users = {} %}
     {% for category in contest.categories %}
         <h4>{{ category.translate(app.request.locale).name }}</h4>
         <p>{{ category.image }}</p>
         <p>{{ category.translate(app.request.locale).description }}</p>
-        <h5>{{ "photos_from_category"|trans }}</h5>
+
+        <p><b>{{ "photo_count"|trans }}:</b> {{ category.photo|length }}</p>
+
+        {# Get photos #}
+        {% set total_photo_count = total_photo_count + category.photo|length %}
         {% for photo in category.photo %}
-            {{ photo.id }}
+            {#<p>{{ photo.title }} -> {{ photo.image }} ({{ "user"|trans }}: {{ photo.fosUser.username }})</p>#}
+            
+            {# the hash key should be a string for this to work #}
+            {% set all_users = all_users|merge({("u" ~ photo.fosUser.id): photo.fosUser.id}) %}
         {% endfor %}
     {% endfor %}
+
+    <h3>{{ "awards"|trans }}</h3>
+    {% for award in contest.awards %}
+        <h4>{{ award.translate(app.request.locale).name }}</h4>
+        <p>{{ award.translate(app.request.locale).description }}</p>
+    {% endfor %}
+
+    <h3>{{ "judges"|trans }}</h3>
+    {% for judge in contest.judges %}
+        <h4>{{ judge.fosUser.username }}</h4>
+        <p>{{ judge.translate(app.request.locale).description }}</p>
+    {% endfor %}
+
+    <h3>{{ "sponsors"|trans }}</h3>
+    {% for sponsor in contest.sponsors %}
+        <h4>{{ sponsor.name }}</h4>
+        <p>{{ sponsor.translate(app.request.locale).description }}</p>
+    {% endfor %}
+
+    <hr>
+
+    <p><b>{{ "total_users"|trans }}:</b> {{ all_users|length }}</p>
+    <p><b>{{ "total_photos"|trans }}:</b> {{ total_photo_count }}</p>
+    <p><b>{{ "total_sponsors"|trans }}:</b> {{ contest.sponsors|length }}</p>
 {% endblock %}

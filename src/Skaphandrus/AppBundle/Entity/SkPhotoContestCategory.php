@@ -133,4 +133,3 @@ class SkPhotoContestCategory
         return $this->photo;
     }
 }
-

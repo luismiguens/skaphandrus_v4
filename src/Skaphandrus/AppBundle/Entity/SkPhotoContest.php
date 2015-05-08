@@ -58,6 +58,15 @@ class SkPhotoContest
      */
     private $categories;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $sponsors;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $awards;
 
     /**
      * Constructor
@@ -277,5 +286,112 @@ class SkPhotoContest
     public function getCategories()
     {
         return $this->categories;
+    }
+
+    /**
+     * Add sponsor
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor $sponsor
+     *
+     * @return SkPhotoContest
+     */
+    public function addSponsor(\Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor $sponsor)
+    {
+        $this->sponsors[] = $sponsor;
+
+        return $this;
+    }
+
+    /**
+     * Remove sponsor
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor $sponsor
+     */
+    public function removeSponsor(\Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor $sponsor)
+    {
+        $this->sponsors->removeElement($sponsor);
+    }
+
+    /**
+     * Get sponsors
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSponsors()
+    {
+        return $this->sponsors;
+    }
+
+    /**
+     * Add award
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award
+     *
+     * @return SkPhotoContest
+     */
+    public function addAward(\Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award)
+    {
+        $this->awards[] = $award;
+
+        return $this;
+    }
+
+    /**
+     * Remove award
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award
+     */
+    public function removeAward(\Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award)
+    {
+        $this->awards->removeElement($award);
+    }
+
+    /**
+     * Get awards
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAwards()
+    {
+        return $this->awards;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $judges;
+
+
+    /**
+     * Add judge
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge
+     *
+     * @return SkPhotoContest
+     */
+    public function addJudge(\Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge)
+    {
+        $this->judges[] = $judge;
+
+        return $this;
+    }
+
+    /**
+     * Remove judge
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge
+     */
+    public function removeJudge(\Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge)
+    {
+        $this->judges->removeElement($judge);
+    }
+
+    /**
+     * Get judges
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getJudges()
+    {
+        return $this->judges;
     }
 }

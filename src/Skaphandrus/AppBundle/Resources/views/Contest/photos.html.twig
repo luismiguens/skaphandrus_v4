@@ -1,0 +1,10 @@
+{% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
+
+{% block body %}
+    <h2>{{ "photos"|trans }}: {{ category.translate(app.request.locale).name }}, {{ category.contest.name }}</h2>
+    
+    {% for photo in category.photo %}
+        <p>{{ photo.title }} -> {{ photo.image }} ({{ "user"|trans }}: {{ photo.fosUser.username }})</p>
+    {% endfor %}
+
+{% endblock %}

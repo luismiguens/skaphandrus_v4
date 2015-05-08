@@ -51,19 +51,23 @@ spot:
         _locale:  en|pt
 
 #CONTROLLER CONTEST
-landing_page:
+contests_landing_page:
     path:     /{_locale}/underwater-photo-contest
     defaults: { _controller: SkaphandrusAppBundle:Contest:landing, _locale: en }
     requirements:
         _locale:  en|pt
 
-contest:
+contests_photos:
+    path:     /{_locale}/underwater-photo-contest/photos/{contest_slug}/{category_slug}
+    defaults: { _controller: SkaphandrusAppBundle:Contest:photos, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+contests_contest:
     path:     /{_locale}/underwater-photo-contest/{slug}
     defaults: { _controller: SkaphandrusAppBundle:Contest:contest, _locale: en }
     requirements:
         _locale:  en|pt
-
-
 
 ##################################################################################
 #### AJAX ROUTES

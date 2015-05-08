@@ -79,6 +79,7 @@ class DefaultController extends Controller {
         $dbPort = $this->container->getParameter('database_port');
 
         $em = $this->container->get('doctrine.orm.entity_manager');
+        $um = $this->container->get('fos_user.user_manager');
         $em->getClassMetaData(get_class(new \Skaphandrus\AppBundle\Entity\FosUser()))
             ->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
 
@@ -87,23 +88,21 @@ class DefaultController extends Controller {
 
         $i = 0;
         while ($userSfGuard = $result->fetch_object()) {
-            $userFOS = new \Skaphandrus\AppBundle\Entity\FosUser();
-            $userFOS->setId($userSfGuard->username);
+            $userFOS = $um->createUser();
+            $userFOS->setId($userSfGuard->id);
             $userFOS->setUsername($userSfGuard->username);
             $userFOS->setEmail($userSfGuard->username);
             $userFOS->setPassword($userSfGuard->password);
             $userFOS->setSalt($userSfGuard->salt);
 
             $em->persist($userFOS);
-
-            if ($i % 10 == 1) {
-                $em->flush();
-            }
             $i++;
         }
         $em->flush();
 
-        return $this->render('SkaphandrusAppBundle:Default:usersMigration.html.php');
+        return $this->render('SkaphandrusAppBundle:Default:usersMigration.html.twig', array(
+            'total' => $i,
+        ));
     }
 
     public function taxonAction($node, $slug) {

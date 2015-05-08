@@ -1,0 +1,1 @@
+Total: <?php print $total; ?>

@@ -53,6 +53,28 @@ class SkPhotoContest
      */
     private $id;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $categories;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $sponsors;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $awards;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Set name
@@ -231,5 +253,106 @@ class SkPhotoContest
     {
         return $this->id;
     }
-}
 
+    /**
+     * Add category
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category
+     *
+     * @return SkPhotoContest
+     */
+    public function addCategory(\Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category
+     */
+    public function removeCategory(\Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * Add sponsor
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor $sponsor
+     *
+     * @return SkPhotoContest
+     */
+    public function addSponsor(\Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor $sponsor)
+    {
+        $this->sponsors[] = $sponsor;
+
+        return $this;
+    }
+
+    /**
+     * Remove sponsor
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor $sponsor
+     */
+    public function removeSponsor(\Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor $sponsor)
+    {
+        $this->sponsors->removeElement($sponsor);
+    }
+
+    /**
+     * Get sponsors
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSponsors()
+    {
+        return $this->sponsors;
+    }
+
+    /**
+     * Add award
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award
+     *
+     * @return SkPhotoContest
+     */
+    public function addAward(\Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award)
+    {
+        $this->awards[] = $award;
+
+        return $this;
+    }
+
+    /**
+     * Remove award
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award
+     */
+    public function removeAward(\Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award)
+    {
+        $this->awards->removeElement($award);
+    }
+
+    /**
+     * Get awards
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAwards()
+    {
+        return $this->awards;
+    }
+}
