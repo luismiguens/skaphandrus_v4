@@ -11,29 +11,30 @@
 
 
 {% block form_title %}
-    {{ "forms.photo.title"|trans }}
+    {{ "form.photo.h1.title"|trans }}
 {% endblock %}
 
 
 {% block form_breadcrumbs %}
     <ol class="breadcrumb">
-        <li><a href="index.html">{{ "forms.breadcrumbs.dashboard"|trans }}</a></li>
-        <li><a href="index.html">{{ "forms.breadcrumbs.photos"|trans }}</a></li>
-        <li class="active"><strong>{{ "forms.breadcrumbs.add_photo"|trans }}</strong></li>
+        <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="index.html">{{ "breadcrumb.photos"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.add_photo"|trans }}</strong></li>
     </ol>
 {% endblock %}
 
 {% block form_title_action %}
-    {{ "forms.photo.btn.add"|trans }}
+    {{ "form.photo.btn.add"|trans }}
 {% endblock %}
 
 {% block form_title_description %}
-      {{ "forms.photo.title.description"|trans }}
+    {{ "form.photo.text.description"|trans }}
 {% endblock %}
 
 
 {% block body %}
-    <form method="get" class="form-horizontal">
-    {{ form(form) }}
-    </form>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_widget(form) }}
+    {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'photo_admin', 'is_new':true} %}
+    {{ form_end(form) }}
 {% endblock %}

@@ -14,21 +14,21 @@ class SkPhotoType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('title', 'text', array('attr' => array('class' => 'form-control')))
-                ->add('file', 'file', array('attr' => array('class' => '')))
-                ->add('description', 'textarea', array('attr' => array('class' => 'form-control')))
+                ->add('title', 'text', array('attr' => array('class' => 'form-control'),'label'=>'form.photo.label.title' ) )
+                ->add('file', 'file', array('label'=>'form.photo.label.file'))
+                ->add('description', 'textarea', array('attr' => array('class' => 'form-control'),'label'=>'form.photo.label.description'))
                 //->add('views')
                 //->add('takenAt', 'datetime', array('date_widget' => "single_text", 'time_widget' => "single_text"))
                 //->add('createdAt')
-                ->add('creative', 'entity', array('class' => 'SkaphandrusAppBundle:SkCreativeCommons', 'attr' => array('class' => 'form-control m-b')))
-                ->add('model', 'autocomplete', array('class' => 'SkaphandrusAppBundle:SkPhotoMachineModel'))
-                ->add('spot', 'autocomplete', array('class' => 'SkaphandrusAppBundle:SkSpot'))
-                ->add('species', 'autocomplete', array('class' => 'SkaphandrusAppBundle:SkSpecies'))
+                ->add('creative', 'entity', array('class' => 'SkaphandrusAppBundle:SkCreativeCommons', 'attr' => array('class' => 'form-control m-b'),'label'=>'form.photo.label.creative'))
+                ->add('model', 'autocomplete', array('class' => 'SkaphandrusAppBundle:SkPhotoMachineModel','label'=>'form.photo.label.model'))
+                ->add('spot', 'autocomplete', array('class' => 'SkaphandrusAppBundle:SkSpot','label'=>'form.photo.label.spot'))
+                ->add('species', 'autocomplete', array('class' => 'SkaphandrusAppBundle:SkSpecies','label'=>'form.photo.label.species'))
                 ->add('fosUser')
                 //->add('keyword')
                 //->add('category')
-                ->add('cancel', 'submit', array('label' => 'Cancel','attr' => array('class' => 'btn btn-white')))
-                ->add('submit', 'submit', array('label' => 'Save','attr' => array('class' => 'btn btn-primary')))
+                //->add('cancel', 'submit', array('label' => 'form.common.btn.cancel','attr' => array('class' => 'btn btn-primary')))
+                //->add('submit', 'submit', array('label' => 'form.common.btn.save','attr' => array('class' => 'btn btn-primary')))
                 
 
         ;

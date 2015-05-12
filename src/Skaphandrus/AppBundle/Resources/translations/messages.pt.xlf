@@ -4,7 +4,7 @@
         <body>
             <trans-unit id="1">
                 <source>form.photo.label.title</source>
-                <target>Title</target>
+                <target>Titulo</target>
             </trans-unit>
         </body>
     </file>
