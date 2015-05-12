@@ -17,6 +17,9 @@ use Doctrine\ORM\EntityRepository;
 class SkPhotoMachineModelRepository extends EntityRepository{
     //put your code here
     public function findLikeName($term) {
+        
+        //$term= "Nikon D90";
+        
 //        return $this->getEntityManager()
 //      ->createQuery(
 //        "SELECT m 

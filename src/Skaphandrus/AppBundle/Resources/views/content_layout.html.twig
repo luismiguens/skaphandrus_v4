@@ -14,56 +14,58 @@
         <link href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}" rel="stylesheet">
         <link href="{{ asset('bundles/skaphandrusapp/css/style.css') }}" rel="stylesheet">
 
-    </head>
+    {% block stylesheets %}{% endblock %}
 
-    <body class="boxed-layout canvas-menu">
+</head>
 
-        <div id="wrapper">
+<body class="boxed-layout canvas-menu">
 
-            {% include 'SkaphandrusAppBundle:Default:sidebar-menu.html.twig' with {'layout': 'content'} %}
+    <div id="wrapper">
 
-            <div id="page-wrapper" class="gray-bg">
-                <div class="row border-bottom">
-                    {% include 'SkaphandrusAppBundle:Default:navbar-menu.html.twig' with {'bg': 'white-bg'} %}
-                </div>
+        {% include 'SkaphandrusAppBundle:Default:sidebar-menu.html.twig' with {'layout': 'content'} %}
 
-                {% include 'SkaphandrusAppBundle:Default:heading-content.html.twig' with {'bg': 'white-bg'} %}
-
-
-                <div class="wrapper wrapper-content">
-                    <div class="middle-box text-center animated fadeInRightBig">
-                        <h3 class="font-bold">This is page content</h3>
-                        <div class="error-desc">
-                            You can create here any grid layout you want. And any variation layout you imagine:) Check out
-                            main dashboard and other site. It use many different layout.
-                            <br/><a href="index.html" class="btn btn-primary m-t">Dashboard</a>
-                        {% block body %}{% endblock %}wrwerwerwe
-                    </div>
-                </div>
+        <div id="page-wrapper" class="gray-bg">
+            <div class="row border-bottom">
+                {% include 'SkaphandrusAppBundle:Default:navbar-menu.html.twig' with {'bg': 'white-bg'} %}
             </div>
 
-            <div class="footer">
-                <div class="pull-right">
-                    10GB of <strong>250GB</strong> Free.
-                </div>
-                <div>
-                    <strong>Copyright</strong> Example Company &copy; 2014-2015
+            {% include 'SkaphandrusAppBundle:Default:heading-content.html.twig' with {'bg': 'white-bg'} %}
+
+
+            <div class="wrapper wrapper-content">
+                <div class="middle-box text-center animated fadeInRightBig">
+                    <h3 class="font-bold">This is page content</h3>
+                    <div class="error-desc">
+                        You can create here any grid layout you want. And any variation layout you imagine:) Check out
+                        main dashboard and other site. It use many different layout.
+                        <br/><a href="index.html" class="btn btn-primary m-t">Dashboard</a>
+                    {% block body %}{% endblock %}wrwerwerwe
                 </div>
             </div>
-
         </div>
+
+        <div class="footer">
+            <div class="pull-right">
+                10GB of <strong>250GB</strong> Free.
+            </div>
+            <div>
+                <strong>Copyright</strong> Example Company &copy; 2014-2015
+            </div>
+        </div>
+
     </div>
+</div>
 
 
-    <!-- Mainly scripts -->
-    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-2.1.1.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+<!-- Mainly scripts -->
+<script src="{{ asset('bundles/skaphandrusapp/js/jquery-2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/skaphandrusapp/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('bundles/skaphandrusapp/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+<script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-    <!-- Custom and plugin javascript -->
-    <script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
+<!-- Custom and plugin javascript -->
+<script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>
+<script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
 
 
 </body>

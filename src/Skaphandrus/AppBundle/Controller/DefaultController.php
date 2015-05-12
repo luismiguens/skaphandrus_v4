@@ -4,7 +4,7 @@ namespace Skaphandrus\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Intl\Intl;
-use Cocur\Slugify\Slugify;
+
 
 class DefaultController extends Controller {
 

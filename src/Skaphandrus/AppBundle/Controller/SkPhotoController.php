@@ -226,32 +226,6 @@ class SkPhotoController extends Controller {
         ;
     }
 
-    public function searchPhotoMachineModelAction(Request $request) {
-        $q = $request->get('term');
-        $em = $this->getDoctrine()->getManager();
-        $models = $em->getRepository('SkaphandrusAppBundle:SkPhotoMachineModel')->findLikeName($q);
-        
-        
-        $results = array();
-    foreach ($models as $model) {
-        $results[] = array(
-            'id' => $model->getId(),
-            'name' => $model->getName(),
-            'label' => sprintf("[%s] %s", $model->getName(), $model->getName())
-        );
-    }
 
-    return new JsonResponse($results);
-        
-
-        //return array('results' => $results);
-    }
-
-    public function getPhotoMachineModelAction($id) {
-        $em = $this->getDoctrine()->getManager();
-        $SkPhotoMachineModel = $em->getRepository('SkaphandrusAppBundle:SkPhotoMachineModel')->find($id);
-
-        return new Response($SkPhotoMachineModel->getName());
-    }
 
 }

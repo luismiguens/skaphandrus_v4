@@ -15,6 +15,7 @@
         <link href="{{ asset('bundles/skaphandrusapp/css/style.css') }}" rel="stylesheet">
         <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
 
+        {% block stylesheets %}{% endblock %}
     </head>
 
 
@@ -22,24 +23,40 @@
 
 
     <body class="boxed-layout">
-
-
-
         <div id="wrapper">
-
             {% include 'SkaphandrusAppBundle:Default:sidebar-menu.html.twig' with {'layout': 'form'} %}
-
             <div id="page-wrapper" class="gray-bg">
                 <div class="row border-bottom">
                     {% include 'SkaphandrusAppBundle:Default:navbar-menu.html.twig' with {'bg': 'white-bg'} %}
                 </div>
-
-                {% include 'SkaphandrusAppBundle:Default:heading-content.html.twig' with {'bg': 'white-bg'} %}
-
-
-                        {% block body %}{% endblock %}
-
-
+                <!-- page-heading begin -->
+                <div class="row wrapper border-bottom white-bg page-heading">
+                    <div class="col-sm-4">
+                        <h2>{% block form_title %}{% endblock %}</h2>
+                    {% block form_breadcrumbs %}{% endblock %}
+                </div>
+                <div class="col-sm-8">
+                    <div class="title-action">
+                        <a href="" class="btn btn-primary">{% block form_title_action %}{% endblock %}</a>
+                    </div>
+                </div>
+            </div>
+            <!-- page-heading end -->
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>{% block form_title_description %}{% endblock %}</h5>
+                            </div>
+                            <div class="ibox-content">
+                                {% block body %}
+                                {% endblock %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="footer">
                 <div class="pull-right">
@@ -55,18 +72,18 @@
 
 
 
-{% block javascripts %}
-    <!-- Mainly scripts -->
-    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-2.1.1.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+    {% block javascripts %}
+        <!-- Mainly scripts -->
+        <script src="{{ asset('bundles/skaphandrusapp/js/jquery-2.1.1.js') }}"></script>
+        <script src="{{ asset('bundles/skaphandrusapp/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-    <!-- Custom and plugin javascript -->
-    <script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
-    
-{% endblock %}
+        <!-- Custom and plugin javascript -->
+        <script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>
+        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
+
+    {% endblock %}
 </body>
 
 </html>

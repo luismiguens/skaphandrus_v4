@@ -6,5 +6,14 @@
 
 
 $(document).ready(function () {
-    $('#skaphandrus_appbundle_skphoto_model').autocompleter({url_list: '/photo_model_ajax_search', url_get: '/photo_model_ajax_get/'});
+    
+    $('.dataTables-example').dataTable({
+                responsive: true,
+                "dom": 'T<"clear">lfrtip'
+            });
+    
+    
+    $('#skaphandrus_appbundle_skphoto_model').autocompleter({url_list: '/app_dev.php/en/ajax_search_photo_machine_model/', url_get: '/ajax_search_photo_machine_model_get/'});
+    $('#skaphandrus_appbundle_skphoto_species').autocompleter({url_list: '/app_dev.php/en/ajax_search_species/', url_get: '/ajax_search_species_get/'});
+    $('#skaphandrus_appbundle_skphoto_spot').autocompleter({url_list: '/app_dev.php/en/ajax_search_spot/', url_get: '/ajax_search_spot_get/'});
 });
