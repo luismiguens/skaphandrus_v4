@@ -1,7 +1,7 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
 {% block body %}
-    <h2>{{ spot.translate(app.request.locale).name }}, {{ spot.location.translate(app.request.locale).name }}, {{ country_name }}</h2>
+    <h2>{{ spot.translate(app.request.locale).name }}, {{ spot.location.translate(app.request.locale).name }}, {{ intl_country_name(spot.location.region.country.name) }}</h2>
 
     <h3>{{ "coordinates"|trans }}</h3>
     <p>{{ spot.coordinate }}</p>

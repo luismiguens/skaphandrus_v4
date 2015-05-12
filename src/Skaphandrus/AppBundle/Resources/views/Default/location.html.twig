@@ -1,7 +1,7 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
 {% block body %}
-    <h2>{{ location.translate(app.request.locale).name }}, {{ country_name }}</h2>
+    <h2>{{ location.translate(app.request.locale).name }}, {{ intl_country_name(location.region.country.name) }}</h2>
 
     <h3>{{ "location_description"|trans }}</h3>
     <p>{{ location.translate(app.request.locale).description }}</p>

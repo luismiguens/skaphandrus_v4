@@ -36,9 +36,7 @@ class DefaultController extends Controller {
      * Migração dos utilizadores da base de dados sfUser
      * 
      */
-    public function usersMigrationAction() {
-
-
+    public function usersMigrationActionOld() {
         $dbHost = $this->container->getParameter('database_host');
         $dbUser = $this->container->getParameter('database_user');
         $dbPassword = $this->container->getParameter('database_password');
@@ -52,13 +50,9 @@ class DefaultController extends Controller {
         $result = $mysqli->query('SELECT * FROM sf_guard_user');
         $userSfGuard = $result->fetch_object();
 
-        
-
-        
-        
         while ($userSfGuard = $result->fetch_object()) {
             $userFOS = $um->createUser();
-            $userFOS->SetId($userSfGuard->username);
+            $userFOS->setId($userSfGuard->username);
             $userFOS->setUsername($userSfGuard->username);
             $userFOS->setEmail($userSfGuard->username);
             $userFOS->setPassword($userSfGuard->password);
@@ -68,11 +62,47 @@ class DefaultController extends Controller {
         }
         $em->flush();
 
-
-
-
-
         return $this->render('SkaphandrusAppBundle:Default:usersMigration.html.php');
+    }
+
+    /**
+     * Users migration from sfUser database.
+     *
+     * The id is saved accordingly with:
+     * http://www.ens.ro/2012/07/03/symfony2-doctrine-force-entity-id-on-persist/
+     */
+    public function usersMigrationAction() {
+        $dbHost = $this->container->getParameter('database_host');
+        $dbUser = $this->container->getParameter('database_user');
+        $dbPassword = $this->container->getParameter('database_password');
+        $dbName = $this->container->getParameter('database_name');
+        $dbPort = $this->container->getParameter('database_port');
+
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $um = $this->container->get('fos_user.user_manager');
+        $em->getClassMetaData(get_class(new \Skaphandrus\AppBundle\Entity\FosUser()))
+            ->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
+
+        $mysqli = new \mysqli($dbHost, $dbUser, $dbPassword, $dbName, $dbPort);
+        $result = $mysqli->query('SELECT * FROM sf_guard_user');
+
+        $i = 0;
+        while ($userSfGuard = $result->fetch_object()) {
+            $userFOS = $um->createUser();
+            $userFOS->setId($userSfGuard->id);
+            $userFOS->setUsername($userSfGuard->username);
+            $userFOS->setEmail($userSfGuard->username);
+            $userFOS->setPassword($userSfGuard->password);
+            $userFOS->setSalt($userSfGuard->salt);
+
+            $em->persist($userFOS);
+            $i++;
+        }
+        $em->flush();
+
+        return $this->render('SkaphandrusAppBundle:Default:usersMigration.html.twig', array(
+            'total' => $i,
+        ));
     }
 
     public function taxonAction($node, $slug) {
@@ -81,19 +111,9 @@ class DefaultController extends Controller {
             ->findOneBy(array('name' => $slug));
 
         if ($taxon) {
-            // Get common names, with language names.
-            $vernaculars = array();
-            foreach ($taxon->getVernaculars() as $v) {
-                $vernaculars[] = array(
-                    'name' => $v->getName(),
-                    'language' => '(' . Intl::getLocaleBundle()->getLocaleName($v->getLocale()) . ')',
-                );
-            }
-
             return $this->render('SkaphandrusAppBundle:Default:taxon.html.twig', array(
                 "node" => $node,
                 "taxon" => $taxon,
-                "vernaculars" => $vernaculars,
             ));
         }
         else {
@@ -102,26 +122,13 @@ class DefaultController extends Controller {
     }
 
     public function speciesPageAction($slug) {
-        $request = $this->get('request');
-        $locale = $request->getLocale();
+        $locale = $this->get('request')->getLocale();
         $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
             ->findBySlug($slug);
 
         if ($species) {
-            // Get common names, with language names.
-            $vernaculars = array();
-            foreach ($species->getSpeciesVernaculars() as $v) {
-                $vernaculars[] = array(
-                    'name' => $v->getVernacular()->getName(),
-                    'language' => Intl::getLocaleBundle()->getLocaleName($v->getLocale()),
-                );
-            }
-
-            dump($species->getPhotos());
-
             return $this->render('SkaphandrusAppBundle:Default:species.html.twig', array(
                 "species" => $species,
-                "vernaculars" => $vernaculars,
                 "users" => $this->getDoctrine()
                     ->getRepository("SkaphandrusAppBundle:SkPhoto")
                     ->findPhotosCountByUserForModel($species->getId()),
@@ -138,12 +145,8 @@ class DefaultController extends Controller {
             ->findBySlug($slug, $location, $country, $locale);
         
         if ($spot) {
-            $country_name = Intl::getRegionBundle()
-                ->getCountryName($spot->getLocation()->getRegion()->getCountry()->getName());
-            
             return $this->render('SkaphandrusAppBundle:Default:spot.html.twig', array(
                 'spot' => $spot,
-                'country_name' => $country_name,
             ));
         }
         else {
@@ -161,12 +164,8 @@ class DefaultController extends Controller {
             ->findBySlug($name, $country, $locale);
 
         if ($location) {
-            $country_name = Intl::getRegionBundle()
-                ->getCountryName($location->getRegion()->getCountry()->getName());
-
             return $this->render('SkaphandrusAppBundle:Default:location.html.twig', array(
                 'location' => $location,
-                'country_name' => $country_name,
             ));
         }
         else {
@@ -205,14 +204,36 @@ class DefaultController extends Controller {
     /*
      * Photo page.
      */
-    public function photoAction($slug) {
+    public function photoAction($id, $slug) {
+        $title = str_replace('-', ' ', $slug);
 
+        $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
+            ->findOneBy(array('id' => $id, 'title' => $title));
+
+        if ($photo) {
+            return $this->render('SkaphandrusAppBundle:Default:photo.html.twig', array(
+                'photo' => $photo,
+            ));
+        }
+        else {
+            throw $this->createNotFoundException('The photo "'. $title .'" with id "'. $id .'" does not exist.');
+        }
     }
 
     /*
      * User page.
      */
-    public function userAction($slug) {
-        return $this->render('SkaphandrusAppBundle:Default:index.html.twig');
+    public function userAction($id) {
+        $user = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
+            ->findOneById($id);
+
+        if ($user) {
+            return $this->render('SkaphandrusAppBundle:Default:user.html.twig', array(
+                'user' => $user,
+            ));
+        }
+        else {
+            throw $this->createNotFoundException('The user with id "'. $id .'" does not exist.');
+        }
     }
 }
