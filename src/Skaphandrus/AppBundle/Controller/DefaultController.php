@@ -221,6 +221,48 @@ class DefaultController extends Controller {
     }
 
     /*
+     * Photo page.
+     */
+    public function photosAction() {
+        $page = $this->get('request')->query->get('page');
+        if (!$page) { $page = 1; }
+
+        $per_page = 20;
+        $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
+            ->findAllAsPaginator($page, $per_page);
+        
+        // Variables for pagination
+        $visible_pages = 9;
+        $total_pages = ceil(count($photos) / $per_page);
+
+        // If current page number is less than half of visible pages in the begining...
+        if ($page < floor($visible_pages / 2)) {
+            $first_page = 1;
+            $last_page = $visible_pages;
+        }
+        // If current page number is less than half of visible pages in the end...
+        elseif ($page > $total_pages - floor($visible_pages / 2)) {
+            $last_page = $total_pages;
+            $first_page = $total_pages - $visible_pages;
+        }
+        // If current page is not close to the limit edges...
+        else {
+            $first_page = $page - floor($visible_pages / 2);
+            $last_page = $page + floor($visible_pages / 2);
+        }
+
+        return $this->render('SkaphandrusAppBundle:Default:photos.html.twig', array(
+            'photos' => $photos,
+            'pagination' => array(
+                'page' => $page,
+                'total_pages' => ceil(count($photos) / $per_page),
+                'first_page' => $first_page,
+                'last_page' => $last_page,
+            ),
+        ));
+    }
+
+    /*
      * User page.
      */
     public function userAction($id) {

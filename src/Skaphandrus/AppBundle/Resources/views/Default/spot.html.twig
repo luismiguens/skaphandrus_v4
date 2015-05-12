@@ -3,9 +3,9 @@
 {% block body %}
     <h2>{{ spot.translate(app.request.locale).name }}, {{ spot.location.translate(app.request.locale).name }}, {{ intl_country_name(spot.location.region.country.name) }}</h2>
 
-    <h3>{{ "coordinates"|trans }}</h3>
+    <h3>{{ "page.spot.h3.coordinates"|trans }}</h3>
     <p>{{ spot.coordinate }}</p>
 
-    <h3>{{ "description"|trans }}</h3>
+    <h3>{{ "page.spot.h3.description"|trans }}</h3>
     <p>{{ spot.translate(app.request.locale).description }}</p>
 {% endblock %}

@@ -4,56 +4,30 @@
     <h2>{{ photo.title }}</h2>
 
     {% if photo.image is not empty %}
-        <h3>{{ "image"|trans }}</h3>
+        <h3>{{ "page.photo.h3.image"|trans }}</h3>
         <p>{{ photo.image }}</p>
     {% endif %}
 
     {% if photo.fosuser is not empty %}
-        <h3>{{ "photographer"|trans }}</h3>
+        <h3>{{ "page.photo.h3.photographer"|trans }}</h3>
         <p>{{ photo.fosuser.id }}</p>
         <p>{{ photo.fosuser.username }}</p>
     {% endif %}
 
     {% if photo.description is not empty %}
-        <h3>{{ "description"|trans }}</h3>
+        <h3>{{ "page.photo.h3.description"|trans }}</h3>
         <p>{{ photo.description }}</p>
     {% endif %}
 
     {% if photo.species is not empty %}
-        <h3>{{ "species"|trans }}</h3>
-        <ul>
-            <li>{{ "kingdom"|trans }}: {{ photo.species.genus.family.order.class.phylum.kingdom.name }}
-                <ul>
-                    <li>{{ "phylum"|trans }}: {{ photo.species.genus.family.order.class.phylum.name }}
-                        <ul>
-                            <li>{{ "class"|trans }}: {{ photo.species.genus.family.order.class.name }}
-                                <ul>
-                                    <li>{{ "order"|trans }}: {{ photo.species.genus.family.order.name }}
-                                        <ul>
-                                            <li>{{ "family"|trans }}: {{ photo.species.genus.family.name }}
-                                                <ul>
-                                                    <li>{{ "genus"|trans }}: {{ photo.species.genus.name }}
-                                                        <ul>
-                                                        {% for sn in photo.species.scientificNames %}
-                                                            <li>{{ sn.name }}</li>
-                                                        {% endfor %}
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+        <h3>{{ "page.photo.h3.species"|trans }}</h3>
+        {% for sn in photo.species.scientificNames %}
+        <p><a href="{{ link_to_species(photo.species) }}">{{ sn.name }}</a></p>
+        {% endfor %}
     {% endif %}
 
     {% if photo.spot is not empty %}
-        <h3>{{ "where_was_taken"|trans }}</h3>
+        <h3>{{ "page.photo.h3.where_was_taken"|trans }}</h3>
         <p>
             {{ photo.spot.translate(app.request.locale).name }},
             {{ photo.spot.location.translate(app.request.locale).name }},
@@ -62,12 +36,12 @@
     {% endif %}
 
     {% if photo.keyword|length %}
-        <h3>{{ "tags"|trans }}</h3>
+        <h3>{{ "page.photo.h3.tags"|trans }}</h3>
         {% for keyword in photo.keyword %}
             <p>{{ keyword.keyword }}</p>
         {% endfor %}
     {% endif %}
 
-    <h3>{{ photo.views }} {{ "views"|trans }}</h3>
-
+    <h3>{# photo.views #} {{ "page.photo.h3.views"|trans({'%views%': photo.views}) }}</h3>
+0
 {% endblock %}

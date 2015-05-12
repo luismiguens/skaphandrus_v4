@@ -1,0 +1,34 @@
+{% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
+
+{% block body %}
+    <h2>{{ "page.photos.h2.photos"|trans }}</h2>
+    {% for photo in photos.iterator %}
+        <h3>{{ photo.title }}</h3>
+        <p>{{ photo.image }}</p>
+        <p>{{ photo.description }}</p>
+    {% endfor %}
+
+    {# PAGINATION #}
+    {% if pagination.total_pages > 1 %}
+    <ul class="pagination pagination-sm">
+        {# '«' arrow  #}
+        <li {{ pagination.page == 1 ? 'class="disabled"' }}>
+            <a href="{{ path('photos', {page: 1}) }}">«</a>
+        </li>
+
+        {# Render each page number #}
+        {% for i in pagination.first_page..pagination.last_page %}
+        <li {{ pagination.page == i ? 'class="active"' }}>
+        <a href="{{ path('photos', {page: i}) }}">{{ i }}</a>
+        </li>
+        {% endfor %}
+
+        {# '»' arrow #}
+        <li {{ pagination.page == pagination.total_pages ? 'class="disabled"' }}>
+            <a href="{{ path('photos', {page: pagination.total_pages}) }}">»</a>
+        </li>
+    </ul>
+    {% endif %}
+    <p>{{ "page.photos.pagination.total_pages" }}: {{ pagination.total_pages }}</p>
+    {# END PAGINATION #}
+{% endblock %}

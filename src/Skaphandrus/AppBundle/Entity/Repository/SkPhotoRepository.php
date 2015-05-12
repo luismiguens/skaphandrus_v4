@@ -3,6 +3,7 @@
 namespace Skaphandrus\AppBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * SkPhotoRepository
@@ -12,16 +13,28 @@ use Doctrine\ORM\EntityRepository;
  */
 class SkPhotoRepository extends EntityRepository
 {
-  public function findPhotosCountByUserForModel($id, $model = 'species') {
-    return $this->getEntityManager()
-      ->createQuery(
-        "SELECT u, COUNT(p.id) as countable
-        FROM SkaphandrusAppBundle:FosUser u
-        JOIN SkaphandrusAppBundle:SkPhoto p
-          WITH u.id = IDENTITY(p.fosUser)
-        WHERE IDENTITY(p.$model) = :id
-        GROUP BY u.id
-        ORDER BY countable DESC"
-      )->setParameter('id', $id)->getResult();
-  }
+    public function findPhotosCountByUserForModel($id, $model = 'species') {
+        return $this->getEntityManager()
+            ->createQuery(
+            "SELECT u, COUNT(p.id) as countable
+            FROM SkaphandrusAppBundle:FosUser u
+            JOIN SkaphandrusAppBundle:SkPhoto p
+                WITH u.id = IDENTITY(p.fosUser)
+            WHERE IDENTITY(p.$model) = :id
+            GROUP BY u.id
+            ORDER BY countable DESC"
+            )->setParameter('id', $id)->getResult();
+    }
+
+    public function findAllAsPaginator($page, $per_page = 10) {
+        $first = ($page - 1) * $per_page;
+
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT p FROM SkaphandrusAppBundle:SkPhoto p ORDER BY p.createdAt DESC")
+            ->setFirstResult($first)
+            ->setMaxResults($per_page);
+
+        return new Paginator($query, TRUE);
+    }
+
 }
