@@ -1,14 +1,11 @@
 {# empty Twig template #}
-   
-
-
-
 <div class="form-group">
-        <div class="col-sm-4 col-sm-offset-2">
-            <a class="btn btn-white" href="{{ path(admin_route) }}"> {{ "form.common.btn.back_to_list"|trans }}</a>
-            
-            
-            
-            <button type="submit" class="btn btn-primary">{{ "form.common.btn.save_changes"|trans }}</button>
-        </div>
+    <div class="col-sm-10 col-sm-offset-2">
+        <a class="btn btn-white" href="{{ path(admin_route) }}">{{ "form.common.btn.back_to_list"|trans }}</a>
+        {% if new_form == true %}
+            <button type="submit" class="btn btn-primary">{{ "form.common.btn.create"|trans }}</button>
+        {% else %}
+            <button type="submit" class="btn btn-primary">{{ "form.common.btn.update"|trans }}</button>
+        {% endif %}
     </div>
+</div>

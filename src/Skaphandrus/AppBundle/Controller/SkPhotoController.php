@@ -85,6 +85,7 @@ class SkPhotoController extends Controller {
 //        $entity->setFosUser($fos_user);
 
         $form = $this->createCreateForm($entity);
+       
 
 
 
@@ -130,6 +131,9 @@ class SkPhotoController extends Controller {
         }
 
         $editForm = $this->createEditForm($entity);
+        $editForm->remove('file');  
+        
+        
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('SkaphandrusAppBundle:SkPhoto:edit.html.twig', array(
@@ -152,7 +156,7 @@ class SkPhotoController extends Controller {
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        //$form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
@@ -221,7 +225,7 @@ class SkPhotoController extends Controller {
         return $this->createFormBuilder()
                         ->setAction($this->generateUrl('photo_admin_delete', array('id' => $id)))
                         ->setMethod('DELETE')
-                        ->add('submit', 'submit', array('label' => 'Delete'))
+                        ->add('submit', 'submit', array('label' => 'form.common.btn.delete','attr' => array('class' => 'btn btn-danger')))
                         ->getForm()
         ;
     }

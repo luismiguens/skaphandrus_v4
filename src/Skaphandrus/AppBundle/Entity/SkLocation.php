@@ -162,4 +162,11 @@ class SkLocation
     {
         return $this->spots;
     }
+    
+    
+    public function getName() {
+        return $this->translate()->getName();
+    }
+    
+    
 }

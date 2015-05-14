@@ -8,11 +8,10 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 /**
  * SkSpot
  */
-class SkSpot
-{
+class SkSpot {
 
     use ORMBehaviors\Translatable\Translatable;
-    
+
     /**
      * @var integer
      */
@@ -58,7 +57,6 @@ class SkSpot
      */
     private $location;
 
-
     /**
      * Set maxDepth
      *
@@ -66,8 +64,7 @@ class SkSpot
      *
      * @return SkSpot
      */
-    public function setMaxDepth($maxDepth)
-    {
+    public function setMaxDepth($maxDepth) {
         $this->maxDepth = $maxDepth;
 
         return $this;
@@ -78,8 +75,7 @@ class SkSpot
      *
      * @return integer
      */
-    public function getMaxDepth()
-    {
+    public function getMaxDepth() {
         return $this->maxDepth;
     }
 
@@ -90,8 +86,7 @@ class SkSpot
      *
      * @return SkSpot
      */
-    public function setCoordinate($coordinate)
-    {
+    public function setCoordinate($coordinate) {
         $this->coordinate = $coordinate;
 
         return $this;
@@ -102,8 +97,7 @@ class SkSpot
      *
      * @return string
      */
-    public function getCoordinate()
-    {
+    public function getCoordinate() {
         return $this->coordinate;
     }
 
@@ -114,8 +108,7 @@ class SkSpot
      *
      * @return SkSpot
      */
-    public function setZoom($zoom)
-    {
+    public function setZoom($zoom) {
         $this->zoom = $zoom;
 
         return $this;
@@ -126,8 +119,7 @@ class SkSpot
      *
      * @return integer
      */
-    public function getZoom()
-    {
+    public function getZoom() {
         return $this->zoom;
     }
 
@@ -138,8 +130,7 @@ class SkSpot
      *
      * @return SkSpot
      */
-    public function setIsAproved($isAproved)
-    {
+    public function setIsAproved($isAproved) {
         $this->isAproved = $isAproved;
 
         return $this;
@@ -150,8 +141,7 @@ class SkSpot
      *
      * @return boolean
      */
-    public function getIsAproved()
-    {
+    public function getIsAproved() {
         return $this->isAproved;
     }
 
@@ -162,8 +152,7 @@ class SkSpot
      *
      * @return SkSpot
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
 
         return $this;
@@ -174,8 +163,7 @@ class SkSpot
      *
      * @return \DateTime
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->createdAt;
     }
 
@@ -186,8 +174,7 @@ class SkSpot
      *
      * @return SkSpot
      */
-    public function setUpdatedAt($updatedAt)
-    {
+    public function setUpdatedAt($updatedAt) {
         $this->updatedAt = $updatedAt;
 
         return $this;
@@ -198,8 +185,7 @@ class SkSpot
      *
      * @return \DateTime
      */
-    public function getUpdatedAt()
-    {
+    public function getUpdatedAt() {
         return $this->updatedAt;
     }
 
@@ -208,8 +194,7 @@ class SkSpot
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -220,8 +205,7 @@ class SkSpot
      *
      * @return SkSpot
      */
-    public function setFosUser(\Skaphandrus\AppBundle\Entity\FosUser $fosUser = null)
-    {
+    public function setFosUser(\Skaphandrus\AppBundle\Entity\FosUser $fosUser = null) {
         $this->fosUser = $fosUser;
 
         return $this;
@@ -232,8 +216,7 @@ class SkSpot
      *
      * @return \Skaphandrus\AppBundle\Entity\FosUser
      */
-    public function getFosUser()
-    {
+    public function getFosUser() {
         return $this->fosUser;
     }
 
@@ -244,8 +227,7 @@ class SkSpot
      *
      * @return SkSpot
      */
-    public function setLocation(\Skaphandrus\AppBundle\Entity\SkLocation $location = null)
-    {
+    public function setLocation(\Skaphandrus\AppBundle\Entity\SkLocation $location = null) {
         $this->location = $location;
 
         return $this;
@@ -256,13 +238,20 @@ class SkSpot
      *
      * @return \Skaphandrus\AppBundle\Entity\SkLocation
      */
-    public function getLocation()
-    {
+    public function getLocation() {
         return $this->location;
     }
-    
-        public function __toString(){
-        return $this->translate('en')->getName();
+
+    public function __toString() {
+        return $this->translate()->getName();
     }
     
+    public function getName() {
+        return $this->translate()->getName();
+    }
+    
+    
+    
+    
+
 }

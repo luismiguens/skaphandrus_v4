@@ -6,14 +6,20 @@
 
 
 $(document).ready(function () {
+
+
+    if ($('.dataTables-example').length) {
+        $('.dataTables-example').dataTable({
+            responsive: true,
+            "dom": 'T<"clear">lfrtip'
+        });
+    }
+
+
+    $('#skaphandrus_appbundle_skphoto_model').autocompleter({url_list: '/app_dev.php/en/ajax_search_photo_machine_model/', url_get: '/app_dev.php/en/ajax_get_photo_machine_model/'});
+    $('#skaphandrus_appbundle_skphoto_species').autocompleter({url_list: '/app_dev.php/en/ajax_search_species/', url_get: '/app_dev.php/en/ajax_get_species/'});
+    $('#skaphandrus_appbundle_skphoto_spot').autocompleter({url_list: '/app_dev.php/en/ajax_search_spot/', url_get: '/app_dev.php/en/ajax_get_spot/'});
     
-    $('.dataTables-example').dataTable({
-                responsive: true,
-                "dom": 'T<"clear">lfrtip'
-            });
+
     
-    
-    $('#skaphandrus_appbundle_skphoto_model').autocompleter({url_list: '/app_dev.php/en/ajax_search_photo_machine_model/', url_get: '/ajax_search_photo_machine_model_get/'});
-    $('#skaphandrus_appbundle_skphoto_species').autocompleter({url_list: '/app_dev.php/en/ajax_search_species/', url_get: '/ajax_search_species_get/'});
-    $('#skaphandrus_appbundle_skphoto_spot').autocompleter({url_list: '/app_dev.php/en/ajax_search_spot/', url_get: '/ajax_search_spot_get/'});
 });

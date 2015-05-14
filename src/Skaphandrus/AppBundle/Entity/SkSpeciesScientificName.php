@@ -138,5 +138,14 @@ class SkSpeciesScientificName
     {
         return $this->species;
     }
+    
+    
+    
+    public function __toString() {
+        return $this->getName().", ".$this->getAuthor();
+    }
+    
+    
+    
 }
 

@@ -7,15 +7,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <title>INSPINIA | Minor view</title>
+        {% block stylesheets %}
+            <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/skaphandrusapp/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
-        <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('bundles/skaphandrusapp/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/skaphandrusapp/css/style.css') }}" rel="stylesheet">
+            <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
 
-        <link href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}" rel="stylesheet">
-        <link href="{{ asset('bundles/skaphandrusapp/css/style.css') }}" rel="stylesheet">
-        <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
-
-        {% block stylesheets %}{% endblock %}
+        {% endblock %}
     </head>
 
 
@@ -24,10 +24,10 @@
 
     <body class="boxed-layout">
         <div id="wrapper">
-            {% include 'SkaphandrusAppBundle:Default:sidebar-menu.html.twig' with {'layout': 'form'} %}
+            {% include 'SkaphandrusAppBundle:Common:sidebar-menu.html.twig' with {'layout': 'form'} %}
             <div id="page-wrapper" class="gray-bg">
                 <div class="row border-bottom">
-                    {% include 'SkaphandrusAppBundle:Default:navbar-menu.html.twig' with {'bg': 'white-bg'} %}
+                    {% include 'SkaphandrusAppBundle:Common:navbar-menu.html.twig' with {'bg': 'white-bg'} %}
                 </div>
                 <!-- page-heading begin -->
                 <div class="row wrapper border-bottom white-bg page-heading">

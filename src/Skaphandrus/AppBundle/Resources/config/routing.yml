@@ -1,10 +1,10 @@
-skaphandrus_app_spot:
-    resource: "@SkaphandrusAppBundle/Resources/config/routing/skspot.xml"
-    prefix:   /spot
+skaphandrus_app_spot_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skspot.yml"
+    prefix:   /{_locale}/spot_admin
 
 skaphandrus_app_photo_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skphoto.yml"
-    prefix:   /{_locale}/photo
+    prefix:   /{_locale}/photo_admin
 
 skaphandrus_app_hello:
     path:     /hello/{name}
@@ -101,6 +101,17 @@ ajax_search_spot:
     defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxSearchSpot }
 
 
+ajax_get_photo_machine_model:
+    path:     /{_locale}/ajax_get_photo_machine_model/{id}
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetPhotoMachineModel }
+
+ajax_get_species:
+    path:     /{_locale}/ajax_get_species/{id}
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetSpecies }
+
+ajax_get_spot:
+    path:     /{_locale}/ajax_get_spot/{id}
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetSpot }
 
 
 

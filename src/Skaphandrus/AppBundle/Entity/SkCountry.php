@@ -4,6 +4,7 @@ namespace Skaphandrus\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use Symfony\Component\Intl\Intl;
 
 /**
  * SkCountry
@@ -162,4 +163,13 @@ class SkCountry
     {
         return $this->regions;
     }
+    
+    
+        public function __toString() {
+        return Intl::getRegionBundle()->getCountryName($this->name);
+    }
+    
+    
+
+    
 }

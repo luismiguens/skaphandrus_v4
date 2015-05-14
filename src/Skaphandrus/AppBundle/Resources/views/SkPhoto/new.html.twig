@@ -10,6 +10,12 @@
 {% endblock %}
 
 
+{% block styleshets %}
+    {{ parent() }}
+    <!-- Data Tables -->
+
+{% endblock %}
+
 {% block form_title %}
     {{ "form.photo.h1.title"|trans }}
 {% endblock %}
@@ -33,8 +39,18 @@
 
 
 {% block body %}
+    
+    
+    
+ <style>
+.ui-autocomplete-loading {
+background: white url("http://jqueryui.com/resources/demos/autocomplete/images/ui-anim_basic_16x16.gif") right center no-repeat;
+}
+</style>
+    
     {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
     {{ form_widget(form) }}
-    {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'photo_admin', 'is_new':true} %}
+    {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'photo_admin', 'new_form':false} %}
     {{ form_end(form) }}
+
 {% endblock %}

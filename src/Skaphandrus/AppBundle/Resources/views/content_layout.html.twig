@@ -7,60 +7,60 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <title>INSPINIA | Minor view</title>
+        {% block stylesheets %}
+            <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/skaphandrusapp/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
-        <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('bundles/skaphandrusapp/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/skaphandrusapp/css/style.css') }}" rel="stylesheet">
 
-        <link href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}" rel="stylesheet">
-        <link href="{{ asset('bundles/skaphandrusapp/css/style.css') }}" rel="stylesheet">
+        {% endblock %}
 
-    {% block stylesheets %}{% endblock %}
+    </head>
 
-</head>
+    <body class="boxed-layout canvas-menu">
 
-<body class="boxed-layout canvas-menu">
+        <div id="wrapper">
 
-    <div id="wrapper">
+            {% include 'SkaphandrusAppBundle:Common:sidebar-menu.html.twig' with {'layout': 'content'} %}
 
-        {% include 'SkaphandrusAppBundle:Default:sidebar-menu.html.twig' with {'layout': 'content'} %}
+            <div id="page-wrapper" class="gray-bg">
+                <div class="row border-bottom">
+                    {% include 'SkaphandrusAppBundle:Common:navbar-menu.html.twig' with {'bg': 'white-bg'} %}
+                </div>
 
-        <div id="page-wrapper" class="gray-bg">
-            <div class="row border-bottom">
-                {% include 'SkaphandrusAppBundle:Default:navbar-menu.html.twig' with {'bg': 'white-bg'} %}
-            </div>
-
-            {% include 'SkaphandrusAppBundle:Default:heading-content.html.twig' with {'bg': 'white-bg'} %}
+                {% include 'SkaphandrusAppBundle:Common:heading-content.html.twig' with {'bg': 'white-bg'} %}
 
                 <div class="wrapper wrapper-content">
                     <div class="middle-box text-center animated fadeInRightBig">
                         <h3 class="font-bold">This is page content</h3>
-                        {% block body %}{% endblock %}
-                    </div>
+                    {% block body %}{% endblock %}
                 </div>
-
-                <div class="footer">
-                    <div class="pull-right">
-                        10GB of <strong>250GB</strong> Free.
-                    </div>
-                    <div>
-                        <strong>Copyright</strong> Example Company &copy; 2014-2015
-                    </div>
-                </div>
-
             </div>
+
+            <div class="footer">
+                <div class="pull-right">
+                    10GB of <strong>250GB</strong> Free.
+                </div>
+                <div>
+                    <strong>Copyright</strong> Example Company &copy; 2014-2015
+                </div>
+            </div>
+
         </div>
+    </div>
 
+    {% block javascripts %}
+        <!-- Mainly scripts -->
+        <script src="{{ asset('bundles/skaphandrusapp/js/jquery-2.1.1.js') }}"></script>
+        <script src="{{ asset('bundles/skaphandrusapp/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-<!-- Mainly scripts -->
-<script src="{{ asset('bundles/skaphandrusapp/js/jquery-2.1.1.js') }}"></script>
-<script src="{{ asset('bundles/skaphandrusapp/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('bundles/skaphandrusapp/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-<script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
-
-<!-- Custom and plugin javascript -->
-<script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>
-<script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
-
+        <!-- Custom and plugin javascript -->
+        <script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>
+        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
+    {% endblock %}
 
 </body>
 

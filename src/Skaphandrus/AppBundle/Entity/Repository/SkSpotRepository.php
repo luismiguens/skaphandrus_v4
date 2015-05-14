@@ -28,6 +28,33 @@ class SkSpotRepository extends EntityRepository {
     //     }
     // }
 
+    
+    
+        public function findLikeName($term, $locale) {
+
+
+        return $this->getEntityManager()->createQuery(
+                "SELECT s, l
+                FROM SkaphandrusAppBundle:SkSpot s
+                JOIN s.translations t
+                JOIN s.location l
+         WHERE t.name LIKE :term
+         AND t.locale = :locale
+        ORDER BY t.name DESC"
+                )->setParameter('term', '%' . $term . '%')->setParameter('locale', $locale)->getResult();
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    
+    
+    
+    
     public function findBySlug($slug, $location, $country, $locale) {
         $name = str_replace('-', ' ', $slug);
 

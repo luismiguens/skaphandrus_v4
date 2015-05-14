@@ -1,4 +1,5 @@
 <?php
+
 namespace Skaphandrus\AppBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
@@ -14,24 +15,18 @@ use Doctrine\ORM\EntityRepository;
  *
  * @author Luis Miguens <luis.miguens@skaphandrus.com>
  */
-class SkPhotoMachineModelRepository extends EntityRepository{
+class SkPhotoMachineModelRepository extends EntityRepository {
+
     //put your code here
     public function findLikeName($term) {
-        
-        //$term= "Nikon D90";
-        
-//        return $this->getEntityManager()
-//      ->createQuery(
-//        "SELECT m 
-//        FROM SkaphandrusAppBundle:SkPhotoMachineModel m
-//        WHERE m.name like :term
-//        ORDER BY m.name DESC"
-//      )->setParameter('term', $term)->getResult();
-        
-        
-        return $this->getEntityManager()->getRepository('SkaphandrusAppBundle:SkPhotoMachineModel')->findAll();
-        
-  }
+
+
+        return $this->getEntityManager()->createQuery(
+                        "SELECT m 
+        FROM SkaphandrusAppBundle:SkPhotoMachineModel m
+        WHERE m.name LIKE :term
+        ORDER BY m.name DESC"
+                )->setParameter('term', '%' . $term . '%')->getResult();
+    }
+
 }
-
-

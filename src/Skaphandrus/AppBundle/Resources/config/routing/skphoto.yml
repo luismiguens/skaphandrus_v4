@@ -2,9 +2,9 @@ photo_admin:
     path:     /
     defaults: { _controller: "SkaphandrusAppBundle:SkPhoto:index" }
 
-photo_admin_show:
-    path:     /{id}/show
-    defaults: { _controller: "SkaphandrusAppBundle:SkPhoto:show" }
+#photo_admin_show:
+#    path:     /{id}/show
+#    defaults: { _controller: "SkaphandrusAppBundle:SkPhoto:show" }
 
 photo_admin_new:
     path:     /new

@@ -1,18 +1,56 @@
+
 {% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
 
-{% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
+{% form_theme edit_form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
 
-{% block body -%}
-    <h1>SkPhoto edit</h1>
-
-    {{ form(edit_form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('photo_admin') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
+    <script src="{{ asset('bundles/pugxautocompleter/js/autocompleter-jqueryui.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/skaphandrus.js') }}"></script>
 {% endblock %}
+
+
+{% block form_title %}
+    {{ "form.photo.h1.title"|trans }}
+{% endblock %}
+
+
+{% block form_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="index.html">{{ "breadcrumb.photos"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.add_photo"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block form_title_action %}
+    {{ "form.photo.btn.add"|trans }}
+{% endblock %}
+
+{% block form_title_description %}
+    {{ "form.photo.text.description"|trans }}
+{% endblock %}
+
+
+{% block body %}
+
+
+
+    <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-2">
+            <img src="{{ edit_form.vars.value.getWebPath | imagine_filter('medium_thumb') }}" />
+        </div>
+    </div>
+
+    {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_widget(edit_form) }}
+    {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'photo_admin', 'new_form':false} %}
+    {{ form_end(edit_form) }}
+
+
+    {{ form(delete_form) }}
+
+
+{% endblock %}
+
