@@ -25,7 +25,7 @@ skaphandrus_app_users_migration:
 #
 
 index:
-    path:      /{_locale}/index
+    path:      /{_locale}
     defaults:  { _controller: SkaphandrusAppBundle:Default:index, _locale: en }
     requirements:
         _locale:  en|fr

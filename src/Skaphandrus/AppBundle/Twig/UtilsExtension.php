@@ -37,6 +37,8 @@ class UtilsExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('link_to_species', array($this, 'link_to_species')),
             new \Twig_SimpleFunction('link_to_contest', array($this, 'link_to_photo_contest')),
             new \Twig_SimpleFunction('link_to_contest_photos', array($this, 'link_to_contest_photos')),
+            new \Twig_SimpleFunction('link_to_spot', array($this, 'link_to_spot')),
+            new \Twig_SimpleFunction('link_to_photo', array($this, 'link_to_photo')),
 
         );
     }
@@ -91,6 +93,25 @@ class UtilsExtension extends \Twig_Extension {
         return call_user_func($path_function, 'contests_photos', array(
             'contest_slug' => str_replace(' ', '-', $category->getContest()->getName()),
             'category_slug' => str_replace(' ', '-', $category->translate()->getName()),
+        ));
+    }
+
+    public function link_to_spot($spot) {
+        $path_function = $this->getPathFunction();
+
+        return call_user_func($path_function, 'spot', array(
+            'country' => str_replace(' ', '-', Intl::getRegionBundle()->getCountryName($spot->getLocation()->getRegion()->getCountry()->getName())),
+            'location' => str_replace(' ', '-', $spot->getLocation()->getName(),
+            'slug' => str_replace(' ', '-', $spot->getName(),
+        ));
+    }
+
+    public function link_to_photo($photo) {
+        $path_function = $this->getPathFunction();
+
+        return call_user_func($path_function, 'photo', array(
+            'id' => $photo->getId(),
+            'slug' => str_replace(' ', '-', $photo->getTitle(),
         ));
     }
 }

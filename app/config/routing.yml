@@ -15,8 +15,15 @@ _sonata_admin:
     
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
-    
-    
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+fos_user_profile_show:
+    pattern: /profile/
+    defaults: { _controller: FrameworkBundle:Redirect:urlRedirect, path: '/', permanent: true }
+
 lexik_translation_edition:
     resource: "@LexikTranslationBundle/Resources/config/routing.yml"
     prefix:   /translations

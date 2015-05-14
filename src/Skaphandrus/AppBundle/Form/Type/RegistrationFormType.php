@@ -9,7 +9,6 @@ class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // add your custom field
         $builder
             ->add('email', 'email', array('label' => FALSE, 'translation_domain' => 'FOSUserBundle', 'attr' => array('class' => 'form-control', 'placeholder' => 'form.email')))
             ->add('username', null, array('label' => FALSE, 'translation_domain' => 'FOSUserBundle', 'attr' => array('class' => 'form-control', 'placeholder' => 'form.username')))
