@@ -1,7 +1,7 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
 {% block body %}
-    <h2>{{ "photographers"|trans }}: {{ contest.name }}</h2>
+    <h2>{{ "page.photographers.h2.photographers"|trans }}: {{ contest.name }}</h2>
 
     {% set total_photo_count = 0 %}
     {% set all_users = {} %}
@@ -16,6 +16,6 @@
 
     {% for photographer in photographers %}
         <h3><a href="{{ link_to_user(photographer.user) }}">{{ photographer.user.username }}</a></h3>
-        <p>{{ "photos"|trans }}: {{ photographer.photos|length }}</p>
+        <p>{{ "page.photographers.label.photos"|trans }}: {{ photographer.photos|length }}</p>
     {% endfor %}
 {% endblock %}

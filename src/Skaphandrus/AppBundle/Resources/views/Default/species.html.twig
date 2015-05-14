@@ -9,57 +9,57 @@
   {% endfor %}
 
   {% if species.photos|first is not empty %}
-    <h2>{{ "photo_path"|trans }}</h2>
+    <h3>{{ "page.species.h3.photo_path"|trans }}</h3>
     <p>{{ species.photos|first.photo.image }}</p>
     <p>{{ species.photos|first.fosuser.id }}</p>
     <p>{# species.photos|first.fosuser.username #}</p>
   {% endif %}
 
-  <h2>{{ "taxonomic_structure"|trans }}</h2>
-  <p>{{ "species_kingdom"|trans ~ ": " ~ species.genus.family.order.class.phylum.kingdom.name }}</p>
-  <p>{{ "species_phylum"|trans ~ ": " ~ species.genus.family.order.class.phylum.name }}</p>
-  <p>{{ "species_class"|trans ~ ": " ~ species.genus.family.order.class.name }}</p>
-  <p>{{ "species_order"|trans ~ ": " ~ species.genus.family.order.name }}</p>
-  <p>{{ "species_family"|trans ~ ": " ~ species.genus.family.name }}</p>
-  <p>{{ "species_genus"|trans ~ ": " ~ species.genus.name }}</p>
+  <h3>{{ "page.species.h3.taxonomic_structure"|trans }}</h3>
+  <p>{{ "page.species.label.species_kingdom"|trans ~ ": " ~ species.genus.family.order.class.phylum.kingdom.name }}</p>
+  <p>{{ "page.species.label.species_phylum"|trans ~ ": " ~ species.genus.family.order.class.phylum.name }}</p>
+  <p>{{ "page.species.label.species_class"|trans ~ ": " ~ species.genus.family.order.class.name }}</p>
+  <p>{{ "page.species.label.species_order"|trans ~ ": " ~ species.genus.family.order.name }}</p>
+  <p>{{ "page.species.label.species_family"|trans ~ ": " ~ species.genus.family.name }}</p>
+  <p>{{ "page.species.label.species_genus"|trans ~ ": " ~ species.genus.name }}</p>
 
   {% if species.translate(app.request.locale).description is not empty %}
-    <h2>{{ "description"|trans }}</h2>
+    <h3>{{ "page.species.h3.description"|trans }}</h3>
     <p>{{ species.translate(app.request.locale).description }}</p>
   {% endif %}
 
   {% if species.translate(app.request.locale).howToFind is not empty %}
-    <h2>{{ "how_to_find"|trans }}</h2>
+    <h3>{{ "page.species.h3.how_to_find"|trans }}</h3>
     <p>{{ species.translate(app.request.locale).howToFind }}</p>
   {% endif %}
   
 
   {% if species.character is not empty %}
-    <h2>{{ "species_criteria"|trans }}</h2>
+    <h3>{{ "page.species.h3.species_criteria"|trans }}</h3>
     {% for c in species.character %}
         <p>{{ c.criteria.translate(app.request.locale).name }} -> {{ c.image }}</p>
     {% endfor %}
   {% endif %}
 
   {% if species.speciesVernaculars is not empty %}
-    <h2>{{ "common_names"|trans }}</h2>
+    <h3>{{ "page.species.h3.common_names"|trans }}</h3>
     {% for vernacular in species.speciesVernaculars %}
         <p>{{ vernacular.vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}</p>
     {% endfor %}
   {% endif %}
 
   {% if species.photos|first is not empty %}
-    <h2>{{ "photos"|trans }}</h2>
+    <h3>{{ "page.species.h3.photos"|trans }}</h3>
     {% for p in species.photos %}
         <p>{{ p.photo.title }} -> {{ p.photo.image }}</p>
     {% endfor %}
   {% endif %}
 
   {% if users is not empty %}
-    <h2>{{ "user_photos"|trans }}</h2>
+    <h3>{{ "page.species.h3.user_photos"|trans }}</h3>
     {% for u in users %}
         <p>
-          <a href="{{ link_to_user(u.0) }}">{{ "user_id"|trans }}: {{ u.0.username }}</a> ({{ u.countable }} {{ "photos"|trans }})
+          <a href="{{ link_to_user(u.0) }}">{{ "user_id"|trans }}: {{ u.0.username }}</a> ({{ u.countable }} {{ "page.species.label.photos"|trans }})
         </p>
     {% endfor %}
   {% endif %}

@@ -6,6 +6,10 @@
                 <source>form.photo.label.title</source>
                 <target>Title</target>
             </trans-unit>
+            <trans-unit id="2">
+                <source>page.photo.h3.views</source>
+                <target>Number of views: %views%</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

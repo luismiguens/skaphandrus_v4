@@ -3,13 +3,15 @@
 {% block body %}
 
     {% if contests|length %}
-        <h3>{{ "contests"|trans }}</h3>
+        <h3>{{ "page.contests_landing.h3.contests"|trans }}</h3>
         {% for contest in contests %}
             <h4>{{ contest.name }}</h4>
             
+            <p>
             {% trans with {'%from%': contest.beginAt|date('d-m-Y'), '%to%': contest.beginAt|date('d-m-Y')} from 'messages' %}
-                <p>from %from% to %to%</p>
+                page.contest.label.from %from% to %to%
             {% endtrans %}
+            </p>
             
             <p>{{ contest.image }}</p>
             <p>{{ contest.logo }}</p>

@@ -1,0 +1,42 @@
+{% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block body %}
+<div class="passwordBox animated fadeInDown">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="ibox-content">
+                <h3>Register to Skaphandrus</h3>
+                <p>Create account to see it in action.</p>
+                {{ form_errors(form) }}
+                <form class="m-t fos_user_registration_register" role="form" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST">
+                    <div class="form-group">
+                        {{ form_row(form.email) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form.username) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form.plainPassword) }}
+                    </div>
+                    
+                    <input type="submit" class="btn btn-primary block full-width m-b" value="{{ 'registration.submit'|trans }}" />
+
+                    <p class="text-muted text-center"><small>Already have an account?</small></p>
+                    <a class="btn btn-sm btn-white btn-block" href="{{ path('fos_user_security_login') }}">Login</a>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-md-6">
+            Copyright Example Company
+        </div>
+        <div class="col-md-6 text-right">
+           <small>© 2014-2015</small>
+        </div>
+    </div>
+</div>
+{% endblock %}

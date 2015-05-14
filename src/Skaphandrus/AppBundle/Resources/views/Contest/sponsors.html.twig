@@ -1,7 +1,7 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
 {% block body %}
-    <h2>{{ "sponsors"|trans }}: {{ contest.name }}</h2>
+    <h2>{{ "page.contests_sponsors.h3.sponsors"|trans }}: {{ contest.name }}</h2>
     {% for sponsor in contest.sponsors %}
         <p>{{ sponsor.name }}<p/>
     {% endfor %}

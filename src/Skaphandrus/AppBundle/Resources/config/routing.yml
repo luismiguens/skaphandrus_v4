@@ -25,7 +25,7 @@ skaphandrus_app_users_migration:
 #
 
 index:
-    path:      /{_locale}/index
+    path:      /{_locale}
     defaults:  { _controller: SkaphandrusAppBundle:Default:index, _locale: en }
     requirements:
         _locale:  en|fr
@@ -51,6 +51,36 @@ taxon:
 spot:
     path:     /{_locale}/scuba-dive-locations/info/spot/{country}/{location}/{slug}
     defaults: { _controller: SkaphandrusAppBundle:Default:spot, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+location:
+    path:     /{_locale}/scuba-dive-locations/info/location/{country}/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:location, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+country:
+    path:     /{_locale}/scuba-dive-locations/info/country/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:country, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+photo:
+    path:     /{_locale}/underwater-photography/photo/{id}-{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:photo, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+photos:
+    path:     /{_locale}/underwater-photography/photos
+    defaults: { _controller: SkaphandrusAppBundle:Default:photos, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+user:
+    path:     /{_locale}/users/username/{id}
+    defaults: { _controller: SkaphandrusAppBundle:Default:user, _locale: en }
     requirements:
         _locale:  en|pt
 
@@ -112,36 +142,6 @@ ajax_get_species:
 ajax_get_spot:
     path:     /{_locale}/ajax_get_spot/{id}
     defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetSpot }
-
-
-
-#
-#
-location:
-    path:     /{_locale}/scuba-dive-locations/info/location/{country}/{slug}
-    defaults: { _controller: SkaphandrusAppBundle:Default:location, _locale: en }
-    requirements:
-        _locale:  en|pt
-
-country:
-    path:     /{_locale}/scuba-dive-locations/info/country/{slug}
-    defaults: { _controller: SkaphandrusAppBundle:Default:country, _locale: en }
-    requirements:
-        _locale:  en|pt
-
-photo:
-    path:     /{_locale}/underwater-photography/photo/{id}-{slug}
-    defaults: { _controller: SkaphandrusAppBundle:Default:photo, _locale: en }
-    requirements:
-        _locale:  en|pt
-
-user:
-    path:     /{_locale}/users/username/{id}
-    defaults: { _controller: SkaphandrusAppBundle:Default:user, _locale: en }
-    requirements:
-        _locale:  en|pt
-
-
 
 #
 #################################################################################  

@@ -8,15 +8,14 @@
 
         <title>INSPINIA | Minor view</title>
         {% block stylesheets %}
+
             <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">
             <link href="{{ asset('bundles/skaphandrusapp/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
             <link href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}" rel="stylesheet">
             <link href="{{ asset('bundles/skaphandrusapp/css/style.css') }}" rel="stylesheet">
-
         {% endblock %}
 
-    </head>
 
     <body class="boxed-layout canvas-menu">
 
@@ -32,9 +31,9 @@
                 {% include 'SkaphandrusAppBundle:Common:heading-content.html.twig' with {'bg': 'white-bg'} %}
 
                 <div class="wrapper wrapper-content">
-                    <div class="middle-box text-center animated fadeInRightBig">
-                        <h3 class="font-bold">This is page content</h3>
-                    {% block body %}{% endblock %}
+                    <div class="text-center animated fadeInRightBig">
+                        {% block body %}{% endblock %}
+                    </div>
                 </div>
             </div>
 

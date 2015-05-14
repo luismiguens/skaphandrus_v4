@@ -80,7 +80,7 @@ doctrine:
 # Swiftmailer Configuration
 swiftmailer:
     transport: "%mailer_transport%"
-    host:      "%mailer_host%"
+    # host:      "%mailer_host%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
@@ -96,8 +96,8 @@ sonata_block:
         # Your other blocks
         sonata.user.block.menu:    # used to display the menu in profile pages
         sonata.user.block.account: # used to display menu option (login option)
-        
-        
+
+
 a2lix_translation_form:
     locale_provider: default       # [1]
     locales: [en, pt]          # [1-a]
@@ -105,8 +105,8 @@ a2lix_translation_form:
     required_locales: [en]         # [1-c]
     manager_registry: doctrine      # [2]
     templating: "A2lixTranslationFormBundle::default.html.twig"      # [3]
-    
-    
+
+
 security:
     # [...]
     acl:
@@ -123,13 +123,23 @@ security:
           algorithm: sha1
           iterations: 1
           encode_as_base64: false    
-        
-        
 
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: Skaphandrus\AppBundle\Entity\FosUser
+    from_email:
+        address:     antonio.pedro.couto@gmail.com
+        sender_name: Skaphandrus
+    registration:
+        confirmation:
+            enabled:  true
+            template: FOSUserBundle:Registration:email.txt.twig
+        form:
+            type: skaphandrus_user_registration
+    resetting:
+        form:
+            type: skaphandrus_user_resetting
 
 
     #group:
@@ -146,8 +156,8 @@ fos_user:
 #            handler:            fos_user.profile.form.handler.default
 #            name:               fos_user_profile_form
 #            validation_groups:  [Authentication] # Please note : this is not the default value
-            
-            
+
+
 #@LM - por causa dos dois tipos de encoding
 parameters:
     security.encoder.digest.class: Skaphandrus\AppBundle\Security\MessageDigestPasswordEncoder

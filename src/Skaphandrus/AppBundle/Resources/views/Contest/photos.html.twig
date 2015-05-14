@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <h3>{{ "categories"|trans }}</h3>
+    <h3>{{ "page.contests_photos.h3.categories"|trans }}</h3>
     <ul>
         {% for cat in category.contest.categories %}
         <li>
@@ -17,10 +17,10 @@
         {% endfor %}
     </ul>
 
-    <h2>{{ "photos"|trans }}: {{ category.translate(app.request.locale).name }}, {{ category.contest.name }}</h2>
+    <h3>{{ "page.contests_photos.h3.photos"|trans }}: {{ category.translate(app.request.locale).name }}, {{ category.contest.name }}</h3>
     
     {% for photo in category.photo %}
-        <p>{{ photo.title }} -> {{ photo.image }} ({{ "user"|trans }}: {{ photo.fosUser.username }})</p>
+        <p>{{ photo.title }} -> {{ photo.image }} ({{ "page.contests_photos.label.user"|trans }}: {{ photo.fosUser.username }})</p>
     {% endfor %}
 
 {% endblock %}
