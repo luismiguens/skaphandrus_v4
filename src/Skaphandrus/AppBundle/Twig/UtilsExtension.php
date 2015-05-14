@@ -101,8 +101,8 @@ class UtilsExtension extends \Twig_Extension {
 
         return call_user_func($path_function, 'spot', array(
             'country' => str_replace(' ', '-', Intl::getRegionBundle()->getCountryName($spot->getLocation()->getRegion()->getCountry()->getName())),
-            'location' => str_replace(' ', '-', $spot->getLocation()->getName(),
-            'slug' => str_replace(' ', '-', $spot->getName(),
+            'location' => str_replace(' ', '-', $spot->getLocation()->getName()),
+            'slug' => str_replace(' ', '-', $spot->getName())
         ));
     }
 
@@ -111,7 +111,7 @@ class UtilsExtension extends \Twig_Extension {
 
         return call_user_func($path_function, 'photo', array(
             'id' => $photo->getId(),
-            'slug' => str_replace(' ', '-', $photo->getTitle(),
+            'slug' => str_replace(' ', '-', $photo->getTitle())
         ));
     }
 }
