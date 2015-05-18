@@ -128,16 +128,20 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: Skaphandrus\AppBundle\Entity\FosUser
+    service:
+        mailer: fos_user.mailer.twig_swift
     from_email:
         address:     antonio.pedro.couto@gmail.com
         sender_name: Skaphandrus
     registration:
         confirmation:
             enabled:  true
-            template: FOSUserBundle:Registration:email.txt.twig
+            template: SkaphandrusAppBundle:FOSUserEmail:register.html.twig
         form:
             type: skaphandrus_user_registration
     resetting:
+        email:
+            template: SkaphandrusAppBundle:FOSUserEmail:resetting.html.twig
         form:
             type: skaphandrus_user_resetting
 
