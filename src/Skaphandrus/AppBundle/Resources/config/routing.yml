@@ -42,6 +42,18 @@ species:
     requirements:
         _locale:  en|pt
 
+taxonomy:
+    path:     /{_locale}/marine-species/taxonomy
+    defaults: { _controller: SkaphandrusAppBundle:Default:taxonomy, locale: en }
+    requirements:
+        _locale:  en|pt
+
+taxonomy_source:
+    path:     /{_locale}/species/source
+    defaults: { _controller: SkaphandrusAppBundle:Default:source, locale: en }
+    requirements:
+        _locale:  en|pt
+
 taxon:
     path:     /{_locale}/marine-species/{node}/{slug}
     defaults: { _controller: SkaphandrusAppBundle:Default:taxon, _locale: en }

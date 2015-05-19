@@ -4,7 +4,10 @@ namespace Skaphandrus\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Intl\Intl;
+use Symfony\Component\HttpFoundation\JsonResponse as JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
+use Skaphandrus\AppBundle\Utils\Utils;
 
 class DefaultController extends Controller {
 
@@ -105,15 +108,134 @@ class DefaultController extends Controller {
         ));
     }
 
+    public function taxonomyAction() {
+        return $this->render('SkaphandrusAppBundle:Default:taxonomy.html.twig');
+    }
+
+    public function sourceAction() {
+        $id = $this->get('request')->query->get('id');
+
+        $dados = explode(".", $id);
+        $taxon = null;
+        $result = array();
+        $estado = "";
+        $categ_next = "";
+        $categ = "";
+        $response = array();
+
+        if ($dados[0] == "li") {
+            $taxon = $dados[1];
+            $parent_id = $dados[2];
+        }
+        
+        $structure = Utils::taxonomyStructure();
+
+        if (array_key_exists($taxon, $structure)) {
+            $result = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:Sk" . ucfirst($taxon))
+                ->findBy(array( $structure[$taxon]['parent'] => $parent_id ), array('name' => 'ASC'));
+
+            if (!$result) {
+                $response[] = array('data' => 'not_exists');
+            }
+            else {
+                foreach ($result as $object) {
+                    $url = $this->generateUrl('taxon', array('node' => $taxon, 'slug' => $object->getName()));
+                    $categ_next_id = 'li.' . $structure[$taxon]['next'] . '.' . $object->getId();
+                    
+                    $response[] = array(
+                        'id' => $categ_next_id,
+                        'text' => $object->getName(),
+                        'icon' => FALSE,
+                        'state' => array( 'opened' => FALSE, 'selected' => FALSE ),
+                        'children' => TRUE,
+                        'a_attr' => array(
+                            'href' => $this->generateUrl('taxon', array(
+                                'node' => $taxon,
+                                'slug' => $object->getName(),
+                            )),
+                        ),
+                    );
+                }
+            }
+        }
+        elseif ($taxon == 'species') {
+            $result = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkSpecies")
+                ->findBy(array( 'genus' => $parent_id ));
+
+            $categ = "species";
+
+            foreach ($result as $object) {
+                $sn = $object->getScientificNames();
+                $slug = Utils::slugify($sn[0]->getName());
+                $url = $this->generateUrl('species', array('slug' => $slug));
+
+                $response[] = array(
+                    'text' => $sn[0]->getName() . ' (' . $sn[0]->getAuthor() . ')',
+                    'icon' => FALSE,
+                    'state' => array( 'opened' => FALSE, 'selected' => FALSE ),
+                    'children' => FALSE,
+                    'a_attr' => array(
+                        'href' => $this->generateUrl('species', array(
+                            'slug' => $slug,
+                        )),
+                    ),
+                );
+            }
+        }
+        elseif ($taxon == 'kingdom') {
+            $result = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkKingdom")
+                ->findBy(array(), array('name' => 'ASC'));
+
+            $categ_next = "phylum";
+            $categ = "kingdom";
+
+            foreach ($result as $object) {
+                $url = $this->generateUrl('taxon', array('node' => 'kingdom', 'slug' => $object->getName()));
+                $categ_next_id = 'li.phylum.' . $object->getId();
+                $url = $this->generateUrl('taxon', array(
+                    'node' => 'kingdom',
+                    'slug' => $object->getName(),
+                ));
+                
+                $response[] = array(
+                    'id' => $categ_next_id,
+                    'text' => $object->getName(),
+                    'icon' => FALSE,
+                    'state' => array( 'opened' => FALSE, 'selected' => FALSE, 'disabled' => FALSE ),
+                    'children' => TRUE,
+                    'a_attr' => array(
+                        'href' => $this->generateUrl('taxon', array(
+                            'node' => 'kingdom',
+                            'slug' => $object->getName(),
+                        )),
+                    ),
+                );
+            }
+        }
+
+        return new JsonResponse($response);
+    }
+
     public function taxonAction($node, $slug) {
         $taxon_name = ucfirst($node);
         $taxon = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:Sk" . $taxon_name)
             ->findOneBy(array('name' => $slug));
 
+        $structure = Utils::taxonomyStructure();
+
+        $next_taxon = "";
+        if (array_key_exists($node, $structure)) {
+            $next_taxon = $structure[$node]['next'];
+        }
+        elseif ($node = 'kingdom') {
+            $next_taxon = 'phylum';
+        }
+
         if ($taxon) {
             return $this->render('SkaphandrusAppBundle:Default:taxon.html.twig', array(
                 "node" => $node,
                 "taxon" => $taxon,
+                "next_taxon" => $next_taxon,
             ));
         }
         else {
@@ -158,7 +280,7 @@ class DefaultController extends Controller {
      * Location page.
      */
     public function locationAction($country, $slug) {
-        $name = str_replace('-', ' ', $slug);
+        $name = Utils::unslugify($slug);
         $locale = $this->get('request')->getLocale();
         $location = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
             ->findBySlug($name, $country, $locale);
@@ -177,7 +299,7 @@ class DefaultController extends Controller {
      * Country page.
      */
     public function countryAction($slug) {
-        $name = str_replace('-', ' ', $slug);
+        $name = Utils::unslugify($slug);
         $locale = $this->get('request')->getLocale();
         $country = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')
                 ->findBySlug($slug);
@@ -205,7 +327,7 @@ class DefaultController extends Controller {
      * Photo page.
      */
     public function photoAction($id, $slug) {
-        $title = str_replace('-', ' ', $slug);
+        $title = Utils::unslugify($slug);
 
         $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
             ->findOneBy(array('id' => $id, 'title' => $title));

@@ -4,6 +4,8 @@ namespace Skaphandrus\AppBundle\Twig;
 use Twig_Environment;
 use Symfony\Component\Intl\Intl;
 
+use Skaphandrus\AppBundle\Utils\Utils;
+
 class UtilsExtension extends \Twig_Extension {
 
     protected $twig;
@@ -39,7 +41,7 @@ class UtilsExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('link_to_contest_photos', array($this, 'link_to_contest_photos')),
             new \Twig_SimpleFunction('link_to_spot', array($this, 'link_to_spot')),
             new \Twig_SimpleFunction('link_to_photo', array($this, 'link_to_photo')),
-
+            new \Twig_SimpleFunction('link_to_taxon', array($this, 'link_to_taxon')),
         );
     }
 
@@ -71,7 +73,7 @@ class UtilsExtension extends \Twig_Extension {
     public function link_to_species($species) {
         $path_function = $this->getPathFunction();
         $names = $species->getScientificNames();
-        $slug = str_replace(' ', '-', $names[0]->getName());
+        $slug = Utils::slugify($names[0]->getName());
 
         return call_user_func($path_function, 'species', array(
             'slug' => $slug,
@@ -80,7 +82,7 @@ class UtilsExtension extends \Twig_Extension {
 
     public function link_to_contest($contest) {
         $path_function = $this->getPathFunction();
-        $slug = str_replace(' ', '-', $contest->getName());
+        $slug = Utils::slugify($contest->getName());
 
         return call_user_func($path_function, 'contests_contest', array(
             'slug' => $slug,
@@ -91,8 +93,8 @@ class UtilsExtension extends \Twig_Extension {
         $path_function = $this->getPathFunction();
 
         return call_user_func($path_function, 'contests_photos', array(
-            'contest_slug' => str_replace(' ', '-', $category->getContest()->getName()),
-            'category_slug' => str_replace(' ', '-', $category->translate()->getName()),
+            'contest_slug' => Utils::slugify($category->getContest()->getName()),
+            'category_slug' => Utils::slugify($category->translate()->getName()),
         ));
     }
 
@@ -100,9 +102,9 @@ class UtilsExtension extends \Twig_Extension {
         $path_function = $this->getPathFunction();
 
         return call_user_func($path_function, 'spot', array(
-            'country' => str_replace(' ', '-', Intl::getRegionBundle()->getCountryName($spot->getLocation()->getRegion()->getCountry()->getName())),
-            'location' => str_replace(' ', '-', $spot->getLocation()->getName()),
-            'slug' => str_replace(' ', '-', $spot->getName())
+            'country' => Utils::slugify(Intl::getRegionBundle()->getCountryName($spot->getLocation()->getRegion()->getCountry()->getName())),
+            'location' => Utils::slugify($spot->getLocation()->getName()),
+            'slug' => Utils::slugify($spot->getName())
         ));
     }
 
@@ -111,7 +113,17 @@ class UtilsExtension extends \Twig_Extension {
 
         return call_user_func($path_function, 'photo', array(
             'id' => $photo->getId(),
-            'slug' => str_replace(' ', '-', $photo->getTitle())
+            'slug' => Utils::slugify($photo->getTitle())
+        ));
+    }
+
+    public function link_to_taxon($taxon) {
+        $path_function = $this->getPathFunction();
+        $node = strtolower(str_replace('Sk', '', (new \ReflectionClass($taxon))->getShortName()));
+
+        return call_user_func($path_function, 'taxon', array(
+            'node' => $node,
+            'slug' => Utils::slugify($taxon->getName()),
         ));
     }
 }

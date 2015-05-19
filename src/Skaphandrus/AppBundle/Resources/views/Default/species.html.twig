@@ -1,5 +1,10 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
+{% block javascripts %}
+    
+{% endblock %}
+
+
 {% block body %}
 
   {% for sn_name in species.scientificNames %}
@@ -16,12 +21,36 @@
   {% endif %}
 
   <h3>{{ "page.species.h3.taxonomic_structure"|trans }}</h3>
-  <p>{{ "page.species.label.species_kingdom"|trans ~ ": " ~ species.genus.family.order.class.phylum.kingdom.name }}</p>
-  <p>{{ "page.species.label.species_phylum"|trans ~ ": " ~ species.genus.family.order.class.phylum.name }}</p>
-  <p>{{ "page.species.label.species_class"|trans ~ ": " ~ species.genus.family.order.class.name }}</p>
-  <p>{{ "page.species.label.species_order"|trans ~ ": " ~ species.genus.family.order.name }}</p>
-  <p>{{ "page.species.label.species_family"|trans ~ ": " ~ species.genus.family.name }}</p>
-  <p>{{ "page.species.label.species_genus"|trans ~ ": " ~ species.genus.name }}</p>
+  <p>{{ "page.species.label.species_kingdom"|trans }}:
+    <a href="{{ link_to_taxon(species.genus.family.order.class.phylum.kingdom) }}">
+      {{ species.genus.family.order.class.phylum.kingdom.name }}
+    </a>
+  </p>
+  <p>{{ "page.species.label.species_phylum"|trans }}:
+    <a href="{{ link_to_taxon(species.genus.family.order.class.phylum) }}">
+      {{ species.genus.family.order.class.phylum.name }}
+    </a>
+  </p>
+  <p>{{ "page.species.label.species_class"|trans }}:
+    <a href="{{ link_to_taxon(species.genus.family.order.class) }}">
+      {{ species.genus.family.order.class.name }}
+    </a>
+  </p>
+  <p>{{ "page.species.label.species_order"|trans }}:
+    <a href="{{ link_to_taxon(species.genus.family.order) }}">
+      {{ species.genus.family.order.name }}
+    </a>
+  </p>
+  <p>{{ "page.species.label.species_family"|trans }}:
+    <a href="{{ link_to_taxon(species.genus.family) }}">
+      {{ species.genus.family.name }}
+    </a>
+  </p>
+  <p>{{ "page.species.label.species_genus"|trans }}:
+    <a href="{{ link_to_taxon(species.genus) }}">
+      {{ species.genus.name }}
+    </a>
+  </p>
 
   {% if species.translate(app.request.locale).description is not empty %}
     <h3>{{ "page.species.h3.description"|trans }}</h3>
@@ -51,7 +80,7 @@
   {% if species.photos|first is not empty %}
     <h3>{{ "page.species.h3.photos"|trans }}</h3>
     {% for p in species.photos %}
-        <p>{{ p.photo.title }} -> {{ p.photo.image }}</p>
+        <p><a href="{{ link_to_photo(p.photo) }}">{{ p.photo.title }}</a> -> {{ p.photo.image }}</p>
     {% endfor %}
   {% endif %}
 

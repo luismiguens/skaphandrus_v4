@@ -16,7 +16,7 @@
             "data": {
               "url": "/{{ app.request.locale }}/species/source",
               "data": function (n) {
-                return { id: n.id === '#' ? "li.{{ next_taxon }}.{{ taxon.id }}" : n.id };
+                return { id: n.id === '#' ? "li.kingdom.0" : n.id };
               }
             }
           }
@@ -30,17 +30,7 @@
 {% endblock %}
 
 {% block body %}
-  <h2> {{ node }} : {{ taxon.name }}!</h2>
+    <h2>Taxonomy Page</h2>
 
-  {% if taxon.vernaculars is not empty %}
-    <h3>{{ "page.taxon.h3.common_names"|trans }}</h3>
-    {% for vernacular in taxon.vernaculars %}
-        <p>{{ vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}</p>
-    {% endfor %}
-  {% endif %}
-
-  <h2>{{ "page.taxon.h2.taxonomic_structure"|trans }}</h2>
-  <p><a href="{{ link_to_taxon(taxon) }}">{{ taxon.name }}</a></p>
-  <div id="jstree" style="text-align: left;"></div>
+    <div style="text-align: left;" id="jstree"></div>
 {% endblock %}
-
