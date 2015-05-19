@@ -1,0 +1,12 @@
+{% extends 'SkaphandrusAppBundle:FOSUserEmail:_base_template.html.twig' %}
+
+{% block title %}
+{{ 'resetting.email.subject'|trans({}, "FOSUserBundle") }}
+{% endblock %}
+
+{% block body %}
+{{ 'resetting.email.message'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}, "FOSUserBundle") }}
+{% endblock %}
+
+{% block link_url %}{{ confirmationUrl }}{% endblock %}
+{% block link_text %}{{ "Confirm Resetting"|trans }}{% endblock %}

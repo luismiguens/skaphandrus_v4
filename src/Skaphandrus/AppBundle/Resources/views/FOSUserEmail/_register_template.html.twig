@@ -1,0 +1,10 @@
+{% extends 'SkaphandrusAppBundle:FOSUserEmail:_base_template.html.twig' %}
+
+{% block title %}{{ 'registration.email.subject'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}, "FOSUserBundle") }}{% endblock %}
+
+{% block body %}
+    {{ 'registration.email.message'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}, "FOSUserBundle") }}
+{% endblock %}
+
+{% block link_url %}{{ confirmationUrl }}{% endblock %}
+{% block link_text %}{{ "Confirm email address"|trans }}{% endblock %}

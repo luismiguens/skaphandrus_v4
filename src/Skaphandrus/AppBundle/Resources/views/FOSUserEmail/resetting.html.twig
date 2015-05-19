@@ -1,0 +1,9 @@
+{% block subject %}{{ 'resetting.email.subject'|trans({}, "FOSUserBundle") }}{% endblock %}
+
+{% block body_text %}
+{{ 'resetting.email.message'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}, "FOSUserBundle") }}
+{% endblock %}
+
+{% block body_html %}
+{% include 'SkaphandrusAppBundle:FOSUserEmail:_resetting_template.html.twig' %}
+{% endblock %}
