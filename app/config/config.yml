@@ -214,6 +214,19 @@ lexik_translation:
     fallback_locale: en      # (required) default locale to use
     managed_locales: [en, pt]    # (required) locales that the bundle have to manage
 
+
+
+#      "square"     =>  "_s  => 75px*75px",
+#      "thumbnail"  =>  "_t  => 100px do lado maior",
+#      "small"      =>  "_m  => 240px do lado maior",
+#      "medium"     =>  "    => 500px do lado maior",
+#      "medium_640" =>  "_z  => 640px do lado maior",
+#      "large"      =>  "_b  =>1024px do lado maior",
+#      "original"   =>  "_o"
+
+
+
+
 liip_imagine:
     resolvers:
        default:
@@ -225,7 +238,12 @@ liip_imagine:
             quality: 100
             filters:
                 thumbnail: { size: [120, 90], mode: outbound }
-        medium_thumb:
-            quality: 100
+        sk_widen_75:
             filters:
-                thumbnail: { size: [320], mode: outbound }
+                relative_resize: { widen: 75 } # Transforms 500x400 to 260x??
+        sk_widen_100:
+            filters:
+                relative_resize: { widen: 100 }
+        sk_widen_240:
+            filters:
+                relative_resize: { widen: 240 }

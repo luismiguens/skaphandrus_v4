@@ -29,4 +29,23 @@ class SkLocationRepository extends EntityRepository {
             return null;
         }
     }
+    
+    
+    
+        public function findLikeName($term, $locale) {
+
+        return $this->getEntityManager()->createQuery(
+                        "SELECT l
+                FROM SkaphandrusAppBundle:SkLocation l
+                JOIN l.translations t
+                WHERE t.name LIKE :term
+         AND t.locale = :locale
+        ORDER BY t.name DESC"
+                )->setParameter('term', '%' . $term . '%')->setParameter('locale', $locale)->getResult();
+    }
+
+    
+    
+    
+    
 }

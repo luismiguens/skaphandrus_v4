@@ -60,6 +60,38 @@ class AjaxSearchController extends Controller {
     }
     
     
+        public function ajaxSearchLocationAction(Request $request) {
+        
+         $locale = $this->get('request')->getLocale();
+         
+        $q = $request->get('term');
+        $em = $this->getDoctrine()->getManager();
+        $locations = $em->getRepository('SkaphandrusAppBundle:SkLocation')->findLikeName($q, $locale);
+
+
+        $results = array();
+        foreach ($locations as $location) {
+            $results[] = array(
+                'id' => $location->getId(),
+                'name' => $location->getName(),
+                'label' => sprintf("%s, %s", $location->getName(), $location->getRegion()->getCountry())
+            );
+        }
+
+        return new JsonResponse($results);
+    }
+
+    
+    
+    
+    public function ajaxGetLocationAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $SkLocation = $em->getRepository('SkaphandrusAppBundle:SkLocation')->find($id);
+
+        return new Response($SkLocation->getName().", ".$SkLocation()->getRegion()->getCountry());
+    }
+    
+    
     
     
 

@@ -14,17 +14,65 @@ class SkPhotoType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('title', 'text', array('attr' => array('class' => 'form-control'),'label'=>'form.photo.label.title' ) )
-                ->add('file', 'file', array('label'=>'form.photo.label.file'))
-                ->add('description', 'textarea', array('attr' => array('class' => 'form-control'),'label'=>'form.photo.label.description'))
+                ->add('title', 'text', 
+                        array(
+                            'attr' => array('class' => 'form-control'),
+                            'label'=>'form.photo.label.title'
+                            )
+                        )
+                ->add('file', 'file', 
+                        array(
+                            'label'=>'form.photo.label.file',
+                            'required' => true
+                            )
+                        )
+                ->add('description', 'textarea', 
+                        array(
+                            'attr' => array('class' => 'form-control'),
+                            'label'=>'form.photo.label.description', 
+                            'required' => false
+                            )
+                        )
                 //->add('views')
                 //->add('takenAt', 'datetime', array('date_widget' => "single_text", 'time_widget' => "single_text"))
-                //->add('createdAt')
-                ->add('creative', 'entity', array('class' => 'SkaphandrusAppBundle:SkCreativeCommons', 'attr' => array('class' => 'form-control'),'label'=>'form.photo.label.creative'))
-                ->add('model', 'autocomplete', array('class' => 'SkaphandrusAppBundle:SkPhotoMachineModel','attr' => array('class' => ''),'label'=>'form.photo.label.model'))
-                ->add('spot', 'autocomplete', array('class' => 'SkaphandrusAppBundle:SkSpot','attr' => array('class' => 'form-control m-b'),'label'=>'form.photo.label.spot'))
-                ->add('species', 'autocomplete', array('class' => 'SkaphandrusAppBundle:SkSpecies','attr' => array('class' => 'form-control m-b'),'label'=>'form.photo.label.species'))
-                ->add('fosUser')
+                //->add('createdAt', 'hidden')
+                ->add('creative', 'entity', 
+                        array(
+                            'class' => 'SkaphandrusAppBundle:SkCreativeCommons', 
+                            'attr' => array('class' => 'form-control'),
+                            'label'=>'form.photo.label.creative'
+                            )
+                        )
+                ->add('model', 'autocomplete', 
+                        array(
+                            'class' => 'SkaphandrusAppBundle:SkPhotoMachineModel',
+                            'attr' => array('class' => ''),
+                            'label'=>'form.photo.label.model', 
+                            'required' => false
+                            )
+                        )
+                ->add('spot', 'autocomplete', 
+                        array(
+                            'class' => 'SkaphandrusAppBundle:SkSpot',
+                            'attr' => array('class' => 'form-control m-b'),
+                            'label'=>'form.photo.label.spot', 
+                            'required' => false
+                            )
+                        )
+                ->add('species', 'autocomplete', 
+                        array(
+                            'class' => 'SkaphandrusAppBundle:SkSpecies',
+                            'attr' => array('class' => 'form-control m-b'),
+                            'label'=>'form.photo.label.species', 
+                            'required' => false
+                            )
+                        )
+//                ->add('fosUser', 'hidden', 
+//                        array(
+//                            'data_class' => 'Skaphandrus\AppBundle\Entity\FosUser',
+//                            'required' => true
+//                            )
+//                        )
                 //->add('keyword')
                 //->add('category')
                 //->add('cancel', 'submit', array('label' => 'form.common.btn.cancel','attr' => array('class' => 'btn btn-primary')))

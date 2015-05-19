@@ -6,7 +6,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Skaphandrus\AppBundle\Entity\SkPhoto;
 use Skaphandrus\AppBundle\Form\SkPhotoType;
-use Symfony\Component\HttpFoundation\JsonResponse;
+
+
+
+
+
 
 /**
  * SkPhoto controller.
@@ -21,7 +25,9 @@ class SkPhotoController extends Controller {
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->findByFosUser(5);
+        ##@LM
+        $fos_user = $this->get('security.token_storage')->getToken()->getUser();
+        $entities = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->findByFosUser($fos_user );
 
         return $this->render('SkaphandrusAppBundle:SkPhoto:index.html.twig', array(
                     'entities' => $entities,
@@ -34,6 +40,11 @@ class SkPhotoController extends Controller {
      */
     public function createAction(Request $request) {
         $entity = new SkPhoto();
+        
+        ##@LM
+        $fos_user = $this->get('security.token_storage')->getToken()->getUser();
+        $entity->setFosUser($fos_user);
+        
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -44,8 +55,11 @@ class SkPhotoController extends Controller {
 
             $em->persist($entity);
             $em->flush();
+            
+            ##@LM
+            $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
 
-            return $this->redirect($this->generateUrl('photo_admin_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('photo_admin_edit', array('id' => $entity->getId())));
         }
 
         return $this->render('SkaphandrusAppBundle:SkPhoto:new.html.twig', array(
@@ -67,6 +81,7 @@ class SkPhotoController extends Controller {
             'method' => 'POST',
         ));
 
+        ##@LM
         //$form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
@@ -78,18 +93,8 @@ class SkPhotoController extends Controller {
      */
     public function newAction() {
         $entity = new SkPhoto();
-
-//        $fos_user = new \Skaphandrus\AppBundle\Entity\FosUser();
-//        $fos_user->setId(5);
-//
-//        $entity->setFosUser($fos_user);
-
         $form = $this->createCreateForm($entity);
        
-
-
-
-
         return $this->render('SkaphandrusAppBundle:SkPhoto:new.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
@@ -100,22 +105,22 @@ class SkPhotoController extends Controller {
      * Finds and displays a SkPhoto entity.
      *
      */
-    public function showAction($id) {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find SkPhoto entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('SkaphandrusAppBundle:SkPhoto:show.html.twig', array(
-                    'entity' => $entity,
-                    'delete_form' => $deleteForm->createView(),
-        ));
-    }
+//    public function showAction($id) {
+//        $em = $this->getDoctrine()->getManager();
+//
+//        $entity = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($id);
+//
+//        if (!$entity) {
+//            throw $this->createNotFoundException('Unable to find SkPhoto entity.');
+//        }
+//
+//        $deleteForm = $this->createDeleteForm($id);
+//
+//        return $this->render('SkaphandrusAppBundle:SkPhoto:show.html.twig', array(
+//                    'entity' => $entity,
+//                    'delete_form' => $deleteForm->createView(),
+//        ));
+//    }
 
     /**
      * Displays a form to edit an existing SkPhoto entity.
@@ -155,7 +160,8 @@ class SkPhotoController extends Controller {
             'action' => $this->generateUrl('photo_admin_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
-
+        
+        ##@LM
         //$form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
@@ -180,6 +186,9 @@ class SkPhotoController extends Controller {
 
         if ($editForm->isValid()) {
             $em->flush();
+            
+            ##@LM
+            $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
 
             return $this->redirect($this->generateUrl('photo_admin_edit', array('id' => $id)));
         }

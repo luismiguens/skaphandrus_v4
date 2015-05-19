@@ -6,6 +6,16 @@
                 <source>form.photo.label.title</source>
                 <target>Titulo</target>
             </trans-unit>
+            <trans-unit id="2">
+                <source>page.photo.h3.views</source>
+                <target>Number of views: %views%</target>
+            </trans-unit>
+            
+            <trans-unit id="3">
+                <source>form.common.message.changes_saved</source>
+                <target>alteracoes_guardadas</target>
+            </trans-unit>
+            
         </body>
     </file>
 </xliff>

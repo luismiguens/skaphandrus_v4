@@ -12,16 +12,14 @@
 
 {% block styleshets %}
     {{ parent() }}
-    <!-- Data Tables -->
-
 {% endblock %}
 
-{% block form_title %}
+{% block form_heading_title %}
     {{ "form.photo.h1.title"|trans }}
 {% endblock %}
 
 
-{% block form_breadcrumbs %}
+{% block form_heading_breadcrumbs %}
     <ol class="breadcrumb">
         <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
         <li><a href="index.html">{{ "breadcrumb.photos"|trans }}</a></li>
@@ -29,8 +27,8 @@
     </ol>
 {% endblock %}
 
-{% block form_title_action %}
-    {{ "form.photo.btn.add"|trans }}
+{% block form_heading_action %}
+    <a href="{{ path('photo_admin_new') }}" class="btn btn-primary">{{ "form.photo.btn.add"|trans }}</a>
 {% endblock %}
 
 {% block form_title_description %}

@@ -31,6 +31,7 @@ security:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
+            
         # the login page has to be accessible for everybody
 #        demo_login:
 #            pattern:  ^/demo/secured/login$
@@ -64,6 +65,8 @@ security:
 #                path:           /admin/logout
 #            anonymous:          true
 
+
+
         # -> end custom configuration
 
         # default login area for standard users
@@ -86,3 +89,4 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        

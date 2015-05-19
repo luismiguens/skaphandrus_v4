@@ -32,12 +32,12 @@
                 <!-- page-heading begin -->
                 <div class="row wrapper border-bottom white-bg page-heading">
                     <div class="col-sm-4">
-                        <h2>{% block form_title %}{% endblock %}</h2>
-                    {% block form_breadcrumbs %}{% endblock %}
+                        <h2>{% block form_heading_title %}{% endblock %}</h2>
+                            {% block form_heading_breadcrumbs %}{% endblock %}
                 </div>
                 <div class="col-sm-8">
                     <div class="title-action">
-                        <a href="" class="btn btn-primary">{% block form_title_action %}{% endblock %}</a>
+                        {% block form_heading_action %}{% endblock %}
                     </div>
                 </div>
             </div>
@@ -50,6 +50,14 @@
                                 <h5>{% block form_title_description %}{% endblock %}</h5>
                             </div>
                             <div class="ibox-content">
+
+                                {% for flashMessage in app.session.flashbag.get('notice') %}
+                                    <div class="alert alert-success alert-dismissable">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        {{ flashMessage|trans }}
+                                    </div>
+                                {% endfor %}
+
                                 {% block body %}
                                 {% endblock %}
                             </div>

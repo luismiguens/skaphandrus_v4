@@ -1,16 +1,49 @@
-{% extends '::base.html.twig' %}
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
 
-{% block body -%}
-    <h1>SkSpot edit</h1>
+{% form_theme edit_form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
 
-    {{ form(edit_form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('spot') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
+    <script src="{{ asset('bundles/pugxautocompleter/js/autocompleter-jqueryui.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/skaphandrus.js') }}"></script>
 {% endblock %}
+
+
+{% block form_heading_title %}
+    {{ "form.spot.h1.title"|trans }}
+{% endblock %}
+
+
+{% block form_heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="index.html">{{ "breadcrumb.spots"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.edit_spot"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+
+{% block form_heading_action %}
+    <a href="{{ path('spot_admin_new') }}" class="btn btn-primary">{{ "form.spot.btn.add"|trans }}</a>
+{% endblock %}
+
+
+{% block form_title_description %}
+    {{ "form.spot.text.description"|trans }}
+{% endblock %}
+
+
+{% block body %}
+
+    {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_widget(edit_form) }}
+    {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'spot_admin', 'new_form':false} %}
+    {{ form_end(edit_form) }}
+
+
+    {{ form(delete_form) }}
+
+
+{% endblock %}
+

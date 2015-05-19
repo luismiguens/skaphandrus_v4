@@ -20,20 +20,20 @@
     <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/dataTables.tableTools.min.css') }}" rel="stylesheet">
 {% endblock %}
 
-{% block form_title %}
+{% block form_heading_title %}
     {{ "form.photo.h1.title"|trans }}
 {% endblock %}
 
 
-{% block form_breadcrumbs %}
+{% block form_heading_breadcrumbs %}
     <ol class="breadcrumb">
         <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
         <li class="active"><strong>{{ "breadcrumb.photos"|trans }}</strong></li>
     </ol>
 {% endblock %}
 
-{% block form_title_action %}
-    {{ "form.photo.btn.add"|trans }}
+{% block form_heading_action %}
+    <a href="{{ path('photo_admin_new') }}" class="btn btn-primary">{{ "form.photo.btn.add"|trans }}</a>
 {% endblock %}
 
 {% block form_title_description %}
@@ -44,12 +44,12 @@
 
 {% block body -%}
 
-    <table class="table table-striped table-bordered table-hover dataTables-example">
+
+    <table id="datatable-list" class="table display table-striped table-bordered table-hover " cellspacing="0" width="100%">
         <thead>
             <tr>
                 <th>{{ "form.photo.label.title"|trans }}</th>
                 <th>{{ "form.photo.label.image"|trans }}</th>
-                <th>{{ "form.photo.label.views"|trans }}</th>
                 <th>{{ "form.photo.label.takenat"|trans }}</th>
                 <th>{{ "form.common.label.actions"|trans }}</th>
             </tr>
@@ -58,28 +58,24 @@
             {% for entity in entities %}
                 <tr>
                     <td><a href="{{ link_to_photo(entity) }}">{{ entity.title }}</a></td>
-                    <td>{{ entity.image }}</td>
-                    <td>{{ entity.views }}</td>
+                    <td><img src="{{ entity.getWebPath | imagine_filter('sk_widen_240') }}" /></td>
                     <td>{% if entity.takenAt %}{{ entity.takenAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                     <td>
-                        <ul class="">
-                            <li>
-                                <a class="btn btn-white btn-sm" href="{{ path('photo_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.edit"|trans }}</a>
-                            </li>
-                        </ul>
+                        <a class="btn btn-white btn-sm" href="{{ path('photo_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.edit"|trans }}</a>
+                        <a class="btn btn-white btn-sm" href="{{ link_to_photo(entity) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.view"|trans }}</a>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a class="btn btn-primary" href="{{ path('photo_admin_new') }}">
-               <i class="fa fa-pencil"></i>  {{ "form.photo.btn.add"|trans }}
-            </a>
-        </li>
-    </ul>
+
+
+    <a class="btn btn-primary" href="{{ path('photo_admin_new') }}">
+        <i class="fa fa-pencil"></i>  {{ "form.photo.btn.add"|trans }}
+    </a>
+
+
 
 
 {% endblock %}

@@ -18,11 +18,19 @@ class SkSpotType extends AbstractType
             ->add('maxDepth')
             ->add('coordinate')
             ->add('zoom')
-            ->add('isAproved')
-            ->add('createdAt')
+            //->add('isAproved')
+            //->add('createdAt')
             ->add('updatedAt')
-            ->add('fosUser')
-            ->add('location')
+            //->add('fosUser')
+                            ->add('location', 'autocomplete', 
+                        array(
+                            'class' => 'SkaphandrusAppBundle:SkLocation',
+                            'attr' => array('class' => 'form-control m-b'),
+                            'label'=>'form.photo.label.location', 
+                            'required' => false
+                            )
+                        )
+                 ->add('translations', 'a2lix_translations')
         ;
     }
     

@@ -130,6 +130,9 @@ ajax_search_spot:
     path:     /{_locale}/ajax_search_spot/
     defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxSearchSpot }
 
+ajax_search_location:
+    path:     /{_locale}/ajax_search_location/
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxSearchLocation }
 
 ajax_get_photo_machine_model:
     path:     /{_locale}/ajax_get_photo_machine_model/{id}

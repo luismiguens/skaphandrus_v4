@@ -168,5 +168,7 @@ class SkLocation
         return $this->translate()->getName();
     }
     
-    
+    public function __toString() {
+        return $this->getName();
+    }
 }
