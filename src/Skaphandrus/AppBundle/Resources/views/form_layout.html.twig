@@ -1,12 +1,36 @@
 <!DOCTYPE html>
-<html>
 
-    <head>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
+<!--[if !IE]><!--> <html lang="{{ app.request.locale }}" xmlns:fb="http://www.facebook.com/2008/fbml" > <!--<![endif]--> 
+    
 
+    <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# skaphandrus: http://ogp.me/ns/fb/skaphandrus#">
+        
+        <title>{% block page_title %}{% endblock %}</title>
+        <link rel="shortcut icon" href="favicon.ico"> 
+        
+        
+        <!-- Meta -->
         <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <title>INSPINIA | Minor view</title>
+        <meta name="google-site-verification" content="4Tm2ZPRBKI8g1uSYzNSLcRPniZr0ZB-PJAOnU-Glshc" />
+        <meta name="msvalidate.01" content="A46E7B6BA16D68E9F871752AAB51389E" />
+        <meta name="robots" content="noodp">
+        <meta name="keywords" content="{% block page_keywords %}{% endblock %}" />
+        <meta name="description" content="{% block page_description %}{% endblock %}" />
+       
+        
+        <!-- smart app link -->        
+        <meta name="apple-itunes-app" content="app-id=894101166"/>
+        <meta name="google-play-app" content="app-id=com.skaphandrus.oceanlifeid">
+        
+        <!-- hreflang for language -->
+        <link rel="alternate" hreflang="pt" href="http://skaphandrus.com/pt" />
+        <link rel="alternate" hreflang="en" href="http://skaphandrus.com/en" />
+        
+        
         {% block stylesheets %}
             <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">
             <link href="{{ asset('bundles/skaphandrusapp/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
@@ -31,40 +55,40 @@
                 </div>
                 <!-- page-heading begin -->
                 <div class="row wrapper border-bottom white-bg page-heading">
-                    <div class="col-sm-4">
-                        <h2>{% block form_heading_title %}{% endblock %}</h2>
-                            {% block form_heading_breadcrumbs %}{% endblock %}
-                </div>
-                <div class="col-sm-8">
-                    <div class="title-action">
-                        {% block form_heading_action %}{% endblock %}
+                    <div class="col-sm-6">
+                        <h2>{% block heading_title %}{% endblock %}</h2>
+                            {% block heading_breadcrumbs %}{% endblock %}
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="title-action">
+                            {% block heading_action %}{% endblock %}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- page-heading end -->
-            <div class="wrapper wrapper-content animated fadeInRight">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="ibox float-e-margins">
-                            <div class="ibox-title">
-                                <h5>{% block form_title_description %}{% endblock %}</h5>
-                            </div>
-                            <div class="ibox-content">
+                <!-- page-heading end -->
+                <div class="wrapper wrapper-content animated fadeInRight">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>{% block form_title_description %}{% endblock %}</h5>
+                                </div>
+                                <div class="ibox-content">
 
-                                {% for flashMessage in app.session.flashbag.get('notice') %}
-                                    <div class="alert alert-success alert-dismissable">
-                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                        {{ flashMessage|trans }}
-                                    </div>
-                                {% endfor %}
+                                    {% for flashMessage in app.session.flashbag.get('notice') %}
+                                        <div class="alert alert-success alert-dismissable">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                            {{ flashMessage|trans }}
+                                        </div>
+                                    {% endfor %}
 
-                                {% block body %}
-                                {% endblock %}
+                                    {% block body %}
+                                    {% endblock %}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
             <div class="footer">
                 <div class="pull-right">

@@ -37,4 +37,12 @@ class SkPhotoRepository extends EntityRepository
         return new Paginator($query, TRUE);
     }
 
+    
+    public function getPrimaryPhotoForSpecies($species_id) {
+        
+        return $this->findBy(array('species' => $species_id), array('id' => 'DESC'))[0];
+    }
+    
+    
+    
 }

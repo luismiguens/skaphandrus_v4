@@ -245,15 +245,21 @@ class DefaultController extends Controller {
 
     public function speciesPageAction($slug) {
         $locale = $this->get('request')->getLocale();
-        $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
-            ->findBySlug($slug);
+        $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findBySlug($slug);
 
         if ($species) {
+            
+            
+            $photo = $this->getDoctrine()
+                    ->getRepository("SkaphandrusAppBundle:SkPhoto")->getPrimaryPhotoForSpecies($species->getId());
+            
+            $users = $this->getDoctrine()
+                    ->getRepository("SkaphandrusAppBundle:SkPhoto")->findPhotosCountByUserForModel($species->getId());
+            
             return $this->render('SkaphandrusAppBundle:Default:species.html.twig', array(
                 "species" => $species,
-                "users" => $this->getDoctrine()
-                    ->getRepository("SkaphandrusAppBundle:SkPhoto")
-                    ->findPhotosCountByUserForModel($species->getId()),
+                "photo" => $photo,
+                "users" => $users
             ));
         }
         else {

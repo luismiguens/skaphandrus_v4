@@ -104,7 +104,7 @@ class AjaxSearchController extends Controller {
         $results = array();
         foreach ($speciess as $species) {
             $results[] = array(
-                'id' => $species->getId(),
+                'id' => $species->getSpecies()->getId(),
                 'name' => $species->getName(),
                 //'label' => sprintf("[%s] %s", $species->getName(), $species->getName())
                 'label' => sprintf("%s", $species->getName())

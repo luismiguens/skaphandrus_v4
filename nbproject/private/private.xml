@@ -24,19 +24,25 @@
             <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Form/SkSpotType.php</file>
             <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/SkSpot/index.html.twig</file>
             <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Controller/SkSpotController.php</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/species.html.twig</file>
             <file>file:/home/luis/sfprojects/skaphandrus_v4/app/config/routing.yml</file>
             <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Controller/AjaxSearchController.php</file>
             <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Entity/Repository/SkLocationRepository.php</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Controller/DefaultController.php</file>
             <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/config/routing.yml</file>
             <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/public/js/skaphandrus.js</file>
             <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/config/routing/skphoto.yml</file>
             <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Entity/SkLocation.php</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Entity/Repository/SkPhotoRepository.php</file>
             <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/SkPhoto/edit.html.twig</file>
             <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/config/routing/skspot.yml</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Entity/Repository/SkSpeciesRepository.php</file>
             <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/SkPhoto/index.html.twig</file>
             <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Admin/SkSpeciesAdmin.php</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Entity/SkSpecies.php</file>
             <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Common/navbar-menu.html.twig</file>
             <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/SkSpot/edit.html.twig</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/content_layout.html.twig</file>
         </group>
     </open-files>
 </project-private>

@@ -21,19 +21,19 @@
     <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/dataTables.tableTools.min.css') }}" rel="stylesheet">
 {% endblock %}
 
-{% block form_heading_title %}
+{% block heading_title %}
     {{ "form.spot.h1.title"|trans }}
 {% endblock %}
 
 
-{% block form_heading_breadcrumbs %}
+{% block heading_breadcrumbs %}
     <ol class="breadcrumb">
         <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
         <li class="active"><strong>{{ "breadcrumb.spots"|trans }}</strong></li>
     </ol>
 {% endblock %}
 
-{% block form_heading_action %}
+{% block heading_action %}
     <a href="{{ path('spot_admin_new') }}" class="btn btn-primary">{{ "form.spot.btn.add"|trans }}</a>
 {% endblock %}
 
