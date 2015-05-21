@@ -1,0 +1,11 @@
+<div class="isotope-board">
+  {% for photo in photos %}
+    <div class="board-item">
+      <div class="img-container">
+        <a href="{{ link_to_photo(photo) }}">
+          <img src="/{{ photo.webPath }}" alt="{{ photo.title }}">
+        </a>
+      </div>
+    </div>
+  {% endfor %}
+</div>

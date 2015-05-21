@@ -40,8 +40,14 @@ class UtilsExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('link_to_contest', array($this, 'link_to_photo_contest')),
             new \Twig_SimpleFunction('link_to_contest_photos', array($this, 'link_to_contest_photos')),
             new \Twig_SimpleFunction('link_to_spot', array($this, 'link_to_spot')),
-            new \Twig_SimpleFunction('link_to_photo', array($this, 'link_to_photo')),
+            new \Twig_SimpleFunction('link_to_photo', array($this, 'link_to_photo'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('link_to_taxon', array($this, 'link_to_taxon')),
+
+            // URL helper functions.
+            new \Twig_SimpleFunction('url_to_photo', array($this, 'url_to_photo')),
+
+            // Other helpers
+            new \Twig_SimpleFunction('sk_build_query', array($this, 'sk_build_query'))
         );
     }
 
@@ -111,10 +117,14 @@ class UtilsExtension extends \Twig_Extension {
     public function link_to_photo($photo) {
         $path_function = $this->getPathFunction();
 
-        return call_user_func($path_function, 'photo', array(
+        $url = call_user_func($path_function, 'photo', array(
             'id' => $photo->getId(),
             'slug' => Utils::slugify($photo->getTitle())
         ));
+
+        $link = '<a href="'.$url.'"><img src="/'.$photo->getWebPath().'" alt="'.$photo->getTitle().'"></a>';
+
+        return $link;
     }
 
     public function link_to_taxon($taxon) {
@@ -125,5 +135,26 @@ class UtilsExtension extends \Twig_Extension {
             'node' => $node,
             'slug' => Utils::slugify($taxon->getName()),
         ));
+    }
+
+    /*
+     * URL helper functions.
+     */
+
+    public function url_to_photo($photo) {
+        $path_function = $this->getPathFunction();
+
+        return call_user_func($path_function, 'photo', array(
+            'id' => $photo->getId(),
+            'slug' => Utils::slugify($photo->getTitle())
+        ));
+    }
+
+    /*
+     * Other helpers.
+     */
+
+    public function sk_build_query($array) {
+        return html_build_query($array);
     }
 }

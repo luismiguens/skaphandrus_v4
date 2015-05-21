@@ -9,4 +9,7 @@
         <p>{{ spot.coordinate }}</p>
     {% endfor %}
   {% endif %}
+
+  {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'fosUser': user.id } } )) }}
+
 {% endblock %}

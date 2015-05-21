@@ -406,4 +406,36 @@ class DefaultController extends Controller {
             throw $this->createNotFoundException('The user with id "'. $id .'" does not exist.');
         }
     }
+
+
+    // ############################# COMPONENTS #############################
+
+    /*
+     * Prints a board of photos.
+     */
+    public function skBoardAction($type, $id) {
+        $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
+            ->findBy(array($type => $id));
+
+        return $this->render('SkaphandrusAppBundle:Default:skBoard.html.twig', array(
+            'photos' => $photos,
+        ));
+    }
+
+    /*
+     * Prints a grid of photos.
+     *
+     * Include these files on the page:
+     * <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
+     * <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
+     */
+    public function skGridAction($parameters, $order = array('id' => 'desc'), $limit = 20) {
+        $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
+            ->findBy($parameters, $order, $limit);
+
+        return $this->render('SkaphandrusAppBundle:Default:skGrid.html.twig', array(
+            'photos' => $photos,
+            'parameters' => $parameters,
+        ));
+    }
 }

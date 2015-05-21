@@ -4,6 +4,38 @@
 {% block page_description %}description{% endblock %}
 {% block page_keywords %}keywords{% endblock %}
 
+{% block stylesheets %}
+  {{ parent() }}
+  {#<style>
+    .isotope-board .board-item {
+      text-align: center;
+      padding: 5px;
+      width: 200px;
+    }
+
+    .isotope-board .board-item img {
+      max-width: 190px;
+    }
+  </style>#}
+  <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {#<script src="{{ asset('bundles/skaphandrusapp/js/isotope.pkgd.min.js') }}"></script>
+  <script>
+    $(function () {
+      $('.isotope-board').isotope({
+        itemSelector: '.board-item',
+        // layout mode options
+        masonry: {
+          columnWidth: 200
+        }
+      });
+    });
+  </script>#}
+  <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
+{% endblock %}
 
 {% block heading_title %}
     {% for sn_name in species.scientificNames %}
@@ -123,9 +155,10 @@
                                                 {% if species.photos|first is not empty %}
                                                     <div id="tab-{{tab_photos_id}}" class="tab-pane {{tab_photos_id==1?'active'}}">
                                                         <h3>{{ "page.species.h3.photos"|trans }}</h3>
-                                                        {% for p in species.photos %}
+                                                        {# for p in species.photos %}
                                                             <p><a href="{{ link_to_photo(p.photo) }}">{{ p.photo.title }}</a> -> {{ p.photo.image }}</p>
-                                                        {% endfor %}
+                                                        {% endfor #}
+                                                        {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': species.id } } )) }}
                                                         {% if users is not empty %}
                                                             <h3>{{ "page.species.h3.user_photos"|trans }}</h3>
                                                             {% for u in users %}
@@ -135,7 +168,7 @@
                                                             {% endfor %}
                                                         {% endif %}
                                                     </div>
-                                                {% endif %} 
+                                                {% endif %}                                                
 
                                                 {% if species.speciesVernaculars is not empty %}
                                                     <div id="tab-{{tab_vernas_id}}" class="tab-pane {{tab_vernas_id==1?'active'}}">

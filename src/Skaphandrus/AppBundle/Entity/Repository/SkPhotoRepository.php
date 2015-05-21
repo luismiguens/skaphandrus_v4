@@ -26,15 +26,22 @@ class SkPhotoRepository extends EntityRepository
             )->setParameter('id', $id)->getResult();
     }
 
-    public function findAllAsPaginator($page, $per_page = 10) {
+    public function findAllAsPaginator($page, $per_page = 10, $params = array()) {
         $first = ($page - 1) * $per_page;
 
-        $query = $this->getEntityManager()
-            ->createQuery("SELECT p FROM SkaphandrusAppBundle:SkPhoto p ORDER BY p.createdAt DESC")
-            ->setFirstResult($first)
-            ->setMaxResults($per_page);
+        // $query = $this->getEntityManager()
+        //     ->createQuery("SELECT p FROM SkaphandrusAppBundle:SkPhoto p ORDER BY p.createdAt DESC")
+        //     ->setFirstResult($first)
+        //     ->setMaxResults($per_page);
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('p')
+           ->from('SkaphandrusAppBundle:SkPhoto', 'p')
+           ->setParameters($params)
+           ->setFirstResult($first)
+           ->setMaxResults($per_page)
+           ->getQuery();
 
-        return new Paginator($query, TRUE);
+        return new Paginator($qb, TRUE);
     }
 
     

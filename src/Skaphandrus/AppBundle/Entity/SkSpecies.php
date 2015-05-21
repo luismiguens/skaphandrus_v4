@@ -258,6 +258,15 @@ class SkSpecies {
         return $this->scientific_names;
     }
 
+    /**
+     * Get Name
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getName() {
+        return $this->scientific_names[0];
+    }
+
 
 
 }

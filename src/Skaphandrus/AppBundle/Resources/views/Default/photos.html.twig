@@ -1,12 +1,61 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
+{% block stylesheets %}
+  {{ parent() }}
+  <style>
+    .isotope-board .board-item {
+      text-align: center;
+      padding: 5px;
+      width: 200px;
+    }
+
+    .isotope-board .board-item img {
+      max-width: 190px;
+    }
+  </style>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('bundles/skaphandrusapp/js/isotope.pkgd.min.js') }}"></script>
+  <script>
+    $(function () {
+      $('.isotope-board').isotope({
+        itemSelector: '.board-item',
+        // layout mode options
+        masonry: {
+          columnWidth: 200
+        }
+      });
+    });
+  </script>
+{% endblock %}
+
+
 {% block body %}
     <h2>{{ "page.photos.h2.photos"|trans }}</h2>
+    <div class="row">
     {% for photo in photos.iterator %}
-        <h3>{{ photo.title }}</h3>
-        <p>{{ photo.image }}</p>
-        <p>{{ photo.description }}</p>
+        {#<h3>{{ photo.title }}</h3>
+        <img src="/{{ photo.webPath }}" alt="{{ photo.title }}">
+        <p>{{ photo.description }}</p>#}
+
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img src="{{ photo.webPath | imagine_filter('sk_widen_590') }}" alt="{{ photo.title }}">
+                <div class="caption">
+                    <p>{{ "page.photos.label.username"|trans }}: {{ photo.fosUser.username }}</p>
+                    {% if photo.spot is not null %}
+                        <p>{{ "page.photos.label.spot"|trans }}: {{ photo.spot.getName }}</p>
+                    {% endif %}
+                    {% if photo.species is not null %}
+                        <p>{{ "page.photos.label.species"|trans }}: {{ photo.species.name }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     {% endfor %}
+    </div>
 
     {# PAGINATION #}
     {% if pagination.total_pages > 1 %}
