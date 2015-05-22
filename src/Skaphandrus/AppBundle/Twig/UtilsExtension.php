@@ -35,16 +35,23 @@ class UtilsExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('intl_locale_name', array($this, 'intl_locale_name')),
             
             // Link helper functions.
-            new \Twig_SimpleFunction('link_to_user', array($this, 'link_to_user')),
-            new \Twig_SimpleFunction('link_to_species', array($this, 'link_to_species')),
-            new \Twig_SimpleFunction('link_to_contest', array($this, 'link_to_photo_contest')),
-            new \Twig_SimpleFunction('link_to_contest_photos', array($this, 'link_to_contest_photos')),
-            new \Twig_SimpleFunction('link_to_spot', array($this, 'link_to_spot')),
+            // The "is_safe" parameter allows html, for rendering the links.
+            new \Twig_SimpleFunction('link_to_user', array($this, 'link_to_user'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('link_to_species', array($this, 'link_to_species'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('link_to_contest', array($this, 'link_to_photo_contest'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('link_to_contest_photos', array($this, 'link_to_contest_photos'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('link_to_spot', array($this, 'link_to_spot'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('link_to_photo', array($this, 'link_to_photo'), array('is_safe' => array('html'))),
-            new \Twig_SimpleFunction('link_to_taxon', array($this, 'link_to_taxon')),
+            new \Twig_SimpleFunction('link_to_taxon', array($this, 'link_to_taxon'), array('is_safe' => array('html'))),
 
             // URL helper functions.
+            new \Twig_SimpleFunction('url_to_user', array($this, 'url_to_user')),
+            new \Twig_SimpleFunction('url_to_species', array($this, 'url_to_species')),
+            new \Twig_SimpleFunction('url_to_contest', array($this, 'url_to_photo_contest')),
+            new \Twig_SimpleFunction('url_to_contest_photos', array($this, 'url_to_contest_photos')),
+            new \Twig_SimpleFunction('url_to_spot', array($this, 'url_to_spot')),
             new \Twig_SimpleFunction('url_to_photo', array($this, 'url_to_photo')),
+            new \Twig_SimpleFunction('url_to_taxon', array($this, 'url_to_taxon')),
 
             // Other helpers
             new \Twig_SimpleFunction('sk_build_query', array($this, 'sk_build_query'))
@@ -68,6 +75,39 @@ class UtilsExtension extends \Twig_Extension {
      */
 
     public function link_to_user($user) {
+        return '<a href="'. $this->url_to_user($user) .'" title="'. $user->getUsername() .'">'. $user->getUsername() .'</a>';
+    }
+
+    public function link_to_species($species) {
+        $names = $species->getScientificNames();
+        return '<a href="'. $this->url_to_species($species) .'" title="'. $names[0]->getName() .'">'. $names[0]->getName() .'</a>';
+    }
+
+    public function link_to_contest($contest) {
+        return '<a href="'. $this->url_to_contest($contest) .'" title="'. $contest->getName() .'">'. $contest->getName() .'</a>';
+    }
+
+    public function link_to_contest_photos($category) {
+        return '<a href="'. $this->url_to_contest_photos($category) .'" title="'. $category->translate()->getName() .'">'. $category->translate()->getName() .'</a>';
+    }
+
+    public function link_to_spot($spot) {
+        return '<a href="'. $this->url_to_spot($spot) .'" title="'. $spot->getName() .'">'. $spot->getName() .'</a>';
+    }
+
+    public function link_to_photo($photo) {
+        return '<a href="'. $this->url_to_photo($photo) .'" title="'. $photo->getTitle() .'"><img src="/'. $photo->getWebPath() .'" alt="'.$photo->getTitle().'"></a>';
+    }
+
+    public function link_to_taxon($taxon) {
+        return '<a href="'. $this->url_to_taxon($taxon) .'" title="'. $taxon->getName() .'">'. $taxon->getName() .'</a>';
+    }
+
+    /*
+     * URL helper functions.
+     */
+    
+    public function url_to_user($user) {
         $path_function = $this->getPathFunction();
 
         return call_user_func($path_function, 'user', array(
@@ -76,7 +116,7 @@ class UtilsExtension extends \Twig_Extension {
         ));
     }
 
-    public function link_to_species($species) {
+    public function url_to_species($species) {
         $path_function = $this->getPathFunction();
         $names = $species->getScientificNames();
         $slug = Utils::slugify($names[0]->getName());
@@ -86,7 +126,7 @@ class UtilsExtension extends \Twig_Extension {
         ));
     }
 
-    public function link_to_contest($contest) {
+    public function url_to_contest($contest) {
         $path_function = $this->getPathFunction();
         $slug = Utils::slugify($contest->getName());
 
@@ -95,7 +135,7 @@ class UtilsExtension extends \Twig_Extension {
         ));
     }
 
-    public function link_to_contest_photos($category) {
+    public function url_to_contest_photos($category) {
         $path_function = $this->getPathFunction();
 
         return call_user_func($path_function, 'contests_photos', array(
@@ -104,7 +144,7 @@ class UtilsExtension extends \Twig_Extension {
         ));
     }
 
-    public function link_to_spot($spot) {
+    public function url_to_spot($spot) {
         $path_function = $this->getPathFunction();
 
         return call_user_func($path_function, 'spot', array(
@@ -114,39 +154,22 @@ class UtilsExtension extends \Twig_Extension {
         ));
     }
 
-    public function link_to_photo($photo) {
-        $path_function = $this->getPathFunction();
-
-        $url = call_user_func($path_function, 'photo', array(
-            'id' => $photo->getId(),
-            'slug' => Utils::slugify($photo->getTitle())
-        ));
-
-        $link = '<a href="'.$url.'"><img src="/'.$photo->getWebPath().'" alt="'.$photo->getTitle().'"></a>';
-
-        return $link;
-    }
-
-    public function link_to_taxon($taxon) {
-        $path_function = $this->getPathFunction();
-        $node = strtolower(str_replace('Sk', '', (new \ReflectionClass($taxon))->getShortName()));
-
-        return call_user_func($path_function, 'taxon', array(
-            'node' => $node,
-            'slug' => Utils::slugify($taxon->getName()),
-        ));
-    }
-
-    /*
-     * URL helper functions.
-     */
-
     public function url_to_photo($photo) {
         $path_function = $this->getPathFunction();
 
         return call_user_func($path_function, 'photo', array(
             'id' => $photo->getId(),
             'slug' => Utils::slugify($photo->getTitle())
+        ));
+    }
+
+    public function url_to_taxon($taxon) {
+        $path_function = $this->getPathFunction();
+        $node = strtolower(str_replace('Sk', '', (new \ReflectionClass($taxon))->getShortName()));
+
+        return call_user_func($path_function, 'taxon', array(
+            'node' => $node,
+            'slug' => Utils::slugify($taxon->getName()),
         ));
     }
 

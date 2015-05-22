@@ -41,16 +41,18 @@ class AppKernel extends Kernel {
             
             new Liip\ImagineBundle\LiipImagineBundle(),
 
-new PUGX\AutocompleterBundle\PUGXAutocompleterBundle(),
+            new PUGX\AutocompleterBundle\PUGXAutocompleterBundle(),
 
-//new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
+            //new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
             
             //new Application\Sonata\UserBundle\ApplicationSonataUserBundle()
             
             //new Cocur\Slugify\Bridge\Symfony\CocurSlugifyBundle(),
-            
-            
-            
+
+            // FosCommentBundle, and dependencies
+            new FOS\RestBundle\FOSRestBundle(),
+            new FOS\CommentBundle\FOSCommentBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle($this),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -15,7 +15,7 @@
     {% endfor %}
 
     {% for photographer in photographers %}
-        <h3><a href="{{ link_to_user(photographer.user) }}">{{ photographer.user.username }}</a></h3>
+        <h3>{{ link_to_user(photographer.user) }}</h3>
         <p>{{ "page.photographers.label.photos"|trans }}: {{ photographer.photos|length }}</p>
     {% endfor %}
 {% endblock %}
