@@ -22,7 +22,7 @@
     {% if photo.species is not empty %}
         <h3>{{ "page.photo.h3.species"|trans }}</h3>
         {% for sn in photo.species.scientificNames %}
-        <p><a href="{{ link_to_species(photo.species) }}">{{ sn.name }}</a></p>
+        <p>{{ link_to_species(photo.species) }}</p>
         {% endfor %}
     {% endif %}
 

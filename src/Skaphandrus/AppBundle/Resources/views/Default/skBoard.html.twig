@@ -2,7 +2,7 @@
   {% for photo in photos %}
     <div class="board-item">
       <div class="img-container">
-        <a href="{{ link_to_photo(photo) }}">
+        <a href="/{{ photo.webPath }} }}">
           <img src="/{{ photo.webPath }}" alt="{{ photo.title }}">
         </a>
       </div>

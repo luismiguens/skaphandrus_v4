@@ -36,6 +36,19 @@ class AppKernel extends Kernel {
             // extend the ``FOSUserBundle``
             new FOS\UserBundle\FOSUserBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
+
+            new PUGX\AutocompleterBundle\PUGXAutocompleterBundle(),
+
+            //new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
+            
+            //new Application\Sonata\UserBundle\ApplicationSonataUserBundle()
+            
+            //new Cocur\Slugify\Bridge\Symfony\CocurSlugifyBundle(),
+
+            // FosCommentBundle, and dependencies
+            new FOS\RestBundle\FOSRestBundle(),
+            new FOS\CommentBundle\FOSCommentBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle($this),
             new PUGX\AutocompleterBundle\PUGXAutocompleterBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
 //new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),

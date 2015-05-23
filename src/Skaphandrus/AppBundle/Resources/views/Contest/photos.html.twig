@@ -9,9 +9,7 @@
             {% if cat.id == category.id %}
                 {{ cat.translate(app.request.locale).name }}
             {% else %}
-                <a href="{{ link_to_contest_photos(cat) }}">
-                    {{ cat.translate(app.request.locale).name }}
-                </a>
+                {{ link_to_contest_photos(cat) }}
             {% endif %}
         </li>
         {% endfor %}

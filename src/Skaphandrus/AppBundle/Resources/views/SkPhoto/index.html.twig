@@ -57,12 +57,12 @@
         <tbody>
             {% for entity in entities %}
                 <tr>
-                    <td><a href="{{ link_to_photo(entity) }}">{{ entity.title }}</a></td>
+                    <td>{{ link_to_photo(entity) }}</td>
                     <td><img src="{{ entity.getWebPath | imagine_filter('sk_widen_240') }}" /></td>
                     <td>{% if entity.takenAt %}{{ entity.takenAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                     <td>
                         <a class="btn btn-white btn-sm" href="{{ path('photo_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.edit"|trans }}</a>
-                        <a class="btn btn-white btn-sm" href="{{ link_to_photo(entity) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.view"|trans }}</a>
+                        <a class="btn btn-white btn-sm" href="{{ url_to_photo(entity) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.view"|trans }}</a>
                     </td>
                 </tr>
             {% endfor %}
