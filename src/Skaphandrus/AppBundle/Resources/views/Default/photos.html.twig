@@ -1,83 +1,110 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block stylesheets %}
-  {{ parent() }}
-  <style>
-    .isotope-board .board-item {
-      text-align: center;
-      padding: 5px;
-      width: 200px;
-    }
 
-    .isotope-board .board-item img {
-      max-width: 190px;
-    }
-  </style>
+{% block page_title %}title{% endblock %}
+{% block page_description %}description{% endblock %}
+{% block page_keywords %}keywords{% endblock %}
+
+
+
+
+{% block heading_title %}
+
 {% endblock %}
 
+
+{% block heading_breadcrumbs %}
+    
+    
+    {% if params.species is defined %}
+   <ol class="breadcrumb">
+        <li><a href="{{ link_to_photos(pagination[0].species.genus.family.order) }}">{{ pagination[0].species.genus.family.order.name }}</a></li>
+        <li><a href="{{ link_to_photos(pagination[0].species.genus.family) }}">{{ pagination[0].species.genus.family.name }}</a></li>
+        <li><a href="{{ link_to_photos(pagination[0].species.genus) }}">{{ pagination[0].species.genus.name }}</a></li>                       
+        <li class="active"><strong>{{ pagination[0].species.name }}</strong></li>
+    </ol>
+{% else %}
+  // do something else
+{% endif %}
+    
+    
+    
+ 
+    
+    
+    
+    
+  
+{% endblock %}
+
+
+{% block heading_action %}
+    <a href="{{ path('photo_admin_new') }}" class="btn btn-primary">{{ "form.photo.btn.add"|trans }}</a>
+{% endblock %}
+
+
+
 {% block javascripts %}
-  {{ parent() }}
-  <script src="{{ asset('bundles/skaphandrusapp/js/isotope.pkgd.min.js') }}"></script>
-  <script>
-    $(function () {
-      $('.isotope-board').isotope({
-        itemSelector: '.board-item',
-        // layout mode options
-        masonry: {
-          columnWidth: 200
-        }
-      });
-    });
-  </script>
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/isotope.pkgd.min.js') }}"></script>
+    <script>
+        $(function () {
+            $('.grid').isotope({
+                itemSelector: '.grid-item',
+                masonry: {
+                    isFitWidth: false
+                }
+            });
+        });
+    </script>
 {% endblock %}
 
 
 {% block body %}
-    <h2>{{ "page.photos.h2.photos"|trans }}</h2>
-    <div class="row">
-    {% for photo in photos.iterator %}
-        {#<h3>{{ photo.title }}</h3>
-        <img src="/{{ photo.webPath }}" alt="{{ photo.title }}">
-        <p>{{ photo.description }}</p>#}
-
-        <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-                <img src="{{ photo.webPath | imagine_filter('sk_widen_590') }}" alt="{{ photo.title }}">
-                <div class="caption">
-                    <p>{{ "page.photos.label.username"|trans }}: {{ photo.fosUser.username }}</p>
-                    {% if photo.spot is not null %}
-                        <p>{{ "page.photos.label.spot"|trans }}: {{ photo.spot.getName }}</p>
-                    {% endif %}
-                    {% if photo.species is not null %}
-                        <p>{{ "page.photos.label.species"|trans }}: {{ photo.species.name }}</p>
-                    {% endif %}
+    <div class="wrapper wrapper-content">
+        <h2>{{ "page.photos.h2.photos"|trans }}</h2>
+        <div class="row grid">
+            {% for photo in pagination %}
+                <div class="col-lg-4 grid-item">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>{{ photo.title }}</h5>
+                            <div class="ibox-tools">
+                                <!--<a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>-->
+                                <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="#">Config option 1</a>
+                                    </li>
+                                    <li><a href="#">Config option 2</a>
+                                    </li>
+                                </ul>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <a href="{{ url_to_photo(photo) }}" class="thumbnail"> <img src="{{ photo.webPath | imagine_filter('sk_widen_590') }}" alt="{{ photo.title }}"></a>
+                            <p>{{ "page.photos.label.username"|trans }}: <a href="{{ link_to_user(photo.fosUser) }}">{{ photo.fosUser.id }}</a></p>
+                                {% if photo.spot is not null %}
+                                <p>{{ "page.photos.label.spot"|trans }}: <a href="{{ link_to_spot(photo.spot) }}">{{ photo.spot.name }}</a></p>
+                                {% endif %}
+                                {% if photo.species is not null %}
+                                <p>{{ "page.photos.label.species"|trans }}: <a href="{{ link_to_species(photo.species) }}">{{ photo.species.name }}</a></p>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            {% endfor %}
+
         </div>
-    {% endfor %}
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </div>
-
-    {# PAGINATION #}
-    {% if pagination.total_pages > 1 %}
-    <ul class="pagination pagination-sm">
-        {# '«' arrow  #}
-        <li {{ pagination.page == 1 ? 'class="disabled"' }}>
-            <a href="{{ path('photos', {page: 1}) }}">«</a>
-        </li>
-
-        {# Render each page number #}
-        {% for i in pagination.first_page..pagination.last_page %}
-        <li {{ pagination.page == i ? 'class="active"' }}>
-        <a href="{{ path('photos', {page: i}) }}">{{ i }}</a>
-        </li>
-        {% endfor %}
-
-        {# '»' arrow #}
-        <li {{ pagination.page == pagination.total_pages ? 'class="disabled"' }}>
-            <a href="{{ path('photos', {page: pagination.total_pages}) }}">»</a>
-        </li>
-    </ul>
-    {% endif %}
-    <p>{{ "page.photos.pagination.total_pages" }}: {{ pagination.total_pages }}</p>
-    {# END PAGINATION #}
 {% endblock %}

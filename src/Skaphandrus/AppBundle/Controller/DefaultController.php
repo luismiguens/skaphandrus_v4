@@ -6,17 +6,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Intl\Intl;
 use Symfony\Component\HttpFoundation\JsonResponse as JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-
 use Skaphandrus\AppBundle\Utils\Utils;
 
 class DefaultController extends Controller {
-
 
     public function indexAction() {
 
         return $this->render('SkaphandrusAppBundle:Default:index.html.twig');
     }
-    
+
     public function index2Action() {
 
         return $this->render('SkaphandrusAppBundle:Default:index2.html.twig');
@@ -84,7 +82,7 @@ class DefaultController extends Controller {
         $em = $this->container->get('doctrine.orm.entity_manager');
         $um = $this->container->get('fos_user.user_manager');
         $em->getClassMetaData(get_class(new \Skaphandrus\AppBundle\Entity\FosUser()))
-            ->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
+                ->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
 
         $mysqli = new \mysqli($dbHost, $dbUser, $dbPassword, $dbName, $dbPort);
         $result = $mysqli->query('SELECT * FROM sf_guard_user');
@@ -104,7 +102,7 @@ class DefaultController extends Controller {
         $em->flush();
 
         return $this->render('SkaphandrusAppBundle:Default:usersMigration.html.twig', array(
-            'total' => $i,
+                    'total' => $i,
         ));
     }
 
@@ -127,26 +125,25 @@ class DefaultController extends Controller {
             $taxon = $dados[1];
             $parent_id = $dados[2];
         }
-        
+
         $structure = Utils::taxonomyStructure();
 
         if (array_key_exists($taxon, $structure)) {
             $result = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:Sk" . ucfirst($taxon))
-                ->findBy(array( $structure[$taxon]['parent'] => $parent_id ), array('name' => 'ASC'));
+                    ->findBy(array($structure[$taxon]['parent'] => $parent_id), array('name' => 'ASC'));
 
             if (!$result) {
                 $response[] = array('data' => 'not_exists');
-            }
-            else {
+            } else {
                 foreach ($result as $object) {
                     $url = $this->generateUrl('taxon', array('node' => $taxon, 'slug' => $object->getName()));
                     $categ_next_id = 'li.' . $structure[$taxon]['next'] . '.' . $object->getId();
-                    
+
                     $response[] = array(
                         'id' => $categ_next_id,
                         'text' => $object->getName(),
                         'icon' => FALSE,
-                        'state' => array( 'opened' => FALSE, 'selected' => FALSE ),
+                        'state' => array('opened' => FALSE, 'selected' => FALSE),
                         'children' => TRUE,
                         'a_attr' => array(
                             'href' => $this->generateUrl('taxon', array(
@@ -157,10 +154,9 @@ class DefaultController extends Controller {
                     );
                 }
             }
-        }
-        elseif ($taxon == 'species') {
+        } elseif ($taxon == 'species') {
             $result = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkSpecies")
-                ->findBy(array( 'genus' => $parent_id ));
+                    ->findBy(array('genus' => $parent_id));
 
             $categ = "species";
 
@@ -172,7 +168,7 @@ class DefaultController extends Controller {
                 $response[] = array(
                     'text' => $sn[0]->getName() . ' (' . $sn[0]->getAuthor() . ')',
                     'icon' => FALSE,
-                    'state' => array( 'opened' => FALSE, 'selected' => FALSE ),
+                    'state' => array('opened' => FALSE, 'selected' => FALSE),
                     'children' => FALSE,
                     'a_attr' => array(
                         'href' => $this->generateUrl('species', array(
@@ -181,10 +177,9 @@ class DefaultController extends Controller {
                     ),
                 );
             }
-        }
-        elseif ($taxon == 'kingdom') {
+        } elseif ($taxon == 'kingdom') {
             $result = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkKingdom")
-                ->findBy(array(), array('name' => 'ASC'));
+                    ->findBy(array(), array('name' => 'ASC'));
 
             $categ_next = "phylum";
             $categ = "kingdom";
@@ -196,12 +191,12 @@ class DefaultController extends Controller {
                     'node' => 'kingdom',
                     'slug' => $object->getName(),
                 ));
-                
+
                 $response[] = array(
                     'id' => $categ_next_id,
                     'text' => $object->getName(),
                     'icon' => FALSE,
-                    'state' => array( 'opened' => FALSE, 'selected' => FALSE, 'disabled' => FALSE ),
+                    'state' => array('opened' => FALSE, 'selected' => FALSE, 'disabled' => FALSE),
                     'children' => TRUE,
                     'a_attr' => array(
                         'href' => $this->generateUrl('taxon', array(
@@ -219,27 +214,25 @@ class DefaultController extends Controller {
     public function taxonAction($node, $slug) {
         $taxon_name = ucfirst($node);
         $taxon = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:Sk" . $taxon_name)
-            ->findOneBy(array('name' => $slug));
+                ->findOneBy(array('name' => $slug));
 
         $structure = Utils::taxonomyStructure();
 
         $next_taxon = "";
         if (array_key_exists($node, $structure)) {
             $next_taxon = $structure[$node]['next'];
-        }
-        elseif ($node = 'kingdom') {
+        } elseif ($node = 'kingdom') {
             $next_taxon = 'phylum';
         }
 
         if ($taxon) {
             return $this->render('SkaphandrusAppBundle:Default:taxon.html.twig', array(
-                "node" => $node,
-                "taxon" => $taxon,
-                "next_taxon" => $next_taxon,
+                        "node" => $node,
+                        "taxon" => $taxon,
+                        "next_taxon" => $next_taxon,
             ));
-        }
-        else {
-            throw $this->createNotFoundException('The '. $taxon_name .' "'. $slug .'" does not exist.');
+        } else {
+            throw $this->createNotFoundException('The ' . $taxon_name . ' "' . $slug . '" does not exist.');
         }
     }
 
@@ -248,68 +241,67 @@ class DefaultController extends Controller {
         $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findBySlug($slug);
 
         if ($species) {
-            
-            
+
+
             $photo = $this->getDoctrine()
-                    ->getRepository("SkaphandrusAppBundle:SkPhoto")->getPrimaryPhotoForSpecies($species->getId());
-            
+                            ->getRepository("SkaphandrusAppBundle:SkPhoto")->getPrimaryPhotoForSpecies($species->getId());
+
             $users = $this->getDoctrine()
-                    ->getRepository("SkaphandrusAppBundle:SkPhoto")->findPhotosCountByUserForModel($species->getId());
-            
+                            ->getRepository("SkaphandrusAppBundle:SkPhoto")->findPhotosCountByUserForModel($species->getId());
+
             return $this->render('SkaphandrusAppBundle:Default:species.html.twig', array(
-                "species" => $species,
-                "photo" => $photo,
-                "users" => $users
+                        "species" => $species,
+                        "photo" => $photo,
+                        "users" => $users
             ));
-        }
-        else {
-            throw $this->createNotFoundException('The species '. $name .' does not exist.');
+        } else {
+            throw $this->createNotFoundException('The species ' . $name . ' does not exist.');
         }
     }
 
     public function spotAction($country, $location, $slug) {
         $locale = $this->get('request')->getLocale();
         $spot = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')
-            ->findBySlug($slug, $location, $country, $locale);
-        
+                ->findBySlug($slug, $location, $country, $locale);
+
         if ($spot) {
             return $this->render('SkaphandrusAppBundle:Default:spot.html.twig', array(
-                'spot' => $spot,
+                        'spot' => $spot,
             ));
-        }
-        else {
-            throw $this->createNotFoundException('The spot '. $name .' does not exist.');
+        } else {
+            throw $this->createNotFoundException('The spot ' . $name . ' does not exist.');
         }
     }
 
     /*
      * Location page.
      */
+
     public function locationAction($country, $slug) {
         $name = Utils::unslugify($slug);
         $locale = $this->get('request')->getLocale();
         $location = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
-            ->findBySlug($name, $country, $locale);
+                ->findBySlug($name, $country, $locale);
 
         if ($location) {
             return $this->render('SkaphandrusAppBundle:Default:location.html.twig', array(
-                'location' => $location,
+                        'location' => $location,
             ));
-        }
-        else {
-            throw $this->createNotFoundException('The location '. $name .' does not exist.');
+        } else {
+            throw $this->createNotFoundException('The location ' . $name . ' does not exist.');
         }
     }
 
     /*
      * Country page.
      */
+
     public function countryAction($slug) {
         $name = Utils::unslugify($slug);
         $locale = $this->get('request')->getLocale();
         $country = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')
                 ->findBySlug($slug);
-        
+
         $locations = array();
         foreach ($country->getRegions() as $region) {
             foreach ($region->getLocations() as $location) {
@@ -319,94 +311,200 @@ class DefaultController extends Controller {
 
         if ($country) {
             return $this->render('SkaphandrusAppBundle:Default:country.html.twig', array(
-                'country' => $country,
-                'country_name' => $slug,
-                'locations' => $locations,
+                        'country' => $country,
+                        'country_name' => $slug,
+                        'locations' => $locations,
             ));
-        }
-        else {
-            throw $this->createNotFoundException('The country '. $name .' does not exist.');
+        } else {
+            throw $this->createNotFoundException('The country ' . $name . ' does not exist.');
         }
     }
 
     /*
      * Photo page.
      */
+
     public function photoAction($id, $slug) {
         $title = Utils::unslugify($slug);
 
         $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
-            ->findOneBy(array('id' => $id, 'title' => $title));
+                ->findOneBy(array('id' => $id, 'title' => $title));
 
         if ($photo) {
             return $this->render('SkaphandrusAppBundle:Default:photo.html.twig', array(
-                'photo' => $photo,
+                        'photo' => $photo,
             ));
-        }
-        else {
-            throw $this->createNotFoundException('The photo "'. $title .'" with id "'. $id .'" does not exist.');
+        } else {
+            throw $this->createNotFoundException('The photo "' . $title . '" with id "' . $id . '" does not exist.');
         }
     }
 
     /*
      * Photo page.
      */
-    public function photosAction() {
-        $page = $this->get('request')->query->get('page');
-        if (!$page) { $page = 1; }
 
-        $per_page = 20;
-        $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
-            ->findAllAsPaginator($page, $per_page);
-        
-        // Variables for pagination
-        $visible_pages = 9;
-        $total_pages = ceil(count($photos) / $per_page);
+//    public function photosAction() {
+//        $page = $this->get('request')->query->get('page');
+//        if (!$page) { $page = 1; }
+//
+//        $per_page = 20;
+//        $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
+//            ->findAllAsPaginator($page, $per_page);
+//        
+//        // Variables for pagination
+//        $visible_pages = 9;
+//        $total_pages = ceil(count($photos) / $per_page);
+//
+//        // If current page number is less than half of visible pages in the begining...
+//        if ($page < floor($visible_pages / 2)) {
+//            $first_page = 1;
+//            $last_page = $visible_pages;
+//        }
+//        // If current page number is less than half of visible pages in the end...
+//        elseif ($page > $total_pages - floor($visible_pages / 2)) {
+//            $last_page = $total_pages;
+//            $first_page = $total_pages - $visible_pages;
+//        }
+//        // If current page is not close to the limit edges...
+//        else {
+//            $first_page = $page - floor($visible_pages / 2);
+//            $last_page = $page + floor($visible_pages / 2);
+//        }
+//
+//        return $this->render('SkaphandrusAppBundle:Default:photos.html.twig', array(
+//            'photos' => $photos,
+//            'pagination' => array(
+//                'page' => $page,
+//                'total_pages' => ceil(count($photos) / $per_page),
+//                'first_page' => $first_page,
+//                'last_page' => $last_page,
+//            ),
+//        ));
+//    }
 
-        // If current page number is less than half of visible pages in the begining...
-        if ($page < floor($visible_pages / 2)) {
-            $first_page = 1;
-            $last_page = $visible_pages;
-        }
-        // If current page number is less than half of visible pages in the end...
-        elseif ($page > $total_pages - floor($visible_pages / 2)) {
-            $last_page = $total_pages;
-            $first_page = $total_pages - $visible_pages;
-        }
-        // If current page is not close to the limit edges...
-        else {
-            $first_page = $page - floor($visible_pages / 2);
-            $last_page = $page + floor($visible_pages / 2);
+
+    public function photosAction(\Symfony\Component\HttpFoundation\Request $request) {
+
+        $params = $request->query->all();
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $qb = $em->createQueryBuilder();
+        $qb->select('p')->from('SkaphandrusAppBundle:SkPhoto', 'p');
+
+        //users
+        if (array_key_exists('fosUser', $params)) {
+            $qb->andWhere('p.fosUser = ?2');
+            $qb->setParameter(2, $params['fosUser']);
         }
 
-        return $this->render('SkaphandrusAppBundle:Default:photos.html.twig', array(
-            'photos' => $photos,
-            'pagination' => array(
-                'page' => $page,
-                'total_pages' => ceil(count($photos) / $per_page),
-                'first_page' => $first_page,
-                'last_page' => $last_page,
-            ),
-        ));
+        //spots, locations, regions and countries
+        if (array_key_exists('spot', $params)) {
+            $qb->andWhere('p.spot = ?3');
+            $qb->setParameter(3, $params['spot']);
+        }
+
+        if (array_key_exists('location', $params)) {
+            $qb->join('p.spot', 's', 'WITH', 'p.spot = s.id');
+            $qb->join('s.location', 'l', 'WITH', 's.location = ?4');
+            $qb->setParameter(4, $params['location']);
+        }
+
+        if (array_key_exists('region', $params)) {
+            $qb->join('p.spot', 's', 'WITH', 'p.spot = s.id');
+            $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
+            $qb->join('l.region', 'r', 'WITH', 'l.region = ?5');
+            $qb->setParameter(5, $params['region']);
+        }
+
+        if (array_key_exists('country', $params)) {
+            $qb->join('p.spot', 's', 'WITH', 'p.spot = s.id');
+            $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
+            $qb->join('l.region', 'r', 'WITH', 'l.region = r.id');
+            $qb->join('r.country', 'c', 'WITH', 'r.country = ?6');
+            $qb->setParameter(6, $params['country']);
+        }
+
+
+
+
+
+        //species, genus, families, orders, classes, kingdoms
+        if (array_key_exists('species', $params)) {
+            $qb->andWhere('p.species = ?7');
+            $qb->setParameter(7, $params['species']);
+        }
+
+        if (array_key_exists('kingdom', $params)) {
+            $qb->join('p.species', 's', 'WITH', 'p.species = s.id');
+            $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
+            $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
+            $qb->join('f.order', 'o', 'WITH', 'f.order = o.id');
+            $qb->join('o.class', 'c', 'WITH', 'o.class = c.id');
+            $qb->join('c.kingdom', 'k', 'WITH', 'c.kingdom = ?8');
+            $qb->setParameter(8, $params['kingdom']);
+        }
+
+        if (array_key_exists('class', $params)) {
+            $qb->join('p.species', 's', 'WITH', 'p.species = s.id');
+            $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
+            $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
+            $qb->join('f.order', 'o', 'WITH', 'f.order = o.id');
+            $qb->join('o.class', 'c', 'WITH', 'o.class = ?9');
+            $qb->setParameter(9, $params['class']);
+        }
+
+        if (array_key_exists('order', $params)) {
+            $qb->join('p.species', 's', 'WITH', 'p.species = s.id');
+            $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
+            $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
+            $qb->join('f.order', 'o', 'WITH', 'f.order = ?10');
+            $qb->setParameter(10, $params['class']);
+        }
+
+        if (array_key_exists('family', $params)) {
+            $qb->join('p.species', 's', 'WITH', 'p.species = s.id');
+            $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
+            $qb->join('g.family', 'f', 'WITH', 'g.family = ?11');
+            $qb->setParameter(11, $params['family']);
+        }
+
+        if (array_key_exists('genus', $params)) {
+            $qb->join('p.species', 's', 'WITH', 'p.species = s.id');
+            $qb->join('s.genus', 'g', 'WITH', 's.genus = ?12');
+            $qb->setParameter(12, $params['genus']);
+        }
+
+
+        $query = $qb->getQuery();
+
+        //var_dump($query);
+
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                $query, $this->get('request')->query->getInt('page', 1)/* page number */, 20/* limit per page */
+        );
+
+        // parameters to template
+        return $this->render('SkaphandrusAppBundle:Default:photos.html.twig', array('pagination' => $pagination, 'params' => $params));
     }
 
     /*
      * User page.
      */
+
     public function userAction($id) {
         $user = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-            ->findOneById($id);
+                ->findOneById($id);
 
         if ($user) {
             return $this->render('SkaphandrusAppBundle:Default:user.html.twig', array(
-                'user' => $user,
+                        'user' => $user,
             ));
-        }
-        else {
-            throw $this->createNotFoundException('The user with id "'. $id .'" does not exist.');
+        } else {
+            throw $this->createNotFoundException('The user with id "' . $id . '" does not exist.');
         }
     }
-
 
     // ############################# COMPONENTS #############################
 
@@ -415,10 +513,10 @@ class DefaultController extends Controller {
      */
     public function skBoardAction($type, $id) {
         $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
-            ->findBy(array($type => $id));
+                ->findBy(array($type => $id));
 
         return $this->render('SkaphandrusAppBundle:Default:skBoard.html.twig', array(
-            'photos' => $photos,
+                    'photos' => $photos,
         ));
     }
 
@@ -429,13 +527,15 @@ class DefaultController extends Controller {
      * <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
      * <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
      */
+
     public function skGridAction($parameters, $order = array('id' => 'desc'), $limit = 20) {
         $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
-            ->findBy($parameters, $order, $limit);
+                ->findBy($parameters, $order, $limit);
 
         return $this->render('SkaphandrusAppBundle:Default:skGrid.html.twig', array(
-            'photos' => $photos,
-            'parameters' => $parameters,
+                    'photos' => $photos,
+                    'parameters' => $parameters,
         ));
     }
+
 }

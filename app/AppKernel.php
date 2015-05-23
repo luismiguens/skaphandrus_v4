@@ -28,29 +28,19 @@ class AppKernel extends Kernel {
             new Sonata\AdminBundle\SonataAdminBundle(),
             new Skaphandrus\AppBundle\SkaphandrusAppBundle(),
             new A2lix\TranslationFormBundle\A2lixTranslationFormBundle(),
-            
             new Lexik\Bundle\TranslationBundle\LexikTranslationBundle(),
-           // new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
-
+            // new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
             // You have 2 options to initialize the SonataUserBundle in your AppKernel,
             // you can select which bundle SonataUserBundle extends
             // Most of the cases, you'll want to extend FOSUserBundle though ;)
             // extend the ``FOSUserBundle``
-            
             new FOS\UserBundle\FOSUserBundle(),
-            
             new Liip\ImagineBundle\LiipImagineBundle(),
-
-new PUGX\AutocompleterBundle\PUGXAutocompleterBundle(),
-
+            new PUGX\AutocompleterBundle\PUGXAutocompleterBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
 //new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
-            
-            //new Application\Sonata\UserBundle\ApplicationSonataUserBundle()
-            
-            //new Cocur\Slugify\Bridge\Symfony\CocurSlugifyBundle(),
-            
-            
-            
+                //new Application\Sonata\UserBundle\ApplicationSonataUserBundle()
+                //new Cocur\Slugify\Bridge\Symfony\CocurSlugifyBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
