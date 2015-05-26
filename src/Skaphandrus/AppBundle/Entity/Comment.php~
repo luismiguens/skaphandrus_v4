@@ -1,0 +1,71 @@
+<?php
+
+namespace Skaphandrus\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use FOS\CommentBundle\Entity\Comment as BaseComment;
+
+/**
+ * @ORM\Entity
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ */
+class Comment extends BaseComment
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * Thread of this comment
+     *
+     * @var Thread
+     * @ORM\ManyToOne(targetEntity="Skaphandrus\AppBundle\Entity\Thread")
+     */
+    protected $thread;
+    /**
+     * @var \Skaphandrus\AppBundle\Entity\FosUser
+     */
+    private $fosUser;
+
+
+    /**
+     * Set depth
+     *
+     * @param integer $depth
+     *
+     * @return Comment
+     */
+    public function setDepth($depth)
+    {
+        $this->depth = $depth;
+
+        return $this;
+    }
+
+    /**
+     * Set fosUser
+     *
+     * @param \Skaphandrus\AppBundle\Entity\FosUser $fosUser
+     *
+     * @return Comment
+     */
+    public function setFosUser(\Skaphandrus\AppBundle\Entity\FosUser $fosUser = null)
+    {
+        $this->fosUser = $fosUser;
+
+        return $this;
+    }
+
+    /**
+     * Get fosUser
+     *
+     * @return \Skaphandrus\AppBundle\Entity\FosUser
+     */
+    public function getFosUser()
+    {
+        return $this->fosUser;
+    }
+}
