@@ -58,8 +58,14 @@ class SkCreativeCommons
         return $this->id;
     }
     
+    
+    public function getName() {
+        return $this->__toString();
+    }
+    
+    
     public function __toString(){
-        return $this->translate('en')->getName();
+        return $this->translate()->getName();
     }
     
     

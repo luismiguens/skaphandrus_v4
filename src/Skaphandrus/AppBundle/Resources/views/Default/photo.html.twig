@@ -1,47 +1,158 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
+
+{% block page_title %}{{ photo.title }}, {{ photo.createdAt|date('Y-m-d H:i:s') }}{% endblock %}
+{% block page_description %}{{photo.title}}, {{photo.description}}{% endblock %}
+{% block page_keywords %}{{photo.title}}, {{photo.keywordsString}}, {{photo.species.name}}, {{photo.spot.name}}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
+{% endblock %}
+
+{% block heading_title %}
+    {{ photo.title }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+
+        <li class="active"><strong>{{ photo.title }}</strong></li>
+    </ol>
+{% endblock %}
+
+
+{% block heading_action %}
+    <a href="{{ path('photo_admin_new') }}" class="btn btn-primary">{{ "form.photo.btn.add"|trans }}</a>
+{% endblock %}
+
+
+
+
+
+
 {% block body %}
-    <h2>{{ photo.title }}</h2>
 
-    {% if photo.image is not empty %}
-        <h3>{{ "page.photo.h3.image"|trans }}</h3>
-        <p>{{ photo.image }}</p>
-    {% endif %}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>{{ "page.photo.h5.photo_detail"|trans }}</h5>
+                    </div>
 
-    {% if photo.fosuser is not empty %}
-        <h3>{{ "page.photo.h3.photographer"|trans }}</h3>
-        <p>{{ photo.fosuser.id }}</p>
-        <p>{{ photo.fosuser.username }}</p>
-    {% endif %}
 
-    {% if photo.description is not empty %}
-        <h3>{{ "page.photo.h3.description"|trans }}</h3>
-        <p>{{ photo.description }}</p>
-    {% endif %}
+                    <div>
+                        <div class="ibox-content ibox-content no-padding border-left-right">
+                            <img alt="image" class="img-responsive" src="{{ photo.getWebPath | imagine_filter('sk_upscale_800_600') }}" />
+                        </div>
+                        <div class="ibox-content profile-content">
+                            <h4><strong>{{photo.title}}</strong></h4>
 
-    {% if photo.species is not empty %}
-        <h3>{{ "page.photo.h3.species"|trans }}</h3>
-        {% for sn in photo.species.scientificNames %}
-        <p>{{ link_to_species(photo.species) }}</p>
-        {% endfor %}
-    {% endif %}
+                            <ul class="list-unstyled">
+                                <li><i class="fa fa-clock-o"></i> {{ "page.photo.label.taken_at"|trans }} {{ photo.takenAt|date('Y-m-d H:i:s') }}</li>
+                                <li><i class="fa fa-cloud-upload"></i> {{ "page.photo.label.uploaded_at"|trans }} {{ photo.createdAt|date('Y-m-d H:i:s') }}</li>
+                                <li><i class="fa fa-gavel"></i> {{ "page.photo.label.licensed_under"|trans }} {{ photo.creative.name }}</li>
+                                <li><i class="fa fa-camera"></i> {{ "page.photo.label.camera"|trans }} {{ photo.model.name }}</li>
+                            </ul>
 
-    {% if photo.spot is not empty %}
-        <h3>{{ "page.photo.h3.where_was_taken"|trans }}</h3>
-        <p>
-            {{ photo.spot.translate(app.request.locale).name }},
-            {{ photo.spot.location.translate(app.request.locale).name }},
-            {{ intl_country_name(photo.spot.location.region.country.name) }}
-        </p>
-    {% endif %}
+                            {% if photo.description is not empty %}
+                                <h5>{{ "page.photo.h5.description"|trans }}</h5>
+                                <p>{{ photo.description }}</p>
+                            {% endif %}
 
-    {% if photo.keyword|length %}
-        <h3>{{ "page.photo.h3.tags"|trans }}</h3>
-        {% for keyword in photo.keyword %}
-            <p>{{ keyword.keyword }}</p>
-        {% endfor %}
-    {% endif %}
 
-    <h3>{# photo.views #} {{ "page.photo.h3.views"|trans({'%views%': photo.views}) }}</h3>
-0
+
+                            <div class="row m-t-md">
+                                <div class="col-md-4">
+                                    <h5><strong>{{photo.views}}</strong> {{ "page.photo.h5.views"|trans }}</h5>
+                                </div>
+                                <div class="col-md-4">
+                                    <h5><strong>{{photo.countLikes}}</strong> {{ "page.photo.h5.likes"|trans }}</h5>
+                                </div>
+                                <div class="col-md-4">
+                                    <h5><strong>{{photo.countComments}}</strong> {{ "page.photo.h5.comments"|trans }}</h5>
+                                </div>
+                            </div>  
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>{{ "page.photo.h5.related_contents"|trans }}</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#">Config option 1</a>
+                                </li>
+                                <li><a href="#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content ">
+
+                        <h3>{{ "page.photo.h3.photographer"|trans }} </h3>
+                        <p>{{ link_to_user(photo.fosuser) }}</p>
+
+                        {% if photo.keyword|length %}
+                            <h3>{{ "page.photo.h3.tags"|trans }}</h3>
+                            {% for keyword in photo.keyword %}
+                                <p>{{ keyword.keyword }}</p>
+                            {% endfor %}
+                        {% endif %}
+
+                        {% if photo.species is not empty %}
+                            <h3>{{ "page.photo.h3.species"|trans }}</h3>
+                            <p>{{ link_to_species(photo.species) }}</p>
+                        {% endif %}
+
+                        {% if photo.spot is not empty %}
+                            <h3>{{ "page.photo.h3.spot"|trans }}</h3>
+                            <p>{{ link_to_spot(photo.spot)}}, {{ link_to_location(photo.spot.location)}}, {{ link_to_country(photo.spot.location.region.country)}}</p>
+                        {% endif %}
+
+                        {% if photo.species is not empty %}
+                            <h3>{{ "page.photo.h3.species_photos"|trans }}</h3>
+                            {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': photo.species.id } } )) }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+    </div><!-- end wrapper-->
+
+
+
+
+
+
+
+
 {% endblock %}

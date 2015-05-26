@@ -440,8 +440,20 @@ class DefaultController extends Controller {
             $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
             $qb->join('f.order', 'o', 'WITH', 'f.order = o.id');
             $qb->join('o.class', 'c', 'WITH', 'o.class = c.id');
-            $qb->join('c.kingdom', 'k', 'WITH', 'c.kingdom = ?8');
+            $qb->join('c.phylum', 'ph', 'WITH', 'c.phylum = ph.id');
+            $qb->join('ph.kingdom', 'k', 'WITH', 'ph.kingdom = ?8');
             $qb->setParameter(8, $params['kingdom']);
+        }
+
+
+        if (array_key_exists('phylum', $params)) {
+            $qb->join('p.species', 's', 'WITH', 'p.species = s.id');
+            $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
+            $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
+            $qb->join('f.order', 'o', 'WITH', 'f.order = o.id');
+            $qb->join('o.class', 'c', 'WITH', 'o.class = c.id');
+            $qb->join('c.phylum', 'ph', 'WITH', 'c.phylum = ?9');
+            $qb->setParameter(9, $params['phylum']);
         }
 
         if (array_key_exists('class', $params)) {
@@ -449,35 +461,35 @@ class DefaultController extends Controller {
             $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
             $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
             $qb->join('f.order', 'o', 'WITH', 'f.order = o.id');
-            $qb->join('o.class', 'c', 'WITH', 'o.class = ?9');
-            $qb->setParameter(9, $params['class']);
+            $qb->join('o.class', 'c', 'WITH', 'o.class = ?10');
+            $qb->setParameter(10, $params['class']);
         }
 
         if (array_key_exists('order', $params)) {
             $qb->join('p.species', 's', 'WITH', 'p.species = s.id');
             $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
             $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
-            $qb->join('f.order', 'o', 'WITH', 'f.order = ?10');
-            $qb->setParameter(10, $params['class']);
+            $qb->join('f.order', 'o', 'WITH', 'f.order = ?11');
+            $qb->setParameter(11, $params['order']);
         }
 
         if (array_key_exists('family', $params)) {
             $qb->join('p.species', 's', 'WITH', 'p.species = s.id');
             $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
-            $qb->join('g.family', 'f', 'WITH', 'g.family = ?11');
-            $qb->setParameter(11, $params['family']);
+            $qb->join('g.family', 'f', 'WITH', 'g.family = ?12');
+            $qb->setParameter(12, $params['family']);
         }
 
         if (array_key_exists('genus', $params)) {
             $qb->join('p.species', 's', 'WITH', 'p.species = s.id');
-            $qb->join('s.genus', 'g', 'WITH', 's.genus = ?12');
-            $qb->setParameter(12, $params['genus']);
+            $qb->join('s.genus', 'g', 'WITH', 's.genus = ?13');
+            $qb->setParameter(13, $params['genus']);
         }
 
 
         $query = $qb->getQuery();
 
-        //var_dump($query);
+        //var_dump($params);
 
 
         $paginator = $this->get('knp_paginator');

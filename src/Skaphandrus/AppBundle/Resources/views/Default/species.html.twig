@@ -5,19 +5,17 @@
 {% block page_keywords %}keywords{% endblock %}
 
 {% block stylesheets %}
-  {{ parent() }}
-  <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
 {% endblock %}
 
 {% block javascripts %}
-  {{ parent() }}
-  <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
 {% endblock %}
 
 {% block heading_title %}
-    {% for sn_name in species.scientificNames %}
-        {{ sn_name.name }} {{ sn_name.author }}
-    {% endfor %}
+            {{ species.name }}
 {% endblock %}
 
 
@@ -27,7 +25,7 @@
         <li>{{ link_to_taxon(species.genus.family.order) }}</li>
         <li>{{ link_to_taxon(species.genus.family) }}</li>
         <li>{{ link_to_taxon(species.genus) }}</li>
-        <li class="active"><strong>{% for sn_name in species.scientificNames %}{{ sn_name.name }} {{ sn_name.author }}{% endfor %}</strong></li>
+        <li class="active"><strong>{{ species.name }}</strong></li>
     </ol>
 {% endblock %}
 
@@ -45,34 +43,29 @@
             <!-- left column -->
             <div class="col-md-4">
                 <div class="ibox float-e-margins">
-                    <div class="ibox-content no-padding border-left-right">
-                        <img alt="image" class="img-responsive" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />
-                        <p> username: {{ photo.fosuser.id }}</p>
-
-                        <h3>{{ "page.species.h3.taxonomic_structure"|trans }}</h3>
-                        <p>{{ "page.species.label.species_kingdom"|trans }}:
-                            {{ link_to_taxon(species.genus.family.order.class.phylum.kingdom) }}
-                        </p>
-                        <p>{{ "page.species.label.species_phylum"|trans }}:
-                            {{ link_to_taxon(species.genus.family.order.class.phylum) }}
-                        </p>
-                        <p>{{ "page.species.label.species_class"|trans }}:
-                            {{ link_to_taxon(species.genus.family.order.class) }}
-                        </p>
-                        <p>{{ "page.species.label.species_order"|trans }}:
-                            {{ link_to_taxon(species.genus.family.order) }}
-                        </p>
-                        <p>{{ "page.species.label.species_family"|trans }}:
-                            {{ link_to_taxon(species.genus.family) }}
-                        </p>
-                        <p>{{ "page.species.label.species_genus"|trans }}:
-                            {{ link_to_taxon(species.genus) }}
-                        </p>
-
-                        {% if species.translate(app.request.locale).description is not empty %}
-                            <h3>{{ "page.species.h3.description"|trans }}</h3>
-                            <p>{{ species.translate(app.request.locale).description }}</p>
-                        {% endif %}
+                    <div class="ibox-title">
+                        <h5>{{ "page.species.h5.species_detail"|trans }}</h5>
+                    </div>
+                    <div>
+                        <div class="ibox-content ibox-content no-padding border-left-right">
+                            <img alt="image" class="img-responsive" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />
+                        </div>
+                        <div class="ibox-content profile-content">
+                            <h4><strong>{{photo.species.name}}</strong></h4>
+                            <h5>{{ "page.species.h3.taxonomic_structure"|trans }}</h5>
+                            <ul class="list-unstyled">
+                                <li>{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.kingdom) }}</li>
+                                <li>{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum) }}</li>
+                                <li>{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(species.genus.family.order.class) }}</li>
+                                <li>{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(species.genus.family.order) }}</li>
+                                <li>{{ "page.species.label.species_family"|trans }}: {{ link_to_taxon(species.genus.family) }}</li>
+                                <li>{{ "page.species.label.species_genus"|trans }}: {{ link_to_taxon(species.genus) }}</li>
+                            </ul>
+                            {% if species.translate(app.request.locale).description is not empty %}
+                                <h5>{{ "page.species.h3.description"|trans }}</h5>
+                                <p>{{ species.translate(app.request.locale).description }}</p>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div><!-- end left column -->
@@ -80,6 +73,28 @@
             <!-- right column -->
             <div class="col-md-8">
                 <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>{{ "page.photo.h5.species_related_contents"|trans }}</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#">Config option 1</a>
+                                </li>
+                                <li><a href="#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+
+
                     <div class="ibox-content">
                         {% for sn_name in species.scientificNames %}
                             <h1>{{ sn_name.name }} {{ sn_name.author }}</h1>
@@ -151,7 +166,7 @@
 
                                 </div>
                             </div>
-                        </div><!--end left column -->
+                        </div><!--end right column -->
                     </div><!-- end row-->
                 </div><!-- end wrapper-->
 

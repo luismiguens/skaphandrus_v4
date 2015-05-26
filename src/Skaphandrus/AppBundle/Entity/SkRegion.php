@@ -8,8 +8,7 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 /**
  * SkRegion
  */
-class SkRegion
-{
+class SkRegion {
 
     use ORMBehaviors\Translatable\Translatable;
 
@@ -28,12 +27,10 @@ class SkRegion
      */
     private $locations;
 
-
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->locations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -42,8 +39,7 @@ class SkRegion
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -54,8 +50,7 @@ class SkRegion
      *
      * @return SkRegion
      */
-    public function setCountry(\Skaphandrus\AppBundle\Entity\SkCountry $country = null)
-    {
+    public function setCountry(\Skaphandrus\AppBundle\Entity\SkCountry $country = null) {
         $this->country = $country;
 
         return $this;
@@ -66,8 +61,7 @@ class SkRegion
      *
      * @return \Skaphandrus\AppBundle\Entity\SkCountry
      */
-    public function getCountry()
-    {
+    public function getCountry() {
         return $this->country;
     }
 
@@ -78,8 +72,7 @@ class SkRegion
      *
      * @return SkRegion
      */
-    public function addLocation(\Skaphandrus\AppBundle\Entity\SkLocation $location)
-    {
+    public function addLocation(\Skaphandrus\AppBundle\Entity\SkLocation $location) {
         $this->locations[] = $location;
 
         return $this;
@@ -90,8 +83,7 @@ class SkRegion
      *
      * @param \Skaphandrus\AppBundle\Entity\SkLocation $location
      */
-    public function removeLocation(\Skaphandrus\AppBundle\Entity\SkLocation $location)
-    {
+    public function removeLocation(\Skaphandrus\AppBundle\Entity\SkLocation $location) {
         $this->locations->removeElement($location);
     }
 
@@ -100,8 +92,16 @@ class SkRegion
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getLocations()
-    {
+    public function getLocations() {
         return $this->locations;
     }
+
+    public function getName() {
+        return $this->translate()->getName();
+    }
+
+    public function __toString() {
+        return $this->getName();
+    }
+
 }

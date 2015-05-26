@@ -466,4 +466,25 @@ class SkPhoto {
         $this->file = null;
     }
 
+    
+    public function getKeywordsString() {
+        return implode(', ', $this->keyword->toArray());
+    }
+    
+    
+    
+    
+    public function countComments() {
+        
+        return "123";
+        
+    }
+    
+    
+    
+    public function countLikes() {
+        
+        return "321";
+        
+    }
 }

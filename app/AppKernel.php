@@ -49,7 +49,7 @@ class AppKernel extends Kernel {
             new FOS\RestBundle\FOSRestBundle(),
             new FOS\CommentBundle\FOSCommentBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle($this),
-            new PUGX\AutocompleterBundle\PUGXAutocompleterBundle(),
+            //new PUGX\AutocompleterBundle\PUGXAutocompleterBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
 //new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
                 //new Application\Sonata\UserBundle\ApplicationSonataUserBundle()
