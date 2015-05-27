@@ -1,0 +1,166 @@
+{#
+
+ This file is part of the FOSCommentBundle package.
+
+ (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
+
+ This source file is subject to the MIT license that is bundled
+ with this source code in the file LICENSE.
+
+#}
+
+{% block fos_comment_comment %}
+<div id="fos_comment_{{ comment.id }}" class="fos_comment_comment_show fos_comment_comment_depth_{{ depth }} chat-element" {% if parent is defined and parent is not null %}data-parent="{{ parent.id }}"{% endif %}>
+    <div class="fos_comment_comment_metas">
+        {% block fos_comment_comment_metas %}
+
+            {% block fos_comment_comment_metas_edit %}
+                {% if fos_comment_can_edit_comment(comment) %}
+                <button data-container="#fos_comment_comment_body_{{ comment.id }}" data-url="{{ url("fos_comment_edit_thread_comment", {"id": comment.thread.id, "commentId": comment.id}) }}" class="fos_comment_comment_edit_show_form">{% trans from 'FOSCommentBundle' %}fos_comment_comment_edit{% endtrans %}</button>
+                {% endif %}
+            {% endblock fos_comment_comment_metas_edit %}
+
+            {% block fos_comment_comment_metas_delete %}
+                {% if fos_comment_can_delete_comment(comment) %}
+                    {% if comment is fos_comment_in_state(constant('FOS\\CommentBundle\\Model\\CommentInterface::STATE_DELETED')) %}
+                        {# undelete #}
+                        <button data-url="{{ url("fos_comment_remove_thread_comment", {"id": comment.thread.id, "commentId": comment.id, "value": constant('FOS\\CommentBundle\\Model\\CommentInterface::STATE_VISIBLE') }) }}" class="fos_comment_comment_remove">{% trans from 'FOSCommentBundle' %}fos_comment_comment_undelete{% endtrans %}</button>
+                    {% else %}
+                        {# delete #}
+                        <button data-url="{{ url("fos_comment_remove_thread_comment", {"id": comment.thread.id, "commentId": comment.id, "value":  constant('FOS\\CommentBundle\\Model\\CommentInterface::STATE_DELETED')}) }}" class="fos_comment_comment_remove">{% trans from 'FOSCommentBundle' %}fos_comment_comment_delete{% endtrans %}</button>
+                    {% endif %}
+                {% endif %}
+            {% endblock fos_comment_comment_metas_delete %}
+
+            {% block fos_comment_comment_metas_voting %}
+                {% if fos_comment_can_vote(comment) %}
+                    <div class="fos_comment_comment_voting">
+                        <button data-url="{{ url("fos_comment_new_thread_comment_votes", {"id": comment.thread.id, "commentId": comment.id, "value": 1}) }}" class="fos_comment_comment_vote">{% trans from 'FOSCommentBundle' %}fos_comment_comment_show_voteup{% endtrans %}</button>
+                        <button data-url="{{ url("fos_comment_new_thread_comment_votes", {"id": comment.thread.id, "commentId": comment.id, "value": -1}) }}" class="fos_comment_comment_vote">{% trans from 'FOSCommentBundle' %}fos_comment_comment_show_votedown{% endtrans %}</button>
+                        <div class="fos_comment_comment_score" id="fos_comment_score_{{ comment.id }}">{% include "FOSCommentBundle:Thread:comment_votes.html.twig" with { 'commentScore': comment.score } %}</div>
+                    </div>
+                {% endif %}
+            {% endblock fos_comment_comment_metas_voting %}
+        {% endblock fos_comment_comment_metas %}
+    </div>
+
+
+    {# COMMENT BODY #}
+
+    <a href="#" class="pull-left">
+        <img alt="image" class="img-circle" src="http://localhost:8000/media/cache/sk_thumbnail_outbound_100/uploads/azores-turtle-deepsea.jpg">
+    </a>
+    <div id="fos_comment_comment_body_{{ comment.id }}" class="fos_comment_comment_body media-body">
+        {% block fos_comment_comment_metas_authorline %}
+            <small class="pull-right text-navy">{{ comment.createdAt|date }}</small>
+            <strong>{{ comment.authorName }}</strong>
+        {% endblock fos_comment_comment_metas_authorline %}
+        <p class="m-b-xs">
+            {% block fos_comment_comment_body %}
+                {% if comment is fos_comment_in_state(constant('FOS\\CommentBundle\\Model\\CommentInterface::STATE_DELETED')) %}
+                    {% trans from 'FOSCommentBundle' %}fos_comment_comment_deleted{% endtrans %}
+                {% else %}
+                    {% if comment is fos_comment_raw %}
+                        {{ comment.rawBody | raw }}
+                    {% else %}
+                        {{ comment.body | nl2br }}
+                    {% endif %}
+                {% endif %}
+            {% endblock fos_comment_comment_body %}
+        </p>
+        <small class="text-muted">{{ comment.createdAt|date }}</small>
+
+    {% block fos_comment_comment_children %}
+        {# if view is not sameas('flat') %}
+            {% if fos_comment_can_comment(comment) %}
+                <div class="fos_comment_comment_reply text-right">
+                    {% block fos_comment_comment_reply %}
+                        <button data-url="{{ url('fos_comment_new_thread_comments', {"id": comment.thread.id}) }}" data-name="{{ comment.authorName }}" data-parent-id="{{ comment.id }}" class="fos_comment_comment_reply_show_form btn btn-sm btn-primary m-t-n-xs">{% trans from 'FOSCommentBundle' %}fos_comment_comment_show_reply{% endtrans %}</button>
+                    {% endblock fos_comment_comment_reply %}
+                </div>
+            {% endif %}
+
+            <!--<div class="fos_comment_comment_replies">-->
+
+                {% if children is defined %}
+                    {% include "FOSCommentBundle:Thread:comments.html.twig" with { "comments": children, "depth": depth + 1, "parent": comment, "view": view } %}
+                {% endif %}
+
+            <!--</div>-->
+        {% elseif view is sameas('flat') and children is defined %}
+            {% include "FOSCommentBundle:Thread:comments.html.twig" with { "comments": children, "depth": depth + 1, "parent": comment, "view": view } %}
+        {% endif #}
+    {% endblock fos_comment_comment_children %}
+    </div>
+
+</div>
+{% endblock fos_comment_comment %}
+
+
+
+<!--<div class="col-lg-6">
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <div>
+                <div class="chat-activity-list">
+
+
+
+
+
+                    <div class="chat-element">
+                        <a href="#" class="pull-left">
+                            <img alt="image" class="img-circle" src="img/a2.jpg">
+                        </a>
+                        <div class="media-body ">
+                            <small class="pull-right text-navy">1m ago</small>
+                            <strong>Mike Smith</strong>
+                            <p class="m-b-xs">
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                            </p>
+                            <small class="text-muted">Today 4:21 pm - 12.06.2014</small>
+                        </div>
+                    </div>
+
+                    <div class="chat-element right">
+                        <a href="#" class="pull-right">
+                            <img alt="image" class="img-circle" src="img/a4.jpg">
+                        </a>
+                        <div class="media-body text-right ">
+                            <small class="pull-left">5m ago</small>
+                            <strong>John Smith</strong>
+                            <p class="m-b-xs">
+                                Lorem Ipsum is simply dummy text of the printing.
+                            </p>
+                            <small class="text-muted">Today 4:21 pm - 12.06.2014</small>
+                        </div>
+                    </div>
+
+                    <div class="chat-element ">
+                        <a href="#" class="pull-left">
+                            <img alt="image" class="img-circle" src="img/a2.jpg">
+                        </a>
+                        <div class="media-body ">
+                            <small class="pull-right">2h ago</small>
+                            <strong>Mike Smith</strong>
+                            <p class="m-b-xs">
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                            </p>
+                            <small class="text-muted">Today 4:21 pm - 12.06.2014</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-form">
+                <form role="form">
+                    <div class="form-group">
+                        <textarea class="form-control" placeholder="Message"></textarea>
+                    </div>
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-sm btn-primary m-t-n-xs"><strong>Send message</strong></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>-->

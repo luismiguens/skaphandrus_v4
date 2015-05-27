@@ -18,4 +18,28 @@ class Thread extends BaseThread
      * @ORM\Column(type="string")
      */
     protected $id;
+
+    /**
+     * Set isCommentable
+     *
+     * @param boolean $isCommentable
+     *
+     * @return Thread
+     */
+    public function setIsCommentable($isCommentable)
+    {
+        $this->isCommentable = $isCommentable;
+
+        return $this;
+    }
+
+    /**
+     * Get isCommentable
+     *
+     * @return boolean
+     */
+    public function getIsCommentable()
+    {
+        return $this->isCommentable;
+    }
 }

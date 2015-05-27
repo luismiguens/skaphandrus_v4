@@ -16,8 +16,8 @@
 
     <entity name="Skaphandrus\AppBundle\Entity\Thread">
 
-        <id name="id" type="integer" column="id">
-            <generator strategy="AUTO"/>
+        <id name="id" type="string" column="id">
+            <generator strategy="NONE"/>
         </id>
 
         <field name="permalink" column="permalink" type="string" />
