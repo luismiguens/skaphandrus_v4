@@ -32,12 +32,24 @@ class SkFamily
      */
     private $vernaculars;
 
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $genus;
+
+
+    
+    
+    
+    
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->character = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->genus = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -165,4 +177,57 @@ class SkFamily
     {
         return $this->vernaculars;
     }
+
+    /**
+     * Add genus
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkGenus $genus
+     *
+     * @return SkFamily
+     */
+    public function addGenus(\Skaphandrus\AppBundle\Entity\SkGenus $genus)
+    {
+        $this->genus[] = $genus;
+
+        return $this;
+    }
+
+    /**
+     * Remove genus
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkGenus $genus
+     */
+    public function removeGenus(\Skaphandrus\AppBundle\Entity\SkGenus $genus)
+    {
+        $this->genus->removeElement($genus);
+    }
+
+    /**
+     * Get genus
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGenus()
+    {
+        return $this->genus;
+    }
+    
+    
+        
+    public function getChildNodes() {
+        return $this->getGenus();
+    }
+    
+    
+    
+    public function getTaxonNodeName(){
+        return "family";
+        
+    }
+    
+        public function getParentNode() {
+        return $this->getOrder();
+    }
+    
+    
 }

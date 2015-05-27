@@ -4,7 +4,7 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="Skaphandrus\AppBundle\Entity\FosUser" table="fos_user">
+    <entity name="Skaphandrus\AppBundle\Entity\FosUser" repository-class="Skaphandrus\AppBundle\Entity\Repository\FosUserRepository" table="fos_user">
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO"/>
         </id>

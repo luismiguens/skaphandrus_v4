@@ -28,5 +28,6 @@
       </join-table>
     </many-to-many>
     <one-to-many field="vernaculars" target-entity="SkGenusVernacular" mapped-by="genus"/>
+    <one-to-many field="species" target-entity="SkSpecies" mapped-by="genus"/>
   </entity>
 </doctrine-mapping>

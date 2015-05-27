@@ -1,14 +1,14 @@
 <div class="lightBoxGallery">
-  {% for photo in photos %}<a href="/{{ photo.webPath }}" title="{{ photo.title }}"  data-gallery=""><img src="{{ photo.webPath | imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ photo.title }}" style="margin: 1px;"></a>{% endfor %}
-  <a href="{{ path('photos', parameters) }}">See More</a>
-  <!-- The Gallery as lightbox dialog, should be a child element of the document body -->
-  <div id="blueimp-gallery" class="blueimp-gallery">
-      <div class="slides"></div>
-      <h3 class="title"></h3>
-      <a class="prev">‹</a>
-      <a class="next">›</a>
-      <a class="close">×</a>
-      <a class="play-pause"></a>
-      <ol class="indicator"></ol>
-  </div>
+    {% for photo in photos %}<a href="/{{ photo.webPath }}" title="{{ photo.title }}"  data-gallery=""><img src="{{ photo.webPath | imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ photo.title }}" style="margin: 1px;"></a>{% endfor %}
+    <a href="{{ path('photos', parameters) }}">See More</a>
+    <!-- The Gallery as lightbox dialog, should be a child element of the document body -->
+    <div id="blueimp-gallery" class="blueimp-gallery">
+        <div class="slides"></div>
+        <h3 class="title"></h3>
+        <a class="prev">‹</a>
+        <a class="next">›</a>
+        <a class="close">×</a>
+        <a class="play-pause"></a>
+        <ol class="indicator"></ol>
+    </div>
 </div>

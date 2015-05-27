@@ -1,11 +1,142 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block body %}
-    <h2>{{ spot.translate(app.request.locale).name }}, {{ spot.location.translate(app.request.locale).name }}, {{ intl_country_name(spot.location.region.country.name) }}</h2>
+{% block page_title %}{{ spot.name }}, {{ spot.location.name }}, {{ spot.location.region.country }}{% endblock %}
+{% block page_description %}description{% endblock %}
+{% block page_keywords %}{{ spot.name }}, {{ spot.location.name }}, {{ spot.location.region.country }}{% endblock %}
 
-    <h3>{{ "page.spot.h3.coordinates"|trans }}</h3>
-    <p>{{ spot.coordinate }}</p>
-
-    <h3>{{ "page.spot.h3.description"|trans }}</h3>
-    <p>{{ spot.translate(app.request.locale).description }}</p>
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
+ 
+{% endblock %}
+
+{% block heading_title %}
+    {{ spot.name }}, {{ spot.location.name }}, {{ spot.location.region.country }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li>{{ link_to_country(spot.location.region.country) }}</li>
+        <li>{{ link_to_location(spot.location) }}</li>
+        <li class="active"><strong>{{ spot.name }}</strong></li>
+    </ol>
+{% endblock %}
+
+
+{% block heading_action %}
+    <a href="{{ path('photo_admin_new') }}" class="btn btn-primary">{{ "form.photo.btn.add"|trans }}</a>
+{% endblock %}
+
+
+
+{% block body %}
+
+    <div class="wrapper wrapper-content">
+        <div class="row animated fadeInRight">
+            <!-- left column -->
+            <div class="col-md-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>{{ "page.spot.h5.spot_detail"|trans }}</h5>
+                    </div>
+                    <div>
+                        <div class="ibox-content">
+                         {{ google_map(map) }}
+                        </div>
+                        <div class="ibox-content profile-content">
+                            <h4><strong>{{spot.name}}</strong></h4>
+
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end left column -->
+
+            <!-- right column -->
+            <div class="col-md-8">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>{{ "page.spot.h5.spot_related_contents"|trans }}</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#">Config option 1</a>
+                                </li>
+                                <li><a href="#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content">
+                        <h1>{{ spot.name }}, {{ spot.location.name }}, {{ spot.location.region.country }}</h1>
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <!--<div class="panel-title m-b-md"><h4>Blank Panel with text tabs</h4></div>-->
+                                <div class="panel-options">
+                                    <ul class="nav nav-tabs">
+
+                                        <li class="active"><a data-toggle="tab" href="#tab-1">{{ "page.spot.tab.info"|trans }}</a></li>
+                                        <li><a data-toggle="tab" href="#tab-2">{{ "page.spot.tab.photos"|trans }}</a></li>
+                                        <li><a data-toggle="tab" href="#tab-3">{{ "page.spot.tab.contributors"|trans }}</a></li>
+                                         <li><a data-toggle="tab" href="#tab-4">{{ "page.spot.tab.species"|trans }}</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="tab-content">
+                                    <div id="tab-1" class="tab-pane active">
+                                        <h3>{{ "page.spot.h3.info"|trans }}</h3>
+                                        {% if spot.description is not empty %}
+                                            <h5>{{ "page.spot.h5.description"|trans }}</h5>
+                                            <p>{{ spot.description }}</p>
+                                        {% endif %}
+                                    </div>
+                                    <div id="tab-2" class="tab-pane">
+                                        <h3>{{ "page.spot.h3.photos"|trans }}</h3>
+                                        {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'spot': spot.id },'limit':20 } )) }}
+                                    </div>
+                                    <div id="tab-3" class="tab-pane">
+                                        <h3>{{ "page.spot.h3.contributors"|trans }}</h3>
+                                        <ul class="unstyled">
+                                        {% for photographer in photographers %}
+                                            <li> photographer : {{link_to_user(photographer)}}</li>
+                                        {% endfor%}
+                                        </ul>   
+                                    </div>
+                                    <div id="tab-4" class="tab-pane">
+                                        <h3>{{ "page.spot.h3.species"|trans }}</h3>
+                                        <ul class="unstyled">
+                                        {% for sp in species %}
+                                            <li> species : {{link_to_species(sp)}}</li>
+                                        {% endfor%}
+                                        </ul>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--end right column -->
+        </div><!-- end row-->
+    </div><!-- end wrapper-->
+
+{% endblock %}
+
+
+

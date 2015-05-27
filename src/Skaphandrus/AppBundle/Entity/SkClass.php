@@ -37,6 +37,14 @@ class SkClass
      */
     private $vernaculars;
 
+       /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $order;
+
+    
+    
+    
     /**
      * Constructor
      */
@@ -194,4 +202,57 @@ class SkClass
     {
         return $this->vernaculars;
     }
+ 
+
+    /**
+     * Add order
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkOrder $order
+     *
+     * @return SkClass
+     */
+    public function addOrder(\Skaphandrus\AppBundle\Entity\SkOrder $order)
+    {
+        $this->order[] = $order;
+
+        return $this;
+    }
+
+    /**
+     * Remove order
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkOrder $order
+     */
+    public function removeOrder(\Skaphandrus\AppBundle\Entity\SkOrder $order)
+    {
+        $this->order->removeElement($order);
+    }
+
+    /**
+     * Get order
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+    
+    
+        
+    public function getChildNodes() {
+        return $this->getOrder();
+    }
+    
+    
+    public function getTaxonNodeName(){
+        return "class";
+        
+    }
+    
+    
+        public function getParentNode() {
+        return $this->getPhylum();
+    }
+    
 }

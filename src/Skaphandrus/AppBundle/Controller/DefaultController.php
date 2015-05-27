@@ -3,10 +3,11 @@
 namespace Skaphandrus\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Intl\Intl;
 use Symfony\Component\HttpFoundation\JsonResponse as JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Skaphandrus\AppBundle\Utils\Utils;
+use Ivory\GoogleMap\Overlays\Animation;
+use Ivory\GoogleMap\Overlays\Marker;
+use Ivory\GoogleMap\MapTypeId;
 
 class DefaultController extends Controller {
 
@@ -166,7 +167,7 @@ class DefaultController extends Controller {
                 $url = $this->generateUrl('species', array('slug' => $slug));
 
                 $response[] = array(
-                    'text' => $sn[0]->getName() . ' (' . $sn[0]->getAuthor() . ')',
+                    'text' => $sn[0]->getName() . ', ' . $sn[0]->getAuthor() . '',
                     'icon' => FALSE,
                     'state' => array('opened' => FALSE, 'selected' => FALSE),
                     'children' => FALSE,
@@ -225,11 +226,23 @@ class DefaultController extends Controller {
             $next_taxon = 'phylum';
         }
 
+
+
+
+        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->getQueryBuilder([$taxon->getTaxonNodeName() => $taxon->getId()], 20);
+        $query = $qb->getQuery();
+
+
+
+        $photographers = $query->getResult();
+
+
         if ($taxon) {
             return $this->render('SkaphandrusAppBundle:Default:taxon.html.twig', array(
                         "node" => $node,
                         "taxon" => $taxon,
                         "next_taxon" => $next_taxon,
+                        "photographers" => $photographers
             ));
         } else {
             throw $this->createNotFoundException('The ' . $taxon_name . ' "' . $slug . '" does not exist.');
@@ -260,13 +273,99 @@ class DefaultController extends Controller {
     }
 
     public function spotAction($country, $location, $slug) {
+
+
+
         $locale = $this->get('request')->getLocale();
+
+        //spot
         $spot = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')
                 ->findBySlug($slug, $location, $country, $locale);
+
+
+//photos
+//        $qb_photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder(['spot' => $spot], 20);
+//        $query_photos = $qb_photos->getQuery();
+//        $photos = $query_photos->getResult();
+//photographers
+        $qb_photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->getQueryBuilder(['spot' => $spot], 20);
+        $query_photographers = $qb_photographers->getQuery();
+        $photographers = $query_photographers->getResult();
+
+        //species
+        $qb_species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->getQueryBuilder(['spot' => $spot], 20);
+        $query_species = $qb_species->getQuery();
+        $species = $query_species->getResult();
+
+        $marker = new Marker();
+
+        $latitude = explode(",", $spot->getCoordinate())[0];
+        $longitude = explode(",", $spot->getCoordinate())[1];
+
+
+
+// Configure your marker options
+        $marker->setPrefixJavascriptVariable('marker_');
+        $marker->setPosition($latitude, $longitude, true);
+        $marker->setAnimation(Animation::DROP);
+
+        $marker->setOption('clickable', false);
+        $marker->setOption('flat', true);
+        $marker->setOptions(array(
+            'clickable' => false,
+            'flat' => true,
+        ));
+
+
+
+
+// Add your marker to the map
+        //$map = $this->get('ivory_google_map.map');
+        $map = new \Ivory\GoogleMap\Map();
+
+        $map->setPrefixJavascriptVariable('map_');
+        $map->setHtmlContainerId('map_canvas');
+
+        $map->setAsync(false);
+//$map->setAutoZoom(true);
+
+
+
+        $map->setCenter($latitude, $longitude, true);
+        $map->setMapOption('zoom', 10);
+
+//$map->setBound(-2.1, -3.9, 2.6, 1.4, true, true);
+
+        $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
+        $map->setMapOption('mapTypeId', 'roadmap');
+
+        $map->setMapOption('disableDefaultUI', true);
+        $map->setMapOption('disableDoubleClickZoom', true);
+        $map->setMapOptions(array(
+            'disableDefaultUI' => true,
+            'disableDoubleClickZoom' => true,
+        ));
+
+        $map->setStylesheetOption('width', 'auto');
+        $map->setStylesheetOption('height', '300px');
+        $map->setStylesheetOptions(array(
+            'width' => 'auto',
+            'height' => '300px',
+        ));
+
+        $map->setLanguage('en');
+
+
+
+        $map->addMarker($marker);
+
 
         if ($spot) {
             return $this->render('SkaphandrusAppBundle:Default:spot.html.twig', array(
                         'spot' => $spot,
+                        'photographers' => $photographers,
+                'species' => $species,
+                        'map' => $map
             ));
         } else {
             throw $this->createNotFoundException('The spot ' . $name . ' does not exist.');
@@ -387,106 +486,7 @@ class DefaultController extends Controller {
 
         $params = $request->query->all();
 
-        $em = $this->get('doctrine.orm.entity_manager');
-        $qb = $em->createQueryBuilder();
-        $qb->select('p')->from('SkaphandrusAppBundle:SkPhoto', 'p');
-
-        //users
-        if (array_key_exists('fosUser', $params)) {
-            $qb->andWhere('p.fosUser = ?2');
-            $qb->setParameter(2, $params['fosUser']);
-        }
-
-        //spots, locations, regions and countries
-        if (array_key_exists('spot', $params)) {
-            $qb->andWhere('p.spot = ?3');
-            $qb->setParameter(3, $params['spot']);
-        }
-
-        if (array_key_exists('location', $params)) {
-            $qb->join('p.spot', 's', 'WITH', 'p.spot = s.id');
-            $qb->join('s.location', 'l', 'WITH', 's.location = ?4');
-            $qb->setParameter(4, $params['location']);
-        }
-
-        if (array_key_exists('region', $params)) {
-            $qb->join('p.spot', 's', 'WITH', 'p.spot = s.id');
-            $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
-            $qb->join('l.region', 'r', 'WITH', 'l.region = ?5');
-            $qb->setParameter(5, $params['region']);
-        }
-
-        if (array_key_exists('country', $params)) {
-            $qb->join('p.spot', 's', 'WITH', 'p.spot = s.id');
-            $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
-            $qb->join('l.region', 'r', 'WITH', 'l.region = r.id');
-            $qb->join('r.country', 'c', 'WITH', 'r.country = ?6');
-            $qb->setParameter(6, $params['country']);
-        }
-
-
-
-
-
-        //species, genus, families, orders, classes, kingdoms
-        if (array_key_exists('species', $params)) {
-            $qb->andWhere('p.species = ?7');
-            $qb->setParameter(7, $params['species']);
-        }
-
-        if (array_key_exists('kingdom', $params)) {
-            $qb->join('p.species', 's', 'WITH', 'p.species = s.id');
-            $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
-            $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
-            $qb->join('f.order', 'o', 'WITH', 'f.order = o.id');
-            $qb->join('o.class', 'c', 'WITH', 'o.class = c.id');
-            $qb->join('c.phylum', 'ph', 'WITH', 'c.phylum = ph.id');
-            $qb->join('ph.kingdom', 'k', 'WITH', 'ph.kingdom = ?8');
-            $qb->setParameter(8, $params['kingdom']);
-        }
-
-
-        if (array_key_exists('phylum', $params)) {
-            $qb->join('p.species', 's', 'WITH', 'p.species = s.id');
-            $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
-            $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
-            $qb->join('f.order', 'o', 'WITH', 'f.order = o.id');
-            $qb->join('o.class', 'c', 'WITH', 'o.class = c.id');
-            $qb->join('c.phylum', 'ph', 'WITH', 'c.phylum = ?9');
-            $qb->setParameter(9, $params['phylum']);
-        }
-
-        if (array_key_exists('class', $params)) {
-            $qb->join('p.species', 's', 'WITH', 'p.species = s.id');
-            $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
-            $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
-            $qb->join('f.order', 'o', 'WITH', 'f.order = o.id');
-            $qb->join('o.class', 'c', 'WITH', 'o.class = ?10');
-            $qb->setParameter(10, $params['class']);
-        }
-
-        if (array_key_exists('order', $params)) {
-            $qb->join('p.species', 's', 'WITH', 'p.species = s.id');
-            $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
-            $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
-            $qb->join('f.order', 'o', 'WITH', 'f.order = ?11');
-            $qb->setParameter(11, $params['order']);
-        }
-
-        if (array_key_exists('family', $params)) {
-            $qb->join('p.species', 's', 'WITH', 'p.species = s.id');
-            $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
-            $qb->join('g.family', 'f', 'WITH', 'g.family = ?12');
-            $qb->setParameter(12, $params['family']);
-        }
-
-        if (array_key_exists('genus', $params)) {
-            $qb->join('p.species', 's', 'WITH', 'p.species = s.id');
-            $qb->join('s.genus', 'g', 'WITH', 's.genus = ?13');
-            $qb->setParameter(13, $params['genus']);
-        }
-
-
+        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($params, 20);
         $query = $qb->getQuery();
 
         //var_dump($params);
@@ -540,9 +540,17 @@ class DefaultController extends Controller {
      * <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
      */
 
-    public function skGridAction($parameters, $order = array('id' => 'desc'), $limit = 20) {
-        $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
-                ->findBy($parameters, $order, $limit);
+    public function skGridAction($parameters, $limit, $order = array('id' => 'desc')) {
+
+        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($parameters, $limit);
+        $query = $qb->getQuery();
+
+//print_r($parameters);
+
+        $photos = $query->getResult();
+
+//        $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
+//                ->findBy($parameters, $limit, $order);
 
         return $this->render('SkaphandrusAppBundle:Default:skGrid.html.twig', array(
                     'photos' => $photos,

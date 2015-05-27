@@ -32,12 +32,23 @@ class SkPhylum
      */
     private $vernaculars;
 
+    
+       /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $class;
+
+    
+    
+    
+    
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->character = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->class = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -165,4 +176,58 @@ class SkPhylum
     {
         return $this->vernaculars;
     }
+ 
+
+    /**
+     * Add class
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkClass $class
+     *
+     * @return SkPhylum
+     */
+    public function addClass(\Skaphandrus\AppBundle\Entity\SkClass $class)
+    {
+        $this->class[] = $class;
+
+        return $this;
+    }
+
+    /**
+     * Remove class
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkClass $class
+     */
+    public function removeClass(\Skaphandrus\AppBundle\Entity\SkClass $class)
+    {
+        $this->class->removeElement($class);
+    }
+
+    /**
+     * Get class
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
+    
+    
+        public function getChildNodes() {
+        return $this->getClass();
+    }
+    
+    
+    
+    
+    
+    public function getTaxonNodeName(){
+        return "phylum";
+        
+    }
+    
+        public function getParentNode() {
+        return $this->getKingdom();
+    }
+    
 }

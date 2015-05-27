@@ -38,7 +38,17 @@
         "liip/imagine-bundle": "~1.2",
         "pugx/autocompleter-bundle": "~1.2",
         "friendsofsymfony/comment-bundle": "~2.0",
-        "knplabs/knp-paginator-bundle": "~2.4"
+        "knplabs/knp-paginator-bundle": "~2.4",
+        
+        
+     
+        
+        
+        "egeloen/google-map-bundle": "~2.2",
+"willdurand/geocoder": "*",
+"widop/http-adapter-bundle": "~1.2"
+        
+        
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

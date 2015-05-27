@@ -33,5 +33,6 @@
       </join-table>
     </many-to-many>
     <one-to-many field="vernaculars" target-entity="SkClassVernacular" mapped-by="class"/>
+    <one-to-many field="order" target-entity="SkOrder" mapped-by="class"/>
   </entity>
 </doctrine-mapping>

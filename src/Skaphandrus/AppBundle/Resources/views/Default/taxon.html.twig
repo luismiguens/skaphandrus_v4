@@ -1,46 +1,232 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
+
+
+
+{% block page_title %}{{ taxon.taxonNodeName|capitalize }} : {{ taxon.name }}{% endblock %}
+{% block page_description %}description{% endblock %}
+{% block page_keywords %}keywords{% endblock %}
+
 {% block stylesheets %}
     {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/js/jstree/dist/themes/default/style.min.css') }}" />
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/jstree/dist/jstree.min.js') }}"></script>
     <script>
-      $(function () {
-        $("#jstree")
-        .jstree({
-          "core": {
-            "data": {
-              "url": "/{{ app.request.locale }}/species/source",
-              "data": function (n) {
-                return { id: n.id === '#' ? "li.{{ next_taxon }}.{{ taxon.id }}" : n.id };
-              }
-            }
-          }
-        })
-        .bind("select_node.jstree", function (e, data) {
-          var href = data.node.a_attr.href;
-          document.location.href = href;
+        $(function () {
+            $("#jstree")
+                    .jstree({
+                        "core": {
+                            "data": {
+                                "url": "/app_dev.php/{{ app.request.locale }}/species/source",
+                                "data": function (n) {
+                                    return {id: n.id === '#' ? "li.{{ next_taxon }}.{{ taxon.id }}" : n.id};
+                                }
+                            }
+                        }
+                    })
+                    .bind("select_node.jstree", function (e, data) {
+                        var href = data.node.a_attr.href;
+                        document.location.href = href;
+                    });
         });
-      });
     </script>
 {% endblock %}
 
-{% block body %}
-  <h2> {{ node }} : {{ taxon.name }}!</h2>
-
-  {% if taxon.vernaculars is not empty %}
-    <h3>{{ "page.taxon.h3.common_names"|trans }}</h3>
-    {% for vernacular in taxon.vernaculars %}
-        <p>{{ vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}</p>
-    {% endfor %}
-  {% endif %}
-
-  <h2>{{ "page.taxon.h2.taxonomic_structure"|trans }}</h2>
-  <p>{{ link_to_taxon(taxon) }}</p>
-  <div id="jstree" style="text-align: left;"></div>
+{% block heading_title %}
+    {{ taxon.taxonNodeName|capitalize }} : {{ taxon.name }}
 {% endblock %}
+
+
+{% block heading_breadcrumbs %}
+
+    <ol class="breadcrumb">
+        {% if taxon.taxonNodeName == 'genus' %}
+
+            <li>{{ link_to_taxon(taxon.parentNode.parentNode.parentNode) }}</li>
+            <li>{{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
+            <li>{{ link_to_taxon(taxon.parentNode) }}</li>
+            <li class="active"><strong>{{taxon.name}}</strong></li>
+                {%elseif taxon.taxonNodeName == 'family' %}
+            <li>{{ link_to_taxon(taxon.parentNode.parentNode.parentNode) }}</li>
+            <li>{{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
+            <li>{{ link_to_taxon(taxon.parentNode) }}</li>
+            <li class="active"><strong>{{taxon.name}}</strong></li>
+                {%elseif taxon.taxonNodeName == 'order' %}
+            <li>{{ link_to_taxon(taxon.parentNode.parentNode.parentNode) }}</li>
+            <li>{{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
+            <li>{{ link_to_taxon(taxon.parentNode) }}</li>
+            <li class="active"><strong>{{taxon.name}}</strong></li>
+                {%elseif taxon.taxonNodeName == 'class' %}
+
+            <li>{{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
+            <li>{{ link_to_taxon(taxon.parentNode) }}</li>
+            <li class="active"><strong>{{taxon.name}}</strong></li>
+                {%elseif taxon.taxonNodeName == 'phylum' %}
+
+            <li>{{ link_to_taxon(taxon.parentNode) }}</li>
+            <li class="active"><strong>{{taxon.name}}</strong></li>
+                {%elseif taxon.taxonNodeName == 'kingdom' %}
+
+            <li class="active"><strong>{{taxon.name}}</strong></li>
+                {% endif %}
+
+
+    </ol>
+
+
+{% endblock %}
+
+
+{% block heading_action %}
+    <a href="{{ path('photo_admin_new') }}" class="btn btn-primary">{{ "form.photo.btn.add"|trans }}</a>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+{% block body %}
+
+    <div class="wrapper wrapper-content">
+        <div class="row animated fadeInRight">
+            <!-- left column -->
+            <div class="col-md-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>{{ "page.taxon.h5.taxon_detail"|trans }}</h5>
+                    </div>
+                    <div>
+
+                        <div class="ibox-content">
+                            <h4><strong>{{ node|capitalize }} : {{ taxon.name }}</strong></h4>
+
+                            {% if taxon.vernaculars is not empty %}
+                                <h5>{{ "page.taxon.h5.common_names"|trans }}</h5>
+                                <ul class="list-unstyled">
+                                    {% for vernacular in taxon.vernaculars %}
+                                        <li>{{ vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}</li>
+                                        {% endfor %}
+                                </ul>
+                            {% endif %}
+
+                            <h5>{{ "page.taxon.h5.taxonomic_structure"|trans }}</h5>
+
+                            <ul class="list-unstyled">
+                                {% if taxon.taxonNodeName == 'genus' %}
+                                    <li>{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode.parentNode.parentNode) }}</li>
+                                    <li>{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode.parentNode) }}</li>
+                                    <li>{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode) }}</li>
+                                    <li>{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
+                                    <li>{{ "page.species.label.species_family"|trans }}: {{ link_to_taxon(taxon.parentNode) }}</li>
+                                    <li>{{ "page.species.label.species_genus"|trans }}: {{ link_to_taxon(taxon) }}</li>
+                                    {%elseif taxon.taxonNodeName == 'family' %}
+                                    <li>{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode.parentNode) }}</li>
+                                    <li>{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode) }}</li>
+                                    <li>{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
+                                    <li>{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(taxon.parentNode) }}</li>
+                                    <li>{{ "page.species.label.species_family"|trans }}: {{ link_to_taxon(taxon) }}</li>
+                                    {%elseif taxon.taxonNodeName == 'order' %}
+                                    <li>{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode) }}</li>
+                                    <li>{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
+                                    <li>{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(taxon.parentNode) }}</li>
+                                    <li>{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(taxon) }}</li>
+                                    {%elseif taxon.taxonNodeName == 'class' %}
+                                    <li>{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
+                                    <li>{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon.parentNode) }}</li>
+                                    <li>{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(taxon) }}</li>
+                                    {%elseif taxon.taxonNodeName == 'phylum' %}
+                                    <li>{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode) }}</li>
+                                    <li>{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon) }}</li>
+                                    {%elseif taxon.taxonNodeName == 'kingdom' %}
+                                    <li>{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon) }}</li>
+                                    {% endif %}
+                            </ul>
+
+
+
+
+                            <div id="jstree" style="text-align: left;"></div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end left column -->
+
+            <!-- right column -->
+            <div class="col-md-8">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>{{ "page.taxon.h5.taxon_related_contents"|trans }}</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#">Config option 1</a>
+                                </li>
+                                <li><a href="#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <div class="ibox-content">
+                        <h1>{{ node|capitalize }} : {{ taxon.name }}</h1>
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <!--<div class="panel-title m-b-md"><h4>Blank Panel with text tabs</h4></div>-->
+                                <div class="panel-options">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a data-toggle="tab" href="#tab-1">{{ "page.taxon.tab.photos"|trans }}</a></li>
+                                        <li><a data-toggle="tab" href="#tab-2">{{ "page.taxon.tab.contributors"|trans }}</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="tab-content">
+                                    <div id="tab-1" class="tab-pane active">
+                                        <h3>{{ "page.taxon.h3.photos"|trans }}</h3>
+                                        {% for child in taxon.childNodes %}
+                                            <h5>{{ child.name }}<h5>
+                                                    {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { (child.taxonNodeName) : child.id }, 'limit':8 } )) }}
+                                                {% endfor %}
+                                                </div>
+
+                                                <div id="tab-2" class="tab-pane">
+                                                    <h3>{{ "page.taxon.h3.contributors"|trans }}</h3>
+                                                    {% for photographer in photographers %}
+                                                        photographer : {{photographer.id}}
+                                                        {% endfor%}
+                                                </div>
+
+                                                </div>
+                                                </div>
+                                                </div>
+                                                </div>
+                                                </div>
+                                                </div><!--end right column -->
+                                                </div><!-- end row-->
+                                                </div><!-- end wrapper-->
+                                            {% endblock %}
 

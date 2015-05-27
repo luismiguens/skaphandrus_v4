@@ -25,11 +25,7 @@
       </join-table>
     </many-to-many>
     <one-to-many field="species_vernaculars" target-entity="SkSpeciesVernacular" mapped-by="species"/>
-    <one-to-many field="photos" target-entity="SkPhotoSpeciesValidation" mapped-by="species">
-      <order-by>
-        <order-by-field name="rating" direction="DESC" />
-      </order-by>
-    </one-to-many>
+    <one-to-many field="photos" target-entity="SkPhoto" mapped-by="species"/>
     <one-to-many field="scientific_names" target-entity="SkSpeciesScientificName" mapped-by="species"/>
   </entity>
 </doctrine-mapping>

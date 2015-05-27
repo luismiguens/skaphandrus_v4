@@ -58,6 +58,12 @@ class SkSpot {
     private $location;
 
     
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $photos;
+
+
     
     
      /**
@@ -263,8 +269,43 @@ class SkSpot {
         return $this->translate()->getName();
     }
     
-    
+      public function getDescription() {
+        return $this->translate()->getDescription();
+    }
     
     
 
+    /**
+     * Add photo
+     *
+     * @param \Skaphandrus\AppBundle\Entity\skPhoto $photo
+     *
+     * @return SkSpot
+     */
+    public function addPhoto(\Skaphandrus\AppBundle\Entity\skPhoto $photo)
+    {
+        $this->photos[] = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Remove photo
+     *
+     * @param \Skaphandrus\AppBundle\Entity\skPhoto $photo
+     */
+    public function removePhoto(\Skaphandrus\AppBundle\Entity\skPhoto $photo)
+    {
+        $this->photos->removeElement($photo);
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
+    }
 }

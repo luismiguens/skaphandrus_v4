@@ -21,6 +21,25 @@ class SkKingdom
      * @var \Doctrine\Common\Collections\Collection
      */
     private $vernaculars;
+    
+    
+        /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $phylum;
+
+    
+    
+       /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->vernaculars = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->phylum = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    
 
     /**
      * Set name
@@ -56,13 +75,7 @@ class SkKingdom
         return $this->id;
     }
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->vernaculars = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+ 
 
     /**
      * Add vernacular
@@ -97,4 +110,54 @@ class SkKingdom
     {
         return $this->vernaculars;
     }
+
+
+    /**
+     * Add phylum
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhylum $phylum
+     *
+     * @return SkKingdom
+     */
+    public function addPhylum(\Skaphandrus\AppBundle\Entity\SkPhylum $phylum)
+    {
+        $this->phylum[] = $phylum;
+
+        return $this;
+    }
+
+    /**
+     * Remove phylum
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhylum $phylum
+     */
+    public function removePhylum(\Skaphandrus\AppBundle\Entity\SkPhylum $phylum)
+    {
+        $this->phylum->removeElement($phylum);
+    }
+
+    /**
+     * Get phylum
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhylum()
+    {
+        return $this->phylum;
+    }
+    
+    
+    
+    public function getChildNodes() {
+        return $this->getPhylum();
+    }
+    
+    
+    
+    public function getTaxonNodeName(){
+        return "kingdom";
+        
+    }
+    
+    
 }

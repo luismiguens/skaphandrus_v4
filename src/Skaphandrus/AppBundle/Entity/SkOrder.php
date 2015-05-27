@@ -32,12 +32,23 @@ class SkOrder
      */
     private $vernaculars;
 
+    
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $family;
+
+    
+    
+    
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->character = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->family = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -165,4 +176,60 @@ class SkOrder
     {
         return $this->vernaculars;
     }
+
+
+    /**
+     * Add family
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkFamily $family
+     *
+     * @return SkOrder
+     */
+    public function addFamily(\Skaphandrus\AppBundle\Entity\SkFamily $family)
+    {
+        $this->family[] = $family;
+
+        return $this;
+    }
+
+    /**
+     * Remove family
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkFamily $family
+     */
+    public function removeFamily(\Skaphandrus\AppBundle\Entity\SkFamily $family)
+    {
+        $this->family->removeElement($family);
+    }
+
+    /**
+     * Get family
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFamily()
+    {
+        return $this->family;
+    }
+    
+    
+        
+    public function getChildNodes() {
+        return $this->getFamily();
+    }
+    
+    
+    
+    public function getTaxonNodeName(){
+        return "order";
+        
+    }
+    
+    
+        public function getParentNode() {
+        return $this->getClass();
+    }
+    
+    
+    
 }

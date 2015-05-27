@@ -1,8 +1,8 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block page_title %}title{% endblock %}
+{% block page_title %}{{species.name}}, {{species.genus.name}}{% endblock %}
 {% block page_description %}description{% endblock %}
-{% block page_keywords %}keywords{% endblock %}
+{% block page_keywords %}{{species.name}},{{species.genus.name}}, {{species.genus.family.name}}, {{species.genus.family.order.name}}, {{species.genus.family.order.class.name}}, {{species.genus.family.order.class.phylum.name}}, {{species.genus.family.order.class.phylum.kingdom.name}}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block heading_title %}
-            {{ species.name }}
+   {{ species.taxonNodeName|capitalize }} : {{ species.name }}
 {% endblock %}
 
 
@@ -52,7 +52,7 @@
                         </div>
                         <div class="ibox-content profile-content">
                             <h4><strong>{{photo.species.name}}</strong></h4>
-                            <h5>{{ "page.species.h3.taxonomic_structure"|trans }}</h5>
+                            <h5>{{ "page.species.h5.taxonomic_structure"|trans }}</h5>
                             <ul class="list-unstyled">
                                 <li>{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.kingdom) }}</li>
                                 <li>{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum) }}</li>
@@ -62,9 +62,21 @@
                                 <li>{{ "page.species.label.species_genus"|trans }}: {{ link_to_taxon(species.genus) }}</li>
                             </ul>
                             {% if species.translate(app.request.locale).description is not empty %}
-                                <h5>{{ "page.species.h3.description"|trans }}</h5>
+                                <h5>{{ "page.species.h5.description"|trans }}</h5>
                                 <p>{{ species.translate(app.request.locale).description }}</p>
                             {% endif %}
+
+                            {% if species.speciesVernaculars is not empty %}
+
+                                <h5>{{ "page.species.h5.common_names"|trans }}</h5>
+                                <ul class="list-unstyled">
+                                    {% for vernacular in species.speciesVernaculars %}
+
+                                        <li>{{ vernacular.vernacular.name|capitalize ~ " - " ~ intl_locale_name(vernacular.locale) }}</li>
+                                        {% endfor %}
+                                </ul>
+                            {% endif %}
+
                         </div>
                     </div>
                 </div>
@@ -96,78 +108,74 @@
 
 
                     <div class="ibox-content">
-                        {% for sn_name in species.scientificNames %}
-                            <h1>{{ sn_name.name }} {{ sn_name.author }}</h1>
-                        {% endfor %}
+
+                        <h1>{{ species.name }} </h1>
+
                         <div class="panel">
                             <div class="panel-heading">
-                                <!--<div class="panel-title m-b-md"><h4>Blank Panel with text tabs</h4></div>-->
+                                <div class="panel-title m-b-md"><h4>{{ species.name }}</h4></div>
                                 <div class="panel-options">
-
                                     <ul class="nav nav-tabs">
-
                                         {% set tab_id = 0 %}
 
                                         {% if species.character is not empty  %} 
                                             {% set tab_id = tab_id + 1 %}
-                                            {% set tab_chars_id = tab_id %}<li class="{{tab_id==1?'active'}}"><a data-toggle="tab" href="#tab-{{tab_id}}">{{ "page.species.tab.criterias"|trans }}</a></li> {% endif %}
-                                                {% if species.photos|first is not empty %} 
-                                                    {% set tab_id = tab_id + 1 %}
-                                                    {% set tab_photos_id = tab_id %}<li class="{{tab_id==1?'active'}}"><a data-toggle="tab" href="#tab-{{tab_id}}">{{ "page.species.tab.photos"|trans }}</a></li>{% endif %}
-                                                    {% if species.speciesVernaculars is not empty %} 
-                                                        {% set tab_id = tab_id + 1 %}
-                                                        {% set tab_vernas_id = tab_id %}<li class="{{tab_id==1?'active'}}"><a data-toggle="tab" href="#tab-{{tab_id}}">{{ "page.species.tab.common-names"|trans }}</a></li>{% endif %}
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                        <div class="panel-body">
-                                            <div class="tab-content">
-                                                {% if species.character is not empty %}
-                                                    <div id="tab-{{tab_chars_id}}" class="tab-pane {{tab_chars_id==1?'active'}}">
-                                                        <h3>{{ "page.species.h3.species_criteria"|trans }}</h3>
-                                                        {% for c in species.character %}
-                                                            <p>{{ c.criteria.translate(app.request.locale).name }} -> {{ c.image }}</p>
-                                                        {% endfor %}
-                                                    </div>
-                                                {% endif %}
-
-                                                {% if species.photos|first is not empty %}
-                                                    <div id="tab-{{tab_photos_id}}" class="tab-pane {{tab_photos_id==1?'active'}}">
-                                                        <h3>{{ "page.species.h3.photos"|trans }}</h3>
-                                                        {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': species.id } } )) }}
-                                                        {% if users is not empty %}
-                                                            <h3>{{ "page.species.h3.user_photos"|trans }}</h3>
-                                                            {% for u in users %}
-                                                                <p>
-                                                                    {{ "user_id"|trans }}: {{ link_to_user(u.0) }} ({{ u.countable }} {{ "page.species.label.photos"|trans }})
-                                                                </p>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </div>
-                                                {% endif %}                                                
-
-                                                {% if species.speciesVernaculars is not empty %}
-                                                    <div id="tab-{{tab_vernas_id}}" class="tab-pane {{tab_vernas_id==1?'active'}}">
-                                                        <h3>{{ "page.species.h3.common_names"|trans }}</h3>
-                                                        {% for vernacular in species.speciesVernaculars %}
-                                                            <p>{{ vernacular.vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}</p>
-                                                        {% endfor %}
-                                                    </div>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {% if species.translate(app.request.locale).howToFind is not empty %}
-                                        <h3>{{ "page.species.h3.how_to_find"|trans }}</h3>
-                                        <p>{{ species.translate(app.request.locale).howToFind }}</p>
-                                    {% endif %}
-
+                                            {% set tab_chars_id = tab_id %}<li class="{{tab_id==1?'active'}}"><a data-toggle="tab" href="#tab-{{tab_id}}">{{ "page.species.tab.criterias"|trans }}</a></li> 
+                                            {% endif %}
+                                            {% if species.photos|first is not empty %} 
+                                                {% set tab_id = tab_id + 1 %}
+                                                {% set tab_photos_id = tab_id %}<li class="{{tab_id==1?'active'}}"><a data-toggle="tab" href="#tab-{{tab_id}}">{{ "page.species.tab.photos"|trans }}</a></li>
+                                            {% endif %}
+                                            {% if users is not empty %} 
+                                                {% set tab_id = tab_id + 1 %}
+                                                {% set tab_users_id = tab_id %}<li class="{{tab_id==1?'active'}}"><a data-toggle="tab" href="#tab-{{tab_id}}">{{ "page.species.tab.contributors"|trans }}</a></li>
+                                            {% endif %}
+                                    </ul>
                                 </div>
                             </div>
-                        </div><!--end right column -->
-                    </div><!-- end row-->
-                </div><!-- end wrapper-->
 
-            {% endblock %}
+                            <div class="panel-body">
+                                <div class="tab-content">
+                                    {% if species.character is not empty %}
+                                        <div id="tab-{{tab_chars_id}}" class="tab-pane {{tab_chars_id==1?'active'}}">
+                                            <h3>{{ "page.species.h3.species_criteria"|trans }}</h3>
+                                            {% for c in species.character %}
+                                                <p>{{ c.criteria.translate(app.request.locale).name }} -> {{ c.image }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+
+                                    {% if species.photos|first is not empty %}
+                                        <div id="tab-{{tab_photos_id}}" class="tab-pane {{tab_photos_id==1?'active'}}">
+                                            <h3>{{ "page.species.h3.photos"|trans }}</h3>
+                                            {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': species.id },'limit':20 } )) }}
+
+                                        </div>
+                                    {% endif %}                                                
+
+                                    {% if users is not empty %}
+                                        <div id="tab-{{tab_users_id}}" class="tab-pane {{tab_users_id==1?'active'}}">
+                                            <h3>{{ "page.species.h3.contributors"|trans }}</h3>
+                                            {% for u in users %}
+                                                <p>
+                                                    {{ "user_id"|trans }}: {{ link_to_user(u.0) }} ({{ u.countable }} {{ "page.species.label.photos"|trans }})
+                                                </p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if species.translate(app.request.locale).howToFind is not empty %}
+                            <h3>{{ "page.species.h3.how_to_find"|trans }}</h3>
+                            <p>{{ species.translate(app.request.locale).howToFind }}</p>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div><!--end right column -->
+        </div><!-- end row-->
+    </div><!-- end wrapper-->
+
+{% endblock %}

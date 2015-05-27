@@ -268,5 +268,14 @@ class SkSpecies {
     }
 
 
+    public function getTaxonNodeName(){
+        return "species";
+        
+    }
+    
+    
+        public function getParentNode() {
+        return $this->getGenus();
+    }
 
 }

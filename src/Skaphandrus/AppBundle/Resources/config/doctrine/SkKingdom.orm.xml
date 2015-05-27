@@ -10,5 +10,6 @@
       </options>
     </field>
     <one-to-many field="vernaculars" target-entity="SkKingdomVernacular" mapped-by="kingdom"/>
+    <one-to-many field="phylum" target-entity="SkPhylum" mapped-by="kingdom"/>
   </entity>
 </doctrine-mapping>
