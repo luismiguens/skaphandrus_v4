@@ -97,7 +97,7 @@
                                 <ul class="nav nav-tabs">
                                    {% set tab_id = 0 %}
 
-                                    {% if user.photos|first is not empty  %} 
+                                    {% if user.photos|first is not empty  %}
                                         {% set tab_id = tab_id + 1 %}
                                         {% set tab_photos_id = tab_id %}
 
@@ -107,13 +107,33 @@
                                             </a>
                                         </li>
                                     {% endif %}
-                                    {% if user.spots|first is not empty %} 
+                                    {% if species|first is not empty %}
+                                        {% set tab_id = tab_id + 1 %}
+                                        {% set tab_species_id = tab_id %}
+
+                                        <li class="{{tab_id==1?'active'}}">
+                                            <a data-toggle="tab" href="#tab-{{tab_id}}">
+                                                {{ "page.user.tab.species"|trans }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                    {% if spots|first is not empty %}
                                         {% set tab_id = tab_id + 1 %}
                                         {% set tab_spots_id = tab_id %}
 
                                         <li class="{{tab_id==1?'active'}}">
                                             <a data-toggle="tab" href="#tab-{{tab_id}}">
                                                 {{ "page.user.tab.spots"|trans }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                    {% if user.photosValidated|first is not empty %}
+                                        {% set tab_id = tab_id + 1 %}
+                                        {% set tab_photosv_id = tab_id %}
+
+                                        <li class="{{tab_id==1?'active'}}">
+                                            <a data-toggle="tab" href="#tab-{{tab_id}}">
+                                                {{ "page.user.tab.photos_validated"|trans }}
                                             </a>
                                         </li>
                                     {% endif %}
@@ -131,12 +151,33 @@
                                 </div>
                                 {% endif %}
                                 <!-- End Photos Tab -->
+                                <!-- Start Species Tab -->
+                                {% if species|first is not empty %}
+                                <div id="tab-{{tab_species_id}}" class="tab-pane {{tab_species_id==1?'active'}}">
+                                    <h3>{{ "page.user.h3.species"|trans }}</h3>
+                                    {% for s in species %}
+                                        <p>{{ link_to_species(s) }}</p>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                                <!-- End Species Tab -->
                                 <!-- Start Spots Tab -->
-                                {% if user.spots|first is not empty %}
+                                {% if spots|first is not empty %}
                                 <div id="tab-{{tab_spots_id}}" class="tab-pane {{tab_spots_id==1?'active'}}">
                                     <h3>{{ "page.user.h3.spots"|trans }}</h3>
-                                    {% for spot in user.spots %}
-                                        <p>{{ spot.coordinate }}</p>
+                                    {% for spot in spots %}
+                                        <p>{{ link_to_spot(spot) }}</p>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                                <!-- End Spots Tab -->
+                                <!-- Start Spots Tab -->
+                                {% if user.photosValidated|first is not empty %}
+                                <div id="tab-{{tab_photosv_id}}" class="tab-pane {{tab_photosv_id==1?'active'}}">
+                                    <h3>{{ "page.user.h3.photos_validated"|trans }}</h3>
+                                    {% for pv in user.photosValidated %}
+                                        <p>{{ pv.photo.title }}</p>
+                                        {# link_to_photo(pv.photo) #}
                                     {% endfor %}
                                 </div>
                                 {% endif %}
@@ -145,13 +186,6 @@
                         </div>
                     </div>
                     <!-- End Panel -->
-                </div>
-            </div>
-            <div class="ibox float-e-margins">
-                <div class="ibox-content">
-                    <!-- Start Comments -->
-                    {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': 'fosUser-' ~ user.id } %}
-                    <!-- End Comments -->
                 </div>
             </div>
         </div>

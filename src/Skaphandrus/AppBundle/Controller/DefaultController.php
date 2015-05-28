@@ -504,14 +504,15 @@ class DefaultController extends Controller {
     /*
      * User page.
      */
-
     public function userAction($id) {
         $user = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-                ->findOneById($id);
+            ->findOneById($id);
 
         if ($user) {
             return $this->render('SkaphandrusAppBundle:Default:user.html.twig', array(
-                        'user' => $user,
+                'user' => $user,
+                'species' => $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findByUserId($user->getId()),
+                'spots' => $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')->findByUserId($user->getId()),
             ));
         } else {
             throw $this->createNotFoundException('The user with id "' . $id . '" does not exist.');

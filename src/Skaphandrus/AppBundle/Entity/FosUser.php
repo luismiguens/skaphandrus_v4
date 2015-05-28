@@ -35,6 +35,11 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
      */
     private $photos;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $photosValidated;
+
 
     public function getEncoderName() {
         return $this->algorithm == 'sha1' ? 'legacy' : 'default';
@@ -165,5 +170,39 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
     public function getPhotos()
     {
         return $this->photos;
+    }
+
+    /**
+     * Add photosValidated
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photosValidated
+     *
+     * @return FosUser
+     */
+    public function addPhotosValidated(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photosValidated)
+    {
+        $this->photosValidated[] = $photosValidated;
+
+        return $this;
+    }
+
+    /**
+     * Remove photosValidated
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photosValidated
+     */
+    public function removePhotosValidated(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photosValidated)
+    {
+        $this->photosValidated->removeElement($photosValidated);
+    }
+
+    /**
+     * Get photosValidated
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotosValidated()
+    {
+        return $this->photosValidated;
     }
 }

@@ -268,6 +268,32 @@ fos_comment:
         model:
             comment: Skaphandrus\AppBundle\Entity\Comment
             thread: Skaphandrus\AppBundle\Entity\Thread
+    acl: true
+    service:
+        acl:
+            thread:  fos_comment.acl.thread.roles
+            comment: fos_comment.acl.comment.roles
+            vote:    fos_comment.acl.vote.roles
+        manager:
+            thread:  fos_comment.manager.thread.acl
+            comment: fos_comment.manager.comment.acl
+            vote:    fos_comment.manager.vote.acl
+    acl_roles:
+        comment:
+            create: IS_AUTHENTICATED_FULLY
+            view: IS_AUTHENTICATED_ANONYMOUSLY
+            edit: ADMIN_USER
+            delete: ADMIN_USER
+        thread:
+            create: IS_AUTHENTICATED_FULLY
+            view: IS_AUTHENTICATED_ANONYMOUSLY
+            edit: ADMIN_USER
+            delete: ADMIN_USER
+        vote:
+            create: IS_AUTHENTICATED_FULLY
+            view: IS_AUTHENTICATED_ANONYMOUSLY
+            edit: ADMIN_USER
+            delete: ADMIN_USER
 
 
 #https://github.com/KnpLabs/KnpPaginatorBundle

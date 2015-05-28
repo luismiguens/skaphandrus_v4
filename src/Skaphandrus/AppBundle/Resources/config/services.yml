@@ -9,10 +9,17 @@ services:
         arguments: ["@service_container"]
         tags:
             - { name: twig.extension }
+
+    twig.extension.Date:
+        class: Twig_Extensions_Extension_Date
+        tags:
+            - { name: twig.extension }
+
     skaphandrus_user.registration.form.type:
         class: Skaphandrus\AppBundle\Form\Type\RegistrationFormType
         tags:
             - { name: form.type, alias: skaphandrus_user_registration }
+
     skaphandrus_user.resetting.form.type:
         class: Skaphandrus\AppBundle\Form\Type\ResettingFormType
         tags:

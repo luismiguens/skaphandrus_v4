@@ -52,7 +52,7 @@
     </a>
     <div id="fos_comment_comment_body_{{ comment.id }}" class="fos_comment_comment_body media-body">
         {% block fos_comment_comment_metas_authorline %}
-            <small class="pull-right text-navy">{{ comment.createdAt|date }}</small>
+            <small class="pull-right text-navy">{{ comment.createdAt|time_diff }}</small>
             <strong>{{ comment.authorName }}</strong>
         {% endblock fos_comment_comment_metas_authorline %}
         <p class="m-b-xs">
