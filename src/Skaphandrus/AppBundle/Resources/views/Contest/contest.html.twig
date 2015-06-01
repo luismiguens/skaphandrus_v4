@@ -3,6 +3,9 @@
 {% block page_title %}{{contest.name}}{% endblock %}
 {% block page_description %}description{% endblock %}
 
+{# Needed for sidebar navigation #}
+{% block body_data_attributes %}data-spy="scroll" data-target="#navbar-sidebar"{% endblock %}
+
 {% block heading_title %}
    {{contest.name}}
 {% endblock %}
@@ -17,6 +20,19 @@
 
 {% block body %}
 
+{# Calculate the project completeness #}
+{% if "now"|date("U") < contest.beginAt|date("U") %}
+    {% set percentage = 0 %}
+    {% set contest_status = 'not-started' %}
+{% elseif "now"|date("U") < contest.endAt|date("U") %}
+    {% set time_length = contest.endAt|date("U") - contest.beginAt|date("U") %}
+    {% set current_time_length = "now"|date("U") - contest.beginAt|date("U") %}
+    {% set percentage = ( (current_time_length * 100) / time_length )|number_format %}
+    {% set contest_status = 'active' %}
+{% else %}
+    {% set percentage = 100 %}
+    {% set contest_status = 'completed' %}
+{% endif %}
 
 <div class="row">
     <div class="col-lg-9">
@@ -30,7 +46,7 @@
                                 <h2>{{ contest.name }}</h2>
                             </div>
                             <dl class="dl-horizontal">
-                                <dt>{{ "page.contest.dt.status"|trans }}:</dt> <dd><span class="label label-primary">Active</span></dd>
+                                <dt>{{ "page.contest.dt.status"|trans }}:</dt> <dd><span class="label label-primary">{{ "page.contest.label.status_" ~ contest_status|trans }}</span></dd>
                             </dl>
                         </div>
                     </div>
@@ -50,11 +66,10 @@
                                 <dt>{{ "page.contest.dt.ends_at"|trans }}:</dt> <dd>{{ contest.endAt|date }}</dd>
                                 <dt>{{ "page.contest.dt.participants"|trans }}:</dt>
                                 <dd class="project-people">
-                                    <a href=""><img alt="image" class="img-circle" src="/uploads/11138585_1606358319621583_5687423293522990896_n.jpg"></a>
-                                    <a href=""><img alt="image" class="img-circle" src="/uploads/11138585_1606358319621583_5687423293522990896_n.jpg"></a>
-                                    <a href=""><img alt="image" class="img-circle" src="/uploads/11138585_1606358319621583_5687423293522990896_n.jpg"></a>
-                                    <a href=""><img alt="image" class="img-circle" src="/uploads/11138585_1606358319621583_5687423293522990896_n.jpg"></a>
-                                    <a href=""><img alt="image" class="img-circle" src="/uploads/11138585_1606358319621583_5687423293522990896_n.jpg"></a>
+                                    {% for photographer in photographers[:5] %}
+                                        <a href="{{ url_to_user(photographer) }}"><img alt="image" class="img-circle" src="/uploads/11138585_1606358319621583_5687423293522990896_n.jpg"></a>
+                                    {% endfor %}
+                                    <a href="{{ path("contests_photographers", {'contest_slug': slugify(contest.name) }) }}">{{ "page.contest.link.more_photographers"|trans }}</a>
                                 </dd>
                             </dl>
                         </div>
@@ -65,9 +80,9 @@
                                 <dt>Completed:</dt>
                                 <dd>
                                     <div class="progress progress-striped active m-b-sm">
-                                        <div style="width: 60%;" class="progress-bar"></div>
+                                        <div style="width: {{ percentage }}%;" class="progress-bar"></div>
                                     </div>
-                                    <small>Project completed in <strong>60%</strong>. Remaining close the project, sign a contract and invoice.</small>
+                                    <small>Contest completed in <strong>{{ percentage }}%</strong>.</small>
                                 </dd>
                             </dl>
                         </div>
@@ -78,7 +93,8 @@
                                 <div class="panel-heading">
                                     <div class="panel-options">
                                         <ul class="nav nav-tabs">
-                                            <li class="active"><a href="#tab-2" data-toggle="tab">{{ "page.contest.tab.get_started"|trans }}</a></li>
+                                            <li class="active"><a href="#tab-1" data-toggle="tab">{{ "page.contest.tab.get_started"|trans }}</a></li>
+                                            <li><a href="{{ url_to_contest_photos(contest.categories|first) }}">{{ "page.contest.tab.photos"|trans }}</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -86,7 +102,7 @@
                                 <div class="panel-body">
 
                                     <div class="tab-content">
-                                        <div class="tab-pane active" id="tab-2" data-spy="scroll" data-target="#navbar-sidebar">
+                                        <div class="tab-pane active" id="tab-1">
 
                                             <section id="categories">
                                                 <h2>{{ "page.contest.h2.categories"|trans }}</h2>
@@ -108,7 +124,7 @@
                                                                     {% endif %}
                                                                 </td>
                                                                 <td>
-                                                                    <h4>{{ category.translate.name }}</h4>
+                                                                    <h4>{{ link_to_contest_photos(category) }}</h4>
                                                                     <p>{{ category.translate.description }}</p>
                                                                 </td>
                                                                 <td></td>
@@ -164,6 +180,7 @@
                                                         {% for judge in contest.judges %}
                                                             <tr>
                                                                 <td>
+                                                                    {# @TODO: Add judge real photo #}
                                                                     <img class="img-rounded" src="{{ "uploads/11138585_1606358319621583_5687423293522990896_n.jpg"|imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ judge.fosUser.username }}" title="{{ judge.fosUser.username }}">
                                                                 </td>
                                                                 <td>
@@ -230,6 +247,8 @@
                             <ul class="nav bs-docs-sidenav">
                                 <li><a href="#categories">Categories</a></li>
                                 <li><a href="#awards">Awards</a></li>
+                                <li><a href="#judges">Judges</a></li>
+                                <li><a href="#sponsors">Sponsors</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -238,19 +257,4 @@
         </div>
     </div>
 </div>
-
-    {% set total_photo_count = 0 %}
-    {% set all_users = {} %}
-    {% for category in contest.categories %}
-        {# Get photos #}
-        {% set total_photo_count = total_photo_count + category.photo|length %}
-        {% for photo in category.photo %}
-            {# the hash key should be a string for this to work #}
-            {% set all_users = all_users|merge({("u" ~ photo.fosUser.id): photo.fosUser.id}) %}
-        {% endfor %}
-    {% endfor %}
-    <hr>
-    <p><b>{{ "page.contests_contest.label.total_users"|trans }}:</b> {{ all_users|length }}</p>
-    <p><b>{{ "page.contests_contest.label.total_photos"|trans }}:</b> {{ total_photo_count }}</p>
-    <p><b>{{ "page.contests_contest.label.total_sponsors"|trans }}:</b> {{ contest.sponsors|length }}</p>
 {% endblock %}

@@ -29,4 +29,18 @@ class SkPhotoContestCategoryRepository extends EntityRepository {
             return null;
         }
     }
+
+    public function findPhotographers($category) {
+        $users = array();
+
+        foreach ($category->getPhoto() as $photo) {
+            $user = $photo->getFosUser();
+
+            if ($user && !array_key_exists($user->getId(), $users)) {
+                $users[$user->getId()] = $user;
+            }
+        }
+
+        return $users;
+    }
 }

@@ -36,7 +36,7 @@ class UtilsExtension extends \Twig_Extension {
             // The "is_safe" parameter allows html, for rendering the links.
             new \Twig_SimpleFunction('link_to_user', array($this, 'link_to_user'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('link_to_species', array($this, 'link_to_species'), array('is_safe' => array('html'))),
-            new \Twig_SimpleFunction('link_to_contest', array($this, 'link_to_photo_contest'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('link_to_contest', array($this, 'link_to_contest'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('link_to_contest_photos', array($this, 'link_to_contest_photos'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('link_to_spot', array($this, 'link_to_spot'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('link_to_location', array($this, 'link_to_location'), array('is_safe' => array('html'))),
@@ -46,7 +46,7 @@ class UtilsExtension extends \Twig_Extension {
             // URL helper functions.
             new \Twig_SimpleFunction('url_to_user', array($this, 'url_to_user')),
             new \Twig_SimpleFunction('url_to_species', array($this, 'url_to_species')),
-            new \Twig_SimpleFunction('url_to_contest', array($this, 'url_to_photo_contest')),
+            new \Twig_SimpleFunction('url_to_contest', array($this, 'url_to_contest')),
             new \Twig_SimpleFunction('url_to_contest_photos', array($this, 'url_to_contest_photos')),
             new \Twig_SimpleFunction('url_to_spot', array($this, 'url_to_spot')),
             new \Twig_SimpleFunction('url_to_location', array($this, 'url_to_location')),
@@ -55,7 +55,9 @@ class UtilsExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('url_to_taxon', array($this, 'url_to_taxon')),
             new \Twig_SimpleFunction('url_to_photos', array($this, 'url_to_photos')),
             // Other helpers
-            new \Twig_SimpleFunction('sk_build_query', array($this, 'sk_build_query'))
+            new \Twig_SimpleFunction('sk_build_query', array($this, 'sk_build_query')),
+            new \Twig_SimpleFunction('slugify', array($this, 'slugify')),
+            new \Twig_SimpleFunction('unslugify', array($this, 'unslugify')),
         );
     }
 
@@ -210,6 +212,14 @@ class UtilsExtension extends \Twig_Extension {
 
     public function sk_build_query($array) {
         return html_build_query($array);
+    }
+
+    public function slugify($string) {
+        return Utils::slugify($string);
+    }
+
+    public function unslugify($string) {
+        return Utils::unslugify($string);
     }
 
 }
