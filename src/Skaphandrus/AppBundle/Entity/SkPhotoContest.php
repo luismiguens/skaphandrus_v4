@@ -69,6 +69,11 @@ class SkPhotoContest
     private $awards;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $judges;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -355,11 +360,6 @@ class SkPhotoContest
     {
         return $this->awards;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $judges;
-
 
     /**
      * Add judge

@@ -541,17 +541,12 @@ class DefaultController extends Controller {
      * <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
      */
 
-    public function skGridAction($parameters, $limit, $order = array('id' => 'desc')) {
+    public function skGridAction($parameters, $limit = 20, $order = array('id' => 'desc')) {
 
-        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($parameters, $limit);
+        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($parameters, $limit, $order);
         $query = $qb->getQuery();
 
-//print_r($parameters);
-
         $photos = $query->getResult();
-
-//        $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
-//                ->findBy($parameters, $limit, $order);
 
         return $this->render('SkaphandrusAppBundle:Default:skGrid.html.twig', array(
                     'photos' => $photos,
