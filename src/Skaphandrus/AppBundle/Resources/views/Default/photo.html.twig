@@ -3,7 +3,7 @@
 
 {% block page_title %}{{ photo.title }}, {{ photo.createdAt|date('Y-m-d H:i:s') }}{% endblock %}
 {% block page_description %}{{photo.title}}, {{photo.description}}{% endblock %}
-{% block page_keywords %}{{photo.title}}, {{photo.keywordsString}}, {{photo.species.name}}, {{photo.spot.name}}{% endblock %}
+{% block page_keywords %}{{photo.title}}, {{photo.keywordsString}}{% if photo.species is not empty %}, {{photo.species.name}}{% endif %}{% if photo.spot is not empty %}, {{photo.spot.name}}{% endif %}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -58,8 +58,12 @@
                             <ul class="list-unstyled">
                                 <li><i class="fa fa-clock-o"></i> {{ "page.photo.label.taken_at"|trans }} {{ photo.takenAt|date('Y-m-d H:i:s') }}</li>
                                 <li><i class="fa fa-cloud-upload"></i> {{ "page.photo.label.uploaded_at"|trans }} {{ photo.createdAt|date('Y-m-d H:i:s') }}</li>
+                                {% if photo.creative is not empty %}
                                 <li><i class="fa fa-gavel"></i> {{ "page.photo.label.licensed_under"|trans }} {{ photo.creative.name }}</li>
+                                {% endif %}
+                                {% if photo.model is not empty %}
                                 <li><i class="fa fa-camera"></i> {{ "page.photo.label.camera"|trans }} {{ photo.model.name }}</li>
+                                {% endif %}
                             </ul>
 
                             {% if photo.description is not empty %}
@@ -118,9 +122,12 @@
 
                         {% if photo.keyword|length %}
                             <h3>{{ "page.photo.h3.tags"|trans }}</h3>
+                            <ul class="tag-list" style="padding: 0;">
                             {% for keyword in photo.keyword %}
-                                <p>{{ keyword.keyword }}</p>
+                                <li><a href="">{{ keyword.keyword }}</a></li>
                             {% endfor %}
+                            </ul>
+                            <div style="clear: both;"></div>
                         {% endif %}
 
                         {% if photo.species is not empty %}

@@ -232,7 +232,8 @@
     <div class="col-lg-3">
         <div class="wrapper wrapper-content project-manager hidden-sm hidden-xs hidden-md" data-spy="affix" data-offset-top="155" style="top: 0; max-width: 250px;">
             <h2>{{ contest.name }}</h2>
-            <img src="{{ contest.logo }}" class="img-responsive">
+            <!--<img src="{{ contest.logo }}" class="img-responsive">-->
+            <img src="/uploads/11138585_1606358319621583_5687423293522990896_n.jpg" class="img-responsive">
             <p class="small">
                 {{ contest.translate.description|raw }}
             </p>
@@ -240,19 +241,15 @@
             <p class="small">
                 {{ contest.translate.rules|raw }}
             </p>
-            <div class="ibox">
-                <div class="ibox-content">
-                    <div class="row">
-                        <nav role="navigation" id="navbar-sidebar">
-                            <ul class="nav bs-docs-sidenav">
-                                <li><a href="#categories">Categories</a></li>
-                                <li><a href="#awards">Awards</a></li>
-                                <li><a href="#judges">Judges</a></li>
-                                <li><a href="#sponsors">Sponsors</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
+            <div class="row">
+                <nav role="navigation" id="navbar-sidebar">
+                    <ul class="nav bs-docs-sidenav">
+                        <li><a href="#categories">{{ "page.contest.menu.categories"|trans }}</a></li>
+                        <li><a href="#awards">{{ "page.contest.menu.awards"|trans }}</a></li>
+                        <li><a href="#judges">{{ "page.contest.menu.judges"|trans }}</a></li>
+                        <li><a href="#sponsors">{{ "page.contest.menu.sponsors"|trans }}</a></li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

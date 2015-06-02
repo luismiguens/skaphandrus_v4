@@ -257,7 +257,9 @@ liip_imagine:
         sk_thumbnail_outbound_100:
             filters:
                 thumbnail: { size: [100, 100], mode: outbound }
-                
+        sk_thumbnail_outbound_198_100:
+            filters:
+                thumbnail: { size: [198, 100], mode: outbound }
         sk_upscale_800_600:
             filters:
                 upscale: { min: [800, 600] }

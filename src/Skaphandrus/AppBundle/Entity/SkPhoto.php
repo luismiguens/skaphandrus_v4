@@ -468,7 +468,13 @@ class SkPhoto {
 
     
     public function getKeywordsString() {
-        return implode(', ', $this->keyword->toArray());
+        $string = '';
+
+        foreach ($this->keyword->toArray() as $keyword) {
+            $string .= $keyword->getKeyword() . ', ';
+        }
+
+        return substr($string, 0, -2);
     }
     
     

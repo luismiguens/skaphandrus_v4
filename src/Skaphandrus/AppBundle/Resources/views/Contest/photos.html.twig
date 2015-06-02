@@ -18,101 +18,69 @@
                                         </ul>
                                     </div>
                                 </div>
-
-                                <div class="panel-body">
-                                    <div class="tab-content">
-                                        <div class="tab-pane active" id="tab-1">
-
-                                            <div class="row">
-                                                <div class="col-lg-3">
-                                                    <div class="ibox float-e-margins">
-                                                        <div class="ibox-content">
-                                                            <div class="file-manager">
-                                                                <h5>Categories:</h5>
-                                                                {% for cat in category.contest.categories %}
-                                                                    {% if cat.id == category.id %}
-                                                                        {% set url = '#' %}
-                                                                        {% set class = ' active' %}
-                                                                    {% else %}
-                                                                        {% set url = url_to_contest_photos(cat) %}
-                                                                        {% set class = '' %}
-                                                                    {% endif %}
-                                                                    <a href="{{ url }}" class="file-control{{ class }}">
-                                                                        {{ cat.translate(app.request.locale).name }}
-                                                                    </a>
-                                                                {% endfor %}
-                                                                <div class="hr-line-dashed"></div>
-                                                                <button class="btn btn-primary btn-block">Upload Files</button>
-                                                                <div class="hr-line-dashed"></div>
-                                                                <h5>Folders</h5>
-                                                                <ul class="folder-list" style="padding: 0">
-                                                                    {% for cat in category.contest.categories %}
-                                                                        {% if cat.id == category.id %}
-                                                                            {% set url = '#' %}
-                                                                            {% set class = '-open' %}
-                                                                        {% else %}
-                                                                            {% set url = url_to_contest_photos(cat) %}
-                                                                            {% set class = '' %}
-                                                                        {% endif %}
-                                                                        <li><a href="{{ url }}"><i class="fa fa-folder{{ class }}"></i> {{ cat.translate(app.request.locale).name }}</a></li>
-                                                                    {% endfor %}
-                                                                </ul>
-                                                                <!-- <h5 class="tag-title">Tags</h5>
-                                                                <ul class="tag-list" style="padding: 0">
-                                                                    <li><a href="">Family</a></li>
-                                                                    <li><a href="">Work</a></li>
-                                                                    <li><a href="">Home</a></li>
-                                                                    <li><a href="">Children</a></li>
-                                                                    <li><a href="">Holidays</a></li>
-                                                                    <li><a href="">Music</a></li>
-                                                                    <li><a href="">Photography</a></li>
-                                                                    <li><a href="">Film</a></li>
-                                                                </ul> -->
-                                                                <div class="clearfix"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-9 animated fadeInRight">
-                                                    <div class="row">
-                                                        <div class="col-lg-12">
-                                                            {% for photo in category.photo %}
-                                                                <div class="file-box">
-                                                                    <div class="file">
-                                                                        <a href="#">
-                                                                            <span class="corner"></span>
-
-                                                                            <div class="image">
-                                                                                <img alt="image" class="img-responsive" src="/{{ photo.webPath }}">
-                                                                            </div>
-                                                                            <div class="file-name">
-                                                                                {{ photo.title }}
-                                                                                <br/>
-                                                                                <small>Added: {{ photo.createdAt|date }}</small>
-                                                                            </div>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            {% endfor %}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="file-manager">
+                                <h5>{{ "page.contest_photos.h5.categories"|trans }}</h5>
+                                <ul class="folder-list" style="padding: 0">
+                                    {% for cat in category.contest.categories %}
+                                        {% if cat.id == category.id %}
+                                            {% set url = '#' %}
+                                            {% set class = '-open' %}
+                                        {% else %}
+                                            {% set url = url_to_contest_photos(cat) %}
+                                            {% set class = '' %}
+                                        {% endif %}
+                                        <li><a href="{{ url }}"><i class="fa fa-folder{{ class }}"></i> {{ cat.translate(app.request.locale).name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="hr-line-dashed"></div>
+                                <button class="btn btn-primary btn-block">Upload Files</button>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 animated fadeInRight">
+                    <div class="row">
+                        <!--<div class="col-lg-12">-->
+                            {% for photo in category.photo %}
+                                <div class="file-box">
+                                    <div class="file">
+                                        {# url_to_photo(photo) causes problems when slug has "/" #}
+                                        <a href="#">
+                                            <span class="corner"></span>
+
+                                            <div class="image">
+                                                {# <img alt="image" class="img-responsive" src="{{ photo.webPath|imagine_filter('sk_thumbnail_outbound_198_100') }}">#}
+                                                <img alt="image" class="img-responsive" src="{{ "uploads/11138585_1606358319621583_5687423293522990896_n.jpg"|imagine_filter('sk_thumbnail_outbound_198_100') }}">
+                                            </div>
+                                            <div class="file-name">
+                                                {{ photo.title|truncate(20) }}<br/>
+                                                <small>Added: {{ photo.createdAt|date }}</small>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        <!--</div>-->
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-lg-3">
-        <div class="wrapper wrapper-content project-manager hidden-sm hidden-xs hidden-md" data-spy="affix" data-offset-top="155" style="top: 0; max-width: 250px;">
+        <div class="wrapper wrapper-content project-manager hidden-sm hidden-xs hidden-md" data-spy="affix" data-offset-top="112" style="top: 0; max-width: 250px;">
             <h2>{{ category.contest.name }}</h2>
-            <img src="{{ category.contest.logo }}" class="img-responsive">
+            <!--<img src="{{ category.contest.logo }}" class="img-responsive">-->
+            <img src="/uploads/11138585_1606358319621583_5687423293522990896_n.jpg" class="img-responsive">
             <p class="small">
                 {{ category.contest.translate.description|raw }}
             </p>
@@ -129,26 +97,12 @@
                 {% set percentage = 100 %}
                 {% set contest_status = 'completed' %}
             {% endif %}
-            <p><span class="label label-primary">{{ "page.contest.label.status_" ~ contest_status|trans }}</span></p>
-            <p>{{ "page.contest.label.created_by"|trans }}: Alex Smith</p>
-            <p>{{ "page.contest.label.client"|trans }}: <a href="#" class="text-navy"> Skaphandrus</a></p>
-            <p>{{ "page.contest.label.created"|trans }}: {{ category.contest.createdAt|date }}</p>
-            <p>{{ "page.contest.label.starts_at"|trans }}: {{ category.contest.beginAt|date }}</p>
-            <p>{{ "page.contest.label.ends_at"|trans }}: {{ category.contest.endAt|date }}</p>
-            <div class="ibox">
-                <div class="ibox-content">
-                    <div class="row">
-                        <nav role="navigation" id="navbar-sidebar">
-                            <ul class="nav bs-docs-sidenav">
-                                <li><a href="{{ url_to_contest(category.contest) }}#categories">Categories</a></li>
-                                <li><a href="{{ url_to_contest(category.contest) }}#awards">Awards</a></li>
-                                <li><a href="{{ url_to_contest(category.contest) }}#judges">Judges</a></li>
-                                <li><a href="{{ url_to_contest(category.contest) }}#sponsors">Sponsors</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
+            <p><strong>{{ "page.contest.dt.status"|trans }}:</strong> <span class="label label-primary">{{ "page.contest.label.status_" ~ contest_status|trans }}</span></p>
+            <p><strong>{{ "page.contest.label.created_by"|trans }}:</strong> Alex Smith</p>
+            <p><strong>{{ "page.contest.label.client"|trans }}:</strong> <a href="#" class="text-navy"> Skaphandrus</a></p>
+            <p><strong>{{ "page.contest.label.created"|trans }}:</strong> {{ category.contest.createdAt|date }}</p>
+            <p><strong>{{ "page.contest.label.starts_at"|trans }}:</strong> {{ category.contest.beginAt|date }}</p>
+            <p><strong>{{ "page.contest.label.ends_at"|trans }}:</strong> {{ category.contest.endAt|date }}</p>
         </div>
     </div>
 </div>
