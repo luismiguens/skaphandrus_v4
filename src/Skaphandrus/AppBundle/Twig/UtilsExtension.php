@@ -38,6 +38,8 @@ class UtilsExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('link_to_species', array($this, 'link_to_species'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('link_to_contest', array($this, 'link_to_contest'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('link_to_contest_photos', array($this, 'link_to_contest_photos'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('link_to_contest_photographers', array($this, 'link_to_contest_photographers'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('link_to_contest_sponsors', array($this, 'link_to_contest_sponsors'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('link_to_spot', array($this, 'link_to_spot'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('link_to_location', array($this, 'link_to_location'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('link_to_country', array($this, 'link_to_country'), array('is_safe' => array('html'))),
@@ -48,6 +50,8 @@ class UtilsExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('url_to_species', array($this, 'url_to_species')),
             new \Twig_SimpleFunction('url_to_contest', array($this, 'url_to_contest')),
             new \Twig_SimpleFunction('url_to_contest_photos', array($this, 'url_to_contest_photos')),
+            new \Twig_SimpleFunction('url_to_contest_photographers', array($this, 'url_to_contest_photographers')),
+            new \Twig_SimpleFunction('url_to_contest_sponsors', array($this, 'url_to_contest_sponsors')),
             new \Twig_SimpleFunction('url_to_spot', array($this, 'url_to_spot')),
             new \Twig_SimpleFunction('url_to_location', array($this, 'url_to_location')),
             new \Twig_SimpleFunction('url_to_country', array($this, 'url_to_country')),
@@ -91,6 +95,14 @@ class UtilsExtension extends \Twig_Extension {
 
     public function link_to_contest_photos($category) {
         return '<a href="' . $this->url_to_contest_photos($category) . '" title="' . $category->translate()->getName() . '">' . $category->translate()->getName() . '</a>';
+    }
+
+    public function link_to_contest_photographers($contest) {
+        return '<a href="' . $this->url_to_contest_photographers($contest) . '" title="' . $contest->getName() . '">' . $contest->getName() . '</a>';
+    }
+
+    public function link_to_contest_sponsors($contest) {
+        return '<a href="' . $this->url_to_contest_sponsors($contest) . '" title="' . $contest->getName() . '">' . $contest->getName() . '</a>';
     }
 
     public function link_to_spot($spot) {
@@ -151,6 +163,22 @@ class UtilsExtension extends \Twig_Extension {
         return call_user_func($path_function, 'contests_photos', array(
             'contest_slug' => Utils::slugify($category->getContest()->getName()),
             'category_slug' => Utils::slugify($category->translate()->getName()),
+        ));
+    }
+
+    public function url_to_contest_photographers($contest) {
+        $path_function = $this->getPathFunction();
+
+        return call_user_func($path_function, 'contests_photographers', array(
+            'contest_slug' => Utils::slugify($contest->getName()),
+        ));
+    }
+
+    public function url_to_contest_sponsors($contest) {
+        $path_function = $this->getPathFunction();
+
+        return call_user_func($path_function, 'contests_sponsors', array(
+            'contest_slug' => Utils::slugify($contest->getName()),
         ));
     }
 

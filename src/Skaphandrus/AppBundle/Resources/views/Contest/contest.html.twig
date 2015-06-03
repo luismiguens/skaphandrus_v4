@@ -1,7 +1,7 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block page_title %}{{contest.name}}{% endblock %}
-{% block page_description %}description{% endblock %}
+{% block page_title %}{{ contest.name }}{% endblock %}
+{% block page_description %}{{ contest.translate.description }}{% endblock %}
 
 {# Needed for sidebar navigation #}
 {% block body_data_attributes %}data-spy="scroll" data-target="#navbar-sidebar"{% endblock %}
@@ -93,8 +93,26 @@
                                 <div class="panel-heading">
                                     <div class="panel-options">
                                         <ul class="nav nav-tabs">
-                                            <li class="active"><a href="#tab-1" data-toggle="tab">{{ "page.contest.tab.get_started"|trans }}</a></li>
-                                            <li><a href="{{ url_to_contest_photos(contest.categories|first) }}">{{ "page.contest.tab.photos"|trans }}</a></li>
+                                            <li class="active">
+                                                <a href="#tab-1" data-toggle="tab">
+                                                    {{ "page.contest.tab.get_started"|trans }}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ url_to_contest_photos(contest.categories|first) }}">
+                                                    {{ "page.contest.tab.photos"|trans }}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ url_to_contest_photographers(contest) }}">
+                                                    {{ "page.contest.tab.photographers"|trans }}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ url_to_contest_sponsors(contest) }}">
+                                                    {{ "page.contest.tab.sponsors"|trans }}
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>

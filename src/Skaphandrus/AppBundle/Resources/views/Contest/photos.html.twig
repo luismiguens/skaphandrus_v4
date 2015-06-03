@@ -1,8 +1,23 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block body %}
+{% block page_title %}{{ category.contest.name }} - {{ category.translate.name }}{% endblock %}
+{% block page_description %}description{% endblock %}
 
-    <div class="row">
+{% block heading_title %}
+   {{ category.contest.name }} - {{ category.translate.name }}
+{% endblock %}
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="{{ path("contests_landing_page") }}">{{ "page.contest.breadcrumb.contest"|trans }}</a></li>
+        <li><a href="{{ url_to_contest(category.contest) }}">{{ category.contest.name }}</a></li>
+        <li class="active"><strong>{{ category.translate.name }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block body %}
+<div class="row">
     <div class="col-lg-9">
         <div class="wrapper wrapper-content animated fadeInUp">
             <div class="ibox">
@@ -13,8 +28,26 @@
                                 <div class="panel-heading">
                                     <div class="panel-options">
                                         <ul class="nav nav-tabs">
-                                            <li><a href="{{ url_to_contest(category.contest) }}">{{ "page.contest.tab.get_started"|trans }}</a></li>
-                                            <li class="active"><a href="#tab-1" data-toggle="tab">{{ "page.contest.tab.photos"|trans }}</a></li>
+                                            <li>
+                                                <a href="{{ url_to_contest(category.contest) }}">
+                                                    {{ "page.contest.tab.get_started"|trans }}
+                                                </a>
+                                            </li>
+                                            <li class="active">
+                                                <a href="#tab-1" data-toggle="tab">
+                                                    {{ "page.contest.tab.photos"|trans }}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ url_to_contest_photographers(category.contest) }}">
+                                                    {{ "page.contest.tab.photographers"|trans }}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ url_to_contest_sponsors(category.contest) }}">
+                                                    {{ "page.contest.tab.sponsors"|trans }}
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -55,7 +88,7 @@
                                 <div class="file-box">
                                     <div class="file">
                                         {# url_to_photo(photo) causes problems when slug has "/" #}
-                                        <a href="#">
+                                        <a href="{{ url_to_photo(photo) }}" title="{{ photo.title }}">
                                             <span class="corner"></span>
 
                                             <div class="image">

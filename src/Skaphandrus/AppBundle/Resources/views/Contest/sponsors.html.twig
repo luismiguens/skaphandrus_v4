@@ -1,6 +1,143 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
+{% block page_title %}{{ contest.name }} - {{ "page.sponsors.title.sponsors"|trans }}{% endblock %}
+{% block page_description %}description{% endblock %}
+
+{% block heading_title %}
+   {{ contest.name }} - {{ "page.sponsors.title.sponsors"|trans }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            $('.contact-box').each(function() {
+                animationHover(this, 'pulse');
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="{{ path("contests_landing_page") }}">{{ "page.contest.breadcrumb.contest"|trans }}</a></li>
+        <li><a href="{{ url_to_contest(contest) }}">{{ contest.name }}</a></li>
+        <li class="active"><strong>{{ "page.photographers.title.sponsors"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
 {% block body %}
+<div class="row">
+    <div class="col-lg-9">
+        <div class="wrapper wrapper-content animated fadeInUp">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <div class="row m-t-sm">
+                        <div class="col-lg-12">
+                            <div class="panel blank-panel">
+                                <div class="panel-heading">
+                                    <div class="panel-options">
+                                        <ul class="nav nav-tabs">
+                                            <li>
+                                                <a href="{{ url_to_contest(contest) }}">
+                                                    {{ "page.contest.tab.get_started"|trans }}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ url_to_contest_photos(contest.categories|first) }}">
+                                                    {{ "page.contest.tab.photos"|trans }}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ url_to_contest_photographers(contest) }}">
+                                                    {{ "page.contest.tab.photographers"|trans }}
+                                                </a>
+                                            </li>
+                                            <li class="active">
+                                                <a href="#tab-1" data-toggle="tab">
+                                                    {{ "page.contest.tab.sponsors"|trans }}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="tab-1">
+                                            <section id="sponsors">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for sponsor in contest.sponsors %}
+                                                            <tr>
+                                                                <td>
+                                                                    {# <img class="img-rounded" src="{{ sponsor.image|imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}"> #}
+                                                                    <img class="img-rounded" src="{{ "uploads/11138585_1606358319621583_5687423293522990896_n.jpg"|imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
+                                                                </td>
+                                                                <td>
+                                                                    <h4>{{ sponsor.name }}</h4>
+                                                                    <p>{{ sponsor.translate.description }}</p>
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="wrapper wrapper-content project-manager hidden-sm hidden-xs hidden-md" data-spy="affix" data-offset-top="112" style="top: 0; max-width: 250px;">
+            <h2>{{ contest.name }}</h2>
+            <!--<img src="{{ contest.logo }}" class="img-responsive">-->
+            <img src="/uploads/11138585_1606358319621583_5687423293522990896_n.jpg" class="img-responsive">
+            <p class="small">
+                {{ contest.translate.description|raw }}
+            </p>
+            {# Calculate the project completeness #}
+            {% if "now"|date("U") < contest.beginAt|date("U") %}
+                {% set percentage = 0 %}
+                {% set contest_status = 'not-started' %}
+            {% elseif "now"|date("U") < contest.endAt|date("U") %}
+                {% set time_length = contest.endAt|date("U") - contest.beginAt|date("U") %}
+                {% set current_time_length = "now"|date("U") - contest.beginAt|date("U") %}
+                {% set percentage = ( (current_time_length * 100) / time_length )|number_format %}
+                {% set contest_status = 'active' %}
+            {% else %}
+                {% set percentage = 100 %}
+                {% set contest_status = 'completed' %}
+            {% endif %}
+            <p><strong>{{ "page.contest.dt.status"|trans }}:</strong> <span class="label label-primary">{{ "page.contest.label.status_" ~ contest_status|trans }}</span></p>
+            <p><strong>{{ "page.contest.label.created_by"|trans }}:</strong> Alex Smith</p>
+            <p><strong>{{ "page.contest.label.client"|trans }}:</strong> <a href="#" class="text-navy"> Skaphandrus</a></p>
+            <p><strong>{{ "page.contest.label.created"|trans }}:</strong> {{ contest.createdAt|date }}</p>
+            <p><strong>{{ "page.contest.label.starts_at"|trans }}:</strong> {{ contest.beginAt|date }}</p>
+            <p><strong>{{ "page.contest.label.ends_at"|trans }}:</strong> {{ contest.endAt|date }}</p>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
     <h2>{{ "page.contests_sponsors.h3.sponsors"|trans }}: {{ contest.name }}</h2>
     {% for sponsor in contest.sponsors %}
         <p>{{ sponsor.name }}<p/>
