@@ -254,12 +254,12 @@ liip_imagine:
         sk_widen_590:
             filters:
                 relative_resize: { widen: 590 }
-        sk_thumbnail_outbound_63:
-            filters:
-                thumbnail: { size: [63, 63], mode: outbound }
         sk_thumbnail_outbound_100:
             filters:
                 thumbnail: { size: [100, 100], mode: outbound }
+        sk_thumbnail_outbound_130:
+            filters:
+                thumbnail: { size: [130, 130], mode: outbound }
         sk_thumbnail_outbound_198_100:
             filters:
                 thumbnail: { size: [198, 100], mode: outbound }

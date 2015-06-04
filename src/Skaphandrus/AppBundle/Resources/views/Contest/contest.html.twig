@@ -98,10 +98,15 @@
                                                     {{ "page.contest.tab.get_started"|trans }}
                                                 </a>
                                             </li>
-                                            <li>
-                                                <a href="{{ url_to_contest_photos(contest.categories|first) }}">
-                                                    {{ "page.contest.tab.photos"|trans }}
+                                            <li class="dropdown" role="presentation">
+                                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                                                  {{ "page.contest.tab.photos"|trans }} <span class="caret"></span>
                                                 </a>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    {% for cat in contest.categories %}
+                                                        <li><a href="{{ url_to_contest_photos(cat) }}">{{ cat.translate(app.request.locale).name }}</a></li>
+                                                    {% endfor %}
+                                                </ul>
                                             </li>
                                             <li>
                                                 <a href="{{ url_to_contest_photographers(contest) }}">
@@ -145,7 +150,14 @@
                                                                     <h4>{{ link_to_contest_photos(category) }}</h4>
                                                                     <p>{{ category.translate.description }}</p>
                                                                 </td>
-                                                                <td></td>
+                                                                <td>
+                                                                    {% for award in category.awards %}
+                                                                        {% for sponsor in award.sponsor %}
+                                                                            {# <img class="img-rounded" src="{{ sponsor.image|imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}"> #}
+                                                                            <img class="img-rounded" src="{{ "uploads/11138585_1606358319621583_5687423293522990896_n.jpg"|imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
+                                                                        {% endfor %}
+                                                                    {% endfor %}
+                                                                </td>
                                                             </tr>
                                                         {% endfor %}
                                                     </tbody>
@@ -183,6 +195,11 @@
                                                         {% endfor %}
                                                     </tbody>
                                                 </table>
+                                            </section>
+
+                                            <section id="rules">
+                                                <h2>{{ "page.contest.h2.rules"|trans }}</h2>
+                                                {{ contest.translate.rules|raw }}
                                             </section>
 
                                             <section id="judges">
@@ -255,15 +272,12 @@
             <p class="small">
                 {{ contest.translate.description|raw }}
             </p>
-            <h2>{{ "page.contest.h2.rules"|trans }}</h2>
-            <p class="small">
-                {{ contest.translate.rules|raw }}
-            </p>
             <div class="row">
                 <nav role="navigation" id="navbar-sidebar">
-                    <ul class="nav bs-docs-sidenav">
+                    <ul class="nav nav-pills">
                         <li><a href="#categories">{{ "page.contest.menu.categories"|trans }}</a></li>
                         <li><a href="#awards">{{ "page.contest.menu.awards"|trans }}</a></li>
+                        <li><a href="#rules">{{ "page.contest.menu.rules"|trans }}</a></li>
                         <li><a href="#judges">{{ "page.contest.menu.judges"|trans }}</a></li>
                         <li><a href="#sponsors">{{ "page.contest.menu.sponsors"|trans }}</a></li>
                     </ul>

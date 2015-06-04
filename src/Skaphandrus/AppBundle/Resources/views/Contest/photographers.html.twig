@@ -31,73 +31,76 @@
 <div class="row">
     <div class="col-lg-9">
         <div class="wrapper wrapper-content animated fadeInUp">
-            <div class="ibox">
-                <div class="ibox-content">
-                    <div class="row m-t-sm">
-                        <div class="col-lg-12">
-                            <div class="panel blank-panel">
-                                <div class="panel-heading">
-                                    <div class="panel-options">
-                                        <ul class="nav nav-tabs">
-                                            <li>
-                                                <a href="{{ url_to_contest(contest) }}">
-                                                    {{ "page.contest.tab.get_started"|trans }}
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="{{ url_to_contest_photos(contest.categories|first) }}">
-                                                    {{ "page.contest.tab.photos"|trans }}
-                                                </a>
-                                            </li>
-                                            <li class="active">
-                                                <a href="#tab-1" data-toggle="tab">
-                                                    {{ "page.contest.tab.photographers"|trans }}
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="{{ url_to_contest_sponsors(contest) }}">
-                                                    {{ "page.contest.tab.sponsors"|trans }}
-                                                </a>
-                                            </li>
-                                        </ul>
+            <div class="panel blank-panel">
+                <div class="panel-heading">
+                    <div class="panel-options">
+                        <ul class="nav nav-tabs">
+                            <li>
+                                <a href="{{ url_to_contest(contest) }}">
+                                    {{ "page.contest.tab.get_started"|trans }}
+                                </a>
+                            </li>
+                            <li class="dropdown" role="presentation">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                                  {{ "page.contest.tab.photos"|trans }} <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    {% for cat in contest.categories %}
+                                        <li><a href="{{ url_to_contest_photos(cat) }}">{{ cat.translate(app.request.locale).name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li class="active">
+                                <a href="#tab-1" data-toggle="tab">
+                                    {{ "page.contest.tab.photographers"|trans }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url_to_contest_sponsors(contest) }}">
+                                    {{ "page.contest.tab.sponsors"|trans }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab-1">
+                        <div class="row">
+                            {% for photographer in photographers %}
+                                <div class="col-md-6">
+                                    <div class="contact-box">
+                                        <a href="{{ url_to_user(photographer.user) }}">
+                                            <div class="col-sm-6">
+                                                <div class="text-center">
+                                                    <img alt="image" class="img-circle m-t-xs img-responsive" src="{{ "/uploads/11138585_1606358319621583_5687423293522990896_n.jpg"|imagine_filter('sk_thumbnail_outbound_130') }}">
+                                                    <!--<div class="m-t-xs font-bold">Photographer</div>-->
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <h3><strong>{{ photographer.user.username }}</strong></h3>
+                                                <p><i class="fa fa-photo"></i> {{ photographer.photos|length }}</p>
+                                                <address>
+                                                    <strong>Twitter, Inc.</strong><br>
+                                                    795 Folsom Ave, Suite 600<br>
+                                                    San Francisco, CA 94107<br>
+                                                    (123) 456-7890
+                                                </address>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </a>
                                     </div>
                                 </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                {% for photographer in photographers %}
-                    <div class="col-lg-4">
-                        <div class="contact-box">
-                            <a href="{{ url_to_user(photographer.user) }}">
-                                <div class="col-sm-4">
-                                    <div class="text-center">
-                                        <img alt="image" class="img-circle m-t-xs img-responsive" src="{{ "/uploads/11138585_1606358319621583_5687423293522990896_n.jpg"|imagine_filter('sk_thumbnail_outbound_63') }}">
-                                        <!--<div class="m-t-xs font-bold">Photographer</div>-->
-                                    </div>
-                                </div>
-                                <div class="col-sm-8">
-                                    <h3><strong>{{ photographer.user.username }}</strong></h3>
-                                    <p><i class="fa fa-photo"></i> {{ photographer.photos|length }}</p>
-                                    <address>
-                                        <strong>Twitter, Inc.</strong><br>
-                                        795 Folsom Ave, Suite 600<br>
-                                        San Francisco, CA 94107<br>
-                                        (123) 456-7890
-                                    </address>
-                                </div>
-                                <div class="clearfix"></div>
-                            </a>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
         </div>
     </div>
     <div class="col-lg-3">
-        <div class="wrapper wrapper-content project-manager hidden-sm hidden-xs hidden-md" data-spy="affix" data-offset-top="112" style="top: 0; max-width: 250px;">
+        <div class="wrapper wrapper-content project-manager hidden-sm hidden-xs hidden-md" data-spy="affix" data-offset-top="156" style="top: 0; max-width: 250px;">
             <h2>{{ contest.name }}</h2>
             <!--<img src="{{ contest.logo }}" class="img-responsive">-->
             <img src="/uploads/11138585_1606358319621583_5687423293522990896_n.jpg" class="img-responsive">

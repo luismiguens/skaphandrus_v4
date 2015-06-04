@@ -31,68 +31,65 @@
 <div class="row">
     <div class="col-lg-9">
         <div class="wrapper wrapper-content animated fadeInUp">
-            <div class="ibox">
-                <div class="ibox-content">
-                    <div class="row m-t-sm">
-                        <div class="col-lg-12">
-                            <div class="panel blank-panel">
-                                <div class="panel-heading">
-                                    <div class="panel-options">
-                                        <ul class="nav nav-tabs">
-                                            <li>
-                                                <a href="{{ url_to_contest(contest) }}">
-                                                    {{ "page.contest.tab.get_started"|trans }}
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="{{ url_to_contest_photos(contest.categories|first) }}">
-                                                    {{ "page.contest.tab.photos"|trans }}
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="{{ url_to_contest_photographers(contest) }}">
-                                                    {{ "page.contest.tab.photographers"|trans }}
-                                                </a>
-                                            </li>
-                                            <li class="active">
-                                                <a href="#tab-1" data-toggle="tab">
-                                                    {{ "page.contest.tab.sponsors"|trans }}
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="tab-content">
-                                        <div class="tab-pane active" id="tab-1">
-                                            <section id="sponsors">
-                                                <table class="table table-striped">
-                                                    <thead>
-                                                        <tr>
-                                                            <th></th>
-                                                            <th></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {% for sponsor in contest.sponsors %}
-                                                            <tr>
-                                                                <td>
-                                                                    {# <img class="img-rounded" src="{{ sponsor.image|imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}"> #}
-                                                                    <img class="img-rounded" src="{{ "uploads/11138585_1606358319621583_5687423293522990896_n.jpg"|imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
-                                                                </td>
-                                                                <td>
-                                                                    <h4>{{ sponsor.name }}</h4>
-                                                                    <p>{{ sponsor.translate.description }}</p>
-                                                                </td>
-                                                            </tr>
-                                                        {% endfor %}
-                                                    </tbody>
-                                                </table>
-                                            </section>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+            <div class="panel blank-panel">
+                <div class="panel-heading">
+                    <div class="panel-options">
+                        <ul class="nav nav-tabs">
+                            <li>
+                                <a href="{{ url_to_contest(contest) }}">
+                                    {{ "page.contest.tab.get_started"|trans }}
+                                </a>
+                            </li>
+                            <li class="dropdown" role="presentation">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                                  {{ "page.contest.tab.photos"|trans }} <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    {% for cat in contest.categories %}
+                                        <li><a href="{{ url_to_contest_photos(cat) }}">{{ cat.translate(app.request.locale).name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="{{ url_to_contest_photographers(contest) }}">
+                                    {{ "page.contest.tab.photographers"|trans }}
+                                </a>
+                            </li>
+                            <li class="active">
+                                <a href="#tab-1" data-toggle="tab">
+                                    {{ "page.contest.tab.sponsors"|trans }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab-1">
+                            <section id="sponsors">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for sponsor in contest.sponsors %}
+                                            <tr>
+                                                <td>
+                                                    {# <img class="img-rounded" src="{{ sponsor.image|imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}"> #}
+                                                    <img class="img-rounded" src="{{ "uploads/11138585_1606358319621583_5687423293522990896_n.jpg"|imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
+                                                </td>
+                                                <td>
+                                                    <h4>{{ sponsor.name }}</h4>
+                                                    <p>{{ sponsor.translate.description }}</p>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </section>
                         </div>
                     </div>
                 </div>

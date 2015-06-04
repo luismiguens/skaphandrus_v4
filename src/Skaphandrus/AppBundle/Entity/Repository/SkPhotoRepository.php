@@ -158,7 +158,7 @@ class SkPhotoRepository extends EntityRepository {
             $qb->setMaxResults($limit);
        
 
-echo $qb;
+//echo $qb;
 
         return $qb;
     }
