@@ -523,13 +523,19 @@ class DefaultController extends Controller {
 
     /*
      * Prints a board of photos.
+     *
+     * Include these files on the page:
+     * <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
+     * <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
      */
-    public function skBoardAction($type, $id) {
-        $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
-                ->findBy(array($type => $id));
+    public function skBoardAction($parameters, $limit = 20, $order = array('id' => 'desc')) {
+        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($parameters, $limit, $order);
+        $query = $qb->getQuery();
+        $photos = $query->getResult();
 
         return $this->render('SkaphandrusAppBundle:Default:skBoard.html.twig', array(
                     'photos' => $photos,
+                    'parameters' => $parameters,
         ));
     }
 

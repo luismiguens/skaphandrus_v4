@@ -17,11 +17,5 @@
         <join-column name="criteria_id" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
-    <many-to-many field="phylum" target-entity="SkPhylum" mapped-by="character" fetch="LAZY"/>
-    <many-to-many field="species" target-entity="SkSpecies" mapped-by="character" fetch="LAZY"/>
-    <many-to-many field="order" target-entity="SkOrder" mapped-by="character" fetch="LAZY"/>
-    <many-to-many field="genus" target-entity="SkGenus" mapped-by="character" fetch="LAZY"/>
-    <many-to-many field="class" target-entity="SkClass" mapped-by="character" fetch="LAZY"/>
-    <many-to-many field="family" target-entity="SkFamily" mapped-by="character" fetch="LAZY"/>
   </entity>
 </doctrine-mapping>

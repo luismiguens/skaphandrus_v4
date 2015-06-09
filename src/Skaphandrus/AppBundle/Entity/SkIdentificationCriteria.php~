@@ -2,11 +2,17 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+
 /**
  * SkIdentificationCriteria
  */
 class SkIdentificationCriteria
 {
+
+    use ORMBehaviors\Translatable\Translatable;
+    
     /**
      * @var string
      */
@@ -27,6 +33,18 @@ class SkIdentificationCriteria
      */
     private $type;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $groups;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Set orderBy
@@ -108,5 +126,78 @@ class SkIdentificationCriteria
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Add group
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkIdentificationGroup $group
+     *
+     * @return SkIdentificationCriteria
+     */
+    public function addGroup(\Skaphandrus\AppBundle\Entity\SkIdentificationGroup $group)
+    {
+        $this->groups[] = $group;
+
+        return $this;
+    }
+
+    /**
+     * Remove group
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkIdentificationGroup $group
+     */
+    public function removeGroup(\Skaphandrus\AppBundle\Entity\SkIdentificationGroup $group)
+    {
+        $this->groups->removeElement($group);
+    }
+
+    /**
+     * Get groups
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $characters;
+
+
+    /**
+     * Add character
+     *
+     * @param \Skaphandrus\AppBundle\Entity\skIdentificationCharacter $character
+     *
+     * @return SkIdentificationCriteria
+     */
+    public function addCharacter(\Skaphandrus\AppBundle\Entity\skIdentificationCharacter $character)
+    {
+        $this->characters[] = $character;
+
+        return $this;
+    }
+
+    /**
+     * Remove character
+     *
+     * @param \Skaphandrus\AppBundle\Entity\skIdentificationCharacter $character
+     */
+    public function removeCharacter(\Skaphandrus\AppBundle\Entity\skIdentificationCharacter $character)
+    {
+        $this->characters->removeElement($character);
+    }
+
+    /**
+     * Get characters
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCharacters()
+    {
+        return $this->characters;
     }
 }
