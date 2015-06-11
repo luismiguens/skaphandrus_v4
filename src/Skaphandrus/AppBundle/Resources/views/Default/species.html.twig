@@ -47,8 +47,8 @@
                         <h5>{{ "page.species.h5.species_detail"|trans }}</h5>
                     </div>
                     <div>
-                        <div class="ibox-content ibox-content no-padding border-left-right">
-                            <img alt="image" class="img-responsive" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />
+                        <div class="ibox-content ibox-content border-left-right">
+                            <img alt="image" class="img-responsive img-rounded" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />
                         </div>
                         <div class="ibox-content profile-content">
                             <h4><strong>{{photo.species.name}}</strong></h4>

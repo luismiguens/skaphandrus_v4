@@ -43,6 +43,7 @@ class UtilsExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('link_to_country', array($this, 'link_to_country'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('link_to_photo', array($this, 'link_to_photo'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('link_to_taxon', array($this, 'link_to_taxon'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('link_to_module', array($this, 'link_to_module'), array('is_safe' => array('html'))),
             // URL helper functions.
             new \Twig_SimpleFunction('url_to_user', array($this, 'url_to_user')),
             new \Twig_SimpleFunction('url_to_species', array($this, 'url_to_species')),
@@ -53,6 +54,7 @@ class UtilsExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('url_to_country', array($this, 'url_to_country')),
             new \Twig_SimpleFunction('url_to_photo', array($this, 'url_to_photo')),
             new \Twig_SimpleFunction('url_to_taxon', array($this, 'url_to_taxon')),
+            new \Twig_SimpleFunction('url_to_module', array($this, 'url_to_module')),
             new \Twig_SimpleFunction('url_to_photos', array($this, 'url_to_photos')),
             // Other helpers
             new \Twig_SimpleFunction('sk_build_query', array($this, 'sk_build_query'))
@@ -111,6 +113,13 @@ class UtilsExtension extends \Twig_Extension {
         return '<a href="' . $this->url_to_taxon($taxon) . '" title="' . $taxon->getName() . '">' . $taxon->getName() . '</a>';
     }
 
+        public function link_to_module($module_name) {
+        return '<a href="' . $this->url_to_module($module_name) . '" title="' . $module_name . '">' . $module_name . '</a>';
+    }
+
+    
+    
+    
     /*
      * URL helper functions.
      */
@@ -197,6 +206,15 @@ class UtilsExtension extends \Twig_Extension {
             'slug' => Utils::slugify($taxon->getName()),
         ));
     }
+    
+       public function url_to_module($module_name) {
+        $path_function = $this->getPathFunction();
+
+        return call_user_func($path_function, 'module', array(
+            'slug' => Utils::slugify($module_name)
+        ));
+    }
+    
 
     public function url_to_photos($params) {
         $path_function = $this->getPathFunction();

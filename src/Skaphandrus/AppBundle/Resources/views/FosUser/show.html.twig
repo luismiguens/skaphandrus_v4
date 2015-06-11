@@ -1,0 +1,32 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>FosUser</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Algorithm</th>
+                <td>{{ entity.algorithm }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('fos_user') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('fos_user_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

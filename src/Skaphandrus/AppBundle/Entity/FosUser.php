@@ -35,6 +35,14 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
      */
     private $photos;
 
+    
+        /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $modules;
+
+
+    
 
     public function getEncoderName() {
         return $this->algorithm == 'sha1' ? 'legacy' : 'default';
@@ -166,4 +174,44 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
     {
         return $this->photos;
     }
+    
+    
+    
+    /**
+     * Add module
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkModule $module
+     *
+     * @return FosUser
+     */
+    public function addModule(\Skaphandrus\AppBundle\Entity\SkIdentificationModule $module)
+    {
+        $this->modules[] = $module;
+
+        return $this;
+    }
+
+    /**
+     * Remove module
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkModule $module
+     */
+    public function removeModule(\Skaphandrus\AppBundle\Entity\SkIdentificationModule $module)
+    {
+        $this->modules->removeElement($module);
+    }
+
+    /**
+     * Get modules
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getModules()
+    {
+        return $this->modules;
+    }
+    
+    
+    
+    
 }

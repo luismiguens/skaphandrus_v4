@@ -15,6 +15,11 @@ class DefaultController extends Controller {
 
         return $this->render('SkaphandrusAppBundle:Default:index.html.twig');
     }
+    
+    
+
+    
+    
 
     public function index2Action() {
 
@@ -364,7 +369,7 @@ class DefaultController extends Controller {
             return $this->render('SkaphandrusAppBundle:Default:spot.html.twig', array(
                         'spot' => $spot,
                         'photographers' => $photographers,
-                'species' => $species,
+                        'species' => $species,
                         'map' => $map
             ));
         } else {
@@ -382,9 +387,22 @@ class DefaultController extends Controller {
         $location = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
                 ->findBySlug($name, $country, $locale);
 
+        //photographers
+        $qb_photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->getQueryBuilder(['location' => $location], 20);
+        $query_photographers = $qb_photographers->getQuery();
+        $photographers = $query_photographers->getResult();
+
+
+        //species
+        $qb_species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->getQueryBuilder(['location' => $location], 20);
+        $query_species = $qb_species->getQuery();
+        $species = $query_species->getResult();
+
         if ($location) {
             return $this->render('SkaphandrusAppBundle:Default:location.html.twig', array(
                         'location' => $location,
+                        'photographers' => $photographers,
+                        'species' => $species
             ));
         } else {
             throw $this->createNotFoundException('The location ' . $name . ' does not exist.');

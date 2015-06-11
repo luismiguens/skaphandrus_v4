@@ -1,0 +1,140 @@
+{% extends 'SkaphandrusAppBundle::angular_layout.html.twig' %}
+
+{% block page_title %}{{ "page.modules.title"|trans }}{% endblock %}
+{% block page_description %}{{ "page.modules.title"|trans }}{% endblock %}
+{% block page_keywords %}{% endblock %}
+
+{% block heading_title %}
+    {{ "page.modules.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('index')}}">{{ "page.common.breadcrumb.homepage"|trans }}</a></li>
+        <li class="active"><strong>{{ "page.modules.breadcrumb.modules"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+
+{% block heading_action %}
+    <a href="{{ path('photo_admin_new') }}" class="btn btn-primary">{{ "form.photo.btn.add"|trans }}</a>
+{% endblock %}
+
+{% block angular_app %}modulesApp{%endblock%}
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+   
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/angular-slugify-master/angular-slugify.js') }}"></script>
+
+    <script>
+        angular.module('modulesApp', ['slugifier'])
+                .controller('MainCtrl', ['$http', function ($http) {
+
+                        var self = this;
+                        self.modules = [];
+
+                        $http({
+                            url: 'http://skaphandrus.com/en/app/modules.json',
+                            method: "GET",
+                            params: {}
+                        })
+                                .then(function (response) {
+
+                                    self.modules = response.data;
+
+
+                                }, function (errResponse) {
+                                    console.error('Error while fetching infoSpecies');
+                                });
+
+                    }
+                ]).config(['$httpProvider', '$interpolateProvider', function ($httpProvider, $interpolateProvider) {
+                // Set the content type to be FORM type for all post requests
+                // This does not add it for GET requests.
+
+                $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+                $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+
+
+            }]);
+
+    </script>
+{%endblock%}
+
+
+
+
+{% block body %}
+
+
+
+    <div class = "wrapper wrapper-content" >
+        <div class = "row" >
+
+
+            <div ng-repeat = "master in mainCtrl.modules">
+                <div class="col-lg-4"  ng-repeat = "module in master.modules">
+
+                    <div class = "ibox float-e-margins" >
+                        <div class = "ibox-title" >
+                            <span class="label label-primary pull-right">NEW</span>
+                            <h5> {[{module.name}]} </h5>
+                        </div>
+                        <div class="ibox-content">
+                            <a class="thumbnail" href="http://skaphandrus_v4/app_dev.php/en/ocean-life-identification/{[{module.name | slugify}]}"><img src="http://skaphandrus.com{[{module.image_url}]}"></img></a>
+                            
+  
+                            
+                            
+                            <!--<div class="team-members">
+                                <a href="#"><img src="img/a8.jpg" class="img-circle" alt="member"></a>
+                                <a href="#"><img src="img/a4.jpg" class="img-circle" alt="member"></a>
+                                <a href="#"><img src="img/a1.jpg" class="img-circle" alt="member"></a>
+                            </div>
+                            <h4>Info about Design Team</h4>
+                            <p>
+                                Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
+                            </p>-->
+                            <!--<div>
+                                <span>Status of current project:</span>
+                                <div class="stat-percent">61%</div>
+                                <div class="progress progress-mini">
+                                    <div class="progress-bar" style="width: 61%;"></div>
+                                </div>
+                            </div>-->
+                            <div class="row  m-t-sm">
+                                <div class="col-sm-4">
+                                    <div class="font-bold">MASTER</div>
+                                    {[{master.name}]}
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="font-bold">SPECIES</div>
+                                    1th
+                                </div>
+                                <div class="col-sm-4 text-right">
+                                    <div class="font-bold">POINTS</div>
+                                    $705,913 <i class="fa fa-level-up text-navy"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+
+
+{%endblock%}
+

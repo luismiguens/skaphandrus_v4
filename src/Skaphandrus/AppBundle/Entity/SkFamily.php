@@ -5,8 +5,8 @@ namespace Skaphandrus\AppBundle\Entity;
 /**
  * SkFamily
  */
-class SkFamily
-{
+class SkFamily {
+
     /**
      * @var string
      */
@@ -32,22 +32,15 @@ class SkFamily
      */
     private $vernaculars;
 
-    
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $genus;
 
-
-    
-    
-    
-    
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->character = new \Doctrine\Common\Collections\ArrayCollection();
         $this->genus = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -59,8 +52,7 @@ class SkFamily
      *
      * @return SkFamily
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -71,8 +63,7 @@ class SkFamily
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -81,8 +72,7 @@ class SkFamily
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -93,8 +83,7 @@ class SkFamily
      *
      * @return SkFamily
      */
-    public function setOrder(\Skaphandrus\AppBundle\Entity\SkOrder $order = null)
-    {
+    public function setOrder(\Skaphandrus\AppBundle\Entity\SkOrder $order = null) {
         $this->order = $order;
 
         return $this;
@@ -105,8 +94,7 @@ class SkFamily
      *
      * @return \Skaphandrus\AppBundle\Entity\SkOrder
      */
-    public function getOrder()
-    {
+    public function getOrder() {
         return $this->order;
     }
 
@@ -117,8 +105,7 @@ class SkFamily
      *
      * @return SkFamily
      */
-    public function addCharacter(\Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $character)
-    {
+    public function addCharacter(\Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $character) {
         $this->character[] = $character;
 
         return $this;
@@ -129,8 +116,7 @@ class SkFamily
      *
      * @param \Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $character
      */
-    public function removeCharacter(\Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $character)
-    {
+    public function removeCharacter(\Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $character) {
         $this->character->removeElement($character);
     }
 
@@ -139,8 +125,7 @@ class SkFamily
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCharacter()
-    {
+    public function getCharacter() {
         return $this->character;
     }
 
@@ -151,8 +136,7 @@ class SkFamily
      *
      * @return SkFamily
      */
-    public function addVernacular(\Skaphandrus\AppBundle\Entity\SkFamilyVernacular $vernacular)
-    {
+    public function addVernacular(\Skaphandrus\AppBundle\Entity\SkFamilyVernacular $vernacular) {
         $this->vernaculars[] = $vernacular;
 
         return $this;
@@ -163,8 +147,7 @@ class SkFamily
      *
      * @param \Skaphandrus\AppBundle\Entity\SkFamilyVernacular $vernacular
      */
-    public function removeVernacular(\Skaphandrus\AppBundle\Entity\SkFamilyVernacular $vernacular)
-    {
+    public function removeVernacular(\Skaphandrus\AppBundle\Entity\SkFamilyVernacular $vernacular) {
         $this->vernaculars->removeElement($vernacular);
     }
 
@@ -173,8 +156,7 @@ class SkFamily
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getVernaculars()
-    {
+    public function getVernaculars() {
         return $this->vernaculars;
     }
 
@@ -185,8 +167,7 @@ class SkFamily
      *
      * @return SkFamily
      */
-    public function addGenus(\Skaphandrus\AppBundle\Entity\SkGenus $genus)
-    {
+    public function addGenus(\Skaphandrus\AppBundle\Entity\SkGenus $genus) {
         $this->genus[] = $genus;
 
         return $this;
@@ -197,8 +178,7 @@ class SkFamily
      *
      * @param \Skaphandrus\AppBundle\Entity\SkGenus $genus
      */
-    public function removeGenus(\Skaphandrus\AppBundle\Entity\SkGenus $genus)
-    {
+    public function removeGenus(\Skaphandrus\AppBundle\Entity\SkGenus $genus) {
         $this->genus->removeElement($genus);
     }
 
@@ -207,27 +187,36 @@ class SkFamily
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getGenus()
-    {
+    public function getGenus() {
         return $this->genus;
     }
-    
-    
-        
+
     public function getChildNodes() {
         return $this->getGenus();
     }
-    
-    
-    
-    public function getTaxonNodeName(){
+
+    public function getTaxonNodeName() {
         return "family";
-        
     }
-    
-        public function getParentNode() {
+
+    public function getParentNode() {
         return $this->getOrder();
     }
-    
-    
+
+    public function getSpecies() {
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('s')->from('SkaphandrusAppBundle:SkSpecies', 's');
+        $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
+        $qb->join('g.family', 'f', 'WITH', 'g.family = ?1');
+        $qb->setParameter(1, $this->getId());
+
+
+        try {
+            return $qb->getQuery()->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
 }

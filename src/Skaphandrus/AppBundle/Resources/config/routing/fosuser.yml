@@ -1,0 +1,30 @@
+fos_user:
+    path:     /
+    defaults: { _controller: "SkaphandrusAppBundle:FosUser:index" }
+
+fos_user_show:
+    path:     /{id}/show
+    defaults: { _controller: "SkaphandrusAppBundle:FosUser:show" }
+
+fos_user_new:
+    path:     /new
+    defaults: { _controller: "SkaphandrusAppBundle:FosUser:new" }
+
+fos_user_create:
+    path:     /create
+    defaults: { _controller: "SkaphandrusAppBundle:FosUser:create" }
+    methods:  POST
+
+fos_user_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SkaphandrusAppBundle:FosUser:edit" }
+
+fos_user_update:
+    path:     /{id}/update
+    defaults: { _controller: "SkaphandrusAppBundle:FosUser:update" }
+    methods:  [POST, PUT]
+
+fos_user_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SkaphandrusAppBundle:FosUser:delete" }
+    methods:  [POST, DELETE]

@@ -12,7 +12,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
- 
+
 {% endblock %}
 
 {% block heading_title %}
@@ -47,7 +47,7 @@
                     </div>
                     <div>
                         <div class="ibox-content">
-                         {{ google_map(map) }}
+                            {{ google_map(map) }}
                         </div>
                         <div class="ibox-content profile-content">
                             <h4><strong>{{spot.name}}</strong></h4>
@@ -88,11 +88,10 @@
                                 <!--<div class="panel-title m-b-md"><h4>Blank Panel with text tabs</h4></div>-->
                                 <div class="panel-options">
                                     <ul class="nav nav-tabs">
-
                                         <li class="active"><a data-toggle="tab" href="#tab-1">{{ "page.spot.tab.info"|trans }}</a></li>
                                         <li><a data-toggle="tab" href="#tab-2">{{ "page.spot.tab.photos"|trans }}</a></li>
                                         <li><a data-toggle="tab" href="#tab-3">{{ "page.spot.tab.contributors"|trans }}</a></li>
-                                         <li><a data-toggle="tab" href="#tab-4">{{ "page.spot.tab.species"|trans }}</a></li>
+                                        <li><a data-toggle="tab" href="#tab-4">{{ "page.spot.tab.species"|trans }}</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -113,20 +112,19 @@
                                     <div id="tab-3" class="tab-pane">
                                         <h3>{{ "page.spot.h3.contributors"|trans }}</h3>
                                         <ul class="unstyled">
-                                        {% for photographer in photographers %}
-                                            <li> photographer : {{link_to_user(photographer)}}</li>
-                                        {% endfor%}
+                                            {% for photographer in photographers %}
+                                                <li> photographer : {{link_to_user(photographer)}}</li>
+                                                {% endfor%}
                                         </ul>   
                                     </div>
                                     <div id="tab-4" class="tab-pane">
                                         <h3>{{ "page.spot.h3.species"|trans }}</h3>
                                         <ul class="unstyled">
-                                        {% for sp in species %}
-                                            <li> species : {{link_to_species(sp)}}</li>
-                                        {% endfor%}
+                                            {% for sp in species %}
+                                                <li> species : {{link_to_species(sp)}}</li>
+                                                {% endfor%}
                                         </ul>
                                     </div>
-                                    
                                 </div>
                             </div>
                         </div>

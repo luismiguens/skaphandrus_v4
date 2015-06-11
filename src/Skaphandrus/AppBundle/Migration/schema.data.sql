@@ -1123,8 +1123,8 @@ CREATE TABLE `sk_photo_contest_translation`
 (
         `id` INTEGER NOT NULL AUTO_INCREMENT,
         `translatable_id` INTEGER NOT NULL,
-	`description` VARCHAR(255),
-	`rules` VARCHAR(255),
+	`description` TEXT,
+	`rules` TEXT,
 	`locale` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
 	PRIMARY KEY (`id`),
         UNIQUE KEY `sk_photo_contest_translation_unique_translation` (`translatable_id`,`locale`),

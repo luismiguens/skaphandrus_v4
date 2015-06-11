@@ -5,8 +5,8 @@ namespace Skaphandrus\AppBundle\Entity;
 /**
  * SkPhylum
  */
-class SkPhylum
-{
+class SkPhylum {
+
     /**
      * @var string
      */
@@ -32,21 +32,15 @@ class SkPhylum
      */
     private $vernaculars;
 
-    
-       /**
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $class;
 
-    
-    
-    
-    
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->character = new \Doctrine\Common\Collections\ArrayCollection();
         $this->class = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -58,8 +52,7 @@ class SkPhylum
      *
      * @return SkPhylum
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -70,8 +63,7 @@ class SkPhylum
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -80,8 +72,7 @@ class SkPhylum
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -92,8 +83,7 @@ class SkPhylum
      *
      * @return SkPhylum
      */
-    public function setKingdom(\Skaphandrus\AppBundle\Entity\SkKingdom $kingdom = null)
-    {
+    public function setKingdom(\Skaphandrus\AppBundle\Entity\SkKingdom $kingdom = null) {
         $this->kingdom = $kingdom;
 
         return $this;
@@ -104,8 +94,7 @@ class SkPhylum
      *
      * @return \Skaphandrus\AppBundle\Entity\SkKingdom
      */
-    public function getKingdom()
-    {
+    public function getKingdom() {
         return $this->kingdom;
     }
 
@@ -116,8 +105,7 @@ class SkPhylum
      *
      * @return SkPhylum
      */
-    public function addCharacter(\Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $character)
-    {
+    public function addCharacter(\Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $character) {
         $this->character[] = $character;
 
         return $this;
@@ -128,8 +116,7 @@ class SkPhylum
      *
      * @param \Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $character
      */
-    public function removeCharacter(\Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $character)
-    {
+    public function removeCharacter(\Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $character) {
         $this->character->removeElement($character);
     }
 
@@ -138,8 +125,7 @@ class SkPhylum
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCharacter()
-    {
+    public function getCharacter() {
         return $this->character;
     }
 
@@ -150,8 +136,7 @@ class SkPhylum
      *
      * @return SkPhylum
      */
-    public function addVernacular(\Skaphandrus\AppBundle\Entity\SkPhylumVernacular $vernacular)
-    {
+    public function addVernacular(\Skaphandrus\AppBundle\Entity\SkPhylumVernacular $vernacular) {
         $this->vernaculars[] = $vernacular;
 
         return $this;
@@ -162,8 +147,7 @@ class SkPhylum
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPhylumVernacular $vernacular
      */
-    public function removeVernacular(\Skaphandrus\AppBundle\Entity\SkPhylumVernacular $vernacular)
-    {
+    public function removeVernacular(\Skaphandrus\AppBundle\Entity\SkPhylumVernacular $vernacular) {
         $this->vernaculars->removeElement($vernacular);
     }
 
@@ -172,11 +156,9 @@ class SkPhylum
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getVernaculars()
-    {
+    public function getVernaculars() {
         return $this->vernaculars;
     }
- 
 
     /**
      * Add class
@@ -185,8 +167,7 @@ class SkPhylum
      *
      * @return SkPhylum
      */
-    public function addClass(\Skaphandrus\AppBundle\Entity\SkClass $class)
-    {
+    public function addClass(\Skaphandrus\AppBundle\Entity\SkClass $class) {
         $this->class[] = $class;
 
         return $this;
@@ -197,8 +178,7 @@ class SkPhylum
      *
      * @param \Skaphandrus\AppBundle\Entity\SkClass $class
      */
-    public function removeClass(\Skaphandrus\AppBundle\Entity\SkClass $class)
-    {
+    public function removeClass(\Skaphandrus\AppBundle\Entity\SkClass $class) {
         $this->class->removeElement($class);
     }
 
@@ -207,27 +187,41 @@ class SkPhylum
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getClass()
-    {
+    public function getClass() {
         return $this->class;
     }
-    
-    
-        public function getChildNodes() {
+
+    public function getChildNodes() {
         return $this->getClass();
     }
-    
-    
-    
-    
-    
-    public function getTaxonNodeName(){
+
+    public function getTaxonNodeName() {
         return "phylum";
-        
     }
-    
-        public function getParentNode() {
+
+    public function getParentNode() {
         return $this->getKingdom();
     }
-    
+
+    public function getSpecies() {
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('s')->from('SkaphandrusAppBundle:SkSpecies', 's');
+
+
+        $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
+        $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
+        $qb->join('f.order', 'o', 'WITH', 'f.order = o.id');
+        $qb->join('o.class', 'c', 'WITH', 'o.class = c.id');
+        $qb->join('c.phylum', 'ph', 'WITH', 'c.phylum = ?1');
+        $qb->setParameter(1, $this->getId());
+
+
+        try {
+            return $qb->getQuery()->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
 }

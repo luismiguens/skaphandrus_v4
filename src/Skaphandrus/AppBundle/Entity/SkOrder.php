@@ -232,4 +232,23 @@ class SkOrder
     
     
     
+       public function getSpecies() {
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('s')->from('SkaphandrusAppBundle:SkSpecies', 's');
+          
+            $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
+            $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
+            $qb->join('f.order', 'o', 'WITH', 'f.order = ?1');
+        $qb->setParameter(1, $this->getId());
+
+
+        try {
+            return $qb->getQuery()->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    
 }

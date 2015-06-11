@@ -28,35 +28,32 @@ class SkSpeciesRepository extends EntityRepository {
 //            return null;
 //        }
 //    }
-    
-        public function findBySlug($slug) {
+
+    public function findBySlug($slug) {
         $name = str_replace('-', ' ', $slug);
 
         $query = $this->getEntityManager()
-            ->createQuery(
-                'SELECT s
+                        ->createQuery(
+                                'SELECT s
                 FROM SkaphandrusAppBundle:SkSpecies s
                 JOIN s.scientific_names sn
                 WHERE sn.name = :name'
-                )->setParameter('name', $name);
+                        )->setParameter('name', $name);
         try {
             return $query->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
     }
-    
-    
-    
-    
-    public function getQueryBuilder($params, $limit=20, $order = array('id' => 'desc'), $offset=0) {
+
+    public function getQueryBuilder($params, $limit = 20, $order = array('id' => 'desc'), $offset = 0) {
 
 
         $qb = $this->getEntityManager()->createQueryBuilder();
-        
-     $qb->select('sp')->from('SkaphandrusAppBundle:SkSpecies', 'sp');
+
+        $qb->select('sp')->from('SkaphandrusAppBundle:SkSpecies', 'sp');
         $qb->leftJoin('sp.photos', 'p', 'WITH', 'p.species = sp.id');
-        
+
         //users
         if (array_key_exists('fosUser', $params)) {
             $qb->andWhere('p.fosUser = ?2');
@@ -162,17 +159,9 @@ class SkSpeciesRepository extends EntityRepository {
 //        
 //       
 //            $qb->setMaxResults($limit);
-       
-
 //echo $qb;
 
         return $qb;
     }
-    
-    
-    
-    
-    
-    
-    
+
 }

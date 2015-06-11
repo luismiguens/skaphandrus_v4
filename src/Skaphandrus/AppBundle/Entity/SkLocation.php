@@ -8,8 +8,7 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 /**
  * SkLocation
  */
-class SkLocation
-{
+class SkLocation {
 
     use ORMBehaviors\Translatable\Translatable;
 
@@ -38,7 +37,6 @@ class SkLocation
      */
     private $spots;
 
-
     /**
      * Set createdAt
      *
@@ -46,8 +44,7 @@ class SkLocation
      *
      * @return SkLocation
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
 
         return $this;
@@ -58,8 +55,7 @@ class SkLocation
      *
      * @return \DateTime
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->createdAt;
     }
 
@@ -70,8 +66,7 @@ class SkLocation
      *
      * @return SkLocation
      */
-    public function setUpdatedAt($updatedAt)
-    {
+    public function setUpdatedAt($updatedAt) {
         $this->updatedAt = $updatedAt;
 
         return $this;
@@ -82,8 +77,7 @@ class SkLocation
      *
      * @return \DateTime
      */
-    public function getUpdatedAt()
-    {
+    public function getUpdatedAt() {
         return $this->updatedAt;
     }
 
@@ -92,8 +86,7 @@ class SkLocation
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -104,8 +97,7 @@ class SkLocation
      *
      * @return SkLocation
      */
-    public function setRegion(\Skaphandrus\AppBundle\Entity\SkRegion $region = null)
-    {
+    public function setRegion(\Skaphandrus\AppBundle\Entity\SkRegion $region = null) {
         $this->region = $region;
 
         return $this;
@@ -116,16 +108,14 @@ class SkLocation
      *
      * @return \Skaphandrus\AppBundle\Entity\SkRegion
      */
-    public function getRegion()
-    {
+    public function getRegion() {
         return $this->region;
     }
 
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->spots = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -136,8 +126,7 @@ class SkLocation
      *
      * @return SkLocation
      */
-    public function addSpot(\Skaphandrus\AppBundle\Entity\SkSpot $spot)
-    {
+    public function addSpot(\Skaphandrus\AppBundle\Entity\SkSpot $spot) {
         $this->spots[] = $spot;
 
         return $this;
@@ -148,8 +137,7 @@ class SkLocation
      *
      * @param \Skaphandrus\AppBundle\Entity\SkSpot $spot
      */
-    public function removeSpot(\Skaphandrus\AppBundle\Entity\SkSpot $spot)
-    {
+    public function removeSpot(\Skaphandrus\AppBundle\Entity\SkSpot $spot) {
         $this->spots->removeElement($spot);
     }
 
@@ -158,17 +146,44 @@ class SkLocation
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getSpots()
-    {
+    public function getSpots() {
         return $this->spots;
     }
-    
-    
-    public function getName() {
-        return $this->translate()->getName();
-    }
-    
+
     public function __toString() {
         return $this->getName();
     }
+
+    public function getName() {
+        return $this->translate()->getName();
+    }
+
+    public function getDescription() {
+        return $this->translate()->getDescription();
+    }
+
+    public function getWaterTemp() {
+        return $this->translate()->getWaterTemp();
+    }
+
+    public function getSuit() {
+        return $this->translate()->getSuit();
+    }
+
+    public function getVisibility() {
+        return $this->translate()->getVisibility();
+    }
+
+    public function getClimate() {
+        return $this->translate()->getClimate();
+    }
+
+    public function getHowToGo() {
+        return $this->translate()->getHowToGo();
+    }
+
+    public function getExtraDive() {
+        return $this->translate()->getExtraDive();
+    }
+
 }

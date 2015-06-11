@@ -2,11 +2,16 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+
 /**
  * SkIdentificationModule
  */
-class SkIdentificationModule
-{
+class SkIdentificationModule {
+
+    use ORMBehaviors\Translatable\Translatable;
+
     /**
      * @var string
      */
@@ -52,7 +57,23 @@ class SkIdentificationModule
      */
     private $master;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $groups;
 
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $species;
+
+    
+    
+    
+    
+    
+    
     /**
      * Set appstoreId
      *
@@ -60,8 +81,7 @@ class SkIdentificationModule
      *
      * @return SkIdentificationModule
      */
-    public function setAppstoreId($appstoreId)
-    {
+    public function setAppstoreId($appstoreId) {
         $this->appstoreId = $appstoreId;
 
         return $this;
@@ -72,8 +92,7 @@ class SkIdentificationModule
      *
      * @return string
      */
-    public function getAppstoreId()
-    {
+    public function getAppstoreId() {
         return $this->appstoreId;
     }
 
@@ -84,8 +103,7 @@ class SkIdentificationModule
      *
      * @return SkIdentificationModule
      */
-    public function setGoogleplayId($googleplayId)
-    {
+    public function setGoogleplayId($googleplayId) {
         $this->googleplayId = $googleplayId;
 
         return $this;
@@ -96,8 +114,7 @@ class SkIdentificationModule
      *
      * @return string
      */
-    public function getGoogleplayId()
-    {
+    public function getGoogleplayId() {
         return $this->googleplayId;
     }
 
@@ -108,8 +125,7 @@ class SkIdentificationModule
      *
      * @return SkIdentificationModule
      */
-    public function setIsActive($isActive)
-    {
+    public function setIsActive($isActive) {
         $this->isActive = $isActive;
 
         return $this;
@@ -120,8 +136,7 @@ class SkIdentificationModule
      *
      * @return boolean
      */
-    public function getIsActive()
-    {
+    public function getIsActive() {
         return $this->isActive;
     }
 
@@ -132,8 +147,7 @@ class SkIdentificationModule
      *
      * @return SkIdentificationModule
      */
-    public function setIsEnabled($isEnabled)
-    {
+    public function setIsEnabled($isEnabled) {
         $this->isEnabled = $isEnabled;
 
         return $this;
@@ -144,8 +158,7 @@ class SkIdentificationModule
      *
      * @return boolean
      */
-    public function getIsEnabled()
-    {
+    public function getIsEnabled() {
         return $this->isEnabled;
     }
 
@@ -156,8 +169,7 @@ class SkIdentificationModule
      *
      * @return SkIdentificationModule
      */
-    public function setIsFree($isFree)
-    {
+    public function setIsFree($isFree) {
         $this->isFree = $isFree;
 
         return $this;
@@ -168,8 +180,7 @@ class SkIdentificationModule
      *
      * @return boolean
      */
-    public function getIsFree()
-    {
+    public function getIsFree() {
         return $this->isFree;
     }
 
@@ -180,8 +191,7 @@ class SkIdentificationModule
      *
      * @return SkIdentificationModule
      */
-    public function setImage($image)
-    {
+    public function setImage($image) {
         $this->image = $image;
 
         return $this;
@@ -192,8 +202,7 @@ class SkIdentificationModule
      *
      * @return string
      */
-    public function getImage()
-    {
+    public function getImage() {
         return $this->image;
     }
 
@@ -204,8 +213,7 @@ class SkIdentificationModule
      *
      * @return SkIdentificationModule
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
 
         return $this;
@@ -216,8 +224,7 @@ class SkIdentificationModule
      *
      * @return \DateTime
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->createdAt;
     }
 
@@ -226,8 +233,7 @@ class SkIdentificationModule
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -238,8 +244,7 @@ class SkIdentificationModule
      *
      * @return SkIdentificationModule
      */
-    public function setMaster(\Skaphandrus\AppBundle\Entity\SkIdentificationMaster $master = null)
-    {
+    public function setMaster(\Skaphandrus\AppBundle\Entity\SkIdentificationMaster $master = null) {
         $this->master = $master;
 
         return $this;
@@ -250,9 +255,47 @@ class SkIdentificationModule
      *
      * @return \Skaphandrus\AppBundle\Entity\SkIdentificationMaster
      */
-    public function getMaster()
-    {
+    public function getMaster() {
         return $this->master;
     }
-}
 
+    public function getName() {
+        return $this->translate()->getName();
+    }
+
+    public function __toString() {
+        return $this->getName();
+    }
+
+    /**
+     * Add group
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkIdentificationGroup $group
+     *
+     * @return FosUser
+     */
+    public function addGroup(\Skaphandrus\AppBundle\Entity\SkIdentificationGroup $group) {
+        $this->groups[] = $group;
+
+        return $this;
+    }
+
+    /**
+     * Remove group
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkIdentificationGroup $group
+     */
+    public function removeGroup(\Skaphandrus\AppBundle\Entity\SkIdentificationGroup $group) {
+        $this->groups->removeElement($group);
+    }
+
+    /**
+     * Get groups
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGroups() {
+        return $this->groups;
+    }
+
+}

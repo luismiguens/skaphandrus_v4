@@ -1,3 +1,7 @@
+skaphandrus_app_fos_user:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/fosuser.yml"
+    prefix:   /{_locale}/fos_user
+
 skaphandrus_app_spot_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skspot.yml"
     prefix:   /{_locale}/spot_admin
@@ -24,17 +28,34 @@ skaphandrus_app_users_migration:
 #    defaults: { _controller: SkaphandrusAppBundle:Default:index }    
 #
 
+
+
+
 index:
     path:      /{_locale}
     defaults:  { _controller: SkaphandrusAppBundle:Default:index, _locale: en }
     requirements:
-        _locale:  en|fr
+        _locale:  en|pt
+
+modules:
+    path:      /{_locale}/ocean-life-identification
+    defaults:  { _controller: SkaphandrusAppBundle:Identification:modules, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+criterias:
+    path:      /{_locale}/ocean-life-identification/{slug}
+    defaults:  { _controller: SkaphandrusAppBundle:Identification:criterias, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+
 
 index2:
     path:      /{_locale}/index2
     defaults:  { _controller: SkaphandrusAppBundle:Default:index2, _locale: en }
     requirements:
-        _locale:  en|fr
+        _locale:  en|pt
 
 species:
     path:     /{_locale}/marine-species/info/species/{slug}
