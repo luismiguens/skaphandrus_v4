@@ -456,7 +456,7 @@ class SkPhoto {
 // move takes the target directory and then the
 // target filename to move to
         $this->getFile()->move(
-                $this->getUploadRootDir(), $this->getFile()->getClientOriginalName()
+                $this->getUploadRootDir(), sha1(uniqid(mt_rand(), true)).'.'.$this->getFile()->guessExtension()
         );
 
 // set the path property to the filename where you've saved the file
@@ -468,7 +468,13 @@ class SkPhoto {
 
     
     public function getKeywordsString() {
-        return implode(', ', $this->keyword->toArray());
+        $string = '';
+
+        foreach ($this->keyword->toArray() as $keyword) {
+            $string .= $keyword->getKeyword() . ', ';
+        }
+
+        return substr($string, 0, -2);
     }
     
     

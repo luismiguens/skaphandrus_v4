@@ -42,5 +42,6 @@
         <join-column name="phylum_id" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
+    <many-to-many field="criterias" mapped-by="groups" target-entity="SkIdentificationCriteria"/>
   </entity>
 </doctrine-mapping>

@@ -4,11 +4,12 @@ namespace Skaphandrus\AppBundle\Utils;
 
 class Utils {
   public static function slugify($string) {
-    return str_replace(' ', '-', $string);
+    $slug = str_replace(array(' ', '/'), array('-', '_'), $string);
+    return $slug ? $slug : "-";
   }
 
   public static function unslugify($string) {
-    return str_replace('-', ' ', $string);
+    return str_replace(array('-', '_'), array(' ', '/'), $string);
   }
 
   public static function taxonomyStructure() {

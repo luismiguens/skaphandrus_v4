@@ -34,6 +34,11 @@ class SkPhotoContestCategory
     private $photo;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $awards;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -132,5 +137,38 @@ class SkPhotoContestCategory
     {
         return $this->photo;
     }
-}
 
+    /**
+     * Add award
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award
+     *
+     * @return SkPhotoContestCategory
+     */
+    public function addAward(\Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award)
+    {
+        $this->awards[] = $award;
+
+        return $this;
+    }
+
+    /**
+     * Remove award
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award
+     */
+    public function removeAward(\Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award)
+    {
+        $this->awards->removeElement($award);
+    }
+
+    /**
+     * Get awards
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAwards()
+    {
+        return $this->awards;
+    }
+}

@@ -165,8 +165,6 @@
                                     {% endif %}
                                 </div>
                             </div>
-                        </div>
-
                         {% if species.translate(app.request.locale).howToFind is not empty %}
                             <h3>{{ "page.species.h3.how_to_find"|trans }}</h3>
                             <p>{{ species.translate(app.request.locale).howToFind }}</p>
@@ -175,6 +173,7 @@
                     </div>
                 </div>
             </div><!--end right column -->
+                {% include 'SkaphandrusAppBundle:Comments:async.html.twig' with {'id': 'species-' ~ species.id } %}
         </div><!-- end row-->
     </div><!-- end wrapper-->
 

@@ -12,8 +12,16 @@ class ContestController extends Controller {
         $contests = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
             ->findBy(array(), array('beginAt' => 'DESC'));
 
+        $photographers = array();
+        foreach ($contests as $contest) {
+            $photographers[$contest->getId()] = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
+                ->findPhotographers($contest);
+        }
+
+
         return $this->render('SkaphandrusAppBundle:Contest:landing.html.twig', array(
             'contests' => $contests,
+            'photographers' => $photographers,
         ));
     }
 
@@ -87,9 +95,13 @@ class ContestController extends Controller {
         $contest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
             ->findOneByName($name);
 
+        $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
+            ->findPhotographers($contest);
+
         if ($contest) {
             return $this->render('SkaphandrusAppBundle:Contest:contest.html.twig',array(
                 'contest' => $contest,
+                'photographers' => $photographers,
             ));
         }
         else {

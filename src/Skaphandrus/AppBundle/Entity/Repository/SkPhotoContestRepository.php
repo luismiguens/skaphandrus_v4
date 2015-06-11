@@ -12,10 +12,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class SkPhotoContestRepository extends EntityRepository {
 
-    public function findUsers($contest) {
+    public function findPhotographers($contest) {
         $categories = $contest->getCategories();
         $users = array();
-        
+
         foreach ($categories as $category) {
             foreach ($category->getPhoto() as $photo) {
                 $user = $photo->getFosUser();

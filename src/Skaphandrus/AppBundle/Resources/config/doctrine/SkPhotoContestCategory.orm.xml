@@ -27,5 +27,6 @@
         </inverse-join-columns>
       </join-table>
     </many-to-many>
+    <one-to-many field="awards" target-entity="SkPhotoContestAward" mapped-by="category"/>
   </entity>
 </doctrine-mapping>

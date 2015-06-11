@@ -522,14 +522,15 @@ class DefaultController extends Controller {
     /*
      * User page.
      */
-
     public function userAction($id) {
         $user = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-                ->findOneById($id);
+            ->findOneById($id);
 
         if ($user) {
             return $this->render('SkaphandrusAppBundle:Default:user.html.twig', array(
-                        'user' => $user,
+                'user' => $user,
+                'species' => $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findByUserId($user->getId()),
+                'spots' => $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')->findByUserId($user->getId()),
             ));
         } else {
             throw $this->createNotFoundException('The user with id "' . $id . '" does not exist.');
@@ -540,13 +541,19 @@ class DefaultController extends Controller {
 
     /*
      * Prints a board of photos.
+     *
+     * Include these files on the page:
+     * <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
+     * <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
      */
-    public function skBoardAction($type, $id) {
-        $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
-                ->findBy(array($type => $id));
+    public function skBoardAction($parameters, $limit = 20, $order = array('id' => 'desc')) {
+        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($parameters, $limit, $order);
+        $query = $qb->getQuery();
+        $photos = $query->getResult();
 
         return $this->render('SkaphandrusAppBundle:Default:skBoard.html.twig', array(
                     'photos' => $photos,
+                    'parameters' => $parameters,
         ));
     }
 
@@ -558,17 +565,12 @@ class DefaultController extends Controller {
      * <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
      */
 
-    public function skGridAction($parameters, $limit, $order = array('id' => 'desc')) {
+    public function skGridAction($parameters, $limit = 20, $order = array('id' => 'desc')) {
 
-        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($parameters, $limit);
+        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($parameters, $limit, $order);
         $query = $qb->getQuery();
 
-//print_r($parameters);
-
         $photos = $query->getResult();
-
-//        $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
-//                ->findBy($parameters, $limit, $order);
 
         return $this->render('SkaphandrusAppBundle:Default:skGrid.html.twig', array(
                     'photos' => $photos,

@@ -25,5 +25,7 @@
         </many-to-many>
     
         
+        <one-to-many field="photosValidated" target-entity="SkPhotoSpeciesValidation" mapped-by="fosUser"/>
+
     </entity>
 </doctrine-mapping>

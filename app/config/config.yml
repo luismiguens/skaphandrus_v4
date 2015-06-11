@@ -254,10 +254,18 @@ liip_imagine:
         sk_widen_590:
             filters:
                 relative_resize: { widen: 590 }
+        sk_thumbnail_outbound_50:
+            filters:
+                thumbnail: { size: [50, 50], mode: outbound }
         sk_thumbnail_outbound_100:
             filters:
                 thumbnail: { size: [100, 100], mode: outbound }
-                
+        sk_thumbnail_outbound_130:
+            filters:
+                thumbnail: { size: [130, 130], mode: outbound }
+        sk_thumbnail_outbound_198_100:
+            filters:
+                thumbnail: { size: [198, 100], mode: outbound }
         sk_upscale_800_600:
             filters:
                 upscale: { min: [800, 600] }
@@ -268,6 +276,32 @@ fos_comment:
         model:
             comment: Skaphandrus\AppBundle\Entity\Comment
             thread: Skaphandrus\AppBundle\Entity\Thread
+    acl: true
+    service:
+        acl:
+            thread:  fos_comment.acl.thread.roles
+            comment: fos_comment.acl.comment.roles
+            vote:    fos_comment.acl.vote.roles
+        manager:
+            thread:  fos_comment.manager.thread.acl
+            comment: fos_comment.manager.comment.acl
+            vote:    fos_comment.manager.vote.acl
+    acl_roles:
+        comment:
+            create: IS_AUTHENTICATED_FULLY
+            view: IS_AUTHENTICATED_ANONYMOUSLY
+            edit: ADMIN_USER
+            delete: ADMIN_USER
+        thread:
+            create: IS_AUTHENTICATED_FULLY
+            view: IS_AUTHENTICATED_ANONYMOUSLY
+            edit: ADMIN_USER
+            delete: ADMIN_USER
+        vote:
+            create: IS_AUTHENTICATED_FULLY
+            view: IS_AUTHENTICATED_ANONYMOUSLY
+            edit: ADMIN_USER
+            delete: ADMIN_USER
 
 
 #https://github.com/KnpLabs/KnpPaginatorBundle

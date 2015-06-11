@@ -12,24 +12,6 @@ use Doctrine\ORM\EntityRepository;
  */
 class SkSpotRepository extends EntityRepository {
 
-    // public function findOneBySlugJoinedToTranslation($name, $locale) {
-    //     $query = $this->getEntityManager()
-    //         ->createQuery(
-    //             'SELECT s, t
-    //             FROM SkaphandrusAppBundle:SkSpot s
-    //             JOIN s.translations t
-    //             WHERE t.name = :name
-    //             AND t.locale = :locale'
-    //             )->setParameter('name', $name)->setParameter('locale', $locale);
-    //     try {
-    //         return $query->getSingleResult();
-    //     } catch (\Doctrine\ORM\NoResultException $e) {
-    //         return null;
-    //     }
-    // }
-
-
-
     public function findLikeName($term, $locale) {
 
         return $this->getEntityManager()->createQuery(
@@ -63,4 +45,19 @@ class SkSpotRepository extends EntityRepository {
         }
     }
 
+    public function findByUserId($user_id) {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT s
+                FROM SkaphandrusAppBundle:SkSpot s
+                JOIN SkaphandrusAppBundle:SkPhoto p
+                    WITH s.id = IDENTITY(p.spot)
+                WHERE IDENTITY(p.fosUser) = :user_id'
+                )->setParameter('user_id', $user_id);
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }

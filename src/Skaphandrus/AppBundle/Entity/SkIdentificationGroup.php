@@ -42,6 +42,60 @@ class SkIdentificationGroup
      */
     private $phylum;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $criterias;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->criterias = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function __toString() {
+
+        return ucfirst($this->getTaxonName()) .': '. $this->getTaxonValue()->getName();
+    }
+
+    public function getTaxonName() {
+        if ($this->getPhylum()) {
+            return 'phylum';
+        }
+        elseif ($this->getClass()) {
+            return 'class';
+        }
+        elseif ($this->getOrder()) {
+            return 'order';
+        }
+        elseif ($this->getFamily()) {
+            return 'family';
+        }
+        elseif ($this->getGenus()) {
+            return 'genus';
+        }
+    }
+
+    public function getTaxonValue() {
+        if ($this->getPhylum()) {
+            return $this->getPhylum();
+        }
+        elseif ($this->getClass()) {
+            return $this->getClass();
+        }
+        elseif ($this->getOrder()) {
+            return $this->getOrder();
+        }
+        elseif ($this->getFamily()) {
+            return $this->getFamily();
+        }
+        elseif ($this->getGenus()) {
+            return $this->getGenus();
+        }
+    }
 
     /**
      * Get id
@@ -196,5 +250,38 @@ class SkIdentificationGroup
     {
         return $this->phylum;
     }
-}
 
+    /**
+     * Add criteria
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkIdentificationCriteria $criteria
+     *
+     * @return SkIdentificationGroup
+     */
+    public function addCriteria(\Skaphandrus\AppBundle\Entity\SkIdentificationCriteria $criteria)
+    {
+        $this->criterias[] = $criteria;
+
+        return $this;
+    }
+
+    /**
+     * Remove criteria
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkIdentificationCriteria $criteria
+     */
+    public function removeCriteria(\Skaphandrus\AppBundle\Entity\SkIdentificationCriteria $criteria)
+    {
+        $this->criterias->removeElement($criteria);
+    }
+
+    /**
+     * Get criterias
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCriterias()
+    {
+        return $this->criterias;
+    }
+}

@@ -1,6 +1,10 @@
 skaphandrus_app_fos_user:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/fosuser.yml"
     prefix:   /{_locale}/fos_user
+    
+skaphandrus_app_identification_criteria_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skidentificationcriteria.yml"
+    prefix:   /{_locale}/identification_criteria_admin
 
 skaphandrus_app_spot_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skspot.yml"
@@ -17,11 +21,11 @@ skaphandrus_app_hello:
 skaphandrus_app_users_migration:
     path:     /migration/migration
     defaults: { _controller: SkaphandrusAppBundle:Default:usersMigration }
-    
+
 ################################################################################  
 ### TRANSVERSAL
 ################################################################################    
-    
+
 #CONTROLLER DEFAULT    
 #homepage_index:
 #    path:     /index
@@ -184,26 +188,6 @@ ajax_get_spot:
 #### FUN CONTESTS
 #################################################################################
 # 
-#contest_involved:
-#  url:   /:sf_culture/underwater-photo-contest/involved/:slug/*
-#  param: { module: photoContest, action: contestInvolved }
-#
-##contest_photos:
-##  url:   /:sf_culture/underwater-photo-contest/photos/:slug/*
-##  param: { module: photoContest, action: contestPhotos }
-#
-#contest_category:
-#  url:   /:sf_culture/underwater-photo-contest/photos/:slug/:category
-#  param: { module: photoContest, action: contestPhotosCategory }
-#
-#contest_photographers:
-#  url:   /:sf_culture/underwater-photo-contest/photographers/:slug/*
-#  param: { module: photoContest, action: contestPhotographers }
-#
-#contest_sponsors:
-#  url:   /:sf_culture/underwater-photo-contest/sponsors/:slug/*
-#  param: { module: photoContest, action: contestSponsors }
-#
 #contest_about:
 #  url:   /:sf_culture/underwater-photo-contest/about/:slug/*
 #  param: { module: photoContest, action: contestAbout }
@@ -211,13 +195,6 @@ ajax_get_spot:
 #contest_results:
 #  url:   /:sf_culture/underwater-photo-contest/results/:slug/*
 #  param: { module: photoContest, action: contestResults }
-#
-#contest_home:
-#  url:   /:sf_culture/underwater-photo-contest/:slug/*
-#  param: { module: photoContest, action: contestHome }
-#
-#
-#
 #
 ################################################################################
 #### APP OCEAN LIFE ID

@@ -14,7 +14,12 @@
     {% endspaceless %}
 {% endblock form_row %}
 
-
+{# block file_widget %}
+    {{ form_widget(form) }}
+    <img src="" alt="">
+    {% set type = type|default('file') %}
+    {{ block('form_widget_simple') }}
+{% endblock file_widget #}
 
 {#{% block _skaphandrus_appbundle_skphoto_takenAt_row %}
     <div class="form-group">

@@ -33,6 +33,28 @@ class SkIdentificationCriteria
      */
     private $type;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $groups;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $characters;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->characters = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function __toString() {
+        return $this->translate()->getName();
+    }
 
     /**
      * Set orderBy
@@ -115,5 +137,72 @@ class SkIdentificationCriteria
     {
         return $this->type;
     }
-}
 
+    /**
+     * Add group
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkIdentificationGroup $group
+     *
+     * @return SkIdentificationCriteria
+     */
+    public function addGroup(\Skaphandrus\AppBundle\Entity\SkIdentificationGroup $group)
+    {
+        $this->groups[] = $group;
+
+        return $this;
+    }
+
+    /**
+     * Remove group
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkIdentificationGroup $group
+     */
+    public function removeGroup(\Skaphandrus\AppBundle\Entity\SkIdentificationGroup $group)
+    {
+        $this->groups->removeElement($group);
+    }
+
+    /**
+     * Get groups
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
+
+    /**
+     * Add character
+     *
+     * @param \Skaphandrus\AppBundle\Entity\skIdentificationCharacter $character
+     *
+     * @return SkIdentificationCriteria
+     */
+    public function addCharacter(\Skaphandrus\AppBundle\Entity\skIdentificationCharacter $character)
+    {
+        $this->characters[] = $character;
+
+        return $this;
+    }
+
+    /**
+     * Remove character
+     *
+     * @param \Skaphandrus\AppBundle\Entity\skIdentificationCharacter $character
+     */
+    public function removeCharacter(\Skaphandrus\AppBundle\Entity\skIdentificationCharacter $character)
+    {
+        $this->characters->removeElement($character);
+    }
+
+    /**
+     * Get characters
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCharacters()
+    {
+        return $this->characters;
+    }
+}

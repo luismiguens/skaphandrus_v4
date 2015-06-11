@@ -11,24 +11,7 @@ use Doctrine\ORM\EntityRepository;
  * repository methods below.
  */
 class SkSpeciesRepository extends EntityRepository {
-
-//    public function findBySlug($slug) {
-//        $name = str_replace('-', ' ', $slug);
-//
-//        $query = $this->getEntityManager()
-//            ->createQuery(
-//                'SELECT s, sn
-//                FROM SkaphandrusAppBundle:SkSpecies s
-//                JOIN s.scientific_names sn
-//                WHERE sn.name = :name'
-//                )->setParameter('name', $name);
-//        try {
-//            return $query->getSingleResult();
-//        } catch (\Doctrine\ORM\NoResultException $e) {
-//            return null;
-//        }
-//    }
-
+    
     public function findBySlug($slug) {
         $name = str_replace('-', ' ', $slug);
 
@@ -46,7 +29,7 @@ class SkSpeciesRepository extends EntityRepository {
         }
     }
 
-    public function getQueryBuilder($params, $limit = 20, $order = array('id' => 'desc'), $offset = 0) {
+    public function getQueryBuilder($params, $limit=20, $order = array('id' => 'desc'), $offset=0) {
 
 
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -164,4 +147,21 @@ class SkSpeciesRepository extends EntityRepository {
         return $qb;
     }
 
+
+    public function findByUserId($user_id) {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT s
+                FROM SkaphandrusAppBundle:SkSpecies s
+                JOIN SkaphandrusAppBundle:SkPhoto p
+                    WITH s.id = IDENTITY(p.species)
+                WHERE IDENTITY(p.fosUser) = :user_id'
+                )->setParameter('user_id', $user_id);
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
 }

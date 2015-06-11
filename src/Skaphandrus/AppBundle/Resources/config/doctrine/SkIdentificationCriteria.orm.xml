@@ -22,5 +22,20 @@
         <join-column name="type_id" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
+    <many-to-many field="groups" inversed-by="criterias" target-entity="SkIdentificationGroup">
+      <join-table name="sk_identification_criteria_group">
+        <join-columns>
+          <join-column name="criteria_id" referenced-column-name="id" />
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="group_id" referenced-column-name="id" />
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+    <one-to-many field="characters" target-entity="SkIdentificationCharacter" mapped-by="criteria">
+      <cascade>
+        <cascade-persist/>
+      </cascade>
+    </one-to-many>
   </entity>
 </doctrine-mapping>

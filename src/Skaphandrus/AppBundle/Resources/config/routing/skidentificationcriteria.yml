@@ -1,0 +1,30 @@
+identification_criteria_admin:
+    path:     /
+    defaults: { _controller: "SkaphandrusAppBundle:SkIdentificationCriteria:index" }
+
+# identification_criteria_admin_show:
+#     path:     /{id}/show
+#     defaults: { _controller: "SkaphandrusAppBundle:SkIdentificationCriteria:show" }
+
+identification_criteria_admin_new:
+    path:     /new
+    defaults: { _controller: "SkaphandrusAppBundle:SkIdentificationCriteria:new" }
+
+identification_criteria_admin_create:
+    path:     /create
+    defaults: { _controller: "SkaphandrusAppBundle:SkIdentificationCriteria:create" }
+    methods:  POST
+
+identification_criteria_admin_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SkaphandrusAppBundle:SkIdentificationCriteria:edit" }
+
+identification_criteria_admin_update:
+    path:     /{id}/update
+    defaults: { _controller: "SkaphandrusAppBundle:SkIdentificationCriteria:update" }
+    methods:  [POST, PUT]
+
+identification_criteria_admin_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SkaphandrusAppBundle:SkIdentificationCriteria:delete" }
+    methods:  [POST, DELETE]

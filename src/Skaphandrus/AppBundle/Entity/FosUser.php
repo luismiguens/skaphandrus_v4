@@ -43,6 +43,11 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
 
 
     
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $photosValidated;
+
 
     public function getEncoderName() {
         return $this->algorithm == 'sha1' ? 'legacy' : 'default';
@@ -174,23 +179,47 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
     {
         return $this->photos;
     }
-    
-    
-    
+
     /**
-     * Add module
+     * Add photosValidated
      *
-     * @param \Skaphandrus\AppBundle\Entity\SkModule $module
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photosValidated
      *
      * @return FosUser
      */
-    public function addModule(\Skaphandrus\AppBundle\Entity\SkIdentificationModule $module)
+    public function addPhotosValidated(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photosValidated)
     {
-        $this->modules[] = $module;
+        $this->photosValidated[] = $photosValidated;
 
         return $this;
     }
 
+    
+      /**
+     * Remove $photosValidated
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photosValidated
+     */
+    public function removePhotosValidated(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photosValidated)
+    {
+        $this->photosValidated->removeElement($photosValidated);
+    }
+
+    /**
+     * Get modules
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotosValidated()
+    {
+        return $this->photosValidated;
+    }
+    
+    
+    
+    
+    
+    
     /**
      * Remove module
      *
@@ -212,6 +241,11 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
     }
     
     
-    
+       public function addModule(\Skaphandrus\AppBundle\Entity\SkIdentificationModule $module)
+    {
+        $this->modules[] = $module;
+
+        return $this;
+    }
     
 }
