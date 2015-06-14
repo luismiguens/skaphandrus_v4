@@ -2,7 +2,6 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
-
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
@@ -11,15 +10,12 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
  */
 class SkIdentificationModuleTranslation
 {
+    use ORMBehaviors\Translatable\Translation;
     
-    
-     use ORMBehaviors\Translatable\Translation;
     /**
      * @var string
      */
     private $name;
-
-
 
     /**
      * Set name
@@ -44,6 +40,5 @@ class SkIdentificationModuleTranslation
     {
         return $this->name;
     }
-
 }
 

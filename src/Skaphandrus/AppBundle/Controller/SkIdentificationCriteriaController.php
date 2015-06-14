@@ -37,14 +37,26 @@ class SkIdentificationCriteriaController extends Controller
     {
         $entity = new SkIdentificationCriteria();
         $form = $this->createCreateForm($entity);
+        
+        // Set parent ID on embedded forms
+        $embedded = $request->request->get('skaphandrus_appbundle_skidentificationcriteria');
+        foreach ($embedded['characters'] as &$character) {
+            $character['criteria'] = $entity->getId();
+        }
+
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+
+            foreach($entity->getCharacters() as $character) {
+                $character->upload();
+            }
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('identification_criteria_admin_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('identification_criteria_admin_edit', array('id' => $entity->getId())));
         }
 
         return $this->render('SkaphandrusAppBundle:SkIdentificationCriteria:new.html.twig', array(
@@ -67,7 +79,7 @@ class SkIdentificationCriteriaController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        //$form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
     }
@@ -91,23 +103,23 @@ class SkIdentificationCriteriaController extends Controller
      * Finds and displays a SkIdentificationCriteria entity.
      *
      */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
+    // public function showAction($id)
+    // {
+    //     $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('SkaphandrusAppBundle:SkIdentificationCriteria')->find($id);
+    //     $entity = $em->getRepository('SkaphandrusAppBundle:SkIdentificationCriteria')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find SkIdentificationCriteria entity.');
-        }
+    //     if (!$entity) {
+    //         throw $this->createNotFoundException('Unable to find SkIdentificationCriteria entity.');
+    //     }
 
-        $deleteForm = $this->createDeleteForm($id);
+    //     $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('SkaphandrusAppBundle:SkIdentificationCriteria:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
+    //     return $this->render('SkaphandrusAppBundle:SkIdentificationCriteria:show.html.twig', array(
+    //         'entity'      => $entity,
+    //         'delete_form' => $deleteForm->createView(),
+    //     ));
+    // }
 
     /**
      * Displays a form to edit an existing SkIdentificationCriteria entity.
@@ -147,7 +159,7 @@ class SkIdentificationCriteriaController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        //$form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
@@ -165,7 +177,7 @@ class SkIdentificationCriteriaController extends Controller
             throw $this->createNotFoundException('Unable to find SkIdentificationCriteria entity.');
         }
 
-        // Set parent ID on 
+        // Set parent ID on embedded forms
         $embedded = $request->request->get('skaphandrus_appbundle_skidentificationcriteria');
         foreach ($embedded['characters'] as &$character) {
             $character['criteria'] = $id;
@@ -177,6 +189,10 @@ class SkIdentificationCriteriaController extends Controller
 
 
         if ($editForm->isValid()) {
+            foreach($entity->getCharacters() as $character) {
+                $character->upload();
+            }
+
             $em->flush();
 
             return $this->redirect($this->generateUrl('identification_criteria_admin_edit', array('id' => $id)));

@@ -5,8 +5,8 @@ namespace Skaphandrus\AppBundle\Entity;
 /**
  * SkGenus
  */
-class SkGenus
-{
+class SkGenus {
+
     /**
      * @var string
      */
@@ -33,11 +33,16 @@ class SkGenus
     private $vernaculars;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $species;
+
+    /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->character = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->species = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -47,8 +52,7 @@ class SkGenus
      *
      * @return SkGenus
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -59,8 +63,7 @@ class SkGenus
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -69,8 +72,7 @@ class SkGenus
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -81,8 +83,7 @@ class SkGenus
      *
      * @return SkGenus
      */
-    public function setFamily(\Skaphandrus\AppBundle\Entity\SkFamily $family = null)
-    {
+    public function setFamily(\Skaphandrus\AppBundle\Entity\SkFamily $family = null) {
         $this->family = $family;
 
         return $this;
@@ -93,8 +94,7 @@ class SkGenus
      *
      * @return \Skaphandrus\AppBundle\Entity\SkFamily
      */
-    public function getFamily()
-    {
+    public function getFamily() {
         return $this->family;
     }
 
@@ -105,8 +105,7 @@ class SkGenus
      *
      * @return SkGenus
      */
-    public function addCharacter(\Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $character)
-    {
+    public function addCharacter(\Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $character) {
         $this->character[] = $character;
 
         return $this;
@@ -117,8 +116,7 @@ class SkGenus
      *
      * @param \Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $character
      */
-    public function removeCharacter(\Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $character)
-    {
+    public function removeCharacter(\Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $character) {
         $this->character->removeElement($character);
     }
 
@@ -127,8 +125,7 @@ class SkGenus
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCharacter()
-    {
+    public function getCharacter() {
         return $this->character;
     }
 
@@ -139,8 +136,7 @@ class SkGenus
      *
      * @return SkGenus
      */
-    public function addVernacular(\Skaphandrus\AppBundle\Entity\SkGenusVernacular $vernacular)
-    {
+    public function addVernacular(\Skaphandrus\AppBundle\Entity\SkGenusVernacular $vernacular) {
         $this->vernaculars[] = $vernacular;
 
         return $this;
@@ -151,8 +147,7 @@ class SkGenus
      *
      * @param \Skaphandrus\AppBundle\Entity\SkGenusVernacular $vernacular
      */
-    public function removeVernacular(\Skaphandrus\AppBundle\Entity\SkGenusVernacular $vernacular)
-    {
+    public function removeVernacular(\Skaphandrus\AppBundle\Entity\SkGenusVernacular $vernacular) {
         $this->vernaculars->removeElement($vernacular);
     }
 
@@ -161,8 +156,58 @@ class SkGenus
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getVernaculars()
-    {
+    public function getVernaculars() {
         return $this->vernaculars;
     }
+
+    /**
+     * Add species
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkSpecies $species
+     *
+     * @return SkGenus
+     */
+    public function addSpecy(\Skaphandrus\AppBundle\Entity\SkSpecies $species) {
+        $this->species[] = $species;
+
+        return $this;
+    }
+
+    /**
+     * Remove species
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkSpecies $species
+     */
+    public function removeSpecy(\Skaphandrus\AppBundle\Entity\SkSpecies $species) {
+        $this->species->removeElement($species);
+    }
+
+    /**
+     * Get species
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSpecies() {
+        return $this->species;
+    }
+
+    
+    
+    public function getChildNodes() {
+        return $this->getSpecies();
+    }
+    
+    public function getParentNode() {
+        return $this->getFamily();
+    }
+    
+    
+    
+    
+    public function getTaxonNodeName(){
+        return "genus";
+        
+    }
+    
+
 }

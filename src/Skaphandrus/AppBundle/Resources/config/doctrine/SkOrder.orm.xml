@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Skaphandrus\AppBundle\Entity\SkOrder" table="sk_order">
+  <entity name="Skaphandrus\AppBundle\Entity\SkOrder" repository-class="Skaphandrus\AppBundle\Entity\Repository\SkOrderRepository" table="sk_order">
     <indexes>
       <index name="sk_order_FI_1" columns="class_id"/>
     </indexes>

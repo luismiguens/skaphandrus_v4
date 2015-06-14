@@ -14,6 +14,7 @@ $(document).ready(function () {
         });
     }
 
+    // Formulário SkPhoto
     if ($('#skaphandrus_appbundle_skphoto_model').length) {
         $('#skaphandrus_appbundle_skphoto_model').autocompleter({url_list: '/app_dev.php/en/ajax_search_photo_machine_model/', url_get: '/app_dev.php/en/ajax_get_photo_machine_model/'});
     }
@@ -30,5 +31,24 @@ $(document).ready(function () {
         $('#skaphandrus_appbundle_skspot_location').autocompleter({url_list: '/app_dev.php/en/ajax_search_location/', url_get: '/app_dev.php/en/ajax_get_location/'});
     }
 
+    // Formulário Identification Group
+    if ($('#skaphandrus_appbundle_skidentificationgroup_genus').length) {
+        $('#skaphandrus_appbundle_skidentificationgroup_genus').autocompleter({url_list: '/app_dev.php/en/ajax_search_genus/', url_get: '/app_dev.php/en/ajax_get_genus/'});
+    }
 
+    if ($('#skaphandrus_appbundle_skidentificationgroup_family').length) {
+        $('#skaphandrus_appbundle_skidentificationgroup_family').autocompleter({url_list: '/app_dev.php/en/ajax_search_family/', url_get: '/app_dev.php/en/ajax_get_family/'});
+    }
+
+    if ($('#skaphandrus_appbundle_skidentificationgroup_order').length) {
+        $('#skaphandrus_appbundle_skidentificationgroup_order').autocompleter({url_list: '/app_dev.php/en/ajax_search_order/', url_get: '/app_dev.php/en/ajax_get_order/'});
+    }
+
+    if ($('#skaphandrus_appbundle_skidentificationgroup_class').length) {
+        $('#skaphandrus_appbundle_skidentificationgroup_class').autocompleter({url_list: '/app_dev.php/en/ajax_search_class/', url_get: '/app_dev.php/en/ajax_get_class/'});
+    }
+
+    if ($('#skaphandrus_appbundle_skidentificationgroup_phylum').length) {
+        $('#skaphandrus_appbundle_skidentificationgroup_phylum').autocompleter({url_list: '/app_dev.php/en/ajax_search_phylum/', url_get: '/app_dev.php/en/ajax_get_phylum/'});
+    }
 });

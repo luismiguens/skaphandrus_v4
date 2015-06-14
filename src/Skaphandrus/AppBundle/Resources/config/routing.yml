@@ -1,7 +1,11 @@
 skaphandrus_app_fos_user:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/fosuser.yml"
     prefix:   /{_locale}/fos_user
-    
+
+skaphandrus_app_identification_group_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skidentificationgroup.yml"
+    prefix:   /{_locale}/identification_group_admin
+
 skaphandrus_app_identification_criteria_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skidentificationcriteria.yml"
     prefix:   /{_locale}/identification_criteria_admin
@@ -163,6 +167,26 @@ ajax_search_species:
     path:     /{_locale}/ajax_search_species/
     defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxSearchSpecies }
 
+ajax_search_family:
+    path:     /{_locale}/ajax_search_family/
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxSearchFamily }
+
+ajax_search_genus:
+    path:     /{_locale}/ajax_search_genus/
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxSearchGenus }
+
+ajax_search_order:
+    path:     /{_locale}/ajax_search_order/
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxSearchOrder }
+
+ajax_search_class:
+    path:     /{_locale}/ajax_search_class/
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxSearchClass }
+
+ajax_search_phylum:
+    path:     /{_locale}/ajax_search_phylum/
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxSearchPhylum }
+
 ajax_search_spot:
     path:     /{_locale}/ajax_search_spot/
     defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxSearchSpot }
@@ -178,6 +202,26 @@ ajax_get_photo_machine_model:
 ajax_get_species:
     path:     /{_locale}/ajax_get_species/{id}
     defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetSpecies }
+
+ajax_get_genus:
+    path:     /{_locale}/ajax_get_genus/{id}
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetGenus }
+
+ajax_get_family:
+    path:     /{_locale}/ajax_get_family/{id}
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetFamily }
+
+ajax_get_order:
+    path:     /{_locale}/ajax_get_order/{id}
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetOrder }
+
+ajax_get_class:
+    path:     /{_locale}/ajax_get_class/{id}
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetClass }
+
+ajax_get_phylum:
+    path:     /{_locale}/ajax_get_phylum/{id}
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetPhylum }
 
 ajax_get_spot:
     path:     /{_locale}/ajax_get_spot/{id}

@@ -97,6 +97,10 @@ class SkIdentificationGroup
         }
     }
 
+    public function getName() {
+        return ucfirst($this->getTaxonName()) .': '. $this->getTaxonValue()->getName();
+    }
+
     /**
      * Get id
      *

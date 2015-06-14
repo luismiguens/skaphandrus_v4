@@ -38,49 +38,10 @@
 {% endblock %}
 
 {% block body -%}
-    {# <h1>SkIdentificationCriteria list</h1>
-
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Orderby</th>
-                <th>Iscumulative</th>
-                <th>Id</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('identification_criteria_admin_show', { 'id': entity.id }) }}">{{ entity.orderBy }}</a></td>
-                <td>{{ entity.isCumulative }}</td>
-                <td>{{ entity.id }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('identification_criteria_admin_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('identification_criteria_admin_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('identification_criteria_admin_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul> #}
-
     <table id="datatable-list" class="table display table-striped table-bordered table-hover " cellspacing="0" width="100%">
         <thead>
             <tr>
+                <th>{{ "Module"|trans }}</th>
                 <th>{{ "form.identification_criteria.label.criteria"|trans }}</th>
                 <th>{{ "form.identification_criteria.label.name_group"|trans }}</th>
                 <th>{{ "form.common.label.actions"|trans }}</th>
@@ -89,6 +50,17 @@
         <tbody>
             {% for entity in entities %}
                 <tr>
+                    <td>
+                        {% set modules = [] %}
+                        {% for group in entity.groups %}
+                            {% if group.module is not empty and group.module.translate.name not in modules %}
+                                {% set modules = modules|merge([group.module.translate.name]) %}
+                            {% endif %}
+                        {% endfor %}
+                        {% for module in modules %}
+                            {{ module }}<br />
+                        {% endfor %}
+                    </td>
                     <td>{{ entity.translate.name }}</td>
                     <td>
                         {% for group in entity.groups %}
@@ -116,8 +88,6 @@
             {% endfor %}
         </tbody>
     </table>
-
-
 
     <a class="btn btn-primary" href="{{ path('identification_criteria_admin_new') }}">
         <i class="fa fa-pencil"></i>  {{ "form.identification_criteria.btn.add"|trans }}

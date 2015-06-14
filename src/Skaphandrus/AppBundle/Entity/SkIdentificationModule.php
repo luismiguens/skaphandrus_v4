@@ -9,7 +9,6 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
  * SkIdentificationModule
  */
 class SkIdentificationModule {
-
     use ORMBehaviors\Translatable\Translatable;
 
     /**

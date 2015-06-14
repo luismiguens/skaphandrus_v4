@@ -78,6 +78,15 @@ class SkClass
     }
 
     /**
+     * To String
+     *
+     * @return string
+     */
+    public function __toString() {
+        return $this->name;
+    }
+
+    /**
      * Set fileName
      *
      * @param string $fileName
