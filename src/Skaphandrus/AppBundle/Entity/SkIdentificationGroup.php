@@ -47,6 +47,10 @@ class SkIdentificationGroup
      */
     private $criterias;
 
+    /**
+     * @var boolean
+     */
+    private $isParentModule = FALSE;
 
     /**
      * Constructor
@@ -287,5 +291,29 @@ class SkIdentificationGroup
     public function getCriterias()
     {
         return $this->criterias;
+    }
+
+    /**
+     * Set isParentModule
+     *
+     * @param boolean $isParentModule
+     *
+     * @return SkIdentificationGroup
+     */
+    public function setIsParentModule($isParentModule)
+    {
+        $this->isParentModule = $isParentModule;
+
+        return $this;
+    }
+
+    /**
+     * Get isParentModule
+     *
+     * @return boolean
+     */
+    public function getIsParentModule()
+    {
+        return $this->isParentModule;
     }
 }

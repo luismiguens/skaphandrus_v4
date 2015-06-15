@@ -46,6 +46,7 @@ class SkIdentificationGroupType extends AbstractType
                 'label'=>'form.identification_group.label.phylum', 
                 'required' => false
             ))
+            ->add('isParentModule')
         ;
     }
     
