@@ -2,16 +2,6 @@
 
 {% form_theme edit_form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
 
-{% block skaphandrus_appbundle_skidentificationcriteria_characters_0_file_widget %}
-    <div class="file_widget">
-        {{ block('form_widget_simple') }}
-    </div>
-
-    {% if form.vars.value.image is not null %}
-        <img src="{{ asset('upload/dir/' ~ form.vars.value.image) }}" />
-    {% endif %}
-{% endblock %}
-
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>

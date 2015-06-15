@@ -2,6 +2,8 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * SkFamily
  */
@@ -204,19 +206,12 @@ class SkFamily {
     }
 
     public function getSpecies() {
+        $species = array();
 
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('s')->from('SkaphandrusAppBundle:SkSpecies', 's');
-        $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
-        $qb->join('g.family', 'f', 'WITH', 'g.family = ?1');
-        $qb->setParameter(1, $this->getId());
-
-
-        try {
-            return $qb->getQuery()->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
+        foreach ($this->getGenus() as $genus) {
+            $species = array_merge($species, $genus->getSpecies()->toArray());
         }
+        return new ArrayCollection($species);
     }
 
 }

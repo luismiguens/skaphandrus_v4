@@ -1,0 +1,48 @@
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% form_theme edit_form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
+    <script src="{{ asset('bundles/pugxautocompleter/js/autocompleter-jqueryui.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/skaphandrus.js') }}"></script>
+{% endblock %}
+
+
+{% block heading_title %}
+    {{ "form.identification_module.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="{{ path('identification_module_admin') }}">{{ "breadcrumb.identification_module"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.edit_identification_module"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+
+{% block heading_action %}
+    <a href="{{ path('identification_module_admin_new') }}" class="btn btn-primary">{{ "form.identification_module.btn.add"|trans }}</a>
+{% endblock %}
+
+
+{% block form_title_description %}
+    {{ "form.identification_module.text.description"|trans }}
+{% endblock %}
+
+
+{% block body %}
+    {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_widget(edit_form) }}
+    {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'identification_module_admin', 'new_form':false} %}
+    {{ form_end(edit_form) }}
+
+
+    {{ form(delete_form) }}
+
+
+{% endblock %}
+

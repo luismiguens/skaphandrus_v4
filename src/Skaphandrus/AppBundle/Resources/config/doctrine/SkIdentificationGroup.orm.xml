@@ -43,5 +43,10 @@
       </join-columns>
     </many-to-one>
     <many-to-many field="criterias" mapped-by="groups" target-entity="SkIdentificationCriteria"/>
+    <field name="isParentModule" type="boolean" column="is_parent_module" nullable="true">
+      <options>
+        <option name="default">0</option>
+      </options>
+    </field>
   </entity>
 </doctrine-mapping>

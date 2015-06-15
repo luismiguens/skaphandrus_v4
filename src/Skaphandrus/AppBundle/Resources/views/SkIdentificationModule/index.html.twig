@@ -19,31 +19,31 @@
 {% endblock %}
 
 {% block heading_title %}
-    {{ "form.identification_group.h1.title"|trans }}
+    {{ "form.identification_module.h1.title"|trans }}
 {% endblock %}
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
         <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
-        <li class="active"><strong>{{ "breadcrumb.identification_group"|trans }}</strong></li>
+        <li class="active"><strong>{{ "breadcrumb.identification_module"|trans }}</strong></li>
     </ol>
 {% endblock %}
 
 {% block heading_action %}
-    <a href="{{ path('identification_group_admin_new') }}" class="btn btn-primary">{{ "form.identification_group.btn.add"|trans }}</a>
+    <a href="{{ path('identification_module_admin_new') }}" class="btn btn-primary">{{ "form.identification_module.btn.add"|trans }}</a>
 {% endblock %}
 
 {% block form_title_description %}
-    {{ "form.identification_group.text.description"|trans }}
+    {{ "form.identification_module.text.description"|trans }}
 {% endblock %}
 
 {% block body -%}
-    <table class="table display table-striped table-bordered table-hover " cellspacing="0" width="100%">
+    <table id="datatable-list" class="table display table-striped table-bordered table-hover " cellspacing="0" width="100%">
         <thead>
             <tr>
-                <th>{{ "form.identification_group.label.module"|trans }}</th>
-                <th>{{ "form.identification_group.label.name_group"|trans }}</th>
-                <th>{{ "form.identification_group.label.criteria"|trans }}</th>
+                <th>{{ "Master ID"|trans }}</th>
+                <th>{{ "form.identification_module.label.name_module"|trans }}</th>
+                <th>{{ "form.identification_module.label.is_available"|trans }}</th>
                 <th>{{ "form.common.label.actions"|trans }}</th>
             </tr>
         </thead>
@@ -51,26 +51,24 @@
             {% for entity in entities %}
                 <tr>
                     <td>
-                        {% if entity.module is not empty %}
-                            {{ entity.module.translate.name }}
+                        {% if entity.master is not empty %}
+                            {{ entity.master.translate.name }}
                         {% endif %}
                     </td>
-                    <td>{{ entity.name }}</td>
+                    <td>{{ entity.translate.name }}</td>
                     <td>
-                        {% for criteria in entity.criterias %}
-                            {{ criteria.translate.name }}<br />
-                        {% endfor %}
+                        {{ entity.isEnabled }}
                     </td>
                     <td>
-                        <a class="btn btn-white btn-sm" href="{{ path('identification_group_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.edit"|trans }}</a>
+                        <a class="btn btn-white btn-sm" href="{{ path('identification_module_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.edit"|trans }}</a>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <a class="btn btn-primary" href="{{ path('identification_group_admin_new') }}">
-        <i class="fa fa-pencil"></i>  {{ "form.identification_group.btn.add"|trans }}
+    <a class="btn btn-primary" href="{{ path('identification_module_admin_new') }}">
+        <i class="fa fa-pencil"></i>  {{ "form.identification_module.btn.add"|trans }}
     </a>
 
     {% endblock %}

@@ -19,31 +19,32 @@
 {% endblock %}
 
 {% block heading_title %}
-    {{ "form.identification_group.h1.title"|trans }}
+    {{ "form.identification_species.h1.title"|trans }}
 {% endblock %}
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
         <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
-        <li class="active"><strong>{{ "breadcrumb.identification_group"|trans }}</strong></li>
+        <li class="active"><strong>{{ "breadcrumb.identification_species"|trans }}</strong></li>
     </ol>
 {% endblock %}
 
 {% block heading_action %}
-    <a href="{{ path('identification_group_admin_new') }}" class="btn btn-primary">{{ "form.identification_group.btn.add"|trans }}</a>
+    <a href="{{ path('identification_species_admin_new') }}" class="btn btn-primary">{{ "form.identification_species.btn.add"|trans }}</a>
 {% endblock %}
 
 {% block form_title_description %}
-    {{ "form.identification_group.text.description"|trans }}
+    {{ "form.identification_species.text.description"|trans }}
 {% endblock %}
 
 {% block body -%}
-    <table class="table display table-striped table-bordered table-hover " cellspacing="0" width="100%">
+    <table id="datatable-list" class="table display table-striped table-bordered table-hover " cellspacing="0" width="100%">
         <thead>
             <tr>
-                <th>{{ "form.identification_group.label.module"|trans }}</th>
-                <th>{{ "form.identification_group.label.name_group"|trans }}</th>
-                <th>{{ "form.identification_group.label.criteria"|trans }}</th>
+                <th>{{ "form.identification_species.label.id"|trans }}</th>
+                <th>{{ "form.identification_species.label.name"|trans }}</th>
+                {# <th>{{ "form.identification_species.label.failed_refs"|trans }}</th>
+                <th>{{ "form.identification_species.label.repeated_refs"|trans }}</th> #}
                 <th>{{ "form.common.label.actions"|trans }}</th>
             </tr>
         </thead>
@@ -51,26 +52,21 @@
             {% for entity in entities %}
                 <tr>
                     <td>
-                        {% if entity.module is not empty %}
-                            {{ entity.module.translate.name }}
-                        {% endif %}
+                        {{ entity.id }}
                     </td>
                     <td>{{ entity.name }}</td>
+                    {# <td></td>
+                    <td></td> #}
                     <td>
-                        {% for criteria in entity.criterias %}
-                            {{ criteria.translate.name }}<br />
-                        {% endfor %}
-                    </td>
-                    <td>
-                        <a class="btn btn-white btn-sm" href="{{ path('identification_group_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.edit"|trans }}</a>
+                        <a class="btn btn-white btn-sm" href="{{ path('identification_species_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.edit"|trans }}</a>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <a class="btn btn-primary" href="{{ path('identification_group_admin_new') }}">
-        <i class="fa fa-pencil"></i>  {{ "form.identification_group.btn.add"|trans }}
+    <a class="btn btn-primary" href="{{ path('identification_species_admin_new') }}">
+        <i class="fa fa-pencil"></i>  {{ "form.identification_species.btn.add"|trans }}
     </a>
 
     {% endblock %}

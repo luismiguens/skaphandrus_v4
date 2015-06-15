@@ -1,3 +1,11 @@
+skaphandrus_app_identification_species_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skidentificationspecies.yml"
+    prefix:   /{_locale}/identification_species_admin
+
+skaphandrus_app_identification_module_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skidentificationmodule.yml"
+    prefix:   /{_locale}/identification_module_admin
+
 skaphandrus_app_fos_user:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/fosuser.yml"
     prefix:   /{_locale}/fos_user
