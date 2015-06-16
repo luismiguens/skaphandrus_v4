@@ -5,13 +5,13 @@ namespace Skaphandrus\AppBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Skaphandrus\AppBundle\Entity\FosUser;
-use Skaphandrus\AppBundle\Form\FosUserType;
+use Skaphandrus\AppBundle\Form\FosUserModuleUsernameType;
 
 /**
- * SkIdentificationModuleUsername controller.
+ * SkModules controller.
  *
  */
-class SkIdentificationModuleUsernameController extends Controller {
+class SkModulesController extends Controller {
 
     /**
      * Displays a form to edit an existing FosUser entity.
@@ -34,7 +34,7 @@ class SkIdentificationModuleUsernameController extends Controller {
 
         //$deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('SkaphandrusAppBundle:SkIdentificationModuleUsername:edit.html.twig', array(
+        return $this->render('SkaphandrusAppBundle:SkModules:edit.html.twig', array(
                     'entity' => $entity,
                     'choices' => $choices,
                     'edit_form' => $editForm->createView()
@@ -50,7 +50,7 @@ class SkIdentificationModuleUsernameController extends Controller {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createEditForm(FosUser $entity) {
-        $form = $this->createForm(new FosUserType(), $entity, array(
+        $form = $this->createForm(new FosUserModuleUsernameType(), $entity, array(
             'action' => $this->generateUrl('module_admin_update'),
             'method' => 'PUT',
         ));
@@ -82,7 +82,7 @@ class SkIdentificationModuleUsernameController extends Controller {
             return $this->redirect($this->generateUrl('module_admin_edit'));
         }
 
-        return $this->render('SkaphandrusAppBundle:SkIdentificationModuleUsername:edit.html.twig', array(
+        return $this->render('SkaphandrusAppBundle:SkModules:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView()
         ));

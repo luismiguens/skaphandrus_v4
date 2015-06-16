@@ -2,11 +2,16 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+
 /**
  * SkPointsType
  */
 class SkPointsType
 {
+    
+        use ORMBehaviors\Translatable\Translatable;
     /**
      * @var integer
      */
@@ -22,5 +27,28 @@ class SkPointsType
     {
         return $this->id;
     }
+    
+    
+        /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function setId($id)
+    {
+        return $this->id = $id;
+    }
+    
+    
+    
+ 
+    public function __toString() {
+        return "bla bla";
+    }
+    
+    public function getName() {
+        return $this->translate()->getName();
+    }
+    
 }
 

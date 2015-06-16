@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SkUserPointsType extends AbstractType
+class SkPointsType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -27,7 +27,7 @@ class SkUserPointsType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Skaphandrus\AppBundle\Entity\SkUserPoints'
+            'data_class' => 'Skaphandrus\AppBundle\Entity\SkPoints'
         ));
     }
 
@@ -36,6 +36,6 @@ class SkUserPointsType extends AbstractType
      */
     public function getName()
     {
-        return 'skaphandrus_appbundle_skuserpoints';
+        return 'skaphandrus_appbundle_skpoints';
     }
 }

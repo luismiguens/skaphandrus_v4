@@ -5,7 +5,7 @@ namespace Skaphandrus\AppBundle\Entity;
 /**
  * SkUserPoints
  */
-class SkUserPoints
+class SkPoints
 {
     /**
      * @var integer

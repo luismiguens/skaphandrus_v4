@@ -1,13 +1,8 @@
-skaphandrus_app_user_points_admin:
-    resource: "@SkaphandrusAppBundle/Resources/config/routing/skuserpoints.yml"
-    prefix:   /{_locale}/points_admin
-    
 
 
 
-skaphandrus_app_module_username:
-    resource: "@SkaphandrusAppBundle/Resources/config/routing/skmoduleusername.yml"
-    prefix:   /{_locale}/module_admin
+
+#### Identification Admin Routes    
     
 skaphandrus_app_identification_species_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skidentificationspecies.yml"
@@ -25,11 +20,16 @@ skaphandrus_app_identification_criteria_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skidentificationcriteria.yml"
     prefix:   /{_locale}/identification_criteria_admin
 
-skaphandrus_app_fos_user:
-    resource: "@SkaphandrusAppBundle/Resources/config/routing/fosuser.yml"
-    prefix:   /{_locale}/fos_user
 
 
+#
+#skaphandrus_app_fos_user:
+#    resource: "@SkaphandrusAppBundle/Resources/config/routing/fosuser.yml"
+#    prefix:   /{_locale}/fos_user
+#
+
+
+#### User Admin Routes
 skaphandrus_app_spot_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skspot.yml"
     prefix:   /{_locale}/spot_admin
@@ -37,6 +37,22 @@ skaphandrus_app_spot_admin:
 skaphandrus_app_photo_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skphoto.yml"
     prefix:   /{_locale}/photo_admin
+
+skaphandrus_app_points_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skpoints.yml"
+    prefix:   /{_locale}/points_admin
+    
+
+skaphandrus_app_modules_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skmodules.yml"
+    prefix:   /{_locale}/modules_admin
+
+
+
+
+
+
+
 
 skaphandrus_app_hello:
     path:     /hello/{name}

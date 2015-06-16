@@ -2082,27 +2082,27 @@ CREATE TABLE `sk_points_type_translation`
 
 
 -- ---------------------------------------------------------------------
--- sk_user_points
+-- sk_points
 -- ---------------------------------------------------------------------
 
 
-DROP TABLE IF EXISTS `sk_user_points`;
+DROP TABLE IF EXISTS `sk_points`;
 
-CREATE TABLE `sk_user_points`
+CREATE TABLE `sk_points`
 (
 	`id` INTEGER NOT NULL AUTO_INCREMENT,
 	`fos_user_id` INTEGER NOT NULL,
         `points_type_id` INTEGER NOT NULL,
         `points` INTEGER NOT NULL,
 	PRIMARY KEY (`id`),
-	INDEX `sk_user_points_FI_1` (`fos_user_id`),
-        INDEX `sk_user_points_FI_2` (`points_type_id`),
-	CONSTRAINT `sk_user_points_FK_1`
+	INDEX `sk_points_FI_1` (`fos_user_id`),
+        INDEX `sk_points_FI_2` (`points_type_id`),
+	CONSTRAINT `sk_points_FK_1`
 		FOREIGN KEY (`points_type_id`)
 		REFERENCES `sk_points_type` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE CASCADE,
-	CONSTRAINT `sk_user_points_FK_2`
+	CONSTRAINT `sk_points_FK_2`
 		FOREIGN KEY (`fos_user_id`)
 		REFERENCES `fos_user` (`id`)
 		ON UPDATE CASCADE
