@@ -1,6 +1,6 @@
 identification_species_admin:
-    path:     /{module_id}
-    defaults: { _controller: "SkaphandrusAppBundle:SkIdentificationSpecies:index", module_id: 6 }
+    path:     /
+    defaults: { _controller: "SkaphandrusAppBundle:SkIdentificationSpecies:index" }
 
 identification_species_admin_show:
     path:     /{id}/show

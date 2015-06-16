@@ -27,5 +27,10 @@
     <one-to-many field="species_vernaculars" target-entity="SkSpeciesVernacular" mapped-by="species"/>
     <one-to-many field="photos" target-entity="SkPhoto" mapped-by="species"/>
     <one-to-many field="scientific_names" target-entity="SkSpeciesScientificName" mapped-by="species"/>
+    <one-to-many field="image_refs" target-entity="SkSpeciesImageRef" mapped-by="species">
+      <cascade>
+        <cascade-persist/>
+      </cascade>
+    </one-to-many>
   </entity>
 </doctrine-mapping>
