@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class FosUserType extends AbstractType {
+class FosUserModuleUsernameType extends AbstractType {
 
     /**
      * @param FormBuilderInterface $builder

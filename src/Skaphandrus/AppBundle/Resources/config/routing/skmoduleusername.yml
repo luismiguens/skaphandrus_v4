@@ -1,0 +1,10 @@
+module_admin_edit:
+    path:     /edit
+    defaults: { _controller: "SkaphandrusAppBundle:SkIdentificationModuleUsername:edit" }    
+
+module_admin_update:
+    path:     /update
+    defaults: { _controller: "SkaphandrusAppBundle:SkIdentificationModuleUsername:update" }
+    methods:  [POST, PUT]
+
+

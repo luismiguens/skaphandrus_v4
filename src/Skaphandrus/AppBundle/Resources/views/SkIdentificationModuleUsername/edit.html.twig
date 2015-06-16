@@ -1,0 +1,84 @@
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% form_theme edit_form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/skaphandrus.js') }}"></script>
+
+
+
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block heading_title %}
+    {{ "form.modules.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="index.html">{{ "breadcrumb.modules"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.edit_modules"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+
+{% block heading_action %}
+    <a href="{{ path('photo_admin_new') }}" class="btn btn-primary">{{ "form.photo.btn.add"|trans }}</a>
+{% endblock %}
+
+
+{% block form_title_description %}
+    {{ "form.modules.text.description"|trans }}
+{% endblock %}
+{% block body -%}
+
+
+
+    <table class="table table-striped" >
+        <thead>
+            <tr>
+                <th>a</th> 
+                <th>{{ "form.modules.label.name"|trans }}</th>
+                <th>{{ "form.modules.label.points"|trans }}</th>
+                <th>{{ "form.modules.label.acquired_at"|trans }}</th>
+                <th>{{ "form.modules.label.acquired_type"|trans }}</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
+            {% for child in edit_form.modules %}
+                {% set index = child.vars.value %}
+
+                <tr>
+                    <td>{{ form_widget(child, { 'attr': {'class': 'i-checks'} }) }}</td>
+                    <td>{{ choices[index].name }}</td>
+                    <td><span class="pie">0.52/1.561</span></td>
+
+                    <td>Jul 14, 2013</td>
+                    <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+                </tr>
+            {% endfor %}
+
+
+            {{ form_end(edit_form) }}
+        </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+{% endblock %}

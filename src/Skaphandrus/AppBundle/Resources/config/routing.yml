@@ -1,6 +1,13 @@
-skaphandrus_app_fos_user:
-    resource: "@SkaphandrusAppBundle/Resources/config/routing/fosuser.yml"
-    prefix:   /{_locale}/fos_user
+skaphandrus_app_user_points_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skuserpoints.yml"
+    prefix:   /{_locale}/points_admin
+    
+
+
+
+skaphandrus_app_module_username:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skmoduleusername.yml"
+    prefix:   /{_locale}/module_admin
     
 skaphandrus_app_identification_criteria_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skidentificationcriteria.yml"

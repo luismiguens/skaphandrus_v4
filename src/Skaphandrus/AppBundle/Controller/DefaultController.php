@@ -101,6 +101,8 @@ class DefaultController extends Controller {
             $userFOS->setEmail($userSfGuard->username);
             $userFOS->setPassword($userSfGuard->password);
             $userFOS->setSalt($userSfGuard->salt);
+            $userFOS->setAlgorithm($userSfGuard->algorithm);
+            
 
             $em->persist($userFOS);
             $i++;

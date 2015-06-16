@@ -1,0 +1,30 @@
+points_admin:
+    path:     /
+    defaults: { _controller: "SkaphandrusAppBundle:SkUserPoints:index" }
+
+points_admin_show:
+    path:     /{id}/show
+    defaults: { _controller: "SkaphandrusAppBundle:SkUserPoints:show" }
+
+points_admin_new:
+    path:     /new
+    defaults: { _controller: "SkaphandrusAppBundle:SkUserPoints:new" }
+
+points_admin_create:
+    path:     /create
+    defaults: { _controller: "SkaphandrusAppBundle:SkUserPoints:create" }
+    methods:  POST
+
+points_admin_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SkaphandrusAppBundle:SkUserPoints:edit" }
+
+points_admin_update:
+    path:     /{id}/update
+    defaults: { _controller: "SkaphandrusAppBundle:SkUserPoints:update" }
+    methods:  [POST, PUT]
+
+points_admin_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SkaphandrusAppBundle:SkUserPoints:delete" }
+    methods:  [POST, DELETE]

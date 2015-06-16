@@ -1584,6 +1584,7 @@ CREATE TABLE `sk_identification_group`
 	`family_id` INTEGER,
 	`genus_id` INTEGER,
 	`module_id` INTEGER NOT NULL,
+        `is_parent_module` tinyint(1) DEFAULT '0',
 	PRIMARY KEY (`id`),
 	INDEX `sk_identification_group_FI_1` (`phylum_id`),
 	INDEX `sk_identification_group_FI_2` (`class_id`),
@@ -1622,6 +1623,17 @@ CREATE TABLE `sk_identification_group`
 		ON UPDATE RESTRICT
 		ON DELETE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+
+
+
+
+
+
+
+
 
 -- ---------------------------------------------------------------------
 -- sk_identification_criteria
@@ -2033,6 +2045,71 @@ CREATE TABLE `sk_species_image_ref`
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+-- ---------------------------------------------------------------------
+-- sk_points_type
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `sk_points_type`;
+
+CREATE TABLE `sk_points_type`
+(
+	`id` INTEGER NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+-- ---------------------------------------------------------------------
+-- sk_points_type_translation
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `sk_points_type_translation`;
+
+CREATE TABLE `sk_points_type_translation`
+(
+        `id` INTEGER NOT NULL AUTO_INCREMENT,
+        `translatable_id` INTEGER NOT NULL,
+	`name` VARCHAR(255) NOT NULL,
+	`locale` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+	PRIMARY KEY (`id`),
+        UNIQUE KEY `sk_points_type_unique_translation` (`translatable_id`,`locale`),
+	CONSTRAINT `sk_points_type_translation_FK_1`
+		FOREIGN KEY (`translatable_id`)
+		REFERENCES `sk_points_type` (`id`)
+              	ON UPDATE CASCADE
+		ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+-- ---------------------------------------------------------------------
+-- sk_user_points
+-- ---------------------------------------------------------------------
+
+
+DROP TABLE IF EXISTS `sk_user_points`;
+
+CREATE TABLE `sk_user_points`
+(
+	`id` INTEGER NOT NULL AUTO_INCREMENT,
+	`fos_user_id` INTEGER NOT NULL,
+        `points_type_id` INTEGER NOT NULL,
+        `points` INTEGER NOT NULL,
+	PRIMARY KEY (`id`),
+	INDEX `sk_user_points_FI_1` (`fos_user_id`),
+        INDEX `sk_user_points_FI_2` (`points_type_id`),
+	CONSTRAINT `sk_user_points_FK_1`
+		FOREIGN KEY (`points_type_id`)
+		REFERENCES `sk_points_type` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	CONSTRAINT `sk_user_points_FK_2`
+		FOREIGN KEY (`fos_user_id`)
+		REFERENCES `fos_user` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 
 
 
@@ -2141,7 +2218,7 @@ INSERT INTO skaphandrus4.sk_photo_contest_category_judge_photo_vote (id, votatio
 
 INSERT INTO skaphandrus4.sk_identification_criteria_type (id) SELECT id FROM skaphandrus3.sk_identification_criteria_type;
 INSERT INTO skaphandrus4.sk_identification_criteria_type_translation (translatable_id, name, locale) SELECT id, name, culture FROM skaphandrus3.sk_identification_criteria_type_i18n;
-INSERT INTO skaphandrus4.sk_identification_group (id, phylum_id, class_id, order_id, family_id, genus_id, module_id) SELECT id, phylum_id, class_id, order_id, family_id, genus_id, module_id FROM skaphandrus3.sk_identification_group;
+INSERT INTO skaphandrus4.sk_identification_group (id, phylum_id, class_id, order_id, family_id, genus_id, module_id, is_parent_module) SELECT id, phylum_id, class_id, order_id, family_id, genus_id, module_id, is_parent_module FROM skaphandrus3.sk_identification_group;
 INSERT INTO skaphandrus4.sk_identification_criteria (id, type_id, order_by, is_cumulative ) SELECT id, type_id, order_by, is_cumulative FROM skaphandrus3.sk_identification_criteria;
 INSERT INTO skaphandrus4.sk_identification_criteria_translation (translatable_id, name, locale) SELECT id, name, culture FROM skaphandrus3.sk_identification_criteria_i18n;
 INSERT INTO skaphandrus4.sk_identification_criteria_group (id, group_id, criteria_id) SELECT id, group_id, criteria_id FROM skaphandrus3.sk_identification_criteria_group;

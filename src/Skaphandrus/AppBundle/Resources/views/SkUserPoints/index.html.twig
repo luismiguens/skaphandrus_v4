@@ -1,12 +1,12 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>FosUser list</h1>
+    <h1>SkUserPoints list</h1>
 
     <table class="records_list">
         <thead>
             <tr>
-                <th>Algorithm</th>
+                <th>Points</th>
                 <th>Id</th>
                 <th>Actions</th>
             </tr>
@@ -14,15 +14,15 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('fos_user_show', { 'id': entity.id }) }}">{{ entity.algorithm }}</a></td>
+                <td><a href="{{ path('points_admin_show', { 'id': entity.id }) }}">SSS</a></td>
                 <td>{{ entity.id }}</td>
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('fos_user_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('points_admin_show', { 'id': entity.id }) }}">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('fos_user_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('points_admin_edit', { 'id': entity.id }) }}">edit</a>
                     </li>
                 </ul>
                 </td>
@@ -33,7 +33,7 @@
 
         <ul>
         <li>
-            <a href="{{ path('fos_user_new') }}">
+            <a href="{{ path('points_admin_new') }}">
                 Create a new entry
             </a>
         </li>

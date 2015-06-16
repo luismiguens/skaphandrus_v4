@@ -1,13 +1,13 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>FosUser</h1>
+    <h1>SkUserPoints</h1>
 
     <table class="record_properties">
         <tbody>
             <tr>
-                <th>Algorithm</th>
-                <td>{{ entity.algorithm }}</td>
+                <th>Points</th>
+                <td>{{ entity.points }}</td>
             </tr>
             <tr>
                 <th>Id</th>
@@ -18,12 +18,12 @@
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('fos_user') }}">
+        <a href="{{ path('points_admin') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('fos_user_edit', { 'id': entity.id }) }}">
+        <a href="{{ path('points_admin_edit', { 'id': entity.id }) }}">
             Edit
         </a>
     </li>
