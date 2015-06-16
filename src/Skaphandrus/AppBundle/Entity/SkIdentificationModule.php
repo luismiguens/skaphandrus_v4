@@ -4,12 +4,12 @@ namespace Skaphandrus\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * SkIdentificationModule
  */
 class SkIdentificationModule {
-
     use ORMBehaviors\Translatable\Translatable;
 
     /**
@@ -25,17 +25,17 @@ class SkIdentificationModule {
     /**
      * @var boolean
      */
-    private $isActive = '0';
+    private $isActive = FALSE;
 
     /**
      * @var boolean
      */
-    private $isEnabled = '0';
+    private $isEnabled = FALSE;
 
     /**
      * @var boolean
      */
-    private $isFree = '0';
+    private $isFree = FALSE;
 
     /**
      * @var string
@@ -68,11 +68,15 @@ class SkIdentificationModule {
      */
     private $species;
 
-    
-    
-    
-    
-    
+    private $file;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+    }
     
     /**
      * Set appstoreId
@@ -298,4 +302,66 @@ class SkIdentificationModule {
         return $this->groups;
     }
 
+    public function getAbsolutePath() {
+        return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
+    }
+
+    public function getWebPath() {
+        return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image;
+    }
+
+    protected function getUploadRootDir() {
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+
+    protected function getUploadDir() {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'uploads';
+    }
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null) {
+        $this->file = $file;
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile() {
+        return $this->file;
+    }
+
+    /**
+     * 
+     * @return type
+     */
+    public function upload() {
+        // the file property can be empty if the field is not required
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        // use the original file name here but you should
+        // sanitize it at least to avoid any security issues
+        // move takes the target directory and then the
+        // target filename to move to
+        $this->getFile()->move(
+                $this->getUploadRootDir(), sha1(uniqid(mt_rand(), true)).'.'.$this->getFile()->guessExtension()
+        );
+
+        // set the path property to the filename where you've saved the file
+        $this->image = $this->getFile()->getClientOriginalName();
+
+        // clean up the file property as you won't need it anymore
+        $this->file = null;
+    }
 }

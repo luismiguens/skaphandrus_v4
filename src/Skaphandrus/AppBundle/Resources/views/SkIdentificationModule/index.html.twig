@@ -1,0 +1,74 @@
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- Data Tables -->
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.bootstrap.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.responsive.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.tableTools.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/skaphandrus.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Data Tables -->
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/dataTables.responsive.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/dataTables.tableTools.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block heading_title %}
+    {{ "form.identification_module.h1.title"|trans }}
+{% endblock %}
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.identification_module"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block heading_action %}
+    <a href="{{ path('identification_module_admin_new') }}" class="btn btn-primary">{{ "form.identification_module.btn.add"|trans }}</a>
+{% endblock %}
+
+{% block form_title_description %}
+    {{ "form.identification_module.text.description"|trans }}
+{% endblock %}
+
+{% block body -%}
+    <table id="datatable-list" class="table display table-striped table-bordered table-hover " cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>{{ "Master ID"|trans }}</th>
+                <th>{{ "form.identification_module.label.name_module"|trans }}</th>
+                <th>{{ "form.identification_module.label.is_available"|trans }}</th>
+                <th>{{ "form.common.label.actions"|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>
+                        {% if entity.master is not empty %}
+                            {{ entity.master.translate.name }}
+                        {% endif %}
+                    </td>
+                    <td>{{ entity.translate.name }}</td>
+                    <td>
+                        {{ entity.isEnabled }}
+                    </td>
+                    <td>
+                        <a class="btn btn-white btn-sm" href="{{ path('identification_module_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.edit"|trans }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('identification_module_admin_new') }}">
+        <i class="fa fa-pencil"></i>  {{ "form.identification_module.btn.add"|trans }}
+    </a>
+
+    {% endblock %}

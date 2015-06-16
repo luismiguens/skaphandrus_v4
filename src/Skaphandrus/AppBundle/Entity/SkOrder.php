@@ -2,6 +2,8 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * SkOrder
  */
@@ -232,22 +234,15 @@ class SkOrder
     
     
     
-       public function getSpecies() {
+    public function getSpecies() {
+        $species = array();
 
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('s')->from('SkaphandrusAppBundle:SkSpecies', 's');
-          
-            $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
-            $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
-            $qb->join('f.order', 'o', 'WITH', 'f.order = ?1');
-        $qb->setParameter(1, $this->getId());
-
-
-        try {
-            return $qb->getQuery()->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
+        foreach ($this->getFamily() as $family) {
+            foreach ($family->getGenus() as $genus) {
+                $species = array_merge($species, $genus->getSpecies()->toArray());
+            }
         }
+        return new ArrayCollection($species);
     }
     
     

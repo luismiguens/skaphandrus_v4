@@ -124,6 +124,135 @@ class AjaxSearchController extends Controller {
         return new Response($SkSpecies->getScientificNames()[0]);
     }
     
+
+    public function ajaxSearchGenusAction(Request $request) {
+        $q = $request->get('term');
+        $em = $this->getDoctrine()->getManager();
+        $genuses = $em->getRepository('SkaphandrusAppBundle:SkGenus')->findLikeName($q);
+
+
+        $results = array();
+        foreach ($genuses as $genus) {
+            $results[] = array(
+                'id' => $genus->getId(),
+                'name' => $genus->getName(),
+                'label' => sprintf("%s", $genus->getName())
+            );
+        }
+
+        return new JsonResponse($results);
+    }
+
+    public function ajaxGetGenusAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $SkGenus = $em->getRepository('SkaphandrusAppBundle:SkGenus')->find($id);
+
+        return new Response($SkGenus->getName());
+    }
+    
+
+    public function ajaxSearchFamilyAction(Request $request) {
+        $q = $request->get('term');
+        $em = $this->getDoctrine()->getManager();
+        $families = $em->getRepository('SkaphandrusAppBundle:SkFamily')->findLikeName($q);
+
+
+        $results = array();
+        foreach ($families as $family) {
+            $results[] = array(
+                'id' => $family->getId(),
+                'name' => $family->getName(),
+                'label' => sprintf("%s", $family->getName())
+            );
+        }
+
+        return new JsonResponse($results);
+    }
+
+    public function ajaxGetFamilyAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $SkFamily = $em->getRepository('SkaphandrusAppBundle:SkFamily')->find($id);
+
+        return new Response($SkFamily->getName());
+    }
+    
+
+    public function ajaxSearchOrderAction(Request $request) {
+        $q = $request->get('term');
+        $em = $this->getDoctrine()->getManager();
+        $orders = $em->getRepository('SkaphandrusAppBundle:SkOrder')->findLikeName($q);
+
+
+        $results = array();
+        foreach ($orders as $order) {
+            $results[] = array(
+                'id' => $order->getId(),
+                'name' => $order->getName(),
+                'label' => sprintf("%s", $order->getName())
+            );
+        }
+
+        return new JsonResponse($results);
+    }
+
+    public function ajaxGetOrderAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $SkOrder = $em->getRepository('SkaphandrusAppBundle:SkOrder')->find($id);
+
+        return new Response($SkOrder->getName());
+    }
+    
+
+    public function ajaxSearchClassAction(Request $request) {
+        $q = $request->get('term');
+        $em = $this->getDoctrine()->getManager();
+        $classes = $em->getRepository('SkaphandrusAppBundle:SkClass')->findLikeName($q);
+
+
+        $results = array();
+        foreach ($classes as $class) {
+            $results[] = array(
+                'id' => $class->getId(),
+                'name' => $class->getName(),
+                'label' => sprintf("%s", $class->getName())
+            );
+        }
+
+        return new JsonResponse($results);
+    }
+
+    public function ajaxGetClassAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $SkClass = $em->getRepository('SkaphandrusAppBundle:SkClass')->find($id);
+
+        return new Response($SkClass->getName());
+    }
+    
+
+    public function ajaxSearchPhylumAction(Request $request) {
+        $q = $request->get('term');
+        $em = $this->getDoctrine()->getManager();
+        $phylums = $em->getRepository('SkaphandrusAppBundle:SkPhylum')->findLikeName($q);
+
+
+        $results = array();
+        foreach ($phylums as $phylum) {
+            $results[] = array(
+                'id' => $phylum->getId(),
+                'name' => $phylum->getName(),
+                'label' => sprintf("%s", $phylum->getName())
+            );
+        }
+
+        return new JsonResponse($results);
+    }
+
+    public function ajaxGetPhylumAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $SkPhylum = $em->getRepository('SkaphandrusAppBundle:SkPhylum')->find($id);
+
+        return new Response($SkPhylum->getName());
+    }
     
     
 

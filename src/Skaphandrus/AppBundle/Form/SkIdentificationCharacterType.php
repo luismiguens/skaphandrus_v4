@@ -25,7 +25,7 @@ class SkIdentificationCharacterType extends AbstractType
             ->add('file', 'file', 
                 array(
                     'label'=>'form.identification_character.label.file',
-                    'required' => true
+                    'required' => false
                 )
             )
             // ->add('criteria', 'entity', array(

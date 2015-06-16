@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Skaphandrus\AppBundle\Entity\SkGenus" table="sk_genus">
+  <entity name="Skaphandrus\AppBundle\Entity\SkGenus" repository-class="Skaphandrus\AppBundle\Entity\Repository\SkGenusRepository" table="sk_genus">
     <indexes>
       <index name="sk_genus_FI_1" columns="family_id"/>
     </indexes>

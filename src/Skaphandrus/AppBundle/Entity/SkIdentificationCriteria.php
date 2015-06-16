@@ -21,7 +21,7 @@ class SkIdentificationCriteria
     /**
      * @var boolean
      */
-    private $isCumulative = '1';
+    private $isCumulative = TRUE;
 
     /**
      * @var integer
@@ -182,6 +182,7 @@ class SkIdentificationCriteria
     public function addCharacter(\Skaphandrus\AppBundle\Entity\skIdentificationCharacter $character)
     {
         $this->characters[] = $character;
+        $character->setCriteria($this);
 
         return $this;
     }
