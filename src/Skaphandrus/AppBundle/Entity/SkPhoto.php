@@ -79,6 +79,9 @@ class SkPhoto {
      */
     private $category;
 
+    
+        private $isValidated = '0';
+    
     /**
      * Constructor
      */
@@ -317,6 +320,34 @@ class SkPhoto {
         return $this->species;
     }
 
+    
+    
+        /**
+     * Set isValidated
+     *
+     * @param boolean $isValidated
+     *
+     * @return SkPhotoContest
+     */
+    public function setIsValidated($isValidated)
+    {
+        $this->isValidated = $isValidated;
+
+        return $this;
+    }
+
+    /**
+     * Get isValidated
+     *
+     * @return boolean
+     */
+    public function getIsValidated()
+    {
+        return $this->isValidated;
+    }
+
+    
+    
     /**
      * Set fosUser
      *

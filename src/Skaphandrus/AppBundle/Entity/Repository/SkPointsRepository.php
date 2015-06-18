@@ -4,7 +4,6 @@ namespace Skaphandrus\AppBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-
 /**
  * SkPhotoRepository
  *
@@ -13,29 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class SkPointsRepository extends EntityRepository {
 
-    //1ª fotografia associada (e validada) de espécie (campo created_at + 3 validações)(5 PONTOS)
-//    public function findFirstPhotosFromSpecies($user_id) {
-//        return $this->getEntityManager()
-//                        ->createQuery(
-//                                "SELECT u, COUNT(p.id) as countable
-//            FROM SkaphandrusAppBundle:FosUser u
-//            JOIN SkaphandrusAppBundle:SkPhoto p
-//                WITH u.id = IDENTITY(p.fosUser)
-//            WHERE IDENTITY(p.$model) = :id
-//            GROUP BY u.id
-//            ORDER BY countable DESC"
-//                        )->setParameter('id', $id)->getResult();
-//    }
-
-
+    //primeiras fotografias associadas a uma espécie (campo  species_id + created_at)(5 PONTOS)
     public function findFirstPhotosFromSpecies($user_id) {
 
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
-        $statement = $connection->prepare("SELECT sk_photo.* FROM sk_photo INNER JOIN ( 
-    SELECT id, species_id, MIN(created_at) AS first_photo FROM sk_photo GROUP BY species_id ) first_record ON sk_photo.id = first_record.id 
-WHERE sk_photo.fos_user_id = :user_id ");
+        $statement = $connection->prepare("SELECT sk_photo.* FROM sk_photo 
+            INNER JOIN ( 
+            SELECT id, species_id, MIN(created_at) AS first_photo 
+                FROM sk_photo GROUP BY species_id ) first_record ON sk_photo.id = first_record.id 
+            WHERE sk_photo.fos_user_id = :user_id ");
         $statement->bindValue('user_id', $user_id);
         $statement->execute();
         $results = $statement->fetchAll();
@@ -43,15 +30,17 @@ WHERE sk_photo.fos_user_id = :user_id ");
         return $results;
     }
 
-    
+    //fotografias de espécie(validada) (+ 3 validações)(4 PONTOS)
     public function findValidatedSpeciesPhotos($user_id) {
 
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
-        $statement = $connection->prepare("SELECT sk_photo.* FROM sk_photo INNER JOIN ( 
-    SELECT photo_id, species_id, count(species_id) as soma FROM sk_photo_species_validation group by photo_id, species_id having soma > 1 ) validated_record ON sk_photo.id = validated_record.photo_id 
-WHERE sk_photo.fos_user_id = :user_id ");
+        $statement = $connection->prepare("SELECT sk_photo.* FROM sk_photo 
+            INNER JOIN ( 
+            SELECT photo_id, species_id, count(species_id) as soma 
+                FROM sk_photo_species_validation group by photo_id, species_id having soma > 3 ) validated_record ON sk_photo.id = validated_record.photo_id 
+            WHERE sk_photo.fos_user_id = :user_id ");
         $statement->bindValue('user_id', $user_id);
         $statement->execute();
         $results = $statement->fetchAll();
@@ -59,6 +48,73 @@ WHERE sk_photo.fos_user_id = :user_id ");
         return $results;
     }
 
-  
+    //fotografia de espécie (associada) (campo especie_id ) 
+    public function findAssociatedSpeciesPhotos($user_id) {
+
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+        $statement = $connection->prepare("SELECT sk_photo.* FROM sk_photo 
+            WHERE sk_photo.species_id <> 0 AND sk_photo.species_id is not null and  sk_photo.fos_user_id = :user_id ");
+        $statement->bindValue('user_id', $user_id);
+        $statement->execute();
+        $results = $statement->fetchAll();
+
+        return $results;
+    }
     
+    
+        //espécies distintas (associada) (campo especie_id ) 
+    public function findDistictValidatedSpeciesPhotos($user_id) {
+
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+        $statement = $connection->prepare("SELECT distinct(species_id) FROM sk_photo where is_validated=true AND sk_photo.fos_user_id = :user_id ");
+        $statement->bindValue('user_id', $user_id);
+        $statement->execute();
+        $results = $statement->fetchAll();
+
+        return $results;
+    }
+    
+    
+    
+    
+        //primeiras fotografias associadas a um spot (campo spot_id + created_at)(5 PONTOS)
+    public function findFirstPhotosFromSpot($user_id) {
+
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+        $statement = $connection->prepare("SELECT sk_photo.* FROM sk_photo 
+            INNER JOIN ( 
+            SELECT id, spot_id, MIN(created_at) AS first_photo 
+                FROM sk_photo GROUP BY spot_id ) first_record ON sk_photo.id = first_record.id 
+            WHERE sk_photo.fos_user_id = :user_id ");
+        $statement->bindValue('user_id', $user_id);
+        $statement->execute();
+        $results = $statement->fetchAll();
+
+        return $results;
+    }
+    
+        //fotografias de spot (associada) (campo spot_id ) 
+    public function findAssociatedSpotsPhotos($user_id) {
+
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+        $statement = $connection->prepare("SELECT sk_photo.* FROM sk_photo 
+            WHERE sk_photo.spot_id <> 0 AND sk_photo.spot_id is not null and sk_photo.fos_user_id = :user_id ");
+        $statement->bindValue('user_id', $user_id);
+        $statement->execute();
+        $results = $statement->fetchAll();
+
+        return $results;
+    }
+    
+ 
+    
+
 }

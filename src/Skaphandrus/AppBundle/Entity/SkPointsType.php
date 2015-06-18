@@ -43,7 +43,7 @@ class SkPointsType
     
  
     public function __toString() {
-        return "bla bla";
+        return $this->getName();
     }
     
     public function getName() {

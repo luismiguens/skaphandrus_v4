@@ -1,41 +1,75 @@
-{% extends '::base.html.twig' %}
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block heading_title %}
+    {{ "form.points.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.points"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block heading_action %}
+    <a href="{{ path('photo_admin_new') }}" class="btn btn-primary">{{ "form.photo.btn.add"|trans }}</a>
+{% endblock %}
+
+{% block form_title_description %}
+    {{ "form.points.text.description"|trans }}
+{% endblock %}
+
+
 
 {% block body -%}
-    <h1>SkUserPoints list</h1>
+    
+    
+{{ total_points }}
 
-    <table class="records_list">
+    <table class="table table-striped" >
         <thead>
             <tr>
-                <th>Points</th>
-                <th>Id</th>
-                <th>Actions</th>
+                <th>{{ "form.points.label.name"|trans }}</th>
+                <th>{{ "form.points.label.single"|trans }}</th>
+                <th>{{ "form.points.label.number"|trans }}</th>
+                <th>{{ "form.points.label.points"|trans }}</th>
+
             </tr>
         </thead>
         <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('points_admin_show', { 'id': entity.id }) }}">SSS</a></td>
-                <td>{{ entity.id }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('points_admin_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('points_admin_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.pointsType }}</td>
+                    <td>{{ arr[entity.pointsType.id].single }}</td>
+                    <td>{{ arr[entity.pointsType.id].number }}</td>
+                    <td>{{ entity.points }}</td>
+
+                </tr>
+            {% endfor %}
+
+
+        
         </tbody>
     </table>
 
-        <ul>
-        <li>
-            <a href="{{ path('points_admin_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
+
+
+    <a class="btn btn-primary" href="{{ path('photo_admin_new') }}">
+        <i class="fa fa-pencil"></i>  {{ "form.photo.btn.add"|trans }}
+    </a>
+
+
+
+
+{% endblock %}

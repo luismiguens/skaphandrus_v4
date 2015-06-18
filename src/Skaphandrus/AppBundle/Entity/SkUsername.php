@@ -107,6 +107,13 @@ class SkUsername
      */
     private $emailNotificationTime;
 
+    
+        /**
+     * @var integer
+     */
+    private $points;
+
+    
 
     /**
      * Set hash
@@ -573,5 +580,33 @@ class SkUsername
     {
         return $this->emailNotificationTime;
     }
+    
+    
+        /**
+     * Set points
+     *
+     * @param integer points
+     *
+     * @return SkUsername
+     */
+    public function setPoints($points)
+    {
+        $this->points = $points;
+
+        return $this;
+    }
+
+    /**
+     * Get paisId
+     *
+     * @return integer
+     */
+    public function getPoints()
+    {
+        return $this->points;
+    }
+    
+    
+    
 }
 
