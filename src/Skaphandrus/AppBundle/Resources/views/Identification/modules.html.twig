@@ -40,7 +40,7 @@
                         self.modules = [];
 
                         $http({
-                            url: 'http://skaphandrus.com/en/app/modules.json',
+                            url: '/{{ app.request.locale }}/app/modules.json',
                             method: "GET",
                             params: {}
                         })
@@ -87,7 +87,7 @@
                             <h5> {[{module.name}]} </h5>
                         </div>
                         <div class="ibox-content">
-                            <a class="thumbnail" href="http://skaphandrus_v4/app_dev.php/en/ocean-life-identification/{[{module.name | slugify}]}"><img src="http://skaphandrus.com{[{module.image_url}]}"></img></a>
+                            <a class="thumbnail" href="/{{ app.request.locale }}/ocean-life-identification/{[{module.name | slugify}]}"><img src="{[{module.image_url}]}"></img></a>
                             
   
                             

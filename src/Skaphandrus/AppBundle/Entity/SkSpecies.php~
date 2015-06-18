@@ -53,10 +53,16 @@ class SkSpecies {
     private $scientific_names;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $image_refs;
+
+    /**
      * Constructor
      */
     public function __construct() {
         $this->character = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->image_refs = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -278,4 +284,38 @@ class SkSpecies {
         return $this->getGenus();
     }
 
+    /**
+     * Add imageRef
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkSpeciesImageRef $imageRef
+     *
+     * @return SkSpecies
+     */
+    public function addImageRef(\Skaphandrus\AppBundle\Entity\SkSpeciesImageRef $imageRef)
+    {
+        $this->image_refs[] = $imageRef;
+        $imageRef->setSpecies($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove imageRef
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkSpeciesImageRef $imageRef
+     */
+    public function removeImageRef(\Skaphandrus\AppBundle\Entity\SkSpeciesImageRef $imageRef)
+    {
+        $this->image_refs->removeElement($imageRef);
+    }
+
+    /**
+     * Get imageRefs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImageRefs()
+    {
+        return $this->image_refs;
+    }
 }

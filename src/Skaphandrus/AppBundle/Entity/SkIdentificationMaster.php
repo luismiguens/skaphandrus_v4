@@ -22,6 +22,19 @@ class SkIdentificationMaster
      */
     private $id;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $modules;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->modules = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Set isActive
@@ -65,5 +78,38 @@ class SkIdentificationMaster
     public function __toString() {
         return $this->translate()->getName();
     }
-}
 
+    /**
+     * Add module
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkIdentificationModule $module
+     *
+     * @return SkIdentificationMaster
+     */
+    public function addModule(\Skaphandrus\AppBundle\Entity\SkIdentificationModule $module)
+    {
+        $this->modules[] = $module;
+
+        return $this;
+    }
+
+    /**
+     * Remove module
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkIdentificationModule $module
+     */
+    public function removeModule(\Skaphandrus\AppBundle\Entity\SkIdentificationModule $module)
+    {
+        $this->modules->removeElement($module);
+    }
+
+    /**
+     * Get modules
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getModules()
+    {
+        return $this->modules;
+    }
+}

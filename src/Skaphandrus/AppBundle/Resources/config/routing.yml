@@ -192,6 +192,40 @@ contests_contest:
     requirements:
         _locale:  en|pt
 
+# CONTROLLER IDENTIFICATION
+
+identification_criterias:
+    path:     /{_locale}/app/criterias.{_format}
+    defaults: { _controller: SkaphandrusAppBundle:Identification:criteriasListJson, _locale: en }
+    requirements:
+        _format: json
+
+identification_species:
+    path:     /{_locale}/app/species.{_format}
+    defaults: { _controller: SkaphandrusAppBundle:Identification:speciesListJson, _locale: en }
+    requirements:
+        _format: json
+
+identification_modules_list:
+    path:     /{_locale}/app/modules.{_format}
+    defaults: { _controller: SkaphandrusAppBundle:Identification:modulesListJson, _locale: en }
+    requirements:
+        _format: json
+
+identification_species_info:
+    path:     /{_locale}/app/speciesinfo.{_format}
+    defaults: { _controller: SkaphandrusAppBundle:Identification:speciesInfoJson, _locale: en }
+    requirements:
+        _format: json
+
+identification_taxons:
+    path:     /{_locale}/app/taxons.{_format}
+    defaults: { _controller: SkaphandrusAppBundle:Identification:taxonListJson, _locale: en }
+
+# identification_tests:
+#     path:     /{_locale}/app/tests
+#     defaults: { _controller: SkaphandrusAppBundle:Identification:tests, _locale: en }
+
 ##################################################################################
 #### AUTOCOMPLETE AJAX ROUTES
 

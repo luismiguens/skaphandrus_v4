@@ -4,6 +4,7 @@ namespace Skaphandrus\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * SkIdentificationCharacter
@@ -28,48 +29,8 @@ class SkIdentificationCharacter
      */
     private $criteria;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $phylum;
+    private $file;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $species;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $order;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $genus;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $class;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $family;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->phylum = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->species = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->order = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->genus = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->class = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->family = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     public function __toString() {
         return $this->translate()->getName();
@@ -134,207 +95,69 @@ class SkIdentificationCharacter
     }
 
     /**
-     * Add phylum
+     * Sets file.
      *
-     * @param \Skaphandrus\AppBundle\Entity\SkPhylum $phylum
-     *
-     * @return SkIdentificationCharacter
+     * @param UploadedFile $file
      */
-    public function addPhylum(\Skaphandrus\AppBundle\Entity\SkPhylum $phylum)
+    public function setFile(UploadedFile $file = null)
     {
-        $this->phylum[] = $phylum;
-
-        return $this;
+        $this->file = $file;
     }
 
     /**
-     * Remove phylum
+     * Get file.
      *
-     * @param \Skaphandrus\AppBundle\Entity\SkPhylum $phylum
+     * @return UploadedFile
      */
-    public function removePhylum(\Skaphandrus\AppBundle\Entity\SkPhylum $phylum)
+    public function getFile()
     {
-        $this->phylum->removeElement($phylum);
+        return $this->file;
     }
 
-    /**
-     * Get phylum
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPhylum()
-    {
-        return $this->phylum;
+    public function getAbsolutePath() {
+        return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
     }
 
-    /**
-     * Add species
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkSpecies $species
-     *
-     * @return SkIdentificationCharacter
-     */
-    public function addSpecy(\Skaphandrus\AppBundle\Entity\SkSpecies $species)
-    {
-        $this->species[] = $species;
-
-        return $this;
+    public function getWebPath() {
+        return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image;
     }
 
-    /**
-     * Remove species
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkSpecies $species
-     */
-    public function removeSpecy(\Skaphandrus\AppBundle\Entity\SkSpecies $species)
-    {
-        $this->species->removeElement($species);
+    protected function getUploadRootDir() {
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
     }
 
-    /**
-     * Get species
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getSpecies()
-    {
-        return $this->species;
+    protected function getUploadDir() {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'uploads';
     }
 
-    /**
-     * Add order
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkOrder $order
-     *
-     * @return SkIdentificationCharacter
-     */
-    public function addOrder(\Skaphandrus\AppBundle\Entity\SkOrder $order)
-    {
-        $this->order[] = $order;
-
-        return $this;
+    public static function loadValidatorMetadata(ClassMetadata $metadata) {
+        $metadata->addPropertyConstraint('file', new Assert\File(array(
+            'maxSize' => 6000000,
+        )));
     }
 
-    /**
-     * Remove order
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkOrder $order
-     */
-    public function removeOrder(\Skaphandrus\AppBundle\Entity\SkOrder $order)
-    {
-        $this->order->removeElement($order);
-    }
+    public function upload() {
+        // the file property can be empty if the field is not required
+        if (null === $this->getFile()) {
+            return;
+        }
 
-    /**
-     * Get order
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getOrder()
-    {
-        return $this->order;
-    }
+        // use the original file name here but you should
+        // sanitize it at least to avoid any security issues
+        // move takes the target directory and then the
+        // target filename to move to
+        $this->getFile()->move(
+                $this->getUploadRootDir(), sha1(uniqid(mt_rand(), true)).'.'.$this->getFile()->guessExtension()
+        );
 
-    /**
-     * Add genus
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkGenus $genus
-     *
-     * @return SkIdentificationCharacter
-     */
-    public function addGenus(\Skaphandrus\AppBundle\Entity\SkGenus $genus)
-    {
-        $this->genus[] = $genus;
+        // set the path property to the filename where you've saved the file
+        $this->image = $this->getFile()->getClientOriginalName();
 
-        return $this;
-    }
-
-    /**
-     * Remove genus
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkGenus $genus
-     */
-    public function removeGenus(\Skaphandrus\AppBundle\Entity\SkGenus $genus)
-    {
-        $this->genus->removeElement($genus);
-    }
-
-    /**
-     * Get genus
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getGenus()
-    {
-        return $this->genus;
-    }
-
-    /**
-     * Add class
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkClass $class
-     *
-     * @return SkIdentificationCharacter
-     */
-    public function addClass(\Skaphandrus\AppBundle\Entity\SkClass $class)
-    {
-        $this->class[] = $class;
-
-        return $this;
-    }
-
-    /**
-     * Remove class
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkClass $class
-     */
-    public function removeClass(\Skaphandrus\AppBundle\Entity\SkClass $class)
-    {
-        $this->class->removeElement($class);
-    }
-
-    /**
-     * Get class
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getClass()
-    {
-        return $this->class;
-    }
-
-    /**
-     * Add family
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkFamily $family
-     *
-     * @return SkIdentificationCharacter
-     */
-    public function addFamily(\Skaphandrus\AppBundle\Entity\SkFamily $family)
-    {
-        $this->family[] = $family;
-
-        return $this;
-    }
-
-    /**
-     * Remove family
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkFamily $family
-     */
-    public function removeFamily(\Skaphandrus\AppBundle\Entity\SkFamily $family)
-    {
-        $this->family->removeElement($family);
-    }
-
-    /**
-     * Get family
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getFamily()
-    {
-        return $this->family;
+        // clean up the file property as you won't need it anymore
+        $this->file = null;
     }
 }
-
