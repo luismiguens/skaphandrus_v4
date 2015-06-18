@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SkIdentificationSpeciesType extends AbstractType
+class SkIdentificationSpeciesImageRefType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,12 +15,11 @@ class SkIdentificationSpeciesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('imageRefs', 'collection', array(
-                'type' => new SkIdentificationSpeciesImageRefType(),
-                'allow_add' => TRUE,
-                'prototype' => TRUE,
-                'by_reference' => FALSE,
-                'label' => 'form.identification_species.label.refferences'
+            ->add('imageUrl')
+            ->add('imageSrc')
+            ->add('isPrimary', 'checkbox', array(
+                'label'    => 'form.identification_species.label.primary',
+                'required' => FALSE
             ))
         ;
     }
@@ -31,7 +30,7 @@ class SkIdentificationSpeciesType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Skaphandrus\AppBundle\Entity\SkSpecies'
+            'data_class' => 'Skaphandrus\AppBundle\Entity\SkSpeciesImageRef'
         ));
     }
 
@@ -40,6 +39,6 @@ class SkIdentificationSpeciesType extends AbstractType
      */
     public function getName()
     {
-        return 'skaphandrus_appbundle_skspecies';
+        return 'skaphandrus_appbundle_skspeciesimageref';
     }
 }

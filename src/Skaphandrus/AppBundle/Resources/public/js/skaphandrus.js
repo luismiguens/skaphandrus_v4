@@ -51,4 +51,14 @@ $(document).ready(function () {
     if ($('#skaphandrus_appbundle_skidentificationgroup_phylum').length) {
         $('#skaphandrus_appbundle_skidentificationgroup_phylum').autocompleter({url_list: '/app_dev.php/en/ajax_search_phylum/', url_get: '/app_dev.php/en/ajax_get_phylum/'});
     }
+
+    // Filtro Identification Species Index
+    $('#form_module_filter_form_id').change(function() {
+        // var id = $(this).val(); // get selected value
+        // if (id) { // require a URL
+        //     window.location = '/identification_species_admin/' + id; // redirect
+        // }
+        // return false;
+        $(this).parent('form').submit();
+    });
 });

@@ -3,19 +3,19 @@
 {% block javascripts %}
     {{ parent() }}
     <!-- Data Tables -->
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/jquery.dataTables.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.bootstrap.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.responsive.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.tableTools.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/js/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/js/dataTables.bootstrap.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/js/dataTables.responsive.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/js/dataTables.tableTools.min.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/skaphandrus.js') }}"></script>
 {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
     <!-- Data Tables -->
-    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/dataTables.responsive.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/dataTables.tableTools.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/css/dataTables.bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/css/dataTables.responsive.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/css/dataTables.tableTools.min.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block heading_title %}
@@ -29,12 +29,17 @@
     </ol>
 {% endblock %}
 
-{% block heading_action %}
-    <a href="{{ path('identification_species_admin_new') }}" class="btn btn-primary">{{ "form.identification_species.btn.add"|trans }}</a>
-{% endblock %}
-
 {% block form_title_description %}
     {{ "form.identification_species.text.description"|trans }}
+{% endblock %}
+
+{% block heading_action %}
+    {# <select name="identification_species_module_filter" id="identification_species_module_filter">
+        {% for module in modules %}
+            <option value="{{ module.id }}" {% if module.id == module_id %} selected="selected"{% endif %}>{{ module.translate.name }}</option>
+        {% endfor %}
+    </select> #}
+    {{ form(modules_form) }}
 {% endblock %}
 
 {% block body -%}
@@ -64,9 +69,5 @@
             {% endfor %}
         </tbody>
     </table>
-
-    <a class="btn btn-primary" href="{{ path('identification_species_admin_new') }}">
-        <i class="fa fa-pencil"></i>  {{ "form.identification_species.btn.add"|trans }}
-    </a>
 
     {% endblock %}

@@ -1,16 +1,88 @@
-{% extends '::base.html.twig' %}
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
 
-{% block body -%}
-    <h1>SkSpecies edit</h1>
+{% form_theme edit_form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
 
-    {{ form(edit_form) }}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
+    <script src="{{ asset('bundles/pugxautocompleter/js/autocompleter-jqueryui.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/skaphandrus.js') }}"></script>
+    <script>
+        var collectionHolderId = '#skaphandrus_appbundle_skspecies_imageRefs';
+        var $collectionHolder = $(collectionHolderId);
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('identification_species_admin') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+        // setup an "add a tag" link
+        var $addCharacterLink = $('<a href="#" class="add_imageref_link">Add an image ref</a>');
+        //$(collectionHolderId).after($addCharacterLink);
+        $addCharacterLink.insertAfter(collectionHolderId);
+
+        jQuery(document).ready(function() {
+            // Get the ul that holds the collection of tags
+            $collectionHolder = $(collectionHolderId);
+
+            // add the "add a tag" anchor and li to the tags ul
+            $collectionHolder.parent().append($addCharacterLink);
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            // $collectionHolder.data('index', $collectionHolder.find('.form-group').length);
+            $collectionHolder.data('index', $(collectionHolderId + ' > .form-group').length);
+
+            $addCharacterLink.on('click', function(e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+
+                // add a new tag form (see next code block)
+                addCharacterForm($collectionHolder);
+            });
+        });
+
+        function addCharacterForm($collectionHolder) {
+            // Get the data-prototype explained earlier
+            var prototype = $collectionHolder.data('prototype');
+
+            // get the new index
+            var index = $collectionHolder.data('index');
+
+            // Replace '__name__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            var newForm = prototype.replace(/__name__label__/g, index);
+            newForm = newForm.replace(/__name__/g, index);
+
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+
+            // Display the form in the page in an li, before the "Add a tag" link li
+            $collectionHolder.append(newForm);
+            //$('#skaphandrus_appbundle_skidentificationcriteria_characters_'+ index +'_criteria').val({{ entity.id }});
+        }
+    </script>
 {% endblock %}
+
+
+{% block heading_title %}
+    {{ "form.identification_species.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="{{ path('identification_species_admin') }}">{{ "breadcrumb.identification_species"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.edit_identification_species"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block form_title_description %}
+    {{ "form.identification_species.text.description"|trans }}
+{% endblock %}
+
+
+{% block body %}
+    {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_widget(edit_form) }}
+    {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'identification_species_admin', 'new_form':false} %}
+    {{ form_end(edit_form) }}
+
+{% endblock %}
+
