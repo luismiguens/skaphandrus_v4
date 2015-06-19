@@ -270,7 +270,7 @@ class SkSpecies {
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getName() {
-        return $this->scientific_names[0];
+        return $this->scientific_names[0]->getName();
     }
 
 
@@ -317,5 +317,11 @@ class SkSpecies {
     public function getImageRefs()
     {
         return $this->image_refs;
+    }
+
+    public function getImageRef() {
+        foreach ($this->image_refs as $ir) {
+            if ($ir->getIsPrimary()) return $ir;
+        }
     }
 }

@@ -164,4 +164,74 @@ class SkSpeciesRepository extends EntityRepository {
         }
     }
     
+    /**
+     * Metodo que com base nos characters selecionados na ferramenta de identificação, devolve as espécies que fazem match.
+     */
+    public function getSpeciesIDSFromCharacterIDS($characters, $module_id = null) {
+        
+        /*
+         * Estrutura do array characters ex: characters[criteria_id][character_id]
+         *
+         * Para o critério 15 foi selecionado o character 57 e 58 e pa5ra o critério 16 foi selecionado o character 60
+         * Array ( [15] => Array ( [0] => 57 [1] => 58 ) [16] => Array ( [0] => 60 ) )
+         */
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $criterias = array_keys($characters);
+        
+        $sql = "select distinct(T0.species_id), T0.genus_id, T0.family_id from";
+
+        //para cada criteria selecionado tenho de fazer um join
+        foreach ($criterias as $key => $criteria) :
+
+            if ($key > 0):
+                $sql .= " join";
+            endif;
+
+            $sql .= "(SELECT species_id, genus_id, family_id FROM sk_identification_criteria_matrix". (($module_id==null) ? " " : "_". $module_id) ." 
+                WHERE character_id in ( " . implode(',', $characters[$criteria]) . ")) T" . $key;
+
+            if ($key > 0):
+                $sql .= " on T" . ($key - 1) . ".species_id = T" . $key . ".species_id";
+            endif;
+
+        endforeach;
+
+        
+        $sql .= " order by T0.family_id, T0.genus_id";
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+            $result[] = $value['species_id'];
+        }
+
+        return $result;
+    }
+
+    /**
+     * Metodo que com base no modulo_id, devolve as especies que pertencem a esse modulo.
+     */
+    public function getSpeciesIDSFromModule($module_obj) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT distinct(species_id) FROM sk_identification_criteria_matrix_". $module_obj->getId();
+        $sql .= " order by family_id, genus_id";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+            $result[] = $value['species_id'];
+        }
+
+        return $result;
+    }
 }

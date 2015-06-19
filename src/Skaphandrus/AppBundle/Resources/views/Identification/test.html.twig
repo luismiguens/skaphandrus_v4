@@ -1,0 +1,98 @@
+{% extends 'SkaphandrusAppBundle::content_layout.html.twig' %}
+
+{% block body %}
+    bla
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+    $(document).ready(function(){
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        //ir buscar os grupos taxonomicos do modulo
+        $.ajax({
+            url: '/{{ app.request.locale }}/app/taxons.json',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data, 'taxon');
+            },
+            data: { "module_id" : 8  }
+        });
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        //ir buscar os criterios das especies envidas
+        //BALEIAS - MODULO 7
+        //// chamaca antiga não incluia o mudulo
+        //http://skaphandrus.com/pt/identification/jsonCriteriasList?species=25366
+        $.ajax({
+            url: '/{{ app.request.locale }}/app/criterias.json', 
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data, 'criterias1');
+            },
+            data: { "species" : [ 863, 866 ], "module_id" : 2 }
+         
+        });    
+        //ir buscar os criterios do modulo 7
+        $.ajax({
+            url: '/{{ app.request.locale }}/app/criterias.json', 
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data, 'criterias2');
+            },
+            data: { "module_id" : 2 }
+           
+        });
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        //GOLFINHOS
+        //ir buscar as especies que têm os caracteres seleccionados       
+        $.ajax({
+            url: '/{{ app.request.locale }}/app/species.json',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data, 'species1');
+            },
+            data: { "characters" : [ 352 ], "module_id" : 2 }
+        });
+        //ir buscar as especies que têm os caracteres seleccionados       
+        $.ajax({
+            url: '/{{ app.request.locale }}/app/species.json',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data, 'species2');
+            },
+            data: { "module_id" : 2  }
+        });
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////        
+        // para ir buscar os modulos, neste caso ainda apenas mammalia       
+        $.ajax({
+            url: '/{{ app.request.locale }}/app/modules.json',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data, 'modules');
+            },
+            data: { }
+        });
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////       
+        // para ir buscar info da espécie       
+        $.ajax({
+            url: '/{{ app.request.locale }}/app/speciesinfo.json',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data, 'species_info1');
+            },
+            data: {"species_id": 866, "module_id": 2 }
+        });
+    });
+</script>
+{% endblock %}

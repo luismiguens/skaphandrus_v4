@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Skaphandrus\AppBundle\Entity\SkIdentificationCharacter" table="sk_identification_character">
+  <entity name="Skaphandrus\AppBundle\Entity\SkIdentificationCharacter" repository-class="Skaphandrus\AppBundle\Entity\Repository\SkIdentificationCharacterRepository" table="sk_identification_character">
     <indexes>
       <index name="sk_identification_character_FI_1" columns="criteria_id"/>
     </indexes>

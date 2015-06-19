@@ -21,7 +21,7 @@ class SkIdentificationCriteria
     /**
      * @var boolean
      */
-    private $isCumulative = '1';
+    private $isCumulative = TRUE;
 
     /**
      * @var integer
@@ -39,11 +39,21 @@ class SkIdentificationCriteria
     private $groups;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $characters;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->characters = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function __toString() {
+        return $this->translate()->getName();
     }
 
     /**
@@ -161,11 +171,6 @@ class SkIdentificationCriteria
     {
         return $this->groups;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $characters;
-
 
     /**
      * Add character
@@ -177,6 +182,7 @@ class SkIdentificationCriteria
     public function addCharacter(\Skaphandrus\AppBundle\Entity\skIdentificationCharacter $character)
     {
         $this->characters[] = $character;
+        $character->setCriteria($this);
 
         return $this;
     }
