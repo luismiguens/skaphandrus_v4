@@ -362,6 +362,27 @@ CREATE TABLE `sk_species_vernacular`
 
 
 
+##############################################################################################
+###################################### BUSINESS TABLES #######################################
+DROP TABLE IF EXISTS `sk_business`;
+
+CREATE TABLE  `sk_business` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `founded_at` date DEFAULT NULL,
+  `currency` varchar(45) DEFAULT NULL,
+  `about` text CHARACTER SET utf8,
+  `description` text CHARACTER SET utf8,
+  `mission` text CHARACTER SET utf8,
+  `awards` text CHARACTER SET utf8,
+  `picture` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
 
 ##############################################################################################
 ###################################### USERS TABLES ##########################################
@@ -381,22 +402,30 @@ CREATE TABLE `sk_email_notification_time`
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ---------------------------------------------------------------------
--- sk_email_notification_time_i18n
+-- sk_email_notification_time_translation
 -- ---------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `sk_email_notification_time_i18n`;
+DROP TABLE IF EXISTS `sk_email_notification_time_translation`;
 
-CREATE TABLE `sk_email_notification_time_i18n`
+CREATE TABLE `sk_email_notification_time_translation`
 (
-	`name` VARCHAR(128) NOT NULL,
-	`id` INTEGER NOT NULL,
-	`culture` VARCHAR(7) NOT NULL,
-	PRIMARY KEY (`id`,`culture`),
-	CONSTRAINT `sk_email_notification_time_i18n_FK_1`
-		FOREIGN KEY (`id`)
-		REFERENCES `sk_email_notification_time` (`id`)
+	`id` INTEGER NOT NULL AUTO_INCREMENT,
+        `translatable_id` INTEGER NOT NULL,
+        `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+        `locale` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+        PRIMARY KEY (`id`),
+        UNIQUE KEY `sk_email_notification_time_translation_FI_1` (`translatable_id`,`locale`),
+        KEY `sk_email_notification_time_translation_FI_2` (`translatable_id`),
+        CONSTRAINT `sk_email_notification_time_translation_FK_3` 
+                FOREIGN KEY (`translatable_id`) 
+                REFERENCES `sk_email_notification_time` (`id`) 
+              	ON UPDATE CASCADE
 		ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+
 
 
 -- ---------------------------------------------------------------------
@@ -421,40 +450,218 @@ CREATE TABLE  `sf_guard_user` (
 
 
 -- ---------------------------------------------------------------------
--- sk_username
+-- sk_settings
 -- ---------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `sk_username`;
+DROP TABLE IF EXISTS `sk_settings`;
 
-CREATE TABLE  `sk_username` (
+CREATE TABLE  `sk_settings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fos_user_id` int(11) NOT NULL,
-  `hash` varchar(255) DEFAULT NULL,
-  `new_password_hash` varchar(255) DEFAULT NULL,
-  `nome` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `pagina_web` varchar(255) DEFAULT NULL,
-  `sexo` varchar(255) DEFAULT NULL,
-  `data_nascimento` date DEFAULT NULL,
-  `localidade` varchar(255) DEFAULT NULL,
-  `pais_id` int(11) DEFAULT NULL,
-  `idioma_preferido` varchar(255) DEFAULT NULL,
+  `language` varchar(255) DEFAULT NULL,
   `email_notification_time_id` int(4) DEFAULT '2',
   `email_message_at_once` tinyint(4) DEFAULT '1',
   `email_comment_at_once` tinyint(4) DEFAULT '1',
-  `fotografia` varchar(255) DEFAULT NULL,
-  `email_update` tinyint(4) DEFAULT '1',
+  `email_update` tinyint(4) DEFAULT '1',  
+  `photo` varchar(255) DEFAULT NULL,
   `facebook_uid` varchar(20) DEFAULT NULL,
-  `email_hash` varchar(255) DEFAULT NULL,
   `observations` text,
   `points` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `sk_username_U_1` (`email`),
-  KEY `sk_username_FI_1` (`fos_user_id`),
-  KEY `fk_email_notification` (`email_notification_time_id`),
-  CONSTRAINT `fk_email_notification` FOREIGN KEY (`email_notification_time_id`) REFERENCES `sk_email_notification_time` (`id`),
-  CONSTRAINT `sk_username_FK_1` FOREIGN KEY (`fos_user_id`) REFERENCES `fos_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `sk_settings_FI_1` (`fos_user_id`),
+  KEY `sk_settings_FI_2` (`email_notification_time_id`),
+  CONSTRAINT `sk_settings_FK_3` FOREIGN KEY (`email_notification_time_id`) REFERENCES `sk_email_notification_time` (`id`),
+  CONSTRAINT `sk_settings_FK_4` FOREIGN KEY (`fos_user_id`) REFERENCES `fos_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+-- ---------------------------------------------------------------------
+-- sk_address
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `sk_address`;
+
+CREATE TABLE  `sk_address` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `location_id` int(11) DEFAULT NULL,
+  `postcode` varchar(255) DEFAULT NULL,
+  `province` varchar(255) DEFAULT NULL,
+  `street` varchar(255) DEFAULT NULL,
+  `fos_user_id` int(11) DEFAULT NULL,
+  `shop_id` int(11) DEFAULT NULL,
+  `person_id` int(11) DEFAULT NULL,
+  `business_id` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `coordinate` varchar(55) DEFAULT NULL,
+  `zoom` varchar(55) DEFAULT NULL,
+  `accomodation_id` int(11) DEFAULT NULL,
+  `operator_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sk_address_FI_1` (`fos_user_id`) USING BTREE,
+  KEY `sk_address_FI_2` (`business_id`) USING BTREE,
+  KEY `sk_address_FI_3` (`location_id`) USING BTREE,
+  CONSTRAINT `sk_address_FK_4` FOREIGN KEY (`business_id`) REFERENCES `sk_business` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sk_address_FK_5` FOREIGN KEY (`location_id`) REFERENCES `sk_location` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
+  CONSTRAINT `sk_address_FK_6` FOREIGN KEY (`fos_user_id`) REFERENCES `fos_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+-- ---------------------------------------------------------------------
+-- sk_contact
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `sk_contact`;
+
+CREATE TABLE  `sk_contact` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) DEFAULT NULL,
+  `fax` varchar(255) DEFAULT NULL,
+  `homepage` varchar(255) DEFAULT NULL,
+  `mobilephone` varchar(50) DEFAULT NULL,
+  `phone` varchar(50) DEFAULT NULL,
+  `fos_user_id` int(11) DEFAULT NULL,
+  `shop_id` int(11) DEFAULT NULL,
+  `person_id` int(11) DEFAULT NULL,
+  `business_id` int(11) DEFAULT NULL,
+  `operator_id` int(11) DEFAULT NULL,
+  `accomodation_id` int(11) DEFAULT NULL,
+  `sponsor_id` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sk_contact_FI_1` (`fos_user_id`),
+  KEY `sk_contact_FI_2` (`business_id`),
+  KEY `sk_contact_FI_3` (`person_id`),
+  KEY `sk_contact_FI_4` (`sponsor_id`),
+  CONSTRAINT `sk_contact_FK_1` FOREIGN KEY (`sponsor_id`) REFERENCES `sk_photo_contest_sponsor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sk_contact_FK_2` FOREIGN KEY (`fos_user_id`) REFERENCES `fos_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sk_contact_FK_3` FOREIGN KEY (`business_id`) REFERENCES `sk_business` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sk_contact_FK_4` FOREIGN KEY (`person_id`) REFERENCES `sk_person` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+-- ---------------------------------------------------------------------
+-- sk_personal
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `sk_personal`;
+
+CREATE TABLE  `sk_personal` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `honorific` varchar(255) DEFAULT NULL,
+  `firstname` varchar(255) DEFAULT NULL,
+  `middlename` varchar(255) DEFAULT NULL,
+  `lastname` varchar(255) DEFAULT NULL,
+  `birthname` varchar(255) DEFAULT NULL,
+  `sex_type_id` int(11) DEFAULT NULL,
+  `height` float DEFAULT NULL,
+  `weight` float DEFAULT NULL,
+  `smoking` tinyint(4) DEFAULT '0',
+  `birthdate` date DEFAULT NULL,
+  `passport` varchar(255) DEFAULT NULL,
+  `bloodgroup` varchar(255) DEFAULT NULL,
+  `fos_user_id` int(11) DEFAULT NULL,
+  `person_id` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sk_personal_FI_1` (`fos_user_id`) USING BTREE,
+  KEY `sk_personal_FI_2` (`person_id`) USING BTREE,
+  KEY `sk_personal_FI_3` (`sex_type_id`),
+  CONSTRAINT `sk_personal_FK_1` FOREIGN KEY (`fos_user_id`) REFERENCES `fos_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sk_personal_FK_2` FOREIGN KEY (`person_id`) REFERENCES `sk_person` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sk_personal_FK_3` FOREIGN KEY (`sex_type_id`) REFERENCES `sk_sex_type` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+
+
+
+###################################################################################################
+############################################ CONTACTS TABLES ######################################
+
+-- ---------------------------------------------------------------------
+-- sk_person_type
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `sk_person_type`;
+
+CREATE TABLE  `sk_person_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+-- ---------------------------------------------------------------------
+-- sk_person_type_translation
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `sk_person_type_translation`;
+
+CREATE TABLE `sk_person_type_translation`
+(
+	`id` INTEGER NOT NULL AUTO_INCREMENT,
+        `translatable_id` INTEGER NOT NULL,
+        `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+        `locale` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+        PRIMARY KEY (`id`),
+        UNIQUE KEY `sk_person_type_translation_FI_1` (`translatable_id`,`locale`),
+        KEY `sk_person_type_translation_FI_2` (`translatable_id`),
+        CONSTRAINT `sk_person_type_translation_FK_3` 
+                FOREIGN KEY (`translatable_id`) 
+                REFERENCES `sk_person_type` (`id`) 
+              	ON UPDATE CASCADE
+		ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+-- ---------------------------------------------------------------------
+-- sk_person
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `sk_person`;
+
+CREATE TABLE  `sk_person` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fos_user_id` int(11) DEFAULT NULL,
+  `skaphandrus_id` int(11) DEFAULT NULL,
+  `business_id` int(11) DEFAULT NULL,
+  `observations` text,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sk_person_FI_1` (`fos_user_id`),
+  KEY `sk_person_FI_3` (`business_id`),
+  CONSTRAINT `sk_person_FK_2` FOREIGN KEY (`fos_user_id`) REFERENCES `fos_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sk_person_FK_3` FOREIGN KEY (`business_id`) REFERENCES `sk_business` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+-- ---------------------------------------------------------------------
+-- sk_person_person_type
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `sk_person_person_type`;
+
+CREATE TABLE  `sk_person_person_type` (
+  `person_id` int(11) NOT NULL,
+  `persontype_id` int(11) NOT NULL,
+  PRIMARY KEY (`person_id`,`persontype_id`),
+  KEY `sk_person_person_type_FI_2` (`persontype_id`),
+  CONSTRAINT `sk_person_person_type_FK_1` FOREIGN KEY (`person_id`) REFERENCES `sk_person` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sk_person_person_type_FK_2` FOREIGN KEY (`persontype_id`) REFERENCES `sk_person_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+
+
+
+
+
 
 
 ####################################################################################################
@@ -2024,7 +2231,7 @@ CREATE TABLE `sk_identification_phylum_character`
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ---------------------------------------------------------------------
--- sk_especie_image_ref
+-- sk_species_image_ref
 -- ---------------------------------------------------------------------
 
 DROP TABLE IF EXISTS `sk_species_image_ref`;
@@ -2045,6 +2252,30 @@ CREATE TABLE `sk_species_image_ref`
 		ON UPDATE CASCADE
 		ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+-- ---------------------------------------------------------------------
+-- sk_species_illustration
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `sk_species_illustration`;
+
+CREATE TABLE `sk_species_illustration`
+(
+	`id` INTEGER NOT NULL AUTO_INCREMENT,
+	`species_id` INTEGER NOT NULL,
+	`image` TEXT,
+	PRIMARY KEY (`id`),
+	INDEX `sk_species_illustration_FI_1` (`species_id`),
+	CONSTRAINT `sk_species_illustration_FK_1`
+		FOREIGN KEY (`species_id`)
+		REFERENCES `sk_species` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
 
 
 -- ---------------------------------------------------------------------
@@ -2112,6 +2343,60 @@ CREATE TABLE `sk_points`
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+-- ---------------------------------------------------------------------
+-- fos_user
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `fos_user`;
+
+CREATE TABLE  `fos_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `username_canonical` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email_canonical` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `enabled` tinyint(1) NOT NULL,
+  `salt` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `last_login` datetime DEFAULT NULL,
+  `locked` tinyint(1) NOT NULL,
+  `expired` tinyint(1) NOT NULL,
+  `expires_at` datetime DEFAULT NULL,
+  `confirmation_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `password_requested_at` datetime DEFAULT NULL,
+  `roles` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
+  `credentials_expired` tinyint(1) NOT NULL,
+  `credentials_expire_at` datetime DEFAULT NULL,
+  `algorithm` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_957A647992FC23A8` (`username_canonical`),
+  UNIQUE KEY `UNIQ_957A6479A0D96FBF` (`email_canonical`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+###############################################################################################
+######################################  USERS TABLES ##########################################
+
+INSERT INTO skaphandrus4.sk_email_notification_time SELECT * FROM skaphandrus3.sk_email_notification_time;
+INSERT INTO skaphandrus4.sk_email_notification_time_translation (translatable_id, name, locale) SELECT id, name, culture FROM skaphandrus3.sk_email_notification_time_i18n;
+INSERT INTO skaphandrus4.sf_guard_user SELECT * FROM skaphandrus3.sf_guard_user;
+
+/* script importa da tabela sf_guard_user para a tabela fos_user */
+--DELETE FROM skaphandrus4.fos_user;
+INSERT INTO skaphandrus4.fos_user(id, username, username_canonical, email, email_canonical, password, salt) SELECT id, username, username, username, username, password, salt FROM skaphandrus4.sf_guard_user;
+UPDATE skaphandrus4.fos_user SET EMAIL = (SELECT EMAIL FROM skaphandrus3.sk_username WHERE skaphandrus3.sk_username.ID = skaphandrus4.fos_user.ID);
+--UPDATE skaphandrus4.fos_user SET EMAIL_CANONICAL = (SELECT EMAIL FROM skaphandrus3.sk_username WHERE skaphandrus3.sk_username.ID = skaphandrus4.fos_user.ID);
+
+INSERT INTO skaphandrus4.sk_settings(fos_user_id, language, email_notification_time_id, email_message_at_once, email_comment_at_once, email_update, photo, facebook_uid, observations ) SELECT user_id, idioma_preferido, email_notification_time_id, email_message_at_once, email_comment_at_once, email_update, fotografia, facebook_uid, observations FROM skaphandrus3.sk_username;
+INSERT INTO skaphandrus4.sk_address( id, location_id, postcode, province, street, fos_user_id, shop_id, person_id, business_id, created_at, updated_at, coordinate, zoom, accomodation_id, operator_id) SELECT id, location_id, postcode, province, street, username_id, shop_id, person_id, business_id, created_at, updated_at, coordinate, zoom, accomodation_id, operator_id FROM skaphandrus3.sk_address;
+INSERT INTO skaphandrus4.sk_contact(id, email, fax,homepage, mobilephone, phone, fos_user_id, shop_id, person_id, business_id, operator_id, accomodation_id, sponsor_id, created_at, updated_at ) SELECT id, email, fax,homepage, mobilephone, phone, username_id, shop_id, person_id, business_id, operator_id, accomodation_id, sponsor_id, created_at, updated_at  FROM skaphandrus3.sk_contact;
+INSERT INTO skaphandrus4.sk_personal(id,  honorific,  firstname,  middlename,  lastname,  birthname,  sex_type_id,  height,  weight,  smoking,  birthdate,  passport,  bloodgroup, fos_user_id,  person_id,  created_at,  updated_at ) SELECT id,  honorific,  firstname,  middlename,  lastname,  birthname,  sex_type_id,  height,  weight,  smoking,  birthdate,  passport,  bloodgroup, username_id,  person_id,  created_at,  updated_at  FROM skaphandrus3.sk_personal;
+
+
+###############################################################################################
+######################################  BUSINESS TABLES #######################################
+INSERT INTO skaphandrus4.sk_business SELECT * FROM skaphandrus3.sk_business;
 
 
 
@@ -2161,13 +2446,15 @@ INSERT INTO skaphandrus4.sk_spot_translation (translatable_id, name, description
 --INSERT INTO skaphandrus4.sk_country_currency(country_id, currency) select pais_id, sk_moeda.nome from skaphandrus3.sk_pais_moeda, skaphandrus3.sk_moeda where sk_pais_moeda.moeda_id = sk_moeda.id;
 --INSERT INTO skaphandrus4.sk_location_month (location_id, month_id) SELECT local_id, mes_id FROM skaphandrus3.sk_local_mes;
 
-###############################################################################################
-######################################  USERS TABLES ##########################################
 
-INSERT INTO skaphandrus4.sk_email_notification_time SELECT * FROM skaphandrus3.sk_email_notification_time;
-INSERT INTO skaphandrus4.sk_email_notification_time_i18n SELECT * FROM skaphandrus3.sk_email_notification_time_i18n;
-INSERT INTO skaphandrus4.sf_guard_user SELECT * FROM skaphandrus3.sf_guard_user;
---INSERT INTO skaphandrus4.fos_user SELECT * FROM skaphandrus3.sk_username;
+
+
+###############################################################################################
+######################################  PERSON TABLES ##########################################  
+INSERT INTO skaphandrus4.sk_person_type SELECT * FROM skaphandrus3.sk_person_type;
+INSERT INTO skaphandrus4.sk_person_type_translation (translatable_id, name, locale) SELECT id, name, culture FROM skaphandrus3.sk_person_type_i18n;
+INSERT INTO skaphandrus4.sk_person (id,  fos_user_id,  skaphandrus_id, business_id, observations, created_at, updated_at) SELECT id, username_id, sk_username_id, business_id,  observations,  created_at,  updated_at FROM skaphandrus3.sk_person;
+INSERT INTO skaphandrus4.sk_person_person_type SELECT * FROM skaphandrus3.sk_person_person_type;
 
 
 
@@ -2189,27 +2476,18 @@ INSERT INTO skaphandrus4.sk_photo_keyword (photo_id, keyword_id) SELECT fotograf
 
 INSERT INTO skaphandrus4.sk_photo_contest (id, name, logo, image, begin_at, end_at, is_judge, created_at) SELECT id, name, logo, image, begin_at, end_at, is_judge, created_at FROM skaphandrus3.sk_photo_contest;
 INSERT INTO skaphandrus4.sk_photo_contest_translation (translatable_id, description,rules, locale) SELECT id, description, rules, culture FROM skaphandrus3.sk_photo_contest_i18n;
-
 INSERT INTO skaphandrus4.sk_photo_contest_judge (id, contest_id, fos_user_id) SELECT id, contest_id, username_id FROM skaphandrus3.sk_photo_contest_judge;
 INSERT INTO skaphandrus4.sk_photo_contest_judge_translation (translatable_id, description, locale) SELECT id, description, culture FROM skaphandrus3.sk_photo_contest_judge_i18n;
-
 INSERT INTO skaphandrus4.sk_photo_contest_award (id, contest_id, image, category_id, winner_fos_user_id, winner_photo_id) SELECT id, contest_id, image, category_id, winner_username_id, winner_fotografia_id FROM skaphandrus3.sk_photo_contest_award;
 INSERT INTO skaphandrus4.sk_photo_contest_award_translation (translatable_id, name, description, locale) SELECT id, name, description, culture FROM skaphandrus3.sk_photo_contest_award_i18n;
-
 INSERT INTO skaphandrus4.sk_photo_contest_judge_award (judge_id, award_id) SELECT judge_id, award_id FROM skaphandrus3.sk_photo_contest_judge_award;
-
 INSERT INTO skaphandrus4.sk_photo_contest_category (id, contest_id, image ) SELECT id, contest_id, image FROM skaphandrus3.sk_photo_contest_category;
 INSERT INTO skaphandrus4.sk_photo_contest_category_translation (translatable_id, name, description, locale) SELECT id, name, description, culture FROM skaphandrus3.sk_photo_contest_category_i18n;
-
 INSERT INTO skaphandrus4.sk_photo_contest_sponsor (id, contest_id, image, name) SELECT id, contest_id, image, name FROM skaphandrus3.sk_photo_contest_sponsor;
 INSERT INTO skaphandrus4.sk_photo_contest_sponsor_translation (translatable_id, description, locale) SELECT id, description, culture FROM skaphandrus3.sk_photo_contest_sponsor_i18n;
-
 INSERT INTO skaphandrus4.sk_photo_contest_award_sponsor (award_id, sponsor_id) SELECT award_id, sponsor_id FROM skaphandrus3.sk_photo_contest_award_sponsor;
-
 INSERT INTO skaphandrus4.sk_photo_contest_category_photo (category_id, photo_id) SELECT category_id, fotografia_id FROM skaphandrus3.sk_photo_contest_category_fotografia;
-
 INSERT INTO skaphandrus4.sk_photo_contest_vote (fos_user_id, category_id, photo_id, created_at) SELECT username_id, category_id, fotografia_id, created_at FROM skaphandrus3.sk_photo_contest_vote;
-
 INSERT INTO skaphandrus4.sk_photo_contest_category_judge_votation (id, category_id, judge_id, created_at, updated_at) SELECT id, category_id, judge_id, created_at, updated_at FROM skaphandrus3.sk_photo_contest_category_judge_votation;
 INSERT INTO skaphandrus4.sk_photo_contest_category_judge_photo_vote (id, votation_id, photo_id, points) SELECT id, votation_id, fotografia_id, points FROM skaphandrus3.sk_photo_contest_category_judge_photo_vote;
 
@@ -2238,7 +2516,7 @@ INSERT INTO skaphandrus4.sk_identification_class_character (class_id, character_
 INSERT INTO skaphandrus4.sk_identification_phylum_character (phylum_id, character_id) SELECT phylum_id, character_id FROM skaphandrus3.sk_identification_phylum_character;
 
 INSERT INTO skaphandrus4.sk_species_image_ref (id, species_id, is_active, is_primary, image_url, image_src) SELECT id, especie_id, is_active, is_primary, image_url, image_src FROM skaphandrus3.sk_especie_image_ref;
-
+INSERT INTO skaphandrus4.sk_species_illustration (id, species_id, image) SELECT id, especie_id, imagem FROM skaphandrus3.sk_especie_ilustracao;
 
 
 

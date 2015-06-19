@@ -140,6 +140,7 @@ class SkPointsController extends Controller {
 
             $SkPointsType->translate('pt')->setName($arr[$key + 1]['type']);
             $SkPointsType->translate('en')->setName($arr[$key + 1]['type']);
+            
             $em->persist($SkPointsType);
 
 

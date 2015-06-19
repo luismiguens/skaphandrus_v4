@@ -1,3 +1,7 @@
+skaphandrus_app_person_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skperson.yml"
+    prefix:   /person_admin
+
 
 
 

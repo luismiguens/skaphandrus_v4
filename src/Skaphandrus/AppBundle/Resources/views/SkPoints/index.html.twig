@@ -33,10 +33,8 @@
 
 
 {% block body -%}
-    
-    
-{{ total_points }}
 
+    <p> <b>{{ total_points }}</b> {{ "form.points.text.points"|trans }}</p>
     <table class="table table-striped" >
         <thead>
             <tr>
@@ -44,32 +42,17 @@
                 <th>{{ "form.points.label.single"|trans }}</th>
                 <th>{{ "form.points.label.number"|trans }}</th>
                 <th>{{ "form.points.label.points"|trans }}</th>
-
             </tr>
         </thead>
         <tbody>
             {% for entity in entities %}
                 <tr>
-                    <td>{{ entity.pointsType }}</td>
+                    <td>{{ entity.pointsType|trans }}</td>
                     <td>{{ arr[entity.pointsType.id].single }}</td>
                     <td>{{ arr[entity.pointsType.id].number }}</td>
                     <td>{{ entity.points }}</td>
-
                 </tr>
             {% endfor %}
-
-
-        
         </tbody>
     </table>
-
-
-
-    <a class="btn btn-primary" href="{{ path('photo_admin_new') }}">
-        <i class="fa fa-pencil"></i>  {{ "form.photo.btn.add"|trans }}
-    </a>
-
-
-
-
 {% endblock %}
