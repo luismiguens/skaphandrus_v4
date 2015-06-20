@@ -7,7 +7,7 @@
         <!-- close button-->
         {% if layout == 'content' %}
             <a class="close-canvas-menu"><i class="fa fa-times"></i></a>
-        {% endif %}
+            {% endif %}
 
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
@@ -20,7 +20,7 @@
                             </span> <span class="text-muted text-xs block">Art Director <b class="caret"></b></span> </span> </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
                         <li><a href="profile.html">Profile</a></li>
-                        <li><a href="contacts.html">Contacts</a></li>
+                        <li><a href="{{ path('person_admin') }}">{{ "person_admin"|trans }} </a></li>
                         <li><a href="mailbox.html">Mailbox</a></li>
                         <li class="divider"></li>
                         <li><a href="login.html">Logout</a></li>
@@ -41,19 +41,23 @@
                 </ul>
             </li>
 
-            
+
             <li class="{{ 'SkPhotoController' in app.request.attributes.get("_controller")?'active' }}">
                 <a href="{{ path('photo_admin') }}"><i class="fa fa-photo"></i> <span class="nav-label">{{ "photo_admin"|trans }} </span><span class="label label-warning pull-right">16/24</span></a>
             </li>
             <li class="{{ 'SkSpotController' in app.request.attributes.get("_controller")?'active' }}">
                 <a href="{{ path('spot_admin') }}"><i class="fa fa-globe"></i> <span class="nav-label">{{ "spot_admin"|trans }} </span><span class="label label-warning pull-right">16/24</span></a>
             </li>
-             <li class="{{ 'SkIdentificationModuleUsernameController' in app.request.attributes.get("_controller")?'active' }}">
-                <a href="{{ path('module_admin_edit') }}"><i class="fa fa-globe"></i> <span class="nav-label">{{ "module_admin"|trans }} </span><span class="label label-warning pull-right">16/24</span></a>
+            <li class="{{ 'SkModulesController' in app.request.attributes.get("_controller")?'active' }}">
+                <a href="{{ path('module_admin_edit') }}"><i class="fa fa-globe"></i> <span class="nav-label">{{ "modules_admin"|trans }} </span><span class="label label-warning pull-right">16/24</span></a>
             </li>
 
-                         <li class="{{ 'SkUserPointsController' in app.request.attributes.get("_controller")?'active' }}">
+            <li class="{{ 'SkPointsController' in app.request.attributes.get("_controller")?'active' }}">
                 <a href="{{ path('points_admin') }}"><i class="fa fa-globe"></i> <span class="nav-label">{{ "points_admin"|trans }} </span><span class="label label-warning pull-right">16/24</span></a>
+            </li>
+            
+            <li class="{{ 'SkPersonController' in app.request.attributes.get("_controller")?'active' }}">
+                <a href="{{ path('person_admin') }}"><i class="fa fa-photo"></i> <span class="nav-label">{{ "person_admin"|trans }} </span><span class="label label-warning pull-right">16/24</span></a>
             </li>
 
         </ul> 

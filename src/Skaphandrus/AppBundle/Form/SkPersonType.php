@@ -15,12 +15,19 @@ class SkPersonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('skaphandrusId')
+            ->add('skaphandrusId', 'autocomplete', 
+                        array(
+                            'class' => 'SkaphandrusAppBundle:FosUser',
+                            'attr' => array('class' => 'form-control m-b'),
+                            'label'=>'form.person.label.user', 
+                            'required' => false
+                            )
+                        )
             ->add('observations')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('fosUser')
-            ->add('business')
+//            ->add('createdAt')
+//            ->add('updatedAt')
+//            ->add('fosUser')
+//            ->add('business')
             ->add('persontype')
         ;
     }

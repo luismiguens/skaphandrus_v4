@@ -284,4 +284,37 @@ class AjaxSearchController extends Controller {
         return new Response($SkPhotoMachineModel->getName());
     }
 
+    
+    
+    public function ajaxSearchFosUserAction(Request $request) {
+        $q = $request->get('term');
+        $em = $this->getDoctrine()->getManager();
+        $skPersonals = $em->getRepository('SkaphandrusAppBundle:SkPersonal')->findLikeName($q);
+
+
+        $results = array();
+        foreach ($skPersonals as $skPersonal) {
+            $results[] = array(
+                'id' => $skPersonal->getFosUser()->getId(),
+                'name' => $skPersonal->getName(),
+                'label' => sprintf("%s", $skPersonal->getName())
+            );
+        }
+
+        return new JsonResponse($results);
+    }
+
+    public function ajaxGetFosUserAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $fosUser = $em->getRepository('SkaphandrusAppBundle:FosUser')->find($id);
+
+        return new Response($fosUser->getName());
+    }
+    
+    
+    
+    
+    
+    
+    
 }

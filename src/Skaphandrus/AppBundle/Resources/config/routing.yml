@@ -1,8 +1,3 @@
-skaphandrus_app_person_admin:
-    resource: "@SkaphandrusAppBundle/Resources/config/routing/skperson.yml"
-    prefix:   /person_admin
-
-
 
 
 
@@ -50,6 +45,11 @@ skaphandrus_app_points_admin:
 skaphandrus_app_modules_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skmodules.yml"
     prefix:   /{_locale}/modules_admin
+
+skaphandrus_app_person_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skperson.yml"
+    prefix:   /{_locale}/person_admin
+
 
 
 
@@ -265,9 +265,17 @@ ajax_search_spot:
     path:     /{_locale}/ajax_search_spot/
     defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxSearchSpot }
 
+
 ajax_search_location:
     path:     /{_locale}/ajax_search_location/
     defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxSearchLocation }
+
+ajax_search_fosUser:
+    path:     /{_locale}/ajax_search_fosUser/
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxSearchFosUser }
+
+
+## gets
 
 ajax_get_photo_machine_model:
     path:     /{_locale}/ajax_get_photo_machine_model/{id}
@@ -300,6 +308,12 @@ ajax_get_phylum:
 ajax_get_spot:
     path:     /{_locale}/ajax_get_spot/{id}
     defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetSpot }
+    
+    
+ajax_get_fosUser:
+    path:     /{_locale}/ajax_get_fosUser/{id}
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetFosUser }
+
 
 #
 #################################################################################  

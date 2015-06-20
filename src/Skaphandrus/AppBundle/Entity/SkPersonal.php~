@@ -487,4 +487,3 @@ class SkPersonal
         return $this->fosUser;
     }
 }
-

@@ -2,30 +2,22 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+
 /**
  * SkPersonTypeTranslation
  */
 class SkPersonTypeTranslation
 {
+        use ORMBehaviors\Translatable\Translation;
+    
     /**
      * @var string
      */
     private $name;
 
-    /**
-     * @var string
-     */
-    private $locale;
 
-    /**
-     * @var integer
-     */
-    private $id;
-
-    /**
-     * @var \Skaphandrus\AppBundle\Entity\SkPersonType
-     */
-    private $translatable;
 
 
     /**
@@ -52,62 +44,5 @@ class SkPersonTypeTranslation
         return $this->name;
     }
 
-    /**
-     * Set locale
-     *
-     * @param string $locale
-     *
-     * @return SkPersonTypeTranslation
-     */
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
-
-        return $this;
-    }
-
-    /**
-     * Get locale
-     *
-     * @return string
-     */
-    public function getLocale()
-    {
-        return $this->locale;
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set translatable
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkPersonType $translatable
-     *
-     * @return SkPersonTypeTranslation
-     */
-    public function setTranslatable(\Skaphandrus\AppBundle\Entity\SkPersonType $translatable = null)
-    {
-        $this->translatable = $translatable;
-
-        return $this;
-    }
-
-    /**
-     * Get translatable
-     *
-     * @return \Skaphandrus\AppBundle\Entity\SkPersonType
-     */
-    public function getTranslatable()
-    {
-        return $this->translatable;
-    }
 }
 

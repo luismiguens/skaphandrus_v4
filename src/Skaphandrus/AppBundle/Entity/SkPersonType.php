@@ -2,11 +2,16 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+
 /**
  * SkPersonType
  */
-class SkPersonType
-{
+class SkPersonType {
+
+    use ORMBehaviors\Translatable\Translatable;
+
     /**
      * @var integer
      */
@@ -20,8 +25,7 @@ class SkPersonType
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->person = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -30,8 +34,7 @@ class SkPersonType
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -42,8 +45,7 @@ class SkPersonType
      *
      * @return SkPersonType
      */
-    public function addPerson(\Skaphandrus\AppBundle\Entity\SkPerson $person)
-    {
+    public function addPerson(\Skaphandrus\AppBundle\Entity\SkPerson $person) {
         $this->person[] = $person;
 
         return $this;
@@ -54,8 +56,7 @@ class SkPersonType
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPerson $person
      */
-    public function removePerson(\Skaphandrus\AppBundle\Entity\SkPerson $person)
-    {
+    public function removePerson(\Skaphandrus\AppBundle\Entity\SkPerson $person) {
         $this->person->removeElement($person);
     }
 
@@ -64,9 +65,16 @@ class SkPersonType
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPerson()
-    {
+    public function getPerson() {
         return $this->person;
     }
-}
 
+    public function __toString() {
+        return $this->translate()->getName();
+    }
+
+    public function getName() {
+        return $this->translate()->getName();
+    }
+
+}

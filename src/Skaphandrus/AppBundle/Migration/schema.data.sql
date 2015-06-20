@@ -541,6 +541,49 @@ CREATE TABLE  `sk_contact` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+
+
+-- ---------------------------------------------------------------------
+-- sk_sex_type
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `sk_sex_type`;
+
+CREATE TABLE  `sk_sex_type` (
+  `id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+-- ---------------------------------------------------------------------
+-- sk_sex_type_translation
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `sk_sex_type_translation`;
+
+CREATE TABLE `sk_sex_type_translation`
+(
+	`id` INTEGER NOT NULL AUTO_INCREMENT,
+        `translatable_id` INTEGER NOT NULL,
+        `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+        `locale` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+        PRIMARY KEY (`id`),
+        UNIQUE KEY `sk_sex_type_translation_FI_1` (`translatable_id`,`locale`),
+        KEY `sk_sex_type_translation_FI_2` (`translatable_id`),
+        CONSTRAINT `sk_sex_type_translation_FK_3` 
+                FOREIGN KEY (`translatable_id`) 
+                REFERENCES `sk_sex_type` (`id`) 
+              	ON UPDATE CASCADE
+		ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+
+
+
+
 -- ---------------------------------------------------------------------
 -- sk_personal
 -- ---------------------------------------------------------------------

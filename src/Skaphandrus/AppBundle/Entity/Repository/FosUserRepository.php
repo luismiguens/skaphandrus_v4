@@ -134,4 +134,10 @@ class FosUserRepository extends EntityRepository {
         return $qb;
     }
 
+    
+    
+   
+    
+    
+    
 }

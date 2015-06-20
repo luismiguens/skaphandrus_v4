@@ -61,4 +61,16 @@ $(document).ready(function () {
         // return false;
         $(this).parent('form').submit();
     });
+    
+    
+    
+        // Formulário skPerson
+    if ($('#skaphandrus_appbundle_skperson_skaphandrusId').length) {
+        $('#skaphandrus_appbundle_skperson_skaphandrusId').autocompleter({url_list: '/app_dev.php/en/ajax_search_fosUser/', url_get: '/app_dev.php/en/ajax_get_fosUser/'});
+    }
+
+    
+    
+    
+    
 });

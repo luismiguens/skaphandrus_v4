@@ -5,8 +5,8 @@ namespace Skaphandrus\AppBundle\Entity;
 /**
  * SkPersonal
  */
-class SkPersonal
-{
+class SkPersonal {
+
     /**
      * @var string
      */
@@ -92,7 +92,12 @@ class SkPersonal
      */
     private $fosUser;
 
-
+    
+ 
+    
+    
+    
+    
     /**
      * Set honorific
      *
@@ -100,8 +105,7 @@ class SkPersonal
      *
      * @return SkPersonal
      */
-    public function setHonorific($honorific)
-    {
+    public function setHonorific($honorific) {
         $this->honorific = $honorific;
 
         return $this;
@@ -112,8 +116,7 @@ class SkPersonal
      *
      * @return string
      */
-    public function getHonorific()
-    {
+    public function getHonorific() {
         return $this->honorific;
     }
 
@@ -124,8 +127,7 @@ class SkPersonal
      *
      * @return SkPersonal
      */
-    public function setFirstname($firstname)
-    {
+    public function setFirstname($firstname) {
         $this->firstname = $firstname;
 
         return $this;
@@ -136,8 +138,7 @@ class SkPersonal
      *
      * @return string
      */
-    public function getFirstname()
-    {
+    public function getFirstname() {
         return $this->firstname;
     }
 
@@ -148,8 +149,7 @@ class SkPersonal
      *
      * @return SkPersonal
      */
-    public function setMiddlename($middlename)
-    {
+    public function setMiddlename($middlename) {
         $this->middlename = $middlename;
 
         return $this;
@@ -160,8 +160,7 @@ class SkPersonal
      *
      * @return string
      */
-    public function getMiddlename()
-    {
+    public function getMiddlename() {
         return $this->middlename;
     }
 
@@ -172,8 +171,7 @@ class SkPersonal
      *
      * @return SkPersonal
      */
-    public function setLastname($lastname)
-    {
+    public function setLastname($lastname) {
         $this->lastname = $lastname;
 
         return $this;
@@ -184,8 +182,7 @@ class SkPersonal
      *
      * @return string
      */
-    public function getLastname()
-    {
+    public function getLastname() {
         return $this->lastname;
     }
 
@@ -196,8 +193,7 @@ class SkPersonal
      *
      * @return SkPersonal
      */
-    public function setBirthname($birthname)
-    {
+    public function setBirthname($birthname) {
         $this->birthname = $birthname;
 
         return $this;
@@ -208,8 +204,7 @@ class SkPersonal
      *
      * @return string
      */
-    public function getBirthname()
-    {
+    public function getBirthname() {
         return $this->birthname;
     }
 
@@ -220,8 +215,7 @@ class SkPersonal
      *
      * @return SkPersonal
      */
-    public function setHeight($height)
-    {
+    public function setHeight($height) {
         $this->height = $height;
 
         return $this;
@@ -232,8 +226,7 @@ class SkPersonal
      *
      * @return float
      */
-    public function getHeight()
-    {
+    public function getHeight() {
         return $this->height;
     }
 
@@ -244,8 +237,7 @@ class SkPersonal
      *
      * @return SkPersonal
      */
-    public function setWeight($weight)
-    {
+    public function setWeight($weight) {
         $this->weight = $weight;
 
         return $this;
@@ -256,8 +248,7 @@ class SkPersonal
      *
      * @return float
      */
-    public function getWeight()
-    {
+    public function getWeight() {
         return $this->weight;
     }
 
@@ -268,8 +259,7 @@ class SkPersonal
      *
      * @return SkPersonal
      */
-    public function setSmoking($smoking)
-    {
+    public function setSmoking($smoking) {
         $this->smoking = $smoking;
 
         return $this;
@@ -280,8 +270,7 @@ class SkPersonal
      *
      * @return boolean
      */
-    public function getSmoking()
-    {
+    public function getSmoking() {
         return $this->smoking;
     }
 
@@ -292,8 +281,7 @@ class SkPersonal
      *
      * @return SkPersonal
      */
-    public function setBirthdate($birthdate)
-    {
+    public function setBirthdate($birthdate) {
         $this->birthdate = $birthdate;
 
         return $this;
@@ -304,8 +292,7 @@ class SkPersonal
      *
      * @return \DateTime
      */
-    public function getBirthdate()
-    {
+    public function getBirthdate() {
         return $this->birthdate;
     }
 
@@ -316,8 +303,7 @@ class SkPersonal
      *
      * @return SkPersonal
      */
-    public function setPassport($passport)
-    {
+    public function setPassport($passport) {
         $this->passport = $passport;
 
         return $this;
@@ -328,8 +314,7 @@ class SkPersonal
      *
      * @return string
      */
-    public function getPassport()
-    {
+    public function getPassport() {
         return $this->passport;
     }
 
@@ -340,8 +325,7 @@ class SkPersonal
      *
      * @return SkPersonal
      */
-    public function setBloodgroup($bloodgroup)
-    {
+    public function setBloodgroup($bloodgroup) {
         $this->bloodgroup = $bloodgroup;
 
         return $this;
@@ -352,8 +336,7 @@ class SkPersonal
      *
      * @return string
      */
-    public function getBloodgroup()
-    {
+    public function getBloodgroup() {
         return $this->bloodgroup;
     }
 
@@ -364,8 +347,7 @@ class SkPersonal
      *
      * @return SkPersonal
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
 
         return $this;
@@ -376,8 +358,7 @@ class SkPersonal
      *
      * @return \DateTime
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->createdAt;
     }
 
@@ -388,8 +369,7 @@ class SkPersonal
      *
      * @return SkPersonal
      */
-    public function setUpdatedAt($updatedAt)
-    {
+    public function setUpdatedAt($updatedAt) {
         $this->updatedAt = $updatedAt;
 
         return $this;
@@ -400,8 +380,7 @@ class SkPersonal
      *
      * @return \DateTime
      */
-    public function getUpdatedAt()
-    {
+    public function getUpdatedAt() {
         return $this->updatedAt;
     }
 
@@ -410,8 +389,7 @@ class SkPersonal
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -422,8 +400,7 @@ class SkPersonal
      *
      * @return SkPersonal
      */
-    public function setSexType(\Skaphandrus\AppBundle\Entity\SkSexType $sexType = null)
-    {
+    public function setSexType(\Skaphandrus\AppBundle\Entity\SkSexType $sexType = null) {
         $this->sexType = $sexType;
 
         return $this;
@@ -434,8 +411,7 @@ class SkPersonal
      *
      * @return \Skaphandrus\AppBundle\Entity\SkSexType
      */
-    public function getSexType()
-    {
+    public function getSexType() {
         return $this->sexType;
     }
 
@@ -446,8 +422,7 @@ class SkPersonal
      *
      * @return SkPersonal
      */
-    public function setPerson(\Skaphandrus\AppBundle\Entity\SkPerson $person = null)
-    {
+    public function setPerson(\Skaphandrus\AppBundle\Entity\SkPerson $person = null) {
         $this->person = $person;
 
         return $this;
@@ -458,8 +433,7 @@ class SkPersonal
      *
      * @return \Skaphandrus\AppBundle\Entity\SkPerson
      */
-    public function getPerson()
-    {
+    public function getPerson() {
         return $this->person;
     }
 
@@ -470,8 +444,7 @@ class SkPersonal
      *
      * @return SkPersonal
      */
-    public function setFosUser(\Skaphandrus\AppBundle\Entity\FosUser $fosUser = null)
-    {
+    public function setFosUser(\Skaphandrus\AppBundle\Entity\FosUser $fosUser = null) {
         $this->fosUser = $fosUser;
 
         return $this;
@@ -482,8 +455,20 @@ class SkPersonal
      *
      * @return \Skaphandrus\AppBundle\Entity\FosUser
      */
-    public function getFosUser()
-    {
+    public function getFosUser() {
         return $this->fosUser;
     }
+
+    public function getName() {
+        if ($this->getMiddlename() == null && $this->getLastname() == null):
+            return $this->getFirstname();
+        elseif ($this->getMiddlename() != null && $this->getLastname() == null):
+            return $this->getFirstname() . " " . $this->getMiddlename();
+        elseif ($this->getMiddlename() == null and $this->getLastname() != null):
+            return $this->getFirstname() . " " . $this->getLastname();
+        else:
+            return $this->getFirstname() . " " . $this->getMiddlename() . " " . $this->getLastname();
+        endif;
+    }
+
 }

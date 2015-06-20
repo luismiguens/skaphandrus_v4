@@ -48,13 +48,12 @@ class SkPerson
     private $persontype;
 
     
-    
-
-    /**
-     * @var \Skaphandrus\AppBundle\Entity\SkAddress
+        /**
+     * @var \Skaphandrus\AppBundle\Entity\FosUser
      */
-    private $address;
-
+    private $skaphandrusFosUser;
+    
+    
     
     /**
      * Constructor
@@ -253,29 +252,23 @@ class SkPerson
     }
     
     
-
-
+    
+    
     /**
-     * Set address
+     * Get fosUser
      *
-     * @param \Skaphandrus\AppBundle\Entity\SkAddress $address
-     *
-     * @return SkPerson
+     * @return \Skaphandrus\AppBundle\Entity\FosUser
      */
-    public function setAddress(\Skaphandrus\AppBundle\Entity\SkAddress $address = null)
+    public function getSkaphandrusFosUser()
     {
-        $this->address = $address;
+        
+        $em = $this->getManager();
 
-        return $this;
+        $this->skaphandrusFosUser = $em->getRepository('SkaphandrusAppBundle:FosUser')->findById($this->getSkaphandrusId() );
+        
+        return $this->skaphandrusFosUser;
     }
-
-    /**
-     * Get address
-     *
-     * @return \Skaphandrus\AppBundle\Entity\SkAddress
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
+    
+    
 }
+

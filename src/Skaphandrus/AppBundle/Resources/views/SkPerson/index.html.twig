@@ -1,47 +1,78 @@
-{% extends '::base.html.twig' %}
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/skaphandrus.js') }}"></script>
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block heading_title %}
+    {{ "form.person.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.persons"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block heading_action %}
+    <a href="{{ path('person_admin_new') }}" class="btn btn-primary">{{ "form.person.btn.add"|trans }}</a>
+{% endblock %}
+
+{% block form_title_description %}
+    {{ "form.person.text.description"|trans }}
+{% endblock %}
+
+
 
 {% block body -%}
-    <h1>SkPerson list</h1>
 
-    <table class="records_list">
+
+    <table class="table table-striped" >
         <thead>
             <tr>
-                <th>Skaphandrusid</th>
-                <th>Observations</th>
-                <th>Createdat</th>
-                <th>Updatedat</th>
-                <th>Id</th>
-                <th>Actions</th>
+                <th>{{ "form.person.label.name"|trans }}</th>
+                <th>{{ "form.person.label.image"|trans }}</th>
+                <th>{{ "form.person.label.observations"|trans }}</th>
+                <th>{{ "form.common.label.actions"|trans }}</th>
             </tr>
         </thead>
         <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('person_admin_show', { 'id': entity.id }) }}">{{ entity.skaphandrusId }}</a></td>
-                <td>{{ entity.observations }}</td>
-                <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ entity.id }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('person_admin_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('person_admin_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
+            {% for entity in entities %}
+                <tr>
+                    <td>name</td>
+                    <td>image</td>
+                    <td>{{ entity.observations }}</td>
+                    <td>
+                        <a class="btn btn-white btn-sm" href="{{ path('person_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.edit"|trans }}</a>
+                        
+                    {% if entity.skaphandrusId != false %}
+    <a class="btn btn-white btn-sm" href="{{ path('user', { 'id': entity.skaphandrusId }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.view"|trans }}</a>
+{% endif %}    
+                        
+                    
+                    </td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 
-        <ul>
-        <li>
-            <a href="{{ path('person_admin_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
+
+
+    <a class="btn btn-primary" href="{{ path('person_admin_new') }}">
+        <i class="fa fa-pencil"></i>  {{ "form.person.btn.add"|trans }}
+    </a>
+
+
+
+
+{% endblock %}
+
+

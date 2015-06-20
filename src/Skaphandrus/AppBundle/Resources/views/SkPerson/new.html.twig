@@ -1,15 +1,54 @@
-{% extends '::base.html.twig' %}
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
 
-{% block body -%}
-    <h1>SkPerson creation</h1>
+{% form_theme form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
 
-    {{ form(form) }}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
+    <script src="{{ asset('bundles/pugxautocompleter/js/autocompleter-jqueryui.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/skaphandrus.js') }}"></script>
+{% endblock %}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('person_admin') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+
+{% block styleshets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block heading_title %}
+    {{ "form.person.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="index.html">{{ "breadcrumb.persons"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.add_person"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block heading_action %}
+    <a href="{{ path('person_admin_new') }}" class="btn btn-primary">{{ "form.person.btn.add"|trans }}</a>
+{% endblock %}
+
+{% block form_title_description %}
+    {{ "form.person.text.description"|trans }}
+{% endblock %}
+
+
+{% block body %}
+    
+    
+    
+ <style>
+.ui-autocomplete-loading {
+background: white url("http://jqueryui.com/resources/demos/autocomplete/images/ui-anim_basic_16x16.gif") right center no-repeat;
+}
+</style>
+    
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_widget(form) }}
+    {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'person_admin', 'new_form':false} %}
+    {{ form_end(form) }}
+
 {% endblock %}

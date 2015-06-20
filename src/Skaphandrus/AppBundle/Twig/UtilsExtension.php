@@ -6,6 +6,8 @@ use Twig_Environment;
 use Symfony\Component\Intl\Intl;
 use Skaphandrus\AppBundle\Utils\Utils;
 
+use Doctrine\ORM\EntityRepository;
+
 class UtilsExtension extends \Twig_Extension {
 
     protected $twig;
@@ -146,6 +148,9 @@ class UtilsExtension extends \Twig_Extension {
             'username' => $user->getUsername(),
         ));
     }
+    
+    
+ 
 
     public function url_to_species($species) {
         $path_function = $this->getPathFunction();
