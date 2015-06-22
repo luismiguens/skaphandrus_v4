@@ -471,4 +471,10 @@ class SkPersonal {
         endif;
     }
 
+    
+    public function __toString() {
+        return $this->getName();
+    }
+    
+    
 }

@@ -27,5 +27,14 @@
         
         <one-to-many field="photosValidated" target-entity="SkPhotoSpeciesValidation" mapped-by="fosUser"/>
 
+<!--        <one-to-one field="personal" target-entity="SkPersonal" inversed-by="id" >
+            <join-column name="id" referenced-column-name="fos_user_id" />
+        </one-to-one>-->
+    
+    
+    <one-to-one field="personal" target-entity="SkPersonal" mapped-by="fosUser" />
+    
+        
+        
     </entity>
 </doctrine-mapping>

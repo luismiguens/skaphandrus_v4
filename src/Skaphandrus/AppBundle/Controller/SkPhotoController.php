@@ -23,15 +23,38 @@ class SkPhotoController extends Controller {
      *
      */
     public function indexAction() {
-        $em = $this->getDoctrine()->getManager();
-
-        ##@LM
+        
         $fos_user = $this->get('security.token_storage')->getToken()->getUser();
-        $entities = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->findByFosUser($fos_user );
+                $params = array('fosUser'=>$fos_user->getId());
 
-        return $this->render('SkaphandrusAppBundle:SkPhoto:index.html.twig', array(
-                    'entities' => $entities,
-        ));
+        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($params, 20);
+        $query = $qb->getQuery();
+
+        //var_dump($params);
+
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                $query, $this->get('request')->query->getInt('page', 1)/* page number */, 20/* limit per page */
+        );
+
+        // parameters to template
+        return $this->render('SkaphandrusAppBundle:SkPhoto:index.html.twig', array('pagination' => $pagination, 'params' => $params));
+        
+        
+//        
+//        
+//        
+//        
+//        $em = $this->getDoctrine()->getManager();
+//
+//        ##@LM
+//        $fos_user = $this->get('security.token_storage')->getToken()->getUser();
+//        $entities = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->findByFosUser($fos_user );
+//
+//        return $this->render('SkaphandrusAppBundle:SkPhoto:index.html.twig', array(
+//                    'entities' => $entities,
+//        ));
     }
 
     /**

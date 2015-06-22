@@ -64,11 +64,17 @@
         <join-column name="person_id" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
-    <many-to-one field="fosUser" target-entity="FosUser" fetch="LAZY">
+    <!--<many-to-one field="fosUser" target-entity="FosUser" fetch="LAZY">
       <join-columns>
         <join-column name="fos_user_id" referenced-column-name="id"/>
       </join-columns>
-    </many-to-one>
+    </many-to-one>-->
+    
+    <one-to-one field="fosUser" target-entity="FosUser" inversed-by="personal">
+            <join-column name="fos_user_id" referenced-column-name="id" />
+        </one-to-one>
+    
+    
   </entity>
 </doctrine-mapping>
 

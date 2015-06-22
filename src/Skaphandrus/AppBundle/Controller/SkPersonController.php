@@ -23,7 +23,11 @@ class SkPersonController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('SkaphandrusAppBundle:SkPerson')->findAll();
+
+        ##@LM
+        $fos_user = $this->get('security.token_storage')->getToken()->getUser();
+        $entities = $em->getRepository('SkaphandrusAppBundle:SkPerson')->findByFosUser($fos_user );
+
 
         return $this->render('SkaphandrusAppBundle:SkPerson:index.html.twig', array(
             'entities' => $entities,
@@ -36,6 +40,11 @@ class SkPersonController extends Controller
     public function createAction(Request $request)
     {
         $entity = new SkPerson();
+        
+        ##@LM
+        $fos_user = $this->get('security.token_storage')->getToken()->getUser();
+        $entity->setFosUser($fos_user);
+        
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -43,8 +52,11 @@ class SkPersonController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+            
+            ##@LM
+            $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
 
-            return $this->redirect($this->generateUrl('person_admin_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('person_admin_edit', array('id' => $entity->getId())));
         }
 
         return $this->render('SkaphandrusAppBundle:SkPerson:new.html.twig', array(
@@ -67,7 +79,7 @@ class SkPersonController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        //$form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
     }
@@ -91,23 +103,23 @@ class SkPersonController extends Controller
      * Finds and displays a SkPerson entity.
      *
      */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('SkaphandrusAppBundle:SkPerson')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find SkPerson entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('SkaphandrusAppBundle:SkPerson:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
+//    public function showAction($id)
+//    {
+//        $em = $this->getDoctrine()->getManager();
+//
+//        $entity = $em->getRepository('SkaphandrusAppBundle:SkPerson')->find($id);
+//
+//        if (!$entity) {
+//            throw $this->createNotFoundException('Unable to find SkPerson entity.');
+//        }
+//
+//        $deleteForm = $this->createDeleteForm($id);
+//
+//        return $this->render('SkaphandrusAppBundle:SkPerson:show.html.twig', array(
+//            'entity'      => $entity,
+//            'delete_form' => $deleteForm->createView(),
+//        ));
+//    }
 
     /**
      * Displays a form to edit an existing SkPerson entity.
@@ -146,8 +158,8 @@ class SkPersonController extends Controller
             'action' => $this->generateUrl('person_admin_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
+//@LM
+//        $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
@@ -172,6 +184,9 @@ class SkPersonController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
+                        ##@LM
+            $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
+            
             return $this->redirect($this->generateUrl('person_admin_edit', array('id' => $id)));
         }
 
@@ -217,7 +232,7 @@ class SkPersonController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('person_admin_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'form.common.btn.delete','attr' => array('class' => 'btn btn-danger')))
             ->getForm()
         ;
     }

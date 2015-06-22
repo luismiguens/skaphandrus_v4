@@ -15,22 +15,55 @@ class SkSpotType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('maxDepth')
+            ->add('maxDepth', 'integer', 
+                        array(
+                            'attr' => array('class' => 'form-control'),
+                            'label'=>'form.spot.label.maxDepth'
+                            ))
             ->add('coordinate')
             ->add('zoom')
             //->add('isAproved')
             //->add('createdAt')
-            ->add('updatedAt')
+            //->add('updatedAt')
             //->add('fosUser')
                             ->add('location', 'autocomplete', 
                         array(
                             'class' => 'SkaphandrusAppBundle:SkLocation',
                             'attr' => array('class' => 'form-control m-b'),
-                            'label'=>'form.photo.label.location', 
+                            'label'=>'form.spot.label.location', 
                             'required' => false
                             )
                         )
-                 ->add('translations', 'a2lix_translations')
+                 ->add('translations', 'a2lix_translations', array(
+
+        'fields' => array(
+            'name' => array(
+                'field_type' => 'text',
+                'label' => 'form.spot.label.name',
+                'attr' => array('class' => 'form-control'),
+//                'locale_options' => array(
+//                    'en' => array(
+//                        'label' => 'nom'
+//                    ),
+//                    'de' => array(
+//                      'label' => 'Name'
+//                  ),
+//                )
+                ),
+            'description' => array(
+              'field_type' => 'textarea',
+              'label' => 'form.spot.label.description', 
+                'attr' => array('class' => 'form-control'),
+//              'locale_options' => array(
+//                  'fr' => array(
+//                      'label' => 'description'
+//                  ),
+//                  'de' => array(
+//                      'label' => 'Beschreibung'
+//                  ),
+//              )
+                ),
+            ))); 
         ;
     }
     

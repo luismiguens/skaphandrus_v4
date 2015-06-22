@@ -50,18 +50,19 @@ class SkPerson
     
     
 
-    /**
-     * @var \Skaphandrus\AppBundle\Entity\SkAddress
-     */
-    private $address;
-
-    
+//    /**
+//     * @var \Skaphandrus\AppBundle\Entity\SkAddress
+//     */
+//    private $address;
+//
+//    
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->persontype = new \Doctrine\Common\Collections\ArrayCollection();
+         $this->createdAt = new \DateTime();
     }
 
     /**
@@ -71,7 +72,7 @@ class SkPerson
      *
      * @return SkPerson
      */
-    public function setSkaphandrusId($skaphandrusId)
+    public function setSkaphandrusId(\Skaphandrus\AppBundle\Entity\FosUser $skaphandrusId = null)
     {
         $this->skaphandrusId = $skaphandrusId;
 
@@ -147,7 +148,12 @@ class SkPerson
     {
         $this->updatedAt = $updatedAt;
 
-        return $this;
+        return $this;    /**
+//     * @var \Skaphandrus\AppBundle\Entity\SkAddress
+//     */
+//    private $address;
+//
+//    
     }
 
     /**
@@ -252,30 +258,13 @@ class SkPerson
         return $this->persontype;
     }
     
+
+    
+    public function doStuffOnPreUpdate()
+    {
+       $this->updatedAt = new \DateTime();
+    }
+    
     
 
-
-    /**
-     * Set address
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkAddress $address
-     *
-     * @return SkPerson
-     */
-    public function setAddress(\Skaphandrus\AppBundle\Entity\SkAddress $address = null)
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    /**
-     * Get address
-     *
-     * @return \Skaphandrus\AppBundle\Entity\SkAddress
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
 }

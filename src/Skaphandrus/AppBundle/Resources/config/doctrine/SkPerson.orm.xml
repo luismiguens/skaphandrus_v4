@@ -8,11 +8,11 @@
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="skaphandrusId" type="integer" column="skaphandrus_id" nullable="true">
+<!--    <field name="skaphandrusId" type="integer" column="skaphandrus_id" nullable="true">
       <options>
         <option name="unsigned"/>
       </options>
-    </field>
+    </field>-->
     <field name="observations" type="text" column="observations" length="65535" nullable="true">
       <options>
         <option name="fixed"/>
@@ -22,9 +22,9 @@
     <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
     
         
-        <one-to-one field="address" target-entity="SkAddress" inversed-by="person">
+        <one-to-one field="skaphandrusId" target-entity="FosUser" >
             <cascade><cascade-remove /></cascade>
-            <join-column name="id" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>
+            <join-column name="skaphandrus_id" referenced-column-name="id" on-delete="SETNULL" on-update="SETNULL"/>
         </one-to-one>
     
     
@@ -49,5 +49,11 @@
         </inverse-join-columns>
       </join-table>
     </many-to-many>
+    
+    <lifecycle-callbacks>
+            <lifecycle-callback type="preUpdate" method="doStuffOnPreUpdate"/>
+            
+        </lifecycle-callbacks>
+    
   </entity>
 </doctrine-mapping>

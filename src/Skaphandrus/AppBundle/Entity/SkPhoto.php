@@ -524,4 +524,11 @@ class SkPhoto {
         return "321";
         
     }
+    
+    
+      public function doStuffOnPreUpdate()
+    {
+       $this->updatedAt = new \DateTime();
+    }
+    
 }

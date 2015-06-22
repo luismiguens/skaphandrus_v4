@@ -42,6 +42,7 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
     private $modules;
 
 
+    private $personal;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -63,6 +64,28 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
     }
 
 
+    
+   public function getPersonal()
+    {
+        return $this->personal;
+    }
+    
+     
+    //@@@@@@@@@ TEMPORARY APENAS PARA IMPORTACAO DOS UTILIZADORES
+    /** 
+     * Set id
+     *
+     * @return integer 
+     */
+    public function setPersonalId($personal)
+    {
+        $this->personal = $personal;
+        
+        return $this;
+    }
+    
+    
+    
     /**
      * Set algorithm
      *
@@ -247,5 +270,19 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
 
         return $this;
     }
+    
+    
+    public function getName(){
+       return $this->getPersonal()->__toString();
+    }
+            
+    
+    public function __toString() {
+        return $this->getName();
+    }
+    
+    
+    
+    
     
 }

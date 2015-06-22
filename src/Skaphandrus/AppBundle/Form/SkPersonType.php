@@ -23,12 +23,23 @@ class SkPersonType extends AbstractType
                             'required' => false
                             )
                         )
-            ->add('observations')
+            ->add('observations', 'textarea', 
+                        array(
+                            'attr' => array('class' => 'form-control'),
+                            'label'=>'form.person.label.observations', 
+                            'required' => false
+                            ))
 //            ->add('createdAt')
 //            ->add('updatedAt')
 //            ->add('fosUser')
 //            ->add('business')
-            ->add('persontype')
+            ->add('persontype', 'entity', 
+                        array(
+                            'class' => 'SkaphandrusAppBundle:SkPersonType', 
+                            'attr' => array('class' => 'form-control'),
+                            'multiple'=>'true',
+                            'label'=>'form.person.label.persontype'
+                            ))
         ;
     }
     

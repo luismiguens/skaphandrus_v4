@@ -18,21 +18,23 @@
     {% endspaceless %}
 {% endblock form_row %}
 
-{#{% block _skaphandrus_appbundle_skphoto_takenAt_row %}
+
+
+
+{% block _skaphandrus_appbundle_skspot_translations_en_name_row %}
     <div class="form-group">
-        <label class="col-sm-2 control-label">
-            {{ form_label(form) }}
-        </label>
+        <label class="col-lg-2 control-label">{{ form_label(form) }}</label>
         {{ form_errors(form) }}
-        <div class="col-sm-10">
-            <div class="row">
-                
-                <div class="col-md-2"> {{ form_widget(form) }}</div>
-                
-            </div>
+        <div class="col-lg-10">
+            {{ form_widget(form) }} 
         </div>
     </div>
-{% endblock %}#}
+        
+
+        
+        
+        
+    {% endblock %}
 
 
 
