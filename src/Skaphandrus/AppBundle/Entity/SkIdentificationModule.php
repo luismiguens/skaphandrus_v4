@@ -70,6 +70,11 @@ class SkIdentificationModule {
 
     private $file;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $users;
+
 
     /**
      * Constructor
@@ -363,5 +368,39 @@ class SkIdentificationModule {
 
         // clean up the file property as you won't need it anymore
         $this->file = null;
+    }
+
+    /**
+     * Add user
+     *
+     * @param \Skaphandrus\AppBundle\Entity\FosUser $user
+     *
+     * @return SkIdentificationModule
+     */
+    public function addUser(\Skaphandrus\AppBundle\Entity\FosUser $user)
+    {
+        $this->users[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \Skaphandrus\AppBundle\Entity\FosUser $user
+     */
+    public function removeUser(\Skaphandrus\AppBundle\Entity\FosUser $user)
+    {
+        $this->users->removeElement($user);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }

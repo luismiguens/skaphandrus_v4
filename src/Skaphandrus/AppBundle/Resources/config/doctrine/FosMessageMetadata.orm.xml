@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="Skaphandrus\AppBundle\Entity\FosMessageMetadata" table="fos_message_metadata">
+
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="isRead" column="is_read" type="boolean" />
+
+        <many-to-one field="message" target-entity="Skaphandrus\AppBundle\Entity\FosMessage" inversed-by="metadata" />
+
+        <many-to-one field="participant" target-entity="Skaphandrus\AppBundle\Entity\FosUser" />
+
+    </entity>
+
+</doctrine-mapping>

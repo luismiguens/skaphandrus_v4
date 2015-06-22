@@ -316,3 +316,8 @@ knp_paginator:
         #pagination: KnpPaginatorBundle:Pagination:sliding.html.twig     # sliding pagination controls template
         pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
+
+fos_message:
+    db_driver: orm
+    thread_class: Skaphandrus\AppBundle\Entity\FosMessageThread
+    message_class: Skaphandrus\AppBundle\Entity\FosMessage

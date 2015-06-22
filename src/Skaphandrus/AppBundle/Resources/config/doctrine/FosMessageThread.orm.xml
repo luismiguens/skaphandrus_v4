@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="Skaphandrus\AppBundle\Entity\FosMessageThread" table="fos_message_thread">
+
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="subject" column="subject" type="string" />
+        <field name="createdAt" fieldName="createdAt" type="datetime" />
+        <field name="isSpam" fieldName="isSpam" type="boolean" />
+        <many-to-one field="createdBy" target-entity="Skaphandrus\AppBundle\Entity\FosUser" />
+        <one-to-many field="messages" target-entity="Skaphandrus\AppBundle\Entity\FosMessage" mapped-by="thread" />
+        <one-to-many field="metadata" target-entity="Skaphandrus\AppBundle\Entity\FosMessageThreadMetadata" mapped-by="thread">
+            <cascade>
+                <cascade-all />
+            </cascade>
+        </one-to-many>
+    </entity>
+
+</doctrine-mapping>
