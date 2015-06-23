@@ -321,3 +321,5 @@ fos_message:
     db_driver: orm
     thread_class: Skaphandrus\AppBundle\Entity\FosMessageThread
     message_class: Skaphandrus\AppBundle\Entity\FosMessage
+    new_thread_form:
+        type: skaphandrus_message.new_thread.form.type

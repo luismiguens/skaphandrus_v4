@@ -1,55 +1,59 @@
-            <!-- <tr class="unread">
-                <td class="check-mail">
-                    <input type="checkbox" class="i-checks">
-                </td>
-                <td class="mail-ontact"><a href="mail_detail.html">Anna Smith</a></td>
-                <td class="mail-subject"><a href="mail_detail.html">Lorem ipsum dolor noretek imit set.</a></td>
-                <td class=""><i class="fa fa-paperclip"></i></td>
-                <td class="text-right mail-date">6.10 AM</td>
-            </tr> -->
 <table class="table table-hover table-mail">
-    <thead>
-        <tr>
-            <th>{% trans from 'FOSMessageBundle' %}subject{% endtrans %}</th>
-            <th>{% trans from 'FOSMessageBundle' %}starter{% endtrans %}</th>
-            <th>{% trans from 'FOSMessageBundle' %}startdate{% endtrans %}</th>
-            <th>{% trans from 'FOSMessageBundle' %}messages{% endtrans %}</th>
-            <th>{% trans from 'FOSMessageBundle' %}last_message{% endtrans %}</th>
-            <th>{% trans from 'FOSMessageBundle' %}actions{% endtrans %}</th>
-        </tr>
-    </thead>
     <tbody>
     {% if threads %}
         {% for thread in threads %}
             <tr class="{% if not fos_message_is_read(thread) %}unread{% else %}read{% endif %}">
+                <td>
+                    <a href="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}">
+                        {% if page == 'sent' %}{{ "page.messages.label.to"|trans }}: {% endif %}
+                        {% set users = [] %}
+                        {% for participant in thread.participants %}
+                            {% if participant not in users and participant != app.user %}
+                                {% set users = users|merge([participant]) %}
+                            {% endif %}
+                        {% endfor %}
+                        {{ users|join(', ') }}
+                        {# if page != 'sent' %}
+                            {% if thread.messages|length > 1 %}
+                                {% set p = false %}
+                                {% for participant in thread.participants %}
+                                    {% if not p and participant == app.user %}
+                                        {{ participant }}
+                                        {% set p = true %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% else %}
+                            {{ "page.messages.label.to"|trans }}:
+                            {% set p = false %}
+                            {% for participant in thread.participants %}
+                                {% if not p and participant != app.user %}
+                                    {{ participant }}
+                                    {% set p = true %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif #}
+                        {% if thread.messages|length > 1 %} ({{ thread.messages|length }}){% endif %}
+                    </a>
+                </td>
                 <td class="mail-subject">
                     <a href="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}">
                         {{ thread.subject }}
                     </a>
                 </td>
-                <td class="mail-contact">
-                    <a href="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}">
-                        {{ thread.createdBy }}
-                    </a>
-                </td>
-                <td>
+                {# <td>
                     <a href="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}">
                         {{ thread.createdAt|date }}
                     </a>
-                </td>
-                <td>
-                    <a href="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}">
-                        {{ thread.messages|length }}
-                    </a>
-                </td>
-                <td class="mail-ontact">
+                </td> #}
+                <td class="mail-contact">
                     {% if thread.lastMessage %}
                         <a href="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}#message_{{ thread.lastMessage.id }}" title="{% trans from 'FOSMessageBundle' %}goto_last{% endtrans %}">
-                            →
+                            {{ thread.lastMessage.createdAt|date }}
                         </a>
-                        {% trans with {'%date%': thread.lastMessage.createdAt|date} from 'FOSMessageBundle' %}on{% endtrans %}
+                        {# trans with {'%date%': thread.lastMessage.createdAt|date} from 'FOSMessageBundle' %}on{% endtrans %}
                         <br />
-                        {% trans with {'%sender%': thread.lastMessage.sender|e } from 'FOSMessageBundle' %}by{% endtrans %}
+                        {% trans with {'%sender%': thread.lastMessage.sender|e } from 'FOSMessageBundle' %}by{% endtrans #}
                     {% else %}
                         ----
                     {% endif %}
@@ -58,13 +62,13 @@
                     {% if fos_message_can_delete_thread(thread) %}
                         {% if fos_message_deleted_by_participant(thread) %}
                             {% set formAction %}{{ url('fos_message_thread_undelete', {'threadId': thread.id}) }}{% endset %}
-                            {% set submitValue %}{% trans from 'FOSMessageBundle' %}undelete{% endtrans %}{% endset %}
+                            {% set submitValue %}{{ "form.common.btn.undelete"|trans }}{% endset %}
                         {% else %}
                             {% set formAction %}{{ url('fos_message_thread_delete', {'threadId': thread.id}) }}{% endset %}
-                            {% set submitValue %}{% trans from 'FOSMessageBundle' %}delete{% endtrans %}{% endset %}
+                            {% set submitValue %}{{ "form.common.btn.delete"|trans }}{% endset %}
                         {% endif %}
                         <form action="{{ formAction }}" method="post">
-                                <button class="btn btn-white btn-sm" data-placement="top" title="{{ submitValue }}"><i class="fa fa-trash-o"></i> </button>
+                                <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="{{ submitValue }}"><i class="fa fa-trash-o"></i> </button>
                         </form>
                     {% endif %}
                 </td>

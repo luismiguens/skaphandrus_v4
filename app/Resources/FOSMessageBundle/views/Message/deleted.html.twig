@@ -1,4 +1,4 @@
-{% extends 'SkaphandrusAppBundle::content_layout.html.twig' %}
+{% extends 'FOSMessageBundle::layout.html.twig' %}
 
 {% block heading_title %}{% trans from 'FOSMessageBundle' %}messenger{% endtrans %}{% endblock %}
 
@@ -15,7 +15,7 @@
                 {% include 'FOSMessageBundle::_tools.html.twig' %}
             </div>
                 <div class="mail-box">
-                  {% include 'FOSMessageBundle:Message:threads_list.html.twig' with {'threads': threads} %}
+                  {% include 'FOSMessageBundle:Message:threads_list.html.twig' with {'threads': threads, 'page': 'deleted'} %}
                 </div>
             </div>
         </div>

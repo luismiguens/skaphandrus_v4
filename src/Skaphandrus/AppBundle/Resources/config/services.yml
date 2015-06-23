@@ -29,3 +29,8 @@ services:
         class: Skaphandrus\AppBundle\Form\Type\ResettingFormType
         tags:
             - { name: form.type, alias: skaphandrus_user_resetting }
+
+    skaphandrus_message.new_thread.form.type:
+        class: Skaphandrus\AppBundle\Form\FOSMessage\NewThreadMessageFormType
+        tags:
+            - { name: form.type, alias: skaphandrus_message_new_thread }
