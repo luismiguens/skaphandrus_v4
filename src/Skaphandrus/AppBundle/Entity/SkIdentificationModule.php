@@ -73,6 +73,9 @@ class SkIdentificationModule {
     
     private $points;
 
+    private $users;
+    
+    
     /**
      * Constructor
      */
@@ -451,6 +454,7 @@ class SkIdentificationModule {
         // clean up the file property as you won't need it anymore
         $this->file = null;
     }
+
     
     
     
@@ -463,16 +467,15 @@ class SkIdentificationModule {
      */
     public function addAcquisition(\Skaphandrus\AppBundle\Entity\SkIdentificationAcquisition $acquisition) {
         $this->acquisitions[] = $acquisition;
-
-        return $this;
     }
-
-    /**
-     * Remove acquisition
+    
+      
+     /* * Remove acquisition
      *
      * @param \Skaphandrus\AppBundle\Entity\SkIdentificationAcquisition $acquisition
      */
-    public function removeAcquisition(\Skaphandrus\AppBundle\Entity\SkIdentificationAcquisition $acquisition) {
+    public function removeAcquisition(\Skaphandrus\AppBundle\Entity\SkIdentificationAcquisition $acquisition)
+    {
         $this->acquisitions->removeElement($acquisition);
     }
 
@@ -481,11 +484,46 @@ class SkIdentificationModule {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getAcquisitions() {
+    public function getAcquisitions()
+    {
         return $this->acquisitions;
     }
     
     
     
+    /**
+     * Add user
+     *
+     * @param \Skaphandrus\AppBundle\Entity\FosUser $user
+     *
+     * @return SkIdentificationModule
+     */
+    public function addUser(\Skaphandrus\AppBundle\Entity\FosUser $user)
+    {
+        $this->users[] = $user;
 
+        return $this;
+    }
+
+    
+    
+      /* * Remove user
+     *
+     * @param \Skaphandrus\AppBundle\Entity\FosUser $user
+     */
+    public function removeUser(\Skaphandrus\AppBundle\Entity\FosUser $user)
+    {
+        $this->users->removeElement($user);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+    
 }

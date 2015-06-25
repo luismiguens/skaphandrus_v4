@@ -63,6 +63,12 @@ $(document).ready(function () {
     if ($('#skaphandrus_appbundle_skperson_skaphandrusId').length) {
         $('#skaphandrus_appbundle_skperson_skaphandrusId').autocompleter({url_list: '/app_dev.php/en/ajax_search_fosUser/', url_get: '/app_dev.php/en/ajax_get_fosUser/'});
     }
+    
+    
+    // Formulário FOSMessage new message
+    if ($('#message_recipient').length) {
+        $('#message_recipient').autocompleter({url_list: '/app_dev.php/en/ajax_search_fosUser/', url_get: '/app_dev.php/en/ajax_get_fosUser/'});
+    }
 
     // Formulário SkSpot
     if ($('#skaphandrus_appbundle_skspot_location').length) {

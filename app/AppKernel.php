@@ -58,6 +58,7 @@ class AppKernel extends Kernel {
             
             new Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
             
+            new FOS\MessageBundle\FOSMessageBundle(),
             
         );
 

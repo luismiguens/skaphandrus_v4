@@ -1,0 +1,22 @@
+{% extends 'FOSMessageBundle::layout.html.twig' %}
+
+{% block body %}
+<div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-lg-3">
+                {% include 'FOSMessageBundle::_sidebar.html.twig' %}
+            </div>
+            <div class="col-lg-9 animated fadeInRight">
+            <div class="mail-box-header">
+                {% include 'FOSMessageBundle::_search.html.twig' %}
+                <h2>{{ "page.messages_inbox.h2.title"|trans }} ({{ threads|length }})</h2>
+                {% include 'FOSMessageBundle::_tools.html.twig' %}
+            </div>
+                <div class="mail-box">
+                  {% include 'FOSMessageBundle:Message:threads_list.html.twig' with {'threads': threads, 'page': 'inbox'} %}
+                </div>
+            </div>
+        </div>
+        </div>
+{% endblock %}
+

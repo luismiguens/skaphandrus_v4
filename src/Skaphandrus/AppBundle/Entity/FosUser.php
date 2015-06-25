@@ -17,8 +17,12 @@ namespace Skaphandrus\AppBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
+use FOS\MessageBundle\Model\ParticipantInterface;
 
-class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encoder\EncoderAwareInterface {
+
+
+class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInterface {
 
     protected $id;
     protected $algorithm = 'sha512';

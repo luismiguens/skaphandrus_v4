@@ -1,0 +1,87 @@
+<table class="table table-hover table-mail">
+    <tbody>
+    {% if threads %}
+        {% for thread in threads %}
+            <tr class="{% if not fos_message_is_read(thread) %}unread{% else %}read{% endif %}">
+                <td>
+                    <a href="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}">
+                        {% if page == 'sent' %}{{ "page.messages.label.to"|trans }}: {% endif %}
+                        {% set users = [] %}
+                        {% for participant in thread.participants %}
+                            {% if participant not in users and participant != app.user %}
+                                {% set users = users|merge([participant]) %}
+                            {% endif %}
+                        {% endfor %}
+                        {{ users|join(', ') }}
+                        {# if page != 'sent' %}
+                            {% if thread.messages|length > 1 %}
+                                {% set p = false %}
+                                {% for participant in thread.participants %}
+                                    {% if not p and participant == app.user %}
+                                        {{ participant }}
+                                        {% set p = true %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% else %}
+                            {{ "page.messages.label.to"|trans }}:
+                            {% set p = false %}
+                            {% for participant in thread.participants %}
+                                {% if not p and participant != app.user %}
+                                    {{ participant }}
+                                    {% set p = true %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif #}
+                        {% if thread.messages|length > 1 %} ({{ thread.messages|length }}){% endif %}
+                    </a>
+                </td>
+                <td class="mail-subject">
+                    <a href="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}">
+                        {{ thread.subject }}
+                    </a>
+                </td>
+                {# <td>
+                    <a href="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}">
+                        {{ thread.createdAt|date }}
+                    </a>
+                </td> #}
+                <td class="mail-contact">
+                    {% if thread.lastMessage %}
+                        <a href="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}#message_{{ thread.lastMessage.id }}" title="{% trans from 'FOSMessageBundle' %}goto_last{% endtrans %}">
+                            {{ thread.lastMessage.createdAt|date }}
+                        </a>
+                        {# trans with {'%date%': thread.lastMessage.createdAt|date} from 'FOSMessageBundle' %}on{% endtrans %}
+                        <br />
+                        {% trans with {'%sender%': thread.lastMessage.sender|e } from 'FOSMessageBundle' %}by{% endtrans #}
+                    {% else %}
+                        ----
+                    {% endif %}
+                </td>
+                <td>
+                    {% if fos_message_can_delete_thread(thread) %}
+                        {% if fos_message_deleted_by_participant(thread) %}
+                            {% set formAction %}{{ url('fos_message_thread_undelete', {'threadId': thread.id}) }}{% endset %}
+                            {% set submitValue %}{{ "form.common.btn.undelete"|trans }}{% endset %}
+                        {% else %}
+                            {% set formAction %}{{ url('fos_message_thread_delete', {'threadId': thread.id}) }}{% endset %}
+                            {% set submitValue %}{{ "form.common.btn.delete"|trans }}{% endset %}
+                        {% endif %}
+                        <form action="{{ formAction }}" method="post">
+                                <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="{{ submitValue }}"><i class="fa fa-trash-o"></i> </button>
+                        </form>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td class="mail-subject" colspan="6">
+                {% trans from 'FOSMessageBundle' %}no_thread{% endtrans %}.
+            </td>
+        </tr>
+    {% endif %}
+
+    </tbody>
+
+</table>
