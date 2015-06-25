@@ -156,6 +156,7 @@ class SkLocation {
 
     public function getName() {
         return $this->translate()->getName();
+        
     }
 
     public function getDescription() {

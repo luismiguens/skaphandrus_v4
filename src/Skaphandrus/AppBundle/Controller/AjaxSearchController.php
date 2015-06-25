@@ -88,7 +88,9 @@ class AjaxSearchController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $SkLocation = $em->getRepository('SkaphandrusAppBundle:SkLocation')->find($id);
 
-        return new Response($SkLocation->getName().", ".$SkLocation()->getRegion()->getCountry());
+        //return new Response($SkLocation->getName().", ".$SkLocation()->getRegion()->getCountry());
+        return new Response($SkLocation->getName().", ".$SkLocation->getRegion());
+        
     }
     
     

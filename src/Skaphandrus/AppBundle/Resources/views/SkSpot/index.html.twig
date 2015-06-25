@@ -50,13 +50,15 @@
         <thead>
             <tr>
                 <th>{{ "form.spot.label.name"|trans }}</th>
+                <th>{{ "form.spot.label.location"|trans }}</th>
                 <th>{{ "form.common.label.actions"|trans }}</th>
             </tr>
         </thead>
         <tbody>
             {% for entity in entities %}
                 <tr>
-                    <td>{{ link_to_spot(entity) }}">{{ entity.getName }}</td>
+                    <td>{{ link_to_spot(entity) }}</td>
+                    <td>{{ entity.location }}, {{ entity.location.region.country }} </td>
                     <td>
                         <a class="btn btn-white btn-sm" href="{{ path('spot_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.edit"|trans }}</a>
                         <a class="btn btn-white btn-sm" href="{{ url_to_spot(entity) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.view"|trans }}</a>

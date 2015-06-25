@@ -36,45 +36,56 @@
 {% endblock %}
 {% block body -%}
 
+    <p>{{entity.settings.points}} points</p>
+
+    {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
+
+    {{ form_errors(edit_form) }}
 
 
     <table class="table table-striped" >
         <thead>
             <tr>
-                <th>a</th> 
+                <th></th> 
                 <th>{{ "form.modules.label.name"|trans }}</th>
                 <th>{{ "form.modules.label.points"|trans }}</th>
+               {# <th>{{ "form.modules.label.acquisition_type"|trans }}</th>#}
                 <th>{{ "form.modules.label.acquired_at"|trans }}</th>
-                <th>{{ "form.modules.label.acquired_type"|trans }}</th>
 
             </tr>
         </thead>
         <tbody>
-            {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
-            {% for child in edit_form.modules %}
-                {% set index = child.vars.value %}
+
+            {% for module in edit_form.modules %}
+
+                {% set index = module.vars.value %}{# get array index #}
+                {% set entity = edit_form.modules.vars.choices[index].data %}{# get entity object #}
+
+                {% if entity.points == 0 %}
+                    {% set checked = true %}
+                {% else %}
+                    {% set checked = false %}
+                {% endif%}
 
                 <tr>
-                    <td>{{ form_widget(child, { 'attr': {'class': 'i-checks'} }) }}</td>
-                    <td>{{ choices[index].name }}</td>
-                    <td><span class="pie">0.52/1.561</span></td>
+                    <td>{{ form_widget(module,{ 'attr': {'checked': checked} }) }}</td>{# render checkbox #}
+                    <td>{{ entity.name }}</td>
+                    <td>{{ entity.pointsName }}</td>
+                    {% if entity.acquisitions|length > 0 %}
+                        {% for acquisition in entity.acquisitions %}
+                            {#<td>{{ acquisition.acquisitionType }}</td>#}
+                            <td>{{ acquisition.acquiredAt|date('Y-m-d H:i:s') }}</td>
 
-                    <td>Jul 14, 2013</td>
-                    <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+                        {% endfor %}
+                    {% else %}
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    {% endif %}
                 </tr>
             {% endfor %}
-
-
-            {{ form_end(edit_form) }}
         </tbody>
     </table>
-
-
-
-
-
-
-
-
+    <button type="submit" class="btn btn-primary">{{ "form.common.btn.update"|trans }}</button>
+    {{ form_end(edit_form) }}
 
 {% endblock %}

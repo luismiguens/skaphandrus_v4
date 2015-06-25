@@ -1,0 +1,8 @@
+profile_admin_edit:
+    path:     /edit
+    defaults: { _controller: "SkaphandrusAppBundle:SkProfile:edit" }
+
+profile_admin_update:
+    path:     /update
+    defaults: { _controller: "SkaphandrusAppBundle:SkProfile:update" }
+    methods:  [POST, PUT]

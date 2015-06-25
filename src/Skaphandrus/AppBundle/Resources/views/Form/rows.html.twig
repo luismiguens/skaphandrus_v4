@@ -1,15 +1,15 @@
 {% block form_row %}
     {% spaceless %}
         <div class="form-group">
-            <label class="col-sm-2 control-label">
+            <label class="col-sm-3 control-label">
                 {{ form_label(form) }}
             </label>
 
             {{ form_errors(form) }}
-            <div class="col-sm-10">
+            <div class="col-sm-9">
                 {# Show image if it's a file field and there is an image defined #}
-                {% if form.vars.type is defined and form.vars.type =='file' and form.parent.vars.value.image is defined %}
-                    <img src="{{ form.parent.vars.value.getWebPath | imagine_filter('sk_widen_240') }}" />
+                {% if form.vars.type is defined and form.vars.type =='file' and (form.parent.vars.value.image is defined or form.parent.vars.value.photo is defined) %}
+                    <img class="thumbnail" src="{{ form.parent.vars.value.getWebPath | imagine_filter('sk_widen_240') }}" />
                 {% endif %}
                 {{ form_widget(form) }}
             </div>
@@ -23,18 +23,23 @@
 
 {% block _skaphandrus_appbundle_skspot_translations_en_name_row %}
     <div class="form-group">
-        <label class="col-lg-2 control-label">{{ form_label(form) }}</label>
+        <label class="col-lg-3 control-label">{{ form_label(form) }}</label>
+        {{ form_errors(form) }}
+        <div class="col-lg-9">
+            {{ form_widget(form) }} 
+        </div>
+    </div>
+{% endblock %}
+
+{% block _skaphandrus_appbundle_skspot_translations_pt_name_row %}
+    <div class="form-group">
+        <label class="col-lg-3 control-label">{{ form_label(form) }}</label>
         {{ form_errors(form) }}
         <div class="col-lg-10">
             {{ form_widget(form) }} 
         </div>
     </div>
-        
-
-        
-        
-        
-    {% endblock %}
+{% endblock %}
 
 
 

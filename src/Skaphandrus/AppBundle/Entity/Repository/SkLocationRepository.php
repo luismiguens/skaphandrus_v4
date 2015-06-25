@@ -14,25 +14,23 @@ class SkLocationRepository extends EntityRepository {
 
     public function findBySlug($name, $country, $locale) {
         $query = $this->getEntityManager()
-            ->createQuery(
-                'SELECT l, t
+                        ->createQuery(
+                                'SELECT l, t
                 FROM SkaphandrusAppBundle:SkLocation l
                 JOIN l.translations t
                 JOIN l.region r
                 WHERE t.name = :name
                 AND t.locale = :locale
                 AND IDENTITY(r.country) = ' . $this->getEntityManager()->getRepository('SkaphandrusAppBundle:SkCountry')->findBySlug($country)->getId()
-                )->setParameter('name', $name)->setParameter('locale', $locale);
+                        )->setParameter('name', $name)->setParameter('locale', $locale);
         try {
             return $query->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
     }
-    
-    
-    
-        public function findLikeName($term, $locale) {
+
+    public function findLikeName($term, $locale) {
 
         return $this->getEntityManager()->createQuery(
                         "SELECT l
@@ -44,8 +42,4 @@ class SkLocationRepository extends EntityRepository {
                 )->setParameter('term', '%' . $term . '%')->setParameter('locale', $locale)->getResult();
     }
 
-    
-    
-    
-    
 }

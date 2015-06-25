@@ -13,8 +13,8 @@ class FosUserControllerTest extends WebTestCase
         $client = static::createClient();
 
         // Create a new entry in the database
-        $crawler = $client->request('GET', '/fos_user/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /fos_user/");
+        $crawler = $client->request('GET', '/profile_admin/');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /profile_admin/");
         $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
 
         // Fill in the form and submit it

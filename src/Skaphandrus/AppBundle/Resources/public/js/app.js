@@ -27,10 +27,6 @@ $(document).ready(function () {
         $('#skaphandrus_appbundle_skphoto_spot').autocompleter({url_list: '/app_dev.php/en/ajax_search_spot/', url_get: '/app_dev.php/en/ajax_get_spot/'});
     }
 
-    if ($('#skaphandrus_appbundle_skspot_location').length) {
-        $('#skaphandrus_appbundle_skspot_location').autocompleter({url_list: '/app_dev.php/en/ajax_search_location/', url_get: '/app_dev.php/en/ajax_get_location/'});
-    }
-
     // Formulário Identification Group
     if ($('#skaphandrus_appbundle_skidentificationgroup_genus').length) {
         $('#skaphandrus_appbundle_skidentificationgroup_genus').autocompleter({url_list: '/app_dev.php/en/ajax_search_genus/', url_get: '/app_dev.php/en/ajax_get_genus/'});
@@ -53,7 +49,7 @@ $(document).ready(function () {
     }
 
     // Filtro Identification Species Index
-    $('#form_module_filter_form_id').change(function() {
+    $('#form_module_filter_form_id').change(function () {
         // var id = $(this).val(); // get selected value
         // if (id) { // require a URL
         //     window.location = '/identification_species_admin/' + id; // redirect
@@ -61,16 +57,19 @@ $(document).ready(function () {
         // return false;
         $(this).parent('form').submit();
     });
-    
-    
-    
-        // Formulário skPerson
+
+
+    // Formulário skPerson
     if ($('#skaphandrus_appbundle_skperson_skaphandrusId').length) {
         $('#skaphandrus_appbundle_skperson_skaphandrusId').autocompleter({url_list: '/app_dev.php/en/ajax_search_fosUser/', url_get: '/app_dev.php/en/ajax_get_fosUser/'});
     }
 
-    
-    
-    
-    
+    // Formulário SkSpot
+    if ($('#skaphandrus_appbundle_skspot_location').length) {
+        $('#skaphandrus_appbundle_skspot_location').autocompleter({url_list: '/app_dev.php/en/ajax_search_location/', url_get: '/app_dev.php/en/ajax_get_location/'});
+    }
+
+
+
+
 });

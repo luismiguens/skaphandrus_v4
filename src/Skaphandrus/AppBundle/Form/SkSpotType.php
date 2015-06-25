@@ -20,8 +20,16 @@ class SkSpotType extends AbstractType
                             'attr' => array('class' => 'form-control'),
                             'label'=>'form.spot.label.maxDepth'
                             ))
-            ->add('coordinate')
-            ->add('zoom')
+            ->add('coordinate','text',
+                        array(
+                            'attr' => array('class' => 'form-control'),
+                            'label'=>'form.spot.label.coordinate'
+                            ))
+            ->add('zoom', 'text', 
+                        array(
+                            'attr' => array('class' => 'form-control'),
+                            'label'=>'form.spot.label.zoom'
+                            ))
             //->add('isAproved')
             //->add('createdAt')
             //->add('updatedAt')
@@ -53,7 +61,7 @@ class SkSpotType extends AbstractType
             'description' => array(
               'field_type' => 'textarea',
               'label' => 'form.spot.label.description', 
-                'attr' => array('class' => 'form-control'),
+                'attr' => array('class' => 'form-control', 'rows'=>'8'),
 //              'locale_options' => array(
 //                  'fr' => array(
 //                      'label' => 'description'
@@ -64,7 +72,7 @@ class SkSpotType extends AbstractType
 //              )
                 ),
             ))); 
-        ;
+        
     }
     
     /**

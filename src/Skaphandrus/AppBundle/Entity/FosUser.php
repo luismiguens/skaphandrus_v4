@@ -15,16 +15,14 @@
 namespace Skaphandrus\AppBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
-
-class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encoder\EncoderAwareInterface{
-
+class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encoder\EncoderAwareInterface {
 
     protected $id;
-
     protected $algorithm = 'sha512';
-    
+
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
@@ -35,20 +33,22 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
      */
     private $photos;
 
-    
-        /**
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
+    private $acquisitions;
     private $modules;
-
-
-    private $personal;
     
+    
+    private $personal;
+    private $address;
+    private $contact;
+    private $settings;
+
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $photosValidated;
-
 
     public function getEncoderName() {
         return $this->algorithm == 'sha1' ? 'legacy' : 'default';
@@ -56,44 +56,118 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
 
     public function __construct() {
         parent::__construct();
+        
+        $this->acquisitions = new ArrayCollection();
+        $this->modules = new ArrayCollection();
+        
         // your own logic
     }
 
+    
+    
+      // Important 
+    public function getModules()
+    {
+        $modules = new ArrayCollection();
+        
+        foreach($this->acquisitions as $acquisition)
+        {
+            $modules[] = $acquisition->getModule();
+        }
+
+        return $modules;
+    }
+    // Important
+    public function setModules($modules)
+    {
+        foreach($modules as $module)
+        {
+            $acquisition = new SkIdentificationAcquisition();
+
+            $acquisition->setFosUser($this);
+            $acquisition->setModule($module);
+
+            $this->addAcquisition($acquisition);
+        }
+
+    }
+    
+    
+    
+    
+    
+    
     public function setSalt($salt) {
         $this->salt = $salt;
     }
 
-
-    
-   public function getPersonal()
-    {
-        return $this->personal;
+    public function getSettings() {
+        return $this->settings;
     }
-    
-     
-    //@@@@@@@@@ TEMPORARY APENAS PARA IMPORTACAO DOS UTILIZADORES
-    /** 
-     * Set id
+
+    /**
+     * Set settings
      *
      * @return integer 
      */
-    public function setPersonalId($personal)
-    {
-        $this->personal = $personal;
-        
+    public function setSettings($settings) {
+        $this->settings = $settings;
+
         return $this;
     }
-    
-    
-    
+
+    public function getPersonal() {
+        return $this->personal;
+    }
+
+    /**
+     * Set personal
+     *
+     * @return integer 
+     */
+    public function setPersonal($personal) {
+        $this->personal = $personal;
+
+        return $this;
+    }
+
+    public function getContact() {
+        return $this->contact;
+    }
+
+    /**
+     * Set contact
+     *
+     * @return integer 
+     */
+    public function setContact($contact) {
+        $this->contact = $contact;
+
+        return $this;
+    }
+
+    public function getAddress() {
+        return $this->address;
+    }
+
+    /**
+     * Set address
+     *
+     * @return integer 
+     */
+    public function setAddress($address) {
+        $this->address = $address;
+
+        return $this;
+    }
+
     /**
      * Set algorithm
      *
      * @param string $algorithm
      * @return User
      */
-    public function setAlgorithm($algorithm)
-    {
+    public function setAlgorithm($algorithm) {
         $this->algorithm = $algorithm;
 
         return $this;
@@ -104,8 +178,7 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
      *
      * @return string 
      */
-    public function getAlgorithm()
-    {
+    public function getAlgorithm() {
         return $this->algorithm;
     }
 
@@ -114,27 +187,21 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
-    
-     
-    //@@@@@@@@@ TEMPORARY APENAS PARA IMPORTACAO DOS UTILIZADORES
-    /** 
+
+    /**
      * Set id
      *
      * @return integer 
      */
-    public function setId($id)
-    {
+    public function setId($id) {
         $this->id = $id;
-        
+
         return $this;
     }
-    //@@@@@@@@@ TEMPORARY APENAS PARA IMPORTACAO DOS UTILIZADORES
-    
-    
+
     /**
      * Add spot
      *
@@ -142,8 +209,7 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
      *
      * @return FosUser
      */
-    public function addSpot(\Skaphandrus\AppBundle\Entity\SkSpot $spot)
-    {
+    public function addSpot(\Skaphandrus\AppBundle\Entity\SkSpot $spot) {
         $this->spots[] = $spot;
 
         return $this;
@@ -154,8 +220,7 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
      *
      * @param \Skaphandrus\AppBundle\Entity\SkSpot $spot
      */
-    public function removeSpot(\Skaphandrus\AppBundle\Entity\SkSpot $spot)
-    {
+    public function removeSpot(\Skaphandrus\AppBundle\Entity\SkSpot $spot) {
         $this->spots->removeElement($spot);
     }
 
@@ -164,8 +229,7 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getSpots()
-    {
+    public function getSpots() {
         return $this->spots;
     }
 
@@ -176,8 +240,7 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
      *
      * @return FosUser
      */
-    public function addPhoto(\Skaphandrus\AppBundle\Entity\SkPhoto $photo)
-    {
+    public function addPhoto(\Skaphandrus\AppBundle\Entity\SkPhoto $photo) {
         $this->photos[] = $photo;
 
         return $this;
@@ -188,8 +251,7 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPhoto $photo
      */
-    public function removePhoto(\Skaphandrus\AppBundle\Entity\SkPhoto $photo)
-    {
+    public function removePhoto(\Skaphandrus\AppBundle\Entity\SkPhoto $photo) {
         $this->photos->removeElement($photo);
     }
 
@@ -198,8 +260,7 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPhotos()
-    {
+    public function getPhotos() {
         return $this->photos;
     }
 
@@ -210,21 +271,18 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
      *
      * @return FosUser
      */
-    public function addPhotosValidated(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photosValidated)
-    {
+    public function addPhotosValidated(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photosValidated) {
         $this->photosValidated[] = $photosValidated;
 
         return $this;
     }
 
-    
-      /**
+    /**
      * Remove $photosValidated
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photosValidated
      */
-    public function removePhotosValidated(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photosValidated)
-    {
+    public function removePhotosValidated(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photosValidated) {
         $this->photosValidated->removeElement($photosValidated);
     }
 
@@ -233,55 +291,47 @@ class FosUser extends BaseUser implements \Symfony\Component\Security\Core\Encod
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPhotosValidated()
-    {
+    public function getPhotosValidated() {
         return $this->photosValidated;
-    }
-    
-    
-    
-    
-    
-    
-    /**
-     * Remove module
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkModule $module
-     */
-    public function removeModule(\Skaphandrus\AppBundle\Entity\SkIdentificationModule $module)
-    {
-        $this->modules->removeElement($module);
     }
 
     /**
-     * Get modules
+     * Remove acquisition
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkAcquisition $acquisition
+     */
+    public function removeAcquisition(\Skaphandrus\AppBundle\Entity\SkIdentificationAcquisition $acquisition) {
+        $this->acquisitions->removeElement($acquisition);
+    }
+
+    /**
+     * Get acquisitions
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getModules()
-    {
-        return $this->modules;
+    public function getAcquisitions() {
+        return $this->acquisitions;
     }
-    
-    
-       public function addModule(\Skaphandrus\AppBundle\Entity\SkIdentificationModule $module)
-    {
-        $this->modules[] = $module;
+
+    public function addAcquisition(\Skaphandrus\AppBundle\Entity\SkIdentificationAcquisition $acquisition) {
+        $this->acquisitions[] = $acquisition;
 
         return $this;
     }
-    
-    
-    public function getName(){
-       return $this->getPersonal()->__toString();
+
+    public function getName() {
+        return $this->getPersonal()->__toString();
     }
-            
-    
+
     public function __toString() {
         return $this->getName();
     }
+
     
-    
+    public function getFosUser() {
+        return $this;
+    }
+
     
     
     

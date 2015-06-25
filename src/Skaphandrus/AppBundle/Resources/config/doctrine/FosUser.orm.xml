@@ -13,7 +13,7 @@
         <one-to-many field="photos" target-entity="SkPhoto" mapped-by="fosUser"/>
         
         
-        <many-to-many field="modules" target-entity="SkIdentificationModule" inversed-by="users" fetch="LAZY">
+        <!--<many-to-many field="modules" target-entity="SkIdentificationModule" inversed-by="users" fetch="LAZY">
             <join-table name="sk_identification_module_username">
                 <join-columns>
                     <join-column name="fos_user_id" referenced-column-name="id"/>
@@ -22,17 +22,29 @@
                     <join-column name="module_id" referenced-column-name="id"/>
                 </inverse-join-columns>
             </join-table>
-        </many-to-many>
+        </many-to-many>-->
     
+        
+
+        <one-to-many field="acquisitions" target-entity="SkIdentificationAcquisition" mapped-by="fosUser">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+
+        
         
         <one-to-many field="photosValidated" target-entity="SkPhotoSpeciesValidation" mapped-by="fosUser"/>
 
-<!--        <one-to-one field="personal" target-entity="SkPersonal" inversed-by="id" >
-            <join-column name="id" referenced-column-name="fos_user_id" />
-        </one-to-one>-->
+
     
     
-    <one-to-one field="personal" target-entity="SkPersonal" mapped-by="fosUser" />
+
+        <one-to-one field="settings" target-entity="SkSettings" mapped-by="fosUser" />
+        
+        <one-to-one field="personal" target-entity="SkPersonal" mapped-by="fosUser" />
+        <one-to-one field="address" target-entity="SkAddress" mapped-by="fosUser" />
+        <one-to-one field="contact" target-entity="SkContact" mapped-by="fosUser" />
     
         
         

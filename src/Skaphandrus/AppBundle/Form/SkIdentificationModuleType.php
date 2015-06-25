@@ -31,7 +31,7 @@ class SkIdentificationModuleType extends AbstractType
             //->add('image')
             ->add('file', 'file', array(
                 'label' => 'form.identification_module.label.file',
-                'required' => true
+                'required' => false
             ))
         ;
     }

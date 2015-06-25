@@ -6,7 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class FosUserModuleUsernameType extends AbstractType {
+
+class FosUserModulesType extends AbstractType {
 
     /**
      * @param FormBuilderInterface $builder
@@ -18,8 +19,14 @@ class FosUserModuleUsernameType extends AbstractType {
                     'class' => 'SkaphandrusAppBundle:SkIdentificationModule',
                     'property' => 'name',
                     'expanded' => true,
-                    'multiple' => true));
+                    'multiple' => true
+                    )
+                        );
     }
+        
+
+ 
+    
 
     /**
      * @param OptionsResolverInterface $resolver

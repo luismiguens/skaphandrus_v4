@@ -449,7 +449,7 @@ class SkPhoto {
     protected function getUploadDir() {
 // get rid of the __DIR__ so it doesn't screw up
 // when displaying uploaded doc/image in the view.
-        return 'uploads';
+        return 'uploads/fotografias';
     }
 
     private $file;
@@ -476,24 +476,33 @@ class SkPhoto {
      * 
      * @return type
      */
-    public function upload() {
-// the file property can be empty if the field is not required
+   public function upload() {
+        // the file property can be empty if the field is not required
         if (null === $this->getFile()) {
             return;
         }
 
-// use the original file name here but you should
-// sanitize it at least to avoid any security issues
-// move takes the target directory and then the
-// target filename to move to
-        $this->getFile()->move(
-                $this->getUploadRootDir(), sha1(uniqid(mt_rand(), true)).'.'.$this->getFile()->guessExtension()
-        );
+        $filename = sha1(uniqid(mt_rand(), true));
+            
+        $this->image = $filename.'.'.$this->getFile()->guessExtension();
+        
+        
+        // use the original file name here but you should
+        // sanitize it at least to avoid any security issues
+        // move takes the target directory and then the
+        // target filename to move to
+//        $this->getFile()->move(
+//                $this->getUploadRootDir(), sha1(uniqid(mt_rand(), true)).'.'.$this->getFile()->guessExtension()
+//        );
 
-// set the path property to the filename where you've saved the file
-        $this->image = $this->getFile()->getClientOriginalName();
+        $this->getFile()->move($this->getUploadRootDir(), $this->image);
+        
+        
+        // set the path property to the filename where you've saved the file
+        //$this->image = $this->getFile()->getClientOriginalName();
+        
 
-// clean up the file property as you won't need it anymore
+        // clean up the file property as you won't need it anymore
         $this->file = null;
     }
 

@@ -8,7 +8,6 @@
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.bootstrap.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.responsive.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.tableTools.min.js') }}"></script>#}
-    <script src="{{ asset('bundles/skaphandrusapp/js/skaphandrus.js') }}"></script>
 {% endblock %}
 
 
@@ -47,9 +46,9 @@
 
     <table class="table table-striped">
         <thead>
-            <tr>
+            <tr>    <th>{{ "form.photo.label.image"|trans }}</th>
                 <th>{{ "form.photo.label.title"|trans }}</th>
-                <th>{{ "form.photo.label.image"|trans }}</th>
+            
                 <th>{{ "form.photo.label.takenat"|trans }}</th>
                 <th>{{ "form.common.label.actions"|trans }}</th>
             </tr>
@@ -58,7 +57,7 @@
             {% for photo in pagination %}
                 <tr>
                     <td>{{ link_to_photo(photo) }}</td>
-                    <td><img src="{{ photo.getWebPath | imagine_filter('sk_widen_240') }}" /></td>
+                    <td>{{ photo.getWebPath | imagine_filter('sk_widen_240') }}" /></td>
                     <td>{% if photo.takenAt %}{{ photo.takenAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                     <td>
                         <a class="btn btn-white btn-sm" href="{{ path('photo_admin_edit', { 'id': photo.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.edit"|trans }}</a>

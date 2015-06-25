@@ -8,6 +8,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Skaphandrus\AppBundle\Entity\SkSpot;
 use Skaphandrus\AppBundle\Form\SkSpotType;
 
+
+
+
+
 /**
  * SkSpot controller.
  *
@@ -92,10 +96,14 @@ class SkSpotController extends Controller
     {
         $entity = new SkSpot();
         $form   = $this->createCreateForm($entity);
+        
+        
+        
+        
 
         return $this->render('SkaphandrusAppBundle:SkSpot:new.html.twig', array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form'   => $form->createView()
         ));
     }
 
@@ -232,7 +240,7 @@ class SkSpotController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('spot_admin_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'form.common.btn.delete','attr' => array('class' => 'btn btn-danger')))
             ->getForm()
         ;
     }

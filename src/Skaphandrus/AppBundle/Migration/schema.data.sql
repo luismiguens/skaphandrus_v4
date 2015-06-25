@@ -2052,9 +2052,35 @@ CREATE TABLE `sk_identification_module_translation`
 -- sk_identification_module_username
 -- ---------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `sk_identification_module_username`;
+ DROP TABLE IF EXISTS `sk_identification_module_username`;
+-- 
+-- CREATE TABLE `sk_identification_module_username`
+-- (
+-- 	`id` INTEGER NOT NULL AUTO_INCREMENT,
+-- 	`module_id` INTEGER NOT NULL,
+--         `fos_user_id` INTEGER NOT NULL,
+-- 	`acquisition_type` INTEGER NOT NULL,
+--         `acquired_at` DATETIME,
+-- 	PRIMARY KEY (`id`),
+-- 	INDEX `sk_identification_module_username_FI_1` (`module_id`),
+-- 	CONSTRAINT `sk_identification_module_username_FK_1`
+-- 		FOREIGN KEY (`module_id`)
+-- 		REFERENCES `sk_identification_module` (`id`)
+-- 		ON UPDATE CASCADE
+-- 		ON DELETE CASCADE,
+-- 	CONSTRAINT `sk_identification_module_username_FK_2`
+-- 		FOREIGN KEY (`fos_user_id`)
+-- 		REFERENCES `fos_user` (`id`)
+-- 		ON UPDATE CASCADE
+-- 		ON DELETE CASCADE
+-- ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `sk_identification_module_username`
+
+
+
+DROP TABLE IF EXISTS `sk_identification_acquisition`;
+
+CREATE TABLE `sk_identification_acquisition`
 (
 	`id` INTEGER NOT NULL AUTO_INCREMENT,
 	`module_id` INTEGER NOT NULL,
@@ -2062,13 +2088,13 @@ CREATE TABLE `sk_identification_module_username`
 	`acquisition_type` INTEGER NOT NULL,
         `acquired_at` DATETIME,
 	PRIMARY KEY (`id`),
-	INDEX `sk_identification_module_username_FI_1` (`module_id`),
-	CONSTRAINT `sk_identification_module_username_FK_1`
+	INDEX `sk_identification_acquisition_FI_1` (`module_id`),
+	CONSTRAINT `sk_identification_acquisition_FK_1`
 		FOREIGN KEY (`module_id`)
 		REFERENCES `sk_identification_module` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE CASCADE,
-	CONSTRAINT `sk_identification_module_username_FK_2`
+	CONSTRAINT `sk_identification_acquisition_FK_2`
 		FOREIGN KEY (`fos_user_id`)
 		REFERENCES `fos_user` (`id`)
 		ON UPDATE CASCADE
@@ -2420,6 +2446,10 @@ CREATE TABLE  `fos_user` (
 
 ###############################################################################################
 ######################################  USERS TABLES ##########################################
+INSERT INTO skaphandrus4.sk_sex_type SELECT * FROM skaphandrus3.sk_sex_type;
+INSERT INTO skaphandrus4.sk_sex_type_translation (translatable_id, name, locale) SELECT id, name, culture FROM skaphandrus3.sk_sex_type_i18n;
+
+
 
 INSERT INTO skaphandrus4.sk_email_notification_time SELECT * FROM skaphandrus3.sk_email_notification_time;
 INSERT INTO skaphandrus4.sk_email_notification_time_translation (translatable_id, name, locale) SELECT id, name, culture FROM skaphandrus3.sk_email_notification_time_i18n;

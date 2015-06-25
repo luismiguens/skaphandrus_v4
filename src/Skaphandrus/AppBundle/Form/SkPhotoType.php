@@ -23,7 +23,7 @@ class SkPhotoType extends AbstractType {
                 ->add('file', 'file', 
                         array(
                             'label'=>'form.photo.label.file',
-                            'required' => true
+                            'required' => false
                             )
                         )
                 ->add('description', 'textarea', 

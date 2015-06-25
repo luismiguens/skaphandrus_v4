@@ -60,11 +60,11 @@
         <option name="unsigned"/>
       </options>
     </field>
-    <many-to-one field="fosUser" target-entity="FosUser" fetch="LAZY">
+<!--    <many-to-one field="fosUser" target-entity="FosUser" fetch="LAZY">
       <join-columns>
         <join-column name="fos_user_id" referenced-column-name="id"/>
       </join-columns>
-    </many-to-one>
+    </many-to-one>-->
     <many-to-one field="location" target-entity="SkLocation" fetch="LAZY">
       <join-columns>
         <join-column name="location_id" referenced-column-name="id"/>
@@ -75,5 +75,11 @@
         <join-column name="business_id" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
+    
+    
+            <one-to-one field="fosUser" target-entity="FosUser" inversed-by="address">
+            <join-column name="fos_user_id" referenced-column-name="id" />
+        </one-to-one>
+    
   </entity>
 </doctrine-mapping>

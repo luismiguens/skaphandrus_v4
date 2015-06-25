@@ -1,6 +1,7 @@
 
 
 
+
 #### Identification Admin Routes    
     
 skaphandrus_app_identification_species_admin:
@@ -40,7 +41,6 @@ skaphandrus_app_photo_admin:
 skaphandrus_app_points_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skpoints.yml"
     prefix:   /{_locale}/points_admin
-    
 
 skaphandrus_app_modules_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skmodules.yml"
@@ -50,8 +50,13 @@ skaphandrus_app_person_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skperson.yml"
     prefix:   /{_locale}/person_admin
 
+skaphandrus_app_settings_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/sksettings.yml"
+    prefix:   /{_locale}/settings_admin
 
-
+skaphandrus_app_profile_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skprofile.yml"
+    prefix:   /{_locale}/profile_admin
 
 
 
@@ -165,7 +170,10 @@ user:
     requirements:
         _locale:  en|pt
 
-#CONTROLLER CONTEST
+
+##################################################################################
+#### CONTROLLER CONTESTS
+
 contests_landing_page:
     path:     /{_locale}/underwater-photo-contest
     defaults: { _controller: SkaphandrusAppBundle:Contest:landing, _locale: en }
@@ -196,7 +204,9 @@ contests_contest:
     requirements:
         _locale:  en|pt
 
-# CONTROLLER IDENTIFICATION
+
+##################################################################################
+#### CONTROLLER IDENTIFICATION APP
 
 identification_criterias:
     path:     /{_locale}/app/criterias.{_format}
@@ -309,6 +319,9 @@ ajax_get_spot:
     path:     /{_locale}/ajax_get_spot/{id}
     defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetSpot }
     
+ajax_get_location:
+    path:     /{_locale}/ajax_get_location/{id}
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetLocation }
     
 ajax_get_fosUser:
     path:     /{_locale}/ajax_get_fosUser/{id}

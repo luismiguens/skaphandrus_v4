@@ -146,16 +146,25 @@ class SkIdentificationCharacter
             return;
         }
 
+        $filename = sha1(uniqid(mt_rand(), true));
+            
+        $this->image = $filename.'.'.$this->getFile()->guessExtension();
+        
+        
         // use the original file name here but you should
         // sanitize it at least to avoid any security issues
         // move takes the target directory and then the
         // target filename to move to
-        $this->getFile()->move(
-                $this->getUploadRootDir(), sha1(uniqid(mt_rand(), true)).'.'.$this->getFile()->guessExtension()
-        );
+//        $this->getFile()->move(
+//                $this->getUploadRootDir(), sha1(uniqid(mt_rand(), true)).'.'.$this->getFile()->guessExtension()
+//        );
 
+        $this->getFile()->move($this->getUploadRootDir(), $this->image);
+        
+        
         // set the path property to the filename where you've saved the file
-        $this->image = $this->getFile()->getClientOriginalName();
+        //$this->image = $this->getFile()->getClientOriginalName();
+        
 
         // clean up the file property as you won't need it anymore
         $this->file = null;

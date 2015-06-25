@@ -1,0 +1,67 @@
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% form_theme edit_form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block heading_title %}
+    {{ "form.profile.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="index.html">{{ "breadcrumb.profile"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.edit_profile"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+
+{% block heading_action %}
+    <a href="{{ path('photo_admin_new') }}" class="btn btn-primary">{{ "form.photo.btn.add"|trans }}</a>
+{% endblock %}
+
+
+{% block form_title_description %}
+    {{ "form.profile.text.description"|trans }}
+{% endblock %}
+
+
+
+
+{% block body %}
+
+
+
+    {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
+
+    {{ form_row(edit_form.settings.file) }}
+
+
+    {{ form_row(edit_form.personal.firstname) }}
+    {{ form_row(edit_form.personal.middlename) }}
+    {{ form_row(edit_form.personal.lastname) }}
+    {{ form_row(edit_form.personal.birthdate) }}
+    {{ form_row(edit_form.personal.sexType) }}
+    {{ form_row(edit_form.settings.observations) }}
+    <button type="submit" class="btn btn-primary">{{ "form.common.btn.update"|trans }}</button>
+    {{ form_end(edit_form) }}
+
+
+
+
+{% endblock %}
+
+
+
+
+

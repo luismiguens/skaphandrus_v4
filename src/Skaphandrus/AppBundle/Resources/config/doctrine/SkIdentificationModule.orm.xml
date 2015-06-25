@@ -44,6 +44,8 @@
       </join-columns>
     </many-to-one>
     
+    <one-to-many field="acquisitions" target-entity="SkIdentificationAcquisition" mapped-by="module"/>
+    
      <one-to-many field="groups" target-entity="SkIdentificationGroup" mapped-by="module"/>
     
     

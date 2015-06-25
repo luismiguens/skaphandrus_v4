@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * SkIdentificationModule
  */
 class SkIdentificationModule {
+
     use ORMBehaviors\Translatable\Translatable;
 
     /**
@@ -62,22 +63,38 @@ class SkIdentificationModule {
      */
     private $groups;
 
-    
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $species;
-
     private $file;
-
+    
+    private $acquisitions;
+    
+    private $points;
 
     /**
      * Constructor
      */
     public function __construct() {
         $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->acquisitions = new \Doctrine\Common\Collections\ArrayCollection();
+        
     }
-    
+
+    public function getSpecies() {
+
+        $species = array();
+        foreach ($this->getGroups() as $group) {
+            if ($group->getIsParentModule()) {
+                $species = array_merge($species, $group->getTaxonValue()->getSpecies()->toArray());
+            }
+        }
+
+        $this->species = $species;
+        return $this->species;
+    }
+
     /**
      * Set appstoreId
      *
@@ -99,6 +116,10 @@ class SkIdentificationModule {
     public function getAppstoreId() {
         return $this->appstoreId;
     }
+    
+    
+
+    
 
     /**
      * Set googleplayId
@@ -124,6 +145,9 @@ class SkIdentificationModule {
 
     /**
      * Set isActive
+     * 
+     * Metodo que controla se o modulo está concluido no lado do servidor.
+     * 
      *
      * @param boolean $isActive
      *
@@ -146,6 +170,11 @@ class SkIdentificationModule {
 
     /**
      * Set isEnabled
+     * 
+     * Metodo que controla se o utilizador tem acesso ao modulo, por pontos, por ser gratuito ou por ter comprado.
+     * is_enabled = 0 = “Will be available soon! New groups are added frequently so stay tuned!”,
+     * is_enabled = -1 = “You don’t have access!”
+     * is_enabled = 1 = “Have access!”
      *
      * @param boolean $isEnabled
      *
@@ -188,6 +217,57 @@ class SkIdentificationModule {
         return $this->isFree;
     }
 
+    
+    /**
+     * Set isFree
+     *
+     * @param boolean $isFree
+     *
+     * @return SkIdentificationModule
+     */
+    public function setPoints($points) {
+        $this->points = $points;
+
+        return $this;
+    }
+
+    /**
+     * Get isFree
+     *
+     * @return boolean
+     */
+    public function getPoints() {
+        
+               
+        if($this->getIsFree()){
+            $this->points = 0;
+        }else{
+            $this->points = count($this->getSpecies());
+        }
+        
+        return $this->points;
+    }
+
+    
+        /**
+     * Get isFree
+     *
+     * @return boolean
+     */
+    public function getPointsName() {
+        
+               
+        if($this->getPoints()==0){
+            return "is_free";
+        }else{
+            return $this->getPoints();
+        }
+        
+        
+    }
+    
+    
+    
     /**
      * Set image
      *
@@ -319,7 +399,7 @@ class SkIdentificationModule {
     protected function getUploadDir() {
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
-        return 'uploads';
+        return 'uploads/characters';
     }
 
     /**
@@ -350,18 +430,62 @@ class SkIdentificationModule {
             return;
         }
 
+        $filename = sha1(uniqid(mt_rand(), true));
+
+        $this->image = $filename . '.' . $this->getFile()->guessExtension();
+
+
         // use the original file name here but you should
         // sanitize it at least to avoid any security issues
         // move takes the target directory and then the
         // target filename to move to
-        $this->getFile()->move(
-                $this->getUploadRootDir(), sha1(uniqid(mt_rand(), true)).'.'.$this->getFile()->guessExtension()
-        );
+//        $this->getFile()->move(
+//                $this->getUploadRootDir(), sha1(uniqid(mt_rand(), true)).'.'.$this->getFile()->guessExtension()
+//        );
+
+        $this->getFile()->move($this->getUploadRootDir(), $this->image);
+
 
         // set the path property to the filename where you've saved the file
-        $this->image = $this->getFile()->getClientOriginalName();
-
+        //$this->image = $this->getFile()->getClientOriginalName();
         // clean up the file property as you won't need it anymore
         $this->file = null;
     }
+    
+    
+    
+        /**
+     * Add acquisition
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkIdentificationAcquisition $acquisition
+     *
+     * @return SkIdentificationAcquisition
+     */
+    public function addAcquisition(\Skaphandrus\AppBundle\Entity\SkIdentificationAcquisition $acquisition) {
+        $this->acquisitions[] = $acquisition;
+
+        return $this;
+    }
+
+    /**
+     * Remove acquisition
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkIdentificationAcquisition $acquisition
+     */
+    public function removeAcquisition(\Skaphandrus\AppBundle\Entity\SkIdentificationAcquisition $acquisition) {
+        $this->acquisitions->removeElement($acquisition);
+    }
+
+    /**
+     * Get acquisitions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAcquisitions() {
+        return $this->acquisitions;
+    }
+    
+    
+    
+
 }

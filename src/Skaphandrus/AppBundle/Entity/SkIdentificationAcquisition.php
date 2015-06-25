@@ -5,8 +5,8 @@ namespace Skaphandrus\AppBundle\Entity;
 /**
  * SkIdentificationModuleUsername
  */
-class SkIdentificationModuleUsername
-{
+class SkIdentificationAcquisition {
+
     /**
      * @var integer
      */
@@ -32,6 +32,10 @@ class SkIdentificationModuleUsername
      */
     private $module;
 
+    public function __construct() {
+        $this->acquisitionType = 1;
+        $this->acquiredAt = new \DateTime();
+    }
 
     /**
      * Set acquisitionType
@@ -40,8 +44,7 @@ class SkIdentificationModuleUsername
      *
      * @return SkIdentificationModuleUsername
      */
-    public function setAcquisitionType($acquisitionType)
-    {
+    public function setAcquisitionType($acquisitionType) {
         $this->acquisitionType = $acquisitionType;
 
         return $this;
@@ -52,9 +55,23 @@ class SkIdentificationModuleUsername
      *
      * @return integer
      */
-    public function getAcquisitionType()
-    {
-        return $this->acquisitionType;
+    public function getAcquisitionType() {
+            return $this->acquisitionType;
+    }
+    
+    
+        /**
+     * Get acquisitionType
+     *
+     * @return integer
+     */
+    public function getAcquisitionTypeName() {
+
+        if ($this->acquisitionType == 1) {
+            return "points";
+        } elseif ($this->acquisitionType == 2) {
+            return "store";
+        }
     }
 
     /**
@@ -64,8 +81,7 @@ class SkIdentificationModuleUsername
      *
      * @return SkIdentificationModuleUsername
      */
-    public function setAcquiredAt($acquiredAt)
-    {
+    public function setAcquiredAt($acquiredAt) {
         $this->acquiredAt = $acquiredAt;
 
         return $this;
@@ -76,8 +92,7 @@ class SkIdentificationModuleUsername
      *
      * @return \DateTime
      */
-    public function getAcquiredAt()
-    {
+    public function getAcquiredAt() {
         return $this->acquiredAt;
     }
 
@@ -86,8 +101,7 @@ class SkIdentificationModuleUsername
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -98,8 +112,7 @@ class SkIdentificationModuleUsername
      *
      * @return SkIdentificationModuleUsername
      */
-    public function setFosUser(\Skaphandrus\AppBundle\Entity\FosUser $fosUser = null)
-    {
+    public function setFosUser(\Skaphandrus\AppBundle\Entity\FosUser $fosUser = null) {
         $this->fosUser = $fosUser;
 
         return $this;
@@ -110,8 +123,7 @@ class SkIdentificationModuleUsername
      *
      * @return \Skaphandrus\AppBundle\Entity\FosUser
      */
-    public function getFosUser()
-    {
+    public function getFosUser() {
         return $this->fosUser;
     }
 
@@ -122,8 +134,7 @@ class SkIdentificationModuleUsername
      *
      * @return SkIdentificationModuleUsername
      */
-    public function setModule(\Skaphandrus\AppBundle\Entity\SkIdentificationModule $module = null)
-    {
+    public function setModule(\Skaphandrus\AppBundle\Entity\SkIdentificationModule $module = null) {
         $this->module = $module;
 
         return $this;
@@ -134,9 +145,8 @@ class SkIdentificationModuleUsername
      *
      * @return \Skaphandrus\AppBundle\Entity\SkIdentificationModule
      */
-    public function getModule()
-    {
+    public function getModule() {
         return $this->module;
     }
-}
 
+}

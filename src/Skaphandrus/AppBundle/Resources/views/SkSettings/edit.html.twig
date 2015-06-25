@@ -1,0 +1,69 @@
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% form_theme edit_form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block heading_title %}
+    {{ "form.settings.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="index.html">{{ "breadcrumb.settings"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.edit_settings"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+
+{% block heading_action %}
+    <a href="{{ path('photo_admin_new') }}" class="btn btn-primary">{{ "form.photo.btn.add"|trans }}</a>
+{% endblock %}
+
+
+{% block form_title_description %}
+    {{ "form.settings.text.description"|trans }}
+{% endblock %}
+
+
+
+
+{% block body %}
+
+    {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
+
+    
+    {{ form_row(edit_form.username) }}
+    
+
+    {{ form_row(edit_form.settings.language) }}
+    {{ form_row(edit_form.settings.emailMessageAtOnce) }}
+    {{ form_row(edit_form.settings.emailCommentAtOnce) }}     
+    {{ form_row(edit_form.settings.emailUpdate) }}
+    {{ form_row(edit_form.settings.emailNotificationTime) }}
+    {{ form_row(edit_form.settings.facebookUid) }}
+    
+    <button type="submit" class="btn btn-primary">{{ "form.common.btn.update"|trans }}</button>
+    
+    {{ form_end(edit_form) }}
+
+
+
+
+
+{% endblock %}
+
+
+
+
+

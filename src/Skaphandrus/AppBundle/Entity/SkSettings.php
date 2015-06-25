@@ -2,6 +2,8 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 /**
  * SkSettings
  */
@@ -312,5 +314,82 @@ class SkSettings
     {
         return $this->emailNotificationTime;
     }
+    
+    
+    
+    public function getAbsolutePath() {
+        return null === $this->photo ? null : $this->getUploadRootDir() . '/' . $this->photo;
+    }
+
+    public function getWebPath() {
+        return null === $this->photo ? null : $this->getUploadDir() . '/' . $this->photo;
+    }
+
+    protected function getUploadRootDir() {
+// the absolute directory path where uploaded
+// documents should be saved
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+
+    protected function getUploadDir() {
+// get rid of the __DIR__ so it doesn't screw up
+// when displaying uploaded doc/image in the view.
+        return 'uploads/utilizadores';
+    }
+
+    private $file;
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null) {
+        $this->file = $file;
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile() {
+        return $this->file;
+    }
+
+    /**
+     * 
+     * @return type
+     */
+   public function upload() {
+        // the file property can be empty if the field is not required
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        $filename = sha1(uniqid(mt_rand(), true));
+            
+        $this->photo = $filename.'.'.$this->getFile()->guessExtension();
+        
+        
+        // use the original file name here but you should
+        // sanitize it at least to avoid any security issues
+        // move takes the target directory and then the
+        // target filename to move to
+//        $this->getFile()->move(
+//                $this->getUploadRootDir(), sha1(uniqid(mt_rand(), true)).'.'.$this->getFile()->guessExtension()
+//        );
+
+        $this->getFile()->move($this->getUploadRootDir(), $this->photo);
+        
+        
+        // set the path property to the filename where you've saved the file
+        //$this->image = $this->getFile()->getClientOriginalName();
+        
+
+        // clean up the file property as you won't need it anymore
+        $this->file = null;
+    }
+
 }
 

@@ -159,7 +159,7 @@ class SkPhotoController extends Controller {
         }
 
         $editForm = $this->createEditForm($entity);
-        $editForm->remove('file');  
+        //$editForm->remove('file');  
         
         
         $deleteForm = $this->createDeleteForm($id);
@@ -209,6 +209,8 @@ class SkPhotoController extends Controller {
 
         if ($editForm->isValid()) {
             $em->flush();
+            
+            $entity->upload();
             
             ##@LM
             $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
