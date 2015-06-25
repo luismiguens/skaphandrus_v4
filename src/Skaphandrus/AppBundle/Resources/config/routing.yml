@@ -1,9 +1,15 @@
+#### Photos Species Validation and Sugestion Routes
+skaphandrus_app_photo_species_validation_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skphotospeciesvalidation.yml"
+    prefix:   /{_locale}/photo_species_validation_admin
+
+skaphandrus_app_photo_species_sugestion_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skphotospeciessugestion.yml"
+    prefix:   /{_locale}/photo_species_sugestion_admin
 
 
 
-
-#### Identification Admin Routes    
-    
+#### Identification Admin Routes
 skaphandrus_app_identification_species_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skidentificationspecies.yml"
     prefix:   /{_locale}/identification_species_admin

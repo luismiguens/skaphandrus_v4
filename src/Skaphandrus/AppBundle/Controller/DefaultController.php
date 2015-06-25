@@ -3,11 +3,20 @@
 namespace Skaphandrus\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse as JsonResponse;
 use Skaphandrus\AppBundle\Utils\Utils;
 use Ivory\GoogleMap\Overlays\Animation;
 use Ivory\GoogleMap\Overlays\Marker;
 use Ivory\GoogleMap\MapTypeId;
+
+// Used Entities
+use Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation;
+use Skaphandrus\AppBundle\Entity\SkPhotoSpeciesSugestion;
+
+// Used Forms
+use Skaphandrus\AppBundle\Form\SkPhotoSpeciesValidationType;
+use Skaphandrus\AppBundle\Form\SkPhotoSpeciesSugestionType;
 
 class DefaultController extends Controller {
 
@@ -447,15 +456,100 @@ class DefaultController extends Controller {
         $title = Utils::unslugify($slug);
 
         $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
-                ->findOneBy(array('id' => $id, 'title' => $title));
+                ->findOneById($id);
 
         if ($photo) {
-            return $this->render('SkaphandrusAppBundle:Default:photo.html.twig', array(
+            $request = $this->get('request');
+            $securityContext = $this->container->get('security.context');
+
+            // Check for validations
+            $validations = $this->getDoctrine()->getManager()->createQuery(
+              'SELECT IDENTITY(sv.species), count(sv.species) AS validation_count
+              FROM SkaphandrusAppBundle:SkPhotoSpeciesValidation sv
+              WHERE IDENTITY(sv.photo) = :id
+              GROUP BY sv.species
+              ORDER BY validation_count DESC'
+            )->setParameter('id', $id)->getResult();
+
+            $validationCount = 0;
+            if (isset($validations[0])) {
+                $validationCount = $validations[0]['validation_count'];
+            }
+
+            $showValidation = $securityContext->isGranted('IS_AUTHENTICATED_FULLY') && $validationCount < 3;
+
+            // Check if validation is new or not
+            $validationAction = 'new';
+            $userValidation = NULL;
+            if ($showValidation) {
+                $userValidation = $this->getDoctrine()
+                    ->getRepository('SkaphandrusAppBundle:SkPhotoSpeciesValidation')
+                    ->findOneBy(array(
+                        'fosUser' => $this->get('security.token_storage')->getToken()->getUser(),
                         'photo' => $photo,
+                    ));
+
+                if ($userValidation) {
+                    $validationAction = 'edit';
+                }
+            }
+
+            $showSugestion = $securityContext->isGranted('IS_AUTHENTICATED_FULLY') && count($photo->getSpeciesSugestions()) < 10;
+
+            // Check if sugestion is new or not
+            $sugestionAction = 'new';
+            $userSugestion = NULL;
+            if ($showSugestion) {
+                $userSugestion = $this->getDoctrine()
+                    ->getRepository('SkaphandrusAppBundle:SkPhotoSpeciesSugestion')
+                    ->findOneBy(array(
+                        'fosUser' => $this->get('security.token_storage')->getToken()->getUser(),
+                        'photo' => $photo,
+                    ));
+
+                if ($userSugestion) {
+                    $sugestionAction = 'edit';
+                }
+            }
+
+            return $this->render('SkaphandrusAppBundle:Default:photo.html.twig', array(
+                'photo' => $photo,
+                'showValidation' => $showValidation,
+                'showSugestion' => $showSugestion,
+                'validationAction' => $validationAction,
+                'userValidation' => $userValidation,
+                'sugestionAction' => $sugestionAction,
+                'userSugestion' => $userSugestion,
             ));
         } else {
             throw $this->createNotFoundException('The photo "' . $title . '" with id "' . $id . '" does not exist.');
         }
+    }
+
+    public function photoSugestionSubmitAction(Request $request, $id) {
+        $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
+            ->findOneById($id);
+        $sugestionEntity = new SkPhotoSpeciesSugestion();
+        $sugestionEntity->setFosUser($this->get('security.token_storage')->getToken()->getUser());
+        $sugestionEntity->setPhoto($photo);
+        $sugestionForm = $this->createForm(new SkPhotoSpeciesSugestionType(), $sugestionEntity, array(
+            'method' => 'POST',
+            'attr' => array(
+                'id' => 'sugestionForm',
+                'name' => 'sugestionForm',
+            ),
+        ));
+
+        $sugestionForm->handleRequest($request);
+
+        if ($sugestionForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($sugestionEntity);
+            $em->flush();
+            
+            $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
+        }
+        return $this->redirect($this->generateUrl('photo', array('id' => $id, 'slug' => Utils::slugify($photo->getTitle()))));
     }
 
     /*

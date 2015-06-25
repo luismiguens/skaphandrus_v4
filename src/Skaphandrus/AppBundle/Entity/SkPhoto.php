@@ -80,14 +80,26 @@ class SkPhoto {
     private $category;
 
     
-        private $isValidated = '0';
+    private $isValidated = '0';
     
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $speciesValidations;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $speciesSugestions;
+
     /**
      * Constructor
      */
     public function __construct() {
         $this->keyword = new \Doctrine\Common\Collections\ArrayCollection();
         $this->category = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->speciesValidations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->speciesSugestions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->createdAt = new \DateTime();
     }
 
@@ -110,6 +122,15 @@ class SkPhoto {
      * @return string
      */
     public function getTitle() {
+        return $this->title;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function __toString() {
         return $this->title;
     }
 
@@ -540,4 +561,71 @@ class SkPhoto {
        $this->updatedAt = new \DateTime();
     }
     
+    /**
+     * Add speciesValidation
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $speciesValidation
+     *
+     * @return SkPhoto
+     */
+    public function addSpeciesValidation(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $speciesValidation)
+    {
+        $this->speciesValidations[] = $speciesValidation;
+
+        return $this;
+    }
+
+    /**
+     * Remove speciesValidation
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $speciesValidation
+     */
+    public function removeSpeciesValidation(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $speciesValidation)
+    {
+        $this->speciesValidations->removeElement($speciesValidation);
+    }
+
+    /**
+     * Get speciesValidations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSpeciesValidations()
+    {
+        return $this->speciesValidations;
+    }
+
+    /**
+     * Add speciesSugestion
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoSpeciesSugestion $speciesSugestion
+     *
+     * @return SkPhoto
+     */
+    public function addSpeciesSugestion(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesSugestion $speciesSugestion)
+    {
+        $this->speciesSugestions[] = $speciesSugestion;
+
+        return $this;
+    }
+
+    /**
+     * Remove speciesSugestion
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoSpeciesSugestion $speciesSugestion
+     */
+    public function removeSpeciesSugestion(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesSugestion $speciesSugestion)
+    {
+        $this->speciesSugestions->removeElement($speciesSugestion);
+    }
+
+    /**
+     * Get speciesSugestions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSpeciesSugestions()
+    {
+        return $this->speciesSugestions;
+    }
 }

@@ -1,0 +1,33 @@
+{# extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>SkPhotoSpeciesSugestion creation</h1>
+
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('photo_species_sugestion_admin') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock #}
+{% form_theme form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <i class="fa fa-globe modal-icon"></i>
+    <h4 class="modal-title">{{ "modal.photo.title.sugestion_title"|trans }}</h4>
+    <small class="font-bold">{{ "modal.photo.sub-title.sugestion_subtitle"|trans }}</small>
+</div>
+{{ form_start(form) }}
+<div class="modal-body">
+    <p>{{ "modal.photo.description.sugestion_description"|trans }}</p>
+            {{ form_row(form.species) }}
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+    {{ form_widget(form.submit) }}
+</div>
+<input type="hidden" id="skaphandrus_appbundle_skphotovalidation_photo" name="skaphandrus_appbundle_skphotovalidation[photo]" value="">
+{{ form_end(form) }}

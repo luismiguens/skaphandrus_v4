@@ -8,11 +8,23 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}">
+    <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+    <style>
+        .ui-autocomplete {
+            z-index: 2500 !important;
+        }
+        #skaphandrus_appbundle_skphotovalidation_rating label {
+            margin: 0 10px 0 2px;
+        }
+    </style>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
+    <script src="{{ asset('bundles/pugxautocompleter/js/autocompleter-jqueryui.js') }}"></script>
 {% endblock %}
 
 {% block heading_title %}
@@ -133,6 +145,57 @@
                         {% if photo.species is not empty %}
                             <h3>{{ "page.photo.h3.species"|trans }}</h3>
                             <p>{{ link_to_species(photo.species) }}</p>
+                        {% endif %}
+
+                        {% for flashMessage in app.session.flashbag.get('notice') %}
+                            <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                {{ flashMessage|trans }}
+                            </div>
+                        {% endfor %}
+
+                        {% if photo.speciesValidations|length %}
+                            <h3>{{ "page.photo.h3.species_validations"|trans }}</h3>
+                            <ul>
+                            {% for sv in photo.speciesValidations %}
+                                <li>{{ link_to_user(sv.fosUser) }} {{ "page.photo.label.validated"|trans }} {{ link_to_species(sv.species) }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                        
+                        {% if showValidation %}
+                            <a href="#" data-toggle="modal" data-target="#modal-validation" class="btn btn-primary">{{ "page.photo.btn.validation_" ~ validationAction|trans }}</a>
+                            <div class="modal inmodal" id="modal-validation" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog"><div class="modal-content animated bounceInRight">
+                                    {% if validationAction == 'new' %}
+                                        {{ render(controller('SkaphandrusAppBundle:SkPhotoSpeciesValidation:new', { 'photo_id': photo.id } )) }}
+                                    {% else %}
+                                        {{ render(controller('SkaphandrusAppBundle:SkPhotoSpeciesValidation:edit', { 'id': userValidation.id } )) }}
+                                    {% endif %}
+                                </div></div>
+                            </div>
+                        {% endif %}
+
+                        {% if photo.speciesSugestions|length %}
+                            <h3>{{ "page.photo.h3.species_sugestions"|trans }}</h3>
+                            <ul>
+                            {% for ss in photo.speciesSugestions %}
+                                <li>{{ link_to_user(ss.fosUser) }} {{ "page.photo.label.sugested"|trans }} {{ link_to_species(ss.species) }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+
+                        {% if showSugestion %}
+                            <a href="#" data-toggle="modal" data-target="#modal-sugestion" class="btn btn-primary">{{ "page.photo.btn.sugestion_" ~ sugestionAction|trans }}</a>
+                            <div class="modal inmodal" id="modal-sugestion" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog"><div class="modal-content animated bounceInRight">
+                                    {% if sugestionAction == 'new' %}
+                                        {{ render(controller('SkaphandrusAppBundle:SkPhotoSpeciesSugestion:new', { 'photo_id': photo.id } )) }}
+                                    {% else %}
+                                        {{ render(controller('SkaphandrusAppBundle:SkPhotoSpeciesSugestion:edit', { 'id': userSugestion.id } )) }}
+                                    {% endif %}
+                                </div></div>
+                            </div>
                         {% endif %}
 
                         {% if photo.spot is not empty %}

@@ -81,6 +81,9 @@
         <lifecycle-callbacks>
             <lifecycle-callback type="preUpdate" method="doStuffOnPreUpdate"/>
         </lifecycle-callbacks>
+
+        <one-to-many field="speciesValidations" target-entity="SkPhotoSpeciesValidation" mapped-by="photo" />
+        <one-to-many field="speciesSugestions" target-entity="SkPhotoSpeciesSugestion" mapped-by="photo" />
     
     </entity>
 </doctrine-mapping>

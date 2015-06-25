@@ -1,0 +1,36 @@
+{# extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>SkPhotoSpeciesValidation edit</h1>
+
+    {{ form(edit_form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('photo_species_validation_admin') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock #}
+{% form_theme edit_form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <i class="fa fa-globe modal-icon"></i>
+    <h4 class="modal-title">{{ "modal.photo.title.validation_title"|trans }}</h4>
+    <small class="font-bold">{{ "modal.photo.sub-title.validation_subtitle"|trans }}</small>
+</div>
+{{ form_start(edit_form) }}
+<div class="modal-body">
+    <p>{{ "modal.photo.description.validation_description"|trans }}</p>
+            {{ form_row(edit_form.species) }}
+            {{ form_row(edit_form.rating) }}
+            <!-- <div class="form-group"><label>Sample Input</label> <input type="email" placeholder="Enter your email" class="form-control"></div> -->
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+    {{ form_widget(edit_form.submit) }}
+    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+</div>
+{{ form_end(edit_form) }}

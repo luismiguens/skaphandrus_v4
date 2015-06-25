@@ -34,6 +34,13 @@ class SkPhotoSpeciesSugestion
 
 
     /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->createdAt = new \DateTime();
+    }
+
+    /**
      * Set createdAt
      *
      * @param \DateTime $createdAt

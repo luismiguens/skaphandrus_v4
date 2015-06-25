@@ -39,6 +39,13 @@ class SkPhotoSpeciesValidation
 
 
     /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->createdAt = new \DateTime();
+    }
+
+    /**
      * Set rating
      *
      * @param integer $rating
