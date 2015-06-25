@@ -2443,6 +2443,23 @@ CREATE TABLE  `fos_user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+CREATE TABLE fos_message_thread_metadata (id INT AUTO_INCREMENT NOT NULL, thread_id INT DEFAULT NULL, participant_id INT DEFAULT NULL, is_deleted TINYINT(1) NOT NULL, last_participant_message_date DATETIME DEFAULT NULL, last_message_date DATETIME DEFAULT NULL, INDEX IDX_E88BB4E0E2904019 (thread_id), INDEX IDX_E88BB4E09D1C3019 (participant_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+CREATE TABLE fos_message_message (id INT AUTO_INCREMENT NOT NULL, sender_id INT DEFAULT NULL, thread_id INT DEFAULT NULL, body LONGTEXT NOT NULL, created_at DATETIME NOT NULL, INDEX IDX_BD970745F624B39D (sender_id), INDEX IDX_BD970745E2904019 (thread_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+CREATE TABLE fos_message_metadata (id INT AUTO_INCREMENT NOT NULL, message_id INT DEFAULT NULL, participant_id INT DEFAULT NULL, is_read TINYINT(1) NOT NULL, INDEX IDX_8913C791537A1329 (message_id), INDEX IDX_8913C7919D1C3019 (participant_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+CREATE TABLE fos_message_thread (id INT AUTO_INCREMENT NOT NULL, subject VARCHAR(255) NOT NULL, createdAt DATETIME NOT NULL, isSpam TINYINT(1) NOT NULL, createdBy_id INT DEFAULT NULL, INDEX IDX_C0C8574C3174800F (createdBy_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+ALTER TABLE fos_message_thread_metadata ADD CONSTRAINT FK_E88BB4E0E2904019 FOREIGN KEY (thread_id) REFERENCES fos_message_thread (id);
+ALTER TABLE fos_message_thread_metadata ADD CONSTRAINT FK_E88BB4E09D1C3019 FOREIGN KEY (participant_id) REFERENCES fos_user (id);
+ALTER TABLE fos_message_message ADD CONSTRAINT FK_BD970745F624B39D FOREIGN KEY (sender_id) REFERENCES fos_user (id);
+ALTER TABLE fos_message_message ADD CONSTRAINT FK_BD970745E2904019 FOREIGN KEY (thread_id) REFERENCES fos_message_thread (id);
+ALTER TABLE fos_message_metadata ADD CONSTRAINT FK_8913C791537A1329 FOREIGN KEY (message_id) REFERENCES fos_message_message (id);
+ALTER TABLE fos_message_metadata ADD CONSTRAINT FK_8913C7919D1C3019 FOREIGN KEY (participant_id) REFERENCES fos_user (id);
+ALTER TABLE fos_message_thread ADD CONSTRAINT FK_C0C8574C3174800F FOREIGN KEY (createdBy_id) REFERENCES fos_user (id);
+
+CREATE TABLE Comment (id INT AUTO_INCREMENT NOT NULL, thread_id VARCHAR(255) DEFAULT NULL, author_id INT DEFAULT NULL, body LONGTEXT NOT NULL, ancestors VARCHAR(1024) NOT NULL, depth INT NOT NULL, created_at DATETIME NOT NULL, state INT NOT NULL, INDEX IDX_5BC96BF0E2904019 (thread_id), INDEX IDX_5BC96BF0F675F31B (author_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+CREATE TABLE Thread (id VARCHAR(255) NOT NULL, permalink VARCHAR(255) NOT NULL, is_commentable TINYINT(1) NOT NULL, num_comments INT NOT NULL, last_comment_at DATETIME DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+ALTER TABLE Comment ADD CONSTRAINT FK_5BC96BF0E2904019 FOREIGN KEY (thread_id) REFERENCES Thread (id);
+ALTER TABLE Comment ADD CONSTRAINT FK_5BC96BF0F675F31B FOREIGN KEY (author_id) REFERENCES fos_user (id);
+
 
 ###############################################################################################
 ######################################  USERS TABLES ##########################################
