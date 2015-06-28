@@ -1,19 +1,11 @@
-{% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
+{% extends '@SkaphandrusAppBundle/Resources/views/auth_layout.html.twig' %}
 
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block body %}
-<div class="passwordBox animated fadeInDown">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="ibox-content">
-                <h2>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</h2>
-                {% if app.session is not empty %}
-                    {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
-                    {% if targetUrl is not empty %}<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>{% endif %}
-                {% endif %}
-            </div>
-        </div>
-    </div>
-</div>
+    <h3>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</h3>
+    {% if app.session is not empty %}
+        {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
+        {% if targetUrl is not empty %}<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>{% endif %}
+    {% endif %}
 {% endblock %}

@@ -1,15 +1,7 @@
-{% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
+{% extends '@SkaphandrusAppBundle/Resources/views/auth_layout.html.twig' %}
 
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block body %}
-<div class="passwordBox animated fadeInDown">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="ibox-content">
-                <p>{{ 'resetting.check_email'|trans({'%email%': email}) }}</p>
-            </div>
-        </div>
-    </div>
-</div>
+  <p>{{ 'resetting.check_email'|trans({'%email%': email}) }}</p>
 {% endblock %}

@@ -1,16 +1,8 @@
-{% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
+{% extends '@SkaphandrusAppBundle/Resources/views/auth_layout.html.twig' %}
 
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block body %}
-<div class="passwordBox animated fadeInDown">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="ibox-content">
-                <h2>{{ "page.registration.h2.thank_you"|trans }}</h2>
-                <p>{{ 'registration.check_email'|trans({'%email%': user.email}) }}</p>
-            </div>
-        </div>
-    </div>
-</div>
+  <h3>{{ "page.registration.h3.thank_you"|trans }}</h3>
+  <p>{{ 'registration.check_email'|trans({'%email%': user.email}) }}</p>
 {% endblock %}

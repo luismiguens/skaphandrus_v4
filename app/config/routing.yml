@@ -47,4 +47,4 @@ fos_comment_api:
 # Import FOSMessageBundle Configuration
 fos_message:
     resource: "@FOSMessageBundle/Resources/config/routing.xml"
-    prefix: /message_admin
+    prefix: /{_locale}/message_admin
