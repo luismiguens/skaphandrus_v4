@@ -1,70 +1,32 @@
-{% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
+{% extends '@SkaphandrusAppBundle/Resources/views/auth_layout.html.twig' %}
 
 {% trans_default_domain 'FOSUserBundle' %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/iCheck/custom.css') }}" rel="stylesheet">
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/iCheck/icheck.min.js') }}"></script>
-    <script>
-        $(document).ready(function () {
-            $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
-            });
-        });
-    </script>
-{% endblock %}
-
 {% block body %}
-
-<div class="passwordBox animated fadeInDown">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="ibox-content">
-                <h2 class="font-bold">Welcome to Skaphandrus</h2>
-                <p>Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.
-                    <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
-                </p>
-                <p>Login in. To see it in action.</p>
-                {% if error %}
-                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                {% endif %}
-                <form class="m-t" role="form" action="{{ path("fos_user_security_check") }}" method="post">
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="username" name="_username" placeholder="{{ 'security.login.username'|trans }}" value="{{ last_username }}" required="required">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" id="password" name="_password" placeholder="{{ 'security.login.password'|trans }}" required="required">
-                    </div>
-                    <div class="form-group">
-                        <div class="checkbox i-checks"><label> <input type="checkbox" id="remember_me" name="_remember_me" value="on" ><i></i> {{ 'security.login.remember_me'|trans }} </label></div>
-                    </div>
-                    <input type="submit" class="btn btn-primary block full-width m-b" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
-
-                    <a href="{{ path('fos_user_resetting_request') }}"><small>Forgot password?</small></a>
-                    <p class="text-muted text-center"><small>Do not have an account?</small></p>
-                    <a class="btn btn-sm btn-white btn-block" href="{{ path('fos_user_registration_register') }}">Create an account</a>
-                </form>
-            </div>
+    <h3>Welcome to Skaphandrus</h3>
+    <p>Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.
+        <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
+    </p>
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+    <form class="m-t" role="form" action="{{ path("fos_user_security_check") }}" method="post">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+        <div class="form-group">
+            <input type="text" class="form-control" id="username" name="_username" placeholder="{{ 'security.login.username'|trans }}" value="{{ last_username }}" required="required">
         </div>
-    </div>
-    <hr/>
-    <div class="row">
-        <div class="col-md-6">
-            Copyright Example Company
+        <div class="form-group">
+            <input type="password" class="form-control" id="password" name="_password" placeholder="{{ 'security.login.password'|trans }}" required="required">
         </div>
-        <div class="col-md-6 text-right">
-           <small>© 2014-2015</small>
+        <div class="form-group">
+            <div><label> <input type="checkbox" id="remember_me" name="_remember_me" value="on" ><i></i> {{ 'security.login.remember_me'|trans }} </label></div>
         </div>
-    </div>
-</div>
+        <input type="submit" class="btn btn-primary block full-width m-b" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
 
+        <a href="{{ path('fos_user_resetting_request') }}"><small>Forgot password?</small></a>
+        <p class="text-muted text-center"><small>Do not have an account?</small></p>
+        <a class="btn btn-sm btn-white btn-block" href="{{ path('fos_user_registration_register') }}">Create an account</a>
+    </form>
 {% endblock %}
 
 

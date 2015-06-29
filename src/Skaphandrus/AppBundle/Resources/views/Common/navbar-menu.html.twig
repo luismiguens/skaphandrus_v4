@@ -111,7 +111,7 @@
                 </li>
 
 
-                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {% if is_granted("IS_AUTHENTICATED_FULLY") %}
                 <li>
                     <span class="m-r-sm text-muted welcome-message">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span>
                 </li>

@@ -1,5 +1,16 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
+{% block page_title %}{{ "page.taxonomy.h1.title"|trans }}{% endblock %}
+{% block page_description %}description{% endblock %}
+{% block heading_title %}{{ "page.taxonomy.h1.title"|trans }}{% endblock %}
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('index') }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li class="active"><strong>{{ "page.taxonomy.breadcrumb.title"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/js/jstree/dist/themes/default/style.min.css') }}" />
@@ -30,7 +41,21 @@
 {% endblock %}
 
 {% block body %}
-    <h2>Taxonomy Page</h2>
-
-    <div style="text-align: left;" id="jstree"></div>
+<div class="wrapper wrapper-content">
+  <div class="row animated fadeInRight">
+    <!-- left column -->
+    <div class="col-md-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>{{ "page.taxonomy.h5.title"|trans }}</h5>
+        </div>
+        <div>
+          <div class="ibox-content">
+            <div style="text-align: left;" id="jstree"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
