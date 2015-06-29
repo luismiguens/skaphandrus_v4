@@ -75,7 +75,11 @@ $(document).ready(function () {
         $('#skaphandrus_appbundle_skspot_location').autocompleter({url_list: '/app_dev.php/en/ajax_search_location/', url_get: '/app_dev.php/en/ajax_get_location/'});
     }
 
-
-
-
+    // Formulário photo validation
+    if ($('#skaphandrus_appbundle_skphotovalidation_species').length) {
+        $('#skaphandrus_appbundle_skphotovalidation_species').autocompleter({url_list: '/app_dev.php/en/ajax_search_species/', url_get: '/app_dev.php/en/ajax_get_species/', appendTo: '#validationForm'});
+    }
+    if ($('#skaphandrus_appbundle_skphotosugestion_species').length) {
+        $('#skaphandrus_appbundle_skphotosugestion_species').autocompleter({url_list: '/app_dev.php/en/ajax_search_species/', url_get: '/app_dev.php/en/ajax_get_species/', appendTo: '#validationForm'});
+    }
 });
