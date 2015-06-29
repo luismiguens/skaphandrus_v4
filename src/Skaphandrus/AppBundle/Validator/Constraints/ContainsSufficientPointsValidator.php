@@ -28,7 +28,7 @@ class ContainsSufficientPointsValidator extends ConstraintValidator {
 
         foreach ($acquisitions as $key => $acquisition) {
 
-            dump($acquisition);
+            //dump($acquisition);
             
             if ($acquisition->getModule()->getIsFree() != TRUE 
                     and $acquisition->getAcquisitionType() != 2 

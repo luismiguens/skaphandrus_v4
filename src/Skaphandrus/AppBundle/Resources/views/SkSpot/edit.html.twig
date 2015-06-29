@@ -39,12 +39,18 @@
 {% block body %}
 
     {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
+
+    {{ form_errors(edit_form) }}
+
+
+    {#{{ form_row(edit_form.translations) }}#}
+
+
+
+    {{ form_widget(edit_form.translations) }}
     
-        {{ form_errors(edit_form) }}
-    {{ form_row(edit_form.translations) }}
+    
     {{ form_row(edit_form.maxDepth) }}
-
-
     {{ form_row(edit_form.location) }}
     <div class="popin">
         <div id="map" style="height: 300px;margin-bottom: 10px;"></div>
@@ -53,10 +59,10 @@
     {{ form_row(edit_form.coordinate) }}
     {{ form_row(edit_form.zoom) }}
 
-    
+
     {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'spot_admin', 'new_form':false} %}
     {{ form_end(edit_form) }}
-    
+
     {{ form(delete_form) }}
 
 

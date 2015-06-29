@@ -36,11 +36,19 @@
 {% endblock %}
 {% block body -%}
 
-    <p>{{entity.settings.points}} points</p>
+
+    <p> <b>{{entity.settings.points}}</b> {{ "form.points.text.points"|trans }}</p>
 
     {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
 
-    {{ form_errors(edit_form) }}
+
+    {% if form_errors(edit_form)|length > 0 %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            {{ form_errors(edit_form) }}
+        </div>
+
+    {% endif %}
 
 
     <table class="table table-striped" >
@@ -49,9 +57,8 @@
                 <th></th> 
                 <th>{{ "form.modules.label.name"|trans }}</th>
                 <th>{{ "form.modules.label.points"|trans }}</th>
-               {# <th>{{ "form.modules.label.acquisition_type"|trans }}</th>#}
-                <th>{{ "form.modules.label.acquired_at"|trans }}</th>
-
+                    {#<th>{{ "form.modules.label.acquisition_type"|trans }}</th>#}
+                    {#<th>{{ "form.modules.label.acquired_at"|trans }}</th>#}
             </tr>
         </thead>
         <tbody>
@@ -71,17 +78,16 @@
                     <td>{{ form_widget(module,{ 'attr': {'checked': checked} }) }}</td>{# render checkbox #}
                     <td>{{ entity.name }}</td>
                     <td>{{ entity.pointsName }}</td>
-                    {% if entity.acquisitions|length > 0 %}
+{#                    {% if entity.acquisitions|length > 0 %}
                         {% for acquisition in entity.acquisitions %}
-                            {#<td>{{ acquisition.acquisitionType }}</td>#}
+                            <td>{{ acquisition.acquisitionType }}</td>
                             <td>{{ acquisition.acquiredAt|date('Y-m-d H:i:s') }}</td>
-
                         {% endfor %}
                     {% else %}
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
                     {% endif %}
-                </tr>
+#}                </tr>
             {% endfor %}
         </tbody>
     </table>

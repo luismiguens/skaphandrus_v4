@@ -78,10 +78,8 @@ class SkPhoto {
      * @var \Doctrine\Common\Collections\Collection
      */
     private $category;
-
-    
     private $isValidated = '0';
-    
+
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
@@ -341,17 +339,14 @@ class SkPhoto {
         return $this->species;
     }
 
-    
-    
-        /**
+    /**
      * Set isValidated
      *
      * @param boolean $isValidated
      *
      * @return SkPhotoContest
      */
-    public function setIsValidated($isValidated)
-    {
+    public function setIsValidated($isValidated) {
         $this->isValidated = $isValidated;
 
         return $this;
@@ -362,13 +357,10 @@ class SkPhoto {
      *
      * @return boolean
      */
-    public function getIsValidated()
-    {
+    public function getIsValidated() {
         return $this->isValidated;
     }
 
-    
-    
     /**
      * Set fosUser
      *
@@ -497,17 +489,17 @@ class SkPhoto {
      * 
      * @return type
      */
-   public function upload() {
+    public function upload() {
         // the file property can be empty if the field is not required
         if (null === $this->getFile()) {
             return;
         }
 
         $filename = sha1(uniqid(mt_rand(), true));
-            
-        $this->image = $filename.'.'.$this->getFile()->guessExtension();
-        
-        
+
+        $this->image = $filename . '.' . $this->getFile()->guessExtension();
+
+
         // use the original file name here but you should
         // sanitize it at least to avoid any security issues
         // move takes the target directory and then the
@@ -517,17 +509,14 @@ class SkPhoto {
 //        );
 
         $this->getFile()->move($this->getUploadRootDir(), $this->image);
-        
-        
+
+
         // set the path property to the filename where you've saved the file
         //$this->image = $this->getFile()->getClientOriginalName();
-        
-
         // clean up the file property as you won't need it anymore
         $this->file = null;
     }
 
-    
     public function getKeywordsString() {
         $string = '';
 
@@ -537,30 +526,21 @@ class SkPhoto {
 
         return substr($string, 0, -2);
     }
-    
-    
-    
-    
+
     public function countComments() {
-        
+
         return "123";
-        
     }
-    
-    
-    
+
     public function countLikes() {
-        
+
         return "321";
-        
     }
-    
-    
-      public function doStuffOnPreUpdate()
-    {
-       $this->updatedAt = new \DateTime();
+
+    public function doStuffOnPreUpdate() {
+        $this->updatedAt = new \DateTime();
     }
-    
+
     /**
      * Add speciesValidation
      *
@@ -568,8 +548,7 @@ class SkPhoto {
      *
      * @return SkPhoto
      */
-    public function addSpeciesValidation(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $speciesValidation)
-    {
+    public function addSpeciesValidation(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $speciesValidation) {
         $this->speciesValidations[] = $speciesValidation;
 
         return $this;
@@ -580,8 +559,7 @@ class SkPhoto {
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $speciesValidation
      */
-    public function removeSpeciesValidation(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $speciesValidation)
-    {
+    public function removeSpeciesValidation(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $speciesValidation) {
         $this->speciesValidations->removeElement($speciesValidation);
     }
 
@@ -590,8 +568,7 @@ class SkPhoto {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getSpeciesValidations()
-    {
+    public function getSpeciesValidations() {
         return $this->speciesValidations;
     }
 
@@ -602,8 +579,7 @@ class SkPhoto {
      *
      * @return SkPhoto
      */
-    public function addSpeciesSugestion(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesSugestion $speciesSugestion)
-    {
+    public function addSpeciesSugestion(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesSugestion $speciesSugestion) {
         $this->speciesSugestions[] = $speciesSugestion;
 
         return $this;
@@ -614,8 +590,7 @@ class SkPhoto {
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPhotoSpeciesSugestion $speciesSugestion
      */
-    public function removeSpeciesSugestion(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesSugestion $speciesSugestion)
-    {
+    public function removeSpeciesSugestion(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesSugestion $speciesSugestion) {
         $this->speciesSugestions->removeElement($speciesSugestion);
     }
 
@@ -624,8 +599,8 @@ class SkPhoto {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getSpeciesSugestions()
-    {
+    public function getSpeciesSugestions() {
         return $this->speciesSugestions;
     }
+
 }

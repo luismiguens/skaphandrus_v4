@@ -273,6 +273,11 @@ class SkSpecies {
         return $this->scientific_names[0]->getName();
     }
 
+    
+    public function __toString() {
+        return $this->getName();
+    }
+    
 
     public function getTaxonNodeName(){
         return "species";

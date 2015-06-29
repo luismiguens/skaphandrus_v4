@@ -145,5 +145,51 @@ class SkPhotoSpeciesSugestion
     {
         return $this->photo;
     }
+    
+    
+    
+    
+        public function doStuffOnPostPersist() {
+    
+            $em = $this->getDoctrine()->getManager();
+            
+            
+         //enviar notificação de sugestão para o dono fotografia 
+         //(x sugeriu especie y na tua fotografia z ) message_abc
+            $SkSocialNotify = new SkSocialNotify();
+            $SkSocialNotify->setUserFrom($this->getFosUser());
+            $SkSocialNotify->setParamFirst($this->getSpecies()->getId());
+            $SkSocialNotify->setParamSecond($this->getPhoto()->getId());
+            $SkSocialNotify->setMessageName("message_abc");
+            $SkSocialNotify->setCreatedAt(new \DateTime());
+            $SkSocialNotify->setUserTo($this->getPhoto()->getFosUser());
+            $em->persist($SkSocialNotify);
+            
+            
+            
+            
+            
+            //enviar notificação para quem já sugeriu 
+            //(x sugeriu especie y na fotografia z) message_aba
+//            
+//            foreach ($array as $key => $value) {
+//                
+//            }
+            
+            
+            
+            
+            $em->flush();
+                    
+            
+            
+            
+            
+        
+    }
+
+    
+    
+    
 }
 

@@ -2460,6 +2460,32 @@ CREATE TABLE Thread (id VARCHAR(255) NOT NULL, permalink VARCHAR(255) NOT NULL, 
 ALTER TABLE Comment ADD CONSTRAINT FK_5BC96BF0E2904019 FOREIGN KEY (thread_id) REFERENCES Thread (id);
 ALTER TABLE Comment ADD CONSTRAINT FK_5BC96BF0F675F31B FOREIGN KEY (author_id) REFERENCES fos_user (id);
 
+-- ---------------------------------------------------------------------
+-- fos_user
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `sk_social_notify`;
+
+CREATE TABLE  `sk_social_notify` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `message_name` varchar(55) NOT NULL,
+  `user_from` int(11) DEFAULT NULL,
+  `user_to` int(11) DEFAULT NULL,
+  `param_first` int(11) DEFAULT NULL,
+  `param_second` int(11) DEFAULT NULL,
+  `param_third` int(11) DEFAULT NULL,
+  `is_read` tinyint(1) DEFAULT '0',
+  `created_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sk_social_notify_FI_1` (`user_from`),
+  KEY `sk_social_notify_FK_2` (`user_to`),
+  CONSTRAINT `sk_social_notify_FK_1` FOREIGN KEY (`user_from`) REFERENCES `fos_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sk_social_notify_FK_2` FOREIGN KEY (`user_to`) REFERENCES `fos_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+
 
 ###############################################################################################
 ######################################  USERS TABLES ##########################################

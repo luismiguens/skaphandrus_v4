@@ -99,8 +99,7 @@ class SkModulesController extends Controller {
 
         $editForm = $this->createEditForm($entity);
 
-        $previousCollections = $entity->getAcquisitions();
-        $previousCollections = $previousCollections->toArray();
+        $previousCollections = $entity->getAcquisitions()->toArray();
 
         //$request = $this->getRequest();
         //$editForm->bindRequest($request);
@@ -109,26 +108,24 @@ class SkModulesController extends Controller {
 
         foreach ($previousCollections as $acquisition) {
             $entity->removeAcquisition($acquisition);
-            $em->remove($acquisition); 
-            $em->persist($entity);
+            $em->remove($acquisition);
         }
-
+        $em->persist($entity);
 
 
         if ($editForm->isValid()) {
-           
-            $em->flush();
 
+            $em->flush();
 
             $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
 
-//            return $this->redirect($this->generateUrl('module_admin_edit'));
+            return $this->redirect($this->generateUrl('module_admin_edit'));
         }
 
-//        return $this->render('SkaphandrusAppBundle:SkModules:edit.html.twig', array(
-//                    'entity' => $entity,
-//                    'edit_form' => $editForm->createView()
-//        ));
+        return $this->render('SkaphandrusAppBundle:SkModules:edit.html.twig', array(
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView()
+        ));
     }
 
 }

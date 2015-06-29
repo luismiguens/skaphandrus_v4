@@ -5,8 +5,9 @@ namespace Skaphandrus\AppBundle\Twig;
 use Twig_Environment;
 use Symfony\Component\Intl\Intl;
 use Skaphandrus\AppBundle\Utils\Utils;
-
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\Loader\ArrayLoader;
 
 class UtilsExtension extends \Twig_Extension {
 
@@ -81,6 +82,112 @@ class UtilsExtension extends \Twig_Extension {
     }
 
     /*
+     * Notification helper messages
+     */
+
+    /**
+     * get notify message
+     * @param  sfSocialNotify $notify
+     * @return string
+     */
+    function getSkSocialNotifyMessage(\Skaphandrus\AppBundle\Entity\SkSocialNotify $notify) {
+
+        switch ($notify->getMessageName()) {
+            case 'message_aaa':
+                $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($notify->getParamFirst());
+                return $this->get('translator')->trans(
+                                '%1% comentou a tua fotografia %2%.', array('%1%' => $this->link_to_user($notify->getUserFrom()),
+                            '%2%' => $this->link_to_photo($photo)));
+
+            case 'message_aab':
+                $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($notify->getParamFirst());
+                return $this->get('translator')->trans(
+                                '%1% tambem comentou a fotografia %2%.', array('%1%' => $this->link_to_user($notify->getUserFrom()),
+                            '%2%' => $this->link_to_photo($photo)));
+
+            case 'message_aba':
+                $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findOneById($notify->getParamFirst());
+                $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($notify->getParamSecond());
+                return $this->get('translator')->trans(
+                                '%1% sugeriu especie %2% na fotografia %3%.', array('%1%' => $this->link_to_user($notify->getUserFrom()),
+                            '%2%' => $this->link_to_species($species),
+                            '%3%' => $this->link_to_photo($photo)));
+
+            case 'message_abb':
+                $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findOneById($notify->getParamFirst());
+                $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($notify->getParamSecond());
+                return $this->get('translator')->trans(
+                                '%1% sugeriu especie %2% na fotografia %3%.', array('%1%' => $this->link_to_user($notify->getUserFrom()),
+                            '%2%' => $this->link_to_species($species),
+                            '%3%' => $this->link_to_photo($photo)));
+
+            case 'message_abc':
+                $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findOneById($notify->getParamFirst());
+                $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($notify->getParamSecond());
+                return $this->get('translator')->trans(
+                                '%1% sugeriu especie %2% na tua fotografia %3%.', array('%1%' => $this->link_to_user($notify->getUserFrom()),
+                            '%2%' => $this->link_to_species($species),
+                            '%3%' => $this->link_to_photo($photo)));
+
+            case 'message_aca':
+                $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($notify->getParamFirst());
+                return $this->get('translator')->trans(
+                                '%1% enviou-te uma nova mensagem.', array('%1%' => $this->link_to_user($notify->getUserFrom())));
+
+            case 'message_ada':
+                $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findOneById($notify->getParamFirst());
+                $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($notify->getParamSecond());
+                return $this->get('translator')->trans(
+                                '%1% associou especie %2% a fotografia %3%.', array('%1%' => $this->link_to_user($notify->getUserFrom()),
+                            '%2%' => $this->link_to_species($species),
+                            '%3%' => $this->link_to_photo($photo)));
+
+            case 'message_aea':
+                $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($notify->getParamFirst());
+                return $this->get('translator')->trans(
+                                '%1% adicionou-te como amigo.', array('%1%' => $this->link_to_user($notify->getUserFrom())));
+
+            case 'message_baa':
+                $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($notify->getParamFirst());
+                $category = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')->findOneById($notify->getParamSecond());
+                return $this->get('translator')->trans(
+                                '%1% tambem adicionou fotografia %2% à categoria %3%.', array('%1%' => $this->link_to_user($notify->getUserFrom()),
+                            '%2%' => $this->link_to_photo($photo),
+                            '%3%' => $this->link_to_contest_photos($category)));
+
+            case 'message_bba':
+                $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($notify->getParamFirst());
+                return $this->get('translator')->trans(
+                                '%1% votou na tua fotografia %2%.', array('%1%' => $this->link_to_user($notify->getUserFrom()),
+                            '%2%' => $this->link_to_photo($photo)));
+
+            case 'message_caa':
+                $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findOneById($notify->getParamFirst());
+                $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($notify->getParamSecond());
+                return $this->get('translator')->trans(
+                                '%1% validou especie %2% na fotografia %3%.', array('%1%' => $this->link_to_user($notify->getUserFrom()),
+                            '%2%' => $this->link_to_species($species),
+                            '%3%' => $this->link_to_photo($photo)));
+
+            case 'message_cab':
+                $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findOneById($notify->getParamFirst());
+                $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($notify->getParamSecond());
+                return $this->get('translator')->trans(
+                                '%1% validou especie %2% na fotografia %3%.', array('%1%' => $this->link_to_user($notify->getUserFrom()),
+                            '%2%' => $this->link_to_species($species),
+                            '%3%' => $this->link_to_photo($photo)));
+
+            case 'message_cac':
+                $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findOneById($notify->getParamFirst());
+                $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($notify->getParamSecond());
+                return $this->get('translator')->trans(
+                                '%1% validou especie %2% na tua fotografia %3%.', array('%1%' => $this->link_to_user($notify->getUserFrom()),
+                            '%2%' => $this->link_to_species($species),
+                            '%3%' => $this->link_to_photo($photo)));
+        }
+    }
+
+    /*
      * Link helper functions.
      */
 
@@ -121,21 +228,22 @@ class UtilsExtension extends \Twig_Extension {
         return '<a href="' . $this->url_to_country($country) . '" title="' . $country . '">' . $country . '</a>';
     }
 
+//    public function link_to_photo($photo) {
+//        return '<a href="' . $this->url_to_photo($photo) . '" title="' . $photo->getTitle() . '"><img src="/' . $photo->getWebPath() . '" alt="' . $photo->getTitle() . '"></a>';
+//    }
+
     public function link_to_photo($photo) {
-        return '<a href="' . $this->url_to_photo($photo) . '" title="' . $photo->getTitle() . '"><img src="/' . $photo->getWebPath() . '" alt="' . $photo->getTitle() . '"></a>';
+        return '<a href="' . $this->url_to_photo($photo) . '" title="' . $photo->getTitle() . '">' . $photo->getTitle() . '</a>';
     }
 
     public function link_to_taxon($taxon) {
         return '<a href="' . $this->url_to_taxon($taxon) . '" title="' . $taxon->getName() . '">' . $taxon->getName() . '</a>';
     }
 
-        public function link_to_module($module_name) {
+    public function link_to_module($module_name) {
         return '<a href="' . $this->url_to_module($module_name) . '" title="' . $module_name . '">' . $module_name . '</a>';
     }
 
-    
-    
-    
     /*
      * URL helper functions.
      */
@@ -148,9 +256,6 @@ class UtilsExtension extends \Twig_Extension {
             'username' => $user->getUsername(),
         ));
     }
-    
-    
- 
 
     public function url_to_species($species) {
         $path_function = $this->getPathFunction();
@@ -241,15 +346,14 @@ class UtilsExtension extends \Twig_Extension {
             'slug' => Utils::slugify($taxon->getName()),
         ));
     }
-    
-       public function url_to_module($module_name) {
+
+    public function url_to_module($module_name) {
         $path_function = $this->getPathFunction();
 
         return call_user_func($path_function, 'module', array(
             'slug' => Utils::slugify($module_name)
         ));
     }
-    
 
     public function url_to_photos($params) {
         $path_function = $this->getPathFunction();

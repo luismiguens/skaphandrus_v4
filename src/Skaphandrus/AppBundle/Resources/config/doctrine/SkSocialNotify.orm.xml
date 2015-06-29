@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Skaphandrus\AppBundle\Entity\SkSocialNotify" table="sk_social_notify">
+    <indexes>
+      <index name="sk_social_notify_FI_1" columns="user_from"/>
+      <index name="sk_social_notify_FK_2" columns="user_to"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="messageName" type="string" column="message_name" length="55" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="paramFirst" type="integer" column="param_first" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="paramSecond" type="integer" column="param_second" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="paramThird" type="integer" column="param_third" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="isRead" type="boolean" column="is_read" nullable="true">
+      <options>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+    <many-to-one field="userTo" target-entity="FosUser" fetch="LAZY">
+      <join-columns>
+        <join-column name="user_to" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="userFrom" target-entity="FosUser" fetch="LAZY">
+      <join-columns>
+        <join-column name="user_from" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>
