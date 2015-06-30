@@ -3,6 +3,7 @@
 namespace Skaphandrus\AppBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Skaphandrus\AppBundle\Utils\Utils;
 
 /**
  * SkPhotoContestCategoryRepository
@@ -13,7 +14,7 @@ use Doctrine\ORM\EntityRepository;
 class SkPhotoContestCategoryRepository extends EntityRepository {
 
     public function findOneBySlug($slug, $locale) {
-        $name = str_replace('-', ' ', $slug);
+        $name = Utils::unslugify($slug);
 
         $query = $this->getEntityManager()
             ->createQuery(

@@ -39,6 +39,10 @@ class SkCountry
      */
     private $regions;
 
+    private $photosCount = 0;
+
+    private $spotsCount = 0;
+
 
     /**
      * Constructor
@@ -165,11 +169,29 @@ class SkCountry
     }
     
     
-        public function __toString() {
-        return Intl::getRegionBundle()->getCountryName($this->name);
-    }
-    
-    
+    public function __toString() {
+        $name = Intl::getRegionBundle()->getCountryName($this->name);
 
-    
+        if ($this->name == 'AN') {
+            $name = 'Netherlands Antilles';
+        }
+
+        return $name ? $name : '';
+    }
+
+    public function getSpotsCount() {
+        return $this->spotsCount;
+    }
+
+    public function setSpotsCount($spotsCount) {
+        $this->spotsCount = $spotsCount;
+    }
+
+    public function getPhotosCount() {
+        return $this->photosCount;
+    }
+
+    public function setPhotosCount($photosCount) {
+        $this->photosCount = $photosCount;
+    }
 }

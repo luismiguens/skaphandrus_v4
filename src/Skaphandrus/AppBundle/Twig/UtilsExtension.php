@@ -216,12 +216,12 @@ class UtilsExtension extends \Twig_Extension {
         return '<a href="' . $this->url_to_contest_sponsors($contest) . '" title="' . $contest->getName() . '">' . $contest->getName() . '</a>';
     }
 
-    public function link_to_spot($spot) {
-        return '<a href="' . $this->url_to_spot($spot) . '" title="' . $spot->getName() . '">' . $spot->getName() . '</a>';
+    public function link_to_spot($spot, $location = NULL, $country = NULL) {
+        return '<a href="' . $this->url_to_spot($spot, $location, $country) . '" title="' . $spot->getName() . '">' . $spot->getName() . '</a>';
     }
 
-    public function link_to_location($location) {
-        return '<a href="' . $this->url_to_location($location) . '" title="' . $location->getName() . '">' . $location->getName() . '</a>';
+    public function link_to_location($location, $country = NULL) {
+        return '<a href="' . $this->url_to_location($location, $country) . '" title="' . $location->getName() . '">' . $location->getName() . '</a>';
     }
 
     public function link_to_country($country) {
@@ -301,21 +301,34 @@ class UtilsExtension extends \Twig_Extension {
         ));
     }
 
-    public function url_to_spot($spot) {
+    public function url_to_spot($spot, $location = NULL, $country = NULL) {
         $path_function = $this->getPathFunction();
 
+        // Added Location and Country as an optional parameters
+        // for reducing queries when necessary
+        if ($location) { $l = $location; }
+        else { $l = $spot->getLocation(); }
+
+        if ($country) { $c = $country; }
+        else { $c = $l->getRegion()->getCountry(); }
+
         return call_user_func($path_function, 'spot', array(
-            'country' => Utils::slugify($spot->getLocation()->getRegion()->getCountry()),
-            'location' => Utils::slugify($spot->getLocation()->getName()),
+            'country' => Utils::slugify($c),
+            'location' => Utils::slugify($l->getName()),
             'slug' => Utils::slugify($spot->getName())
         ));
     }
 
-    public function url_to_location($location) {
+    public function url_to_location($location, $country = NULL) {
         $path_function = $this->getPathFunction();
 
+        // Added Country as an optional parameter
+        // for reducing queries when necessary
+        if ($country) { $c = $country; }
+        else { $c = $location->getRegion()->getCountry(); }
+
         return call_user_func($path_function, 'location', array(
-            'country' => Utils::slugify($location->getRegion()->getCountry()),
+            'country' => Utils::slugify($c),
             'slug' => Utils::slugify($location->getName())
         ));
     }

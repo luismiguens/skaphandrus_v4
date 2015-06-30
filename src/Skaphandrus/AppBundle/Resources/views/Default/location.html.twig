@@ -7,11 +7,30 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
+    <!-- FooTable -->
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/footable/footable.core.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
+    <script>
+        // Fix bug on Gmap inside tabs
+        $('.nav-tabs').on('shown.bs.tab', function () {
+            google.maps.event.trigger(window, 'resize', {});
+            setTimeout(function() {
+                {{ map.javascriptVariable }}.setCenter({{ map.center.javascriptVariable }});
+            },100);
+        });
+    </script>
+    <!-- FooTable -->
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.footable-spots').footable();
+            $('.footable-species').footable();
+        });
+    </script>
 
 {% endblock %}
 
@@ -138,21 +157,53 @@
 
 
                                     <div id="tab-2" class="tab-pane">
-
                                         <h3>{{ "page.location.h3.spots"|trans }}</h3>
-                                        {% for spot in location.spots %}
-                                            <h4>{{ spot.name }}</h4>
-                                            <p>{{ spot.coordinate }}</p>
-                                        {% endfor %}
+                                        <div class="row">
+                                            {{ google_map(map) }}
+                                            <input type="text" class="form-control input-sm m-b-xs" id="filter-spots" placeholder="Search in table">
+                                            <table class="footable footable-spots table" data-page-size="20" data-filter=#filter-spots>
+                                                <thead>
+                                                    <th>{{ "page.location.table.spot"|trans }}</th>
+                                                    <th>{{ "page.location.table.num_photos"|trans }}</th>
+                                                </thead>
+                                                <tbody>
+                                                {% set c = location.region.country %}
+                                                {% for spot in location.spots %}
+                                                    <tr><td>{{ link_to_spot(spot, location, c) }}</td><td>{{ spot.photos|length }}</td></tr>
+                                                {% endfor %}
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <ul class="pagination pull-right"></ul>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
                                     </div>
 
                                     <div id="tab-3" class="tab-pane">
                                         <h3>{{ "page.location.h3.species"|trans }}</h3>
-                                        <ul class="unstyled">
+                                        <input type="text" class="form-control input-sm m-b-xs" id="filter-species" placeholder="Search in table">
+                                        <table class="footable footable-species table" data-page-size="20" data-filter=#filter-species>
+                                            <thead>
+                                                <th>{{ "page.location.table.species"|trans }}</th>
+                                                <th>{{ "page.location.table.num_photos"|trans }}</th>
+                                            </thead>
+                                            <tbody>
                                             {% for sp in species %}
-                                                <li> species : {{link_to_species(sp)}}</li>
-                                                {% endfor%}
-                                        </ul>
+                                                <tr><td>{{ link_to_species(sp) }}</td><td>{{ sp.photosCount }}</td></tr></tr>
+                                            {% endfor%}
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <ul class="pagination pull-right"></ul>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
                                     </div>
 
                                     <div id="tab-4" class="tab-pane">

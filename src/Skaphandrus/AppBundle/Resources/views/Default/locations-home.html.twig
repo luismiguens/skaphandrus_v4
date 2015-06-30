@@ -1,0 +1,119 @@
+{% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
+
+{% block page_title %}{{ "page.locations_home.h1.title"|trans }}{% endblock %}
+{% block page_description %}description{% endblock %}
+{% block page_keywords %}{{ "page.locations_home.h1.title"|trans }}{% endblock %}
+
+{% block heading_title %}
+    {{ "page.locations_home.h1.title"|trans }}
+{% endblock %}
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('index') }}">{{ "home"|trans }}</a></li>
+        <li class="active"><strong>{{ "page.locations_home.h1.title"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            var mapData = {
+                {% for c in countries %}
+                "{{ c.name }}": {{ c.spotsCount }}{% if not loop.last %},{% endif %}
+                {% endfor %}
+            };
+
+            $('#world-map').vectorMap({
+                map: 'world_mill_en',
+                backgroundColor: "transparent",
+                regionStyle: {
+                    initial: {
+                        fill: '#e4e4e4',
+                        "fill-opacity": 1,
+                        stroke: 'none',
+                        "stroke-width": 0,
+                        "stroke-opacity": 0
+                    }
+                },
+                series: {
+                    regions: [{
+                        values: mapData,
+                        scale: ["#1ab394", "#22d6b1"],
+                        normalizeFunction: 'polynomial'
+                    }]
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="wrapper wrapper-content">
+        <div class="row animated fadeInRight">
+            <!-- left column -->
+            <div class="col-md-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>{{ "page.locations_home.h5.detail"|trans }}</h5>
+                    </div>
+                    <div>
+                        <div class="ibox-content">
+
+                        </div>
+                        <div class="ibox-content profile-content">
+                            <h4><strong>{{ "page.locations_home.h1.title"|trans }}</strong></h4>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end left column -->
+            <!-- right column -->
+            <div class="col-md-8">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>{{ "page.locations_home.h5.related_contents"|trans }}</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#">Config option 1</a></li>
+                                <li><a href="#">Config option 2</a></li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content">
+                        <div id="world-map" style="height: 300px;"></div>
+                        <table class="table">
+                            <thead>
+                                <th>{{ "page.locations_home.label.country"|trans }}</th>
+                                <th>{{ "page.locations_home.label.spots"|trans }}</th>
+                                <th>{{ "page.locations_home.label.photos"|trans }}</th>
+                            </thead>
+                            <tbody>
+                            {% for c in countries %}
+                                <tr>
+                                    <td>{{ link_to_country(c) }}</td>
+                                    <td>{{ c.spotsCount }}</td>
+                                    <td>{{ c.photosCount }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

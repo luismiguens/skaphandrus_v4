@@ -162,6 +162,12 @@ country:
     requirements:
         _locale:  en|pt
 
+locations_home:
+    path:     /{_locale}/scuba-dive-locations
+    defaults: { _controller: SkaphandrusAppBundle:Default:locationsHome, _locale: en }
+    requirements:
+        _locale:  en|pt
+
 photo:
     path:     /{_locale}/underwater-photography/photo/{id}-{slug}
     defaults: { _controller: SkaphandrusAppBundle:Default:photo, _locale: en }

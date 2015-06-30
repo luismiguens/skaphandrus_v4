@@ -42,4 +42,49 @@ class SkLocationRepository extends EntityRepository {
                 )->setParameter('term', '%' . $term . '%')->setParameter('locale', $locale)->getResult();
     }
 
+    public function findAllForList($country_id) {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT l
+                FROM SkaphandrusAppBundle:SkLocation l
+                JOIN l.region r
+                JOIN r.country c
+                JOIN SkaphandrusAppBundle:SkSpot s
+                    WITH IDENTITY(s.location) = l.id
+                WHERE IDENTITY(r.country) = :country_id
+                GROUP BY l.id')->setParameter('country_id', $country_id)->getResult();
+    }
+
+    public function countSpotsArray() {
+        $spots = $this->getEntityManager()
+            ->createQuery(
+                'SELECT l.id location_id, count(s.id) as spot_count
+                FROM SkaphandrusAppBundle:SkSpot s
+                JOIN s.location l
+                GROUP BY l.id'
+                )->getResult();
+
+        $spots_array = array();
+        foreach ($spots as $result) {
+            $spots_array[$result['location_id']] = $result['spot_count'];
+        }
+        return $spots_array;
+    }
+
+    public function countPhotosArray() {
+        $photos = $this->getEntityManager()
+            ->createQuery(
+                'SELECT l.id location_id, count(p.id) as photo_count
+                FROM SkaphandrusAppBundle:SkPhoto p
+                JOIN p.spot s
+                JOIN s.location l
+                group by l.id'
+                )->getResult();
+
+        $photos_array = array();
+        foreach ($photos as $result) {
+            $photos_array[$result['location_id']] = $result['photo_count'];
+        }
+        return $photos_array;
+    }
 }

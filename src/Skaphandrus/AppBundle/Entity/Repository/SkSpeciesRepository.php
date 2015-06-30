@@ -3,6 +3,7 @@
 namespace Skaphandrus\AppBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Skaphandrus\AppBundle\Utils\Utils;
 
 /**
  * SkSpeciesRepository
@@ -13,7 +14,7 @@ use Doctrine\ORM\EntityRepository;
 class SkSpeciesRepository extends EntityRepository {
     
     public function findBySlug($slug) {
-        $name = str_replace('-', ' ', $slug);
+        $name = Utils::unslugify($slug);
 
         $query = $this->getEntityManager()
                         ->createQuery(
@@ -233,5 +234,23 @@ class SkSpeciesRepository extends EntityRepository {
         }
 
         return $result;
+    }
+
+    public function countPhotosArray($location_id) {
+        $photos = $this->getEntityManager()
+            ->createQuery(
+                'SELECT IDENTITY(p.species) species_id, count(p.id) as photo_count
+                FROM SkaphandrusAppBundle:SkPhoto p
+                JOIN p.spot s
+                JOIN s.location l
+                WHERE l.id = :location_id
+                GROUP BY species_id'
+                )->setParameter('location_id', $location_id)->getResult();
+
+        $photos_array = array();
+        foreach ($photos as $result) {
+            $photos_array[$result['species_id']] = $result['photo_count'];
+        }
+        return $photos_array;
     }
 }

@@ -1,30 +1,158 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
+{% block page_title %}{{ country }}{% endblock %}
+{% block page_description %}description{% endblock %}
+{% block page_keywords %}{{ country }}{% endblock %}
+
+{% block heading_title %}
+    {{ country }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('index') }}">{{ "home"|trans }}</a></li>
+        <li class="active"><strong>{{ country }}</strong></li>
+    </ol>
+{% endblock %}
+
 {% block body %}
-    <h2>{{ country_name }}</h2>
+    <div class="wrapper wrapper-content">
+        <div class="row animated fadeInRight">
+            <!-- left column -->
+            <div class="col-md-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>{{ "page.country.h5.country_detail"|trans }}</h5>
+                    </div>
+                    <div>
+                        <div class="ibox-content">
 
-    <h3>{{ "page.country.h3.overview"|trans }}</h3>
-    <p>{{ country.translate(app.request.locale).overview }}</p>
-    <h3>{{ "page.country.h3.geography_and_climate"|trans }}</h3>
-    <p>{{ country.translate(app.request.locale).geographyAndClimate }}</p>
-    <h3>{{ "page.country.h3.entry_requirements"|trans }}</h3>
-    <p>{{ country.translate(app.request.locale).entryRequirements }}</p>
-    <h3>{{ "page.country.h3.health_and_safety"|trans }}</h3>
-    <p>{{ country.translate(app.request.locale).healthAndSafety }}</p>
-    <h3>{{ "page.country.h3.time_zone"|trans }}</h3>
-    <p>{{ country.translate(app.request.locale).timeZone }}</p>
-    <h3>{{ "page.country.h3.communications"|trans }}</h3>
-    <p>{{ country.translate(app.request.locale).communications }}</p>
-    <h3>{{ "page.country.h3.power_and_electricity"|trans }}</h3>
-    <p>{{ country.translate(app.request.locale).powerAndElectricity }}</p>
-    <h3>{{ "page.country.h3.other_informations"|trans }}</h3>
-    <p>{{ country.translate(app.request.locale).otherInformations }}</p>
+                        </div>
+                        <div class="ibox-content profile-content">
+                            <h4><strong>{{ country }}</strong></h4>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end left column -->
+            <!-- right column -->
+            <div class="col-md-8">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>{{ "page.country.h5.country_related_contents"|trans }}</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#">Config option 1</a></li>
+                                <li><a href="#">Config option 2</a></li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
 
-    <h3>{{ "page.country.h3.locations"|trans }}</h3>
-    {% for l in locations %}
-        {% if l.spots|length > 0 %}
-            <p>{{ l.translate(app.request.locale).name }}: {{ l.spots|length }} {{ "spots"|trans }}</p>
-        {% endif %}
-    {% endfor %}
+                    <div class="ibox-content">
+                        <h1>{{ country }}</h1>
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <!--<div class="panel-title m-b-md"><h4>Blank Panel with text tabs</h4></div>-->
+                                <div class="panel-options">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a data-toggle="tab" href="#tab-1">{{ "page.country.tab.info"|trans }}</a></li>
+                                        <li><a data-toggle="tab" href="#tab-2">{{ "page.country.tab.locations"|trans }}</a></li>
+                                        <li><a data-toggle="tab" href="#tab-3">{{ "page.country.tab.species"|trans }}</a></li>
+                                        <li><a data-toggle="tab" href="#tab-4">{{ "page.country.tab.photos"|trans }}</a></li>
+                                        <li><a data-toggle="tab" href="#tab-5">{{ "page.country.tab.contributors"|trans }}</a></li>
+                                    </ul>
+                                </div>
+                            </div>
 
+                            <div class="panel-body">
+                                <div class="tab-content">
+                                    <div id="tab-1" class="tab-pane active">
+                                        <h3>{{ "page.country.h3.info"|trans }}</h3>
+
+                                        <h5>{{ "page.country.h5.overview"|trans }}</h5>
+                                        <p>{{ country.translate(app.request.locale).overview }}</p>
+
+                                        <h5>{{ "page.country.h5.geography_and_climate"|trans }}</h5>
+                                        <p>{{ country.translate(app.request.locale).geographyAndClimate }}</p>
+                                        
+                                        <h5>{{ "page.country.h5.entry_requirements"|trans }}</h5>
+                                        <p>{{ country.translate(app.request.locale).entryRequirements }}</p>
+                                        
+                                        <h5>{{ "page.country.h5.health_and_safety"|trans }}</h5>
+                                        <p>{{ country.translate(app.request.locale).healthAndSafety }}</p>
+                                        
+                                        <h5>{{ "page.country.h5.time_zone"|trans }}</h5>
+                                        <p>{{ country.translate(app.request.locale).timeZone }}</p>
+                                        
+                                        <h5>{{ "page.country.h5.communications"|trans }}</h5>
+                                        <p>{{ country.translate(app.request.locale).communications }}</p>
+                                        
+                                        <h5>{{ "page.country.h5.power_and_electricity"|trans }}</h5>
+                                        <p>{{ country.translate(app.request.locale).powerAndElectricity }}</p>
+                                        
+                                        <h5>{{ "page.country.h5.other_informations"|trans }}</h5>
+                                        <p>{{ country.translate(app.request.locale).otherInformations }}</p>
+                                    </div>
+
+
+                                    <div id="tab-2" class="tab-pane">
+                                        <h3>{{ "page.country.h3.locations"|trans }}</h3>
+                                        <div class="row">
+                                            <table class="table">
+                                                <thead>
+                                                    <th>{{ "page.country.label.location"|trans }}</th>
+                                                    <th>{{ "page.country.label.spots"|trans }}</th>
+                                                    <th>{{ "page.country.label.photos"|trans }}</th>
+                                                </thead>
+                                                <tbody>
+                                                {% for l in locations %}
+                                                    <tr>
+                                                        <td>{{ link_to_location(l, country) }}</td>
+                                                        <td>{{ l.spotsCount }}</td>
+                                                        <td>{{ l.photosCount }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    {# <div id="tab-3" class="tab-pane">
+                                        <h3>{{ "page.location.h3.species"|trans }}</h3>
+                                        <ul class="unstyled">
+                                            {% for sp in species %}
+                                                <li> species : {{link_to_species(sp)}}</li>
+                                                {% endfor%}
+                                        </ul>
+                                    </div>
+
+                                    <div id="tab-4" class="tab-pane">
+                                        <h3>{{ "page.location.h3.photos"|trans }}</h3>
+                                        {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'location': location.id },'limit':20 } )) }}
+                                    </div>
+                                    <div id="tab-5" class="tab-pane">
+                                        <h3>{{ "page.location.h3.contributors"|trans }}</h3>
+                                        <ul class="unstyled">
+                                            {% for photographer in photographers %}
+                                                <li> photographer : {{link_to_user(photographer)}}</li>
+                                                {% endfor%}
+                                        </ul>   
+                                    </div> #}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--end right column -->
+        </div><!-- end row-->
+    </div><!-- end wrapper-->
 {% endblock %}

@@ -3,6 +3,7 @@
 namespace Skaphandrus\AppBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Skaphandrus\AppBundle\Utils\Utils;
 
 /**
  * SkSpotRepository
@@ -26,7 +27,9 @@ class SkSpotRepository extends EntityRepository {
     }
 
     public function findBySlug($slug, $location, $country, $locale) {
-        $name = str_replace('-', ' ', $slug);
+        $name = Utils::unslugify($slug);
+
+        dump($name);
 
         $query = $this->getEntityManager()
                         ->createQuery(
@@ -59,5 +62,15 @@ class SkSpotRepository extends EntityRepository {
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
+    }
+
+    public function findPhotos($spot_id) {
+        $query = $entityManager->createQuery(
+            'SELECT p
+            FROM SkaphandrusAppBundle:SkPhoto p
+            WHERE spot_id > :spot_id'
+        )->setParameter('spot_id', $spot_id);
+
+        return $query->getResult();
     }
 }

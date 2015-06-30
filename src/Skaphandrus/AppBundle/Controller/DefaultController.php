@@ -398,22 +398,89 @@ class DefaultController extends Controller {
         $location = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
                 ->findBySlug($name, $country, $locale);
 
-        //photographers
-        $qb_photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->getQueryBuilder(['location' => $location], 20);
-        $query_photographers = $qb_photographers->getQuery();
-        $photographers = $query_photographers->getResult();
-
-
-        //species
-        $qb_species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->getQueryBuilder(['location' => $location], 20);
-        $query_species = $qb_species->getQuery();
-        $species = $query_species->getResult();
 
         if ($location) {
+            //photographers
+            $qb_photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->getQueryBuilder(['location' => $location], 20);
+            $query_photographers = $qb_photographers->getQuery();
+            $photographers = $query_photographers->getResult();
+
+            //species
+            $qb_species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->getQueryBuilder(['location' => $location], 20);
+            $query_species = $qb_species->getQuery();
+            $species = $query_species->getResult();
+
+            $photos_count = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->countPhotosArray($location->getId());
+            dump($location);
+            foreach ($species as $specie) {
+                if (isset($photos_count[$specie->getId()])) {
+                    $specie->setPhotosCount($photos_count[$specie->getId()]);
+                }
+            }
+
+            // Get markers from spots for the map
+            $markers = array();
+            $totalLatitude = 0;
+            $totalLongitude = 0;
+            foreach ($location->getSpots() as $spot) {
+                if ($spot->getCoordinate()) {
+                    $marker = new Marker();
+                    $latitude = explode(",", $spot->getCoordinate())[0];
+                    $longitude = explode(",", $spot->getCoordinate())[1];
+
+                    // Marker options
+                    $marker->setPrefixJavascriptVariable('marker_');
+                    $marker->setPosition($latitude, $longitude, true);
+                    $marker->setAnimation(Animation::DROP);
+                    $marker->setOption('clickable', false);
+                    $marker->setOption('flat', true);
+                    $marker->setOptions(array(
+                        'clickable' => false,
+                        'flat' => true,
+                    ));
+
+                    $totalLatitude += $latitude;
+                    $totalLongitude += $longitude;
+                    $markers[] = $marker;
+                }
+            }
+
+            // Create the map
+            $centerLatitude = $totalLatitude / count($markers);
+            $centerLongitude = $totalLongitude / count($markers);
+            $map = new \Ivory\GoogleMap\Map();
+            $map->setPrefixJavascriptVariable('map_');
+            $map->setHtmlContainerId('map_canvas');
+            $map->setAsync(false);
+            $map->setCenter($centerLatitude, $centerLongitude, true);
+            $map->setMapOption('zoom', 10);
+            $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
+            $map->setMapOption('disableDefaultUI', true);
+            $map->setMapOption('disableDoubleClickZoom', true);
+            $map->setMapOptions(array(
+                'disableDefaultUI' => true,
+                'disableDoubleClickZoom' => true,
+            ));
+            $map->setStylesheetOption('width', 'auto');
+            $map->setStylesheetOption('height', '300px');
+            $map->setStylesheetOptions(array(
+                'width' => 'auto',
+                'height' => '300px',
+            ));
+            $map->setLanguage('en');
+
+            // Add the spots to the map
+            foreach ($markers as $marker) {
+                $map->addMarker($marker);
+            }
+
             return $this->render('SkaphandrusAppBundle:Default:location.html.twig', array(
-                        'location' => $location,
-                        'photographers' => $photographers,
-                        'species' => $species
+                'location' => $location,
+                'photographers' => $photographers,
+                'species' => $species,
+                'map' => $map,
+                'map_center_lat' => $centerLatitude,
+                'map_center_lon' => $centerLongitude,
             ));
         } else {
             throw $this->createNotFoundException('The location ' . $name . ' does not exist.');
@@ -430,22 +497,59 @@ class DefaultController extends Controller {
         $country = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')
                 ->findBySlug($slug);
 
-        $locations = array();
-        foreach ($country->getRegions() as $region) {
-            foreach ($region->getLocations() as $location) {
-                $locations[] = $location;
-            }
-        }
-
         if ($country) {
+            $locations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
+                ->findAllForList($country->getId());
+
+
+            $spots_count = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
+                ->countSpotsArray();
+            $photos_count = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
+                ->countPhotosArray();
+
+            foreach ($locations as $location) {
+                if (isset($spots_count[$location->getId()])) {
+                    $location->setSpotsCount($spots_count[$location->getId()]);
+                }
+                if (isset($photos_count[$location->getId()])) {
+                    $location->setPhotosCount($photos_count[$location->getId()]);
+                }
+            }
+
             return $this->render('SkaphandrusAppBundle:Default:country.html.twig', array(
                         'country' => $country,
-                        'country_name' => $slug,
+                        'country_name' => $name,
                         'locations' => $locations,
             ));
         } else {
             throw $this->createNotFoundException('The country ' . $name . ' does not exist.');
         }
+    }
+
+    /*
+     * Locations Home page
+     */
+    public function locationsHomeAction(Request $request) {
+
+        $countries = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')
+                ->findAllWithSpots();
+        $spots = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')
+            ->countSpotsArray();
+        $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')
+            ->countPhotosArray();
+
+        foreach ($countries as $country) {
+            if (isset($spots[$country->getName()])) {
+                $country->setSpotsCount($spots[$country->getName()]);
+            }
+            if (isset($photos[$country->getName()])) {
+                $country->setPhotosCount($photos[$country->getName()]);
+            }
+        }
+
+        return $this->render('SkaphandrusAppBundle:Default:locations-home.html.twig', array(
+            'countries' => $countries,
+        ));
     }
 
     /*
@@ -524,32 +628,6 @@ class DefaultController extends Controller {
         } else {
             throw $this->createNotFoundException('The photo "' . $title . '" with id "' . $id . '" does not exist.');
         }
-    }
-
-    public function photoSugestionSubmitAction(Request $request, $id) {
-        $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
-            ->findOneById($id);
-        $sugestionEntity = new SkPhotoSpeciesSugestion();
-        $sugestionEntity->setFosUser($this->get('security.token_storage')->getToken()->getUser());
-        $sugestionEntity->setPhoto($photo);
-        $sugestionForm = $this->createForm(new SkPhotoSpeciesSugestionType(), $sugestionEntity, array(
-            'method' => 'POST',
-            'attr' => array(
-                'id' => 'sugestionForm',
-                'name' => 'sugestionForm',
-            ),
-        ));
-
-        $sugestionForm->handleRequest($request);
-
-        if ($sugestionForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($sugestionEntity);
-            $em->flush();
-            
-            $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
-        }
-        return $this->redirect($this->generateUrl('photo', array('id' => $id, 'slug' => Utils::slugify($photo->getTitle()))));
     }
 
     /*
