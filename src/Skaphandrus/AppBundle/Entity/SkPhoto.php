@@ -603,4 +603,28 @@ class SkPhoto {
         return $this->speciesSugestions;
     }
 
+    public function doStuffOnPostPersist(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+
+        $entity = $args->getEntity();
+        $entityManager = $args->getEntityManager();
+
+        if ($entity->getSpecies()) {
+
+            //enviar notificação para quem já validou espécie
+            //(x associou especie y a fotografia z)	message_ada
+            $query = $entityManager->createQuery(
+                            'SELECT v
+                                FROM SkaphandrusAppBundle:SkPhotoSpeciesValidation v
+                                WHERE v.species = :species_id
+                                GROUP BY v.fosUser'
+                    )->setParameter('species_id', $entity->getSpecies()->getId());
+            $validations = $query->getResult();
+
+            foreach ($validations as $photoSpeciesValidation) {
+                $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromPhoto(
+                        $entity, $photoSpeciesValidation->getFosUser(), "message_ada");
+            }
+        }
+    }
+
 }

@@ -10,8 +10,8 @@
 -->
 
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
-                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                        xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                         http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <entity name="Skaphandrus\AppBundle\Entity\Comment">
@@ -41,6 +41,14 @@
                 <join-column name="author_id" referenced-column-name="id"/>
             </join-columns>
         </many-to-one>
+        
+        
+        <lifecycle-callbacks>
+            <lifecycle-callback type="postPersist" method="doStuffOnPostPersist"/>
+        </lifecycle-callbacks>
+
+        
+        
     </entity>
 
 </doctrine-mapping>

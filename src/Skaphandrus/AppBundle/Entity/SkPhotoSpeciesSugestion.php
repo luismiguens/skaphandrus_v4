@@ -5,8 +5,8 @@ namespace Skaphandrus\AppBundle\Entity;
 /**
  * SkPhotoSpeciesSugestion
  */
-class SkPhotoSpeciesSugestion
-{
+class SkPhotoSpeciesSugestion {
+
     /**
      * @var \DateTime
      */
@@ -32,7 +32,6 @@ class SkPhotoSpeciesSugestion
      */
     private $photo;
 
-
     /**
      * Constructor
      */
@@ -47,8 +46,7 @@ class SkPhotoSpeciesSugestion
      *
      * @return SkPhotoSpeciesSugestion
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
 
         return $this;
@@ -59,8 +57,7 @@ class SkPhotoSpeciesSugestion
      *
      * @return \DateTime
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->createdAt;
     }
 
@@ -69,8 +66,7 @@ class SkPhotoSpeciesSugestion
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -81,8 +77,7 @@ class SkPhotoSpeciesSugestion
      *
      * @return SkPhotoSpeciesSugestion
      */
-    public function setFosUser(\Skaphandrus\AppBundle\Entity\FosUser $fosUser = null)
-    {
+    public function setFosUser(\Skaphandrus\AppBundle\Entity\FosUser $fosUser = null) {
         $this->fosUser = $fosUser;
 
         return $this;
@@ -93,8 +88,7 @@ class SkPhotoSpeciesSugestion
      *
      * @return \Skaphandrus\AppBundle\Entity\FosUser
      */
-    public function getFosUser()
-    {
+    public function getFosUser() {
         return $this->fosUser;
     }
 
@@ -105,8 +99,7 @@ class SkPhotoSpeciesSugestion
      *
      * @return SkPhotoSpeciesSugestion
      */
-    public function setSpecies(\Skaphandrus\AppBundle\Entity\SkSpecies $species = null)
-    {
+    public function setSpecies(\Skaphandrus\AppBundle\Entity\SkSpecies $species = null) {
         $this->species = $species;
 
         return $this;
@@ -117,8 +110,7 @@ class SkPhotoSpeciesSugestion
      *
      * @return \Skaphandrus\AppBundle\Entity\SkSpecies
      */
-    public function getSpecies()
-    {
+    public function getSpecies() {
         return $this->species;
     }
 
@@ -129,8 +121,7 @@ class SkPhotoSpeciesSugestion
      *
      * @return SkPhotoSpeciesSugestion
      */
-    public function setPhoto(\Skaphandrus\AppBundle\Entity\SkPhoto $photo = null)
-    {
+    public function setPhoto(\Skaphandrus\AppBundle\Entity\SkPhoto $photo = null) {
         $this->photo = $photo;
 
         return $this;
@@ -141,55 +132,42 @@ class SkPhotoSpeciesSugestion
      *
      * @return \Skaphandrus\AppBundle\Entity\SkPhoto
      */
-    public function getPhoto()
-    {
+    public function getPhoto() {
         return $this->photo;
     }
-    
-    
-    
-    
-        public function doStuffOnPostPersist() {
-    
-            $em = $this->getDoctrine()->getManager();
-            
-            
-         //enviar notificação de sugestão para o dono fotografia 
-         //(x sugeriu especie y na tua fotografia z ) message_abc
-            $SkSocialNotify = new SkSocialNotify();
-            $SkSocialNotify->setUserFrom($this->getFosUser());
-            $SkSocialNotify->setParamFirst($this->getSpecies()->getId());
-            $SkSocialNotify->setParamSecond($this->getPhoto()->getId());
-            $SkSocialNotify->setMessageName("message_abc");
-            $SkSocialNotify->setCreatedAt(new \DateTime());
-            $SkSocialNotify->setUserTo($this->getPhoto()->getFosUser());
-            $em->persist($SkSocialNotify);
-            
-            
-            
-            
-            
-            //enviar notificação para quem já sugeriu 
-            //(x sugeriu especie y na fotografia z) message_aba
-//            
-//            foreach ($array as $key => $value) {
-//                
-//            }
-            
-            
-            
-            
-            $em->flush();
-                    
-            
-            
-            
-            
-        
+
+    public function doStuffOnPostPersist(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+        $entity = $args->getEntity();
+        $entityManager = $args->getEntityManager();
+
+
+        //enviar notificação para quem já sugeriu 
+        //(x sugeriu especie y na fotografia z) message_aba
+        $sugestions = $entityManager->getRepository('SkaphandrusAppBundle:SkPhotoSpeciesSugestion')->FindBy(
+                array('photo_id' => $entity->getPhotoId()));
+
+        foreach ($sugestions as $photoSpeciesSugestion) {
+            $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromPhotoSpeciesSugestion(
+                    $entity, $photoSpeciesSugestion->getFosUser(), "message_aba");
+        }
+
+
+        //enviar notificação para quem já validou	
+        //(x sugeriu especie y na fotografia z) message_abb
+        $validations = $entityManager->getRepository('SkaphandrusAppBundle:SkPhotoSpeciesValidation')->FindBy(
+                array('photo_id' => $entity->getPhotoId()));
+
+        foreach ($validations as $photoSpeciesValidation) {
+            $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromPhotoSpeciesSugestion(
+                    $entity, $photoSpeciesValidation->getFosUser(), "message_abb");
+        }
+
+
+        //enviar notificação para o dono fotografia 
+        //(x sugeriu especie y na tua fotografia z ) message_abc
+
+        $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromPhotoSpeciesSugestion(
+                $entity, $entity->getPhoto()->getFosUser(), "message_abc");
     }
 
-    
-    
-    
 }
-

@@ -105,6 +105,21 @@ class UtilsExtension extends \Twig_Extension {
                                 '%1% tambem comentou a fotografia %2%.', array('%1%' => $this->link_to_user($notify->getUserFrom()),
                             '%2%' => $this->link_to_photo($photo)));
 
+
+            case 'message_aac':
+                $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($notify->getParamFirst());
+                return $this->get('translator')->trans(
+                                '%1% comentou a fotografia %2%.', array('%1%' => $this->link_to_user($notify->getUserFrom()),
+                            '%2%' => $this->link_to_photo($photo)));
+
+
+            case 'message_aad':
+                $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($notify->getParamFirst());
+                return $this->get('translator')->trans(
+                                '%1% comentou a fotografia %2%.', array('%1%' => $this->link_to_user($notify->getUserFrom()),
+                            '%2%' => $this->link_to_photo($photo)));
+
+                
             case 'message_aba':
                 $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findOneById($notify->getParamFirst());
                 $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($notify->getParamSecond());
@@ -138,7 +153,7 @@ class UtilsExtension extends \Twig_Extension {
                 $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findOneById($notify->getParamFirst());
                 $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($notify->getParamSecond());
                 return $this->get('translator')->trans(
-                                '%1% associou especie %2% a fotografia %3%.', array('%1%' => $this->link_to_user($notify->getUserFrom()),
+                                '%1% validou especie %2% na fotografia %3%.', array('%1%' => $this->link_to_user($notify->getUserFrom()),
                             '%2%' => $this->link_to_species($species),
                             '%3%' => $this->link_to_photo($photo)));
 

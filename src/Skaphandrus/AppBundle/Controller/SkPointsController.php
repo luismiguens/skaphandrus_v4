@@ -155,7 +155,7 @@ class SkPointsController extends Controller {
         
         
         $em->flush();
-        $entities = $em->getRepository('SkaphandrusAppBundle:SkPoints')->findAll();
+        $entities = $em->getRepository('SkaphandrusAppBundle:SkPoints')->findBy(array('fosUser' => $fos_user->getId()));
 
         
         //update username points

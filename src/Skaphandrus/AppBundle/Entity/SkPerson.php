@@ -5,8 +5,8 @@ namespace Skaphandrus\AppBundle\Entity;
 /**
  * SkPerson
  */
-class SkPerson
-{
+class SkPerson {
+
     /**
      * @var integer
      */
@@ -47,9 +47,6 @@ class SkPerson
      */
     private $persontype;
 
-    
-    
-
 //    /**
 //     * @var \Skaphandrus\AppBundle\Entity\SkAddress
 //     */
@@ -59,10 +56,9 @@ class SkPerson
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->persontype = new \Doctrine\Common\Collections\ArrayCollection();
-         $this->createdAt = new \DateTime();
+        $this->createdAt = new \DateTime();
     }
 
     /**
@@ -72,8 +68,7 @@ class SkPerson
      *
      * @return SkPerson
      */
-    public function setSkaphandrusId(\Skaphandrus\AppBundle\Entity\FosUser $skaphandrusId = null)
-    {
+    public function setSkaphandrusId(\Skaphandrus\AppBundle\Entity\FosUser $skaphandrusId = null) {
         $this->skaphandrusId = $skaphandrusId;
 
         return $this;
@@ -84,8 +79,7 @@ class SkPerson
      *
      * @return integer
      */
-    public function getSkaphandrusId()
-    {
+    public function getSkaphandrusId() {
         return $this->skaphandrusId;
     }
 
@@ -96,8 +90,7 @@ class SkPerson
      *
      * @return SkPerson
      */
-    public function setObservations($observations)
-    {
+    public function setObservations($observations) {
         $this->observations = $observations;
 
         return $this;
@@ -108,8 +101,7 @@ class SkPerson
      *
      * @return string
      */
-    public function getObservations()
-    {
+    public function getObservations() {
         return $this->observations;
     }
 
@@ -120,8 +112,7 @@ class SkPerson
      *
      * @return SkPerson
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
 
         return $this;
@@ -132,8 +123,7 @@ class SkPerson
      *
      * @return \DateTime
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->createdAt;
     }
 
@@ -144,13 +134,12 @@ class SkPerson
      *
      * @return SkPerson
      */
-    public function setUpdatedAt($updatedAt)
-    {
+    public function setUpdatedAt($updatedAt) {
         $this->updatedAt = $updatedAt;
 
-        return $this;    /**
-//     * @var \Skaphandrus\AppBundle\Entity\SkAddress
-//     */
+        return $this;/**
+          //     * @var \Skaphandrus\AppBundle\Entity\SkAddress
+          // */
 //    private $address;
 //
 //    
@@ -161,8 +150,7 @@ class SkPerson
      *
      * @return \DateTime
      */
-    public function getUpdatedAt()
-    {
+    public function getUpdatedAt() {
         return $this->updatedAt;
     }
 
@@ -171,8 +159,7 @@ class SkPerson
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -183,8 +170,7 @@ class SkPerson
      *
      * @return SkPerson
      */
-    public function setFosUser(\Skaphandrus\AppBundle\Entity\FosUser $fosUser = null)
-    {
+    public function setFosUser(\Skaphandrus\AppBundle\Entity\FosUser $fosUser = null) {
         $this->fosUser = $fosUser;
 
         return $this;
@@ -195,8 +181,7 @@ class SkPerson
      *
      * @return \Skaphandrus\AppBundle\Entity\FosUser
      */
-    public function getFosUser()
-    {
+    public function getFosUser() {
         return $this->fosUser;
     }
 
@@ -207,8 +192,7 @@ class SkPerson
      *
      * @return SkPerson
      */
-    public function setBusiness(\Skaphandrus\AppBundle\Entity\SkBusiness $business = null)
-    {
+    public function setBusiness(\Skaphandrus\AppBundle\Entity\SkBusiness $business = null) {
         $this->business = $business;
 
         return $this;
@@ -219,8 +203,7 @@ class SkPerson
      *
      * @return \Skaphandrus\AppBundle\Entity\SkBusiness
      */
-    public function getBusiness()
-    {
+    public function getBusiness() {
         return $this->business;
     }
 
@@ -231,8 +214,7 @@ class SkPerson
      *
      * @return SkPerson
      */
-    public function addPersontype(\Skaphandrus\AppBundle\Entity\SkPersonType $persontype)
-    {
+    public function addPersontype(\Skaphandrus\AppBundle\Entity\SkPersonType $persontype) {
         $this->persontype[] = $persontype;
 
         return $this;
@@ -243,8 +225,7 @@ class SkPerson
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPersonType $persontype
      */
-    public function removePersontype(\Skaphandrus\AppBundle\Entity\SkPersonType $persontype)
-    {
+    public function removePersontype(\Skaphandrus\AppBundle\Entity\SkPersonType $persontype) {
         $this->persontype->removeElement($persontype);
     }
 
@@ -253,18 +234,24 @@ class SkPerson
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPersontype()
-    {
+    public function getPersontype() {
         return $this->persontype;
     }
-    
 
-    
-    public function doStuffOnPreUpdate()
-    {
-       $this->updatedAt = new \DateTime();
+    public function doStuffOnPreUpdate() {
+        $this->updatedAt = new \DateTime();
     }
-    
-    
+
+    public function doStuffOnPostPersist(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+        //$entity = new SkPerson();
+        $entity = $args->getEntity();
+        $entityManager = $args->getEntityManager();
+
+        //amigo/contacto	
+        //(x adicionou-te como amigo.) message_aea
+
+        $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromPerson(
+                $entity, $entity->getSkaphandrusId(), "message_aea");
+    }
 
 }

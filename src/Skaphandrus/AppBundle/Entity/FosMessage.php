@@ -1,4 +1,5 @@
 <?php
+
 namespace Skaphandrus\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -8,8 +9,8 @@ use FOS\MessageBundle\Entity\Message as BaseMessage;
 /**
  * @ORM\Entity
  */
-class FosMessage extends BaseMessage
-{
+class FosMessage extends BaseMessage {
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -49,8 +50,7 @@ class FosMessage extends BaseMessage
      *
      * @return FosMessage
      */
-    public function addMetadatum(\Skaphandrus\AppBundle\Entity\FosMessageMetadata $metadatum)
-    {
+    public function addMetadatum(\Skaphandrus\AppBundle\Entity\FosMessageMetadata $metadatum) {
         $this->metadata[] = $metadatum;
 
         return $this;
@@ -61,8 +61,7 @@ class FosMessage extends BaseMessage
      *
      * @param \Skaphandrus\AppBundle\Entity\FosMessageMetadata $metadatum
      */
-    public function removeMetadatum(\Skaphandrus\AppBundle\Entity\FosMessageMetadata $metadatum)
-    {
+    public function removeMetadatum(\Skaphandrus\AppBundle\Entity\FosMessageMetadata $metadatum) {
         $this->metadata->removeElement($metadatum);
     }
 
@@ -71,8 +70,38 @@ class FosMessage extends BaseMessage
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getMetadata()
-    {
+    public function getMetadata() {
         return $this->metadata;
     }
+
+    public function doStuffOnPostPersist(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+
+        //$entity = new FosMessage();
+        $entity = $args->getEntity();
+        $entityManager = $args->getEntityManager();
+
+        //enviar notificação para o destinatário da mensagem 		
+        //(x enviou-te uma nova mensagem) message_aca
+//        $query = $entityManager->createQuery(
+//                        'SELECT p
+//                                FROM SkaphandrusAppBundle:FosMessageMetadata p
+//                                WHERE message_id > :message_id'
+//                )->setParameter('message_id', $entity->getId());
+//        $messages = $query->getResult();
+//        $messages = $entityManager->getRepository('SkaphandrusAppBundle:FosMessageMetadata')->findBy(
+//                array('message_id' => $entity->getId()));
+
+        $messages = $entity->getThread()->getParticipants();
+
+
+//dump($messages);
+        //$fosMessageMetadata = new FosMessageMetadata();
+
+
+        foreach ($messages as $participants) {
+            $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromFosMessage(
+                    $entity, $participants, "message_aca");
+        }
+    }
+
 }

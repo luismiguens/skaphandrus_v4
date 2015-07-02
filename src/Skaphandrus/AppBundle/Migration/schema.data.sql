@@ -1671,6 +1671,7 @@ CREATE TABLE `sk_photo_contest_category_photo`
 (
 	`category_id` INTEGER NOT NULL,
 	`photo_id` INTEGER NOT NULL,
+        `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`category_id`,`photo_id`),
 	INDEX `sk_photo_contest_category_photo_FI_1` (`category_id`),
         INDEX `sk_photo_contest_category_photo_FI_2` (`photo_id`),
@@ -2582,7 +2583,7 @@ INSERT INTO skaphandrus4.sk_photo_machine_model (id, name, brand_id, image, type
 INSERT INTO skaphandrus4.sk_creative_commons (id, image) SELECT id, imagem FROM skaphandrus3.sk_creative_commons;
 INSERT INTO skaphandrus4.sk_creative_commons_translation (translatable_id, name, url, locale) SELECT id, nome, url, culture FROM skaphandrus3.sk_creative_commons_i18n;
 INSERT INTO skaphandrus4.sk_photo (id, model_id, fos_user_id, title, image, description, species_id, spot_id, creative_id, views, created_at  ) SELECT id, modelo_id, username_id, nome, imagem, descricao, especie_id, spot_id, creative_id, views, created_at  FROM skaphandrus3.sk_fotografia;
-INSERT INTO skaphandrus4.sk_photo_species_validation (photo_id, species_id, fos_user_id, rating ) SELECT id, especie_id, expert_id, quality_status FROM skaphandrus3.sk_fotografia;
+INSERT INTO skaphandrus4.sk_photo_species_validation (photo_id, species_id, fos_user_id, rating ) SELECT id, especie_id, expert_id, quality_status FROM skaphandrus3.sk_fotografia where especie_id is not null and expert_id is not null;
 INSERT INTO skaphandrus4.sk_keyword SELECT * FROM skaphandrus3.sk_keyword;
 INSERT INTO skaphandrus4.sk_photo_keyword (photo_id, keyword_id) SELECT fotografia_id, keyword_id FROM skaphandrus3.sk_fotografia_keyword;
 

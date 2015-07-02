@@ -209,13 +209,11 @@
                         {% endif %}
                     </div>
                 </div>
+                    
+                      {% include 'SkaphandrusAppBundle:Comments:async.html.twig' with {'id': 'SkPhoto-' ~ photo.id } %}
+                    
             </div>
-
-
         </div>
-
-
-
     </div><!-- end wrapper-->
 
 

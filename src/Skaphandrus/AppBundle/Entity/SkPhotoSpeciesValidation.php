@@ -174,5 +174,43 @@ class SkPhotoSpeciesValidation
     {
         return $this->photo;
     }
+    
+    
+    
+    
+    public function doStuffOnPostPersist(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+        $entity = $args->getEntity();
+        $entityManager = $args->getEntityManager();
+
+
+        //enviar notificação para quem já sugeriu 
+        //(x validou especie y na fotografia z message_caa
+        $sugestions = $entityManager->getRepository('SkaphandrusAppBundle:SkPhotoSpeciesValidation')->FindBy(
+                array('photo_id' => $entity->getPhotoId()));
+
+        foreach ($sugestions as $photoSpeciesSugestion) {
+            $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromPhotoSpeciesValidation(
+                    $entity, $photoSpeciesSugestion->getFosUser(), "message_caa");
+        }
+
+
+        //enviar notificação para quem já validou	
+        //(x validou especie y na fotografia z message_cab
+        $validations = $entityManager->getRepository('SkaphandrusAppBundle:SkPhotoSpeciesValidation')->FindBy(
+                array('photo_id' => $entity->getPhotoId()));
+
+        foreach ($validations as $photoSpeciesValidation) {
+            $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromPhotoSpeciesValidation(
+                    $entity, $photoSpeciesValidation->getFosUser(), "message_cab");
+        }
+
+
+        //enviar notificação para o dono fotografia 
+        //(x validou especie y na tua fotografia z message_cac
+
+        $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromPhotoSpeciesValidation(
+                $entity, $entity->getPhoto()->getFosUser(), "message_cac");
+    }
+    
 }
 
