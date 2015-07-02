@@ -140,7 +140,7 @@
                                                         <td>{{ l.spotsCount }}</td>
                                                         <td>
                                                             {{ l.photosCount }}
-                                                            <a href="{{ path('photos', {'location': location.id}) }}">{{ l.photosCount }}</a>
+                                                            <a href="{{ path('photos', {'location': l.id}) }}">{{ l.photosCount }}</a>
                                                         </td>
                                                     </tr>
                                                 {% endfor %}
