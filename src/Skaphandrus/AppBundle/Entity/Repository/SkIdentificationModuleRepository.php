@@ -3,6 +3,7 @@
 namespace Skaphandrus\AppBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Skaphandrus\AppBundle\Utils\Utils;
 
 /**
  * SkSpotRepository
@@ -15,7 +16,7 @@ class SkIdentificationModuleRepository extends EntityRepository {
    
 
     public function findBySlug($slug,$locale) {
-        $name = str_replace('-', ' ', $slug);
+        $name = Utils::unslugify($slug);
 
         $query = $this->getEntityManager()
                         ->createQuery(

@@ -57,6 +57,8 @@ class SkSpecies {
      */
     private $image_refs;
 
+    private $photosCount = 0;
+
     /**
      * Constructor
      */
@@ -328,5 +330,13 @@ class SkSpecies {
         foreach ($this->image_refs as $ir) {
             if ($ir->getIsPrimary()) return $ir;
         }
+    }
+
+    public function getPhotosCount() {
+        return $this->photosCount;
+    }
+
+    public function setPhotosCount($photosCount) {
+        $this->photosCount = $photosCount;
     }
 }

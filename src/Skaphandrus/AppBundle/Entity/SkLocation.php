@@ -37,6 +37,10 @@ class SkLocation {
      */
     private $spots;
 
+    private $spotsCount = 0;
+
+    private $photosCount = 0;
+
     /**
      * Set createdAt
      *
@@ -187,4 +191,19 @@ class SkLocation {
         return $this->translate()->getExtraDive();
     }
 
+    public function getSpotsCount() {
+        return $this->spotsCount;
+    }
+
+    public function setSpotsCount($spotsCount) {
+        $this->spotsCount = $spotsCount;
+    }
+
+    public function getPhotosCount() {
+        return $this->photosCount;
+    }
+
+    public function setPhotosCount($photosCount) {
+        $this->photosCount = $photosCount;
+    }
 }

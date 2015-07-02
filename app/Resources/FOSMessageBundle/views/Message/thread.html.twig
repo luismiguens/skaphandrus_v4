@@ -60,7 +60,7 @@
                         <span class="pull-right font-noraml">{{ message.createdAt|date }}</span>
                         <span class="font-noraml">From: </span>{{ message.sender|e }}
                     </h5>
-                    {{ message.body }}
+                    {{ message.body|raw }}
                 </div>
                 {% endfor %}
                 <div class="clearfix"></div>
