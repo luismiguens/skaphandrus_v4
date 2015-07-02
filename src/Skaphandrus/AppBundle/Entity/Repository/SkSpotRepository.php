@@ -29,16 +29,22 @@ class SkSpotRepository extends EntityRepository {
     public function findBySlug($slug, $location, $country, $locale) {
         $name = Utils::unslugify($slug);
 
+        $location = $this->getEntityManager()->getRepository('SkaphandrusAppBundle:SkLocation')->findBySlug($location, $country, $locale);
+        dump($location);
+        $location_id = $location->getId();
+
         $query = $this->getEntityManager()
-                        ->createQuery(
-                                'SELECT s
+            ->createQuery(
+                'SELECT s
                 FROM SkaphandrusAppBundle:SkSpot s
                 JOIN s.translations t
                 JOIN s.location l
                 WHERE t.name = :name
                 AND t.locale = :locale
-                AND IDENTITY(s.location) = ' . $this->getEntityManager()->getRepository('SkaphandrusAppBundle:SkLocation')->findBySlug($location, $country, $locale)->getId()
-                        )->setParameter('name', $name)->setParameter('locale', $locale);
+                AND IDENTITY(s.location) = :location_id')
+            ->setParameter('name', $name)
+            ->setParameter('locale', $locale)
+            ->setParameter('location_id', $location->getId());
         try {
             return $query->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
