@@ -29,8 +29,6 @@ class SkSpotRepository extends EntityRepository {
     public function findBySlug($slug, $location, $country, $locale) {
         $name = Utils::unslugify($slug);
 
-        dump($name);
-
         $query = $this->getEntityManager()
                         ->createQuery(
                                 'SELECT s
@@ -72,5 +70,18 @@ class SkSpotRepository extends EntityRepository {
         )->setParameter('spot_id', $spot_id);
 
         return $query->getResult();
+    }
+
+    public function getPhotographers($spot_id) {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT u as fosUser, count(p.id) as photoCount
+                FROM SkaphandrusAppBundle:FosUser u
+                JOIN SkaphandrusAppBundle:SkPhoto p
+                    WITH IDENTITY(p.fosUser) = u.id
+                JOIN p.spot s
+                WHERE s.id = :spot_id
+                GROUP BY u.id'
+            )->setParameter('spot_id', $spot_id)->getResult();
     }
 }

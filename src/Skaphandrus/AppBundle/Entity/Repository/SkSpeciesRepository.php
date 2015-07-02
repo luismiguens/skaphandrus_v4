@@ -236,7 +236,24 @@ class SkSpeciesRepository extends EntityRepository {
         return $result;
     }
 
-    public function countPhotosArray($location_id) {
+    public function countPhotosSpotArray($spot_id) {
+        $photos = $this->getEntityManager()
+            ->createQuery(
+                'SELECT IDENTITY(p.species) species_id, count(p.id) as photo_count
+                FROM SkaphandrusAppBundle:SkPhoto p
+                JOIN p.spot s
+                WHERE s.id = :spot_id
+                GROUP BY species_id'
+                )->setParameter('spot_id', $spot_id)->getResult();
+
+        $photos_array = array();
+        foreach ($photos as $result) {
+            $photos_array[$result['species_id']] = $result['photo_count'];
+        }
+        return $photos_array;
+    }
+
+    public function countPhotosLocationArray($location_id) {
         $photos = $this->getEntityManager()
             ->createQuery(
                 'SELECT IDENTITY(p.species) species_id, count(p.id) as photo_count
@@ -246,6 +263,26 @@ class SkSpeciesRepository extends EntityRepository {
                 WHERE l.id = :location_id
                 GROUP BY species_id'
                 )->setParameter('location_id', $location_id)->getResult();
+
+        $photos_array = array();
+        foreach ($photos as $result) {
+            $photos_array[$result['species_id']] = $result['photo_count'];
+        }
+        return $photos_array;
+    }
+
+    public function countPhotosCountryArray($country_id) {
+        $photos = $this->getEntityManager()
+            ->createQuery(
+                'SELECT IDENTITY(p.species) species_id, count(p.id) as photo_count
+                FROM SkaphandrusAppBundle:SkPhoto p
+                JOIN p.spot s
+                JOIN s.location l
+                JOIN l.region r
+                JOIN r.country c
+                WHERE c.id = :country_id
+                GROUP BY species_id'
+                )->setParameter('country_id', $country_id)->getResult();
 
         $photos_array = array();
         foreach ($photos as $result) {

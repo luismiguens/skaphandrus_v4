@@ -304,14 +304,23 @@ class DefaultController extends Controller {
 //        $query_photos = $qb_photos->getQuery();
 //        $photos = $query_photos->getResult();
 //photographers
-        $qb_photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->getQueryBuilder(['spot' => $spot], 20);
-        $query_photographers = $qb_photographers->getQuery();
-        $photographers = $query_photographers->getResult();
+        // $qb_photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->getQueryBuilder(['spot' => $spot], 20);
+        // $query_photographers = $qb_photographers->getQuery();
+        // $photographers = $query_photographers->getResult();
+        $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')
+                ->getPhotographers($spot->getId());
 
         //species
         $qb_species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->getQueryBuilder(['spot' => $spot], 20);
         $query_species = $qb_species->getQuery();
         $species = $query_species->getResult();
+
+        $photos_count = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->countPhotosSpotArray($spot->getId());
+        foreach ($species as $specie) {
+            if (isset($photos_count[$specie->getId()])) {
+                $specie->setPhotosCount($photos_count[$specie->getId()]);
+            }
+        }
 
         $marker = new Marker();
 
@@ -401,17 +410,19 @@ class DefaultController extends Controller {
 
         if ($location) {
             //photographers
-            $qb_photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->getQueryBuilder(['location' => $location], 20);
-            $query_photographers = $qb_photographers->getQuery();
-            $photographers = $query_photographers->getResult();
+            // $qb_photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->getQueryBuilder(['location' => $location], 20);
+            // $query_photographers = $qb_photographers->getQuery();
+            // $photographers = $query_photographers->getResult();
+            
+            $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
+                ->getPhotographers($location->getId());
 
             //species
             $qb_species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->getQueryBuilder(['location' => $location], 20);
             $query_species = $qb_species->getQuery();
             $species = $query_species->getResult();
 
-            $photos_count = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->countPhotosArray($location->getId());
-            dump($location);
+            $photos_count = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->countPhotosLocationArray($location->getId());
             foreach ($species as $specie) {
                 if (isset($photos_count[$specie->getId()])) {
                     $specie->setPhotosCount($photos_count[$specie->getId()]);
@@ -516,10 +527,27 @@ class DefaultController extends Controller {
                 }
             }
 
+            //species
+            $qb_species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->getQueryBuilder(['location' => $location], 20);
+            $query_species = $qb_species->getQuery();
+            $species = $query_species->getResult();
+
+            $photos_count = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->countPhotosCountryArray($country->getId());
+            foreach ($species as $specie) {
+                if (isset($photos_count[$specie->getId()])) {
+                    $specie->setPhotosCount($photos_count[$specie->getId()]);
+                }
+            }
+
+            $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')
+                ->getPhotographers($country->getId());
+
             return $this->render('SkaphandrusAppBundle:Default:country.html.twig', array(
                         'country' => $country,
                         'country_name' => $name,
                         'locations' => $locations,
+                        'species' => $species,
+                        'photographers' => $photographers,
             ));
         } else {
             throw $this->createNotFoundException('The country ' . $name . ' does not exist.');

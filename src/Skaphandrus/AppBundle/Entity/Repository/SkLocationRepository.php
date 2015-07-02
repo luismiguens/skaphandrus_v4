@@ -87,4 +87,18 @@ class SkLocationRepository extends EntityRepository {
         }
         return $photos_array;
     }
+
+    public function getPhotographers($location_id) {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT u as fosUser, count(p.id) as photoCount
+                FROM SkaphandrusAppBundle:FosUser u
+                JOIN SkaphandrusAppBundle:SkPhoto p
+                    WITH IDENTITY(p.fosUser) = u.id
+                JOIN p.spot s
+                JOIN s.location l
+                WHERE l.id = :location_id
+                GROUP BY u.id'
+            )->setParameter('location_id', $location_id)->getResult();
+    }
 }

@@ -29,6 +29,7 @@
         $(document).ready(function() {
             $('.footable-spots').footable();
             $('.footable-species').footable();
+            $('.footable-photographers').footable();
         });
     </script>
 
@@ -169,7 +170,12 @@
                                                 <tbody>
                                                 {% set c = location.region.country %}
                                                 {% for spot in location.spots %}
-                                                    <tr><td>{{ link_to_spot(spot, location, c) }}</td><td>{{ spot.photos|length }}</td></tr>
+                                                    <tr>
+                                                        <td>{{ link_to_spot(spot, location, c) }}</td>
+                                                        <td>
+                                                            <a href="{{ path('photos', {'spot': spot.id}) }}">{{ spot.photos|length }}</a>
+                                                        </td>
+                                                    </tr>
                                                 {% endfor %}
                                                 </tbody>
                                                 <tfoot>
@@ -193,7 +199,13 @@
                                             </thead>
                                             <tbody>
                                             {% for sp in species %}
-                                                <tr><td>{{ link_to_species(sp) }}</td><td>{{ sp.photosCount }}</td></tr></tr>
+                                                <tr>
+                                                    <td>{{ link_to_species(sp) }}</td>
+                                                    <td>
+                                                        <a href="{{ path('photos', {'species': sp.id, 'location': location.id}) }}">{{ sp.photosCount }}</a>
+                                                    </td>
+                                                </tr>
+                                            </tr>
                                             {% endfor%}
                                             </tbody>
                                             <tfoot>
@@ -210,15 +222,34 @@
                                         <h3>{{ "page.location.h3.photos"|trans }}</h3>
                                         {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'location': location.id },'limit':20 } )) }}
                                     </div>
+
                                     <div id="tab-5" class="tab-pane">
                                         <h3>{{ "page.location.h3.contributors"|trans }}</h3>
-                                        <ul class="unstyled">
-                                            {% for photographer in photographers %}
-                                                <li> photographer : {{link_to_user(photographer)}}</li>
-                                                {% endfor%}
-                                        </ul>   
+                                        <input type="text" class="form-control input-sm m-b-xs" id="filter-photographers" placeholder="Search in table">
+                                        <table class="footable footable-photographers table" data-page-size="20" data-filter=#filter-photographers>
+                                            <thead>
+                                                <th>{{ "page.location.table.species"|trans }}</th>
+                                                <th>{{ "page.location.table.num_photos"|trans }}</th>
+                                            </thead>
+                                            <tbody>
+                                            {% for p in photographers %}
+                                                <tr>
+                                                    <td>{{ link_to_user(p.fosUser) }}</td>
+                                                    <td>
+                                                        <a href="{{ path('photos', {'fosUser': p.fosUser.id, 'location': location.id}) }}">{{ p.photoCount }}</a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor%}
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <ul class="pagination pull-right"></ul>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
                                     </div>
-
                                 </div>
                             </div>
                         </div>

@@ -15,12 +15,23 @@
     </ol>
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- FooTable -->
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/footable/footable.core.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
+    <!-- FooTable -->
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
     <script>
         $(document).ready(function(){
+            
+            $('.footable').footable();
+
             var mapData = {
                 {% for c in countries %}
                 "{{ c.name }}": {{ c.spotsCount }}{% if not loop.last %},{% endif %}
@@ -45,6 +56,11 @@
                         scale: ["#1ab394", "#22d6b1"],
                         normalizeFunction: 'polynomial'
                     }]
+                },
+                onRegionClick: function (event, code) {
+                    {% for c in countries %}
+                    if (code == "{{ c.name }}") { window.location = "{{ url_to_country(c) }}"; }
+                    {% endfor %}
                 }
             });
         });
@@ -94,7 +110,8 @@
 
                     <div class="ibox-content">
                         <div id="world-map" style="height: 300px;"></div>
-                        <table class="table">
+                        <input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
+                        <table class="footable table" data-page-size="20" data-filter=#filter>
                             <thead>
                                 <th>{{ "page.locations_home.label.country"|trans }}</th>
                                 <th>{{ "page.locations_home.label.spots"|trans }}</th>
@@ -105,10 +122,23 @@
                                 <tr>
                                     <td>{{ link_to_country(c) }}</td>
                                     <td>{{ c.spotsCount }}</td>
-                                    <td>{{ c.photosCount }}</td>
+                                    <td>
+                                        {% if c.photosCount > 0 %}
+                                        <a href="{{ path('photos', {'country': c.id}) }}">{{ c.photosCount }}</a>
+                                        {% else %}
+                                        {{ c.photosCount }}
+                                        {% endif %}
+                                    </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2">
+                                        <ul class="pagination pull-right"></ul>
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
