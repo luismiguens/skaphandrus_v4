@@ -1,0 +1,117 @@
+{% extends '@SkaphandrusAppBundle/Resources/views/form_noibox_layout.html.twig' %}
+
+{% block page_title %}{{ "page.contest_participate.h1.title"|trans }}{% endblock %}
+{% block page_description %}description{% endblock %}
+
+{% block heading_title %}
+   {{ "page.contest_participate.h1.title"|trans }}
+{% endblock %}
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="{{ path("contests_landing_page") }}">{{ "page.contest.breadcrumb.contest"|trans }}</a></li>
+        <li class="active"><strong>{{ "page.contest_participate.h1.title"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .own-photos, .contest-photos,
+        .own-photos li, .contest-photos li {
+            float: left;
+            min-width: 20px;
+            border-width: 0;
+            padding: 0;
+        }
+        .own-photos, .contest-photos {
+            width: 100%;
+        }
+        .own-photos {
+            min-height: 110px;
+        }
+        .contest-photos {
+            min-height: 65px;
+        }
+        .own-photos li {
+            width: 110px;
+            height: 110px;
+            margin: 5px;
+        }
+        .contest-photos li {
+            width: 65px;
+            height: 65px;
+            margin: 2px;
+        }
+        .contest-photos li img {
+            width: 65px;
+            height: 65px;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            $(".sortable-list").sortable({
+                connectWith: ".connectList",
+                receive: function( event, ui ) {
+                    // ui.item.attr('id') -> photo id
+                    // $(this).attr('id') -> category id
+                    if ($(this).attr('id') != 'own-photos') {
+                    
+                    }
+                    else {
+                    
+                    }
+                }
+            }).disableSelection();
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="col-lg-8">
+        <div class="ibox">
+            <div class="ibox-content">
+                <h3>{{ "page.contest_participate.h3.your_photos"|trans }}</h3>
+                <ul id="own-photos" class="sortable-list connectList own-photos agile-list">
+                    {% for photo in photos %}
+                    <li id="{{ photo.id }}">
+                        <img src="{{ photo.webPath | imagine_filter('sk_thumbnail_outbound_110') }}" alt="{{ photo.title }}" title="{{ photo.title }}">
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="ibox">
+            <div class="ibox-content">
+                <h3>{{ "page.contest_participate.h3.categories"|trans }}</h3>
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    {% for category in categories %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="heading-{{ category.id }}">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ category.id }}" aria-expanded="true" aria-controls="collapse-{{ category.id }}">
+                                    {{ category.translate.name }}
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse-{{ category.id }}" class="panel-collapse collapse{% if loop.index == 1 %} in{% endif %}" role="tabpanel" aria-labelledby="heading-{{ category.id }}">
+                            <div class="panel-body">
+                                <ul id="{{ category.id }}" class="sortable-list connectList contest-photos agile-list"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

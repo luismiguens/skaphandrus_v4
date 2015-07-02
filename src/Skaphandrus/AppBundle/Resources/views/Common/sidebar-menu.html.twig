@@ -62,7 +62,7 @@
             <li class="{{ 'SkPersonController' in app.request.attributes.get("_controller")?'active' }}">
                 <a href="{{ path('person_admin') }}"><i class="fa fa-photo"></i> <span class="nav-label">{{ "person_admin"|trans }} </span><span class="label label-warning pull-right">16/24</span></a>
             </li>
-
+            {% if is_granted("ROLE_ADMIN") %}
             <li>
                 <a href="#"><i class="fa fa-globe"></i> <span class="nav-label">{{ "identification_admin"|trans }} </span></a>
                 <ul class="nav nav-second-level">
@@ -72,7 +72,7 @@
                     <li><a href="{{ path('identification_species_admin') }}">{{ "identification_species_admin"|trans }}</a></li>
                 </ul>
             </li>
-
+            {% endif %}
         </ul> 
     </div>
 </nav>

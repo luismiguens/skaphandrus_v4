@@ -608,7 +608,9 @@ class DefaultController extends Controller {
                 $validationCount = $validations[0]['validation_count'];
             }
 
-            $showValidation = $securityContext->isGranted('IS_AUTHENTICATED_FULLY') && $validationCount < 3;
+            $showValidation =
+                $securityContext->isGranted('ROLE_EXPERT')
+                && $validationCount < 3;
 
             // Check if validation is new or not
             $validationAction = 'new';
@@ -626,7 +628,10 @@ class DefaultController extends Controller {
                 }
             }
 
-            $showSugestion = $securityContext->isGranted('IS_AUTHENTICATED_FULLY') && count($photo->getSpeciesSugestions()) < 10;
+            $showSugestion =
+                $securityContext->isGranted('IS_AUTHENTICATED_FULLY')
+                && !$securityContext->isGranted('ROLE_EXPERT')
+                && count($photo->getSpeciesSugestions()) < 10;
 
             // Check if sugestion is new or not
             $sugestionAction = 'new';
