@@ -255,6 +255,15 @@ class UtilsExtension extends \Twig_Extension {
                                 '%1% associou especie %2% a fotografia %3%.', array('%1%' => $this->link_to_user($user_from),
                             '%2%' => $this->link_to_species($species),
                             '%3%' => $this->link_to_photo($photo)));
+                
+//                $link_to_user = (string)$this->link_to_user($user_from);
+//                $link_to_user = '<a href="/app_dev.php/en/users/username/5?username=luismiguens" title="luismiguens">luismiguens</a>';
+//                //dump($link_to_user);
+//                
+//                                return $this->translator->trans(
+//                                '%1% associou especie %2% a fotografia %3%.', array('%1%' => $link_to_user,
+//                            '%2%' => 22222,
+//                            '%3%' => 3333));
 
 
             ### activity_002 x associou spot y a fotografia z

@@ -3,8 +3,8 @@
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="1">
-                <source>photo_admin</source>
-                <target>Fotografias</target>
+                <source>%1% associou especie %2% a fotografia %3%.</source>
+                <target>%1% aaassociou especie %2% a fotografia %3%.</target>
             </trans-unit>
         </body>
     </file>
