@@ -45,6 +45,23 @@ class ContestController extends Controller {
         }
     }
 
+    public function participateAction($contest_slug) {
+        $name = str_replace('-', ' ', $contest_slug);
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $contest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
+            ->findOneByName($name);
+
+
+        $photos = $user->getPhotos();
+
+        return $this->render('SkaphandrusAppBundle:Contest:participate.html.twig', array(
+            'contest' => $contest,
+            'categories' => $contest->getCategories(),
+            'photos' => $photos,
+        ));
+    }
+
     public function photographersAction($contest_slug) {
         $name = str_replace('-', ' ', $contest_slug);
 

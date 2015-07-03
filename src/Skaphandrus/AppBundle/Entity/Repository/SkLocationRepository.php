@@ -3,6 +3,7 @@
 namespace Skaphandrus\AppBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Skaphandrus\AppBundle\Utils\Utils;
 
 /**
  * SkLocationRepository
@@ -12,7 +13,9 @@ use Doctrine\ORM\EntityRepository;
  */
 class SkLocationRepository extends EntityRepository {
 
-    public function findBySlug($name, $country, $locale) {
+    public function findBySlug($slug, $country, $locale) {
+        $name = Utils::unslugify($slug);
+
         $query = $this->getEntityManager()
                         ->createQuery(
                                 'SELECT l, t

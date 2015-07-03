@@ -202,6 +202,12 @@ contests_photos:
     requirements:
         _locale:  en|pt
 
+contest_photos_association:
+    path:     /{_locale}/underwater-photo-contest/participate/{contest_slug}
+    defaults: { _controller: SkaphandrusAppBundle:Contest:participate, _locale: en }
+    requirements:
+        _locale:  en|pt
+
 contests_photographers:
     path:     /{_locale}/underwater-photo-contest/photographers/{contest_slug}
     defaults: { _controller: SkaphandrusAppBundle:Contest:photographers, _locale: en }
