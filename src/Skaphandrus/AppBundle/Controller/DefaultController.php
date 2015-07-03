@@ -22,7 +22,17 @@ class DefaultController extends Controller {
 
     public function indexAction() {
 
-        return $this->render('SkaphandrusAppBundle:Default:index.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        
+
+        $entities = $em->getRepository('SkaphandrusAppBundle:SkActivity')->findAll();
+
+
+        
+        
+        return $this->render('SkaphandrusAppBundle:Default:index.html.twig', array(
+            'entities' => $entities,
+            ));
     }
     
     

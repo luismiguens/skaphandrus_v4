@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Skaphandrus\AppBundle\Entity\SkActivity" table="sk_activity">
+        
+        
+        <indexes>
+            <index name="sk_activity_FI_1" columns="user_from"/>
+        </indexes>
+
+        <id name="message_name" type="integer" column="message_name">
+            <generator strategy="IDENTITY"/>
+        </id>
+
+
+
+
+
+        <field name="userFrom" type="integer" column="user_from" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+    
+    
+        <field name="speciesId" type="integer" column="species_id" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+    
+        <field name="spotId" type="integer" column="spot_id" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+    
+        <field name="photoId" type="integer" column="photo_id" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+    
+        <field name="categoryId" type="integer" column="category_id" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+    
+        <field name="commentId" type="integer" column="comment_id" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+    
+        <field name="moduleId" type="integer" column="module_id" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+    
+        <field name="userId" type="integer" column="user_id" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+
+    
+    
+    
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+    
+    
+    </entity>
+</doctrine-mapping>

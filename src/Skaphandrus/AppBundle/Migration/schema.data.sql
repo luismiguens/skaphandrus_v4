@@ -2636,6 +2636,75 @@ INSERT INTO skaphandrus4.sk_species_image_ref (id, species_id, is_active, is_pri
 INSERT INTO skaphandrus4.sk_species_illustration (id, species_id, image) SELECT id, especie_id, imagem FROM skaphandrus3.sk_especie_ilustracao;
 
 
+###################################################################################################
+### CREATE ACTIVITY VIEW
+
+
+### activity_001 x associou especie y a fotografia z	
+### activity_002 x associou spot y a fotografia z	
+### ???????????? x adicionou fotografia y	
+### activity_011 x sugeriu especie y na fotografia z	
+### activity_012 x validou especie y na fotografia z	
+### activity_021 x comentou fotografia y	
+### activity_031 x adicionou spot y	
+### activity_041 x adicionou y como amigo.	
+### ???????????? x editou spot	
+### ???????????? x editou local	
+### ???????????? x editou pais	
+### ???????????? x gostou da fotografia y	
+### activity_051 x registou-se	
+### ???????????? x passou a ser expert	
+### activity_061 x associou fotografia x a categoria y	
+### activity_062 x votou na fotografia y da categoria z	
+### activity_071 x trocou x pontos pelo modulo y	
+
+### message_name, x as user_from, 0 as species_id, 0 as spot_id, 0 as photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, 0 as created_at
+
+
+CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`skaphandrus4`@`localhost` SQL SECURITY DEFINER VIEW `skaphandrus4`.`sk_activity` AS 
+(select "activity_001" as message_name, fos_user_id as user_from, species_id, 0 as spot_id, id as photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
+    from sk_photo where species_id is not NULL order by created_at desc limit 10)
+UNION
+(select "activity_002" as message_name, fos_user_id as user_from, 0 as species_id, spot_id, id as photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
+    from sk_photo where spot_id is not NULL order by created_at desc limit 10)
+UNION
+(select "activity_011" as message_name, fos_user_id as user_from, species_id, 0 as spot_id, photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
+    from sk_photo_species_sugestion order by created_at desc limit 10)
+UNION
+(select "activity_012" as message_name, fos_user_id as user_from, species_id, 0 as spot_id, photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
+    from sk_photo_species_validation order by created_at desc limit 10)
+UNION
+(select "activity_021" as message_name, author_id as user_from, 0 as species_id, 0 as spot_id, SUBSTRING(thread_id,locate("-",thread_id)+1,10) as photo_id, 0 as category_id, id as comment_id, 0 as module_id, 0 as user_id, created_at
+    from Comment where thread_id like "%SkPhoto%" order by created_at desc limit 10)
+UNION
+(select "activity_031" as message_name, fos_user_id as user_from, 0 as species_id, id as spot_id, 0 as photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
+    from sk_spot order by created_at desc limit 10)
+UNION
+(select "activity_041" as message_name, fos_user_id as user_from, 0 as species_id, 0 as spot_id, 0 as photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, id as user_id, created_at
+    from sk_person order by created_at desc limit 10)
+UNION
+(select "activity_051" as message_name, id as user_from, 0 as species_id, 0 as spot_id, 0 as photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, CURRENT_TIMESTAMP as created_at
+    from fos_user where enabled=1 order by id desc limit 10)
+UNION
+(select "activity_061" as message_name, (SELECT fos_user_id from sk_photo where sk_photo.id = sk_photo_contest_category_photo.photo_id) as user_from, 0 as species_id, 0 as spot_id, photo_id, category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
+    from sk_photo_contest_category_photo order by created_at desc limit 10)
+UNION
+(select "activity_062" as message_name, fos_user_id as user_from, 0 as species_id, 0 as spot_id, photo_id, category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
+    from sk_photo_contest_vote order by created_at desc limit 10)
+UNION
+(select "activity_071" as message_name, fos_user_id as user_from, 0 as species_id, 0 as spot_id, 0 as photo_id, 0 as category_id, 0 as comment_id, module_id, 0 as user_id, acquired_at as created_at 
+    from sk_identification_acquisition order by created_at desc limit 10)
+    
+
+
+
+
+
+
+
+
+
+
 
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;

@@ -3,19 +3,9 @@
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="1">
-                <source>form.photo.label.title</source>
-                <target>Titulo</target>
+                <source>photo_admin</source>
+                <target>Fotografias</target>
             </trans-unit>
-            <trans-unit id="2">
-                <source>page.photo.h3.views</source>
-                <target>Number of views: %views%</target>
-            </trans-unit>
-            
-            <trans-unit id="3">
-                <source>form.common.message.changes_saved</source>
-                <target>alteracoes_guardadas</target>
-            </trans-unit>
-            
         </body>
     </file>
 </xliff>
