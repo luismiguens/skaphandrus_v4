@@ -1,0 +1,23 @@
+{# empty Twig template #}
+<div class="feed-activity-list">
+    {% for activity in activities %}
+        <div class="feed-element">
+            <a href="profile.html" class="pull-left">
+                <img alt="image" class="img-circle" src="{{ activity.userFrom.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}" />
+            </a>
+            <div class="media-body ">
+                <small class="pull-right">{{activity.createdAt|time_diff}}</small>
+                {{ activity_message(activity)|raw }} <br>
+                <small class="text-muted">{{activity.createdAt|date("F jS \\a\\t g:ia")}}</small>
+                {#<div class="photos">
+                    <a href="{{url_to_photo(activity.photoId)}}" target="_blank"> 
+                        <img src="{{ activity.photoId.getWebPath | imagine_filter('sk_widen_240') }}" class="feed-photo" alt="image">
+                    </a>
+                </div>#}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+
+

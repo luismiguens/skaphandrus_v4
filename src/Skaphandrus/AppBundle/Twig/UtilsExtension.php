@@ -382,7 +382,7 @@ class UtilsExtension extends \Twig_Extension {
      */
 
     public function link_to_user($user) {
-        return '<a href="' . $this->url_to_user($user) . '" title="' . $user->getUsername() . '">' . $user->getUsername() . '</a>';
+        return '<a href="' . $this->url_to_user($user) . '" title="' . $user->getName() . '">' . $user->getName() . '</a>';
     }
 
     public function link_to_species($species) {

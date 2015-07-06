@@ -47,7 +47,7 @@
         <tbody>
             {% for entity in entities %}
                 <tr>
-                    <td>{{ entity.pointsType|trans }}</td>
+                    <td>{{ entity.pointsType|trans|raw }}</td>
                     <td>{{ arr[entity.pointsType.id].single }}</td>
                     <td>{{ arr[entity.pointsType.id].number }}</td>
                     <td>{{ entity.points }}</td>
