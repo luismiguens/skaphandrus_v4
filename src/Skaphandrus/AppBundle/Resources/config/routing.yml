@@ -220,6 +220,12 @@ contest_remove_photo:
     requirements:
         _locale:  en|pt
 
+contest_vote_photo:
+    path:     /{_locale}/category/{category_id}/vote-photo/{photo_id}
+    defaults: { _controller: SkaphandrusAppBundle:Contest:votePhoto, _locale: en }
+    requirements:
+        _locale:  en|pt
+
 contests_photographers:
     path:     /{_locale}/underwater-photo-contest/photographers/{contest_slug}
     defaults: { _controller: SkaphandrusAppBundle:Contest:photographers, _locale: en }

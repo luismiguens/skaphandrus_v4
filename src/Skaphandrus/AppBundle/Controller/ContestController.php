@@ -5,6 +5,7 @@ namespace Skaphandrus\AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse as JsonResponse;
 use Symfony\Component\Intl\Intl;
+use Skaphandrus\AppBundle\Entity\SkPhotoContestVote;
 
 class ContestController extends Controller {
     
@@ -27,6 +28,7 @@ class ContestController extends Controller {
     }
 
     public function photosAction($contest_slug, $category_slug) {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
         $locale = $this->get('request')->getLocale();
 
         $category = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')
@@ -37,8 +39,12 @@ class ContestController extends Controller {
                 throw $this->createNotFoundException('The category "'. $category_slug .'" does not belong to this contest.');
             }
 
+            $votedPhoto = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestVote')
+                ->findOneBy(array('fosUser' => $user, 'category' => $category));
+
             return $this->render('SkaphandrusAppBundle:Contest:photos.html.twig', array(
                 'category' => $category,
+                'votedPhoto' => $votedPhoto,
             ));
         }
         else {
@@ -103,6 +109,38 @@ class ContestController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $em->persist($category);
         $em->flush();
+
+        return new JsonResponse(array());
+    }
+
+    public function votePhotoAction($category_id, $photo_id) {
+        
+        // Fetch needed entities
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $category = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')
+            ->findOneById($category_id);
+        $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
+            ->findOneById($photo_id);
+
+        // Check if vote already exists
+        $existing_vote = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestVote')
+            ->findOneBy(array('fosUser' => $user, 'category' => $category));
+
+        $em = $this->getDoctrine()->getManager();
+        if ($existing_vote) {
+            $existing_vote->setPhoto($photo);
+            $em->persist($existing_vote);
+            $em->flush();
+        }
+        else {
+            $vote = new SkPhotoContestVote();
+            $vote->setFosUser($user);
+            $vote->setCategory($category);
+            $vote->setPhoto($photo);
+            $vote->setCreatedAt(new \DateTime());
+            $em->persist($vote);
+            $em->flush();
+        }
 
         return new JsonResponse(array());
     }
