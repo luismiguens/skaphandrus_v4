@@ -15,11 +15,11 @@
 
 
 
-        <field name="userFrom" type="integer" column="user_from" nullable="true">
-            <options>
-                <option name="unsigned"/>
-            </options>
-        </field>
+        <many-to-one field="userFrom" target-entity="FosUser" fetch="LAZY">
+            <join-columns>
+                <join-column name="user_from" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
     
     
         <field name="speciesId" type="integer" column="species_id" nullable="true">
@@ -34,11 +34,15 @@
             </options>
         </field>
     
-        <field name="photoId" type="integer" column="photo_id" nullable="true">
-            <options>
-                <option name="unsigned"/>
-            </options>
-        </field>
+
+        
+        
+                <many-to-one field="photoId" target-entity="SkPhoto" fetch="LAZY">
+            <join-columns>
+                <join-column name="photo_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        
     
         <field name="categoryId" type="integer" column="category_id" nullable="true">
             <options>

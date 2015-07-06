@@ -208,15 +208,24 @@
                                                     
                                                     <div class="feed-element">
                                                     <a href="profile.html" class="pull-left">
-                                                        <img alt="image" class="img-circle" src="img/profile.jpg">
+                                                        <img alt="image" class="img-circle" src="{{ entity.userFrom.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}" />
                                                     </a>
                                                     <div class="media-body ">
                                                         <small class="pull-right">{{entity.createdAt|time_diff}}</small>
                                                         {{ activity_message(entity)|raw }} <br>
                                                         <small class="text-muted">{{entity.createdAt|date("F jS \\a\\t g:ia")}}</small>
-
-                                                    </div>
+                                                        <div class="photos">
+                                                <a href="{{url_to_photo(entity.photoId)}}" target="_blank"> 
+                                                    <img src="{{ entity.photoId.getWebPath | imagine_filter('sk_widen_240') }}" class="feed-photo" alt="image">
+                                                </a>
                                                 </div>
+                                                    </div>
+
+                                                    
+                                             
+                                                    
+                                                    
+                                                    </div>
                                                     
                                                     
                                                     

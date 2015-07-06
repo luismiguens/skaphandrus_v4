@@ -12,22 +12,25 @@
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
                 {% if is_granted("IS_AUTHENTICATED_FULLY") %}
-                <div class="dropdown profile-element"> <span>
-                        <!--<img alt="image" class="img-circle" src="img/profile_small.jpg">-->
-                        <img alt="image" class="img-circle" src="">
-                    </span>
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{ app.user.username }}</strong>
-                            </span> <span class="text-muted text-xs block">Art Director <b class="caret"></b></span> </span> </a>
-                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="{{ path('settings_admin_edit') }}">{{ "settings_admin"|trans }} </a></li>
-                        <li><a href="{{ path('profile_admin_edit') }}">{{ "profile_admin"|trans }} </a></li>
-                        <li><a href="{{ path('person_admin') }}">{{ "person_admin"|trans }} </a></li>
-                        <li><a href="{{ path('fos_message_inbox') }}">{{ "messages_admin"|trans }}</a></li>
-                        <li class="divider"></li>
-                        <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
-                    </ul>
-                </div>
+                    <div class="dropdown profile-element"> 
+                        <span>
+                            <img alt="image" class="img-circle" src="{{ app.user.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_48') }}" />
+                        </span>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear"> 
+                                <span class="block m-t-xs"> <strong class="font-bold">{{ app.user.name }}</strong></span> 
+                                <span class="text-muted text-xs block">{{ app.user.personal.honorific }} <b class="caret"></b></span>
+                            </span> 
+                        </a>
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                            <li><a href="{{ path('settings_admin_edit') }}">{{ "settings_admin"|trans }} </a></li>
+                            <li><a href="{{ path('profile_admin_edit') }}">{{ "profile_admin"|trans }} </a></li>
+                            <li><a href="{{ path('person_admin') }}">{{ "person_admin"|trans }} </a></li>
+                            <li><a href="{{ path('fos_message_inbox') }}">{{ "messages_admin"|trans }}</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
+                        </ul>
+                    </div>
                 {% endif %}
                 <div class="logo-element">
                     SK+
@@ -58,20 +61,24 @@
             <li class="{{ 'SkPointsController' in app.request.attributes.get("_controller")?'active' }}">
                 <a href="{{ path('points_admin') }}"><i class="fa fa-globe"></i> <span class="nav-label">{{ "points_admin"|trans }} </span><span class="label label-warning pull-right">16/24</span></a>
             </li>
-            
+
             <li class="{{ 'SkPersonController' in app.request.attributes.get("_controller")?'active' }}">
                 <a href="{{ path('person_admin') }}"><i class="fa fa-photo"></i> <span class="nav-label">{{ "person_admin"|trans }} </span><span class="label label-warning pull-right">16/24</span></a>
             </li>
             {% if is_granted("ROLE_ADMIN") %}
-            <li>
-                <a href="#"><i class="fa fa-globe"></i> <span class="nav-label">{{ "identification_admin"|trans }} </span></a>
-                <ul class="nav nav-second-level">
-                    <li><a href="{{ path('identification_criteria_admin') }}">{{ "identification_criteria_admin"|trans }}</a></li>
-                    <li><a href="{{ path('identification_group_admin') }}">{{ "identification_group_admin"|trans }}</a></li>
-                    <li><a href="{{ path('identification_module_admin') }}">{{ "identification_module_admin"|trans }}</a></li>
-                    <li><a href="{{ path('identification_species_admin') }}">{{ "identification_species_admin"|trans }}</a></li>
-                </ul>
-            </li>
+                <li>
+                    <a href="#"><i class="fa fa-globe"></i> <span class="nav-label">{{ "identification_admin"|trans }} </span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse" style="height: 0px;">
+                        <li><a href="{{ path('identification_criteria_admin') }}">{{ "identification_criteria_admin"|trans }}</a></li>
+                        <li><a href="{{ path('identification_group_admin') }}">{{ "identification_group_admin"|trans }}</a></li>
+                        <li><a href="{{ path('identification_module_admin') }}">{{ "identification_module_admin"|trans }}</a></li>
+                        <li><a href="{{ path('identification_species_admin') }}">{{ "identification_species_admin"|trans }}</a></li>
+                    </ul>
+                </li>
+                
+   
+                
+                
             {% endif %}
         </ul> 
     </div>

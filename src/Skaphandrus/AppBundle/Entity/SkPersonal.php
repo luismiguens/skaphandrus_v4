@@ -117,7 +117,8 @@ class SkPersonal {
      * @return string
      */
     public function getHonorific() {
-        return $this->honorific;
+        return ( ! $this->honorific ) ? 'Scuba diver' : $this->honorific;
+        //return $this->honorific;
     }
 
     /**

@@ -16,7 +16,12 @@ class ProfilePersonalType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            //->add('honorific')
+            ->add('honorific','text',
+                        array(
+                            'attr' => array('class' => 'form-control'),
+                            'label'=>'form.personal.label.honorific',
+                            
+                            ))
             ->add('firstname','text',
                         array(
                             'attr' => array('class' => 'form-control'),
