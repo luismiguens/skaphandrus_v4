@@ -45,8 +45,9 @@
         <one-to-one field="personal" target-entity="SkPersonal" mapped-by="fosUser" />
         <one-to-one field="address" target-entity="SkAddress" mapped-by="fosUser" />
         <one-to-one field="contact" target-entity="SkContact" mapped-by="fosUser" />
-    
-        
-        
+
+        <lifecycle-callbacks>
+            <lifecycle-callback type="postLoad" method="doStuffOnPostLoad"/>
+        </lifecycle-callbacks>
     </entity>
 </doctrine-mapping>

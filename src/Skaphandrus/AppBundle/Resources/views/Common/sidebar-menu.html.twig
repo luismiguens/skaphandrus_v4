@@ -14,7 +14,9 @@
                 {% if is_granted("IS_AUTHENTICATED_FULLY") %}
                     <div class="dropdown profile-element"> 
                         <span>
+                            {% if app.user.settings.getWebPath is not empty %}
                             <img alt="image" class="img-circle" src="{{ app.user.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_48') }}" />
+                            {% endif %}
                         </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> 

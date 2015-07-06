@@ -337,6 +337,26 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
     }
 
     
-    
-    
+    public function doStuffOnPostLoad(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+        $entity = $args->getEntity();
+        $entityManager = $args->getEntityManager();
+
+        if (!$entity->getSettings()) {
+            $settings = new SkSettings();
+            $settings->setFosUser($entity);
+            $entity->setSettings($settings);
+
+            $entityManager->persist($settings);
+        }
+        if (!$entity->getPersonal()) {
+            $personal = new SkPersonal();
+            $personal->setFosUser($entity);
+            $entity->setPersonal($personal);
+            
+            $entityManager->persist($personal);
+        }
+
+        $entityManager->persist($entity);
+        $entityManager->flush();
+    }
 }
