@@ -202,9 +202,21 @@ contests_photos:
     requirements:
         _locale:  en|pt
 
-contest_photos_association:
-    path:     /{_locale}/underwater-photo-contest/participate/{contest_slug}
+contest_participate:
+    path:     /{_locale}/underwater-photo-contest/participate/{contest_id}
     defaults: { _controller: SkaphandrusAppBundle:Contest:participate, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+contest_add_photo:
+    path:     /{_locale}/category/{category_id}/add-photo/{photo_id}
+    defaults: { _controller: SkaphandrusAppBundle:Contest:addPhoto, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+contest_remove_photo:
+    path:     /{_locale}/category/{category_id}/remove-photo/{photo_id}
+    defaults: { _controller: SkaphandrusAppBundle:Contest:removePhoto, _locale: en }
     requirements:
         _locale:  en|pt
 

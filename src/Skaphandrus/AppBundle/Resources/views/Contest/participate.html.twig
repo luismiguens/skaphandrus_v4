@@ -62,10 +62,16 @@
                     // ui.item.attr('id') -> photo id
                     // $(this).attr('id') -> category id
                     if ($(this).attr('id') != 'own-photos') {
-                    
+                        $.ajax({
+                            url: "/{{ app.request.locale }}/category/" + $(this).attr('id') + "/add-photo/" + ui.item.attr('id')
+                        });
                     }
-                    else {
-                    
+                },
+                remove: function( event, ui ) {
+                    if ($(this).attr('id') != 'own-photos') {
+                        $.ajax({
+                            url: "/{{ app.request.locale }}/category/" + $(this).attr('id') + "/remove-photo/" + ui.item.attr('id')
+                        });
                     }
                 }
             }).disableSelection();
@@ -79,7 +85,7 @@
             <div class="ibox-content">
                 <h3>{{ "page.contest_participate.h3.your_photos"|trans }}</h3>
                 <ul id="own-photos" class="sortable-list connectList own-photos agile-list">
-                    {% for photo in photos %}
+                    {% for photo in userPhotos %}
                     <li id="{{ photo.id }}">
                         <img src="{{ photo.webPath | imagine_filter('sk_thumbnail_outbound_110') }}" alt="{{ photo.title }}" title="{{ photo.title }}">
                     </li>
@@ -105,7 +111,13 @@
                         </div>
                         <div id="collapse-{{ category.id }}" class="panel-collapse collapse{% if loop.index == 1 %} in{% endif %}" role="tabpanel" aria-labelledby="heading-{{ category.id }}">
                             <div class="panel-body">
-                                <ul id="{{ category.id }}" class="sortable-list connectList contest-photos agile-list"></ul>
+                                <ul id="{{ category.id }}" class="sortable-list connectList contest-photos agile-list">
+                                    {% for photo in categoryPhotos[category.id] %}
+                                        <li id="{{ photo.id }}">
+                                            <img src="{{ photo.webPath | imagine_filter('sk_thumbnail_outbound_110') }}" alt="{{ photo.title }}" title="{{ photo.title }}">
+                                        </li>
+                                    {% endfor %}
+                                </ul>
                             </div>
                         </div>
                     </div>

@@ -3,6 +3,7 @@
 namespace Skaphandrus\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse as JsonResponse;
 use Symfony\Component\Intl\Intl;
 
 class ContestController extends Controller {
@@ -45,21 +46,65 @@ class ContestController extends Controller {
         }
     }
 
-    public function participateAction($contest_slug) {
-        $name = str_replace('-', ' ', $contest_slug);
+    public function participateAction($contest_id) {
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
         $contest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
-            ->findOneByName($name);
+            ->findOneById($contest_id);
 
+        $categoryPhotos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
+            ->findPhotosFromUserInContest($user->getId(), $contest->getId());
 
-        $photos = $user->getPhotos();
+        $categoryPhotosIds = array();
+        foreach ($categoryPhotos as $cat) {
+            foreach ($cat as $p) {
+                $categoryPhotosIds[] = $p->getId();
+            }
+        }
+
+        $userPhotos = array();
+        foreach ($user->getPhotos() as $photo) {
+            if (!in_array($photo->getId(), $categoryPhotosIds)) {
+                $userPhotos[] = $photo;
+            }
+        }
 
         return $this->render('SkaphandrusAppBundle:Contest:participate.html.twig', array(
             'contest' => $contest,
             'categories' => $contest->getCategories(),
-            'photos' => $photos,
+            'userPhotos' => $userPhotos,
+            'categoryPhotos' => $categoryPhotos,
         ));
+    }
+
+    public function addPhotoAction($category_id, $photo_id) {
+        $category = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')
+            ->findOneById($category_id);
+
+        $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
+            ->findOneById($photo_id);
+
+        $category->addPhoto($photo);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($category);
+        $em->flush();
+
+        return new JsonResponse(array());
+    }
+
+    public function removePhotoAction($category_id, $photo_id) {
+        $category = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')
+            ->findOneById($category_id);
+        $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
+            ->findOneById($photo_id);
+        $category->removePhoto($photo);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($category);
+        $em->flush();
+
+        return new JsonResponse(array());
     }
 
     public function photographersAction($contest_slug) {
