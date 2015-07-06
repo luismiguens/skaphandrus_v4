@@ -27,6 +27,20 @@
                     isFitWidth: false
                 }
             });
+
+            $('.vote-button').click(function() {
+                photo_id = $(this).attr('id');
+
+                if ($(this).hasClass('btn-default')) {
+                    $.ajax({
+                        url: "/{{ app.request.locale }}/category/{{ category.id }}/vote-photo/" + $(this).attr('id'),
+                        success: function (data) {
+                            $('.vote-button.btn-primary').removeClass('btn-primary').addClass('btn-default').html('{{ "page.contest.btn.vote"|trans }}');
+                            $('.vote-button#' + photo_id).removeClass('btn-default').addClass('btn-primary').html('{{ "page.contest.btn.voted"|trans }}');
+                        },
+                    });
+                }
+            });
         });
     </script>
 {% endblock %}
@@ -83,7 +97,17 @@
                                                 </div>
                                                 <div class="ibox-content profile-content">
                                                     <h4><strong>{{ photo.title }}</strong></h4>
+                                                    <div>
+                                                        {% set class = 'btn-default' %}
+                                                        {% set text = "page.contest.btn.vote"|trans %}
+                                                        
+                                                        {% if votedPhoto is not empty and photo.id == votedPhoto.photo.id %}
+                                                            {% set class = 'btn-primary' %}
+                                                            {% set text = "page.contest.btn.voted"|trans %}
+                                                        {% endif %}
 
+                                                        <button type="button" class="vote-button btn {{ class }}" id="{{ photo.id }}">{{ text }}</button>
+                                                    </div>
                                                     {% if photo.description is not empty %}
                                                         <p>{{ photo.description }}</p>
                                                     {% endif %}
