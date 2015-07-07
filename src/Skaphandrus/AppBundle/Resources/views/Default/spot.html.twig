@@ -31,6 +31,8 @@
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
+        <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
+        <li><a href="{{ path('locations_home') }}">{{ "breadcrumb.locations"|trans }}</a></li>
         <li>{{ link_to_country(spot.location.region.country) }}</li>
         <li>{{ link_to_location(spot.location) }}</li>
         <li class="active"><strong>{{ spot.name }}</strong></li>

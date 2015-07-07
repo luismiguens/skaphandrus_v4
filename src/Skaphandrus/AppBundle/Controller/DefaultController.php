@@ -442,8 +442,8 @@ class DefaultController extends Controller {
 
             // Get markers from spots for the map
             $markers = array();
-            $totalLatitude = 0;
-            $totalLongitude = 0;
+            // $totalLatitude = 0;
+            // $totalLongitude = 0;
             foreach ($location->getSpots() as $spot) {
                 if ($spot->getCoordinate()) {
                     $marker = new Marker();
@@ -461,15 +461,17 @@ class DefaultController extends Controller {
                         'flat' => true,
                     ));
 
-                    $totalLatitude += $latitude;
-                    $totalLongitude += $longitude;
+                    // $totalLatitude += $latitude;
+                    // $totalLongitude += $longitude;
                     $markers[] = $marker;
                 }
             }
 
             // Create the map
-            $centerLatitude = $totalLatitude / count($markers);
-            $centerLongitude = $totalLongitude / count($markers);
+            // $centerLatitude = $totalLatitude / count($markers);
+            // $centerLongitude = $totalLongitude / count($markers);
+            $centerLatitude = explode(",", $location->getSpots()->toArray()[0]->getCoordinate())[0];
+            $centerLongitude = explode(",", $location->getSpots()->toArray()[0]->getCoordinate())[1];
             $map = new \Ivory\GoogleMap\Map();
             $map->setPrefixJavascriptVariable('map_');
             $map->setHtmlContainerId('map_canvas');
