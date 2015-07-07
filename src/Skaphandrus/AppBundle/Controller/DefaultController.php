@@ -749,8 +749,8 @@ class DefaultController extends Controller {
         if ($user) {
             return $this->render('SkaphandrusAppBundle:Default:user.html.twig', array(
                 'user' => $user,
-                'species' => $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findByUserId($user->getId()),
-                'spots' => $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')->findByUserId($user->getId()),
+                'species' => $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findWithPhotoCountByUserId($user->getId()),
+                'spots' => $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')->findWithPhotoCountByUserId($user->getId()),
             ));
         } else {
             throw $this->createNotFoundException('The user with id "' . $id . '" does not exist.');
@@ -787,14 +787,19 @@ class DefaultController extends Controller {
 
     public function skGridAction($parameters, $limit = 20, $order = array('id' => 'desc')) {
 
-        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($parameters, $limit, $order);
-        $query = $qb->getQuery();
-
-        $photos = $query->getResult();
+        if (isset($parameters['photos'])) {
+            $photos = $parameters['photos'];
+            unset($parameters['photos']);
+        }
+        else {
+            $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($parameters, $limit, $order);
+            $query = $qb->getQuery();
+            $photos = $query->getResult();
+        }
 
         return $this->render('SkaphandrusAppBundle:Default:skGrid.html.twig', array(
-                    'photos' => $photos,
-                    'parameters' => $parameters,
+            'photos' => $photos,
+            'parameters' => $parameters,
         ));
     }
     

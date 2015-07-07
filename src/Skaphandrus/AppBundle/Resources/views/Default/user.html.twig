@@ -2,18 +2,34 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/peity/jquery.peity.min.js') }}"></script>
+    <!-- FooTable -->
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
     <script>
         $(function() {
             $("span.pie").peity("pie", { fill: ['#1ab394', '#d7d7d7', '#ffffff'] });
             $(".line").peity("line", { fill: '#1ab394', stroke:'#169c81' });
             $(".bar").peity("bar", { fill: ["#1ab394", "#d7d7d7"] });
+
+            $('.footable-species').footable();
+            $('.footable-spots').footable();
         });
     </script>
 {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
+    <!-- FooTable -->
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/footable/footable.core.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
+        <li class="active"><strong>{{ user.personal.name }}</strong></li>
+    </ol>
 {% endblock %}
 
 {% block body %}
@@ -48,7 +64,7 @@
                         <img alt="image" class="img-responsive" src="img/profile_big.jpg">
                     </div>
                     <div class="ibox-content profile-content">
-                        <h4><strong>{{ user.username }}</strong></h4>
+                        <h4><strong>{{ user.personal.name }}</strong></h4>
                         <p><i class="fa fa-map-marker"></i> Riviera State 32/106</p>
                         <h5>
                             {{ "page.user.h5.about_me"|trans }}
@@ -155,9 +171,30 @@
                                 {% if species|first is not empty %}
                                 <div id="tab-{{tab_species_id}}" class="tab-pane {{tab_species_id==1?'active'}}">
                                     <h3>{{ "page.user.h3.species"|trans }}</h3>
-                                    {% for s in species %}
-                                        <p>{{ link_to_species(s) }}</p>
-                                    {% endfor %}
+                                    <input type="text" class="form-control input-sm m-b-xs" id="filter-species" placeholder="Search in table">
+                                    <table class="footable footable-species table" data-page-size="50" data-filter=#filter-species>
+                                        <thead>
+                                            <th>{{ "page.user.table.species"|trans }}</th>
+                                            <th>{{ "page.user.table.num_photos"|trans }}</th>
+                                        </thead>
+                                        <tbody>
+                                        {% for s in species %}
+                                            <tr>
+                                                <td>{{ link_to_species(s.species) }}</td>
+                                                <td>
+                                                    <a href="{{ path('photos', {'fosUser': user.id, 'species': s.species.id}) }}">{{ s.photo_count }}</a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <ul class="pagination pull-right"></ul>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
                                 </div>
                                 {% endif %}
                                 <!-- End Species Tab -->
@@ -165,9 +202,30 @@
                                 {% if spots|first is not empty %}
                                 <div id="tab-{{tab_spots_id}}" class="tab-pane {{tab_spots_id==1?'active'}}">
                                     <h3>{{ "page.user.h3.spots"|trans }}</h3>
-                                    {% for spot in spots %}
-                                        <p>{{ link_to_spot(spot) }}</p>
-                                    {% endfor %}
+                                    <input type="text" class="form-control input-sm m-b-xs" id="filter-spots" placeholder="Search in table">
+                                    <table class="footable footable-spots table" data-page-size="50" data-filter=#filter-spots>
+                                        <thead>
+                                            <th>{{ "page.user.table.spots"|trans }}</th>
+                                            <th>{{ "page.user.table.num_photos"|trans }}</th>
+                                        </thead>
+                                        <tbody>
+                                        {% for s in spots %}
+                                            <tr>
+                                                <td>{{ link_to_spot(s.spot) }}</td>
+                                                <td>
+                                                    <a href="{{ path('photos', {'fosUser': user.id, 'spot': s.spot.id}) }}">{{ s.photo_count }}</a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <ul class="pagination pull-right"></ul>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
                                 </div>
                                 {% endif %}
                                 <!-- End Spots Tab -->
@@ -175,10 +233,11 @@
                                 {% if user.photosValidated|first is not empty %}
                                 <div id="tab-{{tab_photosv_id}}" class="tab-pane {{tab_photosv_id==1?'active'}}">
                                     <h3>{{ "page.user.h3.photos_validated"|trans }}</h3>
-                                    {% for pv in user.photosValidated %}
-                                        <p>{{ pv.photo.title }}</p>
-                                        {# link_to_photo(pv.photo) #}
+                                    {% set pva = [] %}
+                                    {% for pv in user.photosValidated[:20] %}
+                                        {% set pva = pva|merge([pv.photo]) %}
                                     {% endfor %}
+                                    {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'photos': pva } })) }}
                                 </div>
                                 {% endif %}
                                 <!-- End Photos Validated Tab -->
