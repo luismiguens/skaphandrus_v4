@@ -11,12 +11,16 @@
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/js/jstree/dist/themes/default/style.min.css') }}" />
+    <!-- FooTable -->
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/footable/footable.core.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/jstree/dist/jstree.min.js') }}"></script>
+    <!-- FooTable -->
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
     <script>
         $(function () {
             $("#jstree")
@@ -34,6 +38,8 @@
                         var href = data.node.a_attr.href;
                         document.location.href = href;
                     });
+
+            $('.footable-photographers').footable();
         });
     </script>
 {% endblock %}
@@ -207,26 +213,46 @@
                                 <div class="tab-content">
                                     <div id="tab-1" class="tab-pane active">
                                         <h3>{{ "page.taxon.h3.photos"|trans }}</h3>
-                                        {% for child in taxon.childNodes %}
+                                        {# for child in taxon.childNodes %}
                                             <h5>{{ child.name }}<h5>
                                                     {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { (child.taxonNodeName) : child.id }, 'limit':8 } )) }}
-                                                {% endfor %}
-                                                </div>
+                                        {% endfor #}
+                                        {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { (taxon.taxonNodeName) : taxon.id }, 'limit': 20 } )) }}
+                                    </div>
 
-                                                <div id="tab-2" class="tab-pane">
-                                                    <h3>{{ "page.taxon.h3.contributors"|trans }}</h3>
-                                                    {% for photographer in photographers %}
-                                                        photographer : {{photographer.id}}
-                                                        {% endfor%}
-                                                </div>
-
-                                                </div>
-                                                </div>
-                                                </div>
-                                                </div>
-                                                </div>
-                                                </div><!--end right column -->
-                                                </div><!-- end row-->
-                                                </div><!-- end wrapper-->
-                                            {% endblock %}
-
+                                    <div id="tab-2" class="tab-pane">
+                                        <h3>{{ "page.taxon.h3.contributors"|trans }}</h3>
+                                        <input type="text" class="form-control input-sm m-b-xs" id="filter-photographers" placeholder="Search in table">
+                                        <table class="footable footable-photographers table" data-page-size="50" data-filter=#filter-photographers>
+                                            <thead>
+                                                <th>{{ "page.location.table.photographer"|trans }}</th>
+                                                <th>{{ "page.location.table.num_photos"|trans }}</th>
+                                            </thead>
+                                            <tbody>
+                                            {% for p in photographers %}
+                                                <tr>
+                                                    <td>{{ link_to_user(p.user) }}</td>
+                                                    <td>
+                                                        <a href="{{ path('photos', {'fosUser': p.user.id, 'genus': taxon.id}) }}">{{ p.photo_count }}</a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor%}
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <ul class="pagination pull-right"></ul>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--end right column -->
+        </div><!-- end row-->
+    </div><!-- end wrapper-->
+{% endblock %}
