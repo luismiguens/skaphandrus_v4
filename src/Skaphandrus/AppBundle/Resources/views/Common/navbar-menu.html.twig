@@ -3,7 +3,7 @@
             <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
             <form role="search" class="navbar-form-custom" action="{{ path('search') }}">
                 <div class="form-group">
-                    <input type="text" placeholder="{{ "pages.common.label.search_something"|trans }}" class="form-control" name="string" id="string">
+                    <input type="text" placeholder="{{ "pages.common.label.search_something"|trans }}" class="form-control" name="string" id="string" minlength="3">
                 </div>
             </form>
         </div>
