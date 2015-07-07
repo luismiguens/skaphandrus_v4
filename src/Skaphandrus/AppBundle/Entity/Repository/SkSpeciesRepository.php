@@ -290,4 +290,33 @@ class SkSpeciesRepository extends EntityRepository {
         }
         return $photos_array;
     }
+
+    public function findScientificNameSearchResults($string, $locale) {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT sn.name as title, s as object, st.description as description
+                FROM SkaphandrusAppBundle:SkSpecies s
+                JOIN SkaphandrusAppBundle:SkSpeciesScientificName sn
+                    WITH IDENTITY(sn.species) = s.id
+                JOIN SkaphandrusAppBundle:SkSpeciesTranslation st
+                    WITH IDENTITY(st.translatable) = s.id
+                WHERE st.locale = :locale
+                AND sn.name LIKE :string'
+            )->setParameter('locale', $locale)->setParameter('string', '%'.$string.'%')->getResult();
+    }
+
+    // public function findVernacularSearchResults($string, $locale) {
+    //     return $this->getEntityManager()
+    //         ->createQuery(
+    //             'SELECT v.name as title, s as object, st.description as description
+    //             FROM SkaphandrusAppBundle:SkSpecies s
+    //             JOIN SkaphandrusAppBundle:SkSpeciesVernacular sv
+    //                 WITH IDENTITY(sv.species) = s.id
+    //             JOIN SkaphandrusAppBundle:SkSpeciesTranslation st
+    //                 WITH IDENTITY(st.translatable) = s.id
+    //             JOIN sv.vernacular v
+    //             WHERE st.locale = :locale
+    //             AND v.name LIKE :string'
+    //         )->setParameter('locale', $locale)->setParameter('string', '%'.$string.'%')->getResult();
+    // }
 }

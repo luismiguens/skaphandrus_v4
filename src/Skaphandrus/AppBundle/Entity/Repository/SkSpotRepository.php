@@ -90,4 +90,25 @@ class SkSpotRepository extends EntityRepository {
                 GROUP BY u.id'
             )->setParameter('spot_id', $spot_id)->getResult();
     }
+
+    public function findSearchResults($string, $locale) {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT
+                    s as spot,
+                    st.name as title,
+                    st.description as description,
+                    lt.name as location_name,
+                    c.name as country_name
+                FROM SkaphandrusAppBundle:SkSpot s
+                JOIN s.translations st
+                JOIN s.location l
+                JOIN l.translations lt
+                JOIN l.region r
+                JOIN r.country c
+                WHERE st.locale = :locale
+                AND lt.locale = :locale
+                AND st.name LIKE :string'
+            )->setParameter('locale', $locale)->setParameter('string', '%'.$string.'%')->getResult();
+    }
 }

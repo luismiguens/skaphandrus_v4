@@ -41,8 +41,7 @@ class SkPhotoRepository extends EntityRepository {
     }
 
     public function getPrimaryPhotoForSpecies($species_id) {
-
-        return $this->findBy(array('species' => $species_id), array('id' => 'DESC'))[0];
+        return $this->findOneBy(array('species' => $species_id), array('id' => 'DESC'));
     }
 
     public function getQueryBuilder($params, $limit=20, $order = array('id' => 'desc'), $offset=0) {
@@ -163,4 +162,11 @@ class SkPhotoRepository extends EntityRepository {
         return $qb;
     }
 
+    public function findLikeName($string) {
+        return $this->getEntityManager()->createQuery(
+            "SELECT p.id as id, p.title as title, p.description as description
+            FROM SkaphandrusAppBundle:SkPhoto p
+            WHERE p.title LIKE :string"
+        )->setParameter('string', '%'.$string.'%')->getResult();
+    }
 }
