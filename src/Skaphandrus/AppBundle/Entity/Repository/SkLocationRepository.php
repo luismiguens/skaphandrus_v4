@@ -104,4 +104,21 @@ class SkLocationRepository extends EntityRepository {
                 GROUP BY u.id'
             )->setParameter('location_id', $location_id)->getResult();
     }
+
+    public function findSearchResults($string, $locale) {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT
+                    l as location,
+                    lt.name as title,
+                    lt.description as description,
+                    c.name as country_name
+                FROM SkaphandrusAppBundle:SkLocation l
+                JOIN l.translations lt
+                JOIN l.region r
+                JOIN r.country c
+                WHERE lt.locale = :locale
+                AND lt.name LIKE :string'
+            )->setParameter('locale', $locale)->setParameter('string', '%'.$string.'%')->getResult();
+    }
 }

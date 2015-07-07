@@ -186,6 +186,12 @@ user:
     requirements:
         _locale:  en|pt
 
+search:
+    path:     /{_locale}/search-results
+    defaults: { _controller: SkaphandrusAppBundle:Default:search, _locale: en }
+    requirements:
+        _locale:  en|pt
+
 
 ##################################################################################
 #### CONTROLLER CONTESTS

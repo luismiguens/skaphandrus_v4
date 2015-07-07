@@ -5,6 +5,8 @@ namespace Skaphandrus\AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse as JsonResponse;
+use Symfony\Component\Intl\Intl;
+use Symfony\Component\Translation\Translator;
 use Skaphandrus\AppBundle\Utils\Utils;
 use Ivory\GoogleMap\Overlays\Animation;
 use Ivory\GoogleMap\Overlays\Marker;
@@ -794,9 +796,134 @@ class DefaultController extends Controller {
         ));
     }
     
-    
-    
-    
-    
+    public function searchAction(Request $request) {
+        $string = $request->query->get('string');
+        $locale = $request->getLocale();
+        $translator = new Translator($locale);
+        $results = array();
 
+        // Search Species
+        $speciesSN = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
+            ->findScientificNameSearchResults($string, $locale);
+
+        foreach ($speciesSN as $s) {
+            $results[] = array(
+                'title' => $s['title'] .' ('.$translator->trans('page.search.label.species').')',
+                'url' => $this->generateUrl('species', array('slug' => Utils::slugify($s['title'])), true),
+                'desc' => $s['description'],
+            );
+        }
+
+        // Search Families
+        $familySN = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkFamily')
+            ->findLikeName($string);
+
+        foreach ($familySN as $f) {
+            $results[] = array(
+                'title' => $f->getName() .' ('.$translator->trans('page.search.label.family').')',
+                'url' => $this->generateUrl('taxon', array(
+                    'node' => 'family',
+                    'slug' => Utils::slugify($f->getName())
+                ), true),
+                'desc' => '',
+            );
+        }
+
+        // Search Orders
+        $orderSN = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkOrder')
+            ->findLikeName($string);
+
+        foreach ($orderSN as $f) {
+            $results[] = array(
+                'title' => $f->getName() .' ('.$translator->trans('page.search.label.order').')',
+                'url' => $this->generateUrl('taxon', array(
+                    'node' => 'order',
+                    'slug' => Utils::slugify($f->getName())
+                ), true),
+                'desc' => '',
+            );
+        }
+
+        // Search Spots
+        $spots = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')
+            ->findSearchResults($string, $locale);
+
+        foreach ($spots as $s) {
+            $country_name = Intl::getRegionBundle()->getCountryName($s['country_name']);
+            $results[] = array(
+                'title' => $s['title'] .' ('.$translator->trans('page.search.label.spot').')',
+                'url' => $this->generateUrl('spot', array(
+                    'country' => Utils::slugify($country_name),
+                    'location' => Utils::slugify($s['location_name']),
+                    'slug' => Utils::slugify($s['title']),
+                ), true),
+                'desc' => $s['description'],
+            );
+        }
+
+        // Search Locations
+        $locations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
+            ->findSearchResults($string, $locale);
+
+        foreach ($locations as $l) {
+            $country_name = Intl::getRegionBundle()->getCountryName($l['country_name']);
+            $results[] = array(
+                'title' => $l['title'] .' ('.$translator->trans('page.search.label.location').')',
+                'url' => $this->generateUrl('location', array(
+                    'country' => Utils::slugify($country_name),
+                    'slug' => Utils::slugify($l['title']),
+                ), true),
+                'desc' => $l['description'],
+            );
+        }
+
+        // Search Photos
+        $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
+            ->findLikeName($string);
+
+        foreach ($photos as $photo) {
+            $results[] = array(
+                'title' => $photo['title'] .' ('.$translator->trans('page.search.label.photo').')',
+                'url' => $this->generateUrl('photo', array(
+                    'id' => $photo['id'],
+                    'slug' => Utils::slugify($photo['title']),
+                ), true),
+                'desc' => $photo['description'],
+            );
+        }
+
+        $users = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPersonal')
+            ->findLikeName($string);
+
+        foreach ($users as $u) {
+            $fosUser = $u->getFosUser();
+            $results[] = array(
+                'title' => $u->getName(),
+                'url' => $this->generateUrl('user', array(
+                    'id' => $fosUser->getId(),
+                    'username' => $fosUser->getUsername(),
+                ), true),
+                'desc' => '',
+            );
+        }
+
+        // $speciesV = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
+        //     ->findVernacularSearchResults($string, $locale);
+
+        // foreach ($speciesV as $s) {
+        //     $names = $s['object']->getScientificNames();
+        //     $slug = Utils::slugify($names[0]->getName());
+
+        //     $results[] = array(
+        //         'title' => $s['title'],
+        //         'url' => $this->generateUrl('species', array('slug' => $slug)),
+        //         'desc' => $s['description'],
+        //     );
+        // }
+
+        return $this->render('SkaphandrusAppBundle:Default:search.html.twig', array(
+            'string' => $string,
+            'results' => $results,
+        ));
+    }
 }

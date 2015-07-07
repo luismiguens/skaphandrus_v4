@@ -1,0 +1,67 @@
+{% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
+
+{% block page_title %}{{ "page.search.h1.title"|trans }}{% endblock %}
+{% block page_description %}{{ "page.search.text.description"|trans }}{% endblock %}
+{% block page_keywords %}{{ "page.search.h1.title"|trans }}{% endblock %}
+
+{% block heading_title %}
+    {{ "page.search.h1.title"|trans }}
+{% endblock %}
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('index') }}">{{ "home"|trans }}</a></li>
+        <li class="active"><strong>{{ "page.search.h1.title"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block body %}
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <h2>
+                        {{ results|length }} {{ "page.search.h2.results_found_for"|trans }}: <span class="text-navy">“{{ string }}”</span>
+                    </h2>
+                    <small>Request time  (0.23 seconds)</small>
+                    <div class="search-form">
+                        <form action="{{ path('search') }}" method="get">
+                            <div class="input-group">
+                                <input type="text" placeholder="{{ "pages.common.label.search_something"|trans }}" name="string" id="string" class="form-control input-lg" value="{{ string }}" minlength="3">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-lg btn-primary" type="submit">
+                                        {{ "page.search.btn.search"|trans }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    {% for result in results %}
+                        <div class="hr-line-dashed"></div>
+                        <div class="search-result">
+                            <h3><a href="{{ result.url }}">{{ result.title }}</a></h3>
+                            <a href="{{ result.url }}" class="search-link">{{ result.url }}</a>
+                            <p>{{ result.desc|raw }}</p>
+                        </div>
+                    {% endfor %}
+                    {# <div class="hr-line-dashed"></div>
+                    <div class="text-center">
+                        <div class="btn-group">
+                            <button class="btn btn-white" type="button"><i class="fa fa-chevron-left"></i></button>
+                            <button class="btn btn-white">1</button>
+                            <button class="btn btn-white  active">2</button>
+                            <button class="btn btn-white">3</button>
+                            <button class="btn btn-white">4</button>
+                            <button class="btn btn-white">5</button>
+                            <button class="btn btn-white">6</button>
+                            <button class="btn btn-white">7</button>
+                            <button class="btn btn-white" type="button"><i class="fa fa-chevron-right"></i> </button>
+                        </div>
+                    </div> #}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
