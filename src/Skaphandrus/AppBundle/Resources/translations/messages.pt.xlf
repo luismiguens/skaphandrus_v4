@@ -4,7 +4,7 @@
         <body>
             <trans-unit id="1">
                 <source>%1% associou especie %2% a fotografia %3%.</source>
-                <target>%1% aaassociou especie %2% a fotografia %3%.</target>
+                <target>%1% associou especie %2% a fotografia %3%.</target>
             </trans-unit>
         </body>
     </file>

@@ -7,10 +7,17 @@ namespace Skaphandrus\AppBundle\Entity;
  */
 class SkActivity
 {
+    
+        /**
+     * @var integer
+     */
+    private $id;
+
+    
     /**
      * @var string
      */
-    private $message_name;
+    private $messageName;
 
     /**
      * @var integer
@@ -67,11 +74,34 @@ class SkActivity
      */
     public function setMessageName($messageName)
     {
-        $this->message_name = $messageName;
+        $this->messageName = $messageName;
 
         return $this;
     }
 
+    
+        public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get userFrom
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    
+    
+    
+    
+    
     /**
      * Get messageName
      *
@@ -79,7 +109,7 @@ class SkActivity
      */
     public function getMessageName()
     {
-        return $this->message_name;
+        return $this->messageName;
     }
 
     /**

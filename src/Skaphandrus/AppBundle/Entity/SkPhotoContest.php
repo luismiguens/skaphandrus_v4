@@ -73,6 +73,14 @@ class SkPhotoContest
      */
     private $judges;
 
+    
+     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $photos;
+    
+    
+    
     /**
      * Constructor
      */
@@ -394,4 +402,30 @@ class SkPhotoContest
     {
         return $this->judges;
     }
+    
+   
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotos()
+    {
+        
+        $photos = array();
+        $category = new SkPhotoContestCategory();
+        
+        foreach ($this->getCategories() as $category){
+            array_merge($photos, $category->getPhoto()->toArray());
+            
+        }
+        $this->photos = $photos;
+        return $this->photos;
+    }
+    
+
+    
+    
+    
+    
 }

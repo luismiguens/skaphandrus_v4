@@ -25,14 +25,13 @@ class DefaultController extends Controller {
         $em = $this->getDoctrine()->getManager();
         
 
-        $entities = $em->getRepository('SkaphandrusAppBundle:SkActivity')->findAll();
+        $modules = $em->getRepository('SkaphandrusAppBundle:SkIdentificationModule')->findBy(array('isEnabled' => '1'), array('createdAt' => 'DESC'), 8);
+        $contests = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')->findBy(array(), array('createdAt' => 'DESC'), 8);
 
 
         
         
-        return $this->render('SkaphandrusAppBundle:Default:index.html.twig', array(
-            'entities' => $entities,
-            ));
+        return $this->render('SkaphandrusAppBundle:Default:index.html.twig',array('modules'=>$modules, 'contests'=>$contests));
     }
     
     

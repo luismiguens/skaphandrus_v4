@@ -242,12 +242,15 @@ class UtilsExtension extends \Twig_Extension {
         // This won't work... getDoctrine() is a shortcut method, available only in a Controller
         // $container->getDoctrine()->getRepository(...)
         //$container->get("doctrine")->getRepository(...)  
+        
+        
+        //dump($activity);
 
-
+//switch ($activity->getUserFrom()->getId()) {
         switch ($activity->getMessageName()) {
             ### activity_001 x associou especie y a fotografia z
             case 'activity_001':
-                $user_from = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:FosUser')->findOneById($activity->getUserFrom());
+                $user_from = $activity->getUserFrom();
                 $species = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkSpecies')->findOneById($activity->getSpeciesId());
                 $photo = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($activity->getPhotoId());
 
@@ -268,19 +271,19 @@ class UtilsExtension extends \Twig_Extension {
 
             ### activity_002 x associou spot y a fotografia z
             case 'activity_002':
-                $user_from = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:FosUser')->findOneById($activity->getUserFrom());
+                $user_from = $activity->getUserFrom();
                 $spot = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkSpot')->findOneById($activity->getSpotId());
                 $photo = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($activity->getPhotoId());
 
                 return $this->translator->trans(
                                 '%1% associou spot %2% a fotografia %3%.', array('%1%' => $this->link_to_user($activity->getUserFrom()),
                             '%2%' => $this->link_to_spot($spot),
-                            '%2%' => $this->link_to_photo($photo)));
+                            '%3%' => $this->link_to_photo($photo)));
 
 
             ### activity_011 x sugeriu especie y na fotografia z	
             case 'activity_011':
-                $user_from = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:FosUser')->findOneById($activity->getUserFrom());
+                $user_from = $activity->getUserFrom();
                 $species = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkSpecies')->findOneById($activity->getSpeciesId());
                 $photo = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($activity->getPhotoId());
 
@@ -292,7 +295,7 @@ class UtilsExtension extends \Twig_Extension {
 
             ### activity_012 x validou especie y na fotografia z	
             case 'activity_012':
-                $user_from = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:FosUser')->findOneById($activity->getUserFrom());
+                $user_from = $activity->getUserFrom();
                 $species = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkSpecies')->findOneById($activity->getSpeciesId());
                 $photo = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($activity->getPhotoId());
 
@@ -304,7 +307,7 @@ class UtilsExtension extends \Twig_Extension {
 
             ### activity_021 x comentou fotografia y
             case 'activity_021':
-                $user_from = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:FosUser')->findOneById($activity->getUserFrom());
+                $user_from = $activity->getUserFrom();
                 $photo = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($activity->getPhotoId());
 
                 return $this->translator->trans(
@@ -314,7 +317,7 @@ class UtilsExtension extends \Twig_Extension {
 
             ### activity_031 x adicionou spot y	
             case 'activity_031':
-                $user_from = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:FosUser')->findOneById($activity->getUserFrom());
+                $user_from = $activity->getUserFrom();
                 $spot = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkSpot')->findOneById($activity->getSpotId());
 
                 return $this->translator->trans(
@@ -324,7 +327,7 @@ class UtilsExtension extends \Twig_Extension {
 
             ### activity_041 x adicionou y como amigo.
             case 'activity_041':
-                $user_from = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:FosUser')->findOneById($activity->getUserFrom());
+                $user_from = $activity->getUserFrom();
                 $user_to = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:FosUser')->findOneById($activity->getUserId());
 
                 return $this->translator->trans(
@@ -334,7 +337,7 @@ class UtilsExtension extends \Twig_Extension {
 
             ### activity_051 x registou-se
             case 'activity_051':
-                $user_from = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:FosUser')->findOneById($activity->getUserFrom());
+                $user_from = $activity->getUserFrom();
 
                 return $this->translator->trans(
                                 '%1% registou-se.', array('%1%' => $this->link_to_user($user_from)));
@@ -342,7 +345,7 @@ class UtilsExtension extends \Twig_Extension {
 
             ### activity_061 x associou fotografia x a categoria y	
             case 'activity_061':
-                $user_from = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:FosUser')->findOneById($activity->getUserFrom());
+                $user_from = $activity->getUserFrom();
                 $photo = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($activity->getPhotoId());
                 $category = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')->findOneById($activity->getCategoryId());
 
@@ -354,7 +357,7 @@ class UtilsExtension extends \Twig_Extension {
 
             ### activity_062 x votou na fotografia y da categoria z	
             case 'activity_062':
-                $user_from = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:FosUser')->findOneById($activity->getUserFrom());
+                $user_from = $activity->getUserFrom();
                 $photo = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($activity->getPhotoId());
                 $category = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')->findOneById($activity->getCategoryId());
 
@@ -366,14 +369,14 @@ class UtilsExtension extends \Twig_Extension {
 
             ### activity_071 x trocou x pontos pelo modulo y
             case 'activity_071':
-                $user_from = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:FosUser')->findOneById($activity->getUserFrom());
+                $user_from = $activity->getUserFrom();
                 //$module = new \Skaphandrus\AppBundle\Entity\SkIdentificationModule();
                 $module = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkIdentificationModule')->findOneById($activity->getModuleId());
 
                 return $this->translator->trans(
                                 '%1% trocou %2% pontos pelo modulo %3%.', array('%1%' => $this->link_to_user($user_from),
                             '%2%' => $module->getPoints(),
-                            '%3%' => $this->link_to_module($module)));
+                            '%3%' => $this->link_to_module($module->getName())));
         }
     }
 
@@ -386,6 +389,8 @@ class UtilsExtension extends \Twig_Extension {
     }
 
     public function link_to_species($species) {
+  
+        
         $names = $species->getScientificNames();
         return '<a href="' . $this->url_to_species($species) . '" title="' . $names[0]->getName() . '">' . $names[0]->getName() . ', ' . $names[0]->getAuthor() . '</a>';
     }
@@ -562,7 +567,7 @@ class UtilsExtension extends \Twig_Extension {
     public function url_to_module($module_name) {
         $path_function = $this->getPathFunction();
 
-        return call_user_func($path_function, 'module', array(
+        return call_user_func($path_function, 'criterias', array(
             'slug' => Utils::slugify($module_name)
         ));
     }

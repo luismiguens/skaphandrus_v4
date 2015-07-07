@@ -1,26 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <entity name="Skaphandrus\AppBundle\Entity\SkActivity" repository-class="Skaphandrus\AppBundle\Entity\Repository\SkActivityRepository" table="sk_activity">
+    <entity name="Skaphandrus\AppBundle\Entity\SkActivity_" repository-class="Skaphandrus\AppBundle\Entity\Repository\SkActivityRepository_" table="sk_activity_">
         
         
         <indexes>
             <index name="sk_activity_FI_1" columns="user_from"/>
         </indexes>
 
-        <id name="message_name" type="integer" column="message_name">
+
+<!--    <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
-        </id>
+        </id>-->
 
 
 
 
+        <field name="messageName" type="string"  length="255" nullable="false" column="message_name">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
 
-        <many-to-one field="userFrom" target-entity="FosUser" fetch="LAZY">
+
+
+<!--        <many-to-one field="userFrom" target-entity="FosUser" fetch="LAZY">
             <join-columns>
                 <join-column name="user_from" referenced-column-name="id"/>
             </join-columns>
-        </many-to-one>
+        </many-to-one>-->
     
+    
+     <field name="userFrom" type="integer" column="user_from" nullable="false">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
     
         <field name="speciesId" type="integer" column="species_id" nullable="true">
             <options>
@@ -34,14 +48,18 @@
             </options>
         </field>
     
-
+        <field name="photoId" type="integer" column="photo_id" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
         
         
-                <many-to-one field="photoId" target-entity="SkPhoto" fetch="LAZY">
+<!--        <many-to-one field="photoId" target-entity="SkPhoto" fetch="LAZY">
             <join-columns>
                 <join-column name="photo_id" referenced-column-name="id"/>
             </join-columns>
-        </many-to-one>
+        </many-to-one>-->
         
     
         <field name="categoryId" type="integer" column="category_id" nullable="true">

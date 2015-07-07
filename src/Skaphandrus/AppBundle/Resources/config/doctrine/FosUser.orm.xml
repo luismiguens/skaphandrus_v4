@@ -40,7 +40,11 @@
     
     
 
-        <one-to-one field="settings" target-entity="SkSettings" mapped-by="fosUser" />
+        <one-to-one field="settings" target-entity="SkSettings" mapped-by="fosUser" >
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-one>
         
         <one-to-one field="personal" target-entity="SkPersonal" mapped-by="fosUser" />
         <one-to-one field="address" target-entity="SkAddress" mapped-by="fosUser" />

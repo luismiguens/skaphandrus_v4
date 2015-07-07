@@ -30,7 +30,7 @@ class SkSpotRepository extends EntityRepository {
         $name = Utils::unslugify($slug);
 
         $location = $this->getEntityManager()->getRepository('SkaphandrusAppBundle:SkLocation')->findBySlug($location, $country, $locale);
-        dump($location);
+        //dump($location);
         $location_id = $location->getId();
 
         $query = $this->getEntityManager()
