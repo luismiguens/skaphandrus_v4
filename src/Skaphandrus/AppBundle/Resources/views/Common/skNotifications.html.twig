@@ -1,0 +1,42 @@
+{# empty Twig template #}
+
+
+<li class="dropdown">
+                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                        <i class="fa fa-bell"></i>  <span class="label label-primary">{{notification_unread}}</span>
+                    </a>
+                    
+                    
+              
+
+
+
+
+
+<ul class="dropdown-menu dropdown-messages">
+    {% for notification in notification_notifications %}
+        <li>
+            <div class="dropdown-messages-box">
+                <a href="{{url_to_user(notification.userFrom)}}" class="pull-left">
+                    <img alt="image" class="img-circle" src="{{ notification.userFrom.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}" />
+                </a>
+                <div class="media-body ">
+                    <small class="pull-right text-navy">{{notification.createdAt|time_diff}}</small>
+                    {#<strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>#}
+                    {{ notification_message(notification)|raw }} <br>
+                    <small class="text-muted">{{notification.createdAt|date("F jS \\a\\t g:ia")}}</small>
+                </div>
+            </div>
+        </li>
+        <li class="divider"></li>
+        {% endfor %}
+    <li>
+        <div class="text-center link-block">
+            <a href="{{ path('notify_admin') }}">
+                <i class="fa fa-envelope"></i> <strong>{{ "page.common.label.read_all_notifications"|trans }}</strong>
+            </a>
+        </div>
+    </li>
+</ul>  
+
+</li>

@@ -194,4 +194,19 @@ class SkCountry
     public function setPhotosCount($photosCount) {
         $this->photosCount = $photosCount;
     }
+    
+    
+     public function getSpots() {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT s 
+                FROM SkaphandrusAppBundle:SkSpot s
+                JOIN s.location l
+                JOIN l.region r
+                JOIN r.country c
+                WHERE c.id = :country_id'
+            )->setParameter('country_id', $this->getId())->getResult();
+    }
+    
+    
 }

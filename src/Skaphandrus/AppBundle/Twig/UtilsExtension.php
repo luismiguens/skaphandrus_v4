@@ -56,6 +56,8 @@ class UtilsExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('link_to_photo', array($this, 'link_to_photo'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('link_to_taxon', array($this, 'link_to_taxon'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('link_to_module', array($this, 'link_to_module'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('link_to_message', array($this, 'link_to_message'), array('is_safe' => array('html'))),
+            
             // URL helper functions.
             new \Twig_SimpleFunction('url_to_user', array($this, 'url_to_user')),
             new \Twig_SimpleFunction('url_to_species', array($this, 'url_to_species')),
@@ -70,6 +72,9 @@ class UtilsExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('url_to_taxon', array($this, 'url_to_taxon')),
             new \Twig_SimpleFunction('url_to_module', array($this, 'url_to_module')),
             new \Twig_SimpleFunction('url_to_photos', array($this, 'url_to_photos')),
+            
+            new \Twig_SimpleFunction('url_to_message', array($this, 'url_to_message')),
+            
             // Other helpers
             new \Twig_SimpleFunction('sk_build_query', array($this, 'sk_build_query')),
             new \Twig_SimpleFunction('slugify', array($this, 'slugify')),
@@ -182,8 +187,10 @@ class UtilsExtension extends \Twig_Extension {
                 // message_aca x enviou-te uma nova mensagem	
                 case 'message_aca':
                     $photo = $notify->getPhoto();
+                    $message = $notify->getMessage();
                     return $this->translator->trans(
-                                    '%1% enviou-te uma nova mensagem.', array('%1%' => $this->link_to_user($notify->getUserFrom())));
+                                    '%1% enviou-te uma nova %2%.', array('%1%' => $this->link_to_user($notify->getUserFrom()),
+                                '%2%' => $this->link_to_message($message)));
 
                 // message_ada x associou especie y na fotografia z
                 case 'message_ada':
@@ -457,6 +464,12 @@ class UtilsExtension extends \Twig_Extension {
         return '<a href="' . $this->url_to_module($module_name) . '" title="' . $module_name . '">' . $module_name . '</a>';
     }
 
+    public function link_to_message($message) {
+        return '<a href="' . $this->url_to_message($message) . '" title="' . $message->getId() . '">' . $this->translator->trans('message') . '</a>';
+    }
+
+    
+    
     /*
      * URL helper functions.
      */
@@ -589,6 +602,18 @@ class UtilsExtension extends \Twig_Extension {
             'slug' => Utils::slugify($module_name)
         ));
     }
+    
+    
+        public function url_to_message($message) {
+            
+            //$message = new \Skaphandrus\AppBundle\Entity\FosMessage();
+        $path_function = $this->getPathFunction();
+
+        return call_user_func($path_function, 'fos_message_thread_view', array(
+            'threadId' => $message->getThread()->getId()
+        ));
+    }
+    
 
     public function url_to_photos($params) {
         $path_function = $this->getPathFunction();

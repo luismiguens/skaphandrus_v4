@@ -28,42 +28,42 @@
     <!-- FooTable -->
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
     <script>
-        $(document).ready(function(){
-            
+        $(document).ready(function () {
+
             $('.footable').footable();
 
-            var mapData = {
-                {% for c in countries %}
-                "{{ c.name }}": {{ c.spotsCount }}{% if not loop.last %},{% endif %}
-                {% endfor %}
-            };
+            var mapData = {                {% for c in countries %}
+                        "{{ c.name }}":{{ c.spotsCount }}{% if not loop.last %},{% endif %}                {% endfor %}
+                                };
 
-            $('#world-map').vectorMap({
-                map: 'world_mill_en',
-                backgroundColor: "transparent",
-                regionStyle: {
-                    initial: {
-                        fill: '#e4e4e4',
-                        "fill-opacity": 1,
-                        stroke: 'none',
-                        "stroke-width": 0,
-                        "stroke-opacity": 0
-                    }
-                },
-                series: {
-                    regions: [{
-                        values: mapData,
-                        scale: ["#1ab394", "#22d6b1"],
-                        normalizeFunction: 'polynomial'
-                    }]
-                },
-                onRegionClick: function (event, code) {
-                    {% for c in countries %}
-                    if (code == "{{ c.name }}") { window.location = "{{ url_to_country(c) }}"; }
-                    {% endfor %}
-                }
-            });
-        });
+                                $('#world-map').vectorMap({
+                                    map: 'world_mill_en',
+                                    backgroundColor: "transparent",
+                                    regionStyle: {
+                                        initial: {
+                                            fill: '#e4e4e4',
+                                            "fill-opacity": 1,
+                                            stroke: 'none',
+                                            "stroke-width": 0,
+                                            "stroke-opacity": 0
+                                        }
+                                    },
+                                    series: {
+                                        regions: [{
+                                                values: mapData,
+                                                scale: ["#1ab394", "#22d6b1"],
+                                                normalizeFunction: 'polynomial'
+                                            }]
+                                    },
+                                    onRegionClick: function (event, code) {
+        {% for c in countries %}
+                                    if (code == "{{ c.name }}") {
+                                        window.location = "{{ url_to_country(c) }}";
+                                    }
+        {% endfor %}
+                                }
+                            });
+                        });
     </script>
 {% endblock %}
 
@@ -71,21 +71,25 @@
     <div class="wrapper wrapper-content">
         <div class="row animated fadeInRight">
             <!-- left column -->
-            <div class="col-md-4">
+
+            <!-- main locations activity -->              
+            <div class="col-lg-4">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>{{ "page.locations_home.h5.detail"|trans }}</h5>
-                    </div>
-                    <div>
-                        <div class="ibox-content">
+                        <h5>{{ "page.locations_home.h5.locations_home_activity"|trans }}</h5>
 
-                        </div>
-                        <div class="ibox-content profile-content">
-                            <h4><strong>{{ "page.locations_home.h1.title"|trans }}</strong></h4>
+                    </div>
+                    <div class="ibox-content">
+                        <div>
+                            {{ render(controller('SkaphandrusAppBundle:Common:skActivity', { 'parameters': { 'locations_home': 'locations_home' },'limit':30 } )) }}
+                            {#<button class="btn btn-primary btn-block m-t"><i class="fa fa-arrow-down"></i> Show More</button>#}
                         </div>
                     </div>
                 </div>
-            </div><!-- end left column -->
+            </div>
+            <!-- end activity -->
+
+            <!-- end left column -->
             <!-- right column -->
             <div class="col-md-8">
                 <div class="ibox">
@@ -113,24 +117,24 @@
                         <input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
                         <table class="footable table" data-page-size="50" data-filter=#filter>
                             <thead>
-                                <th>{{ "page.locations_home.label.country"|trans }}</th>
-                                <th>{{ "page.locations_home.label.spots"|trans }}</th>
-                                <th>{{ "page.locations_home.label.photos"|trans }}</th>
+                            <th>{{ "page.locations_home.label.country"|trans }}</th>
+                            <th>{{ "page.locations_home.label.spots"|trans }}</th>
+                            <th>{{ "page.locations_home.label.photos"|trans }}</th>
                             </thead>
                             <tbody>
-                            {% for c in countries %}
-                                <tr>
-                                    <td>{{ link_to_country(c) }}</td>
-                                    <td>{{ c.spotsCount }}</td>
-                                    <td>
-                                        {% if c.photosCount > 0 %}
-                                        <a href="{{ path('photos', {'country': c.id}) }}">{{ c.photosCount }}</a>
-                                        {% else %}
-                                        {{ c.photosCount }}
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
+                                {% for c in countries %}
+                                    <tr>
+                                        <td>{{ link_to_country(c) }}</td>
+                                        <td>{{ c.spotsCount }}</td>
+                                        <td>
+                                            {% if c.photosCount > 0 %}
+                                                <a href="{{ path('photos', {'country': c.id}) }}">{{ c.photosCount }}</a>
+                                            {% else %}
+                                                {{ c.photosCount }}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
                             </tbody>
                             <tfoot>
                                 <tr>

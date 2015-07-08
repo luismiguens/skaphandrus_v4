@@ -66,22 +66,23 @@
     <div class="wrapper wrapper-content">
         <div class="row animated fadeInRight">
             <!-- left column -->
-            <div class="col-md-4">
+                            
+            <!-- location activity -->              
+            <div class="col-lg-4">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>{{ "page.location.h5.location_detail"|trans }}</h5>
+                        <h5>{{ "page.location.h5.location_activity"|trans }}</h5>
                     </div>
-                    <div>
-                        <div class="ibox-content">
-
-                        </div>
-                        <div class="ibox-content profile-content">
-                            <h4><strong>{{location.name}}</strong></h4>
-
+                    <div class="ibox-content">
+                        <div>
+                            {{ render(controller('SkaphandrusAppBundle:Common:skActivity', { 'parameters': { 'location_id': location.id },'limit':20 } )) }}
+                            {#<button class="btn btn-primary btn-block m-t"><i class="fa fa-arrow-down"></i> Show More</button>#}
                         </div>
                     </div>
                 </div>
-            </div><!-- end left column -->
+            </div>
+            <!-- end activity -->
+            <!-- end left column -->
 
             <!-- right column -->
             <div class="col-md-8">

@@ -183,6 +183,7 @@ class SkSettings
     public function getPhoto()
     {
         return $this->photo;
+        //         return ( $this->photo == "" ) ? 'user-profile.jpg' : 'user-profile.jpg';
     }
 
     /**

@@ -20,17 +20,84 @@ class CommonController extends Controller {
 
         $sql = "SELECT *  FROM sk_activity WHERE ";
 
+
+        //homepage - citizen
         if (array_key_exists('citizen_activity', $parameters)) {
             $sql = $sql . "message_name in ('activity_001','activity_002', 'activity_011', 'activity_012', 'activity_021', 'activity_031', 'activity_041', 'activity_051') ";
         }
 
+        //homepage - identification
         if (array_key_exists('identification_activity', $parameters)) {
             $sql = $sql . "message_name in ('activity_071') ";
         }
 
+        //homepage - contests
         if (array_key_exists('contests_activity', $parameters)) {
             $sql = $sql . "message_name in ('activity_061','activity_062') ";
         }
+
+
+        //main_locations
+        if (array_key_exists('locations_home', $parameters)) {
+            $sql = $sql . "spot_id is not null and spot_id <> 0 ";
+        }
+
+        //country
+        if (array_key_exists('country_id', $parameters)) {
+
+            $em = $this->getDoctrine()->getManager();
+            $spots = $em->getRepository('SkaphandrusAppBundle:SkCountry')->getSpots($parameters['country_id']);
+
+            $sql = $sql . "spot_id IN ( ";
+            foreach ($spots as $spot) {
+                $spots_ids[] = $spot->getId();
+            }
+            $sql = $sql . implode(',', $spots_ids);
+            $sql = $sql . ") ";
+        }
+
+        //country
+        if (array_key_exists('location_id', $parameters)) {
+
+            $em = $this->getDoctrine()->getManager();
+            $spots = $em->getRepository('SkaphandrusAppBundle:SkLocation')->getSpots($parameters['location_id']);
+
+            $sql = $sql . "spot_id IN ( ";
+            foreach ($spots as $spot) {
+                $spots_ids[] = $spot->getId();
+            }
+            $sql = $sql . implode(',', $spots_ids);
+            $sql = $sql . ") ";
+        }
+
+        //spot
+        if (array_key_exists('spot_id', $parameters)) {
+            $sql = $sql . "spot_id = " . $parameters['spot_id'] . " ";
+        }
+
+        //species
+        if (array_key_exists('species_id', $parameters)) {
+            $sql = $sql . "species_id = " . $parameters['species_id'] . " ";
+        }
+
+        //genus
+        if (array_key_exists('genus_id', $parameters)) {
+            $em = $this->getDoctrine()->getManager();
+            $genus = $em->getRepository('SkaphandrusAppBundle:SkGenus')->find($parameters['genus_id']);
+
+            $sql = $sql . "species_id IN ( ";
+            foreach ($genus->getSpecies() as $species) {
+                $species_ids[] = $species->getId();
+            }
+            $sql = $sql . implode(',', $species_ids);
+            $sql = $sql . ") ";
+        }
+
+
+
+
+
+
         $sql = $sql . "ORDER BY " . key($order) . " " . $order[key($order)] . " ";
         $sql = $sql . "LIMIT " . $limit;
 
@@ -65,6 +132,34 @@ class CommonController extends Controller {
 
         return $this->render('SkaphandrusAppBundle:Common:skActivity.html.twig', array(
                     'activities' => $activities,
+        ));
+    }
+
+    public function skMessagesAction() {
+
+        $em = $this->getDoctrine()->getManager();
+        $fos_user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $message_notifications = $em->getRepository('SkaphandrusAppBundle:SkSocialNotify')->findMessagesFromFosUser($fos_user);
+        //$message_unread = 23;
+
+
+        return $this->render('SkaphandrusAppBundle:Common:skMessages.html.twig', array(
+                    'message_notifications' => $message_notifications
+        ));
+    }
+
+    public function skNotificationsAction() {
+
+        $em = $this->getDoctrine()->getManager();
+        $fos_user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $notification_notifications = $em->getRepository('SkaphandrusAppBundle:SkSocialNotify')->findNotificationsFromFosUser($fos_user);
+        $notification_unread = $em->getRepository('SkaphandrusAppBundle:SkSocialNotify')->findUnreadNotificationsFromFosUser($fos_user);
+
+
+        return $this->render('SkaphandrusAppBundle:Common:skNotifications.html.twig', array(
+                    'notification_notifications' => $notification_notifications, "notification_unread" => count($notification_unread)
         ));
     }
 

@@ -52,9 +52,9 @@ class SkSocialNotifyRepository extends EntityRepository {
             $photo_id = substr($comment->getThread(), strpos($comment->getThread(), "-") + 1);
             $em = $this->getEntityManager();
             $photo = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($photo_id);
-            
-            
-            
+
+
+
             $skSocialNotify = new SkSocialNotify();
             $skSocialNotify->setUserFrom($comment->getFosUser());
             $skSocialNotify->setPhoto($photo);
@@ -84,11 +84,7 @@ class SkSocialNotifyRepository extends EntityRepository {
 
         //dump($skSocialNotify);
     }
-    
-    
-    
-    
-    
+
     public function sendSocialNotifyFromPhoto($photo, $user_to, $message_name) {
 
         //$photo = new \Skaphandrus\AppBundle\Entity\SkPhoto();
@@ -108,8 +104,8 @@ class SkSocialNotifyRepository extends EntityRepository {
 
         //dump($skSocialNotify);
     }
-    
-        public function sendSocialNotifyFromPerson($person, $user_to, $message_name) {
+
+    public function sendSocialNotifyFromPerson($person, $user_to, $message_name) {
 
         //$person = new \Skaphandrus\AppBundle\Entity\SkPerson();
         if ($person->getFosUser()->getId() <> $user_to->getId()) {
@@ -128,6 +124,66 @@ class SkSocialNotifyRepository extends EntityRepository {
 
         //dump($skSocialNotify);
     }
+
+    public function findMessagesFromFosUser($fosUser) {
+
+        $message = "message_aca";
+        
+        $query = $this->getEntityManager()
+                        ->createQuery(
+               'SELECT s
+                FROM SkaphandrusAppBundle:SkSocialNotify s
+                WHERE IDENTITY(s.userTo) = :user_id AND s.messageName = :message 
+                ORDER BY s.createdAt DESC 
+                '
+                        )->setParameter('user_id', $fosUser->getId())->setParameter('message', $message);
+        $query->setMaxResults(4);
+        
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    
+    
+    public function findNotificationsFromFosUser($fosUser) {
+
+        $query = $this->getEntityManager()
+                        ->createQuery(
+               'SELECT s
+                FROM SkaphandrusAppBundle:SkSocialNotify s
+                WHERE IDENTITY(s.userTo) = :user_id 
+                ORDER BY s.createdAt DESC 
+                '
+                        )->setParameter('user_id', $fosUser->getId());
+        $query->setMaxResults(4);
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    
+    
+        public function findUnreadNotificationsFromFosUser($fosUser) {
+
+        $query = $this->getEntityManager()
+                        ->createQuery(
+               'SELECT s
+                FROM SkaphandrusAppBundle:SkSocialNotify s
+                WHERE IDENTITY(s.userTo) = :user_id AND s.isRead = 0'
+                        )->setParameter('user_id', $fosUser->getId());
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    
     
 
 }

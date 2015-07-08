@@ -47,8 +47,8 @@ class SkLocationRepository extends EntityRepository {
 
     public function findAllForList($country_id) {
         return $this->getEntityManager()
-            ->createQuery(
-                'SELECT l
+                        ->createQuery(
+                                'SELECT l
                 FROM SkaphandrusAppBundle:SkLocation l
                 JOIN l.region r
                 JOIN r.country c
@@ -60,12 +60,12 @@ class SkLocationRepository extends EntityRepository {
 
     public function countSpotsArray() {
         $spots = $this->getEntityManager()
-            ->createQuery(
-                'SELECT l.id location_id, count(s.id) as spot_count
+                        ->createQuery(
+                                'SELECT l.id location_id, count(s.id) as spot_count
                 FROM SkaphandrusAppBundle:SkSpot s
                 JOIN s.location l
                 GROUP BY l.id'
-                )->getResult();
+                        )->getResult();
 
         $spots_array = array();
         foreach ($spots as $result) {
@@ -76,13 +76,13 @@ class SkLocationRepository extends EntityRepository {
 
     public function countPhotosArray() {
         $photos = $this->getEntityManager()
-            ->createQuery(
-                'SELECT l.id location_id, count(p.id) as photo_count
+                        ->createQuery(
+                                'SELECT l.id location_id, count(p.id) as photo_count
                 FROM SkaphandrusAppBundle:SkPhoto p
                 JOIN p.spot s
                 JOIN s.location l
                 group by l.id'
-                )->getResult();
+                        )->getResult();
 
         $photos_array = array();
         foreach ($photos as $result) {
@@ -93,8 +93,8 @@ class SkLocationRepository extends EntityRepository {
 
     public function getPhotographers($location_id) {
         return $this->getEntityManager()
-            ->createQuery(
-                'SELECT u as fosUser, count(p.id) as photoCount
+                        ->createQuery(
+                                'SELECT u as fosUser, count(p.id) as photoCount
                 FROM SkaphandrusAppBundle:FosUser u
                 JOIN SkaphandrusAppBundle:SkPhoto p
                     WITH IDENTITY(p.fosUser) = u.id
@@ -102,13 +102,13 @@ class SkLocationRepository extends EntityRepository {
                 JOIN s.location l
                 WHERE l.id = :location_id
                 GROUP BY u.id'
-            )->setParameter('location_id', $location_id)->getResult();
+                        )->setParameter('location_id', $location_id)->getResult();
     }
 
     public function findSearchResults($string, $locale) {
         return $this->getEntityManager()
-            ->createQuery(
-                'SELECT
+                        ->createQuery(
+                                'SELECT
                     l as location,
                     lt.name as title,
                     lt.description as description,
@@ -119,6 +119,17 @@ class SkLocationRepository extends EntityRepository {
                 JOIN r.country c
                 WHERE lt.locale = :locale
                 AND lt.name LIKE :string'
-            )->setParameter('locale', $locale)->setParameter('string', '%'.$string.'%')->getResult();
+                        )->setParameter('locale', $locale)->setParameter('string', '%' . $string . '%')->getResult();
     }
+
+    public function getSpots($location_id) {
+        return $this->getEntityManager()
+                        ->createQuery(
+                                'SELECT s 
+                FROM SkaphandrusAppBundle:SkSpot s
+                JOIN s.location l
+                WHERE l.id = :location_id'
+                        )->setParameter('location_id', $location_id)->getResult();
+    }
+
 }

@@ -425,6 +425,7 @@ class SkUsername
     public function getFotografia()
     {
         return $this->fotografia;
+
     }
 
     /**

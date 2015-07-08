@@ -40,7 +40,6 @@
                 <th>{{ "form.notify.label.notification"|trans }}</th>
                 <th>{{ "form.notify.label.is_read"|trans }}</th>
                 <th>{{ "form.notify.label.date"|trans }}</th>
-                <th>{{ "form.common.label.actions"|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -49,27 +48,9 @@
                 <td>{{ notification_message(entity)|raw }}</td>
                 <td>{{ entity.isRead }}</td>
                 <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('notify_admin_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('notify_admin_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-        <ul>
-        <li>
-            <a href="{{ path('notify_admin_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
     {% endblock %}

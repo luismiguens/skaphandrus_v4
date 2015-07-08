@@ -30,7 +30,7 @@
     <!-- FooTable -->
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             $('.footable-locations').footable();
             $('.footable-species').footable();
             $('.footable-photographers').footable();
@@ -42,21 +42,26 @@
     <div class="wrapper wrapper-content">
         <div class="row animated fadeInRight">
             <!-- left column -->
-            <div class="col-md-4">
+
+            <!-- country activity -->              
+            <div class="col-lg-4">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>{{ "page.country.h5.country_detail"|trans }}</h5>
-                    </div>
-                    <div>
-                        <div class="ibox-content">
+                        <h5>{{ "page.country.h5.country_activity"|trans }}</h5>
 
-                        </div>
-                        <div class="ibox-content profile-content">
-                            <h4><strong>{{ country }}</strong></h4>
+                    </div>
+                    <div class="ibox-content">
+                        <div>
+                            {{ render(controller('SkaphandrusAppBundle:Common:skActivity', { 'parameters': { 'country_id': country.id },'limit':20 } )) }}
+                            {#<button class="btn btn-primary btn-block m-t"><i class="fa fa-arrow-down"></i> Show More</button>#}
                         </div>
                     </div>
                 </div>
-            </div><!-- end left column -->
+            </div>
+            <!-- end activity -->
+
+
+            <!-- end left column -->
             <!-- right column -->
             <div class="col-md-8">
                 <div class="ibox">
@@ -105,22 +110,22 @@
 
                                         <h5>{{ "page.country.h5.geography_and_climate"|trans }}</h5>
                                         <p>{{ country.translate(app.request.locale).geographyAndClimate }}</p>
-                                        
+
                                         <h5>{{ "page.country.h5.entry_requirements"|trans }}</h5>
                                         <p>{{ country.translate(app.request.locale).entryRequirements }}</p>
-                                        
+
                                         <h5>{{ "page.country.h5.health_and_safety"|trans }}</h5>
                                         <p>{{ country.translate(app.request.locale).healthAndSafety }}</p>
-                                        
+
                                         <h5>{{ "page.country.h5.time_zone"|trans }}</h5>
                                         <p>{{ country.translate(app.request.locale).timeZone }}</p>
-                                        
+
                                         <h5>{{ "page.country.h5.communications"|trans }}</h5>
                                         <p>{{ country.translate(app.request.locale).communications }}</p>
-                                        
+
                                         <h5>{{ "page.country.h5.power_and_electricity"|trans }}</h5>
                                         <p>{{ country.translate(app.request.locale).powerAndElectricity }}</p>
-                                        
+
                                         <h5>{{ "page.country.h5.other_informations"|trans }}</h5>
                                         <p>{{ country.translate(app.request.locale).otherInformations }}</p>
                                     </div>
@@ -132,20 +137,20 @@
                                             <input type="text" class="form-control input-sm m-b-xs" id="filter-locations" placeholder="Search in table">
                                             <table class="footable-locations table" data-page-size="50" data-filter=#filter-locations>
                                                 <thead>
-                                                    <th>{{ "page.country.label.location"|trans }}</th>
-                                                    <th>{{ "page.country.label.spots"|trans }}</th>
-                                                    <th>{{ "page.country.label.photos"|trans }}</th>
+                                                <th>{{ "page.country.label.location"|trans }}</th>
+                                                <th>{{ "page.country.label.spots"|trans }}</th>
+                                                <th>{{ "page.country.label.photos"|trans }}</th>
                                                 </thead>
                                                 <tbody>
-                                                {% for l in locations %}
-                                                    <tr>
-                                                        <td>{{ link_to_location(l, country) }}</td>
-                                                        <td>{{ l.spotsCount }}</td>
-                                                        <td>
-                                                            <a href="{{ path('photos', {'location': l.id}) }}">{{ l.photosCount }}</a>
-                                                        </td>
-                                                    </tr>
-                                                {% endfor %}
+                                                    {% for l in locations %}
+                                                        <tr>
+                                                            <td>{{ link_to_location(l, country) }}</td>
+                                                            <td>{{ l.spotsCount }}</td>
+                                                            <td>
+                                                                <a href="{{ path('photos', {'location': l.id}) }}">{{ l.photosCount }}</a>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
@@ -164,19 +169,19 @@
                                         <input type="text" class="form-control input-sm m-b-xs" id="filter-species" placeholder="Search in table">
                                         <table class="footable footable-species table" data-page-size="50" data-filter=#filter-species>
                                             <thead>
-                                                <th>{{ "page.country.table.species"|trans }}</th>
-                                                <th>{{ "page.country.table.num_photos"|trans }}</th>
+                                            <th>{{ "page.country.table.species"|trans }}</th>
+                                            <th>{{ "page.country.table.num_photos"|trans }}</th>
                                             </thead>
                                             <tbody>
-                                            {% for sp in species %}
-                                                <tr>
-                                                    <td>{{ link_to_species(sp) }}</td>
-                                                    <td>
-                                                        <a href="{{ path('photos', {'species': sp.id, 'country': country.id}) }}">{{ sp.photosCount }}</a>
-                                                    </td>
-                                                </tr>
-                                            </tr>
-                                            {% endfor %}
+                                                {% for sp in species %}
+                                                    <tr>
+                                                        <td>{{ link_to_species(sp) }}</td>
+                                                        <td>
+                                                            <a href="{{ path('photos', {'species': sp.id, 'country': country.id}) }}">{{ sp.photosCount }}</a>
+                                                        </td>
+                                                    </tr>
+                                                    </tr>
+                                                {% endfor %}
                                             </tbody>
                                             <tfoot>
                                                 <tr>
@@ -198,19 +203,19 @@
                                         <input type="text" class="form-control input-sm m-b-xs" id="filter-photographers" placeholder="Search in table">
                                         <table class="footable footable-photographers table" data-page-size="50" data-filter=#filter-photographers>
                                             <thead>
-                                                <th>{{ "page.location.table.species"|trans }}</th>
-                                                <th>{{ "page.location.table.num_photos"|trans }}</th>
+                                            <th>{{ "page.location.table.species"|trans }}</th>
+                                            <th>{{ "page.location.table.num_photos"|trans }}</th>
                                             </thead>
                                             <tbody>
-                                            {% for p in photographers %}
-                                                <tr>
-                                                    <td>{{ link_to_user(p.fosUser) }}</td>
-                                                    <td>
-                                                        <a href="{{ path('photos', {'fosUser': p.fosUser.id, 'country': country.id}) }}">{{ p.photoCount }}</a>
-                                                    </td>
-                                                </tr>
-                                            </tr>
-                                            {% endfor%}
+                                                {% for p in photographers %}
+                                                    <tr>
+                                                        <td>{{ link_to_user(p.fosUser) }}</td>
+                                                        <td>
+                                                            <a href="{{ path('photos', {'fosUser': p.fosUser.id, 'country': country.id}) }}">{{ p.photoCount }}</a>
+                                                        </td>
+                                                    </tr>
+                                                    </tr>
+                                                {% endfor%}
                                             </tbody>
                                             <tfoot>
                                                 <tr>

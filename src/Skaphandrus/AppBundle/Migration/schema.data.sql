@@ -463,7 +463,7 @@ CREATE TABLE  `sk_settings` (
   `email_message_at_once` tinyint(4) DEFAULT '1',
   `email_comment_at_once` tinyint(4) DEFAULT '1',
   `email_update` tinyint(4) DEFAULT '1',  
-  `photo` varchar(255) DEFAULT NULL,
+  `photo` varchar(255) DEFAULT 'user-profile.jpg',
   `facebook_uid` varchar(20) DEFAULT NULL,
   `observations` text,
   `points` int(11) DEFAULT NULL,
@@ -2671,37 +2671,37 @@ INSERT INTO skaphandrus4.sk_species_illustration (id, species_id, image) SELECT 
 
 CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`skaphandrus4`@`localhost` SQL SECURITY DEFINER VIEW `skaphandrus4`.`sk_activity` AS 
 (select "activity_001" as message_name, fos_user_id as user_from, species_id, 0 as spot_id, id as photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
-    from sk_photo where species_id is not NULL order by created_at desc limit 10)
+    from sk_photo where species_id is not NULL order by created_at desc )
 UNION
 (select "activity_002" as message_name, fos_user_id as user_from, 0 as species_id, spot_id, id as photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
-    from sk_photo where spot_id is not NULL order by created_at desc limit 10)
+    from sk_photo where spot_id is not NULL order by created_at desc )
 UNION
 (select "activity_011" as message_name, fos_user_id as user_from, species_id, 0 as spot_id, photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
-    from sk_photo_species_sugestion order by created_at desc limit 10)
+    from sk_photo_species_sugestion order by created_at desc )
 UNION
 (select "activity_012" as message_name, fos_user_id as user_from, species_id, 0 as spot_id, photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
-    from sk_photo_species_validation order by created_at desc limit 10)
+    from sk_photo_species_validation order by created_at desc )
 UNION
 (select "activity_021" as message_name, author_id as user_from, 0 as species_id, 0 as spot_id, SUBSTRING(thread_id,locate("-",thread_id)+1,10) as photo_id, 0 as category_id, id as comment_id, 0 as module_id, 0 as user_id, created_at
     from Comment where thread_id like "%SkPhoto%" order by created_at desc limit 10)
 UNION
 (select "activity_031" as message_name, fos_user_id as user_from, 0 as species_id, id as spot_id, 0 as photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
-    from sk_spot order by created_at desc limit 10)
+    from sk_spot order by created_at desc )
 UNION
 (select "activity_041" as message_name, fos_user_id as user_from, 0 as species_id, 0 as spot_id, 0 as photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, id as user_id, created_at
-    from sk_person order by created_at desc limit 10)
+    from sk_person order by created_at desc )
 UNION
 (select "activity_051" as message_name, id as user_from, 0 as species_id, 0 as spot_id, 0 as photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, CURRENT_TIMESTAMP as created_at
-    from fos_user where enabled=1 order by id desc limit 10)
+    from fos_user where enabled=1 order by id desc )
 UNION
 (select "activity_061" as message_name, (SELECT fos_user_id from sk_photo where sk_photo.id = sk_photo_contest_category_photo.photo_id) as user_from, 0 as species_id, 0 as spot_id, photo_id, category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
-    from sk_photo_contest_category_photo order by created_at desc limit 10)
+    from sk_photo_contest_category_photo order by created_at desc )
 UNION
 (select "activity_062" as message_name, fos_user_id as user_from, 0 as species_id, 0 as spot_id, photo_id, category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
-    from sk_photo_contest_vote order by created_at desc limit 10)
+    from sk_photo_contest_vote order by created_at desc )
 UNION
 (select "activity_071" as message_name, fos_user_id as user_from, 0 as species_id, 0 as spot_id, 0 as photo_id, 0 as category_id, 0 as comment_id, module_id, 0 as user_id, acquired_at as created_at 
-    from sk_identification_acquisition order by created_at desc limit 10)
+    from sk_identification_acquisition order by created_at desc )
     
 
 
