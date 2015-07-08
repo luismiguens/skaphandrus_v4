@@ -134,10 +134,28 @@ class FosUserRepository extends EntityRepository {
         return $qb;
     }
 
-    
-    
-   
-    
-    
-    
+    public function findWithPhotoCountByTaxon($taxon_name, $taxon_id, $limit = 20) {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT u as user, COUNT(p) as photo_count
+                FROM SkaphandrusAppBundle:FosUser u
+                JOIN SkaphandrusAppBundle:SkPhoto p
+                    WITH u.id = IDENTITY(p.fosUser)
+                JOIN p.species species
+                JOIN species.genus genus
+                JOIN genus.family family
+                JOIN family.order order
+                JOIN order.class class
+                JOIN class.phylum phylum
+                JOIN phylum.kingdom kingdom
+                WHERE '. $taxon_name .'.id = :taxon_id
+                GROUP BY u.id'
+                )->setParameter('taxon_id', $taxon_id)
+                ->setMaxResults($limit);
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }

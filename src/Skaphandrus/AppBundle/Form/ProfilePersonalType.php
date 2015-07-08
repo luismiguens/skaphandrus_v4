@@ -41,7 +41,7 @@ class ProfilePersonalType extends AbstractType
             //->add('height')
             //->add('weight')
             //->add('smoking')
-            ->add('birthdate','date',
+            ->add('birthdate','birthday',
                         array(
                             //'attr' => array('class' => 'form-control'),
                             'label'=>'form.personal.label.birthdate'

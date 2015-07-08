@@ -209,9 +209,9 @@
                         {% endif %}
                     </div>
                 </div>
-                    
-                      {% include 'SkaphandrusAppBundle:Comments:async.html.twig' with {'id': 'SkPhoto-' ~ photo.id } %}
-                    
+                {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+                    {% include 'SkaphandrusAppBundle:Comments:async.html.twig' with {'id': 'SkPhoto-' ~ photo.id } %}
+                {% endif %}
             </div>
         </div>
     </div><!-- end wrapper-->

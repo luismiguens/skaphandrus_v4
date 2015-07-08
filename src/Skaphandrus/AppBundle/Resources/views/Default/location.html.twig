@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
     <!-- FooTable -->
     <link href="{{ asset('bundles/skaphandrusapp/css/plugins/footable/footable.core.css') }}" rel="stylesheet">
+    <style type="text/css">
+        #map_canvas {
+            margin-bottom: 25px;
+        }
+    </style>
 {% endblock %}
 
 {% block javascripts %}
@@ -42,6 +47,8 @@
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
+        <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
+        <li><a href="{{ path('locations_home') }}">{{ "breadcrumb.locations"|trans }}</a></li>
         <li>{{ link_to_country(location.region.country) }}</li>
         <li class="active"><strong>{{ location.name }}</strong></li>
     </ol>

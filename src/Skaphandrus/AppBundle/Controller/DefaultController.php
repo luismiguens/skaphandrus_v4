@@ -253,16 +253,9 @@ class DefaultController extends Controller {
             $next_taxon = 'phylum';
         }
 
-
-
-
-        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->getQueryBuilder([$taxon->getTaxonNodeName() => $taxon->getId()], 20);
-        $query = $qb->getQuery();
-
-
-
-        $photographers = $query->getResult();
-
+        // $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->getQueryBuilder([$taxon->getTaxonNodeName() => $taxon->getId()], 20);
+        $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
+            ->findWithPhotoCountByTaxon($taxon->getTaxonNodeName(), $taxon->getId());
 
         if ($taxon) {
             return $this->render('SkaphandrusAppBundle:Default:taxon.html.twig', array(
@@ -442,8 +435,8 @@ class DefaultController extends Controller {
 
             // Get markers from spots for the map
             $markers = array();
-            $totalLatitude = 0;
-            $totalLongitude = 0;
+            // $totalLatitude = 0;
+            // $totalLongitude = 0;
             foreach ($location->getSpots() as $spot) {
                 if ($spot->getCoordinate()) {
                     $marker = new Marker();
@@ -461,15 +454,17 @@ class DefaultController extends Controller {
                         'flat' => true,
                     ));
 
-                    $totalLatitude += $latitude;
-                    $totalLongitude += $longitude;
+                    // $totalLatitude += $latitude;
+                    // $totalLongitude += $longitude;
                     $markers[] = $marker;
                 }
             }
 
             // Create the map
-            $centerLatitude = $totalLatitude / count($markers);
-            $centerLongitude = $totalLongitude / count($markers);
+            // $centerLatitude = $totalLatitude / count($markers);
+            // $centerLongitude = $totalLongitude / count($markers);
+            $centerLatitude = explode(",", $location->getSpots()->toArray()[0]->getCoordinate())[0];
+            $centerLongitude = explode(",", $location->getSpots()->toArray()[0]->getCoordinate())[1];
             $map = new \Ivory\GoogleMap\Map();
             $map->setPrefixJavascriptVariable('map_');
             $map->setHtmlContainerId('map_canvas');
@@ -747,8 +742,8 @@ class DefaultController extends Controller {
         if ($user) {
             return $this->render('SkaphandrusAppBundle:Default:user.html.twig', array(
                 'user' => $user,
-                'species' => $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findByUserId($user->getId()),
-                'spots' => $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')->findByUserId($user->getId()),
+                'species' => $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findWithPhotoCountByUserId($user->getId()),
+                'spots' => $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')->findWithPhotoCountByUserId($user->getId()),
             ));
         } else {
             throw $this->createNotFoundException('The user with id "' . $id . '" does not exist.');
@@ -785,14 +780,19 @@ class DefaultController extends Controller {
 
     public function skGridAction($parameters, $limit = 20, $order = array('id' => 'desc')) {
 
-        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($parameters, $limit, $order);
-        $query = $qb->getQuery();
-
-        $photos = $query->getResult();
+        if (isset($parameters['photos'])) {
+            $photos = $parameters['photos'];
+            unset($parameters['photos']);
+        }
+        else {
+            $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($parameters, $limit, $order);
+            $query = $qb->getQuery();
+            $photos = $query->getResult();
+        }
 
         return $this->render('SkaphandrusAppBundle:Default:skGrid.html.twig', array(
-                    'photos' => $photos,
-                    'parameters' => $parameters,
+            'photos' => $photos,
+            'parameters' => $parameters,
         ));
     }
     

@@ -68,6 +68,23 @@ class SkSpotRepository extends EntityRepository {
         }
     }
 
+    public function findWithPhotoCountByUserId($user_id) {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT s as spot, COUNT(p) as photo_count
+                FROM SkaphandrusAppBundle:SkSpot s
+                JOIN SkaphandrusAppBundle:SkPhoto p
+                    WITH s.id = IDENTITY(p.spot)
+                WHERE IDENTITY(p.fosUser) = :user_id
+                GROUP BY s.id'
+                )->setParameter('user_id', $user_id);
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
     public function findPhotos($spot_id) {
         $query = $entityManager->createQuery(
             'SELECT p

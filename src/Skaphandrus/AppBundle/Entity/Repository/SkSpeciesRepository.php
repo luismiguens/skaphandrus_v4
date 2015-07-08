@@ -164,6 +164,23 @@ class SkSpeciesRepository extends EntityRepository {
             return null;
         }
     }
+
+    public function findWithPhotoCountByUserId($user_id) {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT s as species, COUNT(p) as photo_count
+                FROM SkaphandrusAppBundle:SkSpecies s
+                JOIN SkaphandrusAppBundle:SkPhoto p
+                    WITH s.id = IDENTITY(p.species)
+                WHERE IDENTITY(p.fosUser) = :user_id
+                GROUP BY s.id'
+                )->setParameter('user_id', $user_id);
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
     
     /**
      * Metodo que com base nos characters selecionados na ferramenta de identificação, devolve as espécies que fazem match.
