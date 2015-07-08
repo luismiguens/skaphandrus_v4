@@ -2462,7 +2462,7 @@ ALTER TABLE Comment ADD CONSTRAINT FK_5BC96BF0E2904019 FOREIGN KEY (thread_id) R
 ALTER TABLE Comment ADD CONSTRAINT FK_5BC96BF0F675F31B FOREIGN KEY (author_id) REFERENCES fos_user (id);
 
 -- ---------------------------------------------------------------------
--- fos_user
+-- sk_social_notify
 -- ---------------------------------------------------------------------
 
 DROP TABLE IF EXISTS `sk_social_notify`;
@@ -2472,16 +2472,24 @@ CREATE TABLE  `sk_social_notify` (
   `message_name` varchar(55) NOT NULL,
   `user_from` int(11) DEFAULT NULL,
   `user_to` int(11) DEFAULT NULL,
-  `param_first` int(11) DEFAULT NULL,
-  `param_second` int(11) DEFAULT NULL,
-  `param_third` int(11) DEFAULT NULL,
+  `species_id` int(11) DEFAULT NULL,
+  `spot_id` int(11) DEFAULT NULL,
+  `photo_id` int(11) DEFAULT NULL,
+  `message_id` int(11) DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `comment_id` int(11) DEFAULT NULL,
+  `module_id` int(11) DEFAULT NULL,
   `is_read` tinyint(1) DEFAULT '0',
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `sk_social_notify_FI_1` (`user_from`),
-  KEY `sk_social_notify_FK_2` (`user_to`),
+  KEY `sk_social_notify_FI_2` (`user_to`),
   CONSTRAINT `sk_social_notify_FK_1` FOREIGN KEY (`user_from`) REFERENCES `fos_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `sk_social_notify_FK_2` FOREIGN KEY (`user_to`) REFERENCES `fos_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `sk_social_notify_FK_2` FOREIGN KEY (`user_to`) REFERENCES `fos_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sk_social_notify_FK_3` FOREIGN KEY (`photo_id`) REFERENCES `sk_photo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sk_social_notify_FK_4` FOREIGN KEY (`message_id`) REFERENCES `fos_message_message` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sk_social_notify_FK_5` FOREIGN KEY (`spot_id`) REFERENCES `sk_spot` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sk_social_notify_FK_6` FOREIGN KEY (`comment_id`) REFERENCES `Comment` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

@@ -15,17 +15,17 @@ class SkSocialNotify
     /**
      * @var integer
      */
-    private $speciesId;
+    private $paramFirst;
 
     /**
      * @var integer
      */
-    private $categoryId;
+    private $paramSecond;
 
     /**
      * @var integer
      */
-    private $moduleId;
+    private $paramThird;
 
     /**
      * @var boolean
@@ -41,26 +41,6 @@ class SkSocialNotify
      * @var integer
      */
     private $id;
-
-    /**
-     * @var \Skaphandrus\AppBundle\Entity\Comment
-     */
-    private $comment;
-
-    /**
-     * @var \Skaphandrus\AppBundle\Entity\SkSpot
-     */
-    private $spot;
-
-    /**
-     * @var \Skaphandrus\AppBundle\Entity\SkPhoto
-     */
-    private $photo;
-
-    /**
-     * @var \Skaphandrus\AppBundle\Entity\FosMessage
-     */
-    private $message;
 
     /**
      * @var \Skaphandrus\AppBundle\Entity\FosUser
@@ -98,75 +78,75 @@ class SkSocialNotify
     }
 
     /**
-     * Set speciesId
+     * Set paramFirst
      *
-     * @param integer $speciesId
+     * @param integer $paramFirst
      *
      * @return SkSocialNotify
      */
-    public function setSpeciesId($speciesId)
+    public function setParamFirst($paramFirst)
     {
-        $this->speciesId = $speciesId;
+        $this->paramFirst = $paramFirst;
 
         return $this;
     }
 
     /**
-     * Get speciesId
+     * Get paramFirst
      *
      * @return integer
      */
-    public function getSpeciesId()
+    public function getParamFirst()
     {
-        return $this->speciesId;
+        return $this->paramFirst;
     }
 
     /**
-     * Set categoryId
+     * Set paramSecond
      *
-     * @param integer $categoryId
+     * @param integer $paramSecond
      *
      * @return SkSocialNotify
      */
-    public function setCategoryId($categoryId)
+    public function setParamSecond($paramSecond)
     {
-        $this->categoryId = $categoryId;
+        $this->paramSecond = $paramSecond;
 
         return $this;
     }
 
     /**
-     * Get categoryId
+     * Get paramSecond
      *
      * @return integer
      */
-    public function getCategoryId()
+    public function getParamSecond()
     {
-        return $this->categoryId;
+        return $this->paramSecond;
     }
 
     /**
-     * Set moduleId
+     * Set paramThird
      *
-     * @param integer $moduleId
+     * @param integer $paramThird
      *
      * @return SkSocialNotify
      */
-    public function setModuleId($moduleId)
+    public function setParamThird($paramThird)
     {
-        $this->moduleId = $moduleId;
+        $this->paramThird = $paramThird;
 
         return $this;
     }
 
     /**
-     * Get moduleId
+     * Get paramThird
      *
      * @return integer
      */
-    public function getModuleId()
+    public function getParamThird()
     {
-        return $this->moduleId;
+        return $this->paramThird;
     }
 
     /**
@@ -225,102 +205,6 @@ class SkSocialNotify
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set comment
-     *
-     * @param \Skaphandrus\AppBundle\Entity\Comment $comment
-     *
-     * @return SkSocialNotify
-     */
-    public function setComment(\Skaphandrus\AppBundle\Entity\Comment $comment = null)
-    {
-        $this->comment = $comment;
-
-        return $this;
-    }
-
-    /**
-     * Get comment
-     *
-     * @return \Skaphandrus\AppBundle\Entity\Comment
-     */
-    public function getComment()
-    {
-        return $this->comment;
-    }
-
-    /**
-     * Set spot
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkSpot $spot
-     *
-     * @return SkSocialNotify
-     */
-    public function setSpot(\Skaphandrus\AppBundle\Entity\SkSpot $spot = null)
-    {
-        $this->spot = $spot;
-
-        return $this;
-    }
-
-    /**
-     * Get spot
-     *
-     * @return \Skaphandrus\AppBundle\Entity\SkSpot
-     */
-    public function getSpot()
-    {
-        return $this->spot;
-    }
-
-    /**
-     * Set photo
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkPhoto $photo
-     *
-     * @return SkSocialNotify
-     */
-    public function setPhoto(\Skaphandrus\AppBundle\Entity\SkPhoto $photo = null)
-    {
-        $this->photo = $photo;
-
-        return $this;
-    }
-
-    /**
-     * Get photo
-     *
-     * @return \Skaphandrus\AppBundle\Entity\SkPhoto
-     */
-    public function getPhoto()
-    {
-        return $this->photo;
-    }
-
-    /**
-     * Set message
-     *
-     * @param \Skaphandrus\AppBundle\Entity\FosMessage $message
-     *
-     * @return SkSocialNotify
-     */
-    public function setMessage(\Skaphandrus\AppBundle\Entity\FosMessage $message = null)
-    {
-        $this->message = $message;
-
-        return $this;
-    }
-
-    /**
-     * Get message
-     *
-     * @return \Skaphandrus\AppBundle\Entity\FosMessage
-     */
-    public function getMessage()
-    {
-        return $this->message;
     }
 
     /**

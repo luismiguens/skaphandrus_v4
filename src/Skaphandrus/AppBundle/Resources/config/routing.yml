@@ -1,6 +1,4 @@
-skaphandrus_app_notify_admin:
-    resource: "@SkaphandrusAppBundle/Resources/config/routing/sksocialnotify.yml"
-    prefix:   /{_locale}/notify_admin
+
 
 #### Photos Species Validation and Sugestion Routes
 skaphandrus_app_photo_species_validation_admin:
@@ -68,7 +66,9 @@ skaphandrus_app_profile_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skprofile.yml"
     prefix:   /{_locale}/profile_admin
 
-
+skaphandrus_app_notify_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/sksocialnotify.yml"
+    prefix:   /{_locale}/notification_admin
 
 
 

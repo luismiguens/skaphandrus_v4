@@ -3,7 +3,10 @@
   <entity name="Skaphandrus\AppBundle\Entity\SkSocialNotify" repository-class="Skaphandrus\AppBundle\Entity\Repository\SkSocialNotifyRepository" table="sk_social_notify">
     <indexes>
       <index name="sk_social_notify_FI_1" columns="user_from"/>
-      <index name="sk_social_notify_FK_2" columns="user_to"/>
+      <index name="sk_social_notify_FI_2" columns="user_to"/>
+      <index name="sk_social_notify_FK_3" columns="photo_id"/>
+      <index name="sk_social_notify_FK_4" columns="spot_id"/>
+      <index name="sk_social_notify_FK_5" columns="comment_id"/>
     </indexes>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
@@ -13,17 +16,17 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="paramFirst" type="integer" column="param_first" nullable="true">
+    <field name="speciesId" type="integer" column="species_id" nullable="true">
       <options>
         <option name="unsigned"/>
       </options>
     </field>
-    <field name="paramSecond" type="integer" column="param_second" nullable="true">
+    <field name="categoryId" type="integer" column="category_id" nullable="true">
       <options>
         <option name="unsigned"/>
       </options>
     </field>
-    <field name="paramThird" type="integer" column="param_third" nullable="true">
+    <field name="moduleId" type="integer" column="module_id" nullable="true">
       <options>
         <option name="unsigned"/>
       </options>
@@ -34,6 +37,26 @@
       </options>
     </field>
     <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+    <many-to-one field="comment" target-entity="Comment" fetch="LAZY">
+      <join-columns>
+        <join-column name="comment_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="spot" target-entity="SkSpot" fetch="LAZY">
+      <join-columns>
+        <join-column name="spot_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="photo" target-entity="SkPhoto" fetch="LAZY">
+      <join-columns>
+        <join-column name="photo_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+        <many-to-one field="message" target-entity="FosMessage" fetch="LAZY">
+      <join-columns>
+        <join-column name="message_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
     <many-to-one field="userTo" target-entity="FosUser" fetch="LAZY">
       <join-columns>
         <join-column name="user_to" referenced-column-name="id"/>

@@ -49,6 +49,9 @@
                 </ul>
             </li>
 
+            <li class="{{ 'SkSocialNotifyController' in app.request.attributes.get("_controller")?'active' }}">
+                <a href="{{ path('notify_admin') }}"><i class="fa fa-bell"></i> <span class="nav-label">{{ "notify_admin"|trans }} </span><span class="label label-warning pull-right">16/24</span></a>
+            </li>
 
             <li class="{{ 'SkPhotoController' in app.request.attributes.get("_controller")?'active' }}">
                 <a href="{{ path('photo_admin') }}"><i class="fa fa-photo"></i> <span class="nav-label">{{ "photo_admin"|trans }} </span><span class="label label-warning pull-right">16/24</span></a>

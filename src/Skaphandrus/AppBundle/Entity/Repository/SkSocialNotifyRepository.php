@@ -20,8 +20,8 @@ class SkSocialNotifyRepository extends EntityRepository {
             $em = $this->getEntityManager();
             $skSocialNotify = new SkSocialNotify();
             $skSocialNotify->setUserFrom($sugestion->getFosUser());
-            $skSocialNotify->setParamFirst($sugestion->getSpecies()->getId());
-            $skSocialNotify->setParamSecond($sugestion->getPhoto()->getId());
+            $skSocialNotify->setSpeciesId($sugestion->getSpecies()->getId());
+            $skSocialNotify->setPhoto($sugestion->getPhoto());
             $skSocialNotify->setMessageName($message_name);
             $skSocialNotify->setCreatedAt(new \DateTime());
             $skSocialNotify->setUserTo($user_to);
@@ -36,8 +36,8 @@ class SkSocialNotifyRepository extends EntityRepository {
             $em = $this->getEntityManager();
             $skSocialNotify = new SkSocialNotify();
             $skSocialNotify->setUserFrom($validation->getFosUser());
-            $skSocialNotify->setParamFirst($validation->getSpecies()->getId());
-            $skSocialNotify->setParamSecond($validation->getPhoto()->getId());
+            $skSocialNotify->setSpeciesId($validation->getSpecies()->getId());
+            $skSocialNotify->setPhoto($validation->getPhoto());
             $skSocialNotify->setMessageName($message_name);
             $skSocialNotify->setCreatedAt(new \DateTime());
             $skSocialNotify->setUserTo($user_to);
@@ -51,9 +51,13 @@ class SkSocialNotifyRepository extends EntityRepository {
 
             $photo_id = substr($comment->getThread(), strpos($comment->getThread(), "-") + 1);
             $em = $this->getEntityManager();
+            $photo = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($photo_id);
+            
+            
+            
             $skSocialNotify = new SkSocialNotify();
             $skSocialNotify->setUserFrom($comment->getFosUser());
-            $skSocialNotify->setParamFirst($photo_id);
+            $skSocialNotify->setPhoto($photo);
             $skSocialNotify->setMessageName($message_name);
             $skSocialNotify->setCreatedAt(new \DateTime());
             $skSocialNotify->setUserTo($user_to);
@@ -70,7 +74,7 @@ class SkSocialNotifyRepository extends EntityRepository {
             $em = $this->getEntityManager();
             $skSocialNotify = new SkSocialNotify();
             $skSocialNotify->setUserFrom($message->getSender());
-            $skSocialNotify->setParamFirst($message->getId());
+            $skSocialNotify->setMessage($message);
             $skSocialNotify->setMessageName($message_name);
             $skSocialNotify->setCreatedAt(new \DateTime());
             $skSocialNotify->setUserTo($user_to);
@@ -93,8 +97,8 @@ class SkSocialNotifyRepository extends EntityRepository {
             $em = $this->getEntityManager();
             $skSocialNotify = new SkSocialNotify();
             $skSocialNotify->setUserFrom($photo->getFosUser());
-            $skSocialNotify->setParamFirst($photo->getSpecies()->getId());
-            $skSocialNotify->setParamSecond($photo->getId());
+            $skSocialNotify->setSpeciesId($photo->getSpecies()->getId());
+            $skSocialNotify->setPhoto($photo);
             $skSocialNotify->setMessageName($message_name);
             $skSocialNotify->setCreatedAt(new \DateTime());
             $skSocialNotify->setUserTo($user_to);
