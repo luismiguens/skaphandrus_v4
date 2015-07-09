@@ -34,7 +34,8 @@
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
-
+        <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
+        <li><a href="{{ url_to_photos() }}">{{ "breadcrumb.photos"|trans }}</a></li>
         <li class="active"><strong>{{ photo.title }}</strong></li>
     </ol>
 {% endblock %}
@@ -70,12 +71,12 @@
                             <ul class="list-unstyled">
                                 <li><i class="fa fa-clock-o"></i> {{ "page.photo.label.taken_at"|trans }} {{ photo.takenAt|date('Y-m-d H:i:s') }}</li>
                                 <li><i class="fa fa-cloud-upload"></i> {{ "page.photo.label.uploaded_at"|trans }} {{ photo.createdAt|date('Y-m-d H:i:s') }}</li>
-                                {% if photo.creative is not empty %}
-                                <li><i class="fa fa-gavel"></i> {{ "page.photo.label.licensed_under"|trans }} {{ photo.creative.name }}</li>
-                                {% endif %}
-                                {% if photo.model is not empty %}
-                                <li><i class="fa fa-camera"></i> {{ "page.photo.label.camera"|trans }} {{ photo.model.name }}</li>
-                                {% endif %}
+                                    {% if photo.creative is not empty %}
+                                    <li><i class="fa fa-gavel"></i> {{ "page.photo.label.licensed_under"|trans }} {{ photo.creative.name }}</li>
+                                    {% endif %}
+                                    {% if photo.model is not empty %}
+                                    <li><i class="fa fa-camera"></i> {{ "page.photo.label.camera"|trans }} {{ photo.model.name }}</li>
+                                    {% endif %}
                             </ul>
 
                             {% if photo.description is not empty %}
@@ -135,9 +136,9 @@
                         {% if photo.keyword|length %}
                             <h3>{{ "page.photo.h3.tags"|trans }}</h3>
                             <ul class="tag-list" style="padding: 0;">
-                            {% for keyword in photo.keyword %}
-                                <li><a href="">{{ keyword.keyword }}</a></li>
-                            {% endfor %}
+                                {% for keyword in photo.keyword %}
+                                    <li><a href="">{{ keyword.keyword }}</a></li>
+                                    {% endfor %}
                             </ul>
                             <div class="clearfix"></div>
                         {% endif %}
@@ -157,31 +158,31 @@
                         {% if photo.speciesValidations|length %}
                             <h3>{{ "page.photo.h3.species_validations"|trans }}</h3>
                             <ul>
-                            {% for sv in photo.speciesValidations %}
-                                <li>{{ link_to_user(sv.fosUser) }} {{ "page.photo.label.validated"|trans }} {{ link_to_species(sv.species) }}</li>
-                            {% endfor %}
+                                {% for sv in photo.speciesValidations %}
+                                    <li>{{ link_to_user(sv.fosUser) }} {{ "page.photo.label.validated"|trans }} {{ link_to_species(sv.species) }}</li>
+                                    {% endfor %}
                             </ul>
                         {% endif %}
-                        
+
                         {% if showValidation %}
                             <a href="#" data-toggle="modal" data-target="#modal-validation" class="btn btn-primary">{{ "page.photo.btn.validation_" ~ validationAction|trans }}</a>
                             <div class="modal inmodal" id="modal-validation" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog"><div class="modal-content animated bounceInRight">
-                                    {% if validationAction == 'new' %}
-                                        {{ render(controller('SkaphandrusAppBundle:SkPhotoSpeciesValidation:new', { 'photo_id': photo.id } )) }}
-                                    {% else %}
-                                        {{ render(controller('SkaphandrusAppBundle:SkPhotoSpeciesValidation:edit', { 'id': userValidation.id } )) }}
-                                    {% endif %}
-                                </div></div>
+                                        {% if validationAction == 'new' %}
+                                            {{ render(controller('SkaphandrusAppBundle:SkPhotoSpeciesValidation:new', { 'photo_id': photo.id } )) }}
+                                        {% else %}
+                                            {{ render(controller('SkaphandrusAppBundle:SkPhotoSpeciesValidation:edit', { 'id': userValidation.id } )) }}
+                                        {% endif %}
+                                    </div></div>
                             </div>
                         {% endif %}
 
                         {% if photo.speciesSugestions|length %}
                             <h3>{{ "page.photo.h3.species_sugestions"|trans }}</h3>
                             <ul>
-                            {% for ss in photo.speciesSugestions %}
-                                <li>{{ link_to_user(ss.fosUser) }} {{ "page.photo.label.sugested"|trans }} {{ link_to_species(ss.species) }}</li>
-                            {% endfor %}
+                                {% for ss in photo.speciesSugestions %}
+                                    <li>{{ link_to_user(ss.fosUser) }} {{ "page.photo.label.sugested"|trans }} {{ link_to_species(ss.species) }}</li>
+                                    {% endfor %}
                             </ul>
                         {% endif %}
 
@@ -189,12 +190,12 @@
                             <a href="#" data-toggle="modal" data-target="#modal-sugestion" class="btn btn-primary">{{ "page.photo.btn.sugestion_" ~ sugestionAction|trans }}</a>
                             <div class="modal inmodal" id="modal-sugestion" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog"><div class="modal-content animated bounceInRight">
-                                    {% if sugestionAction == 'new' %}
-                                        {{ render(controller('SkaphandrusAppBundle:SkPhotoSpeciesSugestion:new', { 'photo_id': photo.id } )) }}
-                                    {% else %}
-                                        {{ render(controller('SkaphandrusAppBundle:SkPhotoSpeciesSugestion:edit', { 'id': userSugestion.id } )) }}
-                                    {% endif %}
-                                </div></div>
+                                        {% if sugestionAction == 'new' %}
+                                            {{ render(controller('SkaphandrusAppBundle:SkPhotoSpeciesSugestion:new', { 'photo_id': photo.id } )) }}
+                                        {% else %}
+                                            {{ render(controller('SkaphandrusAppBundle:SkPhotoSpeciesSugestion:edit', { 'id': userSugestion.id } )) }}
+                                        {% endif %}
+                                    </div></div>
                             </div>
                         {% endif %}
 

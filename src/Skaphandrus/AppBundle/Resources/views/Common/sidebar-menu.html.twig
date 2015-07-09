@@ -71,11 +71,16 @@
             </li>
 
             <li class="{{ 'SkPointsController' in app.request.attributes.get("_controller")?'active' }}">
-                <a href="{{ path('points_admin') }}"><i class="fa fa-trophy"></i> <span class="nav-label">{{ "points_admin"|trans }} </span>{#<span class="label label-warning pull-right">16/24</span>#}</a>
+                <a href="{{ path('points_admin') }}"><i class="fa fa-star"></i> <span class="nav-label">{{ "points_admin"|trans }} </span>{#<span class="label label-warning pull-right">16/24</span>#}</a>
             </li>
             {% if is_granted("ROLE_ADMIN") %}
+                
+                            <li class="{{ 'TranslationController' in app.request.attributes.get("_controller")?'active' }}">
+                                <a target="_blank" href="{{ path('lexik_translation_grid') }}"><i class="fa fa-language"></i> <span class="nav-label">Translations </span>{#<span class="label label-warning pull-right">16/24</span>#}</a>
+            </li>
+                
                 <li class="{{ 'SkIdentification' in app.request.attributes.get("_controller")?'active' }}">
-                    <a href="#"><i class="fa fa-globe"></i> <span class="nav-label">{{ "identification_admin"|trans }} </span><span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-key"></i> <span class="nav-label">{{ "identification_admin"|trans }} </span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse" stylse="height: 0px;">
                         <li><a href="{{ path('identification_criteria_admin') }}">{{ "identification_criteria_admin"|trans }}</a></li>
                         <li><a href="{{ path('identification_group_admin') }}">{{ "identification_group_admin"|trans }}</a></li>

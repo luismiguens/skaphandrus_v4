@@ -94,9 +94,79 @@ class CommonController extends Controller {
         }
 
 
+        //family
+        if (array_key_exists('family_id', $parameters)) {
+            $em = $this->getDoctrine()->getManager();
+            $species = $em->getRepository('SkaphandrusAppBundle:SkFamily')->getSpecies($parameters['family_id']);
+
+            $sql = $sql . "species_id IN ( ";
+            foreach ($species as $sp) {
+                $species_ids[] = $sp->getId();
+            }
+            $sql = $sql . implode(',', $species_ids);
+            $sql = $sql . ") ";
+        }
 
 
+        
+         //order
+        if (array_key_exists('order_id', $parameters)) {
+            $em = $this->getDoctrine()->getManager();
+            $species = $em->getRepository('SkaphandrusAppBundle:SkOrder')->getSpecies($parameters['order_id']);
 
+            $sql = $sql . "species_id IN ( ";
+            foreach ($species as $sp) {
+                $species_ids[] = $sp->getId();
+            }
+            $sql = $sql . implode(',', $species_ids);
+            $sql = $sql . ") ";
+        }
+
+  //class
+        if (array_key_exists('class_id', $parameters)) {
+
+            $em = $this->getDoctrine()->getManager();
+            $species = $em->getRepository('SkaphandrusAppBundle:SkClass')->getSpecies($parameters['class_id']);
+
+            $sql = $sql . "species_id IN ( ";
+            foreach ($species as $sp) {
+                $species_ids[] = $sp->getId();
+            }
+            $sql = $sql . implode(',', $species_ids);
+            $sql = $sql . ") ";
+        }        
+        
+         //phylum
+        if (array_key_exists('phylum_id', $parameters)) {
+
+            $em = $this->getDoctrine()->getManager();
+            $species = $em->getRepository('SkaphandrusAppBundle:SkPhylum')->getSpecies($parameters['phylum_id']);
+
+            $sql = $sql . "species_id IN ( ";
+            foreach ($species as $sp) {
+                $species_ids[] = $sp->getId();
+            }
+            $sql = $sql . implode(',', $species_ids);
+            $sql = $sql . ") ";
+        }        
+        
+
+        
+        //kingdom
+        if (array_key_exists('kingdom_id', $parameters)) {
+
+            $em = $this->getDoctrine()->getManager();
+            $species = $em->getRepository('SkaphandrusAppBundle:SkKingdom')->getSpecies($parameters['kingdom_id']);
+
+            $sql = $sql . "species_id IN ( ";
+            foreach ($species as $sp) {
+                $species_ids[] = $sp->getId();
+            }
+            $sql = $sql . implode(',', $species_ids);
+            $sql = $sql . ") ";
+        }        
+
+        
 
         $sql = $sql . "ORDER BY " . key($order) . " " . $order[key($order)] . " ";
         $sql = $sql . "LIMIT " . $limit;

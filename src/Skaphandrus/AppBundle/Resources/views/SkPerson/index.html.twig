@@ -17,7 +17,7 @@
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
-        <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
         <li class="active"><strong>{{ "breadcrumb.persons"|trans }}</strong></li>
     </ol>
 {% endblock %}
@@ -46,12 +46,12 @@
             {% for entity in entities %}
                 <tr>
                     <td>{{ entity.skaphandrusId }}</td>
-                   <!-- <td>image</td>-->
+                    <!-- <td>image</td>-->
                     <td>{{ entity.observations }}</td>
                     <td>
                         <a class="btn btn-white btn-sm" href="{{ path('person_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.edit"|trans }}</a>
                         {% if entity.skaphandrusId != false %}
-                            <a class="btn btn-white btn-sm" href="{{ path('user', { 'id': entity.skaphandrusId }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.view"|trans }}</a>
+                            <a class="btn btn-white btn-sm" href="{{ path('user', { 'id': entity.skaphandrusId.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.view"|trans }}</a>
                         {% endif %}    
                     </td>
                 </tr>

@@ -19,5 +19,10 @@ use Symfony\Component\Validator\Constraint;
 
 class ContainsSufficientPoints extends Constraint
 {
-    public $message = 'the selected modules need "%modules_points%" points and you only have "%user_points%" points.';
+    public $message = 'the selected modules need %modules_points% points and you only have %user_points% points.';
+    
+    public function validatedBy()
+    {
+        return 'validator.contains_sufficient_points';
+    }
 }

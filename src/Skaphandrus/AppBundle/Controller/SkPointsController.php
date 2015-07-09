@@ -151,11 +151,18 @@ class SkPointsController extends Controller {
             $total_points = $total_points + $skPoints->getPoints();
         }
 
-        
+       $fos_user->getSettings()->setPoints($total_points);
+       
+       $em->persist($fos_user);
         
         
         $em->flush();
+        
+        
         $entities = $em->getRepository('SkaphandrusAppBundle:SkPoints')->findBy(array('fosUser' => $fos_user->getId()));
+//$fos_user = $this->get('security.token_storage')->getToken()->getUser();
+//
+//$fos_user = new \Skaphandrus\AppBundle\Entity\FosUser();
 
         
         //update username points

@@ -19,8 +19,8 @@
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
-        <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
-        <li><a href="index.html">{{ "breadcrumb.spots"|trans }}</a></li>
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="{{ path('spot_admin') }}">{{ "breadcrumb.spots"|trans }}</a></li>
         <li class="active"><strong>{{ "breadcrumb.edit_spot"|trans }}</strong></li>
     </ol>
 {% endblock %}

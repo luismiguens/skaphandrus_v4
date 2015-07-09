@@ -17,7 +17,7 @@
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
-        <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
         <li class="active"><strong>{{ "breadcrumb.notifications"|trans }}</strong></li>
     </ol>
 {% endblock %}
@@ -34,7 +34,7 @@
 
 
 {% block body -%}
-<table class="table table-striped">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>{{ "form.notify.label.notification"|trans }}</th>
@@ -43,14 +43,14 @@
             </tr>
         </thead>
         <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td>{{ notification_message(entity)|raw }}</td>
-                <td>{{ entity.isRead }}</td>
-                <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-        {% endfor %}
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ notification_message(entity)|raw }}</td>
+                    <td>{{ entity.isRead }}</td>
+                    <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 
-    {% endblock %}
+{% endblock %}

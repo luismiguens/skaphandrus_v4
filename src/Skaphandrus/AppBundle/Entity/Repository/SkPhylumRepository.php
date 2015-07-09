@@ -12,13 +12,27 @@ use Doctrine\ORM\EntityRepository;
  */
 class SkPhylumRepository extends EntityRepository {
 
-  public function findLikeName($term) {
+    public function findLikeName($term) {
         return $this->getEntityManager()->createQuery(
-          "SELECT p
+                        "SELECT p
           FROM SkaphandrusAppBundle:SkPhylum p
           WHERE p.name LIKE :term
           ORDER BY p.name DESC"
-        )->setParameter('term', '%' . $term . '%')->getResult();
+                )->setParameter('term', '%' . $term . '%')->getResult();
+    }
+
+    public function getSpecies($phylum_id) {
+        return $this->getEntityManager()
+                        ->createQuery(
+                                'SELECT s 
+                FROM SkaphandrusAppBundle:SkSpecies s
+                JOIN s.genus g
+                JOIN g.family f
+                JOIN f.order o
+                JOIN o.class c
+                JOIN c.phylum p
+                WHERE p.id = :phylum_id'
+                        )->setParameter('phylum_id', $phylum_id)->getResult();
     }
 
 }

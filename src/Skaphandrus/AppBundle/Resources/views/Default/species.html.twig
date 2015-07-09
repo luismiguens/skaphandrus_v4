@@ -21,7 +21,8 @@
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
-        <li>{{ link_to_taxon(species.genus.family.order.class) }}</li>
+        <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
+        {#<li>{{ link_to_taxon(species.genus.family.order.class) }}</li>#}
         <li>{{ link_to_taxon(species.genus.family.order) }}</li>
         <li>{{ link_to_taxon(species.genus.family) }}</li>
         <li>{{ link_to_taxon(species.genus) }}</li>
@@ -221,7 +222,7 @@
                         </div>
                     </div>
                 </div><!--end right column -->
-                {% include 'SkaphandrusAppBundle:Comments:async.html.twig' with {'id': 'SkSpecies-' ~ species.id } %}
+              
             </div><!-- end row-->
         </div><!-- end wrapper-->
 

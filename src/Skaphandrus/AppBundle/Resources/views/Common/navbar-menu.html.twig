@@ -1,51 +1,69 @@
- <nav class="navbar navbar-static-top {% if color is defined %}{{ color }}{% endif %}" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-            <form role="search" class="navbar-form-custom" action="{{ path('search') }}">
-                <div class="form-group">
-                    <input type="text" placeholder="{{ "pages.common.label.search_something"|trans }}" class="form-control" name="string" id="string" minlength="3">
-                </div>
-            </form>
-        </div>
-                
-            <ul class="nav navbar-top-links navbar-right">
-                
-                
-                
-                <li>
-                    <span class="m-r-sm text-muted welcome-message">{{ "pages.common.label.welcome_skaphandrus"|trans }}</span>
-                </li>
-           
-                     {% if is_granted("IS_AUTHENTICATED_FULLY") %}
-                    <!-- begin messages dropdown -->
-                     {{ render(controller('SkaphandrusAppBundle:Common:skMessages')) }}
-                    <!-- end messages dropdown -->
-                 
-           
-               
-                     <!-- begin notifications dropdown -->
-                     {{ render(controller('SkaphandrusAppBundle:Common:skNotifications')) }}
-                    <!-- end notifications dropdown -->
-                    
-             
+<nav class="navbar navbar-inverse navbar-static-top {% if color is defined %}{{ color }}{% endif %}" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header">
+        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+        <form role="search" class="navbar-form-custom" action="{{ path('search') }}">
+            <div class="form-group">
+                <input type="text" placeholder="{{ "pages.common.label.search_something"|trans }}" class="form-control" name="string" id="string" minlength="3">
+            </div>
+        </form>
+            
+                <ul class="nav navbar-top-links navbar-right">
 
-
-               
-                <li>
-                    <span class="m-r-sm text-muted welcome-message">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span>
-                </li>
-                <li>
-                    <a href="{{ path('fos_user_security_logout') }}">
-                        <i class="fa fa-sign-out"></i> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                    </a>
-                </li>
-                {% else %}
-                <li>
-                    <a href="{{ path('fos_user_security_login') }}">
-                        <i class="fa fa-sign-out"></i> {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
-                    </a>
-                </li>
-                {% endif %}
+        <li><a href="{{path('modules')}}">{{"navbar.menu.label.identification"|trans}}</a></li>
+        <li><a href="{{path('contests_landing_page')}}">{{"navbar.menu.label.uw_contests"|trans}}</a></li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{"navbar.menu.label.contents"|trans}} <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="{{path('locations_home')}}">{{"navbar.menu.label.world_map"|trans}} </a></li>
+                <li><a href="{{path('taxonomy')}}">{{"navbar.menu.label.taxonomy"|trans}} </a></li>
+                <li><a href="{{path('photos')}}">{{"navbar.menu.label.photos"|trans}} </a></li>
+                <li><a href="#">{{"navbar.menu.label.users"|trans}} </a></li>
             </ul>
+        </li>
+                </ul>
+    </div>
 
-        </nav>
+
+
+
+    <ul class="nav navbar-top-links navbar-right">
+
+
+        {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+            {# <li>
+                 <span class="m-r-sm text-muted welcome-message">{{ "pages.common.label.welcome_skaphandrus"|trans }}</span>
+             </li>#}
+
+
+            <!-- begin messages dropdown -->
+            {{ render(controller('SkaphandrusAppBundle:Common:skMessages')) }}
+            <!-- end messages dropdown -->
+
+
+
+            <!-- begin notifications dropdown -->
+            {{ render(controller('SkaphandrusAppBundle:Common:skNotifications')) }}
+            <!-- end notifications dropdown -->
+
+
+
+
+
+            <li>
+                <span class="m-r-sm text-muted welcome-message">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span>
+            </li>
+            <li>
+                <a href="{{ path('fos_user_security_logout') }}">
+                    <i class="fa fa-sign-out"></i> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            </li>
+        {% else %}
+            <li>
+                <a href="{{ path('fos_user_security_login') }}">
+                    <i class="fa fa-sign-out"></i> {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+
+</nav>

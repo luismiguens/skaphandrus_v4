@@ -10,6 +10,7 @@ namespace Skaphandrus\AppBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Translation\Translator;
 
 /**
  * Description of ContainsSufficientPointsValidator
@@ -17,6 +18,12 @@ use Symfony\Component\Validator\ConstraintValidator;
  * @author Luis Miguens <luis.miguens@skaphandrus.com>
  */
 class ContainsSufficientPointsValidator extends ConstraintValidator {
+
+    protected $translator;
+
+    public function __construct($translator) {
+        $this->translator = $translator;
+    }
 
     public function validate($acquisitions, Constraint $constraint) {
 
@@ -29,23 +36,20 @@ class ContainsSufficientPointsValidator extends ConstraintValidator {
         foreach ($acquisitions as $key => $acquisition) {
 
             //dump($acquisition);
-            
-            if ($acquisition->getModule()->getIsFree() != TRUE 
-                    and $acquisition->getAcquisitionType() != 2 
+
+            if ($acquisition->getModule()->getIsFree() != TRUE
+                    and $acquisition->getAcquisitionType() != 2
                     and $acquisition->getId() == null) {
                 $sum_selected_points = $sum_selected_points + $acquisition->getModule()->getPoints();
             }
         }
-
+        
         if ($sum_selected_points > $acquisition->getFosUser()->getSettings()->getPoints()) {
-            $this->context->buildViolation($constraint->message)
-                    ->setParameter('%modules_points%', $sum_selected_points)->setParameter('%user_points%', $acquisition->getFosUser()->getSettings()->getPoints())
-                    ->addViolation();
+            $this->context->buildViolation( $constraint->message)
+                    ->setParameter('%modules_points%', $sum_selected_points)
+                    ->setParameter('%user_points%', $acquisition->getFosUser()->getSettings()->getPoints())
+                                    ->addViolation();
         }
-
-
-
-        //$this->context->buildViolation($acquisition->getFosUser()->getSettings()->getPoints())->addViolation();
     }
 
 }

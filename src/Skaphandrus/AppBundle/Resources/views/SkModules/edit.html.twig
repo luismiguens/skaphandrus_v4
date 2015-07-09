@@ -19,8 +19,7 @@
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
-        <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
-        <li><a href="index.html">{{ "breadcrumb.modules"|trans }}</a></li>
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
         <li class="active"><strong>{{ "breadcrumb.edit_modules"|trans }}</strong></li>
     </ol>
 {% endblock %}
@@ -37,7 +36,10 @@
 {% block body -%}
 
 
-    <p> <b>{{entity.settings.points}}</b> {{ "form.points.text.points"|trans }}</p>
+
+    <div class="alert alert-info">
+        <b>{{ entity.settings.points }}</b> {{ "form.points.text.points"|trans }} <a href="{{path("points_admin")}}" data-placement="left" data-toggle="tooltip" class="btn btn-white btn-sm" href="" data-original-title="Recalculate points"><i class="fa fa-refresh"></i> {{"form.modules.label.recalculate_points"|trans}}</a></div>
+
 
     {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
 
@@ -77,18 +79,18 @@
                 <tr>
                     <td>{{ form_widget(module,{ 'attr': {'checked': checked} }) }}</td>{# render checkbox #}
                     <td>{{ entity.name }}</td>
-                    <td>{{ entity.pointsName }}</td>
-{#                    {% if entity.acquisitions|length > 0 %}
-                        {% for acquisition in entity.acquisitions %}
-                            <td>{{ acquisition.acquisitionType }}</td>
-                            <td>{{ acquisition.acquiredAt|date('Y-m-d H:i:s') }}</td>
-                        {% endfor %}
-                    {% else %}
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    {% endif %}
-#}                </tr>
-            {% endfor %}
+                    <td>{{ entity.pointsName|trans }}</td>
+                    {#                    {% if entity.acquisitions|length > 0 %}
+                                            {% for acquisition in entity.acquisitions %}
+                                                <td>{{ acquisition.acquisitionType }}</td>
+                                                <td>{{ acquisition.acquiredAt|date('Y-m-d H:i:s') }}</td>
+                                            {% endfor %}
+                                        {% else %}
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                        {% endif %}
+                    #}                </tr>
+                {% endfor %}
         </tbody>
     </table>
     <button type="submit" class="btn btn-primary">{{ "form.common.btn.update"|trans }}</button>

@@ -17,8 +17,8 @@
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
-        <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
-        <li><a href="index.html">{{ "breadcrumb.photos"|trans }}</a></li>
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="{{ path('photo_admin') }}">{{ "breadcrumb.photos"|trans }}</a></li>
         <li class="active"><strong>{{ "breadcrumb.edit_photo"|trans }}</strong></li>
     </ol>
 {% endblock %}

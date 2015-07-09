@@ -4,15 +4,13 @@
 
 {% block body %}
     <h3>{{ "resetting.request.h3.forgot_password"|trans }}</h3>
-    <p>
-        Enter your email address and your password will be reset and emailed to you.
-    </p>
+    <p>{{ "resetting.request.enter_your_email_address_and_your_password_will_be_reset_and_emailed_to_you."|trans }}</p>
     {% if invalid_username is defined %}
         <div class="alert alert-danger">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</div>
     {% endif %}
     <form class="fos_user_resetting_request m-t" role="form" action="{{ path('fos_user_resetting_send_email') }}" method="POST">
         <div class="form-group">
-            <input type="text" class="form-control" id="username" name="username" placeholder="{{ 'resetting.request.username'|trans }}" required="required">
+            <input type="text" class="form-control" id="username" name="username" placeholder="{{ 'resetting.request.email'|trans }}" required="required">
         </div>
 
         <input type="submit" class="btn btn-primary block full-width m-b" value="{{ 'resetting.request.submit'|trans }}" />

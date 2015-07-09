@@ -253,9 +253,13 @@ class DefaultController extends Controller {
             $next_taxon = 'phylum';
         }
 
+        $photographers = array();
+        
+        dump($taxon);
+        
         // $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->getQueryBuilder([$taxon->getTaxonNodeName() => $taxon->getId()], 20);
-        $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-            ->findWithPhotoCountByTaxon($taxon->getTaxonNodeName(), $taxon->getId());
+//        $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
+//            ->findWithPhotoCountByTaxon($taxon->getTaxonNodeName(), $taxon->getId());
 
         if ($taxon) {
             return $this->render('SkaphandrusAppBundle:Default:taxon.html.twig', array(

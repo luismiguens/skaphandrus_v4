@@ -3,8 +3,8 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block body %}
-    <h3>Register to Skaphandrus</h3>
-    <p>Create account to see it in action.</p>
+    <h3>{{ 'registration.register_to_skaphandrus'|trans }}</h3>
+    <p>{{ 'registration.create_account_to_see_it_in_action.'|trans }}</p>
     {{ form_errors(form) }}
     <form class="m-t fos_user_registration_register" role="form" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST">
         <div class="form-group">
@@ -19,7 +19,7 @@
         
         <input type="submit" class="btn btn-primary block full-width m-b" value="{{ 'registration.submit'|trans }}" />
 
-        <p class="text-muted text-center"><small>Already have an account?</small></p>
+        <p class="text-muted text-center"><small>{{ 'registration.already_have_an_account'|trans }}?</small></p>
         <a class="btn btn-sm btn-white btn-block" href="{{ path('fos_user_security_login') }}">Login</a>
     {{ form_end(form) }}
 {% endblock %}

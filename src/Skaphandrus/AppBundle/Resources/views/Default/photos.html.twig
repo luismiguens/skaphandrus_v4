@@ -75,7 +75,7 @@
 
 
     {% else %}
-        // do something else
+       {{ "page.photos"|trans }}
     {% endif %}
 {% endblock %}
 
@@ -143,85 +143,87 @@
 
 
 {% block heading_breadcrumbs %}
+   <ol class="breadcrumb">
+       <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
     {% if params.species is defined %}
-        <ol class="breadcrumb">
+        
             <li><a href="{{ url_to_photos( {'order': pagination[0].species.genus.family.order.id}) }}">{{pagination[0].species.genus.family.order.name}}</a></li>
             <li><a href="{{ url_to_photos( {'family': pagination[0].species.genus.family.id}) }}">{{pagination[0].species.genus.family.name}}</a></li>
             <li><a href="{{ url_to_photos( {'genus': pagination[0].species.genus.id}) }}">{{pagination[0].species.genus.name}}</a></li>
             <li class="active"><strong>{{ pagination[0].species.name}} </strong></li>
-        </ol>
+       
     {% elseif params.genus is defined %}
-        <ol class="breadcrumb">
+       
             <li><a href="{{ url_to_photos( {'class': pagination[0].species.genus.family.order.class.id}) }}">{{pagination[0].species.genus.family.order.class.name}}</a></li>
             <li><a href="{{ url_to_photos( {'order': pagination[0].species.genus.family.order.id}) }}">{{pagination[0].species.genus.family.order.name}}</a></li>
             <li><a href="{{ url_to_photos( {'family': pagination[0].species.genus.family.id}) }}">{{pagination[0].species.genus.family.name}}</a></li>
             <li class="active"><strong>{{ pagination[0].species.genus.name}} </strong></li>
-        </ol>
+       
     {% elseif params.family is defined %}
-        <ol class="breadcrumb">
+       
             <li><a href="{{ url_to_photos( {'phylum': pagination[0].species.genus.family.order.class.phylum.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.name}}</a></li>
             <li><a href="{{ url_to_photos( {'class': pagination[0].species.genus.family.order.class.id}) }}">{{pagination[0].species.genus.family.order.class.name}}</a></li>
             <li><a href="{{ url_to_photos( {'order': pagination[0].species.genus.family.order.id}) }}">{{pagination[0].species.genus.family.order.name}}</a></li>
             <li class="active"><strong>{{ pagination[0].species.genus.family.name}} </strong></li>
-        </ol>    
+           
     {% elseif params.order is defined %}
-        <ol class="breadcrumb">
+       
             <li><a href="{{ url_to_photos( {'kingdom': pagination[0].species.genus.family.order.class.phylum.kingdom.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}</a></li>
             <li><a href="{{ url_to_photos( {'phylum': pagination[0].species.genus.family.order.class.phylum.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.name}}</a></li>
             <li><a href="{{ url_to_photos( {'class': pagination[0].species.genus.family.order.class.id}) }}">{{pagination[0].species.genus.family.order.class.name}}</a></li>
             <li class="active"><strong>{{ pagination[0].species.genus.family.order.name}} </strong></li>
-        </ol> 
+        
     {% elseif params.class is defined %}
-        <ol class="breadcrumb">
+       
             <li><a href="{{ url_to_photos( {'kingdom': pagination[0].species.genus.family.order.class.phylum.kingdom.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}</a></li>
             <li><a href="{{ url_to_photos( {'phylum': pagination[0].species.genus.family.order.class.phylum.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.name}}</a></li>
             <li class="active"><strong>{{ pagination[0].species.genus.family.order.class.name}} </strong></li>
-        </ol> 
+        
     {% elseif params.phylum is defined %}
-        <ol class="breadcrumb">
+       
             <li><a href="{{ url_to_photos( {'kingdom': pagination[0].species.genus.family.order.class.phylum.kingdom.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}</a></li>
             <li class="active"><strong>{{ pagination[0].species.genus.family.order.class.phylum.name}} </strong></li>
-        </ol> 
+        
     {% elseif params.kingdom is defined %}
-        <ol class="breadcrumb">
+       
             <li class="active"><strong>{{ pagination[0].species.genus.family.order.class.phylum.kingdom.name}} </strong></li>
-        </ol> 
+        
         
         <!-- spots-->
     {% elseif params.spot is defined %}
-        <ol class="breadcrumb">
+       
             <li><a href="{{ url_to_photos( {'country': pagination[0].spot.location.region.country.id}) }}">{{pagination[0].spot.location.region.country}}</a></li>
             <li><a href="{{ url_to_photos( {'region': pagination[0].spot.location.region.id}) }}">{{pagination[0].spot.location.region.name}}</a></li>
             <li><a href="{{ url_to_photos( {'location': pagination[0].spot.location.id}) }}">{{pagination[0].spot.location.name}}</a></li>
             <li class="active"><strong>{{ pagination[0].spot.name}} </strong></li>
-        </ol>     
+            
     {% elseif params.location is defined %}
-        <ol class="breadcrumb">
+       
             <li><a href="{{ url_to_photos( {'country': pagination[0].spot.location.region.country.id}) }}">{{pagination[0].spot.location.region.country}}</a></li>
             <li><a href="{{ url_to_photos( {'region': pagination[0].spot.location.region.id}) }}">{{pagination[0].spot.location.region.name}}</a></li>
             <li class="active"><strong>{{ pagination[0].spot.location.name}} </strong></li>
-        </ol>     
+            
     {% elseif params.region is defined %}
-        <ol class="breadcrumb">
+       
             <li><a href="{{ url_to_photos( {'country': pagination[0].spot.location.region.country.id}) }}">{{pagination[0].spot.location.region.country}}</a></li>
             <li class="active"><strong>{{ pagination[0].spot.location.region.name}} </strong></li>
-        </ol>     
+            
     {% elseif params.country is defined %}
-        <ol class="breadcrumb">
             <li class="active"><strong>{{ pagination[0].spot.location.region.country}} </strong></li>
-        </ol>   
+     
         
         <!-- fosUser -->
     {% elseif params.fosUser is defined %}
-        <ol class="breadcrumb">
+       
             <li class="active"><strong>{{ pagination[0].fosUser}} </strong></li>
-        </ol>   
+          
 
 
 
     {% else %}
-        // do something else
+       <li class="active"><strong>{{ "breadcrumb.photos"|trans }}  </strong></li>
     {% endif %}
+    </ol>
 {% endblock %}
 
 
@@ -280,7 +282,7 @@
                             <a href="{{ url_to_photo(photo) }}" class="thumbnail"> <img src="{{ photo.webPath | imagine_filter('sk_widen_590') }}" alt="{{ photo.title }}"></a>
                             
                             <ul class="list-unstyled">
-                            <li>{{ "page.photos.label.username"|trans }}: <a href="{{ url_to_user(photo.fosUser) }}">{{ photo.fosUser.id }}</a></li>
+                            <li>{{ "page.photos.label.username"|trans }}: <a href="{{ url_to_user(photo.fosUser) }}">{{ photo.fosUser.name }}</a></li>
                                 {% if photo.spot is not null %}
                                 <li>{{ "page.photos.label.spot"|trans }}: <a href="{{ url_to_spot(photo.spot) }}">{{ photo.spot.name }}</a></li>
                                 {% endif %}

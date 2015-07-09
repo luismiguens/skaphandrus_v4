@@ -20,4 +20,17 @@ class SkOrderRepository extends EntityRepository {
       ORDER BY o.name DESC"
     )->setParameter('term', '%' . $term . '%')->getResult();
   }
+  
+  
+  public function getSpecies($order_id) {
+        return $this->getEntityManager()
+                        ->createQuery(
+                                'SELECT s 
+                FROM SkaphandrusAppBundle:SkSpecies s
+                JOIN s.genus g
+                JOIN g.family f
+                JOIN f.order o
+                WHERE o.id = :order_id'
+                        )->setParameter('order_id', $order_id)->getResult();
+    }
 }

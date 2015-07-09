@@ -10,7 +10,10 @@ class IdentificationController extends Controller {
 
     public function modulesAction() {
 
-        return $this->render('SkaphandrusAppBundle:Identification:modules.html.twig');
+        
+        $modules = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkIdentificationModule')->findAll();
+        
+        return $this->render('SkaphandrusAppBundle:Identification:modules.html.twig', array('modules'=>$modules));
     }
 
     public function criteriasAction($slug) {

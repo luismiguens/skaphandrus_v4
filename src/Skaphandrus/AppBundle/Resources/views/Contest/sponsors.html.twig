@@ -20,8 +20,8 @@
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
-        <li><a href="/">Home</a></li>
-        <li><a href="{{ path("contests_landing_page") }}">{{ "page.contest.breadcrumb.contest"|trans }}</a></li>
+          <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
+        <li><a href="{{ path("contests_landing_page") }}">{{ "page.contest.breadcrumb.contests"|trans }}</a></li>
         <li><a href="{{ url_to_contest(contest) }}">{{ contest.name }}</a></li>
         <li class="active"><strong>{{ "page.photographers.title.sponsors"|trans }}</strong></li>
     </ol>

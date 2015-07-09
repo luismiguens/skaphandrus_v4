@@ -17,7 +17,7 @@
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
-        <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
         <li class="active"><strong>{{ "breadcrumb.points"|trans }}</strong></li>
     </ol>
 {% endblock %}
@@ -33,8 +33,8 @@
 
 
 {% block body -%}
+    <div class="alert alert-info"><b>{{ total_points }}</b> {{ "form.points.text.points"|trans }}</div>
 
-    <p> <b>{{ total_points }}</b> {{ "form.points.text.points"|trans }}</p>
     <table class="table table-striped" >
         <thead>
             <tr>

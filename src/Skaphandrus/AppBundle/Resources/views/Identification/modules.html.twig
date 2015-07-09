@@ -1,4 +1,4 @@
-{% extends 'SkaphandrusAppBundle::angular_layout.html.twig' %}
+{% extends 'SkaphandrusAppBundle::content_layout.html.twig' %}
 
 {% block page_title %}{{ "page.modules.title"|trans }}{% endblock %}
 {% block page_description %}{{ "page.modules.title"|trans }}{% endblock %}
@@ -21,11 +21,11 @@
     <a href="{{ path('photo_admin_new') }}" class="btn btn-primary">{{ "form.photo.btn.add"|trans }}</a>
 {% endblock %}
 
-{% block angular_app %}modulesApp{%endblock%}
+{#{% block angular_app %}modulesApp{%endblock%}#}
 
 {% block javascripts %}
     {{ parent() }}
-
+{#
 
    
 
@@ -64,7 +64,7 @@
 
             }]);
 
-    </script>
+    </script>#}
 {%endblock%}
 
 
@@ -72,12 +72,8 @@
 
 {% block body %}
 
-
-
-    <div class = "wrapper wrapper-content" >
+{#    <div class = "wrapper wrapper-content" >
         <div class = "row" >
-
-
             <div ng-repeat = "master in mainCtrl.modules">
                 <div class="col-lg-4"  ng-repeat = "module in master.modules">
 
@@ -88,26 +84,6 @@
                         </div>
                         <div class="ibox-content">
                             <a class="thumbnail" href="/{{ app.request.locale }}/ocean-life-identification/{[{module.name | slugify}]}"><img src="{[{module.image_url}]}"></img></a>
-                            
-  
-                            
-                            
-                            <!--<div class="team-members">
-                                <a href="#"><img src="img/a8.jpg" class="img-circle" alt="member"></a>
-                                <a href="#"><img src="img/a4.jpg" class="img-circle" alt="member"></a>
-                                <a href="#"><img src="img/a1.jpg" class="img-circle" alt="member"></a>
-                            </div>
-                            <h4>Info about Design Team</h4>
-                            <p>
-                                Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
-                            </p>-->
-                            <!--<div>
-                                <span>Status of current project:</span>
-                                <div class="stat-percent">61%</div>
-                                <div class="progress progress-mini">
-                                    <div class="progress-bar" style="width: 61%;"></div>
-                                </div>
-                            </div>-->
                             <div class="row  m-t-sm">
                                 <div class="col-sm-4">
                                     <div class="font-bold">MASTER</div>
@@ -122,19 +98,66 @@
                                     $705,913 <i class="fa fa-level-up text-navy"></i>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
-
         </div>
     </div>
+#}
 
 
+
+<div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                
+                {% for module in modules %}
+                <div class="col-md-3">
+                    <div class="ibox">
+                        <div class="ibox-content product-box">
+
+                            <div class="product-imitation">
+                                [ INFO ]
+                            </div>
+                            <div class="product-desc">
+                                <span class="product-price">
+                                   {{module.points}}
+                                </span>
+                                <small class="text-muted">{{module.master}}</small>
+                                <a href="{{url_to_module(module)}}" class="product-name"> {{module.name}}</a>
+
+
+
+                                <div class="small m-t-xs">
+                                    Many desktop publishing packages and web page editors now.
+                                </div>
+                                <div class="m-t text-righ">
+
+                                    <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                {% if loop.index is divisible by(4) %}
+                <!-- close row -->
+                </div>
+                    
+                 <!-- open row -->
+                 <div class="row">
+{% endif %}
+                
+                {% endfor %}
+
+ <!-- close row -->
+                </div>
+
+        </div>
+                            
+                            
+                            
+                            
 
 {%endblock%}
 

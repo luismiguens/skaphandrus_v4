@@ -20,4 +20,18 @@ class SkFamilyRepository extends EntityRepository {
       ORDER BY f.name DESC"
     )->setParameter('term', '%' . $term . '%')->getResult();
   }
+  
+  
+  public function getSpecies($family_id) {
+        return $this->getEntityManager()
+                        ->createQuery(
+                                'SELECT s 
+                FROM SkaphandrusAppBundle:SkSpecies s
+                JOIN s.genus g
+                JOIN g.family f
+                WHERE f.id = :family_id'
+                        )->setParameter('family_id', $family_id)->getResult();
+    }
+  
+  
 }

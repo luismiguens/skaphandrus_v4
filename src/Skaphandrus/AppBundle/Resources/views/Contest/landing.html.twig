@@ -1,16 +1,16 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block page_title %}{{ "page.contests.title.contests"|trans }}{% endblock %}
+{% block page_title %}{{ "page.contests.title.underwater_contests"|trans }}{% endblock %}
 {% block page_description %}description{% endblock %}
 
 {% block heading_title %}
-   {{ "page.contests.title.contests"|trans }}
+   {{ "page.contests.title.underwater_contests"|trans }}
 {% endblock %}
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
-        <li><a href="/">Home</a></li>
-        <li class="active"><strong>{{ "page.contest.breadcrumb.contest"|trans }}</strong></li>
+        <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
+        <li class="active"><strong>{{ "page.contest.breadcrumb.contests"|trans }}</strong></li>
     </ol>
 {% endblock %}
 
@@ -18,7 +18,7 @@
 <div class="wrapper wrapper-content animated fadeInUp">
     <div class="ibox">
         <div class="ibox-title">
-            <h5>{{ "page.contests.h5.All Contests" }}</h5>
+            <h5>{{ "page.contests.h5.all_contests" }}</h5>
         </div>
         <div class="ibox-content">
             <div class="project-list">
