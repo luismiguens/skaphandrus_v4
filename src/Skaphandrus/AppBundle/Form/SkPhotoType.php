@@ -5,6 +5,7 @@ namespace Skaphandrus\AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class SkPhotoType extends AbstractType {
 
@@ -34,7 +35,10 @@ class SkPhotoType extends AbstractType {
                             )
                         )
                 //->add('views')
-                //->add('takenAt', 'datetime', array('date_widget' => "single_text", 'time_widget' => "single_text"))
+                ->add('takenAt', 'datetime', array(
+                    'date_widget' => "single_text",
+                    'time_widget' => "single_text",
+                ))
                 //->add('createdAt', 'hidden')
                 ->add('creative', 'entity', 
                         array(

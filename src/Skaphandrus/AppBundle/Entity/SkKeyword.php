@@ -54,6 +54,10 @@ class SkKeyword
         return $this->keyword;
     }
 
+    public function __toString() {
+        return $this->keyword;
+    }
+
     /**
      * Get id
      *
@@ -98,4 +102,3 @@ class SkKeyword
         return $this->photo;
     }
 }
-

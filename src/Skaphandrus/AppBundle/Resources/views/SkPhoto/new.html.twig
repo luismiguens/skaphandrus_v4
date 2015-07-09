@@ -6,12 +6,43 @@
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
     <script src="{{ asset('bundles/pugxautocompleter/js/autocompleter-jqueryui.js') }}"></script>
+    <!-- Data picker -->
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
+    <!-- Clock picker -->
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/clockpicker/clockpicker.js') }}"></script>
+    <!-- Tag It -->
+    <script src="{{ asset('bundles/skaphandrusapp/js/tag-it/tag-it.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#skaphandrus_appbundle_skphoto_takenAt_date').datepicker({
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                autoclose: true,
+                format: "yyyy-mm-dd"
+            });
+        });
 
+        $('#skaphandrus_appbundle_skphoto_takenAt_time').clockpicker({
+            autoclose: true
+        });
+
+        $('#tags').tagit({
+            allowSpaces: true,
+        });
+
+    </script>
 {% endblock %}
 
 
-{% block styleshets %}
+{% block stylesheets %}
     {{ parent() }}
+    <!-- Data picker -->
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/datapicker/datepicker3.css') }}" rel="stylesheet">
+    <!-- Clock picker -->
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/clockpicker/clockpicker.css') }}" rel="stylesheet">
+    <!-- Tag It -->
+    <link href="{{ asset('bundles/skaphandrusapp/css/tag-it/jquery.tagit.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block heading_title %}
@@ -48,6 +79,12 @@ background: white url("http://jqueryui.com/resources/demos/autocomplete/images/u
     
     {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
     {{ form_widget(form) }}
+    <div class="form-group">
+        <label class="col-sm-3 control-label">
+            <label for="tags">Keywords</label>
+        </label>
+        <input type="text" id="tags" name="tags" />
+    </div>
     {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'photo_admin', 'new_form':false} %}
     {{ form_end(form) }}
 

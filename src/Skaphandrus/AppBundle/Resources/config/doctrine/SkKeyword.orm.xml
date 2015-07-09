@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Skaphandrus\AppBundle\Entity\SkKeyword" table="sk_keyword">
+  <entity name="Skaphandrus\AppBundle\Entity\SkKeyword" repository-class="Skaphandrus\AppBundle\Entity\Repository\SkKeywordRepository" table="sk_keyword">
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
