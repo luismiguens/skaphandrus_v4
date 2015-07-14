@@ -255,7 +255,7 @@ class DefaultController extends Controller {
 
 //        $photographers = array();
 //        
-        dump($taxon);
+        //dump($taxon);
         
         // $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->getQueryBuilder([$taxon->getTaxonNodeName() => $taxon->getId()], 20);
         $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
