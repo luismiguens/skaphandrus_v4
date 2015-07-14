@@ -13,15 +13,14 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class FosUserRepository extends EntityRepository {
 
-    
-    public function getQueryBuilder($params, $limit=20, $order = array('id' => 'desc'), $offset=0) {
+    public function getQueryBuilder($params, $limit = 20, $order = array('id' => 'desc'), $offset = 0) {
 
 
         $qb = $this->getEntityManager()->createQueryBuilder();
-        
+
         $qb->select('u')->from('SkaphandrusAppBundle:FosUser', 'u');
         $qb->leftJoin('u.photos', 'p', 'WITH', 'p.fosUser = u.id');
-        
+
         //users
         if (array_key_exists('fosUser', $params)) {
             $qb->andWhere('p.fosUser = ?2');
@@ -127,35 +126,43 @@ class FosUserRepository extends EntityRepository {
 //        
 //       
 //            $qb->setMaxResults($limit);
-       
-
 //echo $qb;
 
         return $qb;
     }
 
-    public function findWithPhotoCountByTaxon($taxon_name, $taxon_id, $limit = 20) {
+    public function findWithPhotoCountByTaxon($next_taxon, $taxon_name, $taxon_id, $limit = 20) {
+
+//        dump($taxon_name);
+//        dump($taxon_id);
+//        
+
         $query = $this->getEntityManager()
-            ->createQuery(
-                'SELECT u as user, COUNT(p) as photo_count
+                ->createQuery(
+                        'SELECT u as user, COUNT(photo.id) as photo_count
                 FROM SkaphandrusAppBundle:FosUser u
-                JOIN SkaphandrusAppBundle:SkPhoto p
-                    WITH u.id = IDENTITY(p.fosUser)
-                JOIN p.species species
-                JOIN species.genus genus
-                JOIN genus.family family
-                JOIN family.order order
-                JOIN order.class class
-                JOIN class.phylum phylum
-                JOIN phylum.kingdom kingdom
-                WHERE '. $taxon_name .'.id = :taxon_id
-                GROUP BY u.id'
+                JOIN SkaphandrusAppBundle:SkPhoto photo
+                    WITH u.id = IDENTITY(photo.fosUser)
+                JOIN photo.species s
+                JOIN s.genus g
+                JOIN g.family f
+                JOIN f.order o
+                JOIN o.class c
+                JOIN c.phylum p 
+                JOIN p.kingdom k
+                WHERE ' . substr($taxon_name, 0, 1) . '.id = :taxon_id 
+                GROUP BY u.id
+                ORDER BY photo_count DESC'
                 )->setParameter('taxon_id', $taxon_id)
                 ->setMaxResults($limit);
+
+
+//        dump($query->getDQL());
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
     }
+
 }

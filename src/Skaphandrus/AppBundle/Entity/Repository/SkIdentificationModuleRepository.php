@@ -31,5 +31,23 @@ class SkIdentificationModuleRepository extends EntityRepository {
             return null;
         }
     }
+    
+    
+     public function findByFosUser($fos_user) {
+        
+
+        $query = $this->getEntityManager()
+                        ->createQuery(
+                                'SELECT m
+                FROM SkaphandrusAppBundle:SkIdentificationModule m
+                WHERE m.isActive = TRUE ');
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    
 
 }

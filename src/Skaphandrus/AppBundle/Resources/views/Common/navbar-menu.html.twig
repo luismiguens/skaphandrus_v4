@@ -6,48 +6,43 @@
                 <input type="text" placeholder="{{ "pages.common.label.search_something"|trans }}" class="form-control" name="string" id="string" minlength="3">
             </div>
         </form>
-            
-                <ul class="nav navbar-top-links navbar-right">
 
-        <li><a href="{{path('modules')}}">{{"navbar.menu.label.identification"|trans}}</a></li>
-        <li><a href="{{path('contests_landing_page')}}">{{"navbar.menu.label.uw_contests"|trans}}</a></li>
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{"navbar.menu.label.contents"|trans}} <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="{{path('locations_home')}}">{{"navbar.menu.label.world_map"|trans}} </a></li>
-                <li><a href="{{path('taxonomy')}}">{{"navbar.menu.label.taxonomy"|trans}} </a></li>
-                <li><a href="{{path('photos')}}">{{"navbar.menu.label.photos"|trans}} </a></li>
-                <li><a href="#">{{"navbar.menu.label.users"|trans}} </a></li>
-            </ul>
-        </li>
+        <style type="text/css">
+            .navbar-top-links li:hover{
+                background-color: white;
+            }
+        </style> 
+
+
+        <ul class="nav navbar-top-links navbar-right">
+            <li><a href="{{path('modules')}}">{{"navbar.menu.label.identification"|trans}}</a></li>
+            <li><a href="{{path('contests_landing_page')}}">{{"navbar.menu.label.uw_contests"|trans}}</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{"navbar.menu.label.contents"|trans}} <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{path('locations_home')}}">{{"navbar.menu.label.world_map"|trans}} </a></li>
+                    <li><a href="{{path('taxonomy')}}">{{"navbar.menu.label.taxonomy"|trans}} </a></li>
+                    <li><a href="{{path('photos')}}">{{"navbar.menu.label.photos"|trans}} </a></li>
+                    <li><a href="#">{{"navbar.menu.label.users"|trans}} </a></li>
                 </ul>
+            </li>
+        </ul>
     </div>
 
-
-
-
     <ul class="nav navbar-top-links navbar-right">
-
 
         {% if is_granted("IS_AUTHENTICATED_FULLY") %}
             {# <li>
                  <span class="m-r-sm text-muted welcome-message">{{ "pages.common.label.welcome_skaphandrus"|trans }}</span>
              </li>#}
 
-
             <!-- begin messages dropdown -->
             {{ render(controller('SkaphandrusAppBundle:Common:skMessages')) }}
             <!-- end messages dropdown -->
 
-
-
             <!-- begin notifications dropdown -->
             {{ render(controller('SkaphandrusAppBundle:Common:skNotifications')) }}
             <!-- end notifications dropdown -->
-
-
-
-
 
             <li>
                 <span class="m-r-sm text-muted welcome-message">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span>

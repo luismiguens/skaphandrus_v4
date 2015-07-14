@@ -42,8 +42,6 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
      */
     private $acquisitions;
     private $modules;
-    
-    
     private $personal;
     private $address;
     private $contact;
@@ -64,12 +62,12 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
         $this->acquisitions = new ArrayCollection();
         $this->modules = new ArrayCollection();
         
-        // your own logic
+    // your own logic
     }
 
     
     
-      // Important 
+    // Important 
     public function getModules()
     {
         $modules = new ArrayCollection();

@@ -140,8 +140,12 @@ class SkPhotoRepository extends EntityRepository {
         }
 
         if (array_key_exists('genus', $params)) {
-            $qb->join('p.species', 's', 'WITH', 'p.species = s.id');
-            $qb->join('s.genus', 'g', 'WITH', 's.genus = ?13');
+            //$qb->join('p.species', 's', 'WITH', 'p.species = s.id');
+            //$qb->join('s.genus', 'g', 'WITH', 's.genus = ?13');
+            $qb->join('p.species', 's');
+            $qb->join('s.genus', 'g');
+            
+            $qb->andWhere('g.genus = ?13');
             $qb->setParameter(13, $params['genus']);
         }
 

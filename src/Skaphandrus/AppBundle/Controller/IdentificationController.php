@@ -10,10 +10,42 @@ class IdentificationController extends Controller {
 
     public function modulesAction() {
 
+
+
+        /**
+         * 
+         * REGRAS DOS MODULOS
+         * 
+         * LABEL (NOT AUTHENTICATED)
+         * 1) (FREE) = FREE
+         * 2) (CREATED_AT < 1 MES) = FREE X MORE DAYS
+         * 3) OTHER = X POINTS
+         * 
+         * BOTAO (NOT AUTHENTICATED) =====
+         * 1) (FREE) = EXPLORE
+         * 2) (CREATED_AT < 1 MES) = LOGIN
+         * 3) (OTHER) = LOGIN
+         * 
+         * LABEL (AUTHENTICATED)         
+         * 1) (FREE) = FREE
+         * 2) (CREATED_AT < 1 MES) = FREE X MORE DAYS
+         * 3) UTILIZADOR COMPROU OU TROCOU POR PONTOS = X POINTS
+         *        
+         * BOTAO (AUTHENTICATED) =====
+         * 1) (FREE) = EXPLORE
+         * 2) (CREATED_AT < 1 MES) = EXPLORE
+         * 3) (UTILIZADOR COMPROU OU TROCOU POR PONTOS) = EXPLORE
+         * 4) (OTHER) = APPLY POINTS
+         * 
+         **/
+        $fos_user = $this->get('security.token_storage')->getToken()->getUser();
+        //dump($fos_user);
         
-        $modules = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkIdentificationModule')->findAll();
+        $modules = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkIdentificationModule')->findBy(array('isActive'=>true));
+
+        dump($modules);
         
-        return $this->render('SkaphandrusAppBundle:Identification:modules.html.twig', array('modules'=>$modules));
+        return $this->render('SkaphandrusAppBundle:Identification:modules.html.twig', array('modules' => $modules));
     }
 
     public function criteriasAction($slug) {
@@ -30,33 +62,35 @@ class IdentificationController extends Controller {
     /*
      * Returns a list of Criterias
      */
+
     public function criteriasListJsonAction(Request $request) {
         $species = $request->query->get('species');
-        if (!$species) $species = $request->request->get('species');
+        if (!$species)
+            $species = $request->request->get('species');
         $module_id = $request->query->get('module_id');
-        if (!$module_id) $module_id = $request->request->get('module_id');
+        if (!$module_id)
+            $module_id = $request->request->get('module_id');
 
         // Já existem caracters selecionados
         if ($species) {
             // Critérios
             $criterias_pks = $this->getDoctrine()
-                ->getRepository('SkaphandrusAppBundle:SkIdentificationCriteria')
-                ->getCriteriaIDSFromSpeciesIDS($species, $module_id);
-        }
-        else {
+                    ->getRepository('SkaphandrusAppBundle:SkIdentificationCriteria')
+                    ->getCriteriaIDSFromSpeciesIDS($species, $module_id);
+        } else {
             // Foi selecionado o módulo e ainda nao ha criterios selecionados
             $module_obj = $this->getDoctrine()
-                ->getRepository('SkaphandrusAppBundle:SkIdentificationModule')
-                ->findOneById($module_id);
+                    ->getRepository('SkaphandrusAppBundle:SkIdentificationModule')
+                    ->findOneById($module_id);
 
             $criterias_pks = $this->getDoctrine()
-                ->getRepository('SkaphandrusAppBundle:SkIdentificationCriteria')
-                ->getCriteriaIDSFromModule($module_obj);
+                    ->getRepository('SkaphandrusAppBundle:SkIdentificationCriteria')
+                    ->getCriteriaIDSFromModule($module_obj);
         }
 
         $criteria_objs = $this->getDoctrine()
-            ->getRepository('SkaphandrusAppBundle:SkIdentificationCriteria')
-            ->findById($criterias_pks, array('orderBy' => 'asc'));
+                ->getRepository('SkaphandrusAppBundle:SkIdentificationCriteria')
+                ->findById($criterias_pks, array('orderBy' => 'asc'));
 
         $output = array();
         foreach ($criteria_objs as $key => $criteria_obj) {
@@ -89,16 +123,19 @@ class IdentificationController extends Controller {
     /*
      * Returns a list of Species
      */
+
     public function speciesListJsonAction(Request $request) {
 
         $character_ids = $request->query->get('characters');
-        if (!$character_ids) $character_ids = $request->request->get('characters');
+        if (!$character_ids)
+            $character_ids = $request->request->get('characters');
         $module_id = $request->query->get('module_id');
-        if (!$module_id) $module_id = $request->request->get('module_id');
+        if (!$module_id)
+            $module_id = $request->request->get('module_id');
 
         $module_obj = $this->getDoctrine()
-            ->getRepository("SkaphandrusAppBundle:SkIdentificationModule")
-            ->findOneById($module_id);
+                ->getRepository("SkaphandrusAppBundle:SkIdentificationModule")
+                ->findOneById($module_id);
 
         //especies com base nos characteres já selecionados
         if ($character_ids) {
@@ -116,14 +153,14 @@ class IdentificationController extends Controller {
             }
 
             $pks = $this->getDoctrine()
-                ->getRepository("SkaphandrusAppBundle:SkSpecies")
-                ->getSpeciesIDSFromCharacterIDS($characters, $module_id);
+                    ->getRepository("SkaphandrusAppBundle:SkSpecies")
+                    ->getSpeciesIDSFromCharacterIDS($characters, $module_id);
 
-        //especies com base no modulo selecionado
+            //especies com base no modulo selecionado
         } else {
             $pks = $this->getDoctrine()
-                ->getRepository("SkaphandrusAppBundle:SkSpecies")
-                ->getSpeciesIDSFromModule($module_obj);
+                    ->getRepository("SkaphandrusAppBundle:SkSpecies")
+                    ->getSpeciesIDSFromModule($module_obj);
         }
 
         $species_list = array();
@@ -131,8 +168,8 @@ class IdentificationController extends Controller {
         //modulo
         if ($module_id):
             $module_obj = $this->getDoctrine()
-                ->getRepository("SkaphandrusAppBundle:SkIdentificationModule")
-                ->findOneById($module_id);
+                    ->getRepository("SkaphandrusAppBundle:SkIdentificationModule")
+                    ->findOneById($module_id);
             $image_url = 'characters/' . $module_obj->getImage();
         else:
             $image_url = 'http://skaphandrus.com/images/stuff/50-50/no-image-species.png';
@@ -140,8 +177,8 @@ class IdentificationController extends Controller {
 
         foreach ($pks as $pk) {
             $species_obj = $this->getDoctrine()
-                ->getRepository("SkaphandrusAppBundle:SkSpecies")
-                ->findOneById($pk);
+                    ->getRepository("SkaphandrusAppBundle:SkSpecies")
+                    ->findOneById($pk);
 
             $especie = array();
             $especie['id'] = $species_obj->getId();
@@ -176,13 +213,14 @@ class IdentificationController extends Controller {
     /*
      * Returns list of Modules organized by Master.
      */
+
     public function modulesListJsonAction() {
         $results = array();
 
         // Get all masters
         $masters = $this->getDoctrine()
-            ->getRepository("SkaphandrusAppBundle:SkIdentificationMaster")
-            ->findBy(array('isActive' => TRUE));
+                ->getRepository("SkaphandrusAppBundle:SkIdentificationMaster")
+                ->findBy(array('isActive' => TRUE));
 
         // Iterate over all masters
         foreach ($masters as $master_object) {
@@ -208,7 +246,7 @@ class IdentificationController extends Controller {
                     $module['is_enabled'] = $module_object->getIsEnabled();
 
                     //100px 100px
-                    $module['image_url'] = 'http://skaphandrus.com/thumbnails/default/characters/'.$module_object->getImage().'.jpg';
+                    $module['image_url'] = 'http://skaphandrus.com/thumbnails/default/characters/' . $module_object->getImage() . '.jpg';
 
                     $modules[] = $module;
                 }
@@ -224,30 +262,33 @@ class IdentificationController extends Controller {
     /*
      * Returns species information.
      */
+
     public function speciesInfoJsonAction(Request $request) {
         $species_id = $request->query->get('species_id');
-        if (!$species_id) $species_id = $request->request->get('species_id');
+        if (!$species_id)
+            $species_id = $request->request->get('species_id');
         $module_id = $request->query->get('module_id');
-        if (!$module_id) $module_id = $request->request->get('module_id');
+        if (!$module_id)
+            $module_id = $request->request->get('module_id');
         $species = array();
 
         $species_obj = $this->getDoctrine()
-            ->getRepository("SkaphandrusAppBundle:SkSpecies")
-            ->findOneById($species_id);
+                ->getRepository("SkaphandrusAppBundle:SkSpecies")
+                ->findOneById($species_id);
 
         //return new JsonResponse($species_obj);
 
         if ($species_obj) {
             $species['id'] = $species_obj->getId();
             $species['name'] = $species_obj->getName();
-     
+
             $locales = array();
             $permitted_locales = array('pt', 'en', 'fr', 'es', 'de', 'it', 'ru', 'zh');
             $vernaculars = array();
             foreach ($species_obj->getSpeciesVernaculars() as $vernacular_obj) {
-                if (!in_array($vernacular_obj->getLocale(), $locales) && in_array($vernacular_obj->getLocale(), $permitted_locales)){
+                if (!in_array($vernacular_obj->getLocale(), $locales) && in_array($vernacular_obj->getLocale(), $permitted_locales)) {
                     $locales[] = $vernacular_obj->getLocale();
-                    
+
                     $vernaculars[] = array(
                         'culture' => $vernacular_obj->getLocale(),
                         'name' => $vernacular_obj->getVernacular()->getName(),
@@ -286,17 +327,13 @@ class IdentificationController extends Controller {
 
             //ILUSTRACOES CIENTIFICAS
             // foreach ($skEspecie->getskEspecieIlustracaos() as $key => $skEspecieIlustracao) {
-
             //     $fotografia = array();
             //     $fotografia['id'] = $skEspecieIlustracao->getId();
-
             //     $image_src = url_for2('sf_image_file', array('format' => 'default', 'filepath' => 'ilustrations/' . $skEspecieIlustracao->getImagem()), true);
             //     $fotografia['image_src'] = $image_src;
             //     $fotografia['is_illustration'] = "true";
-
             //     $fotografias[] = $fotografia;
             // }
-
             //REFERENCIAS GOOGLE
             foreach ($species_obj->getImageRefs() as $imageRef_obj) {
                 if ($imageRef_obj->getIsActive()) {
@@ -312,15 +349,16 @@ class IdentificationController extends Controller {
             //CRITERIOS/CARACTERES
             //$species['criterias'] = $this->getCharactersIDSFromSpecies($species_obj->getId(), /*$module_id*/ 2, $this->container, $this->get('request')->getLocale());
             $species['criterias'] = $this->getDoctrine()
-                ->getRepository("SkaphandrusAppBundle:SkIdentificationCharacter")
-                ->getCharactersIDSFromSpecies($species_obj->getId(), $module_id, $this->get('request')->getLocale());
+                    ->getRepository("SkaphandrusAppBundle:SkIdentificationCharacter")
+                    ->getCharactersIDSFromSpecies($species_obj->getId(), $module_id, $this->get('request')->getLocale());
         }
         return new JsonResponse($species);
     }
 
     public function taxonListJsonAction(Request $request) {
         $module_id = $request->query->get('module_id');
-        if (!$module_id) $module_id = $request->request->get('module_id');
+        if (!$module_id)
+            $module_id = $request->request->get('module_id');
         $module_obj = $this->getDoctrine()
                 ->getRepository("SkaphandrusAppBundle:SkIdentificationModule")
                 ->findOneById($module_id);

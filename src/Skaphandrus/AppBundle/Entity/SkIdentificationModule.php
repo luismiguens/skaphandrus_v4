@@ -68,22 +68,17 @@ class SkIdentificationModule {
      */
     private $species;
     private $file;
-    
     private $acquisitions;
-    
     private $points;
-
     private $users;
-    
-    
+
     /**
      * Constructor
      */
     public function __construct() {
         $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
         $this->acquisitions = new \Doctrine\Common\Collections\ArrayCollection();
-         $this->createdAt = new \DateTime();
-        
+        $this->createdAt = new \DateTime();
     }
 
     public function getSpecies() {
@@ -120,10 +115,6 @@ class SkIdentificationModule {
     public function getAppstoreId() {
         return $this->appstoreId;
     }
-    
-    
-
-    
 
     /**
      * Set googleplayId
@@ -221,7 +212,6 @@ class SkIdentificationModule {
         return $this->isFree;
     }
 
-    
     /**
      * Set isFree
      *
@@ -241,37 +231,32 @@ class SkIdentificationModule {
      * @return boolean
      */
     public function getPoints() {
-        
-               
-        if($this->getIsFree()){
+
+
+        if ($this->getIsFree()) {
             $this->points = 0;
-        }else{
+        } else {
             $this->points = count($this->getSpecies());
         }
-        
+
         return $this->points;
     }
 
-    
-        /**
+    /**
      * Get isFree
      *
      * @return boolean
      */
     public function getPointsName() {
-        
-               
-        if($this->getPoints()==0){
+
+
+        if ($this->getPoints() == 0) {
             return "is_free";
-        }else{
+        } else {
             return $this->getPoints();
         }
-        
-        
     }
-    
-    
-    
+
     /**
      * Set image
      *
@@ -456,10 +441,7 @@ class SkIdentificationModule {
         $this->file = null;
     }
 
-    
-    
-    
-        /**
+    /**
      * Add acquisition
      *
      * @param \Skaphandrus\AppBundle\Entity\SkIdentificationAcquisition $acquisition
@@ -469,14 +451,13 @@ class SkIdentificationModule {
     public function addAcquisition(\Skaphandrus\AppBundle\Entity\SkIdentificationAcquisition $acquisition) {
         $this->acquisitions[] = $acquisition;
     }
-    
-      
-     /* * Remove acquisition
+
+    /*     * Remove acquisition
      *
      * @param \Skaphandrus\AppBundle\Entity\SkIdentificationAcquisition $acquisition
      */
-    public function removeAcquisition(\Skaphandrus\AppBundle\Entity\SkIdentificationAcquisition $acquisition)
-    {
+
+    public function removeAcquisition(\Skaphandrus\AppBundle\Entity\SkIdentificationAcquisition $acquisition) {
         $this->acquisitions->removeElement($acquisition);
     }
 
@@ -485,13 +466,10 @@ class SkIdentificationModule {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getAcquisitions()
-    {
+    public function getAcquisitions() {
         return $this->acquisitions;
     }
-    
-    
-    
+
     /**
      * Add user
      *
@@ -499,21 +477,18 @@ class SkIdentificationModule {
      *
      * @return SkIdentificationModule
      */
-    public function addUser(\Skaphandrus\AppBundle\Entity\FosUser $user)
-    {
+    public function addUser(\Skaphandrus\AppBundle\Entity\FosUser $user) {
         $this->users[] = $user;
 
         return $this;
     }
 
-    
-    
-      /* * Remove user
+    /*     * Remove user
      *
      * @param \Skaphandrus\AppBundle\Entity\FosUser $user
      */
-    public function removeUser(\Skaphandrus\AppBundle\Entity\FosUser $user)
-    {
+
+    public function removeUser(\Skaphandrus\AppBundle\Entity\FosUser $user) {
         $this->users->removeElement($user);
     }
 
@@ -522,9 +497,8 @@ class SkIdentificationModule {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getUsers()
-    {
+    public function getUsers() {
         return $this->users;
     }
-    
+
 }
