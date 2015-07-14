@@ -228,7 +228,7 @@ class UtilsExtension extends \Twig_Extension {
                 $species = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkSpecies')->findOneById($notify->getSpeciesId());
                 $photo = $notify->getPhoto();
                 return $this->translator->trans(
-                                '%1% validou especie %2% na fotografia %3%.', array('%1%' => $this->link_to_user($notify->getUserFrom()),
+                                '%1% associou especie %2% na fotografia %3%.', array('%1%' => $this->link_to_user($notify->getUserFrom()),
                             '%2%' => $this->link_to_species($species),
                             '%3%' => $this->link_to_photo($photo)));
 
