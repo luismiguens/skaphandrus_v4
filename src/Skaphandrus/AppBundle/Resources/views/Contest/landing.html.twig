@@ -51,9 +51,9 @@
                                 <small>{{ "page.contests.label.created"|trans }} {{ contest.createdAt|date('d-m-Y') }}</small>
                             </td>
                             <td class="project-status">
-                                <span class="label label-{{ button_class }}">{{ "page.contests.label.status_" ~ contest_status|trans }}</span><br />
-                                <span>{{ "page.contests.label.starts_at" }}: {{ contest.beginAt|date('Y-m-d') }}</span><br />
-                                <span>{{ "page.contests.label.ends_at" }}: {{ contest.endAt|date('Y-m-d') }}</span><br />
+                                <span class="label label-{{ button_class }}">{{ ("page.contests.label.status_" ~ contest_status)|trans }}</span><br />
+                                <span>{{ "page.contests.label.starts_at"|trans }}: {{ contest.beginAt|date('Y-m-d') }}</span><br />
+                                <span>{{ "page.contests.label.ends_at"|trans }}: {{ contest.endAt|date('Y-m-d') }}</span><br />
                             </td>
                             <td class="project-photos">
                                 {% set num_photos = 0 %}
