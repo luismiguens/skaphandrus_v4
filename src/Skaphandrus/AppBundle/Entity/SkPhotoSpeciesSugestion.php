@@ -144,7 +144,7 @@ class SkPhotoSpeciesSugestion {
         //enviar notificação para quem já sugeriu 
         //(x sugeriu especie y na fotografia z) message_aba
         $sugestions = $entityManager->getRepository('SkaphandrusAppBundle:SkPhotoSpeciesSugestion')->FindBy(
-                array('photo_id' => $entity->getPhotoId()));
+                array('photo_id' => $entity->getPhoto()->getId()));
 
         foreach ($sugestions as $photoSpeciesSugestion) {
             $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromPhotoSpeciesSugestion(
@@ -155,7 +155,7 @@ class SkPhotoSpeciesSugestion {
         //enviar notificação para quem já validou	
         //(x sugeriu especie y na fotografia z) message_abb
         $validations = $entityManager->getRepository('SkaphandrusAppBundle:SkPhotoSpeciesValidation')->FindBy(
-                array('photo_id' => $entity->getPhotoId()));
+                array('photo_id' => $entity->getPhoto()->getId()));
 
         foreach ($validations as $photoSpeciesValidation) {
             $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromPhotoSpeciesSugestion(
