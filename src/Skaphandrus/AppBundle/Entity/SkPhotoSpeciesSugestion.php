@@ -144,30 +144,74 @@ class SkPhotoSpeciesSugestion {
         //enviar notificação para quem já sugeriu 
         //(x sugeriu especie y na fotografia z) message_aba
         $sugestions = $entityManager->getRepository('SkaphandrusAppBundle:SkPhotoSpeciesSugestion')->FindBy(
-                array('photo_id' => $entity->getPhoto()->getId()));
+                array('photo' => $entity->getPhoto()->getId()));
 
-        foreach ($sugestions as $photoSpeciesSugestion) {
-            $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromPhotoSpeciesSugestion(
-                    $entity, $photoSpeciesSugestion->getFosUser(), "message_aba");
+        foreach ($sugestions as $sugestion) {
+//            $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->findBySendSocialNotifyFromPhotoSpeciesSugestion(
+//                    $entity, $photoSpeciesSugestion->getFosUser(), "message_aba");
+
+
+            if ($entity->getFosUser()->getId() <> $sugestion->getFosUser()->getId()) {
+
+                //$entityManager = $this->getEntityManager();
+                $skSocialNotify = new SkSocialNotify();
+                $skSocialNotify->setUserFrom($entity->getFosUser());
+                $skSocialNotify->setSpeciesId($entity->getSpecies()->getId());
+                $skSocialNotify->setPhoto($entity->getPhoto());
+                $skSocialNotify->setMessageName("message_aba");
+                $skSocialNotify->setCreatedAt(new \DateTime());
+                $skSocialNotify->setUserTo($sugestion->getFosUser());
+                $entityManager->persist($skSocialNotify);
+                $entityManager->flush();
+            }
         }
 
 
         //enviar notificação para quem já validou	
         //(x sugeriu especie y na fotografia z) message_abb
         $validations = $entityManager->getRepository('SkaphandrusAppBundle:SkPhotoSpeciesValidation')->FindBy(
-                array('photo_id' => $entity->getPhoto()->getId()));
+                array('photo' => $entity->getPhoto()->getId()));
 
-        foreach ($validations as $photoSpeciesValidation) {
-            $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromPhotoSpeciesSugestion(
-                    $entity, $photoSpeciesValidation->getFosUser(), "message_abb");
+        foreach ($validations as $validation) {
+//            $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->findBySendSocialNotifyFromPhotoSpeciesSugestion(
+//                    $entity, $photoSpeciesValidation->getFosUser(), "message_abb");
+
+
+            if ($entity->getFosUser()->getId() <> $validation->getFosUser()->getId()) {
+
+                //$entityManager = $this->getEntityManager();
+                $skSocialNotify = new SkSocialNotify();
+                $skSocialNotify->setUserFrom($entity->getFosUser());
+                $skSocialNotify->setSpeciesId($entity->getSpecies()->getId());
+                $skSocialNotify->setPhoto($entity->getPhoto());
+                $skSocialNotify->setMessageName("message_abb");
+                $skSocialNotify->setCreatedAt(new \DateTime());
+                $skSocialNotify->setUserTo($validation->getFosUser());
+                $entityManager->persist($skSocialNotify);
+                $entityManager->flush();
+            }
         }
 
 
         //enviar notificação para o dono fotografia 
         //(x sugeriu especie y na tua fotografia z ) message_abc
+//        $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->findBySendSocialNotifyFromPhotoSpeciesSugestion(
+//                $entity, $entity->getPhoto()->getFosUser(), "message_abc");
 
-        $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromPhotoSpeciesSugestion(
-                $entity, $entity->getPhoto()->getFosUser(), "message_abc");
+
+        if ($entity->getFosUser()->getId() <> $entity->getPhoto()->getFosUser()->getId()) {
+
+            //$entityManager = $this->getEntityManager();
+            $skSocialNotify = new SkSocialNotify();
+            $skSocialNotify->setUserFrom($entity->getFosUser());
+            $skSocialNotify->setSpeciesId($entity->getSpecies()->getId());
+            $skSocialNotify->setPhoto($entity->getPhoto());
+            $skSocialNotify->setMessageName("message_abc");
+            $skSocialNotify->setCreatedAt(new \DateTime());
+            $skSocialNotify->setUserTo($entity->getPhoto()->getFosUser());
+            $entityManager->persist($skSocialNotify);
+            $entityManager->flush();
+        }
     }
 
 }

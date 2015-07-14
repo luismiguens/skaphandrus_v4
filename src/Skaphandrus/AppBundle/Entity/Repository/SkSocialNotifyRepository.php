@@ -14,7 +14,7 @@ use Skaphandrus\AppBundle\Entity\FosMessage;
  */
 class SkSocialNotifyRepository extends EntityRepository {
 
-    public function sendSocialNotifyFromPhotoSpeciesSugestion($sugestion, $user_to, $message_name) {
+    public function findBySendSocialNotifyFromPhotoSpeciesSugestion($sugestion, $user_to, $message_name) {
         if ($sugestion->getFosUser()->getId() <> $user_to->getId()) {
 
             $em = $this->getEntityManager();
@@ -29,8 +29,8 @@ class SkSocialNotifyRepository extends EntityRepository {
             $em->flush();
         }
     }
-
-    public function sendSocialNotifyFromPhotoSpeciesValitation($validation, $user_to, $message_name) {
+               
+    public function findBySendSocialNotifyFromPhotoSpeciesValitation($validation, $user_to, $message_name) {
         if ($validation->getFosUser()->getId() <> $user_to->getId()) {
 
             $em = $this->getEntityManager();
@@ -46,7 +46,7 @@ class SkSocialNotifyRepository extends EntityRepository {
         }
     }
 
-    public function sendSocialNotifyFromComment($comment, $user_to, $message_name) {
+    public function findBySendSocialNotifyFromComment($comment, $user_to, $message_name) {
         if ($comment->getFosUser()->getId() <> $user_to->getId()) {
 
             $photo_id = substr($comment->getThread(), strpos($comment->getThread(), "-") + 1);
@@ -66,7 +66,7 @@ class SkSocialNotifyRepository extends EntityRepository {
         }
     }
 
-    public function sendSocialNotifyFromFosMessage($message, $user_to, $message_name) {
+    public function findBySendSocialNotifyFromFosMessage($message, $user_to, $message_name) {
 
         //$message = new FosMessage();
         if ($message->getSender()->getId() <> $user_to->getId()) {
@@ -85,7 +85,7 @@ class SkSocialNotifyRepository extends EntityRepository {
         //dump($skSocialNotify);
     }
 
-    public function sendSocialNotifyFromPhoto($photo, $user_to, $message_name) {
+    public function findBySendSocialNotifyFromPhoto($photo, $user_to, $message_name) {
 
         //$photo = new \Skaphandrus\AppBundle\Entity\SkPhoto();
         if ($photo->getFosUser()->getId() <> $user_to->getId()) {
@@ -105,7 +105,7 @@ class SkSocialNotifyRepository extends EntityRepository {
         //dump($skSocialNotify);
     }
 
-    public function sendSocialNotifyFromPerson($person, $user_to, $message_name) {
+    public function findBySendSocialNotifyFromPerson($person, $user_to, $message_name) {
 
         //$person = new \Skaphandrus\AppBundle\Entity\SkPerson();
         if ($person->getFosUser()->getId() <> $user_to->getId()) {

@@ -52,7 +52,7 @@
     
     <lifecycle-callbacks>
             <lifecycle-callback type="preUpdate" method="doStuffOnPreUpdate"/>
-            
+            <lifecycle-callback type="postPersist" method="doStuffOnPostPersist"/>
         </lifecycle-callbacks>
     
   </entity>

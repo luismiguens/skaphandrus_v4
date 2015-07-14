@@ -79,10 +79,28 @@ class Comment extends BaseComment implements SignedCommentInterface {
                                 GROUP BY p.author_id'
                     )->setParameter('thread_id', 'SkPhoto-' . $photo_id);
 
+
+            //enviar notificação para quem tambem já comentou a fotografia
+            //x tambem comentou fotografia y	message_aab
             $comments = $query->getResult();
             foreach ($comments as $comment) {
-                $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromComment(
-                        $entity, $comment->getFosUser(), "message_aab");
+//                $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromComment(
+//                        $entity, $comment->getFosUser(), "message_aab");
+
+                if ($entity->getFosUser()->getId() <> $comment->getFosUser()->getId()) {
+
+                    $photo_id = substr($entity->getThread(), strpos($entity->getThread(), "-") + 1);
+                    $photo = $entityManager->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($photo_id);
+
+                    $skSocialNotify = new SkSocialNotify();
+                    $skSocialNotify->setUserFrom($entity->getFosUser());
+                    $skSocialNotify->setPhoto($photo);
+                    $skSocialNotify->setMessageName("message_aab");
+                    $skSocialNotify->setCreatedAt(new \DateTime());
+                    $skSocialNotify->setUserTo($comment->getFosUser());
+                    $entityManager->persist($skSocialNotify);
+                    $entityManager->flush();
+                }
             }
 
 
@@ -91,9 +109,24 @@ class Comment extends BaseComment implements SignedCommentInterface {
             $sugestions = $entityManager->getRepository('SkaphandrusAppBundle:SkPhotoSpeciesSugestion')->FindBy(
                     array('photo_id' => $photo_id));
 
-            foreach ($sugestions as $photoSpeciesSugestion) {
-                $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromComment(
-                        $entity, $photoSpeciesSugestion->getFosUser(), "message_aac");
+            foreach ($sugestions as $sugestion) {
+//                $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromComment(
+//                        $entity, $photoSpeciesSugestion->getFosUser(), "message_aac");
+
+                if ($entity->getFosUser()->getId() <> $sugestion->getFosUser()->getId()) {
+
+                    $photo_id = substr($entity->getThread(), strpos($entity->getThread(), "-") + 1);
+                    $photo = $entityManager->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($photo_id);
+
+                    $skSocialNotify = new SkSocialNotify();
+                    $skSocialNotify->setUserFrom($entity->getFosUser());
+                    $skSocialNotify->setPhoto($photo);
+                    $skSocialNotify->setMessageName("message_aac");
+                    $skSocialNotify->setCreatedAt(new \DateTime());
+                    $skSocialNotify->setUserTo($sugestion->getFosUser());
+                    $entityManager->persist($skSocialNotify);
+                    $entityManager->flush();
+                }
             }
 
 
@@ -102,9 +135,25 @@ class Comment extends BaseComment implements SignedCommentInterface {
             $validations = $entityManager->getRepository('SkaphandrusAppBundle:SkPhotoSpeciesValidation')->FindBy(
                     array('photo_id' => $photo_id));
 
-            foreach ($validations as $photoSpeciesValidation) {
-                $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromComment(
-                        $entity, $photoSpeciesValidation->getFosUser(), "message_aad");
+            foreach ($validations as $validation) {
+//                $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromComment(
+//                        $entity, $photoSpeciesValidation->getFosUser(), "message_aad");
+
+
+                if ($entity->getFosUser()->getId() <> $validation->getFosUser()->getId()) {
+
+                    $photo_id = substr($entity->getThread(), strpos($entity->getThread(), "-") + 1);
+                    $photo = $entityManager->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($photo_id);
+
+                    $skSocialNotify = new SkSocialNotify();
+                    $skSocialNotify->setUserFrom($entity->getFosUser());
+                    $skSocialNotify->setPhoto($photo);
+                    $skSocialNotify->setMessageName("message_aad");
+                    $skSocialNotify->setCreatedAt(new \DateTime());
+                    $skSocialNotify->setUserTo($validation->getFosUser());
+                    $entityManager->persist($skSocialNotify);
+                    $entityManager->flush();
+                }
             }
         }
     }

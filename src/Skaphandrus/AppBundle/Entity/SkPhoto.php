@@ -621,9 +621,23 @@ class SkPhoto {
                     )->setParameter('species_id', $entity->getSpecies()->getId());
             $validations = $query->getResult();
 
-            foreach ($validations as $photoSpeciesValidation) {
-                $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromPhoto(
-                        $entity, $photoSpeciesValidation->getFosUser(), "message_ada");
+            foreach ($validations as $validation) {
+//                $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->findBySendSocialNotifyFromPhoto(
+//                        $entity, $photoSpeciesValidation->getFosUser(), "message_ada");
+
+                if ($entity->getFosUser()->getId() <> $validation->getFosUser()->getId()) {
+
+                    //$entityManager = $this->getEntityManager();
+                    $skSocialNotify = new SkSocialNotify();
+                    $skSocialNotify->setUserFrom($entity->getFosUser());
+                    $skSocialNotify->setSpeciesId($entity->getSpecies()->getId());
+                    $skSocialNotify->setPhoto($entity);
+                    $skSocialNotify->setMessageName("message_ada");
+                    $skSocialNotify->setCreatedAt(new \DateTime());
+                    $skSocialNotify->setUserTo($validation->getFosUser());
+                    $entityManager->persist($skSocialNotify);
+                    $entityManager->flush();
+                }
             }
         }
     }

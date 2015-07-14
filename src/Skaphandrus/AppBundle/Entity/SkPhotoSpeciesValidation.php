@@ -5,8 +5,8 @@ namespace Skaphandrus\AppBundle\Entity;
 /**
  * SkPhotoSpeciesValidation
  */
-class SkPhotoSpeciesValidation
-{
+class SkPhotoSpeciesValidation {
+
     /**
      * @var integer
      */
@@ -37,7 +37,6 @@ class SkPhotoSpeciesValidation
      */
     private $photo;
 
-
     /**
      * Constructor
      */
@@ -52,8 +51,7 @@ class SkPhotoSpeciesValidation
      *
      * @return SkPhotoSpeciesValidation
      */
-    public function setRating($rating)
-    {
+    public function setRating($rating) {
         $this->rating = $rating;
 
         return $this;
@@ -64,8 +62,7 @@ class SkPhotoSpeciesValidation
      *
      * @return integer
      */
-    public function getRating()
-    {
+    public function getRating() {
         return $this->rating;
     }
 
@@ -76,8 +73,7 @@ class SkPhotoSpeciesValidation
      *
      * @return SkPhotoSpeciesValidation
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
 
         return $this;
@@ -88,8 +84,7 @@ class SkPhotoSpeciesValidation
      *
      * @return \DateTime
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->createdAt;
     }
 
@@ -98,8 +93,7 @@ class SkPhotoSpeciesValidation
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -110,8 +104,7 @@ class SkPhotoSpeciesValidation
      *
      * @return SkPhotoSpeciesValidation
      */
-    public function setFosUser(\Skaphandrus\AppBundle\Entity\FosUser $fosUser = null)
-    {
+    public function setFosUser(\Skaphandrus\AppBundle\Entity\FosUser $fosUser = null) {
         $this->fosUser = $fosUser;
 
         return $this;
@@ -122,8 +115,7 @@ class SkPhotoSpeciesValidation
      *
      * @return \Skaphandrus\AppBundle\Entity\FosUser
      */
-    public function getFosUser()
-    {
+    public function getFosUser() {
         return $this->fosUser;
     }
 
@@ -134,8 +126,7 @@ class SkPhotoSpeciesValidation
      *
      * @return SkPhotoSpeciesValidation
      */
-    public function setSpecies(\Skaphandrus\AppBundle\Entity\SkSpecies $species = null)
-    {
+    public function setSpecies(\Skaphandrus\AppBundle\Entity\SkSpecies $species = null) {
         $this->species = $species;
 
         return $this;
@@ -146,8 +137,7 @@ class SkPhotoSpeciesValidation
      *
      * @return \Skaphandrus\AppBundle\Entity\SkSpecies
      */
-    public function getSpecies()
-    {
+    public function getSpecies() {
         return $this->species;
     }
 
@@ -158,8 +148,7 @@ class SkPhotoSpeciesValidation
      *
      * @return SkPhotoSpeciesValidation
      */
-    public function setPhoto(\Skaphandrus\AppBundle\Entity\SkPhoto $photo = null)
-    {
+    public function setPhoto(\Skaphandrus\AppBundle\Entity\SkPhoto $photo = null) {
         $this->photo = $photo;
 
         return $this;
@@ -170,14 +159,10 @@ class SkPhotoSpeciesValidation
      *
      * @return \Skaphandrus\AppBundle\Entity\SkPhoto
      */
-    public function getPhoto()
-    {
+    public function getPhoto() {
         return $this->photo;
     }
-    
-    
-    
-    
+
     public function doStuffOnPostPersist(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
         $entity = $args->getEntity();
         $entityManager = $args->getEntityManager();
@@ -185,32 +170,69 @@ class SkPhotoSpeciesValidation
 
         //enviar notificação para quem já sugeriu 
         //(x validou especie y na fotografia z message_caa
-        $sugestions = $entityManager->getRepository('SkaphandrusAppBundle:SkPhotoSpeciesValidation')->FindBy(
-                array('photo_id' => $entity->getPhoto()->getId()));
+        $sugestions = $entityManager->getRepository('SkaphandrusAppBundle:SkPhotoSpeciesSugestion')->FindBy(
+                array('photo' => $entity->getPhoto()->getId()));
 
-        foreach ($sugestions as $photoSpeciesSugestion) {
-            $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromPhotoSpeciesValidation(
-                    $entity, $photoSpeciesSugestion->getFosUser(), "message_caa");
+        foreach ($sugestions as $sugestion) {
+//            $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->findBySendSocialNotifyFromPhotoSpeciesValidation(
+//                    $entity, $photoSpeciesSugestion->getFosUser(), "message_caa");
+
+            if ($entity->getFosUser()->getId() <> $sugestion->getFosUser()->getId()) {
+                //$entityManager = $this->getEntityManager();
+                $skSocialNotify = new SkSocialNotify();
+                $skSocialNotify->setUserFrom($entity->getFosUser());
+                $skSocialNotify->setSpeciesId($entity->getSpecies()->getId());
+                $skSocialNotify->setPhoto($entity->getPhoto());
+                $skSocialNotify->setMessageName("message_caa");
+                $skSocialNotify->setCreatedAt(new \DateTime());
+                $skSocialNotify->setUserTo($sugestion->getFosUser());
+                $entityManager->persist($skSocialNotify);
+                $entityManager->flush();
+            }
         }
 
 
         //enviar notificação para quem já validou	
         //(x validou especie y na fotografia z message_cab
         $validations = $entityManager->getRepository('SkaphandrusAppBundle:SkPhotoSpeciesValidation')->FindBy(
-                array('photo_id' => $entity->getPhoto()->getId()));
+                array('photo' => $entity->getPhoto()->getId()));
 
-        foreach ($validations as $photoSpeciesValidation) {
-            $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromPhotoSpeciesValidation(
-                    $entity, $photoSpeciesValidation->getFosUser(), "message_cab");
+        foreach ($validations as $validation) {
+//            $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->findBySendSocialNotifyFromPhotoSpeciesValidation(
+//                    $entity, $photoSpeciesValidation->getFosUser(), "message_cab");
+
+            if ($entity->getFosUser()->getId() <> $validation->getFosUser()->getId()) {
+                //$entityManager = $this->getEntityManager();
+                $skSocialNotify = new SkSocialNotify();
+                $skSocialNotify->setUserFrom($entity->getFosUser());
+                $skSocialNotify->setSpeciesId($entity->getSpecies()->getId());
+                $skSocialNotify->setPhoto($entity->getPhoto());
+                $skSocialNotify->setMessageName("message_cab");
+                $skSocialNotify->setCreatedAt(new \DateTime());
+                $skSocialNotify->setUserTo($validation->getFosUser());
+                $entityManager->persist($skSocialNotify);
+                $entityManager->flush();
+            }
         }
 
 
         //enviar notificação para o dono fotografia 
         //(x validou especie y na tua fotografia z message_cac
+//        $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->findBySendSocialNotifyFromPhotoSpeciesValidation(
+//                $entity, $entity->getPhoto()->getFosUser(), "message_cac");
 
-        $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromPhotoSpeciesValidation(
-                $entity, $entity->getPhoto()->getFosUser(), "message_cac");
+        if ($entity->getFosUser()->getId() <> $entity->getPhoto()->getFosUser()->getId()) {
+            //$entityManager = $this->getEntityManager();
+            $skSocialNotify = new SkSocialNotify();
+            $skSocialNotify->setUserFrom($entity->getFosUser());
+            $skSocialNotify->setSpeciesId($entity->getSpecies()->getId());
+            $skSocialNotify->setPhoto($entity->getPhoto());
+            $skSocialNotify->setMessageName("message_cac");
+            $skSocialNotify->setCreatedAt(new \DateTime());
+            $skSocialNotify->setUserTo($entity->getPhoto()->getFosUser());
+            $entityManager->persist($skSocialNotify);
+            $entityManager->flush();
+        }
     }
-    
-}
 
+}

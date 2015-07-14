@@ -98,9 +98,22 @@ class FosMessage extends BaseMessage {
         //$fosMessageMetadata = new FosMessageMetadata();
 
 
-        foreach ($messages as $participants) {
-            $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromFosMessage(
-                    $entity, $participants, "message_aca");
+        foreach ($messages as $participant) {
+//            $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromFosMessage(
+//                    $entity, $participants, "message_aca");
+
+            if ($entity->getSender()->getId() <> $participant->getId()) {
+
+                //$entityManager = $this->getEntityManager();
+                $skSocialNotify = new SkSocialNotify();
+                $skSocialNotify->setUserFrom($entity->getSender());
+                $skSocialNotify->setMessage($entity);
+                $skSocialNotify->setMessageName("message_aca");
+                $skSocialNotify->setCreatedAt(new \DateTime());
+                $skSocialNotify->setUserTo($participant);
+                $entityManager->persist($skSocialNotify);
+                $entityManager->flush();
+            }
         }
     }
 

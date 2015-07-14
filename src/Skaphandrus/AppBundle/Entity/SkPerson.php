@@ -250,8 +250,22 @@ class SkPerson {
         //amigo/contacto	
         //(x adicionou-te como amigo.) message_aea
 
-        $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromPerson(
-                $entity, $entity->getSkaphandrusId(), "message_aea");
+//        $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->findBySendSocialNotifyFromPerson(
+//                $entity, $entity->getSkaphandrusId(), "message_aea");
+        
+         if ($entity->getFosUser()->getId() <> $entity->getSkaphandrusId()->getId()) {
+
+            //$entityManager = $this->getEntityManager();
+            $skSocialNotify = new SkSocialNotify();
+            $skSocialNotify->setUserFrom($entity->getFosUser());
+            //$skSocialNotify->setParamFirst($person->getSpecies()->getId());
+            //$skSocialNotify->setParamSecond($photo->getId());
+            $skSocialNotify->setMessageName("message_aea");
+            $skSocialNotify->setCreatedAt(new \DateTime());
+            $skSocialNotify->setUserTo($entity->getSkaphandrusId());
+            $entityManager->persist($skSocialNotify);
+            $entityManager->flush();
+        }
     }
 
 }
