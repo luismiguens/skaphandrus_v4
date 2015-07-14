@@ -133,7 +133,7 @@
                         <h3>{{ "page.photo.h3.photographer"|trans }} </h3>
                         <p>{{ link_to_user(photo.fosuser) }}</p>
 
-                        {% if photo.keyword|length %}
+                        {% if photo.keyword|length > 0 %}
                             <h3>{{ "page.photo.h3.tags"|trans }}</h3>
                             <ul class="tag-list" style="padding: 0;">
                                 {% for keyword in photo.keyword %}
@@ -143,9 +143,9 @@
                             <div class="clearfix"></div>
                         {% endif %}
 
-                        {% if photo.species is not empty %}
+                        {% if photo.species is not empty and photo.species is not null  %}
                             <h3>{{ "page.photo.h3.species"|trans }}</h3>
-                            <p>{{ link_to_species(photo.species) }}</p>
+                            <p>{#{{ link_to_species(photo.species) }}#}</p>
                         {% endif %}
 
                         {% for flashMessage in app.session.flashbag.get('notice') %}
@@ -159,13 +159,15 @@
                             <h3>{{ "page.photo.h3.species_validations"|trans }}</h3>
                             <ul>
                                 {% for sv in photo.speciesValidations %}
+                                    {% if sv.species is not empty %}
                                     <li>{{ link_to_user(sv.fosUser) }} {{ "page.photo.label.validated"|trans }} {{ link_to_species(sv.species) }}</li>
+                                    {% endif %}
                                     {% endfor %}
                             </ul>
                         {% endif %}
 
                         {% if showValidation %}
-                            <a href="#" data-toggle="modal" data-target="#modal-validation" class="btn btn-primary">{{ "page.photo.btn.validation_" ~ validationAction|trans }}</a>
+                            <a href="#" data-toggle="modal" data-target="#modal-validation" class="btn btn-primary">{{ ("page.photo.btn.validation_" ~ validationAction)|trans }}</a>
                             <div class="modal inmodal" id="modal-validation" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog"><div class="modal-content animated bounceInRight">
                                         {% if validationAction == 'new' %}
@@ -187,7 +189,7 @@
                         {% endif %}
 
                         {% if showSugestion %}
-                            <a href="#" data-toggle="modal" data-target="#modal-sugestion" class="btn btn-primary">{{ "page.photo.btn.sugestion_" ~ sugestionAction|trans }}</a>
+                            <a href="#" data-toggle="modal" data-target="#modal-sugestion" class="btn btn-primary">{{ ("page.photo.btn.sugestion_" ~ sugestionAction)|trans }}</a>
                             <div class="modal inmodal" id="modal-sugestion" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog"><div class="modal-content animated bounceInRight">
                                         {% if sugestionAction == 'new' %}
