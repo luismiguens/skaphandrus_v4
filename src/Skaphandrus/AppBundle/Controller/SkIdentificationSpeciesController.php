@@ -198,7 +198,6 @@ class SkIdentificationSpeciesController extends Controller
         foreach ($embedded['imageRefs'] as &$imageRef) {
             $imageRef['species'] = $id;
         }
-        dump($embedded);
 
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);

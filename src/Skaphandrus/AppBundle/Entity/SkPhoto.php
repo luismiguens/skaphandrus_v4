@@ -99,6 +99,7 @@ class SkPhoto {
         $this->speciesValidations = new \Doctrine\Common\Collections\ArrayCollection();
         $this->speciesSugestions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->createdAt = new \DateTime();
+        $this->takenAt = new \DateTime();
     }
 
     /**

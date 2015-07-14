@@ -5,6 +5,7 @@ namespace Skaphandrus\AppBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Skaphandrus\AppBundle\Entity\SkPhoto;
+use Skaphandrus\AppBundle\Entity\SkKeyword;
 use Skaphandrus\AppBundle\Form\SkPhotoType;
 
 
@@ -76,6 +77,22 @@ class SkPhotoController extends Controller {
 
             $entity->upload();
 
+            // Add tags from custom field
+            $tags = explode(',', $request->request->get('tags'));
+            foreach ($tags as $tag) {
+                $keyword = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkKeyword')
+                    ->findLikeKeyword($tag);
+
+                if (!$keyword) {
+                    $keyword = new SkKeyword();
+                    $keyword->setKeyword($tag);
+
+                    $em->persist($keyword);
+                    $em->flush();
+                }
+                $entity->addKeyword($keyword); 
+            }
+
             $em->persist($entity);
             $em->flush();
             
@@ -87,6 +104,7 @@ class SkPhotoController extends Controller {
 
         return $this->render('SkaphandrusAppBundle:SkPhoto:new.html.twig', array(
                     'entity' => $entity,
+                    'keywords' => explode(',', $request->request->get('tags')),
                     'form' => $form->createView(),
         ));
     }
@@ -120,6 +138,7 @@ class SkPhotoController extends Controller {
        
         return $this->render('SkaphandrusAppBundle:SkPhoto:new.html.twig', array(
                     'entity' => $entity,
+                    'keywords' => array(),
                     'form' => $form->createView(),
         ));
     }
@@ -164,8 +183,14 @@ class SkPhotoController extends Controller {
         
         $deleteForm = $this->createDeleteForm($id);
 
+        $keywords = array();
+        foreach ($entity->getKeyword() as $keyword) {
+            $keywords[] = $keyword->getKeyword();
+        }
+
         return $this->render('SkaphandrusAppBundle:SkPhoto:edit.html.twig', array(
                     'entity' => $entity,
+                    'keywords' => $keywords,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
         ));
@@ -211,15 +236,46 @@ class SkPhotoController extends Controller {
             $em->flush();
             
             $entity->upload();
-            
+
+            // Add tags from custom field
+            $entity = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($id);
+            $tags = explode(',', $request->request->get('tags'));
+
+            foreach ($entity->getKeyword() as $keyword) {
+                $entity->removeKeyword($keyword);
+            }
+
+            foreach ($tags as $tag) {
+                $keyword = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkKeyword')
+                    ->findLikeKeyword($tag);
+
+                if (!$keyword) {
+                    $keyword = new SkKeyword();
+                    $keyword->setKeyword($tag);
+
+                    $em->persist($keyword);
+                    $em->flush();
+                }
+                $entity->addKeyword($keyword); 
+            }
+
+            $em->persist($entity);
+            $em->flush();
+
             ##@LM
             $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
 
             return $this->redirect($this->generateUrl('photo_admin_edit', array('id' => $id)));
         }
 
+        $keywords = array();
+        foreach ($entity->getKeyword() as $keyword) {
+            $keywords[] = $keyword->getKeyword();
+        }
+
         return $this->render('SkaphandrusAppBundle:SkPhoto:edit.html.twig', array(
                     'entity' => $entity,
+                    'keywords' => $keywords,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
         ));
