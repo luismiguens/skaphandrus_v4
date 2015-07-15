@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Validator\Constraints\File;
 
 class SkPhotoType extends AbstractType {
 
@@ -15,73 +16,70 @@ class SkPhotoType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('title', 'text', 
-                        array(
-                            'attr' => array('class' => 'form-control'),
-                            'label'=>'form.photo.label.title'
-                            )
+                ->add('title', 'text', array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.photo.label.title'
                         )
-                ->add('file', 'file', 
-                        array(
-                            'label'=>'form.photo.label.file',
-                            'required' => false
-                            )
+                )
+                ->add('file', 'file', array(
+                    'label' => 'form.photo.label.file',
+                    'constraints' => new File(array(
+                        'maxSize' => '10M',
+                        'mimeTypes' => array("image/jpeg")
+                            )),
+                    'required' => false
                         )
-                ->add('description', 'textarea', 
-                        array(
-                            'attr' => array('class' => 'form-control'),
-                            'label'=>'form.photo.label.description', 
-                            'required' => false
-                            )
+                )
+                ->add('description', 'textarea', array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.photo.label.description',
+                    'required' => false
                         )
+                )
                 //->add('views')
                 ->add('takenAt', 'datetime', array(
                     'date_widget' => "single_text",
                     'time_widget' => "single_text",
                 ))
                 //->add('createdAt', 'hidden')
-                ->add('creative', 'entity', 
-                        array(
-                            'class' => 'SkaphandrusAppBundle:SkCreativeCommons', 
-                            'attr' => array('class' => 'form-control'),
-                            'label'=>'form.photo.label.creative'
-                            )
+                ->add('creative', 'entity', array(
+                    'class' => 'SkaphandrusAppBundle:SkCreativeCommons',
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.photo.label.creative'
                         )
-                ->add('model', 'autocomplete', 
-                        array(
-                            'class' => 'SkaphandrusAppBundle:SkPhotoMachineModel',
-                            'attr' => array('class' => ''),
-                            'label'=>'form.photo.label.model', 
-                            'required' => false
-                            )
+                )
+                ->add('model', 'autocomplete', array(
+                    'class' => 'SkaphandrusAppBundle:SkPhotoMachineModel',
+                    'attr' => array('class' => ''),
+                    'label' => 'form.photo.label.model',
+                    'required' => false
                         )
-                ->add('spot', 'autocomplete', 
-                        array(
-                            'class' => 'SkaphandrusAppBundle:SkSpot',
-                            'attr' => array('class' => 'form-control m-b'),
-                            'label'=>'form.photo.label.spot', 
-                            'required' => false
-                            )
+                )
+                ->add('spot', 'autocomplete', array(
+                    'class' => 'SkaphandrusAppBundle:SkSpot',
+                    'attr' => array('class' => 'form-control m-b'),
+                    'label' => 'form.photo.label.spot',
+                    'required' => false
                         )
-                ->add('species', 'autocomplete', 
-                        array(
-                            'class' => 'SkaphandrusAppBundle:SkSpecies',
-                            'attr' => array('class' => 'form-control m-b'),
-                            'label'=>'form.photo.label.species', 
-                            'required' => false
-                            )
+                )
+                ->add('species', 'autocomplete', array(
+                    'class' => 'SkaphandrusAppBundle:SkSpecies',
+                    'attr' => array('class' => 'form-control m-b'),
+                    'label' => 'form.photo.label.species',
+                    'required' => false
                         )
+                )
 //                ->add('fosUser', 'hidden', 
 //                        array(
 //                            'data_class' => 'Skaphandrus\AppBundle\Entity\FosUser',
 //                            'required' => true
 //                            )
 //                        )
-                //->add('keyword')
-                //->add('category')
-                //->add('cancel', 'submit', array('label' => 'form.common.btn.cancel','attr' => array('class' => 'btn btn-primary')))
-                //->add('submit', 'submit', array('label' => 'form.common.btn.save','attr' => array('class' => 'btn btn-primary')))
-                
+        //->add('keyword')
+        //->add('category')
+        //->add('cancel', 'submit', array('label' => 'form.common.btn.cancel','attr' => array('class' => 'btn btn-primary')))
+        //->add('submit', 'submit', array('label' => 'form.common.btn.save','attr' => array('class' => 'btn btn-primary')))
+
 
         ;
     }

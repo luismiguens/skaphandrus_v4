@@ -135,7 +135,7 @@ class UtilsExtension extends \Twig_Extension {
      * @param  sfSocialNotify $notify
      * @return string
      */
-    function notification_message(\Skaphandrus\AppBundle\Entity\SkSocialNotify $notify) {
+    function notification_message(\Skaphandrus\AppBundle\Entity\SkSocialNotify $notify, $locale) {
 
 
 // message_aaa x comentou a tua fotografia y	
@@ -157,6 +157,8 @@ class UtilsExtension extends \Twig_Extension {
 
         $container = $this->container;
 
+
+$this->translator->setLocale($locale);
 
         switch ($notify->getMessageName()) {
 
@@ -235,9 +237,11 @@ class UtilsExtension extends \Twig_Extension {
             // message_aea x adicionou-te como amigo.
             case 'message_aea':
                 $photo = $notify->getPhoto();
-                return $this->translator->trans(
-                                '%1% adicionou-te como amigo.', array('%1%' => $this->link_to_user($notify->getUserFrom())));
+//                return $this->translator->trans(
+//                                'aaaa', array('%1%' => $this->link_to_user($notify->getUserFrom())));
 
+                  return $this->translator->trans('aaaa');
+                
             // message_baa x tambem adicionou fotografia y a categoria z
             case 'message_baa':
                 $photo = $notify->getPhoto();

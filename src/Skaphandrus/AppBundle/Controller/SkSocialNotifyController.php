@@ -5,7 +5,6 @@ namespace Skaphandrus\AppBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-
 /**
  * SkSocialNotify controller.
  *
@@ -23,6 +22,14 @@ class SkSocialNotifyController extends Controller {
 
         $entities = $em->getRepository('SkaphandrusAppBundle:SkSocialNotify')->findByUserTo($fos_user);
 
+        //$notification = new \Skaphandrus\AppBundle\Entity\SkSocialNotify();
+
+        foreach ($entities as $notification) {
+
+            $notification->setIsRead(true);
+            $em->persist($notification);
+        }
+        $em->flush();
         return $this->render('SkaphandrusAppBundle:SkSocialNotify:index.html.twig', array(
                     'entities' => $entities,
         ));

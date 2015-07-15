@@ -641,5 +641,8 @@ class SkPhoto {
             }
         }
     }
+    
+    
+  
 
 }

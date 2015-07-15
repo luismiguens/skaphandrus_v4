@@ -13,10 +13,10 @@ services:
 
     utils.twig_extension:
         class: Skaphandrus\AppBundle\Twig\UtilsExtension
-        public: false
+        #public: false
         arguments: ["@service_container", "@translator.default"]
         tags:
-            - { name: twig.extension }
+            - { name: twig.extension,  alias:  utils.twig_extension  }
 
     twig.extension.Date:
         class: Twig_Extensions_Extension_Date

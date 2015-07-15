@@ -8,6 +8,7 @@ imports:
 
 framework:
     #esi:             ~
+    #translator:      { fallback: [pt] }
     translator:      { fallback: "%locale%" }
     secret:          "%secret%"
     router:
