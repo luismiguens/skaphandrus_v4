@@ -242,12 +242,17 @@
         $(function () {
             $('.grid').isotope({
                 itemSelector: '.grid-item',
-                masonry: {
-                    isFitWidth: false
-                }
+
             });
         });
     </script>
+    
+    
+    $('#posts').imagesLoaded( function(){
+  $('#posts').isotope({
+    itemSelector : '.item'
+  });
+});
 {% endblock %}
 
 
@@ -293,6 +298,8 @@
                         </div>
                     </div>
                 </div>
+                            
+                            
             {% endfor %}
 
         </div>
