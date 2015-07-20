@@ -721,7 +721,7 @@ class DefaultController extends Controller {
 
         $params = $request->query->all();
 
-        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($params, 20);
+        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($params, 21);
         $query = $qb->getQuery();
 
         //var_dump($params);

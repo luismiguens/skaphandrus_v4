@@ -198,7 +198,7 @@ class CommonController extends Controller {
             $activities[] = $activity;
         }
 
-//        dump($activities);
+        dump($activities);
 
         return $this->render('SkaphandrusAppBundle:Common:skActivity.html.twig', array(
                     'activities' => $activities,

@@ -7,7 +7,7 @@
             </a>
             <div class="media-body ">
                 <small class="pull-right">{{activity.createdAt|time_diff}}</small>
-                {{ activity_message(activity)|raw }} <br>
+                {{ activity_message(activity, app.request.locale)|raw }} <br>
                 <small class="text-muted">{{activity.createdAt|date("F jS \\a\\t g:ia")}}</small>
                 {#<div class="photos">
                     <a href="{{url_to_photo(activity.photoId)}}" target="_blank"> 

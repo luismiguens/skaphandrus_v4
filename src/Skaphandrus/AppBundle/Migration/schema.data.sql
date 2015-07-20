@@ -2444,6 +2444,12 @@ CREATE TABLE  `fos_user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `fos_message_thread_metadata`;
+DROP TABLE IF EXISTS `fos_message_message`;
+DROP TABLE IF EXISTS `fos_message_metadata`;
+DROP TABLE IF EXISTS `fos_message_thread`;
+
+
 CREATE TABLE fos_message_thread_metadata (id INT AUTO_INCREMENT NOT NULL, thread_id INT DEFAULT NULL, participant_id INT DEFAULT NULL, is_deleted TINYINT(1) NOT NULL, last_participant_message_date DATETIME DEFAULT NULL, last_message_date DATETIME DEFAULT NULL, INDEX IDX_E88BB4E0E2904019 (thread_id), INDEX IDX_E88BB4E09D1C3019 (participant_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 CREATE TABLE fos_message_message (id INT AUTO_INCREMENT NOT NULL, sender_id INT DEFAULT NULL, thread_id INT DEFAULT NULL, body LONGTEXT NOT NULL, created_at DATETIME NOT NULL, INDEX IDX_BD970745F624B39D (sender_id), INDEX IDX_BD970745E2904019 (thread_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 CREATE TABLE fos_message_metadata (id INT AUTO_INCREMENT NOT NULL, message_id INT DEFAULT NULL, participant_id INT DEFAULT NULL, is_read TINYINT(1) NOT NULL, INDEX IDX_8913C791537A1329 (message_id), INDEX IDX_8913C7919D1C3019 (participant_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
@@ -2456,10 +2462,81 @@ ALTER TABLE fos_message_metadata ADD CONSTRAINT FK_8913C791537A1329 FOREIGN KEY 
 ALTER TABLE fos_message_metadata ADD CONSTRAINT FK_8913C7919D1C3019 FOREIGN KEY (participant_id) REFERENCES fos_user (id);
 ALTER TABLE fos_message_thread ADD CONSTRAINT FK_C0C8574C3174800F FOREIGN KEY (createdBy_id) REFERENCES fos_user (id);
 
+
+DROP TABLE IF EXISTS `Comment`;
+DROP TABLE IF EXISTS `Thread`;
+
 CREATE TABLE Comment (id INT AUTO_INCREMENT NOT NULL, thread_id VARCHAR(255) DEFAULT NULL, author_id INT DEFAULT NULL, body LONGTEXT NOT NULL, ancestors VARCHAR(1024) NOT NULL, depth INT NOT NULL, created_at DATETIME NOT NULL, state INT NOT NULL, INDEX IDX_5BC96BF0E2904019 (thread_id), INDEX IDX_5BC96BF0F675F31B (author_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 CREATE TABLE Thread (id VARCHAR(255) NOT NULL, permalink VARCHAR(255) NOT NULL, is_commentable TINYINT(1) NOT NULL, num_comments INT NOT NULL, last_comment_at DATETIME DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 ALTER TABLE Comment ADD CONSTRAINT FK_5BC96BF0E2904019 FOREIGN KEY (thread_id) REFERENCES Thread (id);
 ALTER TABLE Comment ADD CONSTRAINT FK_5BC96BF0F675F31B FOREIGN KEY (author_id) REFERENCES fos_user (id);
+
+
+
+-- CREATE TABLE  `skaphandrus4`.`acl_classes` (
+--   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+--   `class_type` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+--   PRIMARY KEY (`id`),
+--   UNIQUE KEY `UNIQ_69DD750638A36066` (`class_type`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+-- 
+-- 
+-- CREATE TABLE  `skaphandrus4`.`acl_entries` (
+--   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+--   `class_id` int(10) unsigned NOT NULL,
+--   `object_identity_id` int(10) unsigned DEFAULT NULL,
+--   `security_identity_id` int(10) unsigned NOT NULL,
+--   `field_name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+--   `ace_order` smallint(5) unsigned NOT NULL,
+--   `mask` int(11) NOT NULL,
+--   `granting` tinyint(1) NOT NULL,
+--   `granting_strategy` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+--   `audit_success` tinyint(1) NOT NULL,
+--   `audit_failure` tinyint(1) NOT NULL,
+--   PRIMARY KEY (`id`),
+--   UNIQUE KEY `UNIQ_46C8B806EA000B103D9AB4A64DEF17BCE4289BF4` (`class_id`,`object_identity_id`,`field_name`,`ace_order`),
+--   KEY `IDX_46C8B806EA000B103D9AB4A6DF9183C9` (`class_id`,`object_identity_id`,`security_identity_id`),
+--   KEY `IDX_46C8B806EA000B10` (`class_id`),
+--   KEY `IDX_46C8B8063D9AB4A6` (`object_identity_id`),
+--   KEY `IDX_46C8B806DF9183C9` (`security_identity_id`),
+--   CONSTRAINT `FK_46C8B8063D9AB4A6` FOREIGN KEY (`object_identity_id`) REFERENCES `acl_object_identities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+--   CONSTRAINT `FK_46C8B806DF9183C9` FOREIGN KEY (`security_identity_id`) REFERENCES `acl_security_identities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+--   CONSTRAINT `FK_46C8B806EA000B10` FOREIGN KEY (`class_id`) REFERENCES `acl_classes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+-- 
+-- CREATE TABLE  `skaphandrus4`.`acl_object_identities` (
+--   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+--   `parent_object_identity_id` int(10) unsigned DEFAULT NULL,
+--   `class_id` int(10) unsigned NOT NULL,
+--   `object_identifier` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+--   `entries_inheriting` tinyint(1) NOT NULL,
+--   PRIMARY KEY (`id`),
+--   UNIQUE KEY `UNIQ_9407E5494B12AD6EA000B10` (`object_identifier`,`class_id`),
+--   KEY `IDX_9407E54977FA751A` (`parent_object_identity_id`),
+--   CONSTRAINT `FK_9407E54977FA751A` FOREIGN KEY (`parent_object_identity_id`) REFERENCES `acl_object_identities` (`id`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+-- 
+-- CREATE TABLE  `skaphandrus4`.`acl_object_identity_ancestors` (
+--   `object_identity_id` int(10) unsigned NOT NULL,
+--   `ancestor_id` int(10) unsigned NOT NULL,
+--   PRIMARY KEY (`object_identity_id`,`ancestor_id`),
+--   KEY `IDX_825DE2993D9AB4A6` (`object_identity_id`),
+--   KEY `IDX_825DE299C671CEA1` (`ancestor_id`),
+--   CONSTRAINT `FK_825DE2993D9AB4A6` FOREIGN KEY (`object_identity_id`) REFERENCES `acl_object_identities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+--   CONSTRAINT `FK_825DE299C671CEA1` FOREIGN KEY (`ancestor_id`) REFERENCES `acl_object_identities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+-- 
+-- CREATE TABLE  `skaphandrus4`.`acl_security_identities` (
+--   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+--   `identifier` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+--   `username` tinyint(1) NOT NULL,
+--   PRIMARY KEY (`id`),
+--   UNIQUE KEY `UNIQ_8835EE78772E836AF85E0677` (`identifier`,`username`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+
+
+
+
 
 -- ---------------------------------------------------------------------
 -- sk_social_notify
@@ -2669,40 +2746,40 @@ INSERT INTO skaphandrus4.sk_species_illustration (id, species_id, image) SELECT 
 ### message_name, x as user_from, 0 as species_id, 0 as spot_id, 0 as photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, 0 as created_at
 
 
-CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`skaphandrus4`@`localhost` SQL SECURITY DEFINER VIEW `skaphandrus4`.`sk_activity` AS 
-(select "activity_001" as message_name, fos_user_id as user_from, species_id, 0 as spot_id, id as photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
-    from sk_photo where species_id is not NULL order by created_at desc )
-UNION
-(select "activity_002" as message_name, fos_user_id as user_from, 0 as species_id, spot_id, id as photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
-    from sk_photo where spot_id is not NULL order by created_at desc )
-UNION
-(select "activity_011" as message_name, fos_user_id as user_from, species_id, 0 as spot_id, photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
-    from sk_photo_species_sugestion order by created_at desc )
-UNION
-(select "activity_012" as message_name, fos_user_id as user_from, species_id, 0 as spot_id, photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
-    from sk_photo_species_validation order by created_at desc )
-UNION
-(select "activity_021" as message_name, author_id as user_from, 0 as species_id, 0 as spot_id, SUBSTRING(thread_id,locate("-",thread_id)+1,10) as photo_id, 0 as category_id, id as comment_id, 0 as module_id, 0 as user_id, created_at
-    from Comment where thread_id like "%SkPhoto%" order by created_at desc limit 10)
-UNION
-(select "activity_031" as message_name, fos_user_id as user_from, 0 as species_id, id as spot_id, 0 as photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
-    from sk_spot order by created_at desc )
-UNION
-(select "activity_041" as message_name, fos_user_id as user_from, 0 as species_id, 0 as spot_id, 0 as photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, id as user_id, created_at
-    from sk_person order by created_at desc )
-UNION
-(select "activity_051" as message_name, id as user_from, 0 as species_id, 0 as spot_id, 0 as photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, CURRENT_TIMESTAMP as created_at
-    from fos_user where enabled=1 order by id desc )
-UNION
-(select "activity_061" as message_name, (SELECT fos_user_id from sk_photo where sk_photo.id = sk_photo_contest_category_photo.photo_id) as user_from, 0 as species_id, 0 as spot_id, photo_id, category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
-    from sk_photo_contest_category_photo order by created_at desc )
-UNION
-(select "activity_062" as message_name, fos_user_id as user_from, 0 as species_id, 0 as spot_id, photo_id, category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
-    from sk_photo_contest_vote order by created_at desc )
-UNION
-(select "activity_071" as message_name, fos_user_id as user_from, 0 as species_id, 0 as spot_id, 0 as photo_id, 0 as category_id, 0 as comment_id, module_id, 0 as user_id, acquired_at as created_at 
-    from sk_identification_acquisition order by created_at desc )
-    
+-- CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`skaphandrus4`@`localhost` SQL SECURITY DEFINER VIEW `skaphandrus4`.`sk_activity` AS 
+-- (select "activity_001" as message_name, fos_user_id as user_from, species_id, 0 as spot_id, id as photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
+--     from sk_photo where species_id is not NULL order by created_at desc )
+-- UNION
+-- (select "activity_002" as message_name, fos_user_id as user_from, 0 as species_id, spot_id, id as photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
+--     from sk_photo where spot_id is not NULL order by created_at desc )
+-- UNION
+-- (select "activity_011" as message_name, fos_user_id as user_from, species_id, 0 as spot_id, photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
+--     from sk_photo_species_sugestion order by created_at desc )
+-- UNION
+-- (select "activity_012" as message_name, fos_user_id as user_from, species_id, 0 as spot_id, photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
+--     from sk_photo_species_validation order by created_at desc )
+-- UNION
+-- (select "activity_021" as message_name, author_id as user_from, 0 as species_id, 0 as spot_id, SUBSTRING(thread_id,locate("-",thread_id)+1,10) as photo_id, 0 as category_id, id as comment_id, 0 as module_id, 0 as user_id, created_at
+--     from Comment where thread_id like "%SkPhoto%" order by created_at desc limit 10)
+-- UNION
+-- (select "activity_031" as message_name, fos_user_id as user_from, 0 as species_id, id as spot_id, 0 as photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
+--     from sk_spot order by created_at desc )
+-- UNION
+-- (select "activity_041" as message_name, fos_user_id as user_from, 0 as species_id, 0 as spot_id, 0 as photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, id as user_id, created_at
+--     from sk_person order by created_at desc )
+-- UNION
+-- (select "activity_051" as message_name, id as user_from, 0 as species_id, 0 as spot_id, 0 as photo_id, 0 as category_id, 0 as comment_id, 0 as module_id, 0 as user_id, CURRENT_TIMESTAMP as created_at
+--     from fos_user where enabled=1 order by id desc )
+-- UNION
+-- (select "activity_061" as message_name, (SELECT fos_user_id from sk_photo where sk_photo.id = sk_photo_contest_category_photo.photo_id) as user_from, 0 as species_id, 0 as spot_id, photo_id, category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
+--     from sk_photo_contest_category_photo order by created_at desc )
+-- UNION
+-- (select "activity_062" as message_name, fos_user_id as user_from, 0 as species_id, 0 as spot_id, photo_id, category_id, 0 as comment_id, 0 as module_id, 0 as user_id, created_at
+--     from sk_photo_contest_vote order by created_at desc )
+-- UNION
+-- (select "activity_071" as message_name, fos_user_id as user_from, 0 as species_id, 0 as spot_id, 0 as photo_id, 0 as category_id, 0 as comment_id, module_id, 0 as user_id, acquired_at as created_at 
+--     from sk_identification_acquisition order by created_at desc )
+--     
 
 
 

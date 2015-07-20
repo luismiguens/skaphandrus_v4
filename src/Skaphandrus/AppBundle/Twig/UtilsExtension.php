@@ -292,7 +292,7 @@ $this->translator->setLocale($locale);
      * @param  sfSocialNotify $notify
      * @return string
      */
-    function activity_message(\Skaphandrus\AppBundle\Entity\SkActivity $activity) {
+    function activity_message(\Skaphandrus\AppBundle\Entity\SkActivity $activity, $locale) {
 
 
 ### activity_001 x associou especie y a fotografia z	
@@ -314,6 +314,8 @@ $this->translator->setLocale($locale);
 ### activity_071 x trocou x pontos pelo modulo y
 
         $container = $this->container;
+        $this->translator->setLocale($locale);
+        
 
         switch ($activity->getMessageName()) {
             ### activity_001 x associou especie y a fotografia z

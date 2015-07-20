@@ -282,6 +282,45 @@ identification_taxons:
     path:     /{_locale}/app/taxons.{_format}
     defaults: { _controller: SkaphandrusAppBundle:Identification:taxonListJson, _locale: en }
 
+
+
+
+
+#identification_criterias:
+#  pattern: /{_locale}/app/criterias.{_format}
+#  defaults: { _controller: SkaphandrusAppBundle:Identification:jsonCriteriasList, _format: json}
+#  requirements: { _format: (xml|json), _method: POST }
+#
+#
+#identification_species:
+#  pattern: /{_locale}/app/species.{_format}
+#  defaults: { _controller: SkaphandrusAppBundle:Identification:jsonSpeciesList, _format: json}
+#  requirements: { _format: (xml|json), _method: POST }
+#
+#
+#identification_modules:
+#  pattern: /{_locale}/app/modules.{_format}
+#  defaults: { _controller: SkaphandrusAppBundle:Identification:jsonModulesList, _format: json}
+#  requirements: { _format: (xml|json), _method: POST }
+#
+#
+#identification_species_info:
+#  pattern: /{_locale}/app/speciesinfo.{_format}
+#  defaults: { _controller: SkaphandrusAppBundle:Identification:jsonSpeciesInfo, _format: json}
+#  requirements: { _format: (xml|json), _method: POST }
+#
+#
+#identification_taxons:
+#  pattern: /{_locale}/app/taxons.{_format}
+#  defaults: { _controller: SkaphandrusAppBundle:Identification:jsonTaxonsList, _format: json}
+#  requirements: { _format: (xml|json), _method: POST }
+#
+
+
+
+
+
+
 # identification_tests:
 #     path:     /{_locale}/app/tests
 #     defaults: { _controller: SkaphandrusAppBundle:Identification:tests, _locale: en }
@@ -390,42 +429,11 @@ ajax_get_fosUser:
 ################################################################################
 #### APP OCEAN LIFE ID
 ################################################################################
-#
-#identification_criterias:
-#  url:   /:sf_culture/app/criterias.:sf_format
-#  param: { module: identification, action: jsonCriteriasList}
-#  requirements:
-#    sf_method: [post,put]
-#    sf_format: (?:xml|json)
-#
-#identification_species:
-#  url:   /:sf_culture/app/species.:sf_format
-#  param: { module: identification, action: jsonSpeciesList}
-#  requirements:
-#    sf_method: [post,put]
-#    sf_format: (?:xml|json)
-#
-#identification_modules:
-#  url:   /:sf_culture/app/modules.:sf_format
-#  param: { module: identification, action: jsonModulesList}
-#  requirements:
-#    sf_method: [post,put]
-#    sf_format: (?:xml|json)
-#
-#identification_species_info:
-#  url:   /:sf_culture/app/speciesinfo.:sf_format
-#  param: { module: identification, action: jsonSpeciesInfo}
-#  requirements:
-#    sf_method: [post,put]
-#    sf_format: (?:xml|json)
-#    
-#identification_taxons:
-#  url:   /:sf_culture/app/taxons.:sf_format
-#  param: { module: identification, action: jsonTaxonsList}
-#  requirements:
-#    sf_method: [post,put]
-#    sf_format: (?:xml|json)
-#    
+
+
+
+
+    
 #identification_array:
 #  url:   /:sf_culture/app/array.:sf_format
 #  param: { module: identification, action: jsonArray}
