@@ -62,7 +62,7 @@
                         
                         
                         return $http({
-                        url: '/app_dev.php/{{ app.request.locale }}/app/criterias.json',
+                        url: '/{{ app.request.locale }}/app/criterias.json',
                                 method: "POST",
                                 params: {module_id:{{module.id}}, 'species[]': self.species_ids}
                         })
@@ -90,7 +90,7 @@
 var updateSpecies = function()
 {
  return $http({
-                        url: '/app_dev.php/{{ app.request.locale }}/app/species.json',
+                        url: '/{{ app.request.locale }}/app/species.json',
                                 method: "POST",
                                 params: {module_id:{{module.id}}, 'characters[]': self.characters_ids}
                         })
