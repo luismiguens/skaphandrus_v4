@@ -803,7 +803,7 @@ class DefaultController extends Controller {
     public function searchAction(Request $request) {
         $string = $request->query->get('string');
         $locale = $request->getLocale();
-        $translator = new Translator($locale);
+        //$translator = new Translator($locale);
         
         
         
@@ -827,7 +827,7 @@ class DefaultController extends Controller {
 
         foreach ($familySN as $f) {
             $results[] = array(
-                'title' => $f->getName() .' ('.$translator->trans('page.search.label.family').')',
+                'title' => $f->getName() .' ('.$this->get('translator')->trans('page.search.label.family').')',
                 'url' => $this->generateUrl('taxon', array(
                     'node' => 'family',
                     'slug' => Utils::slugify($f->getName())
@@ -842,7 +842,7 @@ class DefaultController extends Controller {
 
         foreach ($orderSN as $f) {
             $results[] = array(
-                'title' => $f->getName() .' ('.$translator->trans('page.search.label.order').')',
+                'title' => $f->getName() .' ('.$this->get('translator')->trans('page.search.label.order').')',
                 'url' => $this->generateUrl('taxon', array(
                     'node' => 'order',
                     'slug' => Utils::slugify($f->getName())
@@ -858,7 +858,7 @@ class DefaultController extends Controller {
         foreach ($spots as $s) {
             $country_name = Intl::getRegionBundle()->getCountryName($s['country_name']);
             $results[] = array(
-                'title' => $s['title'] .' ('.$translator->trans('page.search.label.spot').')',
+                'title' => $s['title'] .' ('.$this->get('translator')->trans('page.search.label.spot').')',
                 'url' => $this->generateUrl('spot', array(
                     'country' => Utils::slugify($country_name),
                     'location' => Utils::slugify($s['location_name']),
@@ -875,7 +875,7 @@ class DefaultController extends Controller {
         foreach ($locations as $l) {
             $country_name = Intl::getRegionBundle()->getCountryName($l['country_name']);
             $results[] = array(
-                'title' => $l['title'] .' ('.$translator->trans('page.search.label.location').')',
+                'title' => $l['title'] .' ('.$this->get('translator')->trans('page.search.label.location').')',
                 'url' => $this->generateUrl('location', array(
                     'country' => Utils::slugify($country_name),
                     'slug' => Utils::slugify($l['title']),
@@ -890,7 +890,7 @@ class DefaultController extends Controller {
 
         foreach ($photos as $photo) {
             $results[] = array(
-                'title' => $photo['title'] .' ('.$translator->trans('page.search.label.photo').')',
+                'title' => $photo['title'] .' ('.$this->get('translator')->trans('page.search.label.photo').')',
                 'url' => $this->generateUrl('photo', array(
                     'id' => $photo['id'],
                     'slug' => Utils::slugify($photo['title']),
@@ -905,7 +905,7 @@ class DefaultController extends Controller {
         foreach ($users as $u) {
             $fosUser = $u->getFosUser();
             $results[] = array(
-                'title' => $u->getName(),
+                'title' => $u->getName().' ('.$this->get('translator')->trans('page.search.label.user').')',
                 'url' => $this->generateUrl('user', array(
                     'id' => $fosUser->getId(),
                     'username' => $fosUser->getUsername(),
