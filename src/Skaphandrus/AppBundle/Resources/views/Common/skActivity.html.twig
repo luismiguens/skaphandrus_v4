@@ -6,7 +6,7 @@
                 <img alt="image" class="img-circle" src="{{ activity.userFrom.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}" />
             </a>
             <div class="media-body ">
-                <small class="pull-right">{{activity.createdAt|time_diff}}</small>
+                <small class="pull-right text-navy">{{activity.createdAt|time_diff}}</small>
                 {{ activity_message(activity, app.request.locale)|raw }} <br>
                 <small class="text-muted">{{activity.createdAt|date("F jS \\a\\t g:ia")}}</small>
                 {#<div class="photos">
