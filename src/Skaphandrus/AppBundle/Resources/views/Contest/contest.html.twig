@@ -53,7 +53,6 @@
                     <div class="row">
                         <div class="col-lg-5">
                             <dl class="dl-horizontal">
-
                                 {#<dt>{{ "page.contest.dt.created_by"|trans }}:</dt> <dd>Alex Smith</dd>#}
                                 <dt>{{ "page.contest.dt.client"|trans }}:</dt> <dd><a href="#" class="text-navy"> Skaphandrus</a> </dd>
                                 <dt>{{ "page.contest.dt.created"|trans }}:</dt> <dd>  {{ contest.createdAt|date }} </dd>
@@ -77,12 +76,12 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <dl class="dl-horizontal">
-                                <dt>Completed:</dt>
+                                <dt>{{ "page.contest.label.completed"|trans }}:</dt>
                                 <dd>
                                     <div class="progress progress-striped active m-b-sm">
                                         <div style="width: {{ percentage }}%;" class="progress-bar"></div>
                                     </div>
-                                    <small>Contest completed in <strong>{{ percentage }}%</strong>.</small>
+                                    <small>{{ "page.contest.label.contest_completed_in"|trans }} <strong>{{ percentage }}%</strong>.</small>
                                 </dd>
                             </dl>
                         </div>
