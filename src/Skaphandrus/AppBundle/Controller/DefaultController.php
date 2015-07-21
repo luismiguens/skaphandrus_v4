@@ -802,7 +802,7 @@ class DefaultController extends Controller {
     
     public function searchAction(Request $request) {
         $string = $request->query->get('string');
-        //$locale = $request->getLocale();
+        $locale = $request->getLocale();
         //$translator = new Translator($locale);
         
         
