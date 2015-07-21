@@ -16,11 +16,8 @@ namespace Skaphandrus\AppBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\Common\Collections\ArrayCollection;
-
 use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
 use FOS\MessageBundle\Model\ParticipantInterface;
-
-
 
 class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInterface {
 
@@ -58,32 +55,27 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
 
     public function __construct() {
         parent::__construct();
-        
+
         $this->acquisitions = new ArrayCollection();
         $this->modules = new ArrayCollection();
-        
-    // your own logic
+
+        // your own logic
     }
 
-    
-    
     // Important 
-    public function getModules()
-    {
+    public function getModules() {
         $modules = new ArrayCollection();
-        
-        foreach($this->acquisitions as $acquisition)
-        {
+
+        foreach ($this->acquisitions as $acquisition) {
             $modules[] = $acquisition->getModule();
         }
 
         return $modules;
     }
+
     // Important
-    public function setModules($modules)
-    {
-        foreach($modules as $module)
-        {
+    public function setModules($modules) {
+        foreach ($modules as $module) {
             $acquisition = new SkIdentificationAcquisition();
 
             $acquisition->setFosUser($this);
@@ -91,14 +83,8 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
 
             $this->addAcquisition($acquisition);
         }
-
     }
-    
-    
-    
-    
-    
-    
+
     public function setSalt($salt) {
         $this->salt = $salt;
     }
@@ -322,19 +308,31 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
     }
 
     public function getName() {
-        return $this->getPersonal()->__toString();
+
+        if ($this->getPersonal()):
+            return $this->getPersonal()->__toString();
+        endif;
+
+        return null;
     }
 
     public function __toString() {
-        return $this->getName();
+
+        
+        
+        
+        
+        if ($this->getName()){
+            return $this->getName();
+        }else{
+            return $this->getUsername();
+        }
     }
 
-    
     public function getFosUser() {
         return $this;
     }
 
-    
     public function doStuffOnPostLoad(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
         $entity = $args->getEntity();
         $entityManager = $args->getEntityManager();
@@ -350,11 +348,12 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
             $personal = new SkPersonal();
             $personal->setFosUser($entity);
             $entity->setPersonal($personal);
-            
+
             $entityManager->persist($personal);
         }
 
         $entityManager->persist($entity);
         $entityManager->flush();
     }
+
 }

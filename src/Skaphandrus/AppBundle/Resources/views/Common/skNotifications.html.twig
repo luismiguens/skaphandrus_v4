@@ -23,7 +23,7 @@
                 <div class="media-body ">
                     <small class="pull-right text-navy">{{notification.createdAt|time_diff}}</small>
                     {#<strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>#}
-                    {{ notification_message(notification,app.request.locale)|raw }} <br>
+                    <small>{{ notification_message(notification,app.request.locale)|raw }}</small> <br>
                     <small class="text-muted">{{notification.createdAt|date("F jS \\a\\t g:ia")}}</small>
                 </div>
             </div>

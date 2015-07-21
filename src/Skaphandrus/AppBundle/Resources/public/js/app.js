@@ -67,7 +67,7 @@ $(document).ready(function () {
     
     // Formulário FOSMessage new message
     if ($('#message_recipient').length) {
-        $('#message_recipient').autocompleter({url_list: '/en/ajax_search_fosUser/', url_get: '/en/ajax_get_fosUser/'});
+        $('#message_recipient').autocompleter({url_list: '/app_dev.php/en/ajax_search_fosUser/', url_get: '/en/ajax_get_fosUser/'});
     }
 
     // Formulário SkSpot
