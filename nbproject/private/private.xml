@@ -12,12 +12,19 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Form/FosUserType.php</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/app/config/routing.yml</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/config/validation.xml</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Validator/Constraints/ContainsSufficientPoints.php</file>
             <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Controller/DefaultController.php</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Common/skNotifications.html.twig</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/photos.html.twig</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Twig/UtilsExtension.php</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/photo.html.twig</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Common/skActivity.html.twig</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/FOSUserEmail/resetting.html.twig</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/index.html.twig</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/FOSUserEmail/_base_template.html.twig</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/app/config/config.yml</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Entity/FosUser.php</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Validator/Constraints/ContainsSufficientPointsValidator.php</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Contest/landing.html.twig</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Identification/criterias.html.twig</file>
         </group>
     </open-files>
 </project-private>
