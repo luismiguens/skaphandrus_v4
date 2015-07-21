@@ -27,7 +27,7 @@
                     .jstree({
                         "core": {
                             "data": {
-                                "url": "/app_dev.php/{{ app.request.locale }}/species/source",
+                                "url": "/{{ app.request.locale }}/species/source",
                                 "data": function (n) {
                                     return {id: n.id === '#' ? "li.{{ next_taxon }}.{{ taxon.id }}" : n.id};
                                 }
