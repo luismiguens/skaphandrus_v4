@@ -99,27 +99,27 @@
                                     {% if is_granted("IS_AUTHENTICATED_FULLY") %}
                                         {% if module.isFree %}
                                             <a href="{{url_to_module(module)}}" class="btn btn-xs btn-outline btn-primary">
-                                                {{'page.modules.label.explore'}} <i class="fa fa-long-arrow-right"></i> 
+                                                {{'page.modules.label.explore'|trans}} <i class="fa fa-long-arrow-right"></i> 
                                             </a>
                                         {% elseif module.createdAt|date("U") > "-30 days"|date("U") %}
                                             {% set difference = date(module.createdAt).diff(date("-30 days")) %}
                                             {% set leftDays = difference.days %}
                                             <a href="{{url_to_module(module)}}" class="btn btn-xs btn-outline btn-primary">
-                                                {{'page.modules.label.explore'}} <i class="fa fa-long-arrow-right"></i> 
+                                                {{'page.modules.label.explore'|trans}} <i class="fa fa-long-arrow-right"></i> 
                                             </a>
                                         {% elseif module in app.user.modules %}
                                             <a href="{{url_to_module(module)}}" class="btn btn-xs btn-outline btn-primary">
-                                                {{'page.modules.label.explore'}} <i class="fa fa-long-arrow-right"></i> 
+                                                {{'page.modules.label.explore'|trans}} <i class="fa fa-long-arrow-right"></i> 
                                             </a>
                                         {% else %}
                                             <a href="{{path('module_admin_edit')}}" class="btn btn-xs btn-outline btn-success">
-                                                {{'page.modules.label.apply_points'}} <i class="fa fa-long-arrow-right"></i> 
+                                                {{'page.modules.label.apply_points'|trans}} <i class="fa fa-long-arrow-right"></i> 
                                             </a>
                                         {% endif %}
                                     {% else %}
                                         {% if module.isFree %}
                                             <a href="{{url_to_module(module)}}" class="btn btn-xs btn-outline btn-primary">
-                                                {{'page.modules.label.explore'}} <i class="fa fa-long-arrow-right"></i> 
+                                                {{'page.modules.label.explore'|trans}} <i class="fa fa-long-arrow-right"></i> 
                                             </a>
                                         {% elseif module.createdAt|date("U") > "-30 days"|date("U") %}
                                             {% set difference = date(module.createdAt).diff(date("-30 days")) %}
