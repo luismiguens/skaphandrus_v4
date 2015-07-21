@@ -22,7 +22,6 @@ class NewThreadMessageFormType extends AbstractType
                 'attr' => array('class' => 'form-control m-b'),
                 'label'=>'form.new_message.label.user', 
                 'required' => false,
-                'attr' => array('class' => 'form-control'),
             ))
             ->add('subject', 'text')
             ->add('body', 'textarea');
