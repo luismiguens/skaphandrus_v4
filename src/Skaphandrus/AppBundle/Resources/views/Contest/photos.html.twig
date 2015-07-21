@@ -144,8 +144,8 @@
                 {% set percentage = 100 %}
                 {% set contest_status = 'completed' %}
             {% endif %}
-            <p><strong>{{ "page.contest.dt.status"|trans }}:</strong> <span class="label label-primary">{{ "page.contest.label.status_" ~ contest_status|trans }}</span></p>
-            <p><strong>{{ "page.contest.label.created_by"|trans }}:</strong> Alex Smith</p>
+            <p><strong>{{ "page.contest.dt.status"|trans }}:</strong> <span class="label label-primary">{{ ("page.contest.label.status_" ~ contest_status)|trans }}</span></p>
+            {#<p><strong>{{ "page.contest.label.created_by"|trans }}:</strong> Alex Smith</p>#}
             <p><strong>{{ "page.contest.label.client"|trans }}:</strong> <a href="#" class="text-navy"> Skaphandrus</a></p>
             <p><strong>{{ "page.contest.label.created"|trans }}:</strong> {{ category.contest.createdAt|date }}</p>
             <p><strong>{{ "page.contest.label.starts_at"|trans }}:</strong> {{ category.contest.beginAt|date }}</p>
