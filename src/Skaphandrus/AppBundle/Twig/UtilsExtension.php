@@ -237,10 +237,10 @@ $this->translator->setLocale($locale);
             // message_aea x adicionou-te como amigo.
             case 'message_aea':
                 $photo = $notify->getPhoto();
-//                return $this->translator->trans(
-//                                'aaaa', array('%1%' => $this->link_to_user($notify->getUserFrom())));
+                return $this->translator->trans(
+                                '%1% adicionou-te como amigo.', array('%1%' => $this->link_to_user($notify->getUserFrom())));
 
-                  return $this->translator->trans('aaaa');
+                  
                 
             // message_baa x tambem adicionou fotografia y a categoria z
             case 'message_baa':
@@ -295,8 +295,8 @@ $this->translator->setLocale($locale);
     function activity_message(\Skaphandrus\AppBundle\Entity\SkActivity $activity, $locale) {
 
 
-### activity_001 x associou especie y a fotografia z	
-### activity_002 x associou spot y a fotografia z	
+### activity_001 x associou especie y na fotografia z	
+### activity_002 x associou spot y na fotografia z	
 ### ???????????? x adicionou fotografia y	
 ### activity_011 x sugeriu especie y na fotografia z	
 ### activity_012 x validou especie y na fotografia z	
@@ -318,14 +318,14 @@ $this->translator->setLocale($locale);
         
 
         switch ($activity->getMessageName()) {
-            ### activity_001 x associou especie y a fotografia z
+            ### activity_001 x associou especie y na fotografia z
             case 'activity_001':
                 $user_from = $activity->getUserFrom();
                 $species = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkSpecies')->findOneById($activity->getSpeciesId());
                 $photo = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($activity->getPhotoId());
 
                 return $this->translator->trans(
-                                '%1% associou especie %2% a fotografia %3%.', array('%1%' => $this->link_to_user($user_from),
+                                '%1% associou especie %2% na fotografia %3%.', array('%1%' => $this->link_to_user($user_from),
                             '%2%' => $this->link_to_species($species),
                             '%3%' => $this->link_to_photo($photo)));
 
@@ -337,7 +337,7 @@ $this->translator->setLocale($locale);
                 $photo = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($activity->getPhotoId());
 
                 return $this->translator->trans(
-                                '%1% associou spot %2% a fotografia %3%.', array('%1%' => $this->link_to_user($activity->getUserFrom()),
+                                '%1% associou spot %2% na fotografia %3%.', array('%1%' => $this->link_to_user($activity->getUserFrom()),
                             '%2%' => $this->link_to_spot($spot),
                             '%3%' => $this->link_to_photo($photo)));
 
