@@ -38,6 +38,7 @@ class SkPhotoType extends AbstractType {
                 )
                 //->add('views')
                 ->add('takenAt', 'datetime', array(
+                    'label' => 'form.photo.label.taken_at',
                     'date_widget' => "single_text",
                     'time_widget' => "single_text",
                 ))
