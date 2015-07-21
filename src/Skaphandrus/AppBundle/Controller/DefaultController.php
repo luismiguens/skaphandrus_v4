@@ -802,8 +802,11 @@ class DefaultController extends Controller {
     
     public function searchAction(Request $request) {
         $string = $request->query->get('string');
-        $locale = $request->getLocale();
-        $translator = new Translator($locale);
+        //$locale = $request->getLocale();
+        //$translator = new Translator($locale);
+        
+        
+        
         $results = array();
 
         // Search Species
@@ -812,7 +815,7 @@ class DefaultController extends Controller {
 
         foreach ($speciesSN as $s) {
             $results[] = array(
-                'title' => $s['title'] .' ('.$translator->trans('page.search.label.species').')',
+                'title' => $s['title'] .' ('.$this->get('translator')->trans('page.search.label.species').')',
                 'url' => $this->generateUrl('species', array('slug' => Utils::slugify($s['title'])), true),
                 'desc' => $s['description'],
             );

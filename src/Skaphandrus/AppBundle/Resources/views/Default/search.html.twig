@@ -40,7 +40,7 @@
                     {% for result in results %}
                         <div class="hr-line-dashed"></div>
                         <div class="search-result">
-                            <h3><a href="{{ result.url }}">{{ result.title }}{{"page.search.label.species"|trans}}</a></h3>
+                            <h3><a href="{{ result.url }}">{{ result.title }}</a></h3>
                             <a href="{{ result.url }}" class="search-link">{{ result.url }}</a>
                             <p>{{ result.desc|raw }}</p>
                         </div>
