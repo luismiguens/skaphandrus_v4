@@ -46,7 +46,7 @@
             {% for entity in entities %}
                 <tr>
                     <td>
-                        {{ app.request.locale}}
+                        
                         {{ notification_message(entity,app.request.locale )|raw }}</td>
                     <td><i class="fa fa-check text-navy"></i></td>
                     <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
