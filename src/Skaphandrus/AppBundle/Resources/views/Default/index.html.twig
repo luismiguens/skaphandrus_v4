@@ -241,7 +241,7 @@
                                     {% endif %}
                                     <tr>
                                         <td class="text-navy">{{link_to_contest(contest)}}</td>
-                                        <td><span class="label label-{{ button_class }}"><small>{{ "page.contests.label.status_" ~ contest_status|trans }}</small></span></td>
+                                        <td><span class="label label-{{ button_class }}"><small>{{ ("page.contests.label.status_" ~ contest_status)|trans }}</small></span></td>
                                         <td>{{ contest.photos|length }}</td>
                                         <td>{{ contest.awards|length }}</td>
                                     </tr>
