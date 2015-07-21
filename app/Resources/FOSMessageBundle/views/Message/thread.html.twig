@@ -1,5 +1,8 @@
 {% extends 'FOSMessageBundle::layout.html.twig' %}
 
+{% trans_default_domain 'FOSMessageBundle' %}
+
+
 {% block heading_title %}{% trans from 'FOSMessageBundle' %}messenger{% endtrans %}{% endblock %}
 
 {% block stylesheets %}
@@ -58,7 +61,7 @@
                 <div class="mail-body">
                     <h5>
                         <span class="pull-right font-noraml">{{ message.createdAt|date }}</span>
-                        <span class="font-noraml">From: </span>{{ message.sender|e }}
+                        <span class="font-noraml">{{ "from"|trans }}: </span>{{ message.sender|e }}
                     </h5>
                     {{ message.body|raw }}
                 </div>
