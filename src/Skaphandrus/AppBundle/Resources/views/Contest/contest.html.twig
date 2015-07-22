@@ -225,11 +225,11 @@
                                                             <tr>
                                                                 <td>
                                                                     {# @TODO: Add judge real photo #}
-                                                                    <img class="img-rounded" src="{{ judge.fosUser.photo.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ judge.fosUser.name }}" title="{{ judge.fosUser.name }}">
+                                                                    <img class="img-rounded" src="{{ judge.fosUser.settings.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ judge.fosUser.name }}" title="{{ judge.fosUser.name }}">
                                                                 </td>
                                                                 <td>
                                                                     <h4>{{ judge.fosUser.name }}</h4>
-                                                                    <p>{{ judge.fosUser.personal.observations|truncate(250, true) }} <a href="{{ url_to_user(judge.fosUser) }}">{{ "page.contest.table.read_more"|trans }}</a></p>
+                                                                    <p>{{ judge.fosUser.settings.observations|truncate(250, true) }} <a href="{{ url_to_user(judge.fosUser) }}">{{ "page.contest.table.read_more"|trans }}</a></p>
                                                                 </td>
                                                             </tr>
                                                         {% endfor %}
