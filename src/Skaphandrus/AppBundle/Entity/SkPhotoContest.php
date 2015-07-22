@@ -8,8 +8,7 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 /**
  * SkPhotoContest
  */
-class SkPhotoContest
-{
+class SkPhotoContest {
 
     use ORMBehaviors\Translatable\Translatable;
 
@@ -73,19 +72,20 @@ class SkPhotoContest
      */
     private $judges;
 
-    
-     /**
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $photos;
-    
-    
-    
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $photographers;
+
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -96,8 +96,7 @@ class SkPhotoContest
      *
      * @return SkPhotoContest
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -108,8 +107,7 @@ class SkPhotoContest
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -120,8 +118,7 @@ class SkPhotoContest
      *
      * @return SkPhotoContest
      */
-    public function setLogo($logo)
-    {
+    public function setLogo($logo) {
         $this->logo = $logo;
 
         return $this;
@@ -132,8 +129,7 @@ class SkPhotoContest
      *
      * @return string
      */
-    public function getLogo()
-    {
+    public function getLogo() {
         return $this->logo;
     }
 
@@ -144,8 +140,7 @@ class SkPhotoContest
      *
      * @return SkPhotoContest
      */
-    public function setImage($image)
-    {
+    public function setImage($image) {
         $this->image = $image;
 
         return $this;
@@ -156,8 +151,7 @@ class SkPhotoContest
      *
      * @return string
      */
-    public function getImage()
-    {
+    public function getImage() {
         return $this->image;
     }
 
@@ -168,8 +162,7 @@ class SkPhotoContest
      *
      * @return SkPhotoContest
      */
-    public function setBeginAt($beginAt)
-    {
+    public function setBeginAt($beginAt) {
         $this->beginAt = $beginAt;
 
         return $this;
@@ -180,8 +173,7 @@ class SkPhotoContest
      *
      * @return \DateTime
      */
-    public function getBeginAt()
-    {
+    public function getBeginAt() {
         return $this->beginAt;
     }
 
@@ -192,8 +184,7 @@ class SkPhotoContest
      *
      * @return SkPhotoContest
      */
-    public function setEndAt($endAt)
-    {
+    public function setEndAt($endAt) {
         $this->endAt = $endAt;
 
         return $this;
@@ -204,8 +195,7 @@ class SkPhotoContest
      *
      * @return \DateTime
      */
-    public function getEndAt()
-    {
+    public function getEndAt() {
         return $this->endAt;
     }
 
@@ -216,8 +206,7 @@ class SkPhotoContest
      *
      * @return SkPhotoContest
      */
-    public function setIsJudge($isJudge)
-    {
+    public function setIsJudge($isJudge) {
         $this->isJudge = $isJudge;
 
         return $this;
@@ -228,8 +217,7 @@ class SkPhotoContest
      *
      * @return boolean
      */
-    public function getIsJudge()
-    {
+    public function getIsJudge() {
         return $this->isJudge;
     }
 
@@ -240,8 +228,7 @@ class SkPhotoContest
      *
      * @return SkPhotoContest
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
 
         return $this;
@@ -252,8 +239,7 @@ class SkPhotoContest
      *
      * @return \DateTime
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->createdAt;
     }
 
@@ -262,8 +248,7 @@ class SkPhotoContest
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -274,8 +259,7 @@ class SkPhotoContest
      *
      * @return SkPhotoContest
      */
-    public function addCategory(\Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category)
-    {
+    public function addCategory(\Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category) {
         $this->categories[] = $category;
 
         return $this;
@@ -286,8 +270,7 @@ class SkPhotoContest
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category
      */
-    public function removeCategory(\Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category)
-    {
+    public function removeCategory(\Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category) {
         $this->categories->removeElement($category);
     }
 
@@ -296,8 +279,7 @@ class SkPhotoContest
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCategories()
-    {
+    public function getCategories() {
         return $this->categories;
     }
 
@@ -308,8 +290,7 @@ class SkPhotoContest
      *
      * @return SkPhotoContest
      */
-    public function addSponsor(\Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor $sponsor)
-    {
+    public function addSponsor(\Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor $sponsor) {
         $this->sponsors[] = $sponsor;
 
         return $this;
@@ -320,8 +301,7 @@ class SkPhotoContest
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor $sponsor
      */
-    public function removeSponsor(\Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor $sponsor)
-    {
+    public function removeSponsor(\Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor $sponsor) {
         $this->sponsors->removeElement($sponsor);
     }
 
@@ -330,8 +310,7 @@ class SkPhotoContest
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getSponsors()
-    {
+    public function getSponsors() {
         return $this->sponsors;
     }
 
@@ -342,8 +321,7 @@ class SkPhotoContest
      *
      * @return SkPhotoContest
      */
-    public function addAward(\Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award)
-    {
+    public function addAward(\Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award) {
         $this->awards[] = $award;
 
         return $this;
@@ -354,8 +332,7 @@ class SkPhotoContest
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award
      */
-    public function removeAward(\Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award)
-    {
+    public function removeAward(\Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award) {
         $this->awards->removeElement($award);
     }
 
@@ -364,8 +341,7 @@ class SkPhotoContest
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getAwards()
-    {
+    public function getAwards() {
         return $this->awards;
     }
 
@@ -376,8 +352,7 @@ class SkPhotoContest
      *
      * @return SkPhotoContest
      */
-    public function addJudge(\Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge)
-    {
+    public function addJudge(\Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge) {
         $this->judges[] = $judge;
 
         return $this;
@@ -388,8 +363,7 @@ class SkPhotoContest
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge
      */
-    public function removeJudge(\Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge)
-    {
+    public function removeJudge(\Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge) {
         $this->judges->removeElement($judge);
     }
 
@@ -398,15 +372,10 @@ class SkPhotoContest
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getJudges()
-    {
+    public function getJudges() {
         return $this->judges;
     }
-    
-   
-    
-    
-    
+
     public function getAbsolutePath() {
         return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
     }
@@ -426,34 +395,43 @@ class SkPhotoContest
 // when displaying uploaded doc/image in the view.
         return 'uploads/contests';
     }
-    
-    
-    
-    
-    
-    
+
     /**
      * Get photos
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPhotos()
-    {
-        
+    public function getPhotos() {
+
         $photos = array();
         $category = new SkPhotoContestCategory();
-        
-        foreach ($this->getCategories() as $category){
+
+        foreach ($this->getCategories() as $category) {
             array_merge($photos, $category->getPhoto()->toArray());
-            
         }
         $this->photos = $photos;
         return $this->photos;
     }
-    
 
-    
-    
-    
-    
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotographers() {
+
+        $photographers = array();
+        $category = new SkPhotoContestCategory();
+        $photo = new SkPhoto();
+
+        foreach ($this->getCategories() as $category) {
+
+            foreach ($category->getPhoto() as $photo) {
+                array_merge($photographers, $photo->getFosUser()->toArray());
+            }
+        }
+        $this->photographers = array_unique($photographers);
+        return $this->photographers;
+    }
+
 }
