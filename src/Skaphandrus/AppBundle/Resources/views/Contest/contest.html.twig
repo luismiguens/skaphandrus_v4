@@ -142,7 +142,7 @@
                                                                 <td>
                                                                     {% if category.image is not empty %}
                                                                         {# <img src="/{{ category.photo.0.webPath }}" alt="{{ category.photo.0.title }}" title="{{ category.photo.0.title }}"> #}
-                                                                        <img src="{{ category.getWebPath | imagine_filter('sk_widen_100') }}" alt="" title="">
+                                                                        <img class="img-rounded" src="{{ category.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ category.name }}" title="{{ category.name }}">
                                                                     {% endif %}
                                                                 </td>
                                                                 <td>
@@ -153,7 +153,7 @@
                                                                     {% for award in category.awards %}
                                                                         {% for sponsor in award.sponsor %}
                                                                             {# <img class="img-rounded" src="{{ sponsor.image|imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}"> #}
-                                                                            <img class="img-rounded" src="{{ "uploads/11138585_1606358319621583_5687423293522990896_n.jpg"|imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
+                                                                            <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
                                                                         {% endfor %}
                                                                     {% endfor %}
                                                                 </td>
