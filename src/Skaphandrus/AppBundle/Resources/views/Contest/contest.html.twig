@@ -225,7 +225,7 @@
                                                             <tr>
                                                                 <td>
                                                                     {# @TODO: Add judge real photo #}
-                                                                    <img class="img-rounded" src="{{ judge.fosUser.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ judge.fosUser.name }}" title="{{ judge.fosUser.name }}">
+                                                                    <img class="img-rounded" src="{{ judge.fosUser.photo.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ judge.fosUser.name }}" title="{{ judge.fosUser.name }}">
                                                                 </td>
                                                                 <td>
                                                                     <h4>{{ judge.fosUser.name }}</h4>
@@ -251,7 +251,7 @@
                                                             <tr>
                                                                 <td>
                                                                     {# <img class="img-rounded" src="{{ sponsor.image|imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}"> #}
-                                                                    <img class="img-rounded" src="{{ "uploads/11138585_1606358319621583_5687423293522990896_n.jpg"|imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
+                                                                    <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
                                                                 </td>
                                                                 <td>
                                                                     <h4>{{ sponsor.name }}</h4>
