@@ -318,10 +318,6 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
 
     public function __toString() {
 
-        
-        
-        
-        
         if ($this->getName()){
             return $this->getName();
         }else{

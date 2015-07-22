@@ -225,11 +225,11 @@
                                                             <tr>
                                                                 <td>
                                                                     {# @TODO: Add judge real photo #}
-                                                                    <img class="img-rounded" src="{{ "uploads/11138585_1606358319621583_5687423293522990896_n.jpg"|imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ judge.fosUser.username }}" title="{{ judge.fosUser.username }}">
+                                                                    <img class="img-rounded" src="{{ judge.fosUser.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ judge.fosUser.name }}" title="{{ judge.fosUser.name }}">
                                                                 </td>
                                                                 <td>
-                                                                    <h4>{{ judge.fosUser.username }}</h4>
-                                                                    <p>{{ "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."|truncate(250, true) }} <a href="{{ url_to_user(judge.fosUser) }}">{{ "page.contest.table.read_more"|trans }}</a></p>
+                                                                    <h4>{{ judge.fosUser.name }}</h4>
+                                                                    <p>{{ judge.fosUser.personal.observations|truncate(250, true) }} <a href="{{ url_to_user(judge.fosUser) }}">{{ "page.contest.table.read_more"|trans }}</a></p>
                                                                 </td>
                                                             </tr>
                                                         {% endfor %}
