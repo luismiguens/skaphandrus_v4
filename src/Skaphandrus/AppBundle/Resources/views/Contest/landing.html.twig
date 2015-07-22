@@ -73,7 +73,7 @@
                             <td class="project-people">
                                 {% if photographers[contest.id]|length %}
                                     {% for photographer in photographers[contest.id][:5] %}
-                                        <a href="{{ url_to_user(photographer) }}"><img alt="image" class="img-circle" src="{{ photographer.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}"></a>
+                                        <a href="{{ url_to_user(photographer) }}"><img alt="image" class="img-circle" src="{{ photographer.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}"></a>
                                         
                                        
                                         

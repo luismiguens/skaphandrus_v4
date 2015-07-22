@@ -66,7 +66,13 @@
                                 <dt>{{ "page.contest.dt.participants"|trans }}:</dt>
                                 <dd class="project-people">
                                     {% for photographer in photographers[:5] %}
-                                        <a href="{{ url_to_user(photographer) }}"><img alt="image" class="img-circle" src="/uploads/11138585_1606358319621583_5687423293522990896_n.jpg"></a>
+                                   {#     <a href="{{ url_to_user(photographer) }}">
+                                            <img alt="image" class="img-circle" src="/uploads/11138585_1606358319621583_5687423293522990896_n.jpg">
+                                        </a>#}
+                                            
+                                             <a href="{{ url_to_user(photographer) }}"><img alt="image" class="img-circle" src="{{ photographer.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}"></a>
+                                        
+                                       
                                     {% endfor %}
                                     <a href="{{ path("contests_photographers", {'contest_slug': slugify(contest.name) }) }}">{{ "page.contest.link.more_photographers"|trans }}</a>
                                 </dd>
