@@ -76,6 +76,13 @@
                                                 <div class="text-center">
                                                     <img alt="image" class="img-circle m-t-xs img-responsive" src="{{ "/uploads/11138585_1606358319621583_5687423293522990896_n.jpg"|imagine_filter('sk_thumbnail_outbound_130') }}">
                                                     <!--<div class="m-t-xs font-bold">Photographer</div>-->
+                                                    
+                                                     <a href="{{ url_to_user(photographer) }}">
+                                                         <img alt="image" class="img-circle m-t-xs img-responsive" src="{{ photographer.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
+                                                     </a>
+                                        
+                                                     
+                                                    
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
