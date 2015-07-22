@@ -72,27 +72,47 @@
                                 <div class="col-md-6">
                                     
                                     
-                   
-                               
-                                    
+                   {#
+                               <div class="contact-box">
+                    <a href="profile.html">
+                    <div class="col-sm-4">
+                        <div class="text-center">
+                            <img src="img/a2.jpg" class="img-circle m-t-xs img-responsive" alt="image">
+                            <div class="m-t-xs font-bold">Graphics designer</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <h3><strong>John Smith</strong></h3>
+                        <p><i class="fa fa-map-marker"></i> Riviera State 32/106</p>
+                        <address>
+                            <strong>Twitter, Inc.</strong><br>
+                            795 Folsom Ave, Suite 600<br>
+                            San Francisco, CA 94107<br>
+                            <abbr title="Phone">P:</abbr> (123) 456-7890
+                        </address>
+                    </div>
+                    <div class="clearfix"></div>
+                        </a>
+                </div>
+                              #}      
                                     
                                     
                                     <div class="contact-box">
                                         <a href="{{ url_to_user(photographer.user) }}">
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-4">
                                                 <div class="text-center">
                                                    {# <img alt="image" class="img-circle m-t-xs img-responsive" src="{{ "/uploads/11138585_1606358319621583_5687423293522990896_n.jpg"|imagine_filter('sk_thumbnail_outbound_130') }}">#}
-                                                    <div class="m-t-xs font-bold">{{ app.user.personal.honorific }}</div>
+                                                    
                                                     
                                                      
                                                          <img alt="image" class="img-circle m-t-xs img-responsive" src="{{ photographer.user.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
-                                                     </a>
+                                                     <div class="m-t-xs font-bold">{{ app.user.personal.honorific }}</div>
                                         
                                                      
                                                     
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-8">
                                                 <h3><strong>{{ photographer.user.name }}</strong></h3>
                                                 <p><i class="fa fa-photo"></i> {{ photographer.photos|length }}</p>
                                                 {#<address>
