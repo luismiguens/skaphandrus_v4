@@ -140,9 +140,9 @@
                                                         {% for category in contest.categories %}
                                                             <tr>
                                                                 <td>
-                                                                    {% if category.photo is not empty %}
+                                                                    {% if category.image is not empty %}
                                                                         {# <img src="/{{ category.photo.0.webPath }}" alt="{{ category.photo.0.title }}" title="{{ category.photo.0.title }}"> #}
-                                                                        <img src="{{ "uploads/11138585_1606358319621583_5687423293522990896_n.jpg"|imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ category.photo.0.title }}" title="{{ category.photo.0.title }}">
+                                                                        <img src="{{ category.getWebPath | imagine_filter('sk_widen_100') }}" alt="" title="">
                                                                     {% endif %}
                                                                 </td>
                                                                 <td>
