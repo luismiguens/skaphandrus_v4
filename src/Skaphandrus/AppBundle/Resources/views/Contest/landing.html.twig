@@ -43,7 +43,7 @@
                         {% endif %}
                         <tr>
                             <td class="project-logo">
-                                <a href="{{ url_to_contest(contest) }}"><img alt="image" class="img-rounded" src="{{ "uploads/11138585_1606358319621583_5687423293522990896_n.jpg"|imagine_filter("sk_thumbnail_outbound_50") }}"></a>
+                                <a href="{{ url_to_contest(contest) }}"><img alt="image" class="img-rounded" src="{{ contest.getWebPath | imagine_filter('sk_thumbnail_outbound_50') }} {{ "uploads/11138585_1606358319621583_5687423293522990896_n.jpg"|imagine_filter("sk_thumbnail_outbound_50") }}"></a>
                             </td>
                             <td class="project-title">
                                 <a href="{{ url_to_contest(contest) }}">{{ contest.name }}</a>
