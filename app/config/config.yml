@@ -243,6 +243,9 @@ liip_imagine:
             quality: 100
             filters:
                 thumbnail: { size: [120, 90], mode: outbound }
+        sk_widen_50:
+            filters:
+                relative_resize: { widen: 50 } 
         sk_widen_75:
             filters:
                 relative_resize: { widen: 75 } # Transforms 500x400 to 260x??
