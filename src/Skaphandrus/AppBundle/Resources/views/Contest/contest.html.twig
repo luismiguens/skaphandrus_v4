@@ -142,7 +142,7 @@
                                                                 <td>
                                                                     {% if category.image is not empty %}
                                                                         {# <img src="/{{ category.photo.0.webPath }}" alt="{{ category.photo.0.title }}" title="{{ category.photo.0.title }}"> #}
-                                                                        <img class="img-rounded" src="{{ category.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ category.name }}" title="{{ category.name }}">
+                                                                        <img class="img-rounded" src="{{ category.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ category.name }}" title="{{ category.name }}">
                                                                     {% endif %}
                                                                 </td>
                                                                 <td>
@@ -225,7 +225,7 @@
                                                             <tr>
                                                                 <td>
                                                                     {# @TODO: Add judge real photo #}
-                                                                    <img class="img-rounded" src="{{ judge.fosUser.settings.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ judge.fosUser.name }}" title="{{ judge.fosUser.name }}">
+                                                                    <img class="img-rounded" src="{{ judge.fosUser.settings.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ judge.fosUser.name }}" title="{{ judge.fosUser.name }}">
                                                                 </td>
                                                                 <td>
                                                                     <h4>{{ judge.fosUser.name }}</h4>
