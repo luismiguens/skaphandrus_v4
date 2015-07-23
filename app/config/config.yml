@@ -258,6 +258,9 @@ liip_imagine:
         sk_widen_240:
             filters:
                 relative_resize: { widen: 240 }
+        sk_widen_400:
+            filters:
+                relative_resize: { widen: 400 } 
         sk_widen_590:
             filters:
                 relative_resize: { widen: 590 }
@@ -282,6 +285,11 @@ liip_imagine:
         sk_upscale_800_600:
             filters:
                 upscale: { min: [800, 600] }
+
+        sk_downscale_800_600:
+            quality: 100
+            filters:
+                thumbnail: { size: [800, 600], mode: outbound }
 
 fos_comment:
     db_driver: orm

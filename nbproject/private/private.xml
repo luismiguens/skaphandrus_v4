@@ -12,32 +12,25 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Form/FOSMessage/NewThreadMessageFormType.php</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/app/Resources/FOSUserBundle/views/Registration/register.html.twig</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/app/Resources/FOSMessageBundle/views/layout.html.twig</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Form/SkPhotoType.php</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/app/Resources/FOSMessageBundle/views/Message/thread.html.twig</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Common/skNotifications.html.twig</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Entity/SkPhotoContestSponsor.php</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Entity/SkPhotoContestJudge.php</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Entity/SkPhotoContestCategory.php</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Common/sidebar-menu.html.twig</file>
             <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Common/skActivity.html.twig</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/public/js/app.js</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/SkSocialNotify/index.html.twig</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/app/Resources/FOSMessageBundle/views/Message/newThread.html.twig</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/app/Resources/FOSMessageBundle/views/_search.html.twig</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/app/Resources/FOSMessageBundle/views/_tools.html.twig</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Form/FosUserType.php</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/app/Resources/FOSMessageBundle/views/Message/deleted.html.twig</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Controller/DefaultController.php</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/app/Resources/FOSMessageBundle/views/Message/search.html.twig</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/taxon.html.twig</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/SkPhoto/edit.html.twig</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/app/Resources/FOSMessageBundle/views/Message/threads_list.html.twig</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Form/Type/RegistrationFormType.php</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/app/Resources/FOSMessageBundle/views/Message/inbox.html.twig</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/app/config/config.yml</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Entity/SkPhoto.php</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Entity/SkPhotoContestAward.php</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Entity/SkSettings.php</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/config/doctrine/SkPhotoContestJudge.orm.xml</file>
             <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Entity/FosUser.php</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/app/Resources/FOSMessageBundle/views/_sidebar.html.twig</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Common/navbar-menu.html.twig</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Twig/UtilsExtension.php</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/app/Resources/FOSMessageBundle/views/Message/sent.html.twig</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Controller/ContestController.php</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Contest/landing.html.twig</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Entity/SkPersonal.php</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/config/doctrine/FosUser.orm.xml</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Contest/photographers.html.twig</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Contest/contest.html.twig</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/config/doctrine/SkPhotoContest.orm.xml</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Entity/SkPhotoContest.php</file>
         </group>
     </open-files>
 </project-private>

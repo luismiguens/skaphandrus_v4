@@ -7,6 +7,9 @@
 
 {% block stylesheets %}
     {{ parent() }}
+
+
+
     <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}">
     <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
@@ -17,6 +20,13 @@
         #skaphandrus_appbundle_skphotovalidation_rating label {
             margin: 0 10px 0 2px;
         }
+
+
+        .child {
+            display:block;
+            margin:auto;
+        }
+
     </style>
 {% endblock %}
 
@@ -54,50 +64,50 @@
 
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
+            <div class="col col-lg-12" >
+                <img alt="{{photo.title}}" class="img-responsive child" src="{{ photo.getWebPath | imagine_filter('sk_downscale_800_600') }}" />
+                <br/>
+            </div>
+        </div>
+
+
+
+
+
+
+        <div class="row">
             <div class="col-lg-6">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>{{ "page.photo.h5.photo_detail"|trans }}</h5>
                     </div>
+                    <div class="ibox-content ">
+                        <h4><strong>{{photo.title}}</strong></h4>
 
-
-                    <div>
-                        <div class="ibox-content ibox-content no-padding border-left-right">
-                            <img alt="image" class="img-responsive" src="{{ photo.getWebPath | imagine_filter('sk_upscale_800_600') }}" />
-                        </div>
-                        <div class="ibox-content profile-content">
-                            <h4><strong>{{photo.title}}</strong></h4>
-
-                            <ul class="list-unstyled">
-                                <li><i class="fa fa-clock-o"></i> {{ "page.photo.label.taken_at"|trans }} {{ photo.takenAt|date('Y-m-d H:i:s') }}</li>
-                                <li><i class="fa fa-cloud-upload"></i> {{ "page.photo.label.uploaded_at"|trans }} {{ photo.createdAt|date('Y-m-d H:i:s') }}</li>
-                                    {% if photo.creative is not empty %}
-                                    <li><i class="fa fa-gavel"></i> {{ "page.photo.label.licensed_under"|trans }} {{ photo.creative.name }}</li>
-                                    {% endif %}
-                                    {% if photo.model is not empty %}
-                                    <li><i class="fa fa-camera"></i> {{ "page.photo.label.camera"|trans }} {{ photo.model.name }}</li>
-                                    {% endif %}
-                            </ul>
+                        <dl class="dl-horizontal">
+                            <dt>{{ "page.photo.h3.photographer"|trans }}: </dt><dd>{{ link_to_user(photo.fosuser) }}</dd>
+                            <dt>{{ "page.photo.label.taken_at"|trans }}:</dt> <dd>{{ photo.takenAt|date('Y-m-d H:i:s') }}</dd>
+                            <dt>{{ "page.photo.label.uploaded_at"|trans }}:</dt> <dd>  {{ photo.createdAt|date('Y-m-d H:i:s') }}</dd>
+                            {% if photo.creative is not empty %}
+                                <dt>{{ "page.photo.label.licensed_under"|trans }}:</dt> <dd><a class="text-navy" href="#"> {{ photo.creative.name }}</a> </dd>
+                            {% endif %}
+                            {% if photo.model is not empty %}
+                                <dt>{{ "page.photo.label.camera"|trans }}:</dt> <dd> 	{{ photo.model.name }} </dd> 
+                            {% endif %}
+                        </dl>
 
                             {% if photo.description is not empty %}
-                                <h5>{{ "page.photo.h5.description"|trans }}</h5>
-                                <p>{{ photo.description }}</p>
-                            {% endif %}
+                            <h5>{{ "page.photo.h5.description"|trans }}</h5>
+                            <p>{{ photo.description }}</p>
+                        {% endif %}
 
 
 
-                            <div class="row m-t-md">
-                                <div class="col-md-4">
-                                    <h5><strong>{{photo.views}}</strong> {{ "page.photo.h5.views"|trans }}</h5>
-                                </div>
-                                <div class="col-md-4">
-                                    <h5><strong>{{photo.countLikes}}</strong> {{ "page.photo.h5.likes"|trans }}</h5>
-                                </div>
-                                <div class="col-md-4">
-                                    <h5><strong>{{photo.countComments}}</strong> {{ "page.photo.h5.comments"|trans }}</h5>
-                                </div>
-                            </div>  
-                        </div>
+                        {#{% if is_granted("IS_AUTHENTICATED_FULLY") %}#}
+                        {% include 'SkaphandrusAppBundle:Comments:async.html.twig' with {'id': 'SkPhoto-' ~ photo.id } %}
+                        {# {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': 'SkPhoto-' ~ photo.id} %}#}
+                        {#{% endif %}#}
+
                     </div>
 
 
@@ -130,8 +140,33 @@
 
                     <div class="ibox-content ">
 
-                        <h3>{{ "page.photo.h3.photographer"|trans }} </h3>
-                        <p>{{ link_to_user(photo.fosuser) }}</p>
+
+
+
+
+
+                        {#                            <div class="row m-t-md">
+                                                        <div class="col-md-4">
+                                                            <h5><strong>{{photo.views}}</strong> {{ "page.photo.h5.views"|trans }}</h5>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <h5><strong>{{photo.countLikes}}</strong> {{ "page.photo.h5.likes"|trans }}</h5>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <h5><strong>{{photo.countComments}}</strong> {{ "page.photo.h5.comments"|trans }}</h5>
+                                                        </div>
+                                                    </div>  #}
+
+
+
+
+
+
+
+
+
+
+
 
                         {% if photo.keyword|length > 0 %}
                             <h3>{{ "page.photo.h3.tags"|trans }}</h3>
@@ -160,8 +195,8 @@
                             <ul>
                                 {% for sv in photo.speciesValidations %}
                                     {% if sv.species is not empty %}
-                                    <li>{{ link_to_user(sv.fosUser) }} {{ "page.photo.label.validated"|trans }} {{ link_to_species(sv.species) }}</li>
-                                    {% endif %}
+                                        <li>{{ link_to_user(sv.fosUser) }} {{ "page.photo.label.validated"|trans }} {{ link_to_species(sv.species) }}</li>
+                                        {% endif %}
                                     {% endfor %}
                             </ul>
                         {% endif %}
@@ -212,9 +247,7 @@
                         {% endif %}
                     </div>
                 </div>
-                {% if is_granted("IS_AUTHENTICATED_FULLY") %}
-                    {% include 'SkaphandrusAppBundle:Comments:async.html.twig' with {'id': 'SkPhoto-' ~ photo.id } %}
-                {% endif %}
+
             </div>
         </div>
     </div><!-- end wrapper-->

@@ -67,6 +67,9 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab-1">
                             <section id="sponsors">
+
+                                {#<h2>{{ "page.contests_sponsors.h3.sponsors"|trans }}: {{ contest.name }}</h2>#}
+                                
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
@@ -78,8 +81,8 @@
                                         {% for sponsor in contest.sponsors %}
                                             <tr>
                                                 <td>
-                                                    {# <img class="img-rounded" src="{{ sponsor.image|imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}"> #}
-                                                    <img class="img-rounded" src="{{ "uploads/11138585_1606358319621583_5687423293522990896_n.jpg"|imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
+                                                   <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
+                                                  
                                                 </td>
                                                 <td>
                                                     <h4>{{ sponsor.name }}</h4>
@@ -100,7 +103,7 @@
         <div class="wrapper wrapper-content project-manager hidden-sm hidden-xs hidden-md" data-spy="affix" data-offset-top="112" style="top: 0; max-width: 250px;">
             <h2>{{ contest.name }}</h2>
             <!--<img src="{{ contest.logo }}" class="img-responsive">-->
-            <img src="/uploads/11138585_1606358319621583_5687423293522990896_n.jpg" class="img-responsive">
+            <img src="{{ contest.getWebPath | imagine_filter('sk_widen_400') }}" class="img-responsive">
             <p class="small">
                 {{ contest.translate.description|raw }}
             </p>
@@ -129,14 +132,4 @@
 
 
 
-
-
-
-
-
-
-    <h2>{{ "page.contests_sponsors.h3.sponsors"|trans }}: {{ contest.name }}</h2>
-    {% for sponsor in contest.sponsors %}
-        <p>{{ sponsor.name }}<p/>
-    {% endfor %}
 {% endblock %}

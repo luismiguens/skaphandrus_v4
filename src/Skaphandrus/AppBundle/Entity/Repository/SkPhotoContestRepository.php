@@ -57,4 +57,44 @@ class SkPhotoContestRepository extends EntityRepository {
 
         return $photos;
     }
+    
+    
+    
+//      public function findPhotosFromUserInContest($user_id, $contest_id) {
+//        
+//          
+//          
+//          
+//          
+//          
+//          $categories = $this->getEntityManager()->createQuery(
+//            'SELECT cat
+//            FROM SkaphandrusAppBundle:SkPhotoContestCategory cat
+//            WHERE IDENTITY(cat.contest) = :contest_id'
+//        )->setParameter('contest_id', $contest_id)->getResult();
+//
+//        $photos = array();
+//        foreach ($categories as $category) {
+//            $photo_ids = array();
+//
+//            foreach ($category->getPhoto() as $photo) {
+//                $photo_ids[] = $photo->getId();
+//            }
+//
+//            $query = $this->getEntityManager()->createQuery(
+//                'SELECT p
+//                FROM SkaphandrusAppBundle:SkPhoto p
+//                WHERE IDENTITY(p.fosUser) = :user_id
+//                AND p.id IN (:photo_ids)'
+//            )->setParameter('user_id', $user_id)
+//            ->setParameter('photo_ids', implode(',', $photo_ids));
+//
+//            $photos[$category->getId()] = $query->getResult();
+//        }
+//
+//        return $photos;
+//    }
+    
+    
+    
 }

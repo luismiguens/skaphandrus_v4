@@ -43,7 +43,7 @@
                         {% endif %}
                         <tr>
                             <td class="project-logo">
-                                <a href="{{ url_to_contest(contest) }}"><img alt="image" class="img-rounded" src="{{ contest.getWebPath | imagine_filter('sk_widen_50') }} "></a>
+                                <a href="{{ url_to_contest(contest) }}"><img alt="image" class="img-rounded" src="{{ contest.getWebPath | imagine_filter('sk_widen_160') }} "></a>
                             </td>
                             <td class="project-title">
                                 <a href="{{ url_to_contest(contest) }}">{{ contest.name }}</a>
@@ -72,9 +72,13 @@
                             </td>
                             <td class="project-people">
                                 {% if photographers[contest.id]|length %}
-                                    {% for photographer in photographers[contest.id][:5] %}
-                                        <a href="{{ url_to_user(photographer) }}"><img alt="image" class="img-circle" src="{{ photographer.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}"></a>
-                                        
+                                     {% for photographer in photographers[contest.id][:5] %}
+                                        {#{% for photographer in photographers %}#}
+                                      
+                                            
+                                         <a href="{{ url_to_user(photographer) }}">
+                                           <img alt="image" class="img-circle" src="{{ photographer.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
+                                        </a>   
                                        
                                         
                                     {% endfor %}

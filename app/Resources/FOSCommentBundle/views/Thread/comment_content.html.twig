@@ -11,6 +11,7 @@
 
 {% block fos_comment_comment %}
 <div id="fos_comment_{{ comment.id }}" class="fos_comment_comment_show fos_comment_comment_depth_{{ depth }} chat-element" {% if parent is defined and parent is not null %}data-parent="{{ parent.id }}"{% endif %}>
+    
     <div class="fos_comment_comment_metas">
         {% block fos_comment_comment_metas %}
 
@@ -48,12 +49,13 @@
     {# COMMENT BODY #}
 
     <a href="#" class="pull-left">
-        <img alt="image" class="img-circle" src="http://localhost:8000/media/cache/sk_thumbnail_outbound_100/uploads/azores-turtle-deepsea.jpg">
+        {#<img alt="image" class="img-circle" src="http://localhost:8000/media/cache/sk_thumbnail_outbound_100/uploads/azores-turtle-deepsea.jpg">#}
+        <img alt="image" class="img-circle" src="{{ comment.author.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}" />
     </a>
     <div id="fos_comment_comment_body_{{ comment.id }}" class="fos_comment_comment_body media-body">
         {% block fos_comment_comment_metas_authorline %}
             <small class="pull-right text-navy">{{ comment.createdAt|time_diff }}</small>
-            <strong>{{ comment.authorName }}</strong>
+            <strong>{{ comment.author.name }}</strong>
         {% endblock fos_comment_comment_metas_authorline %}
         <p class="m-b-xs">
             {% block fos_comment_comment_body %}

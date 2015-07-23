@@ -60,14 +60,28 @@ class Comment extends BaseComment implements SignedCommentInterface {
 
 
         if (strpos($entity->getThread(), 'SkPhoto') !== false) {
-
-            //enviar notificação ao dono fotografia		
-            //(x comentou a tua fotografia y) message_aaa
+            
             $photo_id = substr($entity->getThread(), strpos($entity->getThread(), "-") + 1);
             $skPhoto = $entityManager->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($photo_id);
+            
+            
+            
+            
+            //enviar notificação ao dono fotografia		
+            //(x comentou a tua fotografia y) message_aaa
+            if ($entity->getAuthor()->getId() <> $skPhoto->getFosUser()->getId()) {
+                $skSocialNotify = new SkSocialNotify();
+                $skSocialNotify->setUserFrom($entity->getAuthor());
+                $skSocialNotify->setPhoto($skPhoto);
+                $skSocialNotify->setMessageName("message_aaa");
+                $skSocialNotify->setCreatedAt(new \DateTime());
+                $skSocialNotify->setUserTo($skPhoto->getFosUser());
+                $entityManager->persist($skSocialNotify);
+                $entityManager->flush();
+            }
 
-            $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromComment(
-                    $entity, $skPhoto->getFosUser(), "message_aaa");
+
+
 
 
             //enviar notificação para quem já comentou fotografia comentada	
@@ -75,29 +89,19 @@ class Comment extends BaseComment implements SignedCommentInterface {
             $query = $entityManager->createQuery(
                             'SELECT c
                                 FROM SkaphandrusAppBundle:Comment c
-                                WHERE thread_id > :thread_id
-                                GROUP BY p.author_id'
+                                WHERE c.thread = :thread_id
+                                GROUP BY c.author'
                     )->setParameter('thread_id', 'SkPhoto-' . $photo_id);
 
-
-            //enviar notificação para quem tambem já comentou a fotografia
-            //x tambem comentou fotografia y	message_aab
             $comments = $query->getResult();
             foreach ($comments as $comment) {
-//                $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromComment(
-//                        $entity, $comment->getFosUser(), "message_aab");
-
-                if ($entity->getFosUser()->getId() <> $comment->getFosUser()->getId()) {
-
-                    $photo_id = substr($entity->getThread(), strpos($entity->getThread(), "-") + 1);
-                    $photo = $entityManager->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($photo_id);
-
+                if ($entity->getAuthor()->getId() <> $comment->getAuthor()->getId()) {
                     $skSocialNotify = new SkSocialNotify();
-                    $skSocialNotify->setUserFrom($entity->getFosUser());
+                    $skSocialNotify->setUserFrom($entity->getAuthor());
                     $skSocialNotify->setPhoto($photo);
                     $skSocialNotify->setMessageName("message_aab");
                     $skSocialNotify->setCreatedAt(new \DateTime());
-                    $skSocialNotify->setUserTo($comment->getFosUser());
+                    $skSocialNotify->setUserTo($comment->getAuthor());
                     $entityManager->persist($skSocialNotify);
                     $entityManager->flush();
                 }
@@ -107,19 +111,12 @@ class Comment extends BaseComment implements SignedCommentInterface {
             //enviar notificação para quem já sugeriu fotografia comentada	
             //(x comentou a fotografia y) message_aac
             $sugestions = $entityManager->getRepository('SkaphandrusAppBundle:SkPhotoSpeciesSugestion')->FindBy(
-                    array('photo_id' => $photo_id));
+                    array('photo' => $photo_id));
 
             foreach ($sugestions as $sugestion) {
-//                $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromComment(
-//                        $entity, $photoSpeciesSugestion->getFosUser(), "message_aac");
-
-                if ($entity->getFosUser()->getId() <> $sugestion->getFosUser()->getId()) {
-
-                    $photo_id = substr($entity->getThread(), strpos($entity->getThread(), "-") + 1);
-                    $photo = $entityManager->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($photo_id);
-
+                if ($entity->getAuthor()->getId() <> $sugestion->getFosUser()->getId()) {
                     $skSocialNotify = new SkSocialNotify();
-                    $skSocialNotify->setUserFrom($entity->getFosUser());
+                    $skSocialNotify->setUserFrom($entity->getAuthor());
                     $skSocialNotify->setPhoto($photo);
                     $skSocialNotify->setMessageName("message_aac");
                     $skSocialNotify->setCreatedAt(new \DateTime());
@@ -133,20 +130,12 @@ class Comment extends BaseComment implements SignedCommentInterface {
             //enviar notificação para quem já validou fotografia comentada	
             //(x comentou a fotografia y) message_aad
             $validations = $entityManager->getRepository('SkaphandrusAppBundle:SkPhotoSpeciesValidation')->FindBy(
-                    array('photo_id' => $photo_id));
+                    array('photo' => $photo_id));
 
             foreach ($validations as $validation) {
-//                $entityManager->getRepository('SkaphandrusAppBundle:SkSocialNotify')->sendSocialNotifyFromComment(
-//                        $entity, $photoSpeciesValidation->getFosUser(), "message_aad");
-
-
-                if ($entity->getFosUser()->getId() <> $validation->getFosUser()->getId()) {
-
-                    $photo_id = substr($entity->getThread(), strpos($entity->getThread(), "-") + 1);
-                    $photo = $entityManager->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($photo_id);
-
+                if ($entity->getAuthor()->getId() <> $validation->getFosUser()->getId()) {
                     $skSocialNotify = new SkSocialNotify();
-                    $skSocialNotify->setUserFrom($entity->getFosUser());
+                    $skSocialNotify->setUserFrom($entity->getAuthor());
                     $skSocialNotify->setPhoto($photo);
                     $skSocialNotify->setMessageName("message_aad");
                     $skSocialNotify->setCreatedAt(new \DateTime());

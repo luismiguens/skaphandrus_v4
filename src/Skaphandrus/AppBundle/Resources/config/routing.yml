@@ -174,6 +174,13 @@ photo:
     requirements:
         _locale:  en|pt
 
+photo_no_slug:
+    path:     /{_locale}/underwater-photography/photo/{id}
+    defaults: { _controller: SkaphandrusAppBundle:Default:photo, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+
 photos:
     path:     /{_locale}/underwater-photography/photos
     defaults: { _controller: SkaphandrusAppBundle:Default:photos, _locale: en }

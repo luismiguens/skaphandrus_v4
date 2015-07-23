@@ -41,7 +41,7 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>{{ "page.user.h5.profile_detail"|trans }}</h5>
-                    <div class="ibox-tools">
+                    {#<div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
                         </a>
@@ -57,22 +57,22 @@
                         <!--<a class="close-link">
                             <i class="fa fa-times"></i>
                         </a>-->
-                    </div>
+                    </div>#}
                 </div>
                 <div>
                     <div class="ibox-content no-padding border-left-right">
-                        <img alt="image" class="img-responsive" src="img/profile_big.jpg">
+                      <img alt="image" class="img-responsive" src="{{ user.settings.getWebPath | imagine_filter('sk_widen_590') }}" />
                     </div>
                     <div class="ibox-content profile-content">
                         <h4><strong>{{ user.personal.name }}</strong></h4>
-                        <p><i class="fa fa-map-marker"></i> Riviera State 32/106</p>
+                        <!--<p><i class="fa fa-map-marker"></i> Riviera State 32/106</p>-->
                         <h5>
                             {{ "page.user.h5.about_me"|trans }}
                         </h5>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.
+                            {{user.settings.observations|raw}}
                         </p>
-                        <div class="row m-t-lg">
+                        <!--<div class="row m-t-lg">
                             <div class="col-md-4">
                                 <span class="bar">5,3,9,6,5,9,7,3,5,2</span>
                                 <h5><strong>169</strong> Posts</h5>
@@ -85,14 +85,14 @@
                                 <span class="bar">5,3,2,-1,-3,-2,2,3,5,2</span>
                                 <h5><strong>240</strong> Followers</h5>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="user-button">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <button type="button" class="btn btn-primary btn-sm btn-block"><i class="fa fa-envelope"></i> Send Message</button>
+                                    <a type="button" href="{{ url('fos_message_thread_new' )}}" class="btn btn-primary btn-sm btn-block"><i class="fa fa-envelope"></i> {{"page.user.label.send_message"}}</a>
                                 </div>
                                 <div class="col-md-6">
-                                    <button type="button" class="btn btn-default btn-sm btn-block"><i class="fa fa-coffee"></i> Buy a coffee</button>
+                                    <a type="button" href="{{ path('person_admin_new') }}" class="btn btn-default btn-sm btn-block"><i class="fa fa-group"></i>  {{"page.user.label.add_contact"}}</a>
                                 </div>
                             </div>
                         </div>
@@ -105,7 +105,7 @@
         <div class="col-md-8">
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
-                    <h1>{{ user.username }}</h1>
+                    <h1>{{ user.name }}</h1>
                     <!-- Start Panel -->
                     <div class="panel">
                         <div class="panel-heading">
@@ -174,7 +174,7 @@
                                     <input type="text" class="form-control input-sm m-b-xs" id="filter-species" placeholder="Search in table">
                                     <table class="footable footable-species table" data-page-size="50" data-filter=#filter-species>
                                         <thead>
-                                            <th>{{ "page.user.table.species"|trans }}</th>
+                                            <th>{{ "page.location.table.name"|trans }}</th>
                                             <th>{{ "page.user.table.num_photos"|trans }}</th>
                                         </thead>
                                         <tbody>
@@ -205,7 +205,7 @@
                                     <input type="text" class="form-control input-sm m-b-xs" id="filter-spots" placeholder="Search in table">
                                     <table class="footable footable-spots table" data-page-size="50" data-filter=#filter-spots>
                                         <thead>
-                                            <th>{{ "page.user.table.spots"|trans }}</th>
+                                            <th>{{ "page.location.table.name"|trans }}</th>
                                             <th>{{ "page.user.table.num_photos"|trans }}</th>
                                         </thead>
                                         <tbody>
@@ -234,7 +234,7 @@
                                 <div id="tab-{{tab_photosv_id}}" class="tab-pane {{tab_photosv_id==1?'active'}}">
                                     <h3>{{ "page.user.h3.photos_validated"|trans }}</h3>
                                     {% set pva = [] %}
-                                    {% for pv in user.photosValidated[:20] %}
+                                    {% for pv in user.photosValidated[:35] %}
                                         {% set pva = pva|merge([pv.photo]) %}
                                     {% endfor %}
                                     {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'photos': pva } })) }}

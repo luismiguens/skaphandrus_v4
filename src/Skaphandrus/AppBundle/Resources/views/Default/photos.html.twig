@@ -239,16 +239,16 @@
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/isotope.pkgd.min.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/imagesloaded.pkgd.min.js') }}"></script>
-    <script>
+    <script type="text/javascript">
 
-var $grid = $('.grid').imagesLoaded( function() {
-  // init Isotope after all images have loaded
-  $grid.isotope({
- // options
+        var $grid = $('.grid').imagesLoaded(function () {
+            // init Isotope after all images have loaded
+            $grid.isotope({
+                // options
                 itemSelector: '.grid-item',
                 layoutMode: 'masonry'
-  });
-});
+            });
+        });
 
     </script>
 
@@ -260,44 +260,31 @@ var $grid = $('.grid').imagesLoaded( function() {
         <h2>{{ "page.photos.h2.photos"|trans }}</h2>
         <div class="row grid">
             {% for photo in pagination %}
+
                 <div class="col-lg-4 grid-item">
                     <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>{{ photo.title }}</h5>
-                            <div class="ibox-tools">
-                                <!--<a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>-->
-                                <a href="#" data-toggle="dropdown" class="dropdown-toggle">
-                                    <i class="fa fa-wrench"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user">
-                                    <li><a href="#">Config option 1</a>
-                                    </li>
-                                    <li><a href="#">Config option 3</a>
-                                    </li>
-                                </ul>
-                                <a class="close-link">
-                                    <i class="fa fa-times"></i>
+                        <!--<div class="ibox-title"><h5>{{photo.title}}</h5></div>-->
+                        <div>
+                            <div class="ibox-content ibox-content no-padding border-left-right">
+                                <a href="{{ url_to_photo(photo) }}" title="{{ photo.title }}">
+                                    <img alt="image" class="img-responsive" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />
                                 </a>
                             </div>
-                        </div>
-                        <div class="ibox-content">
-                            <a href="{{ url_to_photo(photo) }}" class="thumbnail"> <img src="{{ photo.webPath | imagine_filter('sk_widen_590') }}" alt="{{ photo.title }}"></a>
-
-                            <ul class="list-unstyled">
-                                <li>{{ "page.photos.label.username"|trans }}: <a href="{{ url_to_user(photo.fosUser) }}">{{ photo.fosUser.name }}</a></li>
-                                    {% if photo.spot is not null %}
-                                    <li>{{ "page.photos.label.spot"|trans }}: <a href="{{ url_to_spot(photo.spot) }}">{{ photo.spot.name }}</a></li>
-                                    {% endif %}
-                                    {% if photo.species is not null %}
-                                    <li>{{ "page.photos.label.species"|trans }}: <a href="{{ url_to_species(photo.species) }}">{{ photo.species.name }}</a></li>
-                                    {% endif %}
-                            </ul>
+                            <div class="ibox-content profile-content">
+                                <h4><strong>{{ photo.title }}</strong></h4>
+                                <ul class="list-unstyled">
+                                    <li>{{ "page.photos.label.username"|trans }}: <a href="{{ url_to_user(photo.fosUser) }}">{{ photo.fosUser.name }}</a></li>
+                                        {% if photo.spot is not null %}
+                                        <li>{{ "page.photos.label.spot"|trans }}: <a href="{{ url_to_spot(photo.spot) }}">{{ photo.spot.name }}</a></li>
+                                        {% endif %}
+                                        {% if photo.species is not null %}
+                                        <li>{{ "page.photos.label.species"|trans }}: <a href="{{ url_to_species(photo.species) }}">{{ photo.species.name }}</a></li>
+                                        {% endif %}
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-
 
             {% endfor %}
 
@@ -305,8 +292,8 @@ var $grid = $('.grid').imagesLoaded( function() {
         <div class="navigation">
             {{ knp_pagination_render(pagination) }}
         </div>
-        
-        
-       
+
+
+
     </div>
 {% endblock %}

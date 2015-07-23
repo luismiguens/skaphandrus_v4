@@ -594,7 +594,7 @@ class DefaultController extends Controller {
      * Photo page.
      */
 
-    public function photoAction($id, $slug) {
+    public function photoAction($id, $slug=null) {
         $title = Utils::unslugify($slug);
 
         $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
@@ -782,7 +782,7 @@ class DefaultController extends Controller {
      * <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
      */
 
-    public function skGridAction($parameters, $limit = 20, $order = array('id' => 'desc')) {
+    public function skGridAction($parameters, $limit = 35, $order = array('id' => 'desc')) {
 
         if (isset($parameters['photos'])) {
             $photos = $parameters['photos'];

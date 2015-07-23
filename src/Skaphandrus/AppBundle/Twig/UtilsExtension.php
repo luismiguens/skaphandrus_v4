@@ -514,7 +514,7 @@ $this->translator->setLocale($locale);
 
     public function url_to_user($user) {
         $path_function = $this->getPathFunction();
-
+//dump($user);
         return call_user_func($path_function, 'user', array(
             'id' => $user->getId(),
             'username' => $user->getUsername(),
