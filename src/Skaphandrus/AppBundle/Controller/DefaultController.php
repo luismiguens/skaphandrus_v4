@@ -721,7 +721,7 @@ class DefaultController extends Controller {
 
         $params = $request->query->all();
 
-        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($params, 21);
+        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($params, 30);
         $query = $qb->getQuery();
 
         //var_dump($params);
@@ -729,7 +729,7 @@ class DefaultController extends Controller {
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-                $query, $this->get('request')->query->getInt('page', 1)/* page number */, 20/* limit per page */
+                $query, $this->get('request')->query->getInt('page', 1)/* page number */, 30/* limit per page */
         );
 
         // parameters to template
