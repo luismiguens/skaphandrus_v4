@@ -169,7 +169,7 @@
 
 
                         {% if photo.keyword|length > 0 %}
-                            <h3>{{ "page.photo.h3.tags"|trans }}</h3>
+                            <h3 class="tag-title">{{ "page.photo.h3.tags"|trans }}</h3>
                             <ul class="tag-list" style="padding: 0;">
                                 {% for keyword in photo.keyword %}
                                     <li><a href="">{{ keyword.keyword }}</a></li>
