@@ -109,7 +109,7 @@ class IdentificationController extends Controller {
 
                 //100px 100px
 //                $character['image_url'] = 'http://skaphandrus.com/thumbnails/small/characters/' . $character_obj->getImage();
-                  $character['image_url'] = 'http://skaphandrus.com/media/cache/resolve/sk_widen_240/uploads/characters/' . $character_obj->getImage();
+                  $character['image_url'] = 'http://skaphandrus.com/media/cache/sk_widen_240/uploads/characters/' . $character_obj->getImage();
                   
                   //$this->container->get('liip_imagine.filter.manager')->applyFilter($character_obj->getImage(), 'profilepic')->getContent();
                   
