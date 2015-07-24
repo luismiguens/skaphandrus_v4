@@ -108,7 +108,9 @@ class IdentificationController extends Controller {
                 $character['name'] = $character_obj->translate()->getName();
 
                 //100px 100px
-                $character['image_url'] = 'http://skaphandrus.com/thumbnails/small/characters/' . $character_obj->getImage();
+//                $character['image_url'] = 'http://skaphandrus.com/thumbnails/small/characters/' . $character_obj->getImage();
+                  $character['image_url'] = 'http://skaphandrus.com/media/cache/resolve/sk_widen_240/uploads/characters/' . $character_obj->getImage();
+                
                 $character['image_hash'] = $character_obj->getImage();
 
                 $characters[] = $character;
@@ -246,7 +248,9 @@ class IdentificationController extends Controller {
                     $module['is_enabled'] = $module_object->getIsEnabled();
 
                     //100px 100px
-                    $module['image_url'] = 'http://skaphandrus.com/thumbnails/default/characters/' . $module_object->getImage() . '.jpg';
+                    //$module['image_url'] = 'http://skaphandrus.com/thumbnails/default/characters/' . $module_object->getImage() . '.jpg';
+                    $module['image_url'] = 'http://skaphandrus.com/media/cache/resolve/sk_downscale_600_400/uploads/characters/' . $module_object->getImage() . '.jpg';
+
 
                     $modules[] = $module;
                 }

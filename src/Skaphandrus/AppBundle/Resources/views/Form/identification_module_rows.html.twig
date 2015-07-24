@@ -1,0 +1,24 @@
+{% block form_row %}
+    {% spaceless %}
+        <div class="form-group">
+            <label class="col-sm-3 control-label">
+                {{ form_label(form) }}
+            </label>
+
+            {{ form_errors(form) }}
+            <div class="col-sm-9">
+                {# Show image if it's a file field and there is an image defined #}
+                {% if form.vars.type is defined and form.vars.type =='file' and (form.parent.vars.value.image is defined or form.parent.vars.value.photo is defined) %}
+                    <img class="thumbnail" src="{{ form.parent.vars.value.getWebPath | imagine_filter('sk_downscale_600_400') }}" />
+                {% endif %}
+                {{ form_widget(form) }}
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+    {% endspaceless %}
+{% endblock form_row %}
+
+
+
+
+

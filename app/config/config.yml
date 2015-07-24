@@ -239,6 +239,9 @@ liip_imagine:
 
     filter_sets:
         cache: ~
+        
+        
+        
         small_thumb:
             quality: 100
             filters:
@@ -285,11 +288,16 @@ liip_imagine:
         sk_upscale_800_600:
             filters:
                 upscale: { min: [800, 600] }
-
+        #for photo page
         sk_downscale_800_600:
             quality: 100
             filters:
                 thumbnail: { size: [800, 600], mode: inset }
+        #for ocean life id modules page
+        sk_downscale_600_400:
+            quality: 100
+            filters:
+                thumbnail: { size: [600, 400], mode: inset }
 
 fos_comment:
     db_driver: orm
