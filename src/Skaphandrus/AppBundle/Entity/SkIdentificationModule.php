@@ -31,7 +31,7 @@ class SkIdentificationModule {
     /**
      * @var boolean
      */
-    private $isEnabled = FALSE;
+    private $isEnabled;
 
     /**
      * @var boolean
