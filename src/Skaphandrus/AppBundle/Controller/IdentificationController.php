@@ -542,7 +542,7 @@ class IdentificationController extends Controller {
         return new JsonResponse($output);
     }
 
-    // public function testsAction() {
-    //     return $this->render('SkaphandrusAppBundle:Identification:test.html.twig');
-    // }
+     public function testsAction() {
+         return $this->render('SkaphandrusAppBundle:Identification:test.html.twig');
+     }
 }

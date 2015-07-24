@@ -293,6 +293,13 @@ identification_taxons:
 
 
 
+identification_tests:
+    path:     /{_locale}/app/tests
+    defaults: { _controller: SkaphandrusAppBundle:Identification:tests, _locale: en }
+
+
+
+
 #identification_criterias:
 #  pattern: /{_locale}/app/criterias.{_format}
 #  defaults: { _controller: SkaphandrusAppBundle:Identification:jsonCriteriasList, _format: json}
@@ -327,10 +334,6 @@ identification_taxons:
 
 
 
-
-# identification_tests:
-#     path:     /{_locale}/app/tests
-#     defaults: { _controller: SkaphandrusAppBundle:Identification:tests, _locale: en }
 
 ##################################################################################
 #### AUTOCOMPLETE AJAX ROUTES
