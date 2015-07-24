@@ -266,6 +266,10 @@ class IdentificationController extends Controller {
             $results[] = $master;
         }
 
+                header('Access-Control-Allow-Origin: *');
+
+        //echo json_encode($output);
+        
         return new JsonResponse($results);
     }
 
