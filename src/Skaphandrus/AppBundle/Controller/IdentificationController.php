@@ -252,7 +252,7 @@ class IdentificationController extends Controller {
 
                     //100px 100px
                     //$module['image_url'] = 'http://skaphandrus.com/thumbnails/default/characters/' . $module_object->getImage() . '.jpg';
-                    $module['image_url'] = 'http://skaphandrus.com/media/cache/resolve/sk_downscale_600_400/uploads/characters/' . $module_object->getImage() . '.jpg';
+                    $module['image_url'] = 'http://skaphandrus.com/media/cache/sk_downscale_600_400/uploads/characters/' . $module_object->getImage() . '.jpg';
                     
                     
                     
