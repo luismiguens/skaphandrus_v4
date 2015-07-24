@@ -169,7 +169,7 @@ class SkIdentificationCharacter
     protected function getUploadDir() {
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
-        return 'uploads/characteres';
+        return 'uploads/characters';
     }
 
     public static function loadValidatorMetadata(ClassMetadata $metadata) {
