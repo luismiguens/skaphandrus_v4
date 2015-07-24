@@ -289,7 +289,7 @@ liip_imagine:
         sk_downscale_800_600:
             quality: 100
             filters:
-                thumbnail: { size: [800, 600], mode: outbound }
+                thumbnail: { size: [800, 600], mode: inset }
 
 fos_comment:
     db_driver: orm
