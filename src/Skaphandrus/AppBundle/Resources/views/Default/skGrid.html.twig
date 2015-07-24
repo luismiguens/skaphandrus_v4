@@ -1,7 +1,7 @@
 <div class="lightBoxGallery">
     {% for photo in photos %}
         <a href="{{ url_to_photo(photo) }}" title="{{ photo.title }}" >
-            <img alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('sk_thumbnail_outbound_100') }}" />
+            <img alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('new_sk_thumbnail_outbound_100') }}" />
         </a>
     {% endfor %}
     <a href="{{ path('photos', parameters) }}">See More</a>
