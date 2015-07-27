@@ -3,14 +3,14 @@
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
 <!--[if !IE]><!--> <html lang="{{ app.request.locale }}" xmlns:fb="http://www.facebook.com/2008/fbml" > <!--<![endif]--> 
-    
+
 
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# skaphandrus: http://ogp.me/ns/fb/skaphandrus#">
-        
+
         <title>{% block page_title %}{% endblock %}</title>
         <link rel="shortcut icon" href="favicon.ico"> 
-        
-        
+
+
         <!-- Meta -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,12 +20,12 @@
         <meta name="robots" content="noodp">
         <meta name="keywords" content="{% block page_keywords %}{% endblock %}" />
         <meta name="description" content="{% block page_description %}{% endblock %}" />
-       
-        
+
+
         <!-- smart app link -->        
         <meta name="apple-itunes-app" content="app-id=894101166"/>
         <meta name="google-play-app" content="app-id=com.skaphandrus.oceanlifeid">
-        
+
         <!-- hreflang for language -->
         <link rel="alternate" hreflang="pt" href="http://skaphandrus.com/pt" />
         <link rel="alternate" hreflang="en" href="http://skaphandrus.com/en" />
@@ -62,15 +62,15 @@
                 <div class="col-sm-4">
                     <div class="title-action">
                     {% block heading_action %}{% endblock %}
-                   </div>
                 </div>
             </div>
+        </div>
         <!-- page-heading end -->
 
     {% block body %}{% endblock %}
 
-{% include 'SkaphandrusAppBundle:Common:footer.html.twig'%}
-   
+    {% include 'SkaphandrusAppBundle:Common:footer.html.twig'%}
+
 
 </div>
 </div>
@@ -85,8 +85,10 @@
     <!-- Custom and plugin javascript -->
     <script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>
 {% endblock %}
+
+{% include 'SkaphandrusAppBundle:Common:analytics.html.twig'%}
 
 </body>
 

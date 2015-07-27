@@ -784,7 +784,7 @@ class DefaultController extends Controller {
 
     public function skGridAction($parameters, $limit = 35, $order = array('id' => 'desc')) {
 
-        ini_set('memory_limit', '64M');
+       // ini_set('memory_limit', '64M');
         
         if (isset($parameters['photos'])) {
             $photos = $parameters['photos'];
