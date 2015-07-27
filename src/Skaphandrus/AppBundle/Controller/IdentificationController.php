@@ -400,7 +400,7 @@ class IdentificationController extends Controller {
         }
 
         // classList no topo
-        foreach ($classList as $key => $class_obj) {
+        foreach ($classList as $key => $value) {
             $class_obj = $value->getskClasse();
 
             $class = array();
