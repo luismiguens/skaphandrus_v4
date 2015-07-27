@@ -401,7 +401,7 @@ class IdentificationController extends Controller {
 
         // classList no topo
         foreach ($classList as $key => $class_obj) {
-            $class_obj = $value->getskClass();
+            //$class_obj = $value->getskClass();
 
             $class = array();
             $class['id'] = $class_obj->getId();
@@ -456,9 +456,9 @@ class IdentificationController extends Controller {
         }
 
         // orderList no topo
-        foreach ($orderList as $key => $value) {
+        foreach ($orderList as $key => $order_obj) {
 
-            $order_obj = $value->getskOrder();
+            //$order_obj = $value->getskOrder();
 
             $ordem = array();
             $ordem['id'] = $order_obj->getId();
