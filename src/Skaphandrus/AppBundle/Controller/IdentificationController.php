@@ -257,9 +257,9 @@ class IdentificationController extends Controller {
 
                     //100px 100px
                     //$module['image_url'] = 'http://skaphandrus.com/thumbnails/default/characters/' . $module_object->getImage() . '.jpg';
-                    $module['image_url'] = 'http://skaphandrus.com/media/cache/sk_downscale_600_400/uploads/characters/' . $module_object->getImage();
+                    //$module['image_url'] = 'http://skaphandrus.com/media/cache/sk_downscale_600_400/uploads/characters/' . $module_object->getImage();
                     
-                    
+                    $module['image_url'] =  $this->get('liip_imagine.cache.manager')->getBrowserPath($module_object->getWebPath(), 'sk_downscale_600_400');
                     
 
 
