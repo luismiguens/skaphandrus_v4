@@ -166,7 +166,7 @@ $this->translator->setLocale($locale);
             case 'message_aaa':
                 $photo = $notify->getPhoto();
                 return $this->translator->trans(
-                                '%1% comentou a tua fotografia %2%.', array('%1%' => $this->link_to_user($notify->getUserFrom()),
+                                '%1% comentou a tua fotografia %2%.', array('%1%' => "<strong>".$this->link_to_user($notify->getUserFrom())."</strong>",
                             '%2%' => $this->link_to_photo($photo)));
 
             // message_aab x tambem comentou fotografia y	
@@ -221,9 +221,8 @@ $this->translator->setLocale($locale);
             case 'message_aca':
                 $photo = $notify->getPhoto();
                 $message = $notify->getMessage();
-                return $this->translator->trans(
-                                '%1% enviou-te uma nova %2%.', array('%1%' => $this->link_to_user($notify->getUserFrom()),
-                            '%2%' => $this->link_to_message($message)));
+                return $this->translator->trans('%1% enviou-te uma nova %2%.', array('%1%' => "<strong>".$notify->getUserFrom()."</strong>",'%2%' => $this->translator->trans('message')));
+                //return $this->translator->trans('%1% enviou-te uma nova %2%.', array('%1%' => "<strong>".$this->link_to_user($notify->getUserFrom())."</strong>",'%2%' => $this->link_to_message($message)));
 
             // message_ada x associou especie y na fotografia z
             case 'message_ada':

@@ -234,9 +234,9 @@ class SkIdentificationModule {
 
 
         if ($this->getIsFree()) {
-            $this->points = 0;
+            return 0;
         } else {
-            $this->points = count($this->getSpecies());
+            return $this->points; 
         }
 
         return $this->points;
@@ -499,6 +499,17 @@ class SkIdentificationModule {
      */
     public function getUsers() {
         return $this->users;
+    }
+
+    public function doStuffOnPostUpdate(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+
+        $entity = $args->getEntity();
+        $entityManager = $args->getEntityManager();
+
+        $entity->setPoints(count($entity->getSpecies()));
+
+        $entityManager->persist($entity);
+        $entityManager->flush();
     }
 
 }
