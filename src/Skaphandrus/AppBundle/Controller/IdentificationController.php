@@ -370,6 +370,10 @@ class IdentificationController extends Controller {
             $species['criterias'] = $this->getDoctrine()
                     ->getRepository("SkaphandrusAppBundle:SkIdentificationCharacter")
                     ->getCharactersIDSFromSpecies($species_obj->getId(), $module_id, $this->get('request')->getLocale());
+            
+            $species['criterias'] = null;
+            
+            
         }
         return new JsonResponse($species);
     }
