@@ -9,7 +9,9 @@
             <div class="col-sm-9">
                 {# Show image if it's a file field and there is an image defined #}
                 {% if form.vars.type is defined and form.vars.type =='file' and (form.parent.vars.value.image is defined or form.parent.vars.value.photo is defined) %}
-                    <img class="thumbnail" src="{{ form.parent.vars.value.getWebPath | imagine_filter('sk_widen_240') }}" />
+                    {% if form.parent.vars.value.getWebPath is not empty %}
+                        <img class="thumbnail" src="{{ form.parent.vars.value.getWebPath | imagine_filter('sk_widen_240') }}" />
+                    {% endif %}
                 {% endif %}
                 {{ form_widget(form) }}
             </div>
