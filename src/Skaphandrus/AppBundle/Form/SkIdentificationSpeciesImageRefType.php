@@ -15,8 +15,16 @@ class SkIdentificationSpeciesImageRefType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('imageUrl')
-            ->add('imageSrc')
+            ->add('imageUrl', 'textarea', array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'image.url',
+                    'required' => false
+                        ))
+            ->add('imageSrc', 'textarea', array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'image.src',
+                    'required' => false
+                        ))
             ->add('isPrimary', 'checkbox', array(
                 'label'    => 'form.identification_species.label.primary',
                 'required' => FALSE
