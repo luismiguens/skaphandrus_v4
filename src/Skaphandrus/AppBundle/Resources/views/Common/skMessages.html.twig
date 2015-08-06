@@ -9,11 +9,11 @@
             <li>
                 <div class="dropdown-messages-box">
                     <a href="{{url_to_user(notification.userFrom)}}" class="pull-left">
-                       <img alt="image" class="img-circle" src="{{ notification.userFrom.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}" />
+                      {# <img alt="image" class="img-circle" src="{{ notification.userFrom.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}" />#}
                     </a>
                     <div class="media-body ">
                         <small class="pull-right text-navy">{{notification.createdAt|time_diff}}</small>
-                        {#<strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>#}
+                        {#<strong>Angelo Gomes</strong> started following <strong>Monica Smith</strong>. <br>#}
                         {{ notification_message(notification, app.request.locale)|raw }} <br>
                         <small class="text-muted">{{notification.createdAt|date("F jS \\a\\t g:ia")}}</small>
                     </div>

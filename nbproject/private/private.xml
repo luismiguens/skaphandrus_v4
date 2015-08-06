@@ -12,6 +12,7 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Entity/SkPhotoContest.php</file>
             <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/config/vich_uploader/SkPhotoContest.yml</file>
             <file>file:/home/ruben/sfproject/skaphandrus_v4/app/config/config.yml</file>
@@ -19,6 +20,13 @@
             <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Form/SkPhotoContestType.php</file>
             <file>file:/home/ruben/sfproject/skaphandrus_v4/app/AppKernel.php</file>
             <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/SkPhotoContest/index.html.twig</file>
+=======
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/SkIdentificationSpecies/edit.html.twig</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/SkIdentificationGroup/index.html.twig</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/SkIdentificationSpecies/index.html.twig</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Form/identification_species_rows.html.twig</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/SkIdentificationCriteria/index.html.twig</file>
+>>>>>>> 86535cabad4261aef4bcaac8c14f92e56cc7fe16
         </group>
     </open-files>
 </project-private>

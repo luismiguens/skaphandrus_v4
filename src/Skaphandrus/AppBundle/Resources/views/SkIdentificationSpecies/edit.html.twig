@@ -1,6 +1,6 @@
 {% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
 
-{% form_theme edit_form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
+{% form_theme edit_form 'SkaphandrusAppBundle:Form:identification_species_rows.html.twig' %}
 
 {% block javascripts %}
     {{ parent() }}
@@ -61,7 +61,7 @@
 
 
 {% block heading_title %}
-    {{ "form.identification_species.h1.title"|trans }}
+    {{ entity.name }}
 {% endblock %}
 
 
