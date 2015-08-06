@@ -1,0 +1,59 @@
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% form_theme form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
+     <script src="{{ asset('bundles/skaphandrusapp/js/hack/autocompleter-jqueryui.js') }}"></script>
+    
+{% endblock %}
+
+
+{% block styleshets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block heading_title %}
+    {{ "form.photo_contest_category.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="{{ path('photo_contest_category_admin')}}">{{ "breadcrumb.photo_contest_category"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.add_photo_contest_category"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block heading_action %}
+    <a href="{{ path('photo_contest_category_admin_new') }}" class="btn btn-primary">{{ "form.photo_contest_category.btn.add"|trans }}</a>
+{% endblock %}
+
+{% block form_title_description %}
+    {{ "form.photo_contest_category.text.description"|trans }}
+{% endblock %}
+
+
+{% block body %}
+    
+    
+    
+ <style>
+.ui-autocomplete-loading {
+background: white url("http://jqueryui.com/resources/demos/autocomplete/images/ui-anim_basic_16x16.gif") right center no-repeat;
+}
+</style>
+    
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_widget(form) }}
+    {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'photo_contest_category_admin', 'new_form':false} %}
+    {{ form_end(form) }}
+
+{% endblock %}
+
+
+
+
+

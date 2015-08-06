@@ -1,3 +1,15 @@
+skaphandrus_app_photo_contest_sponsor_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skphotocontestsponsor.yml"
+    prefix:   /photo_contest_sponsor_admin
+
+skaphandrus_app_photo_contest_category_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skphotocontestcategory.yml"
+    prefix:   /{_locale}/photo_contest_category_admin
+
+skaphandrus_app_photo_contest_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skphotocontest.yml"
+    prefix:   /{_locale}/photo_contest_admin
+
 
 
 #### Photos Species Validation and Sugestion Routes

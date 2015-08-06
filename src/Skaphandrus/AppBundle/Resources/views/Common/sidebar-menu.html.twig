@@ -75,9 +75,9 @@
             </li>
             {% if is_granted("ROLE_ADMIN") %}
                 
-                            <li class="{{ 'TranslationController' in app.request.attributes.get("_controller")?'active' }}">
-                                <a target="_blank" href="{{ path('lexik_translation_grid') }}"><i class="fa fa-language"></i> <span class="nav-label">Translations </span>{#<span class="label label-warning pull-right">16/24</span>#}</a>
-            </li>
+                <li class="{{ 'TranslationController' in app.request.attributes.get("_controller")?'active' }}">
+                    <a target="_blank" href="{{ path('lexik_translation_grid') }}"><i class="fa fa-language"></i> <span class="nav-label">Translations </span>{#<span class="label label-warning pull-right">16/24</span>#}</a>
+                </li>
                 
                 <li class="{{ 'SkIdentification' in app.request.attributes.get("_controller")?'active' }}">
                     <a href="#"><i class="fa fa-key"></i> <span class="nav-label">{{ "identification_admin"|trans }} </span><span class="fa arrow"></span></a>
@@ -88,8 +88,14 @@
                         <li><a href="{{ path('identification_species_admin') }}">{{ "identification_species_admin"|trans }}</a></li>
                     </ul>
                 </li>
-                
-   
+
+                <li class="{{ 'SkPhotoContestController' in app.request.attributes.get("_controller")?'active' }}">
+                    <a href="#"><i class="fa fa-photo"></i> <span class="nav-label">{{ "photo_contest_admin"|trans }} </span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse" stylse="height: 0px;">
+                        <li><a href="{{ path('photo_contest_admin') }}">{{ "photo_contest_admin"|trans }}</a></li>
+                        <li><a href="{{ path('photo_contest_category_admin') }}">{{ "photo_contest_category_admin"|trans }}</a></li>
+                    </ul>
+                </li>
                 
                 
             {% endif %}
