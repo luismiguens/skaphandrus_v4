@@ -1,4 +1,4 @@
 Skaphandrus\AppBundle\Entity\SkPhotoContest:
     imageFile:
-        mapping:           xxx
+        mapping:           contest_image
         filename_property: image

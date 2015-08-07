@@ -131,6 +131,11 @@ class SkPhotoContestJudge
     public function getAward()
     {
         return $this->award;
+    }    
+    
+    public function __toString() {
+        return $this->getFosUser()->getName();
     }
+    
 }
 

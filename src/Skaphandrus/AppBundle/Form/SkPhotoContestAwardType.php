@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SkPhotoContestType extends AbstractType
+class SkPhotoContestAwardType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,44 +15,45 @@ class SkPhotoContestType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-                
-            ->add('name', null, array(
-                'attr' => array('class' => 'form-control'),
-                'label'=>'form.photo_contest.label.name'
-                ))
-                
-            ->add('logo', null, array(
-                'attr' => array('class' => 'form-control'),
-                'label'=>'form.photo_contest.label.logo'
-                ))
-                
-//            ->add('image')
             ->add('imageFile', 'vich_image', array(
-//                'label'=>'form.photo_contest.label.image_file',
+//                'label'=>'form.photo_contest_award.label.image_file',
                 'required'      => false,
                 'allow_delete'  => false, // not mandatory, default is true
                 'download_link' => false, // not mandatory, default is true
                 ))
                 
-            ->add('beginAt', null, array(
+//            ->add('winnerPhoto', null, array(
 //                'attr' => array('class' => 'form-control'),
-                'label'=>'form.photo_contest.label.begin_at'
+//                'label'=>'form.photo_contest_award.label.winner_photo'
+//                ))
+                
+            ->add('contest', null, array(
+                'required'=> true,
+                'attr' => array('class' => 'form-control'),
+                'label'=>'form.photo_contest_award.label.contest'
+                ))
+          
+            ->add('winnerFosUser', 'autocomplete', array(
+                'required'=> false,
+                'class' => 'SkaphandrusAppBundle:FosUser',
+                'attr' => array('class' => 'form-control m-b'),
+                'label'=>'form.photo_contest_award.label.winnerFosUser', 
+                ))
+               
+            ->add('category', null, array(
+                'attr' => array('class' => 'form-control'),
+                'label'=>'form.photo_contest_award.label.category'
                 ))
                 
-            ->add('endAt', null, array(
-//                'attr' => array('class' => 'form-control'),
-                'label'=>'form.photo_contest.label.end_at'
-                ))
+//            ->add('judge', 'entity', array(
+//                'label'=>'form.photo_contest_award.label.judge',
+//                'class' => 'SkaphandrusAppBundle:SkPhotoContestJudge','expanded' => true, 
+//                'multiple' => true ))
                 
-            ->add('isJudge', null, array(
-//                'attr' => array('class' => 'form-control'),
-                'label'=>'form.photo_contest.label.is_judge'
-                ))
-                
-            ->add('createdAt', null, array(
-//                'attr' => array('class' => 'form-control'),
-                'label'=>'form.photo_contest.label.created_at'
-                ))
+            ->add('sponsor', 'entity', array(
+                'label'=>'form.photo_contest_award.label.sponsor',
+                'class' => 'SkaphandrusAppBundle:SkPhotoContestSponsor','expanded' => true, 
+                'multiple' => true ))
                 
             ->add('translations', 'a2lix_translations', array(
                 
@@ -60,7 +61,7 @@ class SkPhotoContestType extends AbstractType
                     
                     'description' => array(
                         'field_type' => 'textarea',
-                        'label' => 'form.photo_contest.label.description', 
+                        'label' => 'form.photo_contest_award.label.description', 
                           'attr' => array('class' => 'form-control', 'rows'=>'8'),
           //              'locale_options' => array(
           //                  'fr' => array(
@@ -71,9 +72,9 @@ class SkPhotoContestType extends AbstractType
           //                  ),
           //              )
                           ),
-                    'rules' => array(
-                        'field_type' => 'textarea',
-                        'label' => 'form.photo_contest.label.rules',
+                    'name' => array(
+                        'field_type' => 'text',
+                        'label' => 'form.photo_contest_award_award.label.name',
                         'attr' => array('class' => 'form-control',  'rows'=>'40'),
         //                  'locale_options' => array(
         //                    'en' => array(
@@ -86,7 +87,6 @@ class SkPhotoContestType extends AbstractType
                         ),
             )))
                 
-                
         ;
     }
     
@@ -96,7 +96,7 @@ class SkPhotoContestType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Skaphandrus\AppBundle\Entity\SkPhotoContest'
+            'data_class' => 'Skaphandrus\AppBundle\Entity\SkPhotoContestAward'
         ));
     }
 
@@ -105,6 +105,6 @@ class SkPhotoContestType extends AbstractType
      */
     public function getName()
     {
-        return 'skaphandrus_appbundle_skphotocontest';
+        return 'skaphandrus_appbundle_skphotocontestaward';
     }
 }

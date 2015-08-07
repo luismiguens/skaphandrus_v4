@@ -2,9 +2,9 @@ photo_contest_sponsor_admin:
     path:     /
     defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestSponsor:index" }
 
-photo_contest_sponsor_admin_show:
-    path:     /{id}/show
-    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestSponsor:show" }
+#photo_contest_sponsor_admin_show:
+#    path:     /{id}/show
+#    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestSponsor:show" }
 
 photo_contest_sponsor_admin_new:
     path:     /new

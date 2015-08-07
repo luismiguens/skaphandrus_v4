@@ -5,37 +5,37 @@ namespace Skaphandrus\AppBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor;
-use Skaphandrus\AppBundle\Form\SkPhotoContestSponsorType;
+use Skaphandrus\AppBundle\Entity\SkPhotoContestAward;
+use Skaphandrus\AppBundle\Form\SkPhotoContestAwardType;
 
 /**
- * SkPhotoContestSponsor controller.
+ * SkPhotoContestAward controller.
  *
  */
-class SkPhotoContestSponsorController extends Controller
+class SkPhotoContestAwardController extends Controller
 {
 
     /**
-     * Lists all SkPhotoContestSponsor entities.
+     * Lists all SkPhotoContestAward entities.
      *
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestSponsor')->findAll();
+        $entities = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestAward')->findAll();
 
-        return $this->render('SkaphandrusAppBundle:SkPhotoContestSponsor:index.html.twig', array(
+        return $this->render('SkaphandrusAppBundle:SkPhotoContestAward:index.html.twig', array(
             'entities' => $entities,
         ));
     }
     /**
-     * Creates a new SkPhotoContestSponsor entity.
+     * Creates a new SkPhotoContestAward entity.
      *
      */
     public function createAction(Request $request)
     {
-        $entity = new SkPhotoContestSponsor();
+        $entity = new SkPhotoContestAward();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -44,26 +44,26 @@ class SkPhotoContestSponsorController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('photo_contest_sponsor_admin_edit', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('photo_contest_award_admin_edit', array('id' => $entity->getId())));
         }
 
-        return $this->render('SkaphandrusAppBundle:SkPhotoContestSponsor:new.html.twig', array(
+        return $this->render('SkaphandrusAppBundle:SkPhotoContestAward:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
     }
 
     /**
-     * Creates a form to create a SkPhotoContestSponsor entity.
+     * Creates a form to create a SkPhotoContestAward entity.
      *
-     * @param SkPhotoContestSponsor $entity The entity
+     * @param SkPhotoContestAward $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(SkPhotoContestSponsor $entity)
+    private function createCreateForm(SkPhotoContestAward $entity)
     {
-        $form = $this->createForm(new SkPhotoContestSponsorType(), $entity, array(
-            'action' => $this->generateUrl('photo_contest_sponsor_admin_create'),
+        $form = $this->createForm(new SkPhotoContestAwardType(), $entity, array(
+            'action' => $this->generateUrl('photo_contest_award_admin_create'),
             'method' => 'POST',
         ));
 
@@ -73,60 +73,60 @@ class SkPhotoContestSponsorController extends Controller
     }
 
     /**
-     * Displays a form to create a new SkPhotoContestSponsor entity.
+     * Displays a form to create a new SkPhotoContestAward entity.
      *
      */
     public function newAction()
     {
-        $entity = new SkPhotoContestSponsor();
+        $entity = new SkPhotoContestAward();
         $form   = $this->createCreateForm($entity);
 
-        return $this->render('SkaphandrusAppBundle:SkPhotoContestSponsor:new.html.twig', array(
+        return $this->render('SkaphandrusAppBundle:SkPhotoContestAward:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
     }
 
     /**
-     * Finds and displays a SkPhotoContestSponsor entity.
+     * Finds and displays a SkPhotoContestAward entity.
      *
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestSponsor')->find($id);
+        $entity = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestAward')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find SkPhotoContestSponsor entity.');
+            throw $this->createNotFoundException('Unable to find SkPhotoContestAward entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('SkaphandrusAppBundle:SkPhotoContestSponsor:show.html.twig', array(
+        return $this->render('SkaphandrusAppBundle:SkPhotoContestAward:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-     * Displays a form to edit an existing SkPhotoContestSponsor entity.
+     * Displays a form to edit an existing SkPhotoContestAward entity.
      *
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestSponsor')->find($id);
+        $entity = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestAward')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find SkPhotoContestSponsor entity.');
+            throw $this->createNotFoundException('Unable to find SkPhotoContestAward entity.');
         }
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('SkaphandrusAppBundle:SkPhotoContestSponsor:edit.html.twig', array(
+        return $this->render('SkaphandrusAppBundle:SkPhotoContestAward:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -134,16 +134,16 @@ class SkPhotoContestSponsorController extends Controller
     }
 
     /**
-    * Creates a form to edit a SkPhotoContestSponsor entity.
+    * Creates a form to edit a SkPhotoContestAward entity.
     *
-    * @param SkPhotoContestSponsor $entity The entity
+    * @param SkPhotoContestAward $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(SkPhotoContestSponsor $entity)
+    private function createEditForm(SkPhotoContestAward $entity)
     {
-        $form = $this->createForm(new SkPhotoContestSponsorType(), $entity, array(
-            'action' => $this->generateUrl('photo_contest_sponsor_admin_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new SkPhotoContestAwardType(), $entity, array(
+            'action' => $this->generateUrl('photo_contest_award_admin_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -152,17 +152,17 @@ class SkPhotoContestSponsorController extends Controller
         return $form;
     }
     /**
-     * Edits an existing SkPhotoContestSponsor entity.
+     * Edits an existing SkPhotoContestAward entity.
      *
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestSponsor')->find($id);
+        $entity = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestAward')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find SkPhotoContestSponsor entity.');
+            throw $this->createNotFoundException('Unable to find SkPhotoContestAward entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -172,17 +172,17 @@ class SkPhotoContestSponsorController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('photo_contest_sponsor_admin_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('photo_contest_award_admin_edit', array('id' => $id)));
         }
 
-        return $this->render('SkaphandrusAppBundle:SkPhotoContestSponsor:edit.html.twig', array(
+        return $this->render('SkaphandrusAppBundle:SkPhotoContestAward:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
     /**
-     * Deletes a SkPhotoContestSponsor entity.
+     * Deletes a SkPhotoContestAward entity.
      *
      */
     public function deleteAction(Request $request, $id)
@@ -192,21 +192,21 @@ class SkPhotoContestSponsorController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestSponsor')->find($id);
+            $entity = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestAward')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find SkPhotoContestSponsor entity.');
+                throw $this->createNotFoundException('Unable to find SkPhotoContestAward entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('photo_contest_sponsor_admin'));
+        return $this->redirect($this->generateUrl('photo_contest_award_admin'));
     }
 
     /**
-     * Creates a form to delete a SkPhotoContestSponsor entity by id.
+     * Creates a form to delete a SkPhotoContestAward entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -215,7 +215,7 @@ class SkPhotoContestSponsorController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('photo_contest_sponsor_admin_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('photo_contest_award_admin_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'form.common.btn.delete','attr' => array('class' => 'btn btn-danger')))
             ->getForm()

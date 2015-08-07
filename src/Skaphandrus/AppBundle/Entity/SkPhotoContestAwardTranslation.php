@@ -69,6 +69,6 @@ class SkPhotoContestAwardTranslation
     public function getDescription()
     {
         return $this->description;
-    }
+    }    
 }
 

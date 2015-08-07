@@ -1,6 +1,14 @@
+skaphandrus_app_photo_contest_judge_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skphotocontestjudge.yml"
+    prefix:   /{_locale}/photo_contest_judge_admin
+
+skaphandrus_app_photo_contest_award_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skphotocontestaward.yml"
+    prefix:   /{_locale}/photo_contest_award_admin
+
 skaphandrus_app_photo_contest_sponsor_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skphotocontestsponsor.yml"
-    prefix:   /photo_contest_sponsor_admin
+    prefix:   /{_locale}/photo_contest_sponsor_admin
 
 skaphandrus_app_photo_contest_category_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skphotocontestcategory.yml"

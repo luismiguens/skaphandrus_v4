@@ -88,9 +88,6 @@ class SkPhotoContest {
     protected $imageFile;
 
 
-//    protected $imageName;
-
-
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the  update. If this
@@ -112,24 +109,7 @@ class SkPhotoContest {
     {
         return $this->imageFile;
     }
-
-    
-    
-//    /**
-//     * @param string $imageName
-//     */
-//    public function setImageName($imageName)
-//    {
-//        $this->imageName = $imageName;
-//    }
-//
-//    /**
-//     * @return string
-//     */
-//    public function getImageName()
-//    {
-//        return $this->imageName;
-//    }
+ 
     
     
     public function getAbsolutePath() {

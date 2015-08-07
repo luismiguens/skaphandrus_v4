@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SkPhotoContestCategoryType extends AbstractType
+class SkPhotoContestJudgeType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,26 +15,30 @@ class SkPhotoContestCategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+//            ->add('contest', null, array(
+//                'required'=> true,
+//                'attr' => array('class' => 'form-control'),
+//                'label'=>'form.photo_contest_judge.label.contest'
+//                ))
+                
+            ->add('fosUser', 'autocomplete', array(
+                'class' => 'SkaphandrusAppBundle:FosUser',
+                'attr' => array('class' => 'form-control m-b'),
+                'label'=>'form.photo_contest_judge.label.fosUser'
+                ))
+                
+            ->add('award', 'entity', array(
+                'label'=>'form.photo_contest_judge.label.award',
+                'class' => 'SkaphandrusAppBundle:SkPhotoContestAward','expanded' => true, 
+                'multiple' => true ))
+                
             ->add('translations', 'a2lix_translations', array(
                 
                 'fields' => array(
                     
-                    'name' => array(
-                        'field_type' => 'text',
-                        'label' => 'form.photo_contest_category.label.name',
-                        'attr' => array('class' => 'form-control'),
-        //                  'locale_options' => array(
-        //                    'en' => array(
-        //                        'label' => 'nom'
-        //                    ),
-        //                    'de' => array(
-        //                      'label' => 'Name'
-        //                  ),
-        //                )
-                        ),
                     'description' => array(
                         'field_type' => 'textarea',
-                        'label' => 'form.photo_contest_category.label.description', 
+                        'label' => 'form.photo_contest_judge.label.description', 
                           'attr' => array('class' => 'form-control', 'rows'=>'8'),
           //              'locale_options' => array(
           //                  'fr' => array(
@@ -44,21 +48,10 @@ class SkPhotoContestCategoryType extends AbstractType
           //                      'label' => 'Beschreibung'
           //                  ),
           //              )
-                          ),
-            )))
+                          )
+            )))   
                 
-            ->add('image', null, array(
-                'attr' => array('class' => 'form-control'),
-                'label'=>'form.photo_contest_category.label.image'
-                ))
                 
-            ->add('contest', null, array(
-                'required'=> true,
-                'attr' => array('class' => 'form-control'),
-                'label'=>'form.photo_contest_category.label.contest'
-                ))
-                
-//            ->add('photo')
         ;
     }
     
@@ -68,7 +61,7 @@ class SkPhotoContestCategoryType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Skaphandrus\AppBundle\Entity\SkPhotoContestCategory'
+            'data_class' => 'Skaphandrus\AppBundle\Entity\SkPhotoContestJudge'
         ));
     }
 
@@ -77,6 +70,6 @@ class SkPhotoContestCategoryType extends AbstractType
      */
     public function getName()
     {
-        return 'skaphandrus_appbundle_skphotocontestcategory';
+        return 'skaphandrus_appbundle_skphotocontestjudge';
     }
 }

@@ -17,7 +17,7 @@
         <option name="fixed"/>
       </options>
     </field>
-    <many-to-one field="contest" target-entity="SkPhotoContest" fetch="LAZY">
+    <many-to-one field="contest" target-entity="SkPhotoContest" fetch="LAZY" nullable="true">
       <join-columns>
         <join-column name="contest_id" referenced-column-name="id"/>
       </join-columns>

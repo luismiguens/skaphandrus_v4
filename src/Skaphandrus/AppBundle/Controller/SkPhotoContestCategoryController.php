@@ -44,7 +44,7 @@ class SkPhotoContestCategoryController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('photo_contest_category_admin_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('photo_contest_category_admin_edit', array('id' => $entity->getId())));
         }
 
         return $this->render('SkaphandrusAppBundle:SkPhotoContestCategory:new.html.twig', array(
