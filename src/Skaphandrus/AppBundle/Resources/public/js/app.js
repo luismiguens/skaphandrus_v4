@@ -63,7 +63,7 @@ $(document).ready(function () {
     if ($('#skaphandrus_appbundle_skperson_skaphandrusId').length) {
         $('#skaphandrus_appbundle_skperson_skaphandrusId').autocompleter({url_list: '/en/ajax_search_fosUser/', url_get: '/en/ajax_get_fosUser/'});
     }
-    
+       
     
     // Formulário FOSMessage new message
     if ($('#message_recipient').length) {
@@ -82,4 +82,15 @@ $(document).ready(function () {
     if ($('#skaphandrus_appbundle_skphotosugestion_species').length) {
         $('#skaphandrus_appbundle_skphotosugestion_species').autocompleter({url_list: '/en/ajax_search_species/', url_get: '/en/ajax_get_species/', appendTo: '#validationForm'});
     }
+    
+    // Formulário SkPhotoContestJudge
+    if ($('#skaphandrus_appbundle_skphotocontestjudge_fosUser').length) {
+        $('#skaphandrus_appbundle_skphotocontestjudge_fosUser').autocompleter({url_list: '/en/ajax_search_fosUser/', url_get: '/en/ajax_get_fosUser/'});
+    }
+    
+    // Formulário skPhotoContestAward
+    if ($('#skaphandrus_appbundle_skphotocontestaward_winnerFosUser').length) {
+        $('#skaphandrus_appbundle_skphotocontestaward_winnerFosUser').autocompleter({url_list: '/en/ajax_search_fosUser/', url_get: '/en/ajax_get_fosUser/'});
+    }
+    
 });

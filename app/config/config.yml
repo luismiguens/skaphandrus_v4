@@ -33,6 +33,11 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form_themes:
+        # other form themes
+#        - 'VichUploaderBundle:Form:fields.html.twig'
+        - 'SkaphandrusAppBundle:Form:fields.html.twig'
+
 #    form:
 #        resources:
 #            - 'CmfMediaBundle:Form:fields.html.twig'
@@ -358,3 +363,32 @@ fos_message:
     message_class: Skaphandrus\AppBundle\Entity\FosMessage
     new_thread_form:
         type: skaphandrus_message.new_thread.form.type
+        
+        
+# app/config/config.yml
+vich_uploader:
+    db_driver: orm
+    twig:       true
+    mappings:
+        contest_image:
+            uri_prefix:         /uploads/contests
+            upload_destination: %kernel.root_dir%/../web/uploads/contests
+            inject_on_load:     false
+            delete_on_update:   true
+            delete_on_remove:   true
+            namer:              vich_uploader.namer_uniqid
+        contest_sponsor_image:
+            uri_prefix:         /uploads/contests
+            upload_destination: %kernel.root_dir%/../web/uploads/contests
+            inject_on_load:     false
+            delete_on_update:   true
+            delete_on_remove:   true
+            namer:              vich_uploader.namer_uniqid
+        contest_award_image:
+            uri_prefix:         /uploads/contests
+            upload_destination: %kernel.root_dir%/../web/uploads/contests
+            inject_on_load:     false
+            delete_on_update:   true
+            delete_on_remove:   true
+            namer:              vich_uploader.namer_uniqid
+

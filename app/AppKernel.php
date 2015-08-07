@@ -48,6 +48,9 @@ class AppKernel extends Kernel {
             //new Cocur\Slugify\Bridge\Symfony\CocurSlugifyBundle(),
             new Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
             new FOS\MessageBundle\FOSMessageBundle(),
+            
+            new Vich\UploaderBundle\VichUploaderBundle(),
+            
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

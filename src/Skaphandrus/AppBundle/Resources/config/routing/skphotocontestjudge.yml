@@ -1,0 +1,30 @@
+photo_contest_judge_admin:
+    path:     /
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestJudge:index" }
+
+photo_contest_judge_admin_show:
+    path:     /{id}/show
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestJudge:show" }
+
+photo_contest_judge_admin_new:
+    path:     /new
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestJudge:new" }
+
+photo_contest_judge_admin_create:
+    path:     /create
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestJudge:create" }
+    methods:  POST
+
+photo_contest_judge_admin_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestJudge:edit" }
+
+photo_contest_judge_admin_update:
+    path:     /{id}/update
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestJudge:update" }
+    methods:  [POST, PUT]
+
+photo_contest_judge_admin_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestJudge:delete" }
+    methods:  [POST, DELETE]

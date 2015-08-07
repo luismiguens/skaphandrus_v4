@@ -1,0 +1,65 @@
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/skaphandrus.js') }}"></script>
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block heading_title %}
+    {{ "form.photo_contest_category.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.photo_contest_category"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block heading_action %}
+    <a href="{{ path('photo_contest_category_admin_new') }}" class="btn btn-primary">{{ "form.photo_contest_category.btn.add"|trans }}</a>
+{% endblock %}
+
+{% block form_title_description %}
+    {{ "form.photo_contest_category.text.description"|trans }}
+{% endblock %}
+
+
+{% block body -%}
+    <table class="table table-striped" >
+        <thead>
+            <tr>
+                <th>{{ "form.photo_contest_category.label.name"|trans }}</th>
+                <th>{{ "form.photo_contest_category.label.contest"|trans }}</th>
+                <th>{{ "form.common.label.actions"|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.name }}</td>
+                    <td>{{ entity.contest }}</td>
+                    <td>
+{#                        <a class="btn btn-white btn-sm" href="{{ path('photo_contest_category_admin_show', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.view"|trans }}</a>#}
+                        <a class="btn btn-white btn-sm" href="{{ path('photo_contest_category_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit"|trans }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('photo_contest_category_admin_new') }}">
+        <i class="fa fa-pencil"></i>  {{ "form.photo_contest_category.btn.add"|trans }}
+    </a>
+    
+{% endblock %}
+
+
+
+

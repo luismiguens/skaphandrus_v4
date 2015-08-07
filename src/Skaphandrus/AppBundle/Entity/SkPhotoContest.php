@@ -4,6 +4,7 @@ namespace Skaphandrus\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * SkPhotoContest
@@ -40,7 +41,7 @@ class SkPhotoContest {
     /**
      * @var boolean
      */
-    private $isJudge = '0';
+    private $isJudge = false;
 
     /**
      * @var \DateTime
@@ -82,6 +83,58 @@ class SkPhotoContest {
      */
     private $photographers;
 
+    
+    
+    protected $imageFile;
+
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
+     */
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+    }
+
+    /**
+     * @return File
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+ 
+    
+    
+    public function getAbsolutePath() {
+        return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
+    }
+
+    public function getWebPath() {
+        return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image;
+    }
+
+    protected function getUploadRootDir() {
+// the absolute directory path where uploaded
+// documents should be saved
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+
+    protected function getUploadDir() {
+// get rid of the __DIR__ so it doesn't screw up
+// when displaying uploaded doc/image in the view.
+        return 'uploads/contests';
+    }
+    
+    
+    
+    
     /**
      * Constructor
      */
@@ -376,25 +429,7 @@ class SkPhotoContest {
         return $this->judges;
     }
 
-    public function getAbsolutePath() {
-        return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
-    }
 
-    public function getWebPath() {
-        return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image;
-    }
-
-    protected function getUploadRootDir() {
-// the absolute directory path where uploaded
-// documents should be saved
-        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
-    }
-
-    protected function getUploadDir() {
-// get rid of the __DIR__ so it doesn't screw up
-// when displaying uploaded doc/image in the view.
-        return 'uploads/contests';
-    }
 
     /**
      * Get photos
@@ -434,4 +469,9 @@ class SkPhotoContest {
         return $this->photographers;
     }
 
+    
+    public function __toString() {
+        return $this->getName();
+    }
+    
 }

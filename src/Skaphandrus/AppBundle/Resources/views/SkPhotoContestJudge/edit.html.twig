@@ -1,0 +1,49 @@
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% form_theme edit_form 'SkaphandrusAppBundle:Form:vertical_choices_rows.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
+     <script src="{{ asset('bundles/skaphandrusapp/js/hack/autocompleter-jqueryui.js') }}"></script>
+
+{% endblock %}
+
+
+{% block heading_title %}
+    {{ "form.photo_contest_judge.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="{{ path('photo_contest_judge_admin')}}">{{ "breadcrumb.photo_contest_judge"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.edit_photo_contest_judge"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+
+{% block heading_action %}
+    <a href="{{ path('photo_contest_judge_admin_new') }}" class="btn btn-primary">{{ "form.photo_contest_judge.btn.add"|trans }}</a>
+{% endblock %}
+
+
+{% block form_title_description %}
+    {{ "form.photo_contest_judge.text.description"|trans }}
+{% endblock %}
+
+{% block body %}
+
+    {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_widget(edit_form) }}
+    {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'photo_contest_judge_admin', 'new_form':false} %}
+    {{ form_end(edit_form) }}
+
+
+    {{ form(delete_form) }}
+
+
+{% endblock %}
+
+

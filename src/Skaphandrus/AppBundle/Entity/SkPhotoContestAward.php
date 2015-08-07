@@ -4,6 +4,7 @@ namespace Skaphandrus\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * SkPhotoContestAward
@@ -263,7 +264,7 @@ class SkPhotoContestAward
     
     
     
-        public function getAbsolutePath() {
+    public function getAbsolutePath() {
         return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
     }
 
@@ -283,7 +284,39 @@ class SkPhotoContestAward
         return 'uploads/contests';
     }
     
+    public function __toString() {
+        return $this->getName();    
+    }
     
+    protected $imageFile;
+
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
+     */
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+    }
+
+    /**
+     * @return File
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+    
+    public function getName() {
+        return $this->translate()->getName();
+        
+    }
     
 }
 

@@ -47,7 +47,9 @@
         "egeloen/google-map-bundle": "~2.2",
 "willdurand/geocoder": "*",
 "widop/http-adapter-bundle": "~1.2",
-        "friendsofsymfony/message-bundle": "^1.2"
+        "friendsofsymfony/message-bundle": "^1.2",
+        
+        "vich/uploader-bundle": "^0.14.0"
         
         
     },
