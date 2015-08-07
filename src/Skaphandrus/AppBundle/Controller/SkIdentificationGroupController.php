@@ -44,7 +44,10 @@ class SkIdentificationGroupController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('identification_group_admin_show', array('id' => $entity->getId())));
+                 ##@LM
+            $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
+            
+            return $this->redirect($this->generateUrl('identification_group_admin_edit', array('id' => $entity->getId())));
         }
 
         return $this->render('SkaphandrusAppBundle:SkIdentificationGroup:new.html.twig', array(
@@ -91,23 +94,23 @@ class SkIdentificationGroupController extends Controller
      * Finds and displays a SkIdentificationGroup entity.
      *
      */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('SkaphandrusAppBundle:SkIdentificationGroup')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find SkIdentificationGroup entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('SkaphandrusAppBundle:SkIdentificationGroup:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
+//    public function showAction($id)
+//    {
+//        $em = $this->getDoctrine()->getManager();
+//
+//        $entity = $em->getRepository('SkaphandrusAppBundle:SkIdentificationGroup')->find($id);
+//
+//        if (!$entity) {
+//            throw $this->createNotFoundException('Unable to find SkIdentificationGroup entity.');
+//        }
+//
+//        $deleteForm = $this->createDeleteForm($id);
+//
+//        return $this->render('SkaphandrusAppBundle:SkIdentificationGroup:show.html.twig', array(
+//            'entity'      => $entity,
+//            'delete_form' => $deleteForm->createView(),
+//        ));
+//    }
 
     /**
      * Displays a form to edit an existing SkIdentificationGroup entity.
