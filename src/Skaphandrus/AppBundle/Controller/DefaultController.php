@@ -45,7 +45,7 @@ class DefaultController extends Controller {
         $em = $this->getDoctrine()->getManager();
         
 
-        $photos = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->findBy(array('fosUser' => '5'), array('id' => 'DESC'), 8);
+        $photos = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->findBy(array('fosUser' => '5'), array('id' => 'DESC'), 30);
         
 
 
