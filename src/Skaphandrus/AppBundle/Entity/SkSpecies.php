@@ -56,7 +56,6 @@ class SkSpecies {
      * @var \Doctrine\Common\Collections\Collection
      */
     private $image_refs;
-
     private $photosCount = 0;
 
     /**
@@ -275,19 +274,15 @@ class SkSpecies {
         return $this->scientific_names[0]->getName();
     }
 
-    
     public function __toString() {
         return $this->getName();
     }
-    
 
-    public function getTaxonNodeName(){
+    public function getTaxonNodeName() {
         return "species";
-        
     }
-    
-    
-        public function getParentNode() {
+
+    public function getParentNode() {
         return $this->getGenus();
     }
 
@@ -298,8 +293,7 @@ class SkSpecies {
      *
      * @return SkSpecies
      */
-    public function addImageRef(\Skaphandrus\AppBundle\Entity\SkSpeciesImageRef $imageRef)
-    {
+    public function addImageRef(\Skaphandrus\AppBundle\Entity\SkSpeciesImageRef $imageRef) {
         $this->image_refs[] = $imageRef;
         $imageRef->setSpecies($this);
 
@@ -311,8 +305,7 @@ class SkSpecies {
      *
      * @param \Skaphandrus\AppBundle\Entity\SkSpeciesImageRef $imageRef
      */
-    public function removeImageRef(\Skaphandrus\AppBundle\Entity\SkSpeciesImageRef $imageRef)
-    {
+    public function removeImageRef(\Skaphandrus\AppBundle\Entity\SkSpeciesImageRef $imageRef) {
         $this->image_refs->removeElement($imageRef);
     }
 
@@ -321,14 +314,14 @@ class SkSpecies {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getImageRefs()
-    {
+    public function getImageRefs() {
         return $this->image_refs;
     }
 
     public function getImageRef() {
         foreach ($this->image_refs as $ir) {
-            if ($ir->getIsPrimary()) return $ir;
+            if ($ir->getIsPrimary())
+                return $ir;
         }
     }
 
@@ -339,4 +332,22 @@ class SkSpecies {
     public function setPhotosCount($photosCount) {
         $this->photosCount = $photosCount;
     }
+
+    public function doStuffOnPostLoad(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+        $entity = $args->getEntity();
+        $entityManager = $args->getEntityManager();
+//        $entity = new SkSpecies();
+
+        if (!$entity->translate()->getDescription()) {
+            $entity->translate('pt')->setDescription('descrição');
+            $entity->translate('en')->setDescription('description');
+
+            // In order to persist new translations, call mergeNewTranslations method, before flush
+            $entity->mergeNewTranslations();
+        }
+
+        //$entityManager->persist($entity);
+        $entityManager->flush();
+    }
+
 }

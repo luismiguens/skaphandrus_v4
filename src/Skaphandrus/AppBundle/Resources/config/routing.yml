@@ -119,6 +119,9 @@ skaphandrus_app_users_migration:
 #    defaults: { _controller: SkaphandrusAppBundle:Default:index }    
 #
 
+test_thumbnail:
+    path:     /testThumbnail
+    defaults: { _controller: SkaphandrusAppBundle:Default:testThumbnail}    
 
 
 

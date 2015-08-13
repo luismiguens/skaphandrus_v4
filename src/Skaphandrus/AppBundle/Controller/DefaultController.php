@@ -38,6 +38,21 @@ class DefaultController extends Controller {
     
     
 
+
+    public function testThumbnailAction() {
+
+      
+        $em = $this->getDoctrine()->getManager();
+        
+
+        $photos = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->findBy(array('fosUser' => '5'), array('id' => 'DESC'), 100);
+        
+
+
+        
+        
+        return $this->render('SkaphandrusAppBundle:Default:testThumbnail.html.twig',array('photos'=>$photos));
+    }
     
     
 
