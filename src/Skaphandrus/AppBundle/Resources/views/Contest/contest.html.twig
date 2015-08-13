@@ -59,6 +59,10 @@
                                 <dt>{{ "page.contest.dt.starts_at"|trans }}:</dt> <dd>{{ contest.beginAt|date }}</dd>
                                 <dt>{{ "page.contest.dt.ends_at"|trans }}:</dt> <dd>{{ contest.endAt|date }}</dd>
                             </dl>
+                            <dl class="dl-horizontal">
+                                <dt>{{ "page.contest.dt.numero_photos"|trans }}:</dt> <dd>{{ contest.photos|length }}</dd>
+                                <dt>{{ "page.contest.dt.numero_photographers"|trans }}:</dt> <dd>{{ contest.photographers|length }}</dd>
+                            </dl>
                         </div>
                         <div class="col-lg-7" id="cluster_info">
                             <dl class="dl-horizontal" >

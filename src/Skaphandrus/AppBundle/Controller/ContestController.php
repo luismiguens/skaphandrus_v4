@@ -12,18 +12,10 @@ class ContestController extends Controller {
     public function landingAction() {
 
         $contests = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
-            ->findBy(array(), array('beginAt' => 'DESC'));
-
-        $photographers = array();
-        foreach ($contests as $contest) {
-            $photographers[$contest->getId()] = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
-                ->findPhotographers($contest);
-        }
-
+            ->findBy(array('isVisible'=> true), array('beginAt' => 'DESC'));
 
         return $this->render('SkaphandrusAppBundle:Contest:landing.html.twig', array(
             'contests' => $contests,
-            'photographers' => $photographers,
         ));
     }
 

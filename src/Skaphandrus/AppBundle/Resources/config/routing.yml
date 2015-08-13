@@ -1,3 +1,11 @@
+teste:
+    path:     /teste
+    defaults: { _controller: "SkaphandrusAppBundle:Testes:testes" }
+
+contests:
+    path:     /contests
+    defaults: { _controller: "SkaphandrusAppBundle:Testes:contests" }
+
 skaphandrus_app_photo_contest_judge_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skphotocontestjudge.yml"
     prefix:   /{_locale}/photo_contest_judge_admin

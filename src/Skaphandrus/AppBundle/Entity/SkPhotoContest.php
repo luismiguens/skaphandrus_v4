@@ -1,5 +1,7 @@
 <?php
 
+//
+
 namespace Skaphandrus\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -21,11 +23,13 @@ class SkPhotoContest {
     /**
      * @var string
      */
+    //nome do logoTipo
     private $logo;
 
     /**
      * @var string
      */
+    //nome da Imagem
     private $image;
 
     /**
@@ -82,12 +86,38 @@ class SkPhotoContest {
      * @var \Doctrine\Common\Collections\Collection
      */
     private $photographers;
+    
+    /**
+     * @var boolean
+     */
+    private $isVisible = false;     
 
-    
-    
+
     protected $imageFile;
+    protected $logoTipo;
+    
+    
+    /**
+     * Set visible
+     *
+     * @param boolean visible
+     *
+     * @return SkPhotoContest
+     */
+    public function setIsVisible($isVisible) {
+        $this->isVisible = $isVisible;
 
+        return $this;
+    }
 
+    /**
+     * Get visible
+     *
+     * @return boolean
+     */
+    public function getIsVisible() {
+        return $this->isVisible;
+    }
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the  update. If this
@@ -97,27 +127,45 @@ class SkPhotoContest {
      *
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
      */
-    public function setImageFile(File $image = null)
-    {
+    public function setImageFile(File $image = null) {
         $this->imageFile = $image;
     }
 
     /**
      * @return File
      */
-    public function getImageFile()
-    {
+    public function getImageFile() {
         return $this->imageFile;
     }
- 
+       
     
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
+     */
+    public function setlogoTipo(File $image = null) {
+        $this->logoTipo = $image;
+    }
+
+    /**
+     * @return File
+     */
+    public function getlogoTipo() {
+        return $this->logoTipo;
+    }
     
+
     public function getAbsolutePath() {
-        return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
+        return null === $this->logo ? null : $this->getUploadRootDir() . '/' . $this->logo;
     }
 
     public function getWebPath() {
-        return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image;
+        return null === $this->logo ? null : $this->getUploadDir() . '/' . $this->logo;
     }
 
     protected function getUploadRootDir() {
@@ -131,10 +179,7 @@ class SkPhotoContest {
 // when displaying uploaded doc/image in the view.
         return 'uploads/contests';
     }
-    
-    
-    
-    
+
     /**
      * Constructor
      */
@@ -364,7 +409,11 @@ class SkPhotoContest {
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getSponsors() {
-        return $this->sponsors;
+        foreach ($this->categories as $category) {
+            foreach ($category->getAwards() as $award) {
+                return $award->getSponsor();
+            }
+        }
     }
 
     /**
@@ -395,7 +444,9 @@ class SkPhotoContest {
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getAwards() {
-        return $this->awards;
+        foreach ($this->categories as $category) {
+            return $category->getAwards();
+        }
     }
 
     /**
@@ -426,10 +477,12 @@ class SkPhotoContest {
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getJudges() {
-        return $this->judges;
+        foreach ($this->categories as $category) {
+            foreach ($category->getAwards() as $award) {
+                return $award->getJudge();
+            }
+        }
     }
-
-
 
     /**
      * Get photos
@@ -442,7 +495,9 @@ class SkPhotoContest {
         $category = new SkPhotoContestCategory();
 
         foreach ($this->getCategories() as $category) {
-            array_merge($photos, $category->getPhoto()->toArray());
+            foreach ($category->getPhoto() as $photo ) {
+                $photos [] = $photo;
+            } 
         }
         $this->photos = $photos;
         return $this->photos;
@@ -462,16 +517,18 @@ class SkPhotoContest {
         foreach ($this->getCategories() as $category) {
 
             foreach ($category->getPhoto() as $photo) {
-                array_merge($photographers, $photo->getFosUser()->toArray());
+                $photographers[]= $photo->getFosUser();
             }
         }
+        
+//        $this->photographers=$photographers;
         $this->photographers = array_unique($photographers);
         return $this->photographers;
     }
-
     
+
     public function __toString() {
         return $this->getName();
     }
-    
+
 }

@@ -35,7 +35,6 @@
     <table class="table table-striped" >
         <thead>
             <tr>
-{#                <th>{{ "form.photo_contest_judge.label.contest"|trans }}</th>#}
                 <th>{{ "form.photo_contest_judge.label.fos_user"|trans }}</th>
                 <th>{{ "form.common.label.actions"|trans }}</th>
             </tr>
@@ -43,8 +42,7 @@
         <tbody>
             {% for entity in entities %}
                 <tr>
-{#                    <td>{{ entity.contest }}</td>#}
-{#                    {{}}#}
+                    
                     <td>{{ entity.fosUser }}</td>
                     <td>
 {#                        <a class="btn btn-white btn-sm" href="{{ path('photo_contest_judge_admin_show', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.view"|trans }}</a>#}
