@@ -252,6 +252,22 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
         return $this->photos;
     }
 
+    public function getPhotosInContest($contest_id) {
+        
+        $conn = DriverManager::getConnection(array(/*..*/));
+        $queryBuilder = $conn->createQueryBuilder();
+        
+        $queryBuilder
+            ->select('photo')
+            ->from('SkPhoto')
+            ->where('Photo.FosUser = this.id')
+            ->setParameter(0, $contest_id);
+        
+        
+        return $this->photos;
+    }
+    
+    
     /**
      * Add photosValidated
      *

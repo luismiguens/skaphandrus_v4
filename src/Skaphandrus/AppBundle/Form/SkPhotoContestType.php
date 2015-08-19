@@ -21,25 +21,31 @@ class SkPhotoContestType extends AbstractType
                 'label'=>'form.photo_contest.label.name'
                 ))
                 
-            ->add('logo', null, array(
-                'attr' => array('class' => 'form-control'),
-                'label'=>'form.photo_contest.label.logo'
+//            ->add('logo')
+                
+            ->add('logoTipo', 'vich_image', array(
+                'label'=>'form.photo_contest.label.logo',
+                'required'      => false,
+                'allow_delete'  => false, // not mandatory, default is true
+                'download_link' => false, // not mandatory, default is true
                 ))
                 
 //            ->add('image')
             ->add('imageFile', 'vich_image', array(
-//                'label'=>'form.photo_contest.label.image_file',
+                'label'=>'form.photo_contest.label.image_file',
                 'required'      => false,
                 'allow_delete'  => false, // not mandatory, default is true
                 'download_link' => false, // not mandatory, default is true
                 ))
                 
             ->add('beginAt', null, array(
+                'years' => range(2010,2030),
 //                'attr' => array('class' => 'form-control'),
                 'label'=>'form.photo_contest.label.begin_at'
                 ))
                 
             ->add('endAt', null, array(
+                'years' => range(2010,2030),
 //                'attr' => array('class' => 'form-control'),
                 'label'=>'form.photo_contest.label.end_at'
                 ))
@@ -49,7 +55,14 @@ class SkPhotoContestType extends AbstractType
                 'label'=>'form.photo_contest.label.is_judge'
                 ))
                 
+            ->add('isVisible', 'checkbox', array(
+//                'attr' => array('class' => 'form-control'),
+                'label'=>'form.photo_contest.label.is_visible',
+                'required'=> false,
+                ))
+                
             ->add('createdAt', null, array(
+                'years' => range(2010,2030),
 //                'attr' => array('class' => 'form-control'),
                 'label'=>'form.photo_contest.label.created_at'
                 ))

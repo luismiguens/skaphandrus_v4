@@ -16,7 +16,7 @@ class SkPhotoContestAwardType extends AbstractType
     {
         $builder
             ->add('imageFile', 'vich_image', array(
-//                'label'=>'form.photo_contest_award.label.image_file',
+                'label'=>'form.photo_contest_award.label.image_file',
                 'required'      => false,
                 'allow_delete'  => false, // not mandatory, default is true
                 'download_link' => false, // not mandatory, default is true
@@ -74,7 +74,7 @@ class SkPhotoContestAwardType extends AbstractType
                           ),
                     'name' => array(
                         'field_type' => 'text',
-                        'label' => 'form.photo_contest_award_award.label.name',
+                        'label' => 'form.photo_contest_award.label.name',
                         'attr' => array('class' => 'form-control',  'rows'=>'40'),
         //                  'locale_options' => array(
         //                    'en' => array(

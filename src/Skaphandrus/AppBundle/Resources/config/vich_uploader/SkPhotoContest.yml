@@ -2,3 +2,7 @@ Skaphandrus\AppBundle\Entity\SkPhotoContest:
     imageFile:
         mapping:           contest_image
         filename_property: image
+ 
+    logoTipo:
+        mapping:           contest_image
+        filename_property: logo

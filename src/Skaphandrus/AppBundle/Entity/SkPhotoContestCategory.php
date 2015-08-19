@@ -172,7 +172,7 @@ class SkPhotoContestCategory
         return $this->awards;
     }
     
-        public function getAbsolutePath() {
+    public function getAbsolutePath() {
         return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
     }
 

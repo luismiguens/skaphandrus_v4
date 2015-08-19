@@ -35,9 +35,9 @@
     <table class="table table-striped" >
         <thead>
             <tr>
-                {#<th>{{ "form.photo_contest_award.label.name"|trans }}</th>
+                <th>{{ "form.photo_contest_award.label.name"|trans }}</th>
                 <th>{{ "form.photo_contest_award.label.contest"|trans }}</th>
-                #}<th>{{ "form.photo_contest_award.label.category"|trans }}</th>
+                <th>{{ "form.photo_contest_award.label.category"|trans }}</th>
                 <th>{{ "form.photo_contest_award.label.sponsor"|trans }}</th>
                 <th>{{ "form.common.label.actions"|trans }}</th>
             </tr>
@@ -48,8 +48,8 @@
                     <td>{{ entity.name }}</td>
                     <td>{{ entity.contest }}</td>
                     <td>{{ entity.category }}</td>
-                    {%for awardSponsor in entity.sponsor %}
-                        <td>{{ awardSponsor.name }}</td>
+                    {%for sponsor in entity.sponsor %}
+                        <td>{{ sponsor.name }}</td>
                     {% endfor %}
                     <td>
 {#                        <a class="btn btn-white btn-sm" href="{{ path('photo_contest_award_admin_show', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.view"|trans }}</a>#}
