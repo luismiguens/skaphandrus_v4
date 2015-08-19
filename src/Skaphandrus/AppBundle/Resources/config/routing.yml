@@ -1,3 +1,8 @@
+
+################################################################################  
+### ADMIN ROUTES
+################################################################################ 
+
 skaphandrus_app_photo_contest_judge_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skphotocontestjudge.yml"
     prefix:   /{_locale}/photo_contest_judge_admin
@@ -18,8 +23,6 @@ skaphandrus_app_photo_contest_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skphotocontest.yml"
     prefix:   /{_locale}/photo_contest_admin
 
-
-
 #### Photos Species Validation and Sugestion Routes
 skaphandrus_app_photo_species_validation_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skphotospeciesvalidation.yml"
@@ -28,8 +31,6 @@ skaphandrus_app_photo_species_validation_admin:
 skaphandrus_app_photo_species_sugestion_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skphotospeciessugestion.yml"
     prefix:   /{_locale}/photo_species_sugestion_admin
-
-
 
 #### Identification Admin Routes
 skaphandrus_app_identification_species_admin:
@@ -49,13 +50,11 @@ skaphandrus_app_identification_criteria_admin:
     prefix:   /{_locale}/identification_criteria_admin
 
 
-
 #
 #skaphandrus_app_fos_user:
 #    resource: "@SkaphandrusAppBundle/Resources/config/routing/fosuser.yml"
 #    prefix:   /{_locale}/fos_user
 #
-
 
 #### User Admin Routes
 skaphandrus_app_spot_admin:
@@ -90,9 +89,7 @@ skaphandrus_app_notify_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/sksocialnotify.yml"
     prefix:   /{_locale}/notification_admin
 
-
-
-
+#### ????????
 skaphandrus_app_hello:
     path:     /hello/{name}
     defaults: { _controller: SkaphandrusAppBundle:Default:hello }
@@ -101,21 +98,17 @@ skaphandrus_app_users_migration:
     path:     /migration/migration
     defaults: { _controller: SkaphandrusAppBundle:Default:usersMigration }
 
+
+
+
+
+
+
+
+
 ################################################################################  
 ### TRANSVERSAL
 ################################################################################    
-
-#CONTROLLER DEFAULT    
-#homepage_index:
-#    path:     /index
-#    defaults: { _controller: SkaphandrusAppBundle:Default:index }    
-#
-
-test_thumbnail:
-    path:     /testThumbnail
-    defaults: { _controller: SkaphandrusAppBundle:Default:testThumbnail}    
-
-
 
 index:
     path:      /{_locale}
@@ -132,14 +125,6 @@ modules:
 criterias:
     path:      /{_locale}/ocean-life-identification/{slug}
     defaults:  { _controller: SkaphandrusAppBundle:Identification:criterias, _locale: en }
-    requirements:
-        _locale:  en|pt
-
-
-
-index2:
-    path:      /{_locale}/index2
-    defaults:  { _controller: SkaphandrusAppBundle:Default:index2, _locale: en }
     requirements:
         _locale:  en|pt
 
@@ -203,7 +188,6 @@ photo_no_slug:
     requirements:
         _locale:  en|pt
 
-
 photos:
     path:     /{_locale}/underwater-photography/photos
     defaults: { _controller: SkaphandrusAppBundle:Default:photos, _locale: en }
@@ -222,9 +206,26 @@ search:
     requirements:
         _locale:  en|pt
 
+test_thumbnail:
+    path:     /testThumbnail
+    defaults: { _controller: SkaphandrusAppBundle:Default:testThumbnail}    
 
-##################################################################################
-#### CONTROLLER CONTESTS
+
+
+
+
+#################################################################################  
+#### FUN CONTESTS
+#################################################################################
+# 
+#contest_about:
+#  url:   /:sf_culture/underwater-photo-contest/about/:slug/*
+#  param: { module: photoContest, action: contestAbout }
+#
+#contest_results:
+#  url:   /:sf_culture/underwater-photo-contest/results/:slug/*
+#  param: { module: photoContest, action: contestResults }
+#
 
 contests_landing_page:
     path:     /{_locale}/underwater-photo-contest
@@ -281,8 +282,13 @@ contests_contest:
         _locale:  en|pt
 
 
-##################################################################################
-#### CONTROLLER IDENTIFICATION APP
+
+
+
+
+#################################################################################  
+#### IDENTIFICATION APP
+#################################################################################
 
 identification_criterias:
     path:     /{_locale}/app/criterias.{_format}
@@ -312,10 +318,6 @@ identification_taxons:
     path:     /{_locale}/app/taxons.{_format}
     defaults: { _controller: SkaphandrusAppBundle:Identification:taxonListJson, _locale: en }
 
-
-
-
-
 identification_tests:
     path:     /{_locale}/app/tests
     defaults: { _controller: SkaphandrusAppBundle:Identification:tests, _locale: en }
@@ -323,43 +325,10 @@ identification_tests:
 
 
 
-#identification_criterias:
-#  pattern: /{_locale}/app/criterias.{_format}
-#  defaults: { _controller: SkaphandrusAppBundle:Identification:jsonCriteriasList, _format: json}
-#  requirements: { _format: (xml|json), _method: POST }
-#
-#
-#identification_species:
-#  pattern: /{_locale}/app/species.{_format}
-#  defaults: { _controller: SkaphandrusAppBundle:Identification:jsonSpeciesList, _format: json}
-#  requirements: { _format: (xml|json), _method: POST }
-#
-#
-#identification_modules:
-#  pattern: /{_locale}/app/modules.{_format}
-#  defaults: { _controller: SkaphandrusAppBundle:Identification:jsonModulesList, _format: json}
-#  requirements: { _format: (xml|json), _method: POST }
-#
-#
-#identification_species_info:
-#  pattern: /{_locale}/app/speciesinfo.{_format}
-#  defaults: { _controller: SkaphandrusAppBundle:Identification:jsonSpeciesInfo, _format: json}
-#  requirements: { _format: (xml|json), _method: POST }
-#
-#
-#identification_taxons:
-#  pattern: /{_locale}/app/taxons.{_format}
-#  defaults: { _controller: SkaphandrusAppBundle:Identification:jsonTaxonsList, _format: json}
-#  requirements: { _format: (xml|json), _method: POST }
-#
-
-
-
-
-
 
 ##################################################################################
 #### AUTOCOMPLETE AJAX ROUTES
+##################################################################################
 
 ajax_search_photo_machine_model:
     path:     /{_locale}/ajax_search_photo_machine_model/
@@ -404,7 +373,6 @@ ajax_search_fosUser:
 
 
 ## gets
-
 ajax_get_photo_machine_model:
     path:     /{_locale}/ajax_get_photo_machine_model/{id}
     defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetPhotoMachineModel }
@@ -446,27 +414,7 @@ ajax_get_fosUser:
     defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetFosUser }
 
 
-#
-#################################################################################  
-#### FUN CONTESTS
-#################################################################################
-# 
-#contest_about:
-#  url:   /:sf_culture/underwater-photo-contest/about/:slug/*
-#  param: { module: photoContest, action: contestAbout }
-#
-#contest_results:
-#  url:   /:sf_culture/underwater-photo-contest/results/:slug/*
-#  param: { module: photoContest, action: contestResults }
-#
-################################################################################
-#### APP OCEAN LIFE ID
-################################################################################
 
-
-
-
-    
 #identification_array:
 #  url:   /:sf_culture/app/array.:sf_format
 #  param: { module: identification, action: jsonArray}
@@ -477,4 +425,226 @@ ajax_get_fosUser:
 #
 #
 
+#################################################################################  
+#### OLD ROUTES TO DELETE
+#################################################################################
 
+### OLD SPECIES ROUTES
+species_vernaculares:
+    path:     /{_locale}/marine-species/vernaculares/species/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:speciesPage, _locale: en }
+    requirements:
+        _locale:  en|pt
+        
+species_distribution:
+    path:     /{_locale}/marine-species/distribution/species/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:speciesPage, _locale: en }
+    requirements:
+        _locale:  en|pt
+        
+species_photos:
+    path:     /{_locale}/marine-species/photos/species/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:speciesPage, _locale: en }
+    requirements:
+        _locale:  en|pt
+        
+        
+        
+#COUNTRY
+underwater_photography_country:
+    path:     /{_locale}/underwater-photography/country/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:country, _locale: en }
+    requirements:
+        _locale:  en|pt
+        
+wrecks_country:
+    path:     /{_locale}/shipwrecks/country/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:country, _locale: en }
+    requirements:
+        _locale:  en|pt    
+             
+species_country:
+    path:     /{_locale}/marine-species/country/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:country, _locale: en }
+    requirements:
+        _locale:  en|pt   
+
+business_country:
+    path:     /{_locale}/scuba-dive-business/country/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:country, _locale: en }
+    requirements:
+        _locale:  en|pt  
+  
+locations_country_info:
+    path:     /{_locale}/scuba-dive-locations/info/country/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:country, _locale: en }
+    requirements:
+        _locale:  en|pt
+  
+locations_country_info_old:
+    path:     /{_locale}/dive-locations/info/country/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:country, _locale: en }
+    requirements:
+        _locale:  en|pt
+  
+locations_country:
+    path:     /{_locale}/scuba-dive-locations/country/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:country, _locale: en }
+    requirements:
+        _locale:  en|pt
+  
+locations_country_old:
+    path:     /{_locale}/dive-locations/country/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:country, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+
+
+
+
+
+### OLD LOCATION ROUTES
+species_location:
+    path:     /{_locale}/marine-species/location/{country}/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:location, _locale: en }
+    requirements:
+        _locale:  en|pt
+        
+business_location:
+    path:     /{_locale}/scuba-dive-business/location/{country}/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:location, _locale: en }
+    requirements:
+        _locale:  en|pt
+             
+underwater_photography_location:
+    path:     /{_locale}/underwater-photography/location/{country}/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:location, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+locations_location:
+    path:     /{_locale}/scuba-dive-locations/location/{country}/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:location, _locale: en }
+    requirements:
+        _locale:  en|pt
+  
+locations_location_old:
+    path:     /{_locale}/dive-locations/location/{country}/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:location, _locale: en }
+    requirements:
+        _locale:  en|pt
+  
+locations_location_info:
+    path:     /{_locale}/scuba-dive-locations/info/location/{country}/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:location, _locale: en }
+    requirements:
+        _locale:  en|pt
+  
+locations_location_info_old:
+    path:     /{_locale}/dive-locations/info/location/{country}/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:location, _locale: en }
+    requirements:
+        _locale:  en|pt
+  
+  
+  
+### OLD SPOT ROUTES
+locations_dive_site_old:
+    path:     /{_locale}/dive-locations/info/spot/{country}/{location}/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:spot, _locale: en }
+    requirements:
+        _locale:  en|pt
+        
+locations_dive_site_species:
+    path:     /{_locale}/scuba-dive-locations/species/spot/{country}/{location}/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:spot, _locale: en }
+    requirements:
+        _locale:  en|pt
+        
+locations_dive_site_species_old:
+    path:     /{_locale}/dive-locations/species/spot/{country}/{location}/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:spot, _locale: en }
+    requirements:
+        _locale:  en|pt
+        
+locations_dive_site_photos:
+    path:     /{_locale}/scuba-dive-locations/photos/spot/{country}/{location}/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:spot, _locale: en }
+    requirements:
+        _locale:  en|pt
+        
+locations_dive_site_photos_old:
+    path:     /{_locale}/dive-locations/photos/spot/{country}/{location}/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:spot, _locale: en }
+    requirements:
+        _locale:  en|pt       
+
+locations_dive_site_business:
+    path:     /{_locale}/scuba-dive-locations/business/spot/{country}/{location}/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:spot, _locale: en }
+    requirements:
+        _locale:  en|pt  
+
+locations_dive_site_business_old:
+    path:     /{_locale}/dive-locations/business/spot/{country}/{location}/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:spot, _locale: en }
+    requirements:
+        _locale:  en|pt  
+
+
+### OLD USER ROUTES
+
+username_spots:
+    path:     /{_locale}/users/spots/username/{id}
+    defaults: { _controller: SkaphandrusAppBundle:Default:user, _locale: en }
+    requirements:
+        _locale:  en|pt
+  
+username_photography:
+    path:     /{_locale}/users/photography/username/{id}
+    defaults: { _controller: SkaphandrusAppBundle:Default:user, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+username_photos:
+    path:     /{_locale}/users/photos/username/{id}
+    defaults: { _controller: SkaphandrusAppBundle:Default:user, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+username_dives:
+    path:     /{_locale}/users/dives/username/{id}
+    defaults: { _controller: SkaphandrusAppBundle:Default:user, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+username_species_list:
+    path:     /{_locale}/users/species-list/username/{id}
+    defaults: { _controller: SkaphandrusAppBundle:Default:user, _locale: en }
+    requirements:
+        _locale:  en|pt
+ 
+username_species_taxonomic:
+    path:     /{_locale}/users/species-taxonomic/username/{id}
+    defaults: { _controller: SkaphandrusAppBundle:Default:user, _locale: en }
+    requirements:
+        _locale:  en|pt
+  
+username_wrecks:
+    path:     /{_locale}/users/wrecks/username/{id}
+    defaults: { _controller: SkaphandrusAppBundle:Default:user, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+username_education:
+    path:     /{_locale}/users/education/username/{id}
+    defaults: { _controller: SkaphandrusAppBundle:Default:user, _locale: en }
+    requirements:
+        _locale:  en|pt
+  
+username_people:
+    path:     /{_locale}/users/people/username/{id}
+    defaults: { _controller: SkaphandrusAppBundle:Default:user, _locale: en }
+    requirements:
+        _locale:  en|pt

@@ -4,17 +4,17 @@
     "type": "project",
     "description": "The \"Symfony Standard Edition\" distribution",
     "autoload": {
-        "psr-0": { "": "src/", "SymfonyStandard": "app/" }
+        "psr-0": {
+            "": "src/",
+            "SymfonyStandard": "app/"
+        }
     },
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.6.*",
         "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "~1.2",
-        
         "knplabs/doctrine-behaviors": "dev-master",
-        
-        
         "twig/extensions": "~1.0",
         "symfony/assetic-bundle": "~2.3",
         "symfony/swiftmailer-bundle": "~2.3",
@@ -22,36 +22,25 @@
         "sensio/distribution-bundle": "~3.0.12",
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
-        
-
         "lexik/translation-bundle": "~2.0",
-        
         "symfony-cmf/symfony-cmf": "1.2.*",
         "symfony-cmf/simple-cms-bundle": "1.2.*",
         "symfony-cmf/create-bundle": "1.2.*",
         "jackalope/jackalope-doctrine-dbal": "1.1.*",
-        
         "sonata-project/doctrine-orm-admin-bundle": "~2.3",
         "friendsofsymfony/user-bundle": "~2.0@dev",
-        
         "a2lix/translation-form-bundle": "~2.0",
         "liip/imagine-bundle": "~1.2",
         "pugx/autocompleter-bundle": "~1.2",
         "friendsofsymfony/comment-bundle": "~2.0",
         "knplabs/knp-paginator-bundle": "~2.4",
-        
-        
-     
-        
-        
         "egeloen/google-map-bundle": "~2.2",
-"willdurand/geocoder": "*",
-"widop/http-adapter-bundle": "~1.2",
+        "willdurand/geocoder": "*",
+        "widop/http-adapter-bundle": "~1.2",
         "friendsofsymfony/message-bundle": "^1.2",
-        
         "vich/uploader-bundle": "^0.14.0"
-        
-        
+
+
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
