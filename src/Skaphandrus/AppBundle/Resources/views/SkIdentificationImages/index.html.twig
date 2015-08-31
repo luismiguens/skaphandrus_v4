@@ -78,7 +78,7 @@
         <ul class="list-inline">
         {% for character in criteria.characters %}
             <li>{{character}}<br/>
-            <img alt="image" class="img-responsive" src="{{ character.getWebPath | imagine_filter('sk_widen_240') }}" />
+            <img alt="image" class="img-responsive" style="width: 100px" src="{{ character.getWebPath | imagine_filter('sk_widen_240') }}" />
             </li>
         
         
