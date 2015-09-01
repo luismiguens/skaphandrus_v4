@@ -1,6 +1,3 @@
-identification_species_admin:
-    path:     /
-    defaults: { _controller: "SkaphandrusAppBundle:SkIdentificationSpecies:index" }
 
 identification_species_admin_show:
     path:     /{id}/show
@@ -28,3 +25,8 @@ identification_species_admin_delete:
     path:     /{id}/delete
     defaults: { _controller: "SkaphandrusAppBundle:SkIdentificationSpecies:delete" }
     methods:  [POST, DELETE]
+
+#tem de estar no fim por causa do parametro
+identification_species_admin:
+    path:     /{group_id}
+    defaults: { _controller: "SkaphandrusAppBundle:SkIdentificationSpecies:index" }

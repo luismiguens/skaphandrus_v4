@@ -5,6 +5,7 @@ namespace Skaphandrus\AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\File;
 
 class SkIdentificationModuleType extends AbstractType
 {
@@ -29,10 +30,19 @@ class SkIdentificationModuleType extends AbstractType
             ->add('isEnabled')
             ->add('isFree')
             //->add('image')
-            ->add('file', 'file', array(
-                'label' => 'form.identification_module.label.file',
-                'required' => false
-            ))
+//            ->add('file', 'file', array(
+//                'label' => 'form.identification_module.label.file',
+//                'required' => false
+//            ))
+                 ->add('file', 'file', array(
+                    'label' => 'form.identification_module.label.file',
+                    'constraints' => new File(array(
+                        'maxSize' => '10M',
+                        'mimeTypes' => array("image/jpeg")
+                            )),
+                    'required' => false
+                        )
+                )
         ;
     }
     

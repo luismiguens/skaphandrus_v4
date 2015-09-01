@@ -7,7 +7,22 @@
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.bootstrap.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.responsive.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.tableTools.min.js') }}"></script>
-
+<script>
+    $(function(){
+      // bind change event to select
+      $('#group_id').on('change', function () {
+          var url = $(this).val(); // get selected value
+          if (url) { // require a URL
+              window.location = url; // redirect
+          }
+          return false;
+      });
+    });
+    
+    
+ 
+    
+</script>
 {% endblock %}
 
 {% block stylesheets %}
@@ -34,40 +49,63 @@
 {% endblock %}
 
 {% block heading_action %}
-    {# <select name="identification_species_module_filter" id="identification_species_module_filter">
-        {% for module in modules %}
-            <option value="{{ module.id }}" {% if module.id == module_id %} selected="selected"{% endif %}>{{ module.translate.name }}</option>
+    <select name="group_id" id="group_id" >
+        {% for group in groups %}
+            <option value="{{ group.id }}" {% if group.id == group_id %} selected="selected"{% endif %}>{{ group.name }}</option>
         {% endfor %}
-    </select> #}
-    {{ form(modules_form) }}
+    </select> 
+
+
+
+
+    {#{{ form(modules_form) }}#}
 {% endblock %}
 
 {% block body -%}
-    <table id="datatable-list" class="table display table-striped table-bordered table-hover " cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>{{ "form.identification_species.label.id"|trans }}</th>
-                <th>{{ "form.identification_species.label.name"|trans }}</th>
-                {# <th>{{ "form.identification_species.label.failed_refs"|trans }}</th>
-                <th>{{ "form.identification_species.label.repeated_refs"|trans }}</th> #}
-                <th>{{ "form.common.label.actions"|trans }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for entity in entities %}
-                <tr>
-                    <td>
-                        {{ entity.id }}
-                    </td>
-                    <td>{{ entity.name }}</td>
-                    {# <td></td>
-                    <td></td> #}
-                    <td>
-                        <a class="btn btn-white btn-sm" href="{{ path('identification_species_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.edit"|trans }}</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
 
+    {# total items count #}
+    <div class="count">
+        {{ pagination.getTotalItemCount }} species
+    </div>
+  
+
+
+
+
+        <table class="table display table-striped table-bordered table-hover " cellspacing="0" width="100%">
+            <thead>
+{#                  <tr>
+                      <th>{{ "form.identification_species.label.id"|trans }}</th>
+                      <th>{{ "form.identification_species.label.name"|trans }}</th>
+                      <th>{{ "form.identification_species.label.failed_refs"|trans }}</th>
+                      <th>{{ "form.identification_species.label.repeated_refs"|trans }}</th> 
+                      <th>{{ "form.common.label.actions"|trans }}</th>
+                  </tr>#}
+
+                <tr>
+                    <th>{{ knp_pagination_sortable(pagination, 'Id', 'sn.species.id') }}</th>
+                    <th{% if pagination.isSorted('sn.name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Name', 'sn.name') }}</th>
+                    <th>{{ "form.common.label.actions"|trans }}</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                {% for entity in pagination %}
+                    <tr>
+                        <td>
+                            {{ entity.id }}
+                        </td>
+                        <td>{{ entity.name }}</td>
+                        {# <td></td>
+                        <td></td> #}
+                        <td>
+                            <a class="btn btn-white btn-sm" href="{{ path('identification_species_admin_edit', { 'id': entity.species.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.edit"|trans }}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     {% endblock %}

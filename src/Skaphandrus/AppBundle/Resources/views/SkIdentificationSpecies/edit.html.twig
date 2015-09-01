@@ -68,7 +68,7 @@
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
         <li><a href="index.html">{{ "breadcrumb.dashboard"|trans }}</a></li>
-        <li><a href="{{ path('identification_species_admin') }}">{{ "breadcrumb.identification_species"|trans }}</a></li>
+        <li><a href="{{ path('identification_species_admin', { 'group_id': 10 }) }}">{{ "breadcrumb.identification_species"|trans }}</a></li>
         <li class="active"><strong>{{ "breadcrumb.edit_identification_species"|trans }}</strong></li>
     </ol>
 {% endblock %}
@@ -81,7 +81,14 @@
 {% block body %}
     {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
     {{ form_widget(edit_form) }}
-    {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'identification_species_admin', 'new_form':false} %}
+    <div class="form-group">
+    <div class="col-sm-10 col-sm-offset-2">
+        {#<a class="btn btn-white" href="{{ path(identification_species_admin, 'group_id'=> ) }}">{{ "form.common.btn.back_to_list"|trans }}</a>#}
+        
+            <button type="submit" class="btn btn-primary">{{ "form.common.btn.update"|trans }}</button>
+        
+    </div>
+</div>
     {{ form_end(edit_form) }}
 
 {% endblock %}

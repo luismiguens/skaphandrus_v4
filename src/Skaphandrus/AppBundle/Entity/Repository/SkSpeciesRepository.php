@@ -149,6 +149,88 @@ class SkSpeciesRepository extends EntityRepository {
     }
 
 
+    
+    public function getQueryBuilderForSpeciesList($params, $limit=20, $order = array('id' => 'desc'), $offset=0) {
+
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('sn')->from('SkaphandrusAppBundle:SkSpeciesScientificName', 'sn');
+        //$qb->select('s')->from('SkaphandrusAppBundle:SkSpecies', 's');
+
+
+
+        if (array_key_exists('kingdom', $params)) {
+            $qb->join('sn.species', 's', 'WITH', 'sn.species = s.id');
+            $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
+            $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
+            $qb->join('f.order', 'o', 'WITH', 'f.order = o.id');
+            $qb->join('o.class', 'c', 'WITH', 'o.class = c.id');
+            $qb->join('c.phylum', 'ph', 'WITH', 'c.phylum = ph.id');
+            $qb->join('ph.kingdom', 'k', 'WITH', 'ph.kingdom = ?8');
+            $qb->setParameter(8, $params['kingdom']);
+        }
+
+
+        if (array_key_exists('phylum', $params)) {
+            $qb->join('sn.species', 's', 'WITH', 'sn.species = s.id');
+            $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
+            $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
+            $qb->join('f.order', 'o', 'WITH', 'f.order = o.id');
+            $qb->join('o.class', 'c', 'WITH', 'o.class = c.id');
+            $qb->join('c.phylum', 'ph', 'WITH', 'c.phylum = ?9');
+            $qb->setParameter(9, $params['phylum']);
+        }
+
+        if (array_key_exists('class', $params)) {
+            $qb->join('sn.species', 's', 'WITH', 'sn.species = s.id');
+            $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
+            $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
+            $qb->join('f.order', 'o', 'WITH', 'f.order = o.id');
+            $qb->join('o.class', 'c', 'WITH', 'o.class = ?10');
+            $qb->setParameter(10, $params['class']);
+        }
+
+        if (array_key_exists('order', $params)) {
+            $qb->join('sn.species', 's', 'WITH', 'sn.species = s.id');
+            $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
+            $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
+            $qb->join('f.order', 'o', 'WITH', 'f.order = ?11');
+            $qb->setParameter(11, $params['order']);
+        }
+
+        if (array_key_exists('family', $params)) {
+            $qb->join('sn.species', 's', 'WITH', 'sn.species = s.id');
+            $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
+            $qb->join('g.family', 'f', 'WITH', 'g.family = ?12');
+            $qb->setParameter(12, $params['family']);
+        }
+
+        if (array_key_exists('genus', $params)) {
+            $qb->join('sn.species', 's', 'WITH', 'sn.species = s.id');
+            $qb->join('s.genus', 'g', 'WITH', 's.genus = ?13');
+            $qb->setParameter(13, $params['genus']);
+        }
+
+//        if ($order) {
+//            $qb->orderBy('sn.'.key($order), $order[key($order)]);
+//        }
+//
+//        if ($offset) {
+//            $qb->setFirstResult($offset);
+//        }
+//        
+//       
+//            $qb->setMaxResults($limit);
+//echo $qb;
+
+        return $qb;
+    }
+
+
+    
+    
+    
     public function findByUserId($user_id) {
         $query = $this->getEntityManager()
             ->createQuery(
