@@ -71,19 +71,19 @@
                                 
                                  {#<h2>{{ "page.contests_photographers.h3.photographers"|trans }}: {{ contest.name }}</h2>#}
                                 
-                                {% for photographer in photographers %}
+                                {% for p in contest.photographers %}
                                     <div class="col-md-6">
                                         <div class="contact-box">
-                                            <a href="{{ url_to_user(photographer.user) }}">
+                                            <a href="{{ url_to_user(p) }}">
                                                 <div class="col-sm-4">
                                                     <div class="text-center">
-                                                        <img alt="image" class="img-circle m-t-xs img-responsive" src="{{ photographer.user.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
-                                                        <div class="m-t-xs font-bold">{{ photographer.user.personal.honorific }}</div>
+                                                        <img alt="image" class="img-circle m-t-xs img-responsive" src="{{ p.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
+                                                        <div class="m-t-xs font-bold">{{ p.personal.honorific }}</div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <h3><strong>{{ photographer.user.name }}</strong></h3>
-                                                    <p><i class="fa fa-photo"></i> Alterar {{ "page.contest_photographers.label.number_photos"|trans }}</p>
+                                                    <h3><strong>{{ p.name }}</strong></h3>
+                                                    <p><i class="fa fa-photo"></i> {{ p.photosInContest|length }} {{ "page.contest_photographers.label.number_photos"|trans }}</p>
                                                     {#<address>
                                                         <strong>Twitter, Inc.</strong><br>
                                                         795 Folsom Ave, Suite 600<br>

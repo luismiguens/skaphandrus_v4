@@ -43,6 +43,17 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
     private $address;
     private $contact;
     private $settings;
+    
+    private $photosInContest;
+    
+    
+    public function getPhotosInContest(){
+        return $this->photosInContest;
+    }
+    
+    public function setPhotosInContest($param) {
+        $this->photosInContest = $param;
+    }
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -251,21 +262,6 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
     public function getPhotos() {
         return $this->photos;
     }
-
-    public function getPhotosInContest($contest_id) {
-        
-        $conn = DriverManager::getConnection(array(/*..*/));
-        $queryBuilder = $conn->createQueryBuilder();
-        
-        $queryBuilder
-            ->select('photo')
-            ->from('SkPhoto')
-            ->where('Photo.FosUser = this.id')
-            ->setParameter(0, $contest_id);
-        
-        
-        return $this->photos;
-    }
     
     
     /**
@@ -367,5 +363,6 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
         $entityManager->persist($entity);
         $entityManager->flush();
     }
+    
 
 }

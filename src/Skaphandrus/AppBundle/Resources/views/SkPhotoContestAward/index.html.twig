@@ -48,9 +48,11 @@
                     <td>{{ entity.name }}</td>
                     <td>{{ entity.contest }}</td>
                     <td>{{ entity.category }}</td>
-                    {%for sponsor in entity.sponsor %}
-                        <td>{{ sponsor.name }}</td>
-                    {% endfor %}
+                    <td>
+                        {%for sponsor in entity.sponsor %}
+                            <li>{{ sponsor.name }}</li>
+                        {% endfor %}
+                    </td>
                     <td>
 {#                        <a class="btn btn-white btn-sm" href="{{ path('photo_contest_award_admin_show', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.view"|trans }}</a>#}
                         <a class="btn btn-white btn-sm" href="{{ path('photo_contest_award_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit"|trans }}</a>

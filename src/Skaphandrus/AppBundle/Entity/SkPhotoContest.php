@@ -515,13 +515,12 @@ class SkPhotoContest {
         $photo = new SkPhoto();
 
         foreach ($this->getCategories() as $category) {
-
             foreach ($category->getPhoto() as $photo) {
                 $photographers[]= $photo->getFosUser();
             }
         }
         
-//        $this->photographers=$photographers;
+//        $this->photographers=$photographers;    
         $this->photographers = array_unique($photographers);
         return $this->photographers;
     }
