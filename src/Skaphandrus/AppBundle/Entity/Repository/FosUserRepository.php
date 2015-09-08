@@ -4,6 +4,7 @@ namespace Skaphandrus\AppBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Doctrine\DBAL\DriverManager;
 
 /**
  * SkPhotoRepository
@@ -163,6 +164,47 @@ class FosUserRepository extends EntityRepository {
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
+    }
+    
+    public function getPhotosInContest($contest_id, $user_id) {
+        
+
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+        
+        
+//        $queryBuilder
+//            ->select('pho')
+//            ->from('SkaphandrusAppBundle:SkPhotoContest', 'con')
+//            ->innerJoin('con', 'SkaphandrusAppBundle:SkPhotoContestCategory', 'cat', 'con.id = cat.contest_id')
+//            ->innerJoin('cat', 'SkaphandrusAppBundle:SkPhoto', 'pho', 'cat.id = pho.id')
+//            ->where( 'pho.fos_user_id :user_id')
+//            ->andWhere('con.id :contest_id')
+//            ->setParameter('user_id',  $user_id)
+//            ->setParameter('contest_id',  $contest_id);
+        
+//        
+//        $qb->select('u')
+//                ->from('SkaphandrusAppBundle:FosUser', 'u');
+//        $qb->leftJoin('u.photos', 'p', 'WITH', 'p.fosUser = u.id');
+//        
+//        
+        
+        $queryBuilder->select('p')
+                ->from('SkaphandrusAppBundle:SkPhoto', 'p')
+                ->join('p.category', 'c')
+                ->join('c.contest', 'ct')
+                ->where( 'p.fosUser = ?1')
+            ->andWhere('c.contest = ?2')
+            ->setParameter(1,  $user_id)
+            ->setParameter(2,  $contest_id);
+        
+        
+        
+        
+        
+        $photosInContest = $queryBuilder->getQuery()->getResult();
+          return $photosInContest;
+         
     }
 
 }

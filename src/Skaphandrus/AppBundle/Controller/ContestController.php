@@ -143,21 +143,18 @@ class ContestController extends Controller {
         $contest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
             ->findOneByName($name);
 
-        $total_photo_count = 0;
-        $photographers = array();
-        foreach ($contest->getCategories() as $category) {
-            foreach ($category->getPhoto() as $photo) {
-                $photographers[$photo->getFosUser()->getId()] = array(
-                    'user' => $photo->getFosUser(),
-                    'photos' => count($category->getPhoto()),
-                );
-            }
+        
+        foreach( $contest->getPhotographers() as $fosUser ){
+            $photosInContest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
+                ->getPhotosInContest($contest->getId(), $fosUser->getId() );
+            
+            $fosUser->setPhotosInContest($photosInContest);
         }
-
+        
         if ($contest) {
             return $this->render('SkaphandrusAppBundle:Contest:photographers.html.twig',array(
                 'contest' => $contest,
-                'photographers' => $photographers,
+//                'photographers' => $photographers,
             ));
         }
         else {
