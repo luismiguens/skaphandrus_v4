@@ -3,6 +3,7 @@
 namespace Skaphandrus\AppBundle\Entity;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * SkSettings
@@ -32,6 +33,7 @@ class SkSettings
     /**
      * @var string
      */
+    //nome da photo
     private $photo;
 
     /**
@@ -64,6 +66,40 @@ class SkSettings
      */
     private $emailNotificationTime;
 
+    
+    private $imageFile;
+
+
+    private $updatedAt;
+    
+    
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
+     */
+    public function setImageFile(File $image = null) {
+ 
+        $this->imageFile = $image;
+                
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
+
+    }
+
+    /**
+     * @return File
+     */
+    public function getImageFile() {
+        return $this->imageFile;
+    }
+    
+    
 
     /**
      * Set language
@@ -358,39 +394,39 @@ class SkSettings
         return $this->file;
     }
 
-    /**
-     * 
-     * @return type
-     */
-   public function upload() {
-        // the file property can be empty if the field is not required
-        if (null === $this->getFile()) {
-            return;
-        }
-
-        $filename = sha1(uniqid(mt_rand(), true));
-            
-        $this->photo = $filename.'.'.$this->getFile()->guessExtension();
-        
-        
-        // use the original file name here but you should
-        // sanitize it at least to avoid any security issues
-        // move takes the target directory and then the
-        // target filename to move to
-//        $this->getFile()->move(
-//                $this->getUploadRootDir(), sha1(uniqid(mt_rand(), true)).'.'.$this->getFile()->guessExtension()
-//        );
-
-        $this->getFile()->move($this->getUploadRootDir(), $this->photo);
-        
-        
-        // set the path property to the filename where you've saved the file
-        //$this->image = $this->getFile()->getClientOriginalName();
-        
-
-        // clean up the file property as you won't need it anymore
-        $this->file = null;
-    }
-
+//    /**
+//     * 
+//     * @return type
+//     */
+//   public function upload() {
+//        // the file property can be empty if the field is not required
+//        if (null === $this->getFile()) {
+//            return;
+//        }
+//
+//        $filename = sha1(uniqid(mt_rand(), true));
+//            
+//        $this->photo = $filename.'.'.$this->getFile()->guessExtension();
+//        
+//        
+//        // use the original file name here but you should
+//        // sanitize it at least to avoid any security issues
+//        // move takes the target directory and then the
+//        // target filename to move to
+////        $this->getFile()->move(
+////                $this->getUploadRootDir(), sha1(uniqid(mt_rand(), true)).'.'.$this->getFile()->guessExtension()
+////        );
+//
+//        $this->getFile()->move($this->getUploadRootDir(), $this->photo);
+//        
+//        
+//        // set the path property to the filename where you've saved the file
+//        //$this->image = $this->getFile()->getClientOriginalName();
+//        
+//
+//        // clean up the file property as you won't need it anymore
+//        $this->file = null;
+//    }
+    
+    
 }
-

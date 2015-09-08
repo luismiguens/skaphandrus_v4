@@ -4,7 +4,8 @@ namespace Skaphandrus\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+//use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * SkIdentificationModule
@@ -41,6 +42,7 @@ class SkIdentificationModule {
     /**
      * @var string
      */
+    //nome da imagem
     private $image;
 
     /**
@@ -67,11 +69,35 @@ class SkIdentificationModule {
      * @var \Doctrine\Common\Collections\Collection
      */
     private $species;
-    private $file;
+//    private $file;
     private $acquisitions;
     private $points;
     private $users;
 
+    
+    private $imageFile;
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
+     */
+    public function setImageFile(File $image = null) {
+        $this->imageFile = $image;
+    }
+
+    /**
+     * @return File
+     */
+    public function getImageFile() {
+        return $this->imageFile;
+    }
+
+    
     /**
      * Constructor
      */
@@ -391,55 +417,56 @@ class SkIdentificationModule {
         return 'uploads/characters';
     }
 
-    /**
-     * Sets file.
-     *
-     * @param UploadedFile $file
-     */
-    public function setFile(UploadedFile $file = null) {
-        $this->file = $file;
-    }
+//    /**
+//     * Sets file.
+//     *
+//     * @param UploadedFile $file
+//     */
+//    public function setFile(UploadedFile $file = null) {
+//        $this->file = $file;
+//    }
+//
+//    /**
+//     * Get file.
+//     *
+//     * @return UploadedFile
+//     */
+//    public function getFile() {
+//        return $this->file;
+//    }
+//
+//    /**
+//     * 
+//     * @return type
+//     */
+//    public function upload() {
+//        // the file property can be empty if the field is not required
+//        if (null === $this->getFile()) {
+//            return;
+//        }
+//
+//        $filename = sha1(uniqid(mt_rand(), true));
+//
+//        $this->image = $filename . '.' . $this->getFile()->guessExtension();
+//
+//
+//        // use the original file name here but you should
+//        // sanitize it at least to avoid any security issues
+//        // move takes the target directory and then the
+//        // target filename to move to
+////        $this->getFile()->move(
+////                $this->getUploadRootDir(), sha1(uniqid(mt_rand(), true)).'.'.$this->getFile()->guessExtension()
+////        );
+//
+//        $this->getFile()->move($this->getUploadRootDir(), $this->image);
+//
+//
+//        // set the path property to the filename where you've saved the file
+//        //$this->image = $this->getFile()->getClientOriginalName();
+//        // clean up the file property as you won't need it anymore
+//        $this->file = null;
+//    }
 
-    /**
-     * Get file.
-     *
-     * @return UploadedFile
-     */
-    public function getFile() {
-        return $this->file;
-    }
-
-    /**
-     * 
-     * @return type
-     */
-    public function upload() {
-        // the file property can be empty if the field is not required
-        if (null === $this->getFile()) {
-            return;
-        }
-
-        $filename = sha1(uniqid(mt_rand(), true));
-
-        $this->image = $filename . '.' . $this->getFile()->guessExtension();
-
-
-        // use the original file name here but you should
-        // sanitize it at least to avoid any security issues
-        // move takes the target directory and then the
-        // target filename to move to
-//        $this->getFile()->move(
-//                $this->getUploadRootDir(), sha1(uniqid(mt_rand(), true)).'.'.$this->getFile()->guessExtension()
-//        );
-
-        $this->getFile()->move($this->getUploadRootDir(), $this->image);
-
-
-        // set the path property to the filename where you've saved the file
-        //$this->image = $this->getFile()->getClientOriginalName();
-        // clean up the file property as you won't need it anymore
-        $this->file = null;
-    }
 
     /**
      * Add acquisition

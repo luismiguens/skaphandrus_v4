@@ -170,10 +170,9 @@ class SkProfileController extends Controller {
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-           
-            
-             $entity->getSettings()->upload();
- $em->flush();
+
+//            $entity->getSettings()->upload();
+            $em->flush();
             return $this->redirect($this->generateUrl('profile_admin_edit'));
         }
 

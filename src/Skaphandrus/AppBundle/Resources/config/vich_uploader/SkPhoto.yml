@@ -1,0 +1,5 @@
+Skaphandrus\AppBundle\Entity\SkPhoto:
+    imageFile:
+        mapping:           photo
+        filename_property: image
+

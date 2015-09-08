@@ -42,7 +42,7 @@ class SkIdentificationModuleController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $entity->upload();
+//            $entity->upload();
 
             $em->persist($entity);
             $em->flush();
@@ -173,7 +173,7 @@ class SkIdentificationModuleController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $entity->upload();
+//            $entity->upload();
             
             $em->flush();
 
@@ -222,7 +222,7 @@ class SkIdentificationModuleController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('identification_module_admin_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'form.common.btn.delete','attr' => array('class' => 'btn btn-danger')))
             ->getForm()
         ;
     }

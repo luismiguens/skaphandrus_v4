@@ -391,4 +391,32 @@ vich_uploader:
             delete_on_update:   true
             delete_on_remove:   true
             namer:              vich_uploader.namer_uniqid
-
+        photo:
+            uri_prefix:         /uploads/fotografias
+            upload_destination: %kernel.root_dir%/../web/uploads/fotografias
+            inject_on_load:     false
+            delete_on_update:   true
+            delete_on_remove:   true
+            namer:              vich_uploader.namer_uniqid
+        photo_user:
+            uri_prefix:         /uploads/utilizadores
+            upload_destination: %kernel.root_dir%/../web/uploads/utilizadores
+            inject_on_load:     false
+            delete_on_update:   true
+            delete_on_remove:   true
+            namer:              vich_uploader.namer_uniqid
+        module_photo:
+            uri_prefix:         /uploads/characters
+            upload_destination: %kernel.root_dir%/../web/uploads/characters
+            inject_on_load:     false
+            delete_on_update:   true
+            delete_on_remove:   true
+            namer:              vich_uploader.namer_uniqid
+        criteria_photo:
+            uri_prefix:         /uploads/characters
+            upload_destination: %kernel.root_dir%/../web/uploads/characters
+            inject_on_load:     false
+            delete_on_update:   true
+            delete_on_remove:   true
+            namer:              vich_uploader.namer_uniqid
+            

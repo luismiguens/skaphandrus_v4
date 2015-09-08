@@ -1,0 +1,5 @@
+Skaphandrus\AppBundle\Entity\SkIdentificationModule:
+    imageFile:
+        mapping:           module_photo
+        filename_property: image
+

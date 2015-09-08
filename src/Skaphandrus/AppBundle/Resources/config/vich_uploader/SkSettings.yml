@@ -1,0 +1,5 @@
+Skaphandrus\AppBundle\Entity\SkSettings:
+    imageFile:
+        mapping:           photo_user
+        filename_property: photo
+

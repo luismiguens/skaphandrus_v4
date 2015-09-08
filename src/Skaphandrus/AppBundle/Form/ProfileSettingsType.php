@@ -19,12 +19,19 @@ class ProfileSettingsType extends AbstractType {
                             'label'=>'form.settings.label.about_you'
                             )
                         )
-                ->add('file', 'file', 
-                        array(
-                            'label'=>'form.settings.label.file',
-                            'required' => false
-                            )
-                        )
+//                ->add('file', 'file', 
+//                        array(
+//                            'label'=>'form.settings.label.file',
+//                            'required' => false
+//                            )
+//                        )
+                
+                ->add('imageFile', 'vich_image', array(
+                    'label' => 'form.settings.label.file',
+                    'required'      => false,
+                    'allow_delete'  => false, // not mandatory, default is true
+                    'download_link' => false, // not mandatory, default is true
+                    ))
         ;
     }
 

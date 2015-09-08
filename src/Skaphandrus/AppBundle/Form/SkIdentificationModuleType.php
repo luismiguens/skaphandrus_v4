@@ -34,15 +34,21 @@ class SkIdentificationModuleType extends AbstractType
 //                'label' => 'form.identification_module.label.file',
 //                'required' => false
 //            ))
-                 ->add('file', 'file', array(
-                    'label' => 'form.identification_module.label.file',
-                    'constraints' => new File(array(
-                        'maxSize' => '10M',
-                        'mimeTypes' => array("image/jpeg")
-                            )),
-                    'required' => false
-                        )
-                )
+//                 ->add('file', 'file', array(
+//                    'label' => 'form.identification_module.label.file',
+//                    'constraints' => new File(array(
+//                        'maxSize' => '10M',
+//                        'mimeTypes' => array("image/jpeg")
+//                            )),
+//                    'required' => false
+//                        )
+//                )
+            ->add('imageFile', 'vich_image', array(
+                'label' => 'form.identification_module.label.file',
+                'required'      => false,
+                'allow_delete'  => false, // not mandatory, default is true
+                'download_link' => false, // not mandatory, default is true
+                )) 
         ;
     }
     

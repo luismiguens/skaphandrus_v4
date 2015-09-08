@@ -75,7 +75,7 @@ class SkPhotoController extends Controller {
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $entity->upload();
+//            $entity->upload();
 
             // Add tags from custom field
             $tags = explode(',', $request->request->get('tags'));
@@ -235,7 +235,7 @@ class SkPhotoController extends Controller {
         if ($editForm->isValid()) {
             $em->flush();
             
-            $entity->upload();
+//            $entity->upload();
 
             // Add tags from custom field
             $entity = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($id);

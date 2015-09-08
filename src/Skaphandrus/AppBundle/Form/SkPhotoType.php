@@ -21,15 +21,22 @@ class SkPhotoType extends AbstractType {
                     'label' => 'form.photo.label.title'
                         )
                 )
-                ->add('file', 'file', array(
+//                ->add('file', 'file', array(
+//                    'label' => 'form.photo.label.file',
+//                    'constraints' => new File(array(
+//                        'maxSize' => '10M',
+//                        'mimeTypes' => array("image/jpeg")
+//                            )),
+//                    'required' => false
+//                        )
+//                )
+                ->add('imageFile', 'vich_image', array(
                     'label' => 'form.photo.label.file',
-                    'constraints' => new File(array(
-                        'maxSize' => '10M',
-                        'mimeTypes' => array("image/jpeg")
-                            )),
-                    'required' => false
-                        )
-                )
+                    'required'      => false,
+                    'allow_delete'  => false, // not mandatory, default is true
+                    'download_link' => false, // not mandatory, default is true
+                    ))
+                
                 ->add('description', 'textarea', array(
                     'attr' => array('class' => 'form-control'),
                     'label' => 'form.photo.label.description',

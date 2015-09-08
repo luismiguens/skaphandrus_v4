@@ -1,0 +1,5 @@
+Skaphandrus\AppBundle\Entity\SkIdentificationCharacter:
+    imageFile:
+        mapping:           criteria_photo
+        filename_property: image
+

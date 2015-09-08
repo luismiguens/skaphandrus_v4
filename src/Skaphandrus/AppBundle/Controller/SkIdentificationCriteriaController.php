@@ -48,9 +48,9 @@ class SkIdentificationCriteriaController extends Controller
 
         if ($form->isValid()) {
 
-            foreach($entity->getCharacters() as $character) {
-                $character->upload();
-            }
+//            foreach($entity->getCharacters() as $character) {
+//                $character->upload();
+//            }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
@@ -189,10 +189,10 @@ class SkIdentificationCriteriaController extends Controller
 
 
         if ($editForm->isValid()) {
-            foreach($entity->getCharacters() as $character) {
-                $character->upload();
-            }
-
+//            foreach($entity->getCharacters() as $character) {
+//                $character->upload();
+//            }
+            
             $em->flush();
 
             return $this->redirect($this->generateUrl('identification_criteria_admin_edit', array('id' => $id)));
@@ -240,7 +240,7 @@ class SkIdentificationCriteriaController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('identification_criteria_admin_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'form.common.btn.delete','attr' => array('class' => 'btn btn-danger')))
             ->getForm()
         ;
     }

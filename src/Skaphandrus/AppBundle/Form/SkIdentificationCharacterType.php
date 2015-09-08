@@ -22,12 +22,18 @@ class SkIdentificationCharacterType extends AbstractType
                     )
                 )
             ))
-            ->add('file', 'file', 
-                array(
-                    'label'=>'form.identification_character.label.file',
-                    'required' => false
-                )
-            )
+//            ->add('file', 'file', 
+//                array(
+//                    'label'=>'form.identification_character.label.file',
+//                    'required' => false
+//                )
+//            )
+            ->add('imageFile', 'vich_image', array(
+                'label' => 'form.identification_character.label.file',
+                'required'      => false,
+                'allow_delete'  => false, // not mandatory, default is true
+                'download_link' => false, // not mandatory, default is true
+                ))    
             // ->add('criteria', 'entity', array(
             //     'class' => 'SkaphandrusAppBundle:SkIdentificationCriteria',
             // ))
