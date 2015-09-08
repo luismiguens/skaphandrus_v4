@@ -14,3 +14,4 @@
 /composer.phar
 /composer.lock
 /nbproject/*
+/nbproject/private/*
