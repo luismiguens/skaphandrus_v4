@@ -12,5 +12,16 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group/>
+<<<<<<< HEAD
+=======
+=======
+        <group>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/DependencyInjection/SkaphandrusAppExtension.php</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/DependencyInjection/Configuration.php</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Entity/SkPhoto.php</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/composer.json</file>
+        </group>
+>>>>>>> ece77fbec3a05cc456c63e70798fd5eda45ff9d8
+>>>>>>> 7677472c1bfc03d42670737f5a749f8217180b94
     </open-files>
 </project-private>
