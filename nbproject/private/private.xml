@@ -1,27 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
-        <file>
-            <url>src/Skaphandrus/AppBundle/Migration/schema.data.sql</url>
-            <bookmark id="1">
-                <name/>
-                <line>386</line>
-                <key/>
-            </bookmark>
-        </file>
-    </editor-bookmarks>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
-<<<<<<< HEAD
-=======
-=======
         <group>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/DependencyInjection/SkaphandrusAppExtension.php</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/DependencyInjection/Configuration.php</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Entity/SkPhoto.php</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/composer.json</file>
+            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Contest/sponsors.html.twig</file>
+            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Controller/ContestController.php</file>
+            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Contest/contest.html.twig</file>
+            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Entity/Repository/SkPhotoContestSponsorRepository.php</file>
         </group>
->>>>>>> ece77fbec3a05cc456c63e70798fd5eda45ff9d8
->>>>>>> 7677472c1bfc03d42670737f5a749f8217180b94
     </open-files>
 </project-private>

@@ -44,7 +44,11 @@
     </head>
 
 
-
+{#{% if app.user %}
+    # user is logged in
+ {% else %}
+    # user is not logged in
+ {% endif %}#}
 
 
     <body class="boxed-layout">

@@ -164,13 +164,17 @@ class ContestController extends Controller {
 
     public function sponsorsAction($contest_slug) {
         $name = str_replace('-', ' ', $contest_slug);
-
+   
         $contest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
             ->findOneByName($name);
 
+        $sponsors = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestSponsor')
+            ->findSponsorsByContest($contest);
+        
         if ($contest) {
             return $this->render('SkaphandrusAppBundle:Contest:sponsors.html.twig',array(
                 'contest' => $contest,
+                'sponsors' => $sponsors,
             ));
         }
         else {
@@ -186,11 +190,19 @@ class ContestController extends Controller {
 
         $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
             ->findPhotographers($contest);
-
+        
+        $sponsors = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestSponsor')
+            ->findSponsorsByContest($contest);
+        
+        $judges = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestJudge')
+            ->findJudgesByContest($contest);
+        
         if ($contest) {
             return $this->render('SkaphandrusAppBundle:Contest:contest.html.twig',array(
                 'contest' => $contest,
                 'photographers' => $photographers,
+                'sponsors' => $sponsors,
+                'judges' => $judges,
             ));
         }
         else {
