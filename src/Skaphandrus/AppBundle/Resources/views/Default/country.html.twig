@@ -2,7 +2,15 @@
 
 {% block page_title %}{% trans with {'%country%': country} %}page.country.meta_tag.title{% endtrans %}{% endblock %}
 {% block page_description %}{{ country.translate.overview [0:160]}}{% endblock %}
-{% block page_keywords %}{{ country }},{{ "meta_tag.keyword.holidays"|trans }} {% endblock %}
+{% block page_keywords %}{{ country }}, {{ "meta_tag.keyword.holidays"|trans }}, {{ "meta_tag.keyword.travel"|trans }}, 
+    {{ "meta_tag.keyword.snorkeling"|trans }}, {{ "meta_tag.keyword.scuba"|trans }}, {{ "meta_tag.keyword.diving"|trans }}, 
+    {{ "meta_tag.keyword.dive"|trans }}, {{ "meta_tag.keyword.sites"|trans }}, {{ "meta_tag.keyword.locations"|trans }}, 
+    {{ "meta_tag.keyword.animals"|trans }}, {{ "meta_tag.keyword.species"|trans }}, {{ "meta_tag.keyword.images"|trans }}, 
+    {{ "meta_tag.keyword.photos"|trans }}, {{ "meta_tag.keyword.pictures"|trans }}, 
+    {{ "meta_tag.keyword.health_and_safety"|trans }}, {{ "meta_tag.keyword.communications"|trans }}, 
+    {{ "meta_tag.keyword.entry_requirements"|trans }} 
+{% endblock %}
+
 
 {% block heading_title %}
     {{ country }}

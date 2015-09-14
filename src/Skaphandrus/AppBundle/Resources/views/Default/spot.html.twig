@@ -1,8 +1,14 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block page_title %}{{ spot.name }}, {{ spot.location.name }}, {{ spot.location.region.country }}{% endblock %}
-{% block page_description %}description{% endblock %}
-{% block page_keywords %}{{ spot.name }}, {{ spot.location.name }}, {{ spot.location.region.country }}{% endblock %}
+{% block page_title %} {% trans with {'%spot%': spot.name, '%spot_location_name%': spot.location.name, '%spot_location_region_country%': spot.location.region.country} %}page.spot.meta_tag.title{% endtrans %} {% endblock %}
+{% block page_description %} {{ spot.description [0:160]}} {% endblock %}
+{% block page_keywords %} {{ spot.name }}, {{ spot.location.name }}, {{ spot.location.region.country }} 
+    {{ "meta_tag.keyword.map"|trans }}, {{ "meta_tag.keyword.scuba"|trans }}, {{ "meta_tag.keyword.diving"|trans }}, 
+    {{ "meta_tag.keyword.dive"|trans }}, {{ "meta_tag.keyword.sites"|trans }}, {{ "meta_tag.keyword.locations"|trans }}, 
+    {{ "meta_tag.keyword.animals"|trans }}, {{ "meta_tag.keyword.species"|trans }}, {{ "meta_tag.keyword.images"|trans }}, 
+    {{ "meta_tag.keyword.photos"|trans }}, {{ "meta_tag.keyword.pictures"|trans }}, 
+    {{ "meta_tag.keyword.depth"|trans }}, {{ "meta_tag.keyword.coordinate"|trans }}
+{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
