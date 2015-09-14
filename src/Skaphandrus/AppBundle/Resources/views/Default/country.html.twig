@@ -1,8 +1,8 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
 {% block page_title %}{% trans with {'%country%': country} %}page.country.meta_tag.title{% endtrans %}{% endblock %}
-{% block page_description %}description{% endblock %}
-{% block page_keywords %}{{ country }}{% endblock %}
+{% block page_description %}{{ country.translate.overview [0:160]}}{% endblock %}
+{% block page_keywords %}{{ country }},{{ "meta_tag.keyword.holidays"|trans }} {% endblock %}
 
 {% block heading_title %}
     {{ country }}
