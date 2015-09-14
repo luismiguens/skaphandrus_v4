@@ -1,6 +1,6 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block page_title %}{{ country }}{% endblock %}
+{% block page_title %}{% trans with {'%country%': country} %}page.country.meta_tag.title{% endtrans %}{% endblock %}
 {% block page_description %}description{% endblock %}
 {% block page_keywords %}{{ country }}{% endblock %}
 
