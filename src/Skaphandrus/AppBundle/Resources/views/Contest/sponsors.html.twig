@@ -78,11 +78,11 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for sponsor in contest.sponsors %}
+                                        {% for sponsor in sponsors %}
                                             <tr>
                                                 <td>
-                                                   <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
-                                                  
+                                                    <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
+
                                                 </td>
                                                 <td>
                                                     <h4>{{ sponsor.name }}</h4>

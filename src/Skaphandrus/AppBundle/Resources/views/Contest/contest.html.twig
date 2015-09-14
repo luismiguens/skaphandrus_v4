@@ -228,7 +228,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {% for judge in contest.judges %}
+                                                        {% for judge in judges %}
                                                             <tr>
                                                                 <td>
                                                                     {# @TODO: Add judge real photo #}
@@ -254,7 +254,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {% for sponsor in contest.sponsors %}
+                                                        {% for sponsor in sponsors %}
                                                             <tr>
                                                                 <td>
                                                                     {# <img class="img-rounded" src="{{ sponsor.image|imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}"> #}

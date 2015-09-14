@@ -5,12 +5,9 @@ namespace Skaphandrus\AppBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Skaphandrus\AppBundle\Entity\SkPhoto;
+use Skaphandrus\AppBundle\Utils\Utils;
 use Skaphandrus\AppBundle\Entity\SkKeyword;
 use Skaphandrus\AppBundle\Form\SkPhotoType;
-
-
-
-
 
 
 /**
@@ -170,30 +167,38 @@ class SkPhotoController extends Controller {
      */
     public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
-
+        
         $entity = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find SkPhoto entity.');
+        $loggedUser = $this->get('security.token_storage')->getToken()->getUser();
+        $owner = $entity->getFosUser();         
+
+        if (Utils::isOwner($loggedUser, $owner)){
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find SkPhoto entity.');
+            }
+
+            $editForm = $this->createEditForm($entity);
+            //$editForm->remove('file');  
+
+
+            $deleteForm = $this->createDeleteForm($id);
+
+            $keywords = array();
+            foreach ($entity->getKeyword() as $keyword) {
+                $keywords[] = $keyword->getKeyword();
+            }
+
+            return $this->render('SkaphandrusAppBundle:SkPhoto:edit.html.twig', array(
+                        'entity' => $entity,
+                        'keywords' => $keywords,
+                        'edit_form' => $editForm->createView(),
+                        'delete_form' => $deleteForm->createView(),
+            ));
+        } else {
+            throw $this->createNotFoundException("The content isn't yours.");
         }
-
-        $editForm = $this->createEditForm($entity);
-        //$editForm->remove('file');  
         
-        
-        $deleteForm = $this->createDeleteForm($id);
-
-        $keywords = array();
-        foreach ($entity->getKeyword() as $keyword) {
-            $keywords[] = $keyword->getKeyword();
-        }
-
-        return $this->render('SkaphandrusAppBundle:SkPhoto:edit.html.twig', array(
-                    'entity' => $entity,
-                    'keywords' => $keywords,
-                    'edit_form' => $editForm->createView(),
-                    'delete_form' => $deleteForm->createView(),
-        ));
     }
 
     /**

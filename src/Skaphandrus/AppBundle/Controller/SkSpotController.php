@@ -4,7 +4,7 @@ namespace Skaphandrus\AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Skaphandrus\AppBundle\Utils\Utils;
 use Skaphandrus\AppBundle\Entity\SkSpot;
 use Skaphandrus\AppBundle\Form\SkSpotType;
 
@@ -95,11 +95,7 @@ class SkSpotController extends Controller
     public function newAction()
     {
         $entity = new SkSpot();
-        $form   = $this->createCreateForm($entity);
-        
-        
-        
-        
+        $form   = $this->createCreateForm($entity); 
 
         return $this->render('SkaphandrusAppBundle:SkSpot:new.html.twig', array(
             'entity' => $entity,
@@ -138,19 +134,27 @@ class SkSpotController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('SkaphandrusAppBundle:SkSpot')->find($id);
+        
+        $loggedUser = $this->get('security.token_storage')->getToken()->getUser();
+        $owner = $entity->getFosUser();         
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find SkSpot entity.');
+        if (Utils::isOwner($loggedUser, $owner)){
+  
+                if (!$entity) {
+                    throw $this->createNotFoundException('Unable to find SkSpot entity.');
+                }
+
+                $editForm = $this->createEditForm($entity);
+                $deleteForm = $this->createDeleteForm($id);
+
+                return $this->render('SkaphandrusAppBundle:SkSpot:edit.html.twig', array(
+                    'entity'      => $entity,
+                    'edit_form'   => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
+                ));
+        } else {
+            throw $this->createNotFoundException("The content isn't yours.");
         }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('SkaphandrusAppBundle:SkSpot:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
     }
 
     /**

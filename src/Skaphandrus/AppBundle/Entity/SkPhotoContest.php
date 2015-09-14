@@ -444,9 +444,10 @@ class SkPhotoContest {
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getAwards() {
-        foreach ($this->categories as $category) {
-            return $category->getAwards();
-        }
+//        foreach ($this->categories as $category) {
+//            return $category->getAwards();
+//        }
+        return $this->awards;
     }
 
     /**

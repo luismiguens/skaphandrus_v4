@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityRepository;
  * repository methods below.
  */
 class SkPhotoContestRepository extends EntityRepository {
-
+ 
     public function findPhotographers($contest) {
         $categories = $contest->getCategories();
         $users = array();

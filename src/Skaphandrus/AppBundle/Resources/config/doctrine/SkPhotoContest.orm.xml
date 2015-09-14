@@ -34,7 +34,7 @@
     <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
     <one-to-many field="categories" target-entity="SkPhotoContestCategory" mapped-by="contest"/>
     <!--<one-to-many field="sponsors" target-entity="SkPhotoContestSponsor" mapped-by="contest"/>-->
-    <!--<one-to-many field="awards" target-entity="SkPhotoContestAward" mapped-by="contest"/>-->
+    <one-to-many field="awards" target-entity="SkPhotoContestAward" mapped-by="contest"/>
     <!--<one-to-many field="judges" target-entity="SkPhotoContestJudge" mapped-by="contest"/>-->
   </entity>
 </doctrine-mapping>
