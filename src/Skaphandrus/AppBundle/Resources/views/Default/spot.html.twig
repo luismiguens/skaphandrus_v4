@@ -1,6 +1,6 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block page_title %} {% trans with {'%spot%': spot.name, '%spot_location_name%': spot.location.name, '%spot_location_region_country%': spot.location.region.country} %}page.spot.meta_tag.title{% endtrans %} {% endblock %}
+{% block page_title %} {% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.meta_tag.title{% endtrans %} {% endblock %}
 {% block page_description %} {{ spot.description [0:160]}} {% endblock %}
 {% block page_keywords %} {{ spot.name }}, {{ spot.location.name }}, {{ spot.location.region.country }} 
     {{ "meta_tag.keyword.map"|trans }}, {{ "meta_tag.keyword.scuba"|trans }}, {{ "meta_tag.keyword.diving"|trans }}, 

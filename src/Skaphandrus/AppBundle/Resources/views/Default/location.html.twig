@@ -1,6 +1,6 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block page_title %} {% trans with {'%location%': location.name, '%location_region_country%': location.region.country} %}page.location.meta_tag.title{% endtrans %} {% endblock %}
+{% block page_title %} {% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.meta_tag.title{% endtrans %} {% endblock %}
 {% block page_description %} {{ location.description [0:160]}} {% endblock %}
 {% block page_keywords %} {{ location.region.country }}, {{ location.name }}, {{ "meta_tag.keyword.holidays"|trans }}, 
     {{ "meta_tag.keyword.travel"|trans }}, {{ "meta_tag.keyword.snorkeling"|trans }}, 

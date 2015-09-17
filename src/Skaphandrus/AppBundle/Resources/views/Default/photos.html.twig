@@ -3,47 +3,161 @@
 
 {% block page_title %}
     {% if params.species is defined %}
-        {{ "page.photos.keyword.species"|trans }}: {{ pagination[0].species.name}}, 
+        {{ "page.photos.keyword.species"|trans }}, {{ pagination[0].species.name}} {{ "page.photos.meta_tag.title"|trans }}
     {% elseif params.genus is defined %}
-        {{ "page.photos.keyword.genus"|trans }}: {{pagination[0].species.genus.name}}, 
+        {{ "page.photos.keyword.genus"|trans }}, {{pagination[0].species.genus.name}}, {{ "page.photos.meta_tag.title"|trans }}
     {% elseif params.family is defined %}
-        {{ "page.photos.keyword.family"|trans }}: {{pagination[0].species.genus.family.name}}, 
+        {{ "page.photos.keyword.family"|trans }}, {{pagination[0].species.genus.family.name}}, {{ "page.photos.meta_tag.title"|trans }}
     {% elseif params.order is defined %}
-        {{ "page.photos.keyword.order"|trans }}: {{pagination[0].species.genus.family.order.name}},
+        {{ "page.photos.keyword.order"|trans }}, {{pagination[0].species.genus.family.order.name}}, {{ "page.photos.meta_tag.title"|trans }}
     {% elseif params.class is defined %}
-        {{ "page.photos.keyword.class"|trans }}: {{pagination[0].species.genus.family.order.class.name}},
+        {{ "page.photos.keyword.class"|trans }}, {{pagination[0].species.genus.family.order.class.name}}, {{ "page.photos.meta_tag.title"|trans }}
     {% elseif params.phylum is defined %}
-        {{ "page.photos.keyword.phylum"|trans }}: {{pagination[0].species.genus.family.order.class.phylum.name}},
+        {{ "page.photos.keyword.phylum"|trans }}, {{pagination[0].species.genus.family.order.class.phylum.name}}, {{ "page.photos.meta_tag.title"|trans }}
     {% elseif params.kingdom is defined %}
-        {{ "page.photos.keyword.kingdom"|trans }}: {{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}
+        {{ "page.photos.keyword.kingdom"|trans }}, {{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}, {{ "page.photos.meta_tag.title"|trans }}
 
-        <!-- spots-->
+    {#-----spots-----#}
     {% elseif params.spot is defined %}
-        {{ "page.photos.keyword.spot"|trans }}: {{ pagination[0].spot.name}}, {{pagination[0].spot.location.name}}, {{pagination[0].spot.location.region.country}}
+        {{ "page.photos.keyword.spot"|trans }}: {{ pagination[0].spot.name}}, {{pagination[0].spot.location.name}}, {{pagination[0].spot.location.region.country}}, {{ "page.photos.meta_tag.title"|trans }}
     {% elseif params.location is defined %}
-        {{ "page.photos.keyword.location"|trans }}: {{pagination[0].spot.location.name}}, {{pagination[0].spot.location.region.name}}, {{pagination[0].spot.location.region.country}}
+        {{ "page.photos.keyword.location"|trans }}: {{pagination[0].spot.location.name}}, {{pagination[0].spot.location.region.name}}, {{pagination[0].spot.location.region.country}}, {{ "page.photos.meta_tag.title"|trans }}
     {% elseif params.region is defined %}
-        {{ "page.photos.keyword.region"|trans }}: {{pagination[0].spot.location.region.name}}, {{pagination[0].spot.location.region.country}}
+        {{ "page.photos.keyword.region"|trans }}: {{pagination[0].spot.location.region.name}}, {{pagination[0].spot.location.region.country}}, {{ "page.photos.meta_tag.title"|trans }}
     {% elseif params.country is defined %}
-        {{ "page.photos.keyword.country"|trans }}: {{pagination[0].spot.location.region.country}} 
-        <!-- fosUser -->
+        {{ "page.photos.keyword.country"|trans }}: {{pagination[0].spot.location.region.country}}, {{ "page.photos.meta_tag.title"|trans }}
+    
+    {#-----fosuser-----#}
     {% elseif params.fosUser is defined %}
-        {{ "page.photos.keyword.fosUser"|trans }}: {{pagination[0].fosUser}} 
+        {{ "page.photos.keyword.fosUser"|trans }}: {{pagination[0].fosUser}}, {{ "page.photos.meta_tag.title"|trans }}
 
     {% else %}
-        // do something else
+        {{ "page.photos_something_else.meta_tag.title"|trans }}
     {% endif %}
 {% endblock %}
 
 
+{% block page_description %}
+    {% if params.species is defined %}
+        {% trans with {'%type%': "page.photos.keyword.species"|trans, '%value%': pagination[0].species.name} %} page.photos.meta_tag.description {% endtrans %}
+    {% elseif params.genus is defined %}
+        {% trans with {'%type%': "page.photos.keyword.genus"|trans, '%value%': pagination[0].species.genus.name} %} page.photos.meta_tag.description {% endtrans %}
+    {% elseif params.family is defined %}
+        {% trans with {'%type%': "page.photos.keyword.family"|trans, '%value%': pagination[0].species.genus.family.name} %} page.photos.meta_tag.description {% endtrans %}
+    {% elseif params.order is defined %}
+        {% trans with {'%type%': "page.photos.keyword.order"|trans, '%value%': pagination[0].species.genus.family.order.name} %} page.photos.meta_tag.description {% endtrans %}
+    {% elseif params.class is defined %}
+        {% trans with {'%type%': "page.photos.keyword.class"|trans, '%value%': pagination[0].species.genus.family.order.class.name} %} page.photos.meta_tag.description {% endtrans %}
+    {% elseif params.phylum is defined %}
+        {% trans with {'%type%': "page.photos.keyword.phylum"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.name} %} page.photos.meta_tag.description {% endtrans %}
+    {% elseif params.kingdom is defined %}
+        {% trans with {'%type%': "page.photos.keyword.kingdom"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.kingdom.name} %} page.photos.meta_tag.description {% endtrans %}
 
-{% block page_description %}description{% endblock %}
+    {#-----spots-----#}
+    {% elseif params.spot is defined %}
+        {% trans with {'%type%': "page.photos.keyword.spot"|trans, '%value%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.description{% endtrans %}
+    {% elseif params.location is defined %}
+        {% trans with {'%type%': "page.photos.keyword.location"|trans, '%value%': pagination[0].spot.location.name~", "~pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.description {% endtrans %}
+    {% elseif params.region is defined %}
+        {% trans with {'%type%': "page.photos.keyword.region"|trans, '%value%': pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.description {% endtrans %}
+    {% elseif params.country is defined %}
+        {% trans with {'%type%': "page.photos.keyword.country"|trans, '%value%': pagination[0].spot.location.region.country} %} page.photos.meta_tag.description {% endtrans %}
 
+    {#-----fosuser-----#}
+    {% elseif params.fosUser is defined %}
+        {% trans with {'%type%': "page.photos.keyword.fosUser"|trans, '%value%': pagination[0].fosUser} %} page.photos.meta_tag.description {% endtrans %}
+
+    {% else %}
+        {{ "page.photos_something_else.meta_tag.description"|trans }}
+    {% endif %}
+{% endblock %}
+
+
+{% block page_keywords %} 
+    {% if params.species is defined %}
+        {{ "page.photos.keyword.species"|trans }}, {{ pagination[0].species.name}}, 
+        {{ "page.photos.keyword.genus"|trans }}, {{pagination[0].species.genus.name}}, 
+        {{ "page.photos.keyword.family"|trans }}, {{pagination[0].species.genus.family.name}}, 
+        {{ "page.photos.keyword.order"|trans }}, {{pagination[0].species.genus.family.order.name}}, 
+        {{ "meta_tag.keyword.pictures"|trans }}, {{ "meta_tag.keyword.images"|trans }}, {{ "meta_tag.keyword.photos"|trans }}, 
+        {{ "meta_tag.keyword.photography"|trans }}, {{ "meta_tag.keyword.underwater"|trans }}
+    {% elseif params.genus is defined %}
+        {{ "page.photos.keyword.genus"|trans }}, {{pagination[0].species.genus.name}}, 
+        {{ "page.photos.keyword.family"|trans }}, {{pagination[0].species.genus.family.name}}, 
+        {{ "page.photos.keyword.order"|trans }}, {{pagination[0].species.genus.family.order.name}},
+        {{ "page.photos.keyword.class"|trans }}, {{pagination[0].species.genus.family.order.class.name}}, 
+        {{ "meta_tag.keyword.pictures"|trans }}, {{ "meta_tag.keyword.images"|trans }}, {{ "meta_tag.keyword.photos"|trans }}, 
+        {{ "meta_tag.keyword.photography"|trans }}, {{ "meta_tag.keyword.underwater"|trans }}
+    {% elseif params.family is defined %}
+        {{ "page.photos.keyword.family"|trans }}, {{pagination[0].species.genus.family.name}}, 
+        {{ "page.photos.keyword.order"|trans }}, {{pagination[0].species.genus.family.order.name}},
+        {{ "page.photos.keyword.class"|trans }}, {{pagination[0].species.genus.family.order.class.name}},
+        {{ "page.photos.keyword.phylum"|trans }}, {{pagination[0].species.genus.family.order.class.phylum.name}}, 
+        {{ "meta_tag.keyword.pictures"|trans }}, {{ "meta_tag.keyword.images"|trans }}, {{ "meta_tag.keyword.photos"|trans }}, 
+        {{ "meta_tag.keyword.photography"|trans }}, {{ "meta_tag.keyword.underwater"|trans }}
+    {% elseif params.order is defined %}
+        {{ "page.photos.keyword.order"|trans }}, {{pagination[0].species.genus.family.order.name}},
+        {{ "page.photos.keyword.class"|trans }}, {{pagination[0].species.genus.family.order.class.name}},
+        {{ "page.photos.keyword.phylum"|trans }}, {{pagination[0].species.genus.family.order.class.phylum.name}},
+        {{ "page.photos.keyword.kingdom"|trans }}, {{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}, 
+        {{ "meta_tag.keyword.pictures"|trans }}, {{ "meta_tag.keyword.images"|trans }}, {{ "meta_tag.keyword.photos"|trans }}, 
+        {{ "meta_tag.keyword.photography"|trans }}, {{ "meta_tag.keyword.underwater"|trans }}
+    {% elseif params.class is defined %}
+        {{ "page.photos.keyword.class"|trans }}, {{pagination[0].species.genus.family.order.class.name}},
+        {{ "page.photos.keyword.phylum"|trans }}, {{pagination[0].species.genus.family.order.class.phylum.name}},
+        {{ "page.photos.keyword.kingdom"|trans }}, {{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}, 
+        {{ "meta_tag.keyword.pictures"|trans }}, {{ "meta_tag.keyword.images"|trans }}, {{ "meta_tag.keyword.photos"|trans }}, 
+        {{ "meta_tag.keyword.photography"|trans }}, {{ "meta_tag.keyword.underwater"|trans }}
+    {% elseif params.phylum is defined %}
+        {{ "page.photos.keyword.phylum"|trans }}, {{pagination[0].species.genus.family.order.class.phylum.name}},
+        {{ "page.photos.keyword.kingdom"|trans }}, {{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}, 
+        {{ "meta_tag.keyword.pictures"|trans }}, {{ "meta_tag.keyword.images"|trans }}, {{ "meta_tag.keyword.photos"|trans }}, 
+        {{ "meta_tag.keyword.photography"|trans }}, {{ "meta_tag.keyword.underwater"|trans }}
+    {% elseif params.kingdom is defined %}
+        {{ "page.photos.keyword.kingdom"|trans }}, {{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}, 
+        {{ "meta_tag.keyword.pictures"|trans }}, {{ "meta_tag.keyword.images"|trans }}, {{ "meta_tag.keyword.photos"|trans }}, 
+        {{ "meta_tag.keyword.photography"|trans }}, {{ "meta_tag.keyword.underwater"|trans }}
+
+    {#-----spots-----#}
+    {% elseif params.spot is defined %}
+        {{ "page.photos.keyword.spot"|trans }}, {{ pagination[0].spot.name}}, 
+        {{ "page.photos.keyword.location"|trans }}, {{pagination[0].spot.location.name}}, 
+        {{ "page.photos.keyword.region"|trans }}, {{pagination[0].spot.location.region.name}}
+        {{ "page.photos.keyword.country"|trans }}, {{pagination[0].spot.location.region.country}}, 
+        {{ "meta_tag.keyword.pictures"|trans }}, {{ "meta_tag.keyword.images"|trans }}, {{ "meta_tag.keyword.photos"|trans }}, 
+        {{ "meta_tag.keyword.photography"|trans }}, {{ "meta_tag.keyword.underwater"|trans }}
+    {% elseif params.location is defined %}
+        {{ "page.photos.keyword.location"|trans }}, {{pagination[0].spot.location.name}}, 
+        {{ "page.photos.keyword.region"|trans }}, {{pagination[0].spot.location.region.name}}, 
+        {{ "page.photos.keyword.country"|trans }}, {{pagination[0].spot.location.region.country}}, 
+        {{ "meta_tag.keyword.pictures"|trans }}, {{ "meta_tag.keyword.images"|trans }}, {{ "meta_tag.keyword.photos"|trans }}, 
+        {{ "meta_tag.keyword.photography"|trans }}, {{ "meta_tag.keyword.underwater"|trans }}
+    {% elseif params.region is defined %}
+        {{ "page.photos.keyword.region"|trans }}, {{pagination[0].spot.location.region.name}}, 
+        {{ "page.photos.keyword.country"|trans }}, {{pagination[0].spot.location.region.country}}, 
+        {{ "meta_tag.keyword.pictures"|trans }}, {{ "meta_tag.keyword.images"|trans }}, {{ "meta_tag.keyword.photos"|trans }}, 
+        {{ "meta_tag.keyword.photography"|trans }}, {{ "meta_tag.keyword.underwater"|trans }}
+    {% elseif params.country is defined %}
+        {{ "page.photos.keyword.country"|trans }}, {{pagination[0].spot.location.region.country}}, 
+        {{ "meta_tag.keyword.pictures"|trans }}, {{ "meta_tag.keyword.images"|trans }}, {{ "meta_tag.keyword.photos"|trans }}, 
+        {{ "meta_tag.keyword.photography"|trans }}, {{ "meta_tag.keyword.underwater"|trans }}
+
+    {#-----fosuser-----#}
+    {% elseif params.fosUser is defined %}
+        {{ "page.photos.keyword.fosUser"|trans }}, {{pagination[0].fosUser}}, 
+        {{ "meta_tag.keyword.pictures"|trans }}, {{ "meta_tag.keyword.images"|trans }}, {{ "meta_tag.keyword.photos"|trans }}, 
+        {{ "meta_tag.keyword.photography"|trans }}, {{ "meta_tag.keyword.underwater"|trans }}
+
+
+    {% else %}
+        {{ "meta_tag.keyword.pictures"|trans }}, {{ "meta_tag.keyword.images"|trans }}, {{ "meta_tag.keyword.photos"|trans }}, 
+        {{ "meta_tag.keyword.photography"|trans }}, {{ "meta_tag.keyword.underwater"|trans }}, {{ "meta_tag.keyword.portrait"|trans }}, 
+        {{ "meta_tag.keyword.sea"|trans }}, {{ "meta_tag.keyword.ocean"|trans }}, {{ "meta_tag.keyword.marine"|trans }}
+    {% endif %}
+{% endblock %}
 
 
 {% block heading_title %}
-
-    <!-- species -->
     {% if params.species is defined %}
         {{ "page.photos.keyword.species"|trans }}: {{ pagination[0].species.name}}, 
     {% elseif params.genus is defined %}
@@ -58,8 +172,8 @@
         {{ "page.photos.keyword.phylum"|trans }}: {{pagination[0].species.genus.family.order.class.phylum.name}},
     {% elseif params.kingdom is defined %}
         {{ "page.photos.keyword.kingdom"|trans }}: {{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}
-
-        <!-- spots-->
+        
+    {#-----spots-----#}
     {% elseif params.spot is defined %}
         {{ "page.photos.keyword.spot"|trans }}: {{ pagination[0].spot.name}}, {{pagination[0].spot.location.name}}, {{pagination[0].spot.location.region.country}}
     {% elseif params.location is defined %}
@@ -69,7 +183,7 @@
     {% elseif params.country is defined %}
         {{ "page.photos.keyword.country"|trans }}: {{pagination[0].spot.location.region.country}} 
 
-        <!-- fosUser -->
+    {#-----fosuser-----#}
     {% elseif params.fosUser is defined %}
         {{ "page.photos.keyword.fosUser"|trans }}: {{pagination[0].fosUser}} 
 
@@ -78,69 +192,6 @@
         {{ "page.photos"|trans }}
     {% endif %}
 {% endblock %}
-
-
-
-{% block page_keywords %} 
-    {% if params.species is defined %}
-        {{ "page.photos.keyword.species"|trans }}, {{ pagination[0].species.name}}, 
-        {{ "page.photos.keyword.genus"|trans }}, {{pagination[0].species.genus.name}}, 
-        {{ "page.photos.keyword.family"|trans }}, {{pagination[0].species.genus.family.name}}, 
-        {{ "page.photos.keyword.order"|trans }}, {{pagination[0].species.genus.family.order.name}}
-    {% elseif params.genus is defined %}
-        {{ "page.photos.keyword.genus"|trans }}, {{pagination[0].species.genus.name}}, 
-        {{ "page.photos.keyword.family"|trans }}, {{pagination[0].species.genus.family.name}}, 
-        {{ "page.photos.keyword.order"|trans }}, {{pagination[0].species.genus.family.order.name}},
-        {{ "page.photos.keyword.class"|trans }}, {{pagination[0].species.genus.family.order.class.name}}
-    {% elseif params.family is defined %}
-        {{ "page.photos.keyword.family"|trans }}, {{pagination[0].species.genus.family.name}}, 
-        {{ "page.photos.keyword.order"|trans }}, {{pagination[0].species.genus.family.order.name}},
-        {{ "page.photos.keyword.class"|trans }}, {{pagination[0].species.genus.family.order.class.name}},
-        {{ "page.photos.keyword.phylum"|trans }}, {{pagination[0].species.genus.family.order.class.phylum.name}}
-    {% elseif params.order is defined %}
-        {{ "page.photos.keyword.order"|trans }}, {{pagination[0].species.genus.family.order.name}},
-        {{ "page.photos.keyword.class"|trans }}, {{pagination[0].species.genus.family.order.class.name}},
-        {{ "page.photos.keyword.phylum"|trans }}, {{pagination[0].species.genus.family.order.class.phylum.name}},
-        {{ "page.photos.keyword.kingdom"|trans }}, {{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}
-    {% elseif params.class is defined %}
-        {{ "page.photos.keyword.class"|trans }}, {{pagination[0].species.genus.family.order.class.name}},
-        {{ "page.photos.keyword.phylum"|trans }}, {{pagination[0].species.genus.family.order.class.phylum.name}},
-        {{ "page.photos.keyword.kingdom"|trans }}, {{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}
-    {% elseif params.phylum is defined %}
-        {{ "page.photos.keyword.phylum"|trans }}, {{pagination[0].species.genus.family.order.class.phylum.name}},
-        {{ "page.photos.keyword.kingdom"|trans }}, {{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}
-    {% elseif params.kingdom is defined %}
-        {{ "page.photos.keyword.kingdom"|trans }}, {{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}
-
-        <!-- spots-->
-    {% elseif params.spot is defined %}
-        {{ "page.photos.keyword.spot"|trans }}, {{ pagination[0].spot.name}}, 
-        {{ "page.photos.keyword.location"|trans }}, {{pagination[0].spot.location.name}}, 
-        {{ "page.photos.keyword.region"|trans }}, {{pagination[0].spot.location.region.name}}
-        {{ "page.photos.keyword.country"|trans }}, {{pagination[0].spot.location.region.country}}
-    {% elseif params.location is defined %}
-        {{ "page.photos.keyword.location"|trans }}, {{pagination[0].spot.location.name}}, 
-        {{ "page.photos.keyword.region"|trans }}, {{pagination[0].spot.location.region.name}}, 
-        {{ "page.photos.keyword.country"|trans }}, {{pagination[0].spot.location.region.country}}
-    {% elseif params.region is defined %}
-        {{ "page.photos.keyword.region"|trans }}, {{pagination[0].spot.location.region.name}}, 
-        {{ "page.photos.keyword.country"|trans }}, {{pagination[0].spot.location.region.country}}
-    {% elseif params.country is defined %}
-        {{ "page.photos.keyword.country"|trans }}, {{pagination[0].spot.location.region.country}} 
-
-        <!-- fosUser -->
-    {% elseif params.fosUser is defined %}
-        {{ "page.photos.keyword.fosUser"|trans }}, {{pagination[0].fosUser}} 
-
-
-    {% else %}
-        // do something else
-    {% endif %}
-{% endblock %}
-
-
-
-
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">

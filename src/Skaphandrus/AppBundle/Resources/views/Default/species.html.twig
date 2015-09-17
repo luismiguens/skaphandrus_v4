@@ -1,8 +1,42 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block page_title %}{{species.name}}, {{species.genus.name}}{% endblock %}
-{% block page_description %}description{% endblock %}
-{% block page_keywords %}{{species.name}},{{species.genus.name}}, {{species.genus.family.name}}, {{species.genus.family.order.name}}, {{species.genus.family.order.class.name}}, {{species.genus.family.order.class.phylum.name}}, {{species.genus.family.order.class.phylum.kingdom.name}}{% endblock %}
+{% block page_title %}
+    {{species.name}},
+    {% for author in species.ScientificNames %}
+        {{author.author}},
+    {% endfor %}
+    {% if species.speciesVernaculars is not empty %}
+        {% set i=0 %}
+        {% for vernacular in species.speciesVernaculars %}
+            {% if (vernacular.locale == app.request.locale) and (i<4) %}
+                {{ vernacular.vernacular.name }},
+                {% set i=i+1 %}
+            {% endif %}   
+        {% endfor %}
+    {% endif %}
+    {{ "page.species.meta_tag.title"|trans }}
+{% endblock %}
+{% block page_description %}
+    {% if species.translate(app.request.locale).description is not empty %}
+        {{ species.translate(app.request.locale).description [0:160] }}
+    {% endif %}
+{% endblock %}
+{% block page_keywords %} {{species.name}},
+    {% if species.speciesVernaculars is not empty %}
+        {% set i=0 %}
+        {% for vernacular in species.speciesVernaculars %}
+            {% if (vernacular.locale == app.request.locale) and (i<4) %}
+                {{ vernacular.vernacular.name }},
+                {% set i=i+1 %}
+            {% endif %}   
+        {% endfor %}
+    {% endif %}
+    {{ "meta_tag.keyword.fish"|trans }}, {{ "meta_tag.keyword.animal"|trans }},{{ "meta_tag.keyword.species"|trans }},
+    {{ "meta_tag.keyword.sea"|trans }},{{ "meta_tag.keyword.ocean"|trans }},{{ "meta_tag.keyword.marine"|trans }},
+    {{ "meta_tag.keyword.images"|trans }},{{ "meta_tag.keyword.photos"|trans }},{{ "meta_tag.keyword.pictures"|trans }},
+    {{ "meta_tag.keyword.description"|trans }},{{ "meta_tag.keyword.criteria"|trans }},{{ "meta_tag.keyword.identification"|trans }},
+    {{ "meta_tag.keyword.distribution"|trans }},{{ "meta_tag.keyword.taxonomy"|trans }},{{ "meta_tag.keyword.common_names"|trans }},
+{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}

@@ -1,7 +1,12 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block page_title %}{{ "page.contests.title.underwater_contests"|trans }}{% endblock %}
-{% block page_description %}description{% endblock %}
+{% block page_title %} {{ "page.contests.meta_tag.title"|trans }} {% endblock %}
+{% block page_description %} {{ "page.contests.meta_tag.description"|trans }} {% endblock %}
+{% block page_keywords %} {{ "meta_tag.keyword.pictures"|trans }}, {{ "meta_tag.keyword.images"|trans }}, 
+    {{ "meta_tag.keyword.photos"|trans }}, {{ "meta_tag.keyword.festival"|trans }}, {{ "meta_tag.keyword.competition"|trans }}, 
+    {{ "meta_tag.keyword.challenge"|trans }}, {{ "meta_tag.keyword.contest"|trans }}, {{ "meta_tag.keyword.event"|trans }}, 
+    {{ "meta_tag.keyword.photography"|trans }}, {{ "meta_tag.keyword.underwater"|trans }}
+{% endblock %}
 
 {% block heading_title %}
     {{ "page.contests.title.underwater_contests"|trans }}

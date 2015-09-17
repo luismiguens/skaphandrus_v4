@@ -1,8 +1,11 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block page_title %}{{ "page.locations_home.h1.title"|trans }}{% endblock %}
-{% block page_description %}description{% endblock %}
-{% block page_keywords %}{{ "page.locations_home.h1.title"|trans }}{% endblock %}
+{% block page_title %} {{ "page.locations_home.meta_tag.title"|trans }} {% endblock %}
+{% block page_description %} {{ "page.locations_home.meta_tag.description"|trans }} {% endblock %}
+{% block page_keywords %} {{ "meta_tag.keyword.world"|trans }}, {{ "meta_tag.keyword.map"|trans }}, 
+    {{ "meta_tag.keyword.scuba"|trans }}, {{ "meta_tag.keyword.diving"|trans }}, {{ "meta_tag.keyword.sites"|trans }}, 
+    {{ "meta_tag.keyword.countries"|trans }}
+{% endblock %}
 
 {% block heading_title %}
     {{ "page.locations_home.h1.title"|trans }}
