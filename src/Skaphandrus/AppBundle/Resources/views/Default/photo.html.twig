@@ -1,9 +1,12 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
 
-{% block page_title %}{{ photo.title }}, {{ photo.createdAt|date('Y-m-d H:i:s') }}{% endblock %}
-{% block page_description %}{{photo.title}}, {{photo.description}}{% endblock %}
-{% block page_keywords %}{{photo.title}}, {{photo.keywordsString}}{% if photo.species is not empty %}, {{photo.species.name}}{% endif %}{% if photo.spot is not empty %}, {{photo.spot.name}}{% endif %}{% endblock %}
+{% block page_title %} {% trans with {'%title%': photo.title, '%created_at%': photo.createdAt|date('Y-m-d H:i:s')} %}page.photo.meta_tag.title{% endtrans %} {% endblock %}
+{% block page_description %} {{ photo.description [0:160]}} {% endblock %}
+{% block page_keywords %} {{photo.title}}, {{photo.keywordsString}}, {{photo.species}}, {{photo.spot}}, 
+    {{photo.fosuser}}, {{ "meta_tag.keyword.image"|trans }}, {{ "meta_tag.keyword.picture"|trans }}, 
+    {{ "meta_tag.keyword.photo"|trans }} 
+{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}

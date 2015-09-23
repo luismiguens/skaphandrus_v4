@@ -1,8 +1,13 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block page_title %}{{ "page.taxonomy.h1.title"|trans }}{% endblock %}
-{% block page_description %}description{% endblock %}
-{% block heading_title %}{{ "page.taxonomy.h1.title"|trans }}{% endblock %}
+{% block page_title %} {{ "page.taxonomy.meta_tag.title"|trans }} {% endblock %}
+{% block page_description %} {{ "page.taxonomy.meta_tag.description"|trans }} {% endblock %}
+{% block page_keywords %} {{ "meta_tag.keyword.taxonomy"|trans }}, {{ "meta_tag.keyword.kingdom"|trans }}, 
+    {{ "meta_tag.keyword.phylum"|trans }}, {{ "meta_tag.keyword.class"|trans }}, {{ "meta_tag.keyword.order"|trans }}, 
+    {{ "meta_tag.keyword.family"|trans }}, {{ "meta_tag.keyword.genus"|trans }},{{ "meta_tag.keyword.species"|trans }}, 
+    {{ "meta_tag.keyword.fish"|trans }}, {{ "meta_tag.keyword.animal"|trans }},{{ "meta_tag.keyword.sea"|trans }}, 
+    {{ "meta_tag.keyword.ocean"|trans }}, {{ "meta_tag.keyword.marine"|trans }}
+{% endblock %}
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">

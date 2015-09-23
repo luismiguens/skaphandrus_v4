@@ -3,9 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/country.html.twig</file>
             <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/species.html.twig</file>
             <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/photos.html.twig</file>
+=======
+            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Contest/contest.html.twig</file>
+            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Contest/landing.html.twig</file>
+>>>>>>> 812ba8e65de03836a9aa65d2bccefc37fb27e7b4
         </group>
     </open-files>
 </project-private>

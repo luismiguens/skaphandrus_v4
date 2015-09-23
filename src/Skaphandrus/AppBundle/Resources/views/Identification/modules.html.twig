@@ -1,8 +1,14 @@
 {% extends 'SkaphandrusAppBundle::content_layout.html.twig' %}
 
-{% block page_title %}{{ "page.modules.title"|trans }}{% endblock %}
-{% block page_description %}{{ "page.modules.title"|trans }}{% endblock %}
-{% block page_keywords %}{% endblock %}
+{% block page_title %} {{ "page.modules.meta_tag.title"|trans }} {% endblock %}
+{% block page_description %} {{ "page.modules.meta_tag.description"|trans }} {% endblock %}
+{% block page_keywords %} {% for module in modules %} {{ module.name }} {% endfor %}, 
+    {{ "meta_tag.keyword.fish"|trans }}, {{ "meta_tag.keyword.animals"|trans }}, {{ "meta_tag.keyword.sea"|trans }}, 
+    {{ "meta_tag.keyword.ocean"|trans }}, {{ "meta_tag.keyword.marine"|trans }}, {{ "meta_tag.keyword.id"|trans }}, 
+    {{ "meta_tag.keyword.identification"|trans }}, {{ "meta_tag.keyword.guide"|trans }}, {{ "meta_tag.keyword.facts"|trans }}, 
+    {{ "meta_tag.keyword.criterias"|trans }}, {{ "meta_tag.keyword.type"|trans }}, {{ "meta_tag.keyword.pictures"|trans }}, 
+    {{ "meta_tag.keyword.images"|trans }}, {{ "meta_tag.keyword.photos"|trans }}
+{% endblock %}
 
 {% block heading_title %}
     {{ "page.modules.title"|trans }}
