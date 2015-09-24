@@ -1,6 +1,5 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-
 {% block page_title %}
     {% if params.species is defined %}
         {{ "page.photos.keyword.species"|trans }}, {{ pagination[0].species.name}} {{ "page.photos.meta_tag.title"|trans }}
@@ -17,7 +16,7 @@
     {% elseif params.kingdom is defined %}
         {{ "page.photos.keyword.kingdom"|trans }}, {{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}, {{ "page.photos.meta_tag.title"|trans }}
 
-    {#-----spots-----#}
+        {#-----spots-----#}
     {% elseif params.spot is defined %}
         {{ "page.photos.keyword.spot"|trans }}: {{ pagination[0].spot.name}}, {{pagination[0].spot.location.name}}, {{pagination[0].spot.location.region.country}}, {{ "page.photos.meta_tag.title"|trans }}
     {% elseif params.location is defined %}
@@ -26,8 +25,8 @@
         {{ "page.photos.keyword.region"|trans }}: {{pagination[0].spot.location.region.name}}, {{pagination[0].spot.location.region.country}}, {{ "page.photos.meta_tag.title"|trans }}
     {% elseif params.country is defined %}
         {{ "page.photos.keyword.country"|trans }}: {{pagination[0].spot.location.region.country}}, {{ "page.photos.meta_tag.title"|trans }}
-    
-    {#-----fosuser-----#}
+
+        {#-----fosuser-----#}
     {% elseif params.fosUser is defined %}
         {{ "page.photos.keyword.fosUser"|trans }}: {{pagination[0].fosUser}}, {{ "page.photos.meta_tag.title"|trans }}
 
@@ -35,7 +34,6 @@
         {{ "page.photos_something_else.meta_tag.title"|trans }}
     {% endif %}
 {% endblock %}
-
 
 {% block page_description %}
     {% if params.species is defined %}
@@ -53,7 +51,7 @@
     {% elseif params.kingdom is defined %}
         {% trans with {'%type%': "page.photos.keyword.kingdom"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.kingdom.name} %} page.photos.meta_tag.description {% endtrans %}
 
-    {#-----spots-----#}
+        {#-----spots-----#}
     {% elseif params.spot is defined %}
         {% trans with {'%type%': "page.photos.keyword.spot"|trans, '%value%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.description{% endtrans %}
     {% elseif params.location is defined %}
@@ -63,7 +61,7 @@
     {% elseif params.country is defined %}
         {% trans with {'%type%': "page.photos.keyword.country"|trans, '%value%': pagination[0].spot.location.region.country} %} page.photos.meta_tag.description {% endtrans %}
 
-    {#-----fosuser-----#}
+        {#-----fosuser-----#}
     {% elseif params.fosUser is defined %}
         {% trans with {'%type%': "page.photos.keyword.fosUser"|trans, '%value%': pagination[0].fosUser} %} page.photos.meta_tag.description {% endtrans %}
 
@@ -71,7 +69,6 @@
         {{ "page.photos_something_else.meta_tag.description"|trans }}
     {% endif %}
 {% endblock %}
-
 
 {% block page_keywords %} 
     {% if params.species is defined %}
@@ -118,7 +115,7 @@
         {{ "meta_tag.keyword.pictures"|trans }}, {{ "meta_tag.keyword.images"|trans }}, {{ "meta_tag.keyword.photos"|trans }}, 
         {{ "meta_tag.keyword.photography"|trans }}, {{ "meta_tag.keyword.underwater"|trans }}
 
-    {#-----spots-----#}
+        {#-----spots-----#}
     {% elseif params.spot is defined %}
         {{ "page.photos.keyword.spot"|trans }}, {{ pagination[0].spot.name}}, 
         {{ "page.photos.keyword.location"|trans }}, {{pagination[0].spot.location.name}}, 
@@ -142,7 +139,7 @@
         {{ "meta_tag.keyword.pictures"|trans }}, {{ "meta_tag.keyword.images"|trans }}, {{ "meta_tag.keyword.photos"|trans }}, 
         {{ "meta_tag.keyword.photography"|trans }}, {{ "meta_tag.keyword.underwater"|trans }}
 
-    {#-----fosuser-----#}
+        {#-----fosuser-----#}
     {% elseif params.fosUser is defined %}
         {{ "page.photos.keyword.fosUser"|trans }}, {{pagination[0].fosUser}}, 
         {{ "meta_tag.keyword.pictures"|trans }}, {{ "meta_tag.keyword.images"|trans }}, {{ "meta_tag.keyword.photos"|trans }}, 
@@ -172,8 +169,8 @@
         {{ "page.photos.keyword.phylum"|trans }}: {{pagination[0].species.genus.family.order.class.phylum.name}},
     {% elseif params.kingdom is defined %}
         {{ "page.photos.keyword.kingdom"|trans }}: {{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}
-        
-    {#-----spots-----#}
+
+        {#-----spots-----#}
     {% elseif params.spot is defined %}
         {{ "page.photos.keyword.spot"|trans }}: {{ pagination[0].spot.name}}, {{pagination[0].spot.location.name}}, {{pagination[0].spot.location.region.country}}
     {% elseif params.location is defined %}
@@ -183,7 +180,7 @@
     {% elseif params.country is defined %}
         {{ "page.photos.keyword.country"|trans }}: {{pagination[0].spot.location.region.country}} 
 
-    {#-----fosuser-----#}
+        {#-----fosuser-----#}
     {% elseif params.fosUser is defined %}
         {{ "page.photos.keyword.fosUser"|trans }}: {{pagination[0].fosUser}} 
 

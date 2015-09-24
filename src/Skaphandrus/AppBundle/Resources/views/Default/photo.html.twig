@@ -1,18 +1,24 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
+{% block page_title %}{% trans with {'%title%': photo.title, '%created_at%': photo.createdAt|date('Y-m-d H:i:s')} %}page.photo.meta_tag.title{% endtrans %}{% endblock %}
 
-{% block page_title %} {% trans with {'%title%': photo.title, '%created_at%': photo.createdAt|date('Y-m-d H:i:s')} %}page.photo.meta_tag.title{% endtrans %} {% endblock %}
-{% block page_description %} {{ photo.description [0:160]}} {% endblock %}
-{% block page_keywords %} {{photo.title}}, {{photo.keywordsString}}, {{photo.species}}, {{photo.spot}}, 
-    {{photo.fosuser}}, {{ "meta_tag.keyword.image"|trans }}, {{ "meta_tag.keyword.picture"|trans }}, 
-    {{ "meta_tag.keyword.photo"|trans }} 
-{% endblock %}
+{% block page_description %}{{ photo.description [0:160]}}{% endblock %}
+
+{% set keywords = photo.title %}
+{% for key in photo.keyword %}
+    {% set keywords = keywords~', '~key.keyword %}
+{% endfor %}
+{% set keywords = keywords~', '~photo.species %}
+{% set keywords = keywords~', '~photo.spot %}
+{% set keywords = keywords~', '~photo.fosuser %}
+{% set keywords = keywords~', '~("meta_tag.keyword.image"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.picture"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.photo"|trans) %}
+
+{% block page_keywords %}{{keywords}}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
-
-
-
     <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}">
     <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
@@ -99,7 +105,7 @@
                             {% endif %}
                         </dl>
 
-                            {% if photo.description is not empty %}
+                        {% if photo.description is not empty %}
                             <h5>{{ "page.photo.h5.description"|trans }}</h5>
                             <p>{{ photo.description }}</p>
                         {% endif %}

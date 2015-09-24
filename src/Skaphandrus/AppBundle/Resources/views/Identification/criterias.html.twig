@@ -1,19 +1,30 @@
-    {% extends 'SkaphandrusAppBundle::angular_layout.html.twig' %}
+{% extends 'SkaphandrusAppBundle::angular_layout.html.twig' %}
 
-{% block page_title %} {% trans with {'%module_name%': module.name} %}page.criterias.meta_tag.title{% endtrans %} {% endblock %}
-{% block page_description %} description {% endblock %}
-{% block page_keywords %} {{ module.name }}, 
-    {{ "meta_tag.keyword.fish"|trans }}, {{ "meta_tag.keyword.animals"|trans }}, {{ "meta_tag.keyword.sea"|trans }}, 
-    {{ "meta_tag.keyword.ocean"|trans }}, {{ "meta_tag.keyword.marine"|trans }}, {{ "meta_tag.keyword.id"|trans }}, 
-    {{ "meta_tag.keyword.identification"|trans }}, {{ "meta_tag.keyword.guide"|trans }}, {{ "meta_tag.keyword.facts"|trans }}, 
-    {{ "meta_tag.keyword.criterias"|trans }}, {{ "meta_tag.keyword.type"|trans }}, {{ "meta_tag.keyword.pictures"|trans }}, 
-    {{ "meta_tag.keyword.images"|trans }}, {{ "meta_tag.keyword.photos"|trans }}
-{% endblock %}
+{% block page_title %}{% trans with {'%module_name%': module.name} %}page.criterias.meta_tag.title{% endtrans %}{% endblock %}
+
+{% block page_description %}{% endblock %}
+
+{% set keywords = module.name %} 
+{% set keywords = keywords~', '~("meta_tag.keyword.fish"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.animals"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.sea"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.ocean"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.marine"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.id"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.identification"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.guide"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.facts"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.criterias"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.type"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.pictures"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.images"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.photos"|trans) %}
+
+{% block page_keywords %}{{keywords}}{% endblock %}
 
 {% block heading_title %}
     {{ module.name }}
 {% endblock %}
-
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
@@ -23,161 +34,122 @@
     </ol>
 {% endblock %}
 
-
 {% block heading_action %}
     <a href="{{ path('photo_admin_new') }}" class="btn btn-primary">{{ "form.photo.btn.add"|trans }}</a>
 {% endblock %}
 
 {% block angular_app %}criteriasApp{%endblock%}
 
-
 {% block javascripts %}
     {{ parent() }}
-
-
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
 
     <script type="text/javascript">
-                angular.module('criteriasApp', [])
-                .controller('MainCtrl', ['$http', function ($http) {
-
-                var self = this;
-                        
+        
+        angular.module('criteriasApp', []).controller('MainCtrl', ['$http', function ($http) {
+            
+            var self = this;
             //views vars
             self.criterias = [];
-                        self.species = [];
-                        self.infoSpecies;
-                        
-                        
-                        
+            self.species = [];
+            self.infoSpecies;
             //visible view
             self.showCriterias = true;
-                        
             //selected ids from vars
             self.characters_ids = [];
             self.species_ids = [];
             self.criterias_ids = [];
-                        
-            self.selected = []; 
-                        
+            self.selected = [];
+            //get criterias list on server
+            var updateCriterias = function () {
+                
+            return $http({
+                url: '/{{ app.request.locale }}/app/criterias.json',
+                method: "POST",
+                params: {module_id:{{module.id}}, 'species[]': self.species_ids}
+            })
+                .then(function (response) {
+                    //show and hide criterias according response
+                    //need implementation!!!!!!
+
+                    //update criterias view
+                self.criterias = response.data;
+                //update matched criterias(not implemented)
+                for (key in response.data) {
+                    self.criterias_ids.push(self.criterias[key].id);
+                }
+
+                }, function (errResponse) {
+                    console.error('Error while fetching criterias');
+                });
+            };
+            //get species list on server
+            var updateSpecies = function(){
+                return $http({
+                    url: '/{{ app.request.locale }}/app/species.json',
+                    method: "POST",
+                    params: {module_id:{{module.id}}, 'characters[]': self.characters_ids}
+                })
+                .then(function (response) {
+                    //update species view
+                    self.species = response.data;
+                    //update species ids lista (para ser utilizada na chamadas dos criterios)
+                    for (key in self.species) {
+                        self.species_ids.push(self.species[key].id);
+                    }
+                }, function (errResponse) {
+                    console.error('Error while fetching species');
+                });
+            };
+            updateCriterias();
+            updateSpecies();
+            
+            //user click criterias
+            self.clickCriterias = function () {
+                self.showCriterias = true;
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+            };
+            
+            //user click species
+            self.clickSpecies = function (id) {
+                $http({
+                    url: '/{{ app.request.locale }}/app/speciesinfo.json',
+                    method: "GET",
+                    params: {module_id:{{module.id}}, species_id: id}
+                })
+                .then(function (response) {
+                    self.infoSpecies = response.data;
+                    //self.currentTab = tab;
+                    self.showCriterias = false;
+                }, function (errResponse) {
+                    console.error('Error while fetching infoSpecies');
+                });
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+            };
+            
+            //user click character
+            self.clickCharacter = function (id, selected) {
+                //find clicked characters
+                if (selected) {
+                    self.characters_ids.push(id);
+                }
+                else {
+                    self.characters_ids.splice(self.characters_ids.indexOf(id), 1);
+                }
+                updateSpecies();
+                // .then(updateCriterias);
+            };
+        }])
+        .config(['$httpProvider', '$interpolateProvider', function ($httpProvider, $interpolateProvider) {
+            // Set the content type to be FORM type for all post requests
+            // This does not add it for GET requests.
+            $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+            $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+        }]);
     
-    //get criterias list on server
-    var updateCriterias = function () {
-                        
-                        
-                        return $http({
-                        url: '/{{ app.request.locale }}/app/criterias.json',
-                                method: "POST",
-                                params: {module_id:{{module.id}}, 'species[]': self.species_ids}
-                        })
-                        
-                        
-                                .then(function (response) {
-
-                                //show and hide criterias according response
-                        //need implementation!!!!!!
-                        
-                                //update criterias view
-                                self.criterias = response.data;
-
-                                //update matched criterias(not implemented)
-                                for (key in response.data) {
-                                self.criterias_ids.push(self.criterias[key].id);
-                                }
-
-                                }, function (errResponse) {
-                                console.error('Error while fetching criterias');
-                                });
-                        };
-
-//get species list on server
-var updateSpecies = function()
-{
- return $http({
-                        url: '/{{ app.request.locale }}/app/species.json',
-                                method: "POST",
-                                params: {module_id:{{module.id}}, 'characters[]': self.characters_ids}
-                        })
-                                .then(function (response) {
-
-                                //update species view
-                                self.species = response.data;
-                                        //update species ids lista (para ser utilizada na chamadas dos criterios)
-                                        for (key in self.species) {
-                                self.species_ids.push(self.species[key].id);
-                            }
-                                }, function (errResponse) {
-                                console.error('Error while fetching species');
-                                });
-};
-    
-
-
-
-updateCriterias();
-updateSpecies();
-
-
-//user click criterias
-                        self.clickCriterias = function () {
-
-
-                        self.showCriterias = true;
-                                $("html, body").animate({ scrollTop: 0 }, "slow");
-                        };
-                        
-
-
-
-//user click species
-                        self.clickSpecies = function (id) {
-
-                        $http({
-                        url: '/{{ app.request.locale }}/app/speciesinfo.json',
-                                method: "GET",
-                                params: {module_id:{{module.id}}, species_id: id}
-                        })
-                                .then(function (response) {
-
-                                self.infoSpecies = response.data;
-                                        //self.currentTab = tab;
-                                        self.showCriterias = false;
-                                }, function (errResponse) {
-                                console.error('Error while fetching infoSpecies');
-                                });
-                                $("html, body").animate({ scrollTop: 0 }, "slow");
-                        };
-                        
-
-
-//user click character
-                        self.clickCharacter = function (id, selected) {
-
-                        //find clicked characters
-                        if (selected) {
-                        self.characters_ids.push(id);
-                        }
-                        else {
-                        self.characters_ids.splice(self.characters_ids.indexOf(id), 1);
-                        }
-
-
-
-                        updateSpecies();
-                              // .then(updateCriterias);
-                        };
-                }])
-
-
-                .config(['$httpProvider', '$interpolateProvider', function ($httpProvider, $interpolateProvider) {
-                // Set the content type to be FORM type for all post requests
-                // This does not add it for GET requests.
-
-                $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-                        $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
-                }]);</script>
+    </script>
 
 
 
@@ -185,15 +157,14 @@ updateSpecies();
 
 
     <script>
-
-                $(function(){
-                $('.ibox-content-species').slimScroll({
+        $(function(){
+            $('.ibox-content-species').slimScroll({
                 height: '600px'
-                });
-                        $('.ibox-content-criterias').slimScroll({
+            });
+            $('.ibox-content-criterias').slimScroll({
                 height: '600px'
-                });
-                });
+            });
+        });
     </script>
 
 

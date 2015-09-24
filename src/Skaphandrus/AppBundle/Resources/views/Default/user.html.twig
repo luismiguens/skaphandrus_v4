@@ -1,11 +1,16 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
+{% block page_title %}{% trans with {'%name%': user.personal.name} %}page.user.meta_tag.title{% endtrans %}{% endblock %}
 
-{% block page_title %} {% trans with {'%name%': user.personal.name} %}page.user.meta_tag.title{% endtrans %} {% endblock %}
-{% block page_description %} {{ user.settings.observations [0:160]}} {% endblock %}
-{% block page_keywords %} {{ user.personal.name }}, {{ "meta_tag.keyword.profile"|trans }}, 
-    {{ "meta_tag.keyword.photos"|trans }}, {{ "meta_tag.keyword.pictures"|trans }}, {{ "meta_tag.keyword.dive_sites"|trans }} 
-{% endblock %}
+{% block page_description %}{{ user.settings.observations [0:160]}}{% endblock %}
+
+{% set keywords = user.personal.name %}
+{% set keywords = keywords~', '~("meta_tag.keyword.profile"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.photos"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.pictures"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.dive_sites"|trans) %}
+
+{% block page_keywords %}{{keywords}}{% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
@@ -14,10 +19,10 @@
     <!-- FooTable -->
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
     <script>
-        $(function() {
-            $("span.pie").peity("pie", { fill: ['#1ab394', '#d7d7d7', '#ffffff'] });
-            $(".line").peity("line", { fill: '#1ab394', stroke:'#169c81' });
-            $(".bar").peity("bar", { fill: ["#1ab394", "#d7d7d7"] });
+        $(function () {
+            $("span.pie").peity("pie", {fill: ['#1ab394', '#d7d7d7', '#ffffff']});
+            $(".line").peity("line", {fill: '#1ab394', stroke: '#169c81'});
+            $(".bar").peity("bar", {fill: ["#1ab394", "#d7d7d7"]});
 
             $('.footable-species').footable();
             $('.footable-spots').footable();
@@ -41,237 +46,237 @@
 
 {% block body %}
 
-<div class="wrapper wrapper-content">
-    <div class="row animated fadeInRight">
-        <!-- Left Column -->
-        <div class="col-md-4">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>{{ "page.user.h5.profile_detail"|trans }}</h5>
-                    {#<div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#">Edit profile</a>
-                            </li>
-                            <li><a href="#">Submit Photo</a>
-                            </li>
-                        </ul>
-                        <!--<a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>-->
-                    </div>#}
-                </div>
-                <div>
-                    <div class="ibox-content no-padding border-left-right">
-                      <img alt="image" class="img-responsive" src="{{ user.settings.getWebPath | imagine_filter('sk_widen_590') }}" />
+    <div class="wrapper wrapper-content">
+        <div class="row animated fadeInRight">
+            <!-- Left Column -->
+            <div class="col-md-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>{{ "page.user.h5.profile_detail"|trans }}</h5>
+                        {#<div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#">Edit profile</a>
+                                </li>
+                                <li><a href="#">Submit Photo</a>
+                                </li>
+                            </ul>
+                            <!--<a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>-->
+                        </div>#}
                     </div>
-                    <div class="ibox-content profile-content">
-                        <h4><strong>{{ user.personal.name }}</strong></h4>
-                        <!--<p><i class="fa fa-map-marker"></i> Riviera State 32/106</p>-->
-                        <h5>
-                            {{ "page.user.h5.about_me"|trans }}
-                        </h5>
-                        <p>
-                            {{user.settings.observations|raw}}
-                        </p>
-                        <!--<div class="row m-t-lg">
-                            <div class="col-md-4">
-                                <span class="bar">5,3,9,6,5,9,7,3,5,2</span>
-                                <h5><strong>169</strong> Posts</h5>
-                            </div>
-                            <div class="col-md-4">
-                                <span class="line">5,3,9,6,5,9,7,3,5,2</span>
-                                <h5><strong>28</strong> Following</h5>
-                            </div>
-                            <div class="col-md-4">
-                                <span class="bar">5,3,2,-1,-3,-2,2,3,5,2</span>
-                                <h5><strong>240</strong> Followers</h5>
-                            </div>
-                        </div>-->
-                        <div class="user-button">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <a type="button" href="{{ url('fos_message_thread_new' )}}" class="btn btn-primary btn-sm btn-block"><i class="fa fa-envelope"></i> {{"page.user.label.send_message"|trans}}</a>
+                    <div>
+                        <div class="ibox-content no-padding border-left-right">
+                            <img alt="image" class="img-responsive" src="{{ user.settings.getWebPath | imagine_filter('sk_widen_590') }}" />
+                        </div>
+                        <div class="ibox-content profile-content">
+                            <h4><strong>{{ user.personal.name }}</strong></h4>
+                            <!--<p><i class="fa fa-map-marker"></i> Riviera State 32/106</p>-->
+                            <h5>
+                                {{ "page.user.h5.about_me"|trans }}
+                            </h5>
+                            <p>
+                                {{user.settings.observations|raw}}
+                            </p>
+                            <!--<div class="row m-t-lg">
+                                <div class="col-md-4">
+                                    <span class="bar">5,3,9,6,5,9,7,3,5,2</span>
+                                    <h5><strong>169</strong> Posts</h5>
                                 </div>
-                                <div class="col-md-6">
-                                    <a type="button" href="{{ path('person_admin_new') }}" class="btn btn-default btn-sm btn-block"><i class="fa fa-group"></i>  {{"page.user.label.add_contact"|trans}}</a>
+                                <div class="col-md-4">
+                                    <span class="line">5,3,9,6,5,9,7,3,5,2</span>
+                                    <h5><strong>28</strong> Following</h5>
+                                </div>
+                                <div class="col-md-4">
+                                    <span class="bar">5,3,2,-1,-3,-2,2,3,5,2</span>
+                                    <h5><strong>240</strong> Followers</h5>
+                                </div>
+                            </div>-->
+                            <div class="user-button">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <a type="button" href="{{ url('fos_message_thread_new' )}}" class="btn btn-primary btn-sm btn-block"><i class="fa fa-envelope"></i> {{"page.user.label.send_message"|trans}}</a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a type="button" href="{{ path('person_admin_new') }}" class="btn btn-default btn-sm btn-block"><i class="fa fa-group"></i>  {{"page.user.label.add_contact"|trans}}</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- End Left Column -->
-        <!-- Right Column -->
-        <div class="col-md-8">
-            <div class="ibox float-e-margins">
-                <div class="ibox-content">
-                    <h1>{{ user.name }}</h1>
-                    <!-- Start Panel -->
-                    <div class="panel">
-                        <div class="panel-heading">
-                            <div class="panel-options">
-                                <ul class="nav nav-tabs">
-                                   {% set tab_id = 0 %}
+            <!-- End Left Column -->
+            <!-- Right Column -->
+            <div class="col-md-8">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <h1>{{ user.name }}</h1>
+                        <!-- Start Panel -->
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <div class="panel-options">
+                                    <ul class="nav nav-tabs">
+                                        {% set tab_id = 0 %}
 
-                                    {% if user.photos|first is not empty  %}
-                                        {% set tab_id = tab_id + 1 %}
-                                        {% set tab_photos_id = tab_id %}
+                                        {% if user.photos|first is not empty  %}
+                                            {% set tab_id = tab_id + 1 %}
+                                            {% set tab_photos_id = tab_id %}
 
-                                        <li class="{{tab_id==1?'active'}}">
-                                            <a data-toggle="tab" href="#tab-{{tab_id}}">
-                                                {{ "page.user.tab.photos"|trans }}
-                                            </a>
-                                        </li>
+                                            <li class="{{tab_id==1?'active'}}">
+                                                <a data-toggle="tab" href="#tab-{{tab_id}}">
+                                                    {{ "page.user.tab.photos"|trans }}
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        {% if species|first is not empty %}
+                                            {% set tab_id = tab_id + 1 %}
+                                            {% set tab_species_id = tab_id %}
+
+                                            <li class="{{tab_id==1?'active'}}">
+                                                <a data-toggle="tab" href="#tab-{{tab_id}}">
+                                                    {{ "page.user.tab.species"|trans }}
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        {% if spots|first is not empty %}
+                                            {% set tab_id = tab_id + 1 %}
+                                            {% set tab_spots_id = tab_id %}
+
+                                            <li class="{{tab_id==1?'active'}}">
+                                                <a data-toggle="tab" href="#tab-{{tab_id}}">
+                                                    {{ "page.user.tab.spots"|trans }}
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        {% if user.photosValidated|first is not empty %}
+                                            {% set tab_id = tab_id + 1 %}
+                                            {% set tab_photosv_id = tab_id %}
+
+                                            <li class="{{tab_id==1?'active'}}">
+                                                <a data-toggle="tab" href="#tab-{{tab_id}}">
+                                                    {{ "page.user.tab.photos_validated"|trans }}
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="tab-content">
+
+                                    <!-- Start Photos Tab -->
+                                    {% if user.photos|first is not empty %}
+                                        <div id="tab-{{tab_photos_id}}" class="tab-pane {{tab_photos_id==1?'active'}}">
+                                            <h3>{{ "page.user.h3.photos"|trans }}</h3>
+                                            {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'fosUser': user.id } })) }}
+                                        </div>
                                     {% endif %}
+                                    <!-- End Photos Tab -->
+                                    <!-- Start Species Tab -->
                                     {% if species|first is not empty %}
-                                        {% set tab_id = tab_id + 1 %}
-                                        {% set tab_species_id = tab_id %}
-
-                                        <li class="{{tab_id==1?'active'}}">
-                                            <a data-toggle="tab" href="#tab-{{tab_id}}">
-                                                {{ "page.user.tab.species"|trans }}
-                                            </a>
-                                        </li>
+                                        <div id="tab-{{tab_species_id}}" class="tab-pane {{tab_species_id==1?'active'}}">
+                                            <h3>{{ "page.user.h3.species"|trans }}</h3>
+                                            <input type="text" class="form-control input-sm m-b-xs" id="filter-species" placeholder="Search in table">
+                                            <table class="footable footable-species table" data-page-size="50" data-filter=#filter-species>
+                                                <thead>
+                                                <th>{{ "page.location.table.name"|trans }}</th>
+                                                <th>{{ "page.user.table.num_photos"|trans }}</th>
+                                                </thead>
+                                                <tbody>
+                                                    {% for s in species %}
+                                                        <tr>
+                                                            <td>{{ link_to_species(s.species) }}</td>
+                                                            <td>
+                                                                <a href="{{ path('photos', {'fosUser': user.id, 'species': s.species.id}) }}">{{ s.photo_count }}</a>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <ul class="pagination pull-right"></ul>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
                                     {% endif %}
+                                    <!-- End Species Tab -->
+                                    <!-- Start Spots Tab -->
                                     {% if spots|first is not empty %}
-                                        {% set tab_id = tab_id + 1 %}
-                                        {% set tab_spots_id = tab_id %}
-
-                                        <li class="{{tab_id==1?'active'}}">
-                                            <a data-toggle="tab" href="#tab-{{tab_id}}">
-                                                {{ "page.user.tab.spots"|trans }}
-                                            </a>
-                                        </li>
+                                        <div id="tab-{{tab_spots_id}}" class="tab-pane {{tab_spots_id==1?'active'}}">
+                                            <h3>{{ "page.user.h3.spots"|trans }}</h3>
+                                            <input type="text" class="form-control input-sm m-b-xs" id="filter-spots" placeholder="Search in table">
+                                            <table class="footable footable-spots table" data-page-size="50" data-filter=#filter-spots>
+                                                <thead>
+                                                <th>{{ "page.location.table.name"|trans }}</th>
+                                                <th>{{ "page.user.table.num_photos"|trans }}</th>
+                                                </thead>
+                                                <tbody>
+                                                    {% for s in spots %}
+                                                        <tr>
+                                                            <td>{{ link_to_spot(s.spot) }}</td>
+                                                            <td>
+                                                                <a href="{{ path('photos', {'fosUser': user.id, 'spot': s.spot.id}) }}">{{ s.photo_count }}</a>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <ul class="pagination pull-right"></ul>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
                                     {% endif %}
+                                    <!-- End Spots Tab -->
+                                    <!-- Start Photos Validated Tab -->
                                     {% if user.photosValidated|first is not empty %}
-                                        {% set tab_id = tab_id + 1 %}
-                                        {% set tab_photosv_id = tab_id %}
-
-                                        <li class="{{tab_id==1?'active'}}">
-                                            <a data-toggle="tab" href="#tab-{{tab_id}}">
-                                                {{ "page.user.tab.photos_validated"|trans }}
-                                            </a>
-                                        </li>
+                                        <div id="tab-{{tab_photosv_id}}" class="tab-pane {{tab_photosv_id==1?'active'}}">
+                                            <h3>{{ "page.user.h3.photos_validated"|trans }}</h3>
+                                            {% set pva = [] %}
+                                            {% for pv in user.photosValidated[:35] %}
+                                                {% set pva = pva|merge([pv.photo]) %}
+                                            {% endfor %}
+                                            {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'photos': pva } })) }}
+                                        </div>
                                     {% endif %}
-                                </ul>
+                                    <!-- End Photos Validated Tab -->
+                                </div>
                             </div>
                         </div>
-                        <div class="panel-body">
-                            <div class="tab-content">
-
-                                <!-- Start Photos Tab -->
-                                {% if user.photos|first is not empty %}
-                                <div id="tab-{{tab_photos_id}}" class="tab-pane {{tab_photos_id==1?'active'}}">
-                                    <h3>{{ "page.user.h3.photos"|trans }}</h3>
-                                    {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'fosUser': user.id } })) }}
-                                </div>
-                                {% endif %}
-                                <!-- End Photos Tab -->
-                                <!-- Start Species Tab -->
-                                {% if species|first is not empty %}
-                                <div id="tab-{{tab_species_id}}" class="tab-pane {{tab_species_id==1?'active'}}">
-                                    <h3>{{ "page.user.h3.species"|trans }}</h3>
-                                    <input type="text" class="form-control input-sm m-b-xs" id="filter-species" placeholder="Search in table">
-                                    <table class="footable footable-species table" data-page-size="50" data-filter=#filter-species>
-                                        <thead>
-                                            <th>{{ "page.location.table.name"|trans }}</th>
-                                            <th>{{ "page.user.table.num_photos"|trans }}</th>
-                                        </thead>
-                                        <tbody>
-                                        {% for s in species %}
-                                            <tr>
-                                                <td>{{ link_to_species(s.species) }}</td>
-                                                <td>
-                                                    <a href="{{ path('photos', {'fosUser': user.id, 'species': s.species.id}) }}">{{ s.photo_count }}</a>
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <td colspan="2">
-                                                    <ul class="pagination pull-right"></ul>
-                                                </td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                                {% endif %}
-                                <!-- End Species Tab -->
-                                <!-- Start Spots Tab -->
-                                {% if spots|first is not empty %}
-                                <div id="tab-{{tab_spots_id}}" class="tab-pane {{tab_spots_id==1?'active'}}">
-                                    <h3>{{ "page.user.h3.spots"|trans }}</h3>
-                                    <input type="text" class="form-control input-sm m-b-xs" id="filter-spots" placeholder="Search in table">
-                                    <table class="footable footable-spots table" data-page-size="50" data-filter=#filter-spots>
-                                        <thead>
-                                            <th>{{ "page.location.table.name"|trans }}</th>
-                                            <th>{{ "page.user.table.num_photos"|trans }}</th>
-                                        </thead>
-                                        <tbody>
-                                        {% for s in spots %}
-                                            <tr>
-                                                <td>{{ link_to_spot(s.spot) }}</td>
-                                                <td>
-                                                    <a href="{{ path('photos', {'fosUser': user.id, 'spot': s.spot.id}) }}">{{ s.photo_count }}</a>
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <td colspan="2">
-                                                    <ul class="pagination pull-right"></ul>
-                                                </td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                                {% endif %}
-                                <!-- End Spots Tab -->
-                                <!-- Start Photos Validated Tab -->
-                                {% if user.photosValidated|first is not empty %}
-                                <div id="tab-{{tab_photosv_id}}" class="tab-pane {{tab_photosv_id==1?'active'}}">
-                                    <h3>{{ "page.user.h3.photos_validated"|trans }}</h3>
-                                    {% set pva = [] %}
-                                    {% for pv in user.photosValidated[:35] %}
-                                        {% set pva = pva|merge([pv.photo]) %}
-                                    {% endfor %}
-                                    {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'photos': pva } })) }}
-                                </div>
-                                {% endif %}
-                                <!-- End Photos Validated Tab -->
-                            </div>
-                        </div>
+                        <!-- End Panel -->
                     </div>
-                    <!-- End Panel -->
                 </div>
             </div>
+            <!-- End Right Column -->
         </div>
-        <!-- End Right Column -->
     </div>
-</div>
 
 
 
 
-  {#<h2>{{ "page.user.h2.username"|trans }}: {{ user.username }}</h2>
-
-  {% if user.spots|length %}
-    <h3>{{ "page.user.h3.spots"|trans }}</h3>
-    {% for spot in user.spots %}
-        <p>{{ spot.coordinate }}</p>
-    {% endfor %}
-  {% endif %}
-
-  <h3>{{ "page.user.h3.photos"|trans }}</h3>
-  {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'fosUser': user.id } } )) }}#}
+    {#<h2>{{ "page.user.h2.username"|trans }}: {{ user.username }}</h2>
+  
+    {% if user.spots|length %}
+      <h3>{{ "page.user.h3.spots"|trans }}</h3>
+      {% for spot in user.spots %}
+          <p>{{ spot.coordinate }}</p>
+      {% endfor %}
+    {% endif %}
+  
+    <h3>{{ "page.user.h3.photos"|trans }}</h3>
+    {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'fosUser': user.id } } )) }}#}
 
 {% endblock %}

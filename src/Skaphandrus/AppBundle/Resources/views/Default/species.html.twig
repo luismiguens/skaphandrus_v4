@@ -1,42 +1,54 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block page_title %}
-    {{species.name}},
-    {% for author in species.ScientificNames %}
-        {{author.author}},
+{% set title = species.name %}
+{% for author in species.ScientificNames %}
+    {% set title = title~', '~author.author %}
+{% endfor %}
+{% if species.speciesVernaculars is not empty %}
+    {% set i=0 %}
+    {% for vernacular in species.speciesVernaculars %}
+        {% if (vernacular.locale == app.request.locale) and (i<4) %}
+            {% set title = title~', '~vernacular.vernacular.name %}
+            {% set i=i+1 %}
+        {% endif %}
     {% endfor %}
-    {% if species.speciesVernaculars is not empty %}
-        {% set i=0 %}
-        {% for vernacular in species.speciesVernaculars %}
-            {% if (vernacular.locale == app.request.locale) and (i<4) %}
-                {{ vernacular.vernacular.name }},
-                {% set i=i+1 %}
-            {% endif %}   
-        {% endfor %}
-    {% endif %}
-    {{ "page.species.meta_tag.title"|trans }}
-{% endblock %}
-{% block page_description %}
-    {% if species.translate(app.request.locale).description is not empty %}
-        {{ species.translate(app.request.locale).description [0:160] }}
-    {% endif %}
-{% endblock %}
-{% block page_keywords %} {{species.name}},
-    {% if species.speciesVernaculars is not empty %}
-        {% set i=0 %}
-        {% for vernacular in species.speciesVernaculars %}
-            {% if (vernacular.locale == app.request.locale) and (i<4) %}
-                {{ vernacular.vernacular.name }},
-                {% set i=i+1 %}
-            {% endif %}   
-        {% endfor %}
-    {% endif %}
-    {{ "meta_tag.keyword.fish"|trans }}, {{ "meta_tag.keyword.animal"|trans }},{{ "meta_tag.keyword.species"|trans }},
-    {{ "meta_tag.keyword.sea"|trans }},{{ "meta_tag.keyword.ocean"|trans }},{{ "meta_tag.keyword.marine"|trans }},
-    {{ "meta_tag.keyword.images"|trans }},{{ "meta_tag.keyword.photos"|trans }},{{ "meta_tag.keyword.pictures"|trans }},
-    {{ "meta_tag.keyword.description"|trans }},{{ "meta_tag.keyword.criteria"|trans }},{{ "meta_tag.keyword.identification"|trans }},
-    {{ "meta_tag.keyword.distribution"|trans }},{{ "meta_tag.keyword.taxonomy"|trans }},{{ "meta_tag.keyword.common_names"|trans }},
-{% endblock %}
+{% endif %}
+
+{% block page_title %}{{title}}, {{ "page.species.meta_tag.title"|trans }}{% endblock %}
+
+{% if species.translate(app.request.locale).description is not empty %}
+    {% set description = species.translate(app.request.locale).description [0:160] %}
+{% endif %}
+
+{% block page_description %}{{description}}{% endblock %}
+
+{% set keywords = species.name %}
+{% if species.speciesVernaculars is not empty %}
+    {% set i=0 %}
+    {% for vernacular in species.speciesVernaculars %}
+        {% if (vernacular.locale == app.request.locale) and (i<4) %}
+            {% set keywords = keywords~', '~vernacular.vernacular.name %}
+            {% set i=i+1 %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+{% set keywords = keywords~', '~("meta_tag.keyword.fish"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.animal"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.species"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.sea"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.ocean"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.marine"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.images"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.photos"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.pictures"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.description"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.criteria"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.identification"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.distribution"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.taxonomy"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.common_names"|trans) %}
+
+{% block page_keywords %}{{keywords}}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -56,7 +68,7 @@
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
         <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
-        {#<li>{{ link_to_taxon(species.genus.family.order.class) }}</li>#}
+            {#<li>{{ link_to_taxon(species.genus.family.order.class) }}</li>#}
         <li>{{ link_to_taxon(species.genus.family.order) }}</li>
         <li>{{ link_to_taxon(species.genus.family) }}</li>
         <li>{{ link_to_taxon(species.genus) }}</li>
@@ -256,8 +268,9 @@
                         </div>
                     </div>
                 </div><!--end right column -->
-              
+
             </div><!-- end row-->
         </div><!-- end wrapper-->
 
-    {% endblock %}
+    </div>
+{% endblock %}

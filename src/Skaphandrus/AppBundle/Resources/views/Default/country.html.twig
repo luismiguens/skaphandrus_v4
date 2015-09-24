@@ -1,21 +1,32 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
 {% block page_title %}{% trans with {'%country%': country} %}page.country.meta_tag.title{% endtrans %}{% endblock %}
-{% block page_description %}{{ country.translate.overview [0:160]}}{% endblock %}
-{% block page_keywords %}{{ country }}, {{ "meta_tag.keyword.holidays"|trans }}, {{ "meta_tag.keyword.travel"|trans }}, 
-    {{ "meta_tag.keyword.snorkeling"|trans }}, {{ "meta_tag.keyword.scuba"|trans }}, {{ "meta_tag.keyword.diving"|trans }}, 
-    {{ "meta_tag.keyword.dive"|trans }}, {{ "meta_tag.keyword.sites"|trans }}, {{ "meta_tag.keyword.locations"|trans }}, 
-    {{ "meta_tag.keyword.animals"|trans }}, {{ "meta_tag.keyword.species"|trans }}, {{ "meta_tag.keyword.images"|trans }}, 
-    {{ "meta_tag.keyword.photos"|trans }}, {{ "meta_tag.keyword.pictures"|trans }}, 
-    {{ "meta_tag.keyword.health_and_safety"|trans }}, {{ "meta_tag.keyword.communications"|trans }}, 
-    {{ "meta_tag.keyword.entry_requirements"|trans }} 
-{% endblock %}
 
+{% block page_description %}{{ country.translate.overview [0:160]}}{% endblock %}
+
+{% set keywords = country %}
+{% set keywords = keywords~', '~("meta_tag.keyword.holidays"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.travel"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.snorkeling"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.scuba"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.diving"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.dive"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.sites"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.locations"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.animals"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.species"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.images"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.photos"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.pictures"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.health_and_safety"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.communications"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.entry_requirements"|trans) %}
+
+{% block page_keywords %}{{keywords}}{% endblock %}
 
 {% block heading_title %}
     {{ country }}
 {% endblock %}
-
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">

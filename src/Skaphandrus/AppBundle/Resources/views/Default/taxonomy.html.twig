@@ -1,13 +1,24 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block page_title %} {{ "page.taxonomy.meta_tag.title"|trans }} {% endblock %}
-{% block page_description %} {{ "page.taxonomy.meta_tag.description"|trans }} {% endblock %}
-{% block page_keywords %} {{ "meta_tag.keyword.taxonomy"|trans }}, {{ "meta_tag.keyword.kingdom"|trans }}, 
-    {{ "meta_tag.keyword.phylum"|trans }}, {{ "meta_tag.keyword.class"|trans }}, {{ "meta_tag.keyword.order"|trans }}, 
-    {{ "meta_tag.keyword.family"|trans }}, {{ "meta_tag.keyword.genus"|trans }},{{ "meta_tag.keyword.species"|trans }}, 
-    {{ "meta_tag.keyword.fish"|trans }}, {{ "meta_tag.keyword.animal"|trans }},{{ "meta_tag.keyword.sea"|trans }}, 
-    {{ "meta_tag.keyword.ocean"|trans }}, {{ "meta_tag.keyword.marine"|trans }}
-{% endblock %}
+{% block page_title %}{{ "page.taxonomy.meta_tag.title"|trans }}{% endblock %}
+
+{% block page_description %}{{ "page.taxonomy.meta_tag.description"|trans }}{% endblock %}
+
+{% set keywords = ("meta_tag.keyword.taxonomy"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.kingdom"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.phylum"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.class"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.order"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.family"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.genus"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.species"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.fish"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.animal"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.sea"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.ocean"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.marine"|trans) %}
+
+{% block page_keywords %}{{keywords}}{% endblock %}
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
@@ -25,42 +36,42 @@
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/jstree/dist/jstree.min.js') }}"></script>
     <script>
-      $(function () {
-        $("#jstree")
-        .jstree({
-          "core": {
-            "data": {
-              "url": "/{{ app.request.locale }}/species/source",
-              "data": function (n) {
-                return { id: n.id === '#' ? "li.kingdom.0" : n.id };
-              }
-            }
-          }
-        })
-        .bind("select_node.jstree", function (e, data) {
-          var href = data.node.a_attr.href;
-          document.location.href = href;
+        $(function () {
+            $("#jstree")
+                    .jstree({
+                        "core": {
+                            "data": {
+                                "url": "/{{ app.request.locale }}/species/source",
+                                "data": function (n) {
+                                    return {id: n.id === '#' ? "li.kingdom.0" : n.id};
+                                }
+                            }
+                        }
+                    })
+                    .bind("select_node.jstree", function (e, data) {
+                        var href = data.node.a_attr.href;
+                        document.location.href = href;
+                    });
         });
-      });
     </script>
 {% endblock %}
 
 {% block body %}
-<div class="wrapper wrapper-content">
-  <div class="row animated fadeInRight">
-    <!-- left column -->
-    <div class="col-md-12">
-      <div class="ibox float-e-margins">
-        <div class="ibox-title">
-          <h5>{{ "page.taxonomy.h5.title"|trans }}</h5>
+    <div class="wrapper wrapper-content">
+        <div class="row animated fadeInRight">
+            <!-- left column -->
+            <div class="col-md-12">
+                <div  class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>{{ "page.taxonomy.h5.title"|trans }}</h5>
+                    </div>
+                    <div>
+                        <div class="ibox-content">
+                            <div style="text-align: left;" id="jstree"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-          <div class="ibox-content">
-            <div style="text-align: left;" id="jstree"></div>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
-</div>
 {% endblock %}
