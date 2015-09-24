@@ -1,14 +1,29 @@
 {% extends 'SkaphandrusAppBundle::content_layout.html.twig' %}
 
-{% block page_title %} {{ "page.modules.meta_tag.title"|trans }} {% endblock %}
-{% block page_description %} {{ "page.modules.meta_tag.description"|trans }} {% endblock %}
-{% block page_keywords %} {% for module in modules %} {{ module.name }} {% endfor %}, 
-    {{ "meta_tag.keyword.fish"|trans }}, {{ "meta_tag.keyword.animals"|trans }}, {{ "meta_tag.keyword.sea"|trans }}, 
-    {{ "meta_tag.keyword.ocean"|trans }}, {{ "meta_tag.keyword.marine"|trans }}, {{ "meta_tag.keyword.id"|trans }}, 
-    {{ "meta_tag.keyword.identification"|trans }}, {{ "meta_tag.keyword.guide"|trans }}, {{ "meta_tag.keyword.facts"|trans }}, 
-    {{ "meta_tag.keyword.criterias"|trans }}, {{ "meta_tag.keyword.type"|trans }}, {{ "meta_tag.keyword.pictures"|trans }}, 
-    {{ "meta_tag.keyword.images"|trans }}, {{ "meta_tag.keyword.photos"|trans }}
-{% endblock %}
+{% block page_title %}{{ "page.modules.meta_tag.title"|trans }}{% endblock %}
+
+{% block page_description %}{{ "page.modules.meta_tag.description"|trans }}{% endblock %}
+
+{% set keywords = "" %}
+{% for module in modules %} 
+    {% set keywords = keywords~', '~module.name %} 
+{% endfor %}
+{% set keywords = keywords~', '~("meta_tag.keyword.fish"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.animals"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.sea"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.ocean"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.marine"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.id"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.identification"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.guide"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.facts"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.criterias"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.type"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.pictures"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.images"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.photos"|trans) %}
+
+{% block page_keywords %}{{keywords}}{% endblock %}
 
 {% block heading_title %}
     {{ "page.modules.title"|trans }}
@@ -31,7 +46,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-  
+
 {%endblock%}
 
 
@@ -39,30 +54,30 @@
 
 {% block body %}
 
-      {#   /**
-             * REGRAS DOS MODULOS
-             * 
-             * LABEL (AUTHENTICATED)         
-             * 1) (FREE) = FREE
-             * 2) (CREATED_AT < 1 MES) = FREE X MORE DAYS
-             * 3) OTHER = X POINTS
-             *       
-             * LABEL (NOT AUTHENTICATED)
-             * 1) (FREE) = FREE
-             * 2) (CREATED_AT < 1 MES) = FREE X MORE DAYS
-             * 3) OTHER = X POINTS
-             *   
-             * BOTAO (AUTHENTICATED) =====
-             * 1) (FREE) = EXPLORE
-             * 2) (CREATED_AT < 1 MES) = EXPLORE
-             * 3) (UTILIZADOR COMPROU OU TROCOU POR PONTOS) = EXPLORE
-             * 4) (OTHER) = APPLY POINTS
-             *
-             * BOTAO (NOT AUTHENTICATED) =====
-             * 1) (FREE) = EXPLORE
-             * 2) (CREATED_AT < 1 MES) = LOGIN
-             * 3) (OTHER) = LOGIN
-             *
+    {#   /**
+           * REGRAS DOS MODULOS
+           * 
+           * LABEL (AUTHENTICATED)         
+           * 1) (FREE) = FREE
+           * 2) (CREATED_AT < 1 MES) = FREE X MORE DAYS
+           * 3) OTHER = X POINTS
+           *       
+           * LABEL (NOT AUTHENTICATED)
+           * 1) (FREE) = FREE
+           * 2) (CREATED_AT < 1 MES) = FREE X MORE DAYS
+           * 3) OTHER = X POINTS
+           *   
+           * BOTAO (AUTHENTICATED) =====
+           * 1) (FREE) = EXPLORE
+           * 2) (CREATED_AT < 1 MES) = EXPLORE
+           * 3) (UTILIZADOR COMPROU OU TROCOU POR PONTOS) = EXPLORE
+           * 4) (OTHER) = APPLY POINTS
+           *
+           * BOTAO (NOT AUTHENTICATED) =====
+           * 1) (FREE) = EXPLORE
+           * 2) (CREATED_AT < 1 MES) = LOGIN
+           * 3) (OTHER) = LOGIN
+           *
     */#}
 
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -97,8 +112,8 @@
                                         {% for group in module.groups %}
                                             {% if group.isParentModule == TRUE %}
                                                 <li>{{group.name}}</li>
-                                            {% endif %}
-                                        {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
                                     </ul>
                                 </div>
                                 <div class="m-t text-right">

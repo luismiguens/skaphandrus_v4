@@ -1,16 +1,32 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block page_title %} {% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.meta_tag.title{% endtrans %} {% endblock %}
-{% block page_description %} {{ location.description [0:160]}} {% endblock %}
-{% block page_keywords %} {{ location.region.country }}, {{ location.name }}, {{ "meta_tag.keyword.holidays"|trans }}, 
-    {{ "meta_tag.keyword.travel"|trans }}, {{ "meta_tag.keyword.snorkeling"|trans }}, 
-    {{ "meta_tag.keyword.scuba"|trans }}, {{ "meta_tag.keyword.diving"|trans }}, {{ "meta_tag.keyword.dive"|trans }}, 
-    {{ "meta_tag.keyword.sites"|trans }}, {{ "meta_tag.keyword.locations"|trans }}, {{ "meta_tag.keyword.animals"|trans }}, 
-    {{ "meta_tag.keyword.species"|trans }}, {{ "meta_tag.keyword.images"|trans }}, {{ "meta_tag.keyword.photos"|trans }}, 
-    {{ "meta_tag.keyword.pictures"|trans }}, {{ "meta_tag.keyword.map"|trans }}, {{ "meta_tag.keyword.water_temperature"|trans }}, 
-    {{ "meta_tag.keyword.diving_suit"|trans }}, {{ "meta_tag.keyword.diving_suit"|trans }}, {{ "meta_tag.keyword.visibility_underwater"|trans }}, 
-    {{ "meta_tag.keyword.climate"|trans }}, {{ "meta_tag.keyword.how_to_get_there"|trans }}
-{% endblock %}
+{% block page_title %}{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.meta_tag.title{% endtrans %}{% endblock %}
+
+{% block page_description %}{{ location.description [0:160]}}{% endblock %}
+
+{% set keywords = location.region.country %}
+{% set keywords = keywords~', '~location.name %}
+{% set keywords = keywords~', '~("meta_tag.keyword.holidays"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.travel"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.snorkeling"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.scuba"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.diving"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.dive"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.sites"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.locations"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.animals"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.species"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.images"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.photos"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.pictures"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.map"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.water_temperature"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.diving_suit"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.visibility_underwater"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.climate"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.how_to_get_there"|trans) %}
+
+{% block page_keywords %}{{keywords}}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -31,19 +47,19 @@
         // Fix bug on Gmap inside tabs
         $('.nav-tabs').on('shown.bs.tab', function () {
             google.maps.event.trigger(window, 'resize', {});
-            setTimeout(function() {
-                {{ map.javascriptVariable }}.setCenter({{ map.center.javascriptVariable }});
-            },100);
-        });
+            setTimeout(function () {
+        {{ map.javascriptVariable }}.setCenter({{ map.center.javascriptVariable }});
+                        }, 100);
+                    });
     </script>
     <!-- FooTable -->
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
     <script>
-        $(document).ready(function() {
-            $('.footable-spots').footable();
-            $('.footable-species').footable();
-            $('.footable-photographers').footable();
-        });
+                    $(document).ready(function () {
+                        $('.footable-spots').footable();
+                        $('.footable-species').footable();
+                        $('.footable-photographers').footable();
+                    });
     </script>
 
 {% endblock %}
@@ -74,7 +90,7 @@
     <div class="wrapper wrapper-content">
         <div class="row animated fadeInRight">
             <!-- left column -->
-                            
+
             <!-- location activity -->              
             <div class="col-lg-4">
                 <div class="ibox float-e-margins">
@@ -180,19 +196,19 @@
                                             <input type="text" class="form-control input-sm m-b-xs" id="filter-spots" placeholder="Search in table">
                                             <table class="footable footable-spots table" data-page-size="50" data-filter=#filter-spots>
                                                 <thead>
-                                                    <th>{{ "page.location.table.name"|trans }}</th>
-                                                    <th>{{ "page.location.table.num_photos"|trans }}</th>
+                                                <th>{{ "page.location.table.name"|trans }}</th>
+                                                <th>{{ "page.location.table.num_photos"|trans }}</th>
                                                 </thead>
                                                 <tbody>
-                                                {% set c = location.region.country %}
-                                                {% for spot in location.spots %}
-                                                    <tr>
-                                                        <td>{{ link_to_spot(spot, location, c) }}</td>
-                                                        <td>
-                                                            <a href="{{ path('photos', {'spot': spot.id}) }}">{{ spot.photos|length }}</a>
-                                                        </td>
-                                                    </tr>
-                                                {% endfor %}
+                                                    {% set c = location.region.country %}
+                                                    {% for spot in location.spots %}
+                                                        <tr>
+                                                            <td>{{ link_to_spot(spot, location, c) }}</td>
+                                                            <td>
+                                                                <a href="{{ path('photos', {'spot': spot.id}) }}">{{ spot.photos|length }}</a>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
@@ -210,19 +226,19 @@
                                         <input type="text" class="form-control input-sm m-b-xs" id="filter-species" placeholder="Search in table">
                                         <table class="footable footable-species table" data-page-size="50" data-filter=#filter-species>
                                             <thead>
-                                                <th>{{ "page.location.table.name"|trans }}</th>
-                                                <th>{{ "page.location.table.num_photos"|trans }}</th>
+                                            <th>{{ "page.location.table.name"|trans }}</th>
+                                            <th>{{ "page.location.table.num_photos"|trans }}</th>
                                             </thead>
                                             <tbody>
-                                            {% for sp in species %}
-                                                <tr>
-                                                    <td>{{ link_to_species(sp) }}</td>
-                                                    <td>
-                                                        <a href="{{ path('photos', {'species': sp.id, 'location': location.id}) }}">{{ sp.photosCount }}</a>
-                                                    </td>
-                                                </tr>
-                                            </tr>
-                                            {% endfor%}
+                                                {% for sp in species %}
+                                                    <tr>
+                                                        <td>{{ link_to_species(sp) }}</td>
+                                                        <td>
+                                                            <a href="{{ path('photos', {'species': sp.id, 'location': location.id}) }}">{{ sp.photosCount }}</a>
+                                                        </td>
+                                                    </tr>
+                                                    </tr>
+                                                {% endfor%}
                                             </tbody>
                                             <tfoot>
                                                 <tr>
@@ -244,18 +260,18 @@
                                         <input type="text" class="form-control input-sm m-b-xs" id="filter-photographers" placeholder="Search in table">
                                         <table class="footable footable-photographers table" data-page-size="50" data-filter=#filter-photographers>
                                             <thead>
-                                                <th>{{ "page.location.table.name"|trans }}</th>
-                                                <th>{{ "page.location.table.num_photos"|trans }}</th>
+                                            <th>{{ "page.location.table.name"|trans }}</th>
+                                            <th>{{ "page.location.table.num_photos"|trans }}</th>
                                             </thead>
                                             <tbody>
-                                            {% for p in photographers %}
-                                                <tr>
-                                                    <td>{{ link_to_user(p.fosUser) }}</td>
-                                                    <td>
-                                                        <a href="{{ path('photos', {'fosUser': p.fosUser.id, 'location': location.id}) }}">{{ p.photoCount }}</a>
-                                                    </td>
-                                                </tr>
-                                            {% endfor%}
+                                                {% for p in photographers %}
+                                                    <tr>
+                                                        <td>{{ link_to_user(p.fosUser) }}</td>
+                                                        <td>
+                                                            <a href="{{ path('photos', {'fosUser': p.fosUser.id, 'location': location.id}) }}">{{ p.photoCount }}</a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor%}
                                             </tbody>
                                             <tfoot>
                                                 <tr>

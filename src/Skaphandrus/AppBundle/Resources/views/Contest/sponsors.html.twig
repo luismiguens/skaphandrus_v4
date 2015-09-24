@@ -1,12 +1,23 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block page_title %} {% trans with {'%contest%': contest.name} %}page.contest_sponsors.meta_tag.title{% endtrans %} {% endblock %}
-{% block page_description %} {% trans with {'%contest%': contest.name} %}page.contest_sponsors.meta_tag.description{% endtrans %} {% endblock %}
-{% block page_keywords %} {{ contest.name }}, {{ "meta_tag.keyword.sponsors"|trans }}, {{ "meta_tag.keyword.pictures"|trans }}, {{ "meta_tag.keyword.images"|trans }}, 
-    {{ "meta_tag.keyword.photos"|trans }}, {{ "meta_tag.keyword.festival"|trans }}, {{ "meta_tag.keyword.competition"|trans }}, 
-    {{ "meta_tag.keyword.challenge"|trans }}, {{ "meta_tag.keyword.contest"|trans }}, {{ "meta_tag.keyword.event"|trans }}, 
-    {{ "meta_tag.keyword.photography"|trans }}, {{ "meta_tag.keyword.underwater"|trans }} 
-{% endblock %}
+{% block page_title %}{% trans with {'%contest%': contest.name} %}page.contest_sponsors.meta_tag.title{% endtrans %}{% endblock %}
+
+{% block page_description %}{% trans with {'%contest%': contest.name} %}page.contest_sponsors.meta_tag.description{% endtrans %}{% endblock %}
+
+{% set keywords = contest.name %}
+{% set keywords = keywords~', '~("meta_tag.keyword.sponsors"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.pictures"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.images"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.photos"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.festival"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.competition"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.challenge"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.contest"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.event"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.photography"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.underwater"|trans) %}
+
+{% block page_keywords %}{{keywords}}{% endblock %}
 
 {% block heading_title %}
    {{ contest.name }} - {{ "page.sponsors.title.sponsors"|trans }}

@@ -1,23 +1,33 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block page_title %} {{taxon.taxonNodeName|capitalize}} - {{taxon.name}},
-    {% if taxon.vernaculars is not empty %}
-        {% set i=0 %}
-        {% for vernacular in taxon.vernaculars %}
-            {% if (vernacular.locale == app.request.locale) and (i<4) %}
-                {{ vernacular.name }},
-                {% set i=i+1 %}
-            {% endif %}   
-        {% endfor %}
-    {% endif %}
-    {{ "page.taxon.meta_tag.title"|trans }}
-{% endblock %}
-{% block page_description %} description {% endblock %}
-{% block page_keywords %} {{ taxon.taxonNodeName|capitalize }}, {{ taxon.name }}, 
-    {{ "meta_tag.keyword.information"|trans }}, {{ "meta_tag.keyword.common_names"|trans }}, 
-    {{ "meta_tag.keyword.animals"|trans }}, {{ "meta_tag.keyword.species"|trans }}, {{ "meta_tag.keyword.images"|trans }}, 
-    {{ "meta_tag.keyword.photos"|trans }}, {{ "meta_tag.keyword.pictures"|trans }}, {{ "meta_tag.keyword.taxonomic_structure"|trans }}, 
-{% endblock %}
+{% set title = taxon.taxonNodeName|capitalize %}
+{% set title = title~' - '~taxon.name %}
+{% if taxon.vernaculars is not empty %}
+    {% set i=0 %}
+    {% for vernacular in taxon.vernaculars %}
+        {% if (vernacular.locale == app.request.locale) and (i<4) %}
+            {% set title = title~', '~vernacular.name %}
+            {% set i=i+1 %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% block page_title %}{{title}}, {{ "page.taxon.meta_tag.title"|trans }}{% endblock %}
+
+{% block page_description %}{% endblock %}
+
+{% set keywords = taxon.taxonNodeName|capitalize %}
+{% set keywords = keywords~', '~taxon.name %}
+{% set keywords = keywords~', '~("meta_tag.keyword.information"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.common_names"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.animals"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.species"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.images"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.photos"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.pictures"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.taxonomic_structure"|trans) %}
+
+{% block page_keywords %}{{keywords}}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
