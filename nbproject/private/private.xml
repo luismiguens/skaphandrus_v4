@@ -4,16 +4,23 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/photo.html.twig</file>
-            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/country.html.twig</file>
-            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/location.html.twig</file>
+            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Identification/criterias.html.twig</file>
+            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Contest/sponsors.html.twig</file>
+            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/locations-home.html.twig</file>
+            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/photos.html.twig</file>
             <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/spot.html.twig</file>
-            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/species.html.twig</file>
-            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/user.html.twig</file>
-            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/index.html.twig</file>
-            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/taxon.html.twig</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/photos.html.twig</file>
+            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Identification/modules.html.twig</file>
             <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Contest/contest.html.twig</file>
+            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/species.html.twig</file>
+            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Contest/photographers.html.twig</file>
+            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/taxonomy.html.twig</file>
+            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/country.html.twig</file>
+            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Contest/photos.html.twig</file>
+            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/location.html.twig</file>
             <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Contest/landing.html.twig</file>
+            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/index.html.twig</file>
+            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/user.html.twig</file>
+            <file>file:/home/ruben/sfproject/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/Default/taxon.html.twig</file>
         </group>
     </open-files>
 </project-private>

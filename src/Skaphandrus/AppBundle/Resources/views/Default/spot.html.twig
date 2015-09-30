@@ -2,7 +2,7 @@
 
 {% block page_title %}{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.meta_tag.title{% endtrans %}{% endblock %}
 
-{% block page_description %}{{ spot.description [0:160]}}{% endblock %}
+{% block page_description %}{{spot.description [0:160]}}{% endblock %}
 
 {% set keywords = spot.name %}
 {% set keywords = keywords~', '~spot.location.name %}

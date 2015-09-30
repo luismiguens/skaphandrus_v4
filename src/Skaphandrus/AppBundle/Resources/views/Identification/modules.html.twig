@@ -6,9 +6,9 @@
 
 {% set keywords = "" %}
 {% for module in modules %} 
-    {% set keywords = keywords~', '~module.name %} 
+    {% set keywords = keywords~module.name~', ' %} 
 {% endfor %}
-{% set keywords = keywords~', '~("meta_tag.keyword.fish"|trans) %}
+{% set keywords = keywords~("meta_tag.keyword.fish"|trans) %}
 {% set keywords = keywords~', '~("meta_tag.keyword.animals"|trans) %}
 {% set keywords = keywords~', '~("meta_tag.keyword.sea"|trans) %}
 {% set keywords = keywords~', '~("meta_tag.keyword.ocean"|trans) %}
