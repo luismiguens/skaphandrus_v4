@@ -1,6 +1,6 @@
 <div class="lightBoxGallery">
     {% for photo in photos %}
-        <div itemscope itemtype="http://schema.org/Photograph">
+        <span itemscope itemtype="http://schema.org/Photograph">
             <meta itemprop="name" content="{{ photo.title }}">
             <meta itemprop="datePublished" content="{{ photo.createdAt|date("Y-m-d") }}">
             <meta itemprop="dateCreated" content="{{ photo.takenAt|date("Y-m-d") }}">
@@ -13,7 +13,7 @@
             <a href="{{ url_to_photo(photo) }}" title="{{ photo.title }}">
                 <img itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('new_sk_thumbnail_outbound_100') }}" />
             </a>
-        </div>
+        </span>
     {% endfor %}
     <a href="{{ path('photos', parameters) }}">See More</a>
     <!-- The Gallery as lightbox dialog, should be a child element of the document body -->
