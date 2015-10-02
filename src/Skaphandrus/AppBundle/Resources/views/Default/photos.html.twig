@@ -192,10 +192,10 @@
     {% set keywords = keywords~', '~("meta_tag.keyword.photos"|trans)%}
     {% set keywords = keywords~', '~("meta_tag.keyword.photography"|trans)%}
     {% set keywords = keywords~', '~("meta_tag.keyword.underwater"|trans)%}
-    {% set keywords = keywords~', '~("page.photos.keyword.portrait"|trans)%}
-    {% set keywords = keywords~', '~("page.photos.keyword.sea"|trans)%}
-    {% set keywords = keywords~', '~("page.photos.keyword.ocean"|trans)%}
-    {% set keywords = keywords~', '~("page.photos.keyword.marine"|trans)%}
+    {% set keywords = keywords~', '~("meta_tag.keyword.portrait"|trans)%}
+    {% set keywords = keywords~', '~("meta_tag.keyword.sea"|trans)%}
+    {% set keywords = keywords~', '~("meta_tag.keyword.ocean"|trans)%}
+    {% set keywords = keywords~', '~("meta_tag.keyword.marine"|trans)%}
 {% endif %}
 
 {% block page_keywords %}{{keywords}}{% endblock %}
