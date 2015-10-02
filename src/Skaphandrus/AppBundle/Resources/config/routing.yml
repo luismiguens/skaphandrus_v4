@@ -11,6 +11,9 @@ contests:
     path:     /contests
     defaults: { _controller: "SkaphandrusAppBundle:Testes:contests" }
 
+skaphandrus_app_sk_identification_criteria_group:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skidentificationcriteriagroup.yml"
+    prefix:   /{_locale}/sk_identification_criteria_group
 
 skaphandrus_app_photo_contest_judge_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skphotocontestjudge.yml"
