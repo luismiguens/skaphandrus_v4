@@ -1,20 +1,27 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% set title = species.name %}
+{% set auxAuthor = "" %}
 {% for author in species.ScientificNames %}
-    {% set title = title~', '~author.author %}
+    {% set auxAuthor = auxAuthor~', '~author.author %}
 {% endfor %}
 {% if species.speciesVernaculars is not empty %}
+    {% set title = "" %}
+    {% set auxCommon = "" %}
     {% set i=0 %}
     {% for vernacular in species.speciesVernaculars %}
         {% if (vernacular.locale == app.request.locale) and (i<4) %}
-            {% set title = title~', '~vernacular.vernacular.name %}
+            {% set auxCommon = auxCommon~', '~vernacular.vernacular.name %}
+            {% set title %}{% trans with {'%specie%': species.name, '%author%': auxAuthor, '%common%': auxCommon } %} page.species.meta_tag.title {% endtrans %}{% endset %}
             {% set i=i+1 %}
+        {% else %}
+            {% set title %}{% trans with {'%specie%': species.name, '%author%': auxAuthor, '%common%': auxCommon } %} page.species.meta_tag.title {% endtrans %}{% endset %}
         {% endif %}
     {% endfor %}
+{% else %}
+    {% set title %}{% trans with {'%specie%': species.name, '%author%': auxAuthor, '%common%': "" } %} page.species.meta_tag.title {% endtrans %}{% endset %}
 {% endif %}
 
-{% block page_title %}{{title}}, {{ "page.species.meta_tag.title"|trans }}{% endblock %}
+{% block page_title %}{{title}}{% endblock %}
 
 {% if species.translate(app.request.locale).description is not empty %}
     {% set description = species.translate(app.request.locale).description [0:160] %}

@@ -1,18 +1,23 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% set title = taxon.taxonNodeName|capitalize %}
-{% set title = title~' - '~taxon.name %}
 {% if taxon.vernaculars is not empty %}
+    {% set title = "" %}
+    {% set auxCommon = "" %}
     {% set i=0 %}
     {% for vernacular in taxon.vernaculars %}
-        {% if (vernacular.locale == app.request.locale) and (i<4) %}
-            {% set title = title~', '~vernacular.name %}
+        {% if vernacular.locale == app.request.locale and i<4 %}
+            {% set auxCommon = auxCommon~', '~vernacular.name %}
+            {% set title %}{% trans with {'%type%': taxon.taxonNodeName|capitalize, '%value%': taxon.name, '%common%': auxCommon } %} page.taxon.meta_tag.title {% endtrans %}{% endset %}
             {% set i=i+1 %}
+        {% else %}
+            {% set title %}{% trans with {'%type%': taxon.taxonNodeName|capitalize, '%value%': taxon.name, '%common%': auxCommon } %} page.taxon.meta_tag.title {% endtrans %}{% endset %}
         {% endif %}
     {% endfor %}
+{% else %}
+    {% set title %}{% trans with {'%type%': taxon.taxonNodeName|capitalize, '%value%': taxon.name, '%common%': "" } %} page.taxon.meta_tag.title {% endtrans %}{% endset %}
 {% endif %}
 
-{% block page_title %}{{title}}, {{ "page.taxon.meta_tag.title"|trans }}{% endblock %}
+{% block page_title %}{{title}}{% endblock %}
 
 {% block page_description %}{% endblock %}
 
