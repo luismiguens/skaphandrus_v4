@@ -52,13 +52,13 @@ class SkPhotoContestAwardType extends AbstractType
                 
             ->add('sponsor', 'entity', array(
                 'label'=>'form.photo_contest_award.label.sponsor',
-                'class' => 'SkaphandrusAppBundle:SkPhotoContestSponsor','expanded' => true, 
-                'multiple' => true ))
+                'class' => 'SkaphandrusAppBundle:SkPhotoContestSponsor',
+                'expanded' => true, 
+                'multiple' => true 
+                ))
                 
             ->add('translations', 'a2lix_translations', array(
-                
                 'fields' => array(
-                    
                     'description' => array(
                         'field_type' => 'textarea',
                         'label' => 'form.photo_contest_award.label.description', 

@@ -11,6 +11,33 @@ use Doctrine\ORM\EntityRepository;
  * repository methods below.
  */
 class SkIdentificationCriteriaRepository extends EntityRepository {
+    
+    
+    /**
+     * Metodo que com base nas especies enviadas, devolve as os critérios e caracteres que fazem match.
+     */
+//    public function getCriteriasFromSpecies($species) {
+//         $query = $this->getEntityManager()
+//                        ->createQuery(
+//                                'SELECT cri
+//                FROM SkaphandrusAppBundle:SkIdentificationCriteria cri
+//                JOIN spe.character cha
+//                JOIN cha.criteria cri
+//                WHERE spe.id = :species'
+//                        )->setParameter('species', $species);
+//        try {
+//            return $query->getResult();
+//        } catch (\Doctrine\ORM\NoResultException $e) {
+//            return null;
+//        }
+//    }
+    
+    
+    
+    
+    
+    
+    
     /**
      * Metodo que com base nas especies enviadas, devolve as os critérios e caracteres que fazem match.
      */

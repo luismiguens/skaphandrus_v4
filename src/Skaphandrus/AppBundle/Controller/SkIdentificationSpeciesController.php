@@ -131,8 +131,17 @@ class SkIdentificationSpeciesController extends Controller {
      */
     public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
-
+        
+        //$entity = new SkSpecies();
         $entity = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->find($id);
+        
+//
+//        // Get criterias from species
+//        $criterias = $em->getRepository('SkaphandrusAppBundle:SkIdentificationCriteria')->getCriteriasFromSpecies($entity->getId());
+//        
+//        
+//        
+//        $entity->setCriterias($criterias);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find SkSpecies entity.');
