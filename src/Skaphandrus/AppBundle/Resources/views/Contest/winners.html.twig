@@ -65,7 +65,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#tab-1" data-toggle="tab">
+                                <a href="{{ url_to_contest_sponsors(category.contest) }}">
                                         {{ "page.contest.tab.sponsors"|trans }}
                                     </a>
                                 </li>
@@ -130,7 +130,7 @@
                                                     </td>
                                                     <td>
                                                         {% if award.winnerPhoto %}
-                                                            <img alt="image" class="img-responsive" src="{{ award.winnerPhoto.getWebPath | imagine_filter('sk_widen_590') }}" />
+                                                            <img alt="image" class="img-responsive" src="{{ award.winnerPhoto.getWebPath | imagine_filter('sk_widen_160') }}" />
                                                         {% endif %}
                                                     </td>
                                                 </tr>
