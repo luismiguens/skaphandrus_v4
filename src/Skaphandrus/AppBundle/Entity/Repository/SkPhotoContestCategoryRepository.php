@@ -17,13 +17,13 @@ class SkPhotoContestCategoryRepository extends EntityRepository {
         $name = Utils::unslugify($slug);
 
         $query = $this->getEntityManager()
-            ->createQuery(
-                'SELECT cc
+                        ->createQuery(
+                                'SELECT cc
                 FROM SkaphandrusAppBundle:SkPhotoContestCategory cc
                 JOIN cc.translations t
                 WHERE t.name = :name
                 AND t.locale = :locale'
-                )->setParameter('name', $name)->setParameter('locale', $locale);
+                        )->setParameter('name', $name)->setParameter('locale', $locale);
         try {
             return $query->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -44,4 +44,35 @@ class SkPhotoContestCategoryRepository extends EntityRepository {
 
         return $users;
     }
+
+    public function findJudgeCategoryPoints($category_id, $limit = 9) {
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT photo_id, sum(points) as points 
+                FROM (
+                        SELECT votation.category_id, votation.judge_id, vote.photo_id as photo_id, vote.points as points, votation.id 
+                        FROM sk_photo_contest_category_judge_photo_vote as vote 
+                        JOIN sk_photo_contest_category_judge_votation as votation on vote.votation_id = votation.id 
+                        WHERE category_id = " . $category_id . ") as somatorio 
+                GROUP by photo_id 
+                HAVING points > 0 
+                ORDER by points desc
+                LIMIT " . $limit;
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+            $photo = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($value['photo_id']);
+            $photo->setPoints($value['points']);
+            $result[] = $photo;
+        }
+
+        return $result;
+    }
+
 }

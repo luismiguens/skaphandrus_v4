@@ -294,6 +294,14 @@ contests_sponsors:
     requirements:
         _locale:  en|pt
 
+contests_winners:
+    path:     /{_locale}/underwater-photo-contest/winners/{contest_slug}
+    defaults: { _controller: SkaphandrusAppBundle:Contest:winners, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+
+
 contests_contest:
     path:     /{_locale}/underwater-photo-contest/{slug}
     defaults: { _controller: SkaphandrusAppBundle:Contest:contest, _locale: en }

@@ -65,6 +65,10 @@ class SkIdentificationCharacter
     
     
     private $imageFile;
+    
+    
+    private $updatedAt;
+    
 
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
@@ -77,6 +81,12 @@ class SkIdentificationCharacter
      */
     public function setImageFile(File $image = null) {
         $this->imageFile = $image;
+        
+          // Only change the updated af if the file is really uploaded to avoid database updates.
+        // This is needed when the file should be set when loading the entity.
+        if ($this->imageFile instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
+            $this->updatedAt = new \DateTime('now');
+        }
     }
 
     /**
@@ -109,6 +119,8 @@ class SkIdentificationCharacter
     public function setImage($image)
     {
         $this->image = $image;
+        
+       
 
         return $this;
     }

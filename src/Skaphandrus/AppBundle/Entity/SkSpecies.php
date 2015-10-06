@@ -58,6 +58,10 @@ class SkSpecies {
     private $image_refs;
     private $photosCount = 0;
 
+    
+    private $criterias;
+    
+    
     /**
      * Constructor
      */
@@ -172,6 +176,54 @@ class SkSpecies {
         return $this->character;
     }
 
+    
+    
+    
+       /**
+     * Add criterias
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkIdentificationCriterias $criterias
+     *
+     * @return SkSpecies
+     */
+    public function addCriteria(\Skaphandrus\AppBundle\Entity\SkIdentificationCriteria $criteria) {
+        $this->criterias[] = $criteria;
+
+        return $this;
+    }
+
+    /**
+     * Remove criteria
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkIdentificationCriteria $criteria
+     */
+    public function removeCriteria(\Skaphandrus\AppBundle\Entity\SkIdentificationCriteria $criteria) {
+        $this->criterias->removeElement($criteria);
+    }
+    
+    
+    
+        public function setCriterias($criterias) {
+        $this->criterias = $criterias;
+    }
+    
+    
+    public function getCriterias() {
+               
+//        $character = new SkIdentificationCharacter();
+//        
+//        foreach ($this->getCharacter() as $key => $character) {
+//            $criteria[]=$character->getCriteria();
+//        }
+        
+        //$this->criterias = $criteria;
+        
+        return $this->criterias;
+    }
+    
+    
+    
+    
     /**
      * Add speciesVernacular
      *

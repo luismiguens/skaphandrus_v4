@@ -11,15 +11,46 @@ use Doctrine\ORM\EntityRepository;
  * repository methods below.
  */
 class SkIdentificationCriteriaRepository extends EntityRepository {
+
     /**
      * Metodo que com base nas especies enviadas, devolve as os critérios e caracteres que fazem match.
      */
-    public function getCriteriaIDSFromSpeciesIDS($species, $module_id=null) {
+    public function getCriteriasFromSpecies($species_id) {
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT 
+  distinct(
+    sk_identification_character.criteria_id
+  ) as criteria_id 
+FROM 
+  sk_identification_species_character 
+  join sk_identification_character on  sk_identification_species_character.character_id = sk_identification_character.id 
+where species_id = " . $species_id;
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+            //$result[] = $em->getRepository('SkaphandrusAppBundle:SkIdentificationCriteria')->find($value['criteria_id']);
+            $result[] = $value['criteria_id'];
+        }
+
+        return $result;
+    }
+
+    /**
+     * Metodo que com base nas especies enviadas, devolve as os critérios e caracteres que fazem match.
+     */
+    public function getCriteriaIDSFromSpeciesIDS($species, $module_id = null) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
         $sql = "SELECT distinct(criteria_id) 
-            FROM sk_identification_criteria_matrix". ( ($module_id == null)? "" : "_". $module_id ) ." 
+            FROM sk_identification_criteria_matrix" . ( ($module_id == null) ? "" : "_" . $module_id ) . " 
                 where species_id in (" . implode(', ', $species) . ") ";
 
         $statement = $connection->prepare($sql);
@@ -43,11 +74,11 @@ class SkIdentificationCriteriaRepository extends EntityRepository {
         $connection = $em->getConnection();
 
         $sql = "SELECT distinct(criteria_id) 
-            FROM sk_identification_criteria_matrix_". $module->getId() ." 
+            FROM sk_identification_criteria_matrix_" . $module->getId() . " 
             where ";
 
         foreach ($module->getGroups() as $key => $group_obj) {
-            $sql .= $group_obj->getTaxonName() ."_id = " . $group_obj->getTaxonValue()->getId();
+            $sql .= $group_obj->getTaxonName() . "_id = " . $group_obj->getTaxonValue()->getId();
 
             if ($key < count($module->getGroups()) - 1):
                 $sql .= " or ";
@@ -65,4 +96,5 @@ class SkIdentificationCriteriaRepository extends EntityRepository {
 
         return $result;
     }
+
 }

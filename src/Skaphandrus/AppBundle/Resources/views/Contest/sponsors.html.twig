@@ -76,6 +76,11 @@
                                     {{ "page.contest.tab.sponsors"|trans }}
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ url_to_contest_winners(contest) }}">
+                                    {{ "page.contest.tab.winners"|trans }}
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -97,8 +102,9 @@
                                         {% for sponsor in sponsors %}
                                             <tr>
                                                 <td>
+                                                    {% if sponsor.getWebPath %}
                                                     <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
-
+                                                    {% endif %}
                                                 </td>
                                                 <td>
                                                     <h4>{{ sponsor.name }}</h4>

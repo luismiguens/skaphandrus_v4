@@ -131,8 +131,21 @@ class SkIdentificationSpeciesController extends Controller {
      */
     public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
-
+        
+        //$entity = new SkSpecies();
         $entity = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->find($id);
+        
+// // Get criterias from species
+//        $criteria_ids = $em->getRepository('SkaphandrusAppBundle:SkIdentificationCriteria')->getCriteriasFromSpecies($entity->getId());
+//        
+//        
+//        foreach ($criteria_ids as $id) {
+//            $criterias[] = $em->getRepository('SkaphandrusAppBundle:SkIdentificationCriteria')->find($id);
+//            
+//        }
+       
+        
+        //$entity->setCriterias($criterias);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find SkSpecies entity.');
@@ -143,6 +156,7 @@ class SkIdentificationSpeciesController extends Controller {
         return $this->render('SkaphandrusAppBundle:SkIdentificationSpecies:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
+//            'criterias'=> $criterias
         ));
     }
 
@@ -154,9 +168,17 @@ class SkIdentificationSpeciesController extends Controller {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createEditForm(SkSpecies $entity) {
+        $em = $this->getDoctrine()->getManager();
+        
+         // Get criterias from species
+        $criteria_ids = $em->getRepository('SkaphandrusAppBundle:SkIdentificationCriteria')->getCriteriasFromSpecies($entity->getId());
+        
+        
+        
         $form = $this->createForm(new SkIdentificationSpeciesType(), $entity, array(
             'action' => $this->generateUrl('identification_species_admin_update', array('id' => $entity->getId())),
             'method' => 'PUT',
+            'criterias' => $criteria_ids
         ));
         return $form;
     }
