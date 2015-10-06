@@ -26,6 +26,7 @@ class SkPhotoContestSponsorRepository extends EntityRepository {
         $rsm->addEntityResult('SkaphandrusAppBundle:SkPhotoContestSponsor', 's');
         $rsm->addFieldResult('s', 'id', 'id');
         $rsm->addFieldResult('s', 'name', 'name');
+        $rsm->addFieldResult('s', 'image', 'image');
 
         $query = $this->getEntityManager()->createNativeQuery( 
                 'SELECT distinct s.*
