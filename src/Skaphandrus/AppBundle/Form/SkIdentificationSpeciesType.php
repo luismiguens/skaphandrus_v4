@@ -13,6 +13,20 @@ class SkIdentificationSpeciesType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        
+//                $builder->addEventListener(\Symfony\Component\Form\FormEvents::PRE_SET_DATA, function (\Symfony\Component\Form\FormEvent $event) {
+//            $criteria = $event->getData();
+//            dump($criteria);
+//
+//            $form = $event->getForm();
+        
+        //dump($options);
+//        $criterias = $options[0];
+        
+       //dump($criterias);
+        
+       // $criterias = null;
+        
         $builder
                 ->add('imageRefs', 'collection', array(
                     'type' => new SkIdentificationSpeciesImageRefType(),
@@ -21,23 +35,28 @@ class SkIdentificationSpeciesType extends AbstractType {
                     'by_reference' => FALSE,
                     'label' => 'form.identification_species.label.refferences')
                 )
-//                ->add('criteria', 'collection', array(
+                
+                
+                ->add('character', 'entity', array(
+                'class' => 'SkaphandrusAppBundle:SkIdentificationCharacter',
+                'expanded' => true,
+                'multiple' => true,
+                'query_builder' => function (\Doctrine\ORM\EntityRepository $er) use ($options) {
+                    return $er->createQueryBuilder('c')
+                                    ->select('c')
+                                    ->where('c.criteria IN(:criterias)')
+                                    ->setParameter('criterias', array_values($options['criterias']));
+                }
+            ));
+                
+                
+//                ->add('criterias', 'collection', array(
 //                    'type' => new \Skaphandrus\AppBundle\Form\SkIdentificationCriteriaForSpeciesType(),
 //                    'label' => 'form.identification_species.label.refferences')
 //                        )
-//                ->add('character', 'entity', array(
-//                    'class' => 'SkaphandrusAppBundle:SkIdentificationCharacter',
-//                    'expanded' => true,
-//                    'multiple' => true,
-//                    'query_builder' => function (\Doctrine\ORM\EntityRepository $er) {
-//                        return $er->createQueryBuilder('c')
-//                                ->select('c')
-//                                //->from('SkIdentificationCharacter', 'c')
-//                                ->where('c.criteria in( 1232, 1345)');
-//                        //->andWhere('u.is_active = 1');
-//                    },
-//        ))
-        ;
+
+//                });
+    
     }
 
     /**
@@ -45,7 +64,8 @@ class SkIdentificationSpeciesType extends AbstractType {
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'Skaphandrus\AppBundle\Entity\SkSpecies'
+            'data_class' => 'Skaphandrus\AppBundle\Entity\SkSpecies',
+            'criterias' => null
         ));
     }
 

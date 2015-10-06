@@ -3,11 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Entity/Repository/SkSpeciesRepository.php</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Form/SkIdentificationCriteriaType.php</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Form/SkIdentificationCriteriaForSpeciesType.php</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Entity/Repository/SkIdentificationCriteriaRepository.php</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Controller/SkIdentificationSpeciesController.php</file>
             <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Form/SkIdentificationSpeciesType.php</file>
-            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Entity/SkSpecies.php</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Resources/views/SkIdentificationSpecies/edit.html.twig</file>
+            <file>file:/home/luis/sfprojects/skaphandrus_v4/src/Skaphandrus/AppBundle/Controller/SkModulesController.php</file>
         </group>
     </open-files>
 </project-private>

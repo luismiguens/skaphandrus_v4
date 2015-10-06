@@ -37,6 +37,18 @@ class SkPhotoContestCategory
      * @var \Doctrine\Common\Collections\Collection
      */
     private $awards;
+    
+    
+    /**
+     * var used to save winner photos in category
+     * @var type 
+     */
+    private $winnerPhotos;
+    
+    
+    
+    
+    
 
     /**
      * Constructor
@@ -46,6 +58,31 @@ class SkPhotoContestCategory
         $this->photo = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    
+        public function setWinnerPhotos($winnerPhotos)
+    {
+        $this->winnerPhotos = $winnerPhotos;
+
+        return $this;
+    }
+
+    /**
+     * Get winnerPhotos
+     *
+     * @return string
+     */
+    public function getWinnerPhotos()
+    {
+        return $this->winnerPhotos;
+    }
+
+    
+    
+    
+    
+    
+    
+    
     /**
      * Set image
      *

@@ -59,7 +59,7 @@ class SkSpecies {
     private $photosCount = 0;
 
     
-    private $criteria;
+    private $criterias;
     
     
     /**
@@ -187,7 +187,7 @@ class SkSpecies {
      * @return SkSpecies
      */
     public function addCriteria(\Skaphandrus\AppBundle\Entity\SkIdentificationCriteria $criteria) {
-        $this->criteria[] = $criteria;
+        $this->criterias[] = $criteria;
 
         return $this;
     }
@@ -201,17 +201,24 @@ class SkSpecies {
         $this->criterias->removeElement($criteria);
     }
     
-    public function getCriteria() {
+    
+    
+        public function setCriterias($criterias) {
+        $this->criterias = $criterias;
+    }
+    
+    
+    public function getCriterias() {
                
-        $character = new SkIdentificationCharacter();
+//        $character = new SkIdentificationCharacter();
+//        
+//        foreach ($this->getCharacter() as $key => $character) {
+//            $criteria[]=$character->getCriteria();
+//        }
         
-        foreach ($this->getCharacter() as $key => $character) {
-            $criteria[]=$character->getCriteria();
-        }
+        //$this->criterias = $criteria;
         
-        $this->criteria = $criteria;
-        
-        return $this->criteria;
+        return $this->criterias;
     }
     
     

@@ -94,6 +94,13 @@ class SkPhoto {
     
     
     private $imageFile;
+    
+    /**
+     * var used in photo contests results
+     * @var type 
+     */
+    private $points;
+    
 
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
@@ -149,6 +156,32 @@ class SkPhoto {
         return $this->title;
     }
 
+    
+      /**
+     * Set points
+     *
+     * @param string $points
+     *
+     * @return SkPhoto
+     */
+    public function setPoints($points) {
+        $this->points = $points;
+
+        return $this;
+    }
+
+    /**
+     * Get points
+     *
+     * @return string
+     */
+    public function getPoints() {
+        return $this->points;
+    }
+    
+    
+    
+    
     /**
      * Get title
      *

@@ -57,6 +57,7 @@ class UtilsExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('link_to_contest_photos', array($this, 'link_to_contest_photos'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('link_to_contest_photographers', array($this, 'link_to_contest_photographers'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('link_to_contest_sponsors', array($this, 'link_to_contest_sponsors'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('link_to_contest_winners', array($this, 'link_to_contest_winners'), array('is_safe' => array('html'))),
             
             //spots
             new \Twig_SimpleFunction('link_to_spot', array($this, 'link_to_spot'), array('is_safe' => array('html'))),
@@ -86,6 +87,7 @@ class UtilsExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('url_to_contest_photos', array($this, 'url_to_contest_photos')),
             new \Twig_SimpleFunction('url_to_contest_photographers', array($this, 'url_to_contest_photographers')),
             new \Twig_SimpleFunction('url_to_contest_sponsors', array($this, 'url_to_contest_sponsors')),
+            new \Twig_SimpleFunction('url_to_contest_winners', array($this, 'url_to_contest_winners')),
             
             
             new \Twig_SimpleFunction('url_to_spot', array($this, 'url_to_spot')),
@@ -471,6 +473,11 @@ $this->translator->setLocale($locale);
         return '<a href="' . $this->url_to_contest_sponsors($contest) . '" title="' . $contest->getName() . '">' . $contest->getName() . '</a>';
     }
 
+    public function link_to_contest_winners($contest) {
+        return '<a href="' . $this->url_to_contest_winners($contest) . '" title="' . $contest->getName() . '">' . $contest->getName() . '</a>';
+    }
+    
+    
     public function link_to_spot($spot, $location = NULL, $country = NULL) {
         return '<a href="' . $this->url_to_spot($spot, $location, $country) . '" title="' . $spot->getName() . '">' . $spot->getName() . '</a>';
     }
@@ -564,6 +571,16 @@ $this->translator->setLocale($locale);
         ));
     }
 
+    
+    public function url_to_contest_winners($contest) {
+        $path_function = $this->getPathFunction();
+
+        return call_user_func($path_function, 'contests_winners', array(
+            'contest_slug' => Utils::slugify($contest->getName()),
+        ));
+    }
+    
+    
     public function url_to_spot($spot, $location = NULL, $country = NULL) {
         $path_function = $this->getPathFunction();
 

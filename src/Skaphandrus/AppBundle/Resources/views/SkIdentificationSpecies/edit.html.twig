@@ -16,7 +16,7 @@
         //$(collectionHolderId).after($addCharacterLink);
         $addCharacterLink.insertAfter(collectionHolderId);
 
-        jQuery(document).ready(function() {
+        jQuery(document).ready(function () {
             // Get the ul that holds the collection of tags
             $collectionHolder = $(collectionHolderId);
 
@@ -28,7 +28,7 @@
             // $collectionHolder.data('index', $collectionHolder.find('.form-group').length);
             $collectionHolder.data('index', $(collectionHolderId + ' > .form-group').length);
 
-            $addCharacterLink.on('click', function(e) {
+            $addCharacterLink.on('click', function (e) {
                 // prevent the link from creating a "#" on the URL
                 e.preventDefault();
 
@@ -80,15 +80,57 @@
 
 {% block body %}
     {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
-    {{ form_widget(edit_form) }}
+
+
+
+    {{ form_row(edit_form.imageRefs) }}
+
+   
+    {% set last_criteria = "" %}
+
+    {# iterate over each existing tag and render its only field: name #}
+    {% for cha in edit_form.character %}
+
+        {% set index = cha.vars.value %}{# get array index #}
+        {% set entity = edit_form.character.vars.choices[index].data %}{# get entity object #}
+
+        {#{% dump(entity)%}#}
+        
+        
+        {% if entity.criteria != last_criteria %}
+            <br> <hr>
+            <h3>{{entity.criteria}}</h3>
+           
+        {% endif %}
+
+
+
+        {{ form_widget(cha) }}
+        {{ form_label(cha) }}
+
+        {% set last_criteria = entity.criteria%}
+
+    {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+    {#    {{ form_widget(edit_form) }}#}
     <div class="form-group">
-    <div class="col-sm-10 col-sm-offset-2">
-        {#<a class="btn btn-white" href="{{ path(identification_species_admin, 'group_id'=> ) }}">{{ "form.common.btn.back_to_list"|trans }}</a>#}
-        
+        <div class="col-sm-10 col-sm-offset-2">
+            {#<a class="btn btn-white" href="{{ path(identification_species_admin, 'group_id'=> ) }}">{{ "form.common.btn.back_to_list"|trans }}</a>#}
+
             <button type="submit" class="btn btn-primary">{{ "form.common.btn.update"|trans }}</button>
-        
+
+        </div>
     </div>
-</div>
     {{ form_end(edit_form) }}
 
 {% endblock %}
