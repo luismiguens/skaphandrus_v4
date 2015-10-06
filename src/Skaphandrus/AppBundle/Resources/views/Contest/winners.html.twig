@@ -122,6 +122,10 @@
                                                         {% if award.winnerFosUser %}
                                                             <img class="img-rounded" src="{{ award.winnerFosUser.settings.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ award.winnerFosUser.name }}" title="{{ award.winnerFosUser.name }}">
                                                             <h5>award.winnerFosUser.name</h5>
+                                                            
+                                                        {%else%}    
+                                                            <img class="img-rounded" src="{{ award.winnerPhoto.fosUser.settings.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{award.winnerPhoto.fosUser.name}}" title="{{award.winnerPhoto.fosUser.name}}">
+                                                            <h5>{{award.winnerPhoto.fosUser.name}}</h5>
                                                         {% endif %}
                                                     </td>
                                                     <td>
