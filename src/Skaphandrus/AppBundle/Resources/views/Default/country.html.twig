@@ -29,10 +29,10 @@
 {% endblock %}
 
 {% block heading_breadcrumbs %}
-    <ol class="breadcrumb">
-        <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
-        <li><a href="{{ path('locations_home') }}">{{ "breadcrumb.locations"|trans }}</a></li>
-        <li class="active"><strong>{{ country }}</strong></li>
+    <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+        <li itemprop="itemListElement"><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
+        <li itemprop="itemListElement"><a href="{{ path('locations_home') }}">{{ "breadcrumb.locations"|trans }}</a></li>
+        <li itemprop="itemListElement" class="active"><strong>{{ country }}</strong></li>
     </ol>
 {% endblock %}
 
@@ -84,6 +84,7 @@
             <!-- right column -->
             <div class="col-md-8">
                 <div class="ibox">
+                    
                     <div class="ibox-title">
                         <h5>{{ "page.country.h5.country_related_contents"|trans }}</h5>
                         <div class="ibox-tools">
@@ -103,8 +104,9 @@
                         </div>
                     </div>
 
-                    <div class="ibox-content">
-                        <h1>{{ country }}</h1>
+                    <div class="ibox-content"  itemscope itemtype="http://schema.org/Country">
+                        <meta itemprop="isicV4" content="96590">
+                        <h1 itemprop="name">{{ country }}</h1>
                         <div class="panel">
                             <div class="panel-heading">
                                 <!--<div class="panel-title m-b-md"><h4>Blank Panel with text tabs</h4></div>-->
@@ -125,7 +127,7 @@
                                         <h3>{{ "page.country.h3.info"|trans }}</h3>
 
                                         <h5>{{ "page.country.h5.overview"|trans }}</h5>
-                                        <p>{{ country.translate(app.request.locale).overview }}</p>
+                                        <p itemprop="description">{{ country.translate(app.request.locale).overview }}</p>
 
                                         <h5>{{ "page.country.h5.geography_and_climate"|trans }}</h5>
                                         <p>{{ country.translate(app.request.locale).geographyAndClimate }}</p>
@@ -162,6 +164,9 @@
                                                 </thead>
                                                 <tbody>
                                                     {% for l in locations %}
+                                                        <span itemscope itemtype="http://schema.org/City ">
+                                                            <meta itemprop="name" content="{{ l }}">
+                                                        </span>
                                                         <tr>
                                                             <td>{{ link_to_location(l, country) }}</td>
                                                             <td>{{ l.spotsCount }}</td>
@@ -193,6 +198,10 @@
                                             </thead>
                                             <tbody>
                                                 {% for sp in species %}
+                                                    <span itemprop="additionalProperty" itemscope itemtype="http://schema.org/PropertyValue">
+                                                        <meta itemprop="name" content="sea animal">
+                                                        <meta itemprop="value" content="{{ sp }}">
+                                                    </span>
                                                     <tr>
                                                         <td>{{ link_to_species(sp) }}</td>
                                                         <td>
@@ -227,6 +236,9 @@
                                             </thead>
                                             <tbody>
                                                 {% for p in photographers %}
+                                                    <span itemscope itemtype="http://schema.org/Person">
+                                                        <meta itemprop="name" content="{{ p.fosUser }}">
+                                                    </span>
                                                     <tr>
                                                         <td>{{ link_to_user(p.fosUser) }}</td>
                                                         <td>

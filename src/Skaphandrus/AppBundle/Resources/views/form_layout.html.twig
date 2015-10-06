@@ -2,14 +2,12 @@
 
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
-<!--[if !IE]><!--> <html lang="{{ app.request.locale }}" xmlns:fb="http://www.facebook.com/2008/fbml" > <!--<![endif]--> 
-
+<!--[if !IE]><!--><html lang="{{ app.request.locale }}" xmlns:fb="http://www.facebook.com/2008/fbml" ><!--<![endif]--> 
 
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# skaphandrus: http://ogp.me/ns/fb/skaphandrus#">
 
         <title>{% block page_title %}{% endblock %}</title>
         <link rel="shortcut icon" href="favicon.ico"> 
-
 
         <!-- Meta -->
         <meta charset="utf-8">
@@ -21,7 +19,6 @@
         <meta name="keywords" content="{% block page_keywords %}{% endblock %}" />
         <meta name="description" content="{% block page_description %}{% endblock %}" />
 
-
         <!-- smart app link -->        
         <meta name="apple-itunes-app" content="app-id=894101166"/>
         <meta name="google-play-app" content="app-id=com.skaphandrus.oceanlifeid">
@@ -29,7 +26,6 @@
         <!-- hreflang for language -->
         <link rel="alternate" hreflang="pt" href="http://skaphandrus.com/pt" />
         <link rel="alternate" hreflang="en" href="http://skaphandrus.com/en" />
-
 
         {% block stylesheets %}
             <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -42,14 +38,6 @@
 
         {% endblock %}
     </head>
-
-
-{#{% if app.user %}
-    # user is logged in
- {% else %}
-    # user is not logged in
- {% endif %}#}
-
 
     <body class="boxed-layout">
         <div id="wrapper">
@@ -87,21 +75,16 @@
                                 </div>
                             {% endfor %}
 
-
-
-
-
-                            {% block body %}
-                            {% endblock %}
-                        </div>
+                        {% block body %}{% endblock %}
                     </div>
                 </div>
             </div>
         </div>
-
-        {% include 'SkaphandrusAppBundle:Common:footer.html.twig'%}
-
     </div>
+
+    {% include 'SkaphandrusAppBundle:Common:footer.html.twig'%}
+
+</div>
 </div>
 
 
@@ -124,9 +107,3 @@
 </body>
 
 </html>
-
-
-
-
-
-

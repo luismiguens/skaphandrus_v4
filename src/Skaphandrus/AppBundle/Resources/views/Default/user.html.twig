@@ -38,15 +38,15 @@
 {% endblock %}
 
 {% block heading_breadcrumbs %}
-    <ol class="breadcrumb">
-        <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
-        <li class="active"><strong>{{ user.personal.name }}</strong></li>
+    <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+        <li itemprop="itemListElement"><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
+        <li itemprop="itemListElement" class="active"><strong>{{ user.personal.name }}</strong></li>
     </ol>
 {% endblock %}
 
 {% block body %}
 
-    <div class="wrapper wrapper-content">
+    <div class="wrapper wrapper-content" itemscope itemtype="http://schema.org/ProfilePage">
         <div class="row animated fadeInRight">
             <!-- Left Column -->
             <div class="col-md-4">
@@ -73,17 +73,13 @@
                     </div>
                     <div>
                         <div class="ibox-content no-padding border-left-right">
-                            <img alt="image" class="img-responsive" src="{{ user.settings.getWebPath | imagine_filter('sk_widen_590') }}" />
+                            <img itemprop="image" alt="image" class="img-responsive" src="{{ user.settings.getWebPath | imagine_filter('sk_widen_590') }}" />
                         </div>
                         <div class="ibox-content profile-content">
                             <h4><strong>{{ user.personal.name }}</strong></h4>
                             <!--<p><i class="fa fa-map-marker"></i> Riviera State 32/106</p>-->
-                            <h5>
-                                {{ "page.user.h5.about_me"|trans }}
-                            </h5>
-                            <p>
-                                {{user.settings.observations|raw}}
-                            </p>
+                            <h5>{{ "page.user.h5.about_me"|trans }}</h5>
+                            <p itemprop="description">{{user.settings.observations|raw}}</p>
                             <!--<div class="row m-t-lg">
                                 <div class="col-md-4">
                                     <span class="bar">5,3,9,6,5,9,7,3,5,2</span>
@@ -117,7 +113,7 @@
             <div class="col-md-8">
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
-                        <h1>{{ user.name }}</h1>
+                        <h1 itemprop="name">{{ user.name }}</h1>
                         <!-- Start Panel -->
                         <div class="panel">
                             <div class="panel-heading">
@@ -191,13 +187,13 @@
                                                 </thead>
                                                 <tbody>
                                                     {% for s in species %}
-                                                        <tr>
-                                                            <td>{{ link_to_species(s.species) }}</td>
-                                                            <td>
-                                                                <a href="{{ path('photos', {'fosUser': user.id, 'species': s.species.id}) }}">{{ s.photo_count }}</a>
-                                                            </td>
-                                                        </tr>
-                                                    {% endfor %}
+                                                    <tr>
+                                                        <td>{{ link_to_species(s.species) }}</td>
+                                                        <td>
+                                                            <a href="{{ path('photos', {'fosUser': user.id, 'species': s.species.id}) }}">{{ s.photo_count }}</a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
@@ -222,6 +218,9 @@
                                                 </thead>
                                                 <tbody>
                                                     {% for s in spots %}
+                                                        <span itemscope itemtype="http://schema.org/TouristAttraction ">
+                                                            <meta itemprop="name" content="{{ s.spot }}">
+                                                        </span>
                                                         <tr>
                                                             <td>{{ link_to_spot(s.spot) }}</td>
                                                             <td>
@@ -263,9 +262,6 @@
             <!-- End Right Column -->
         </div>
     </div>
-
-
-
 
     {#<h2>{{ "page.user.h2.username"|trans }}: {{ user.username }}</h2>
   

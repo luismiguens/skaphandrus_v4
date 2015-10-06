@@ -1,6 +1,10 @@
 {# empty Twig template #}
 <div class="feed-activity-list">
     {% for activity in activities %}
+        <span itemprop="publisher" itemscope itemtype="http://schema.org/Person">
+            <meta itemprop="name" content="{{ activity.userFrom}}">
+            <meta itemprop="url" content="{{ url_to_user(activity.userFrom) }}">
+        </span>
         <div class="feed-element">
             <a href="{{url_to_user(activity.userFrom)}}" class="pull-left">
 {#                <img alt="image" class="img-circle" src="{{ activity.userFrom.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}" />#}
@@ -18,6 +22,3 @@
         </div>
     {% endfor %}
 </div>
-
-
-

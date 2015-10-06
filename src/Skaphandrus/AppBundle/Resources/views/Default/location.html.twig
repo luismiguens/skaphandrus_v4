@@ -49,17 +49,17 @@
             google.maps.event.trigger(window, 'resize', {});
             setTimeout(function () {
         {{ map.javascriptVariable }}.setCenter({{ map.center.javascriptVariable }});
-                        }, 100);
-                    });
+                }, 100);
+            });
     </script>
     <!-- FooTable -->
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
     <script>
-                    $(document).ready(function () {
-                        $('.footable-spots').footable();
-                        $('.footable-species').footable();
-                        $('.footable-photographers').footable();
-                    });
+            $(document).ready(function () {
+                $('.footable-spots').footable();
+                $('.footable-species').footable();
+                $('.footable-photographers').footable();
+            });
     </script>
 
 {% endblock %}
@@ -70,11 +70,11 @@
 
 
 {% block heading_breadcrumbs %}
-    <ol class="breadcrumb">
-        <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
-        <li><a href="{{ path('locations_home') }}">{{ "breadcrumb.locations"|trans }}</a></li>
-        <li>{{ link_to_country(location.region.country) }}</li>
-        <li class="active"><strong>{{ location.name }}</strong></li>
+    <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+        <li itemprop="itemListElement"><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
+        <li itemprop="itemListElement"><a href="{{ path('locations_home') }}">{{ "breadcrumb.locations"|trans }}</a></li>
+        <li itemprop="itemListElement">{{ link_to_country(location.region.country) }}</li>
+        <li itemprop="itemListElement" class="active"><strong>{{ location.name }}</strong></li>
     </ol>
 {% endblock %}
 
@@ -130,8 +130,9 @@
                         </div>
                     </div>
 
-                    <div class="ibox-content">
-                        <h1>{{ location.name }}, {{ location.region.country }}</h1>
+                    <div class="ibox-content" itemscope itemtype="http://schema.org/City">
+                        <meta itemprop="isicV4" content="96590">
+                        <h1 itemprop="name">{{ location.name }}, {{ location.region.country }}</h1>
                         <div class="panel">
                             <div class="panel-heading">
                                 <!--<div class="panel-title m-b-md"><h4>Blank Panel with text tabs</h4></div>-->
@@ -152,7 +153,7 @@
                                         <h3>{{ "page.location.h3.info"|trans }}</h3>
                                         {% if location.description is not empty %}
                                             <h5>{{ "page.location.h5.description"|trans }}</h5>
-                                            <p>{{ location.description }}</p>
+                                            <p itemprop="description">{{ location.description }}</p>
                                         {% endif %}
 
                                         {% if location.waterTemp is not empty %}
@@ -202,6 +203,9 @@
                                                 <tbody>
                                                     {% set c = location.region.country %}
                                                     {% for spot in location.spots %}
+                                                        <span itemscope itemtype="http://schema.org/TouristAttraction ">
+                                                            <meta itemprop="name" content="{{ spot }}">
+                                                        </span>
                                                         <tr>
                                                             <td>{{ link_to_spot(spot, location, c) }}</td>
                                                             <td>
@@ -231,6 +235,10 @@
                                             </thead>
                                             <tbody>
                                                 {% for sp in species %}
+                                                    <span itemprop="additionalProperty" itemscope itemtype="http://schema.org/PropertyValue">
+                                                        <meta itemprop="name" content="sea animal">
+                                                        <meta itemprop="value" content="{{ sp }}">
+                                                    </span>
                                                     <tr>
                                                         <td>{{ link_to_species(sp) }}</td>
                                                         <td>
@@ -265,13 +273,16 @@
                                             </thead>
                                             <tbody>
                                                 {% for p in photographers %}
-                                                    <tr>
-                                                        <td>{{ link_to_user(p.fosUser) }}</td>
-                                                        <td>
-                                                            <a href="{{ path('photos', {'fosUser': p.fosUser.id, 'location': location.id}) }}">{{ p.photoCount }}</a>
-                                                        </td>
-                                                    </tr>
-                                                {% endfor%}
+                                                <span itemscope itemtype="http://schema.org/Person">
+                                                    <meta itemprop="name" content="{{ p.fosUser }}">
+                                                </span>
+                                                <tr>
+                                                    <td>{{ link_to_user(p.fosUser) }}</td>
+                                                    <td>
+                                                        <a href="{{ path('photos', {'fosUser': p.fosUser.id, 'location': location.id}) }}">{{ p.photoCount }}</a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor%}
                                             </tbody>
                                             <tfoot>
                                                 <tr>

@@ -18,9 +18,9 @@
 {% endblock %}
 
 {% block heading_breadcrumbs %}
-    <ol class="breadcrumb">
-        <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
-        <li class="active"><strong>{{ "page.locations_home.h1.title"|trans }}</strong></li>
+    <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+        <li itemprop="itemListElement"><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
+        <li itemprop="itemListElement" class="active"><strong>{{ "page.locations_home.h1.title"|trans }}</strong></li>
     </ol>
 {% endblock %}
 
@@ -122,7 +122,7 @@
                     </div>
 
                     <div class="ibox-content">
-                        <div id="world-map" style="height: 300px; margin-bottom: 25px;"></div>
+                        <div id="world-map" style="height: 300px; margin-bottom: 25px;">{#<span itemscope itemtype="http://schema.org/Map"><meta itemprop="name" content="World Map"></span>#}</div>
                         <input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
                         <table class="footable table" data-page-size="50" data-filter=#filter>
                             <thead>
@@ -132,6 +132,9 @@
                             </thead>
                             <tbody>
                                 {% for c in countries %}
+                                    <span itemscope itemtype="http://schema.org/Country">
+                                        <meta itemprop="name" content="{{ c }}">
+                                    </span>
                                     <tr>
                                         <td>{{ link_to_country(c) }}</td>
                                         <td>{{ c.spotsCount }}</td>

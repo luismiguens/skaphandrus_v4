@@ -2,14 +2,17 @@
     {% for photo in photos %}
         <span itemscope itemtype="http://schema.org/Photograph">
             <meta itemprop="name" content="{{ photo.title }}">
-            <meta itemprop="datePublished" content="{{ photo.createdAt|date("Y-m-d") }}">
-            <meta itemprop="dateCreated" content="{{ photo.takenAt|date("Y-m-d") }}">
-
-            <span itemprop="author" itemtype="http://schema.org/Person"  >
+            <meta itemprop="dateCreated" content="{{ photo.createdAt|date("Y-m-d") }}">
+            <meta itemprop="datePublished" content="{{ photo.takenAt|date("Y-m-d") }}">
+            <span itemprop="author" itemscope itemtype="http://schema.org/Person"  >
                 <meta itemprop="name" content="{{ photo.fosUser}}">
                 <meta itemprop="url" content="{{ url_to_user(photo.fosUser) }}">
             </span>
-
+            {% if photo.spot is not empty %}
+                <span itemprop="contentLocation" itemscope itemtype="http://schema.org/Place">
+                    <meta itemprop="name" content="{{ photo.spot }}, {{ photo.spot.location }}">
+                </span>
+            {% endif %}
             <a href="{{ url_to_photo(photo) }}" title="{{ photo.title }}">
                 <img itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('new_sk_thumbnail_outbound_100') }}" />
             </a>

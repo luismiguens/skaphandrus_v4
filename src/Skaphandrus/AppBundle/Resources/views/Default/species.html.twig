@@ -11,14 +11,14 @@
     {% for vernacular in species.speciesVernaculars %}
         {% if (vernacular.locale == app.request.locale) and (i<4) %}
             {% set auxCommon = auxCommon~', '~vernacular.vernacular.name %}
-            {% set title %}{% trans with {'%specie%': species.name, '%author%': auxAuthor, '%common%': auxCommon } %} page.species.meta_tag.title {% endtrans %}{% endset %}
-            {% set i=i+1 %}
-        {% else %}
-            {% set title %}{% trans with {'%specie%': species.name, '%author%': auxAuthor, '%common%': auxCommon } %} page.species.meta_tag.title {% endtrans %}{% endset %}
-        {% endif %}
-    {% endfor %}
+        {% set title %}{% trans with {'%specie%': species.name, '%author%': auxAuthor, '%common%': auxCommon } %} page.species.meta_tag.title {% endtrans %}{% endset %}
+        {% set i=i+1 %}
+    {% else %}
+    {% set title %}{% trans with {'%specie%': species.name, '%author%': auxAuthor, '%common%': auxCommon } %} page.species.meta_tag.title {% endtrans %}{% endset %}
+{% endif %}
+{% endfor %}
 {% else %}
-    {% set title %}{% trans with {'%specie%': species.name, '%author%': auxAuthor, '%common%': "" } %} page.species.meta_tag.title {% endtrans %}{% endset %}
+{% set title %}{% trans with {'%specie%': species.name, '%author%': auxAuthor, '%common%': "" } %} page.species.meta_tag.title {% endtrans %}{% endset %}
 {% endif %}
 
 {% block page_title %}{{title}}{% endblock %}
@@ -73,13 +73,13 @@
 
 
 {% block heading_breadcrumbs %}
-    <ol class="breadcrumb">
-        <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
-            {#<li>{{ link_to_taxon(species.genus.family.order.class) }}</li>#}
-        <li>{{ link_to_taxon(species.genus.family.order) }}</li>
-        <li>{{ link_to_taxon(species.genus.family) }}</li>
-        <li>{{ link_to_taxon(species.genus) }}</li>
-        <li class="active"><strong>{{ species.name }}</strong></li>
+    <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+        <li itemprop="itemListElement"><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
+        {#<li>{{ link_to_taxon(species.genus.family.order.class) }}</li>#}
+        <li itemprop="itemListElement">{{ link_to_taxon(species.genus.family.order) }}</li>
+        <li itemprop="itemListElement">{{ link_to_taxon(species.genus.family) }}</li>
+        <li itemprop="itemListElement">{{ link_to_taxon(species.genus) }}</li>
+        <li itemprop="itemListElement" class="active"><strong>{{ species.name }}</strong></li>
     </ol>
 {% endblock %}
 
@@ -95,7 +95,6 @@
     <div class="wrapper wrapper-content">
         <div class="row animated fadeInRight">
             <!-- left column -->
-
 
             {#            <div class="col-md-4">
                             <div class="ibox float-e-margins">
@@ -113,8 +112,7 @@
                                 </div>
                                 </div>
                             </div>
-                        </div>
-                                        #}
+                        </div>#}
 
             <!-- species activity -->              
             <div class="col-lg-4">
@@ -131,8 +129,6 @@
                 </div>
             </div>
             <!-- end activity -->
-
-
 
             <!-- end left column -->
 
@@ -160,10 +156,9 @@
                         </div>
                     </div>
 
-
                     <div class="ibox-content">
 
-                        <h1>{{ species.name }} </h1>
+                        <h1 itemprop="name">{{ species.name }} </h1>
 
                         <div class="panel">
                             <div class="panel-heading">
@@ -205,17 +200,17 @@
                                         <div id="tab-{{tab_info_id}}" class="tab-pane {{tab_info_id==1?'active'}}">
                                             {#<h3>{{ "page.species.h3.information"|trans }}</h3>#}
                                             <h5>{{ "page.species.h5.taxonomic_structure"|trans }}</h5>
-                                            <ul class="list-unstyled">
-                                                <li>{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.kingdom) }}</li>
-                                                <li>{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum) }}</li>
-                                                <li>{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(species.genus.family.order.class) }}</li>
-                                                <li>{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(species.genus.family.order) }}</li>
-                                                <li>{{ "page.species.label.species_family"|trans }}: {{ link_to_taxon(species.genus.family) }}</li>
-                                                <li>{{ "page.species.label.species_genus"|trans }}: {{ link_to_taxon(species.genus) }}</li>
+                                            <ul class="list-unstyled" itemscope itemtype="http://schema.org/ListItem">
+                                                <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.kingdom) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(species.genus.family.order.class) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(species.genus.family.order) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_family"|trans }}: {{ link_to_taxon(species.genus.family) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_genus"|trans }}: {{ link_to_taxon(species.genus) }}</li>
                                             </ul>
                                             {% if species.translate(app.request.locale).description is not empty %}
                                                 <h5>{{ "page.species.h5.description"|trans }}</h5>
-                                                <p>{{ species.translate(app.request.locale).description }}</p>
+                                                <p itemprop="description">{{ species.translate(app.request.locale).description }}</p>
                                             {% endif %}
                                         </div>
                                     {% endif %}
@@ -228,15 +223,16 @@
                                                 <h5>{{ "page.species.h5.common_names"|trans }}</h5>
                                                 <ul class="list-unstyled">
                                                     {% for vernacular in species.speciesVernaculars %}
-
                                                         <li>{{ vernacular.vernacular.name|capitalize ~ " - " ~ intl_locale_name(vernacular.locale) }}</li>
-                                                        {% endfor %}
+                                                            {% if vernacular.locale == app.request.locale %}
+                                                            <meta itemprop="alternateName" content="{{ vernacular.vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}" >
+                                                        {% endif %}
+                                                        {#<meta itemprop="alternateName" content="{{ vernacular.vernacular.name|capitalize ~ " - " ~ intl_locale_name(vernacular.locale) }}" >#}
+                                                    {% endfor %}
                                                 </ul>
                                             {% endif %}
                                         </div>
                                     {% endif %}
-
-
 
                                     {% if species.character is not empty %}
                                         <div id="tab-{{tab_chars_id}}" class="tab-pane {{tab_chars_id==1?'active'}}">
@@ -259,6 +255,9 @@
                                         <div id="tab-{{tab_users_id}}" class="tab-pane {{tab_users_id==1?'active'}}">
                                             <h3>{{ "page.species.h3.contributors"|trans }}</h3>
                                             {% for u in users %}
+                                                <span itemscope itemtype="http://schema.org/Person">
+                                                    <meta itemprop="name" content="{{ u.0 }}">
+                                                </span>
                                                 <p>
                                                     {{ "user_id"|trans }}: {{ link_to_user(u.0) }} ({{ u.countable }} {{ "page.species.label.photos"|trans }})
                                                 </p>
@@ -275,9 +274,7 @@
                         </div>
                     </div>
                 </div><!--end right column -->
-
             </div><!-- end row-->
         </div><!-- end wrapper-->
-
     </div>
 {% endblock %}

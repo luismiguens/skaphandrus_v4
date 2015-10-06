@@ -7,14 +7,14 @@
     {% for vernacular in taxon.vernaculars %}
         {% if vernacular.locale == app.request.locale and i<4 %}
             {% set auxCommon = auxCommon~', '~vernacular.name %}
-            {% set title %}{% trans with {'%type%': taxon.taxonNodeName|capitalize, '%value%': taxon.name, '%common%': auxCommon } %} page.taxon.meta_tag.title {% endtrans %}{% endset %}
-            {% set i=i+1 %}
-        {% else %}
-            {% set title %}{% trans with {'%type%': taxon.taxonNodeName|capitalize, '%value%': taxon.name, '%common%': auxCommon } %} page.taxon.meta_tag.title {% endtrans %}{% endset %}
-        {% endif %}
-    {% endfor %}
+        {% set title %}{% trans with {'%type%': taxon.taxonNodeName|capitalize, '%value%': taxon.name, '%common%': auxCommon } %} page.taxon.meta_tag.title {% endtrans %}{% endset %}
+        {% set i=i+1 %}
+    {% else %}
+    {% set title %}{% trans with {'%type%': taxon.taxonNodeName|capitalize, '%value%': taxon.name, '%common%': auxCommon } %} page.taxon.meta_tag.title {% endtrans %}{% endset %}
+{% endif %}
+{% endfor %}
 {% else %}
-    {% set title %}{% trans with {'%type%': taxon.taxonNodeName|capitalize, '%value%': taxon.name, '%common%': "" } %} page.taxon.meta_tag.title {% endtrans %}{% endset %}
+{% set title %}{% trans with {'%type%': taxon.taxonNodeName|capitalize, '%value%': taxon.name, '%common%': "" } %} page.taxon.meta_tag.title {% endtrans %}{% endset %}
 {% endif %}
 
 {% block page_title %}{{title}}{% endblock %}
@@ -78,32 +78,32 @@
 
 {% block heading_breadcrumbs %}
 
-    <ol class="breadcrumb">
+    <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
         <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
             {% if taxon.taxonNodeName == 'genus' %}
                 {# <li>{{ link_to_taxon(taxon.parentNode.parentNode.parentNode) }}</li>#}
-            <li>{{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
-            <li>{{ link_to_taxon(taxon.parentNode) }}</li>
-            <li class="active"><strong>{{taxon.name}}</strong></li>
+            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
+            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode) }}</li>
+            <li itemprop="itemListElement" class="active"><strong>{{taxon.name}}</strong></li>
                 {%elseif taxon.taxonNodeName == 'family' %}
                     {#<li>{{ link_to_taxon(taxon.parentNode.parentNode.parentNode) }}</li>#}
-            <li>{{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
-            <li>{{ link_to_taxon(taxon.parentNode) }}</li>
-            <li class="active"><strong>{{taxon.name}}</strong></li>
+            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
+            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode) }}</li>
+            <li itemprop="itemListElement" class="active"><strong>{{taxon.name}}</strong></li>
                 {%elseif taxon.taxonNodeName == 'order' %}
                     {#<li>{{ link_to_taxon(taxon.parentNode.parentNode.parentNode) }}</li>#}
-            <li>{{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
-            <li>{{ link_to_taxon(taxon.parentNode) }}</li>
-            <li class="active"><strong>{{taxon.name}}</strong></li>
+            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
+            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode) }}</li>
+            <li itemprop="itemListElement" class="active"><strong>{{taxon.name}}</strong></li>
                 {%elseif taxon.taxonNodeName == 'class' %}
-            <li>{{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
-            <li>{{ link_to_taxon(taxon.parentNode) }}</li>
-            <li class="active"><strong>{{taxon.name}}</strong></li>
+            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
+            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode) }}</li>
+            <li itemprop="itemListElement" class="active"><strong>{{taxon.name}}</strong></li>
                 {%elseif taxon.taxonNodeName == 'phylum' %}
-            <li>{{ link_to_taxon(taxon.parentNode) }}</li>
-            <li class="active"><strong>{{taxon.name}}</strong></li>
+            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode) }}</li>
+            <li itemprop="itemListElement" class="active"><strong>{{taxon.name}}</strong></li>
                 {%elseif taxon.taxonNodeName == 'kingdom' %}
-            <li class="active"><strong>{{taxon.name}}</strong></li>
+            <li itemprop="itemListElement" class="active"><strong>{{taxon.name}}</strong></li>
                 {% endif %}
     </ol>
 {% endblock %}
@@ -130,14 +130,13 @@
                  </div>
              </div>#}
 
-
             <!-- species activity -->              
             <div class="col-lg-4">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>{{ "page.taxon.h5.taxon_activity"|trans }}</h5>
                     </div>
-                    <div class="ibox-content">{{ node|capitalize }} : {{ taxon.name }}
+                    <div class="ibox-content" itemprop="name">{{ node|capitalize }} : {{ taxon.name }}
                         <div>
                             {% if taxon.taxonNodeName == 'genus' %}
                                 {{ render(controller('SkaphandrusAppBundle:Common:skActivity', { 'parameters': { 'genus_id' : taxon.id },'limit':20 } )) }}
@@ -184,7 +183,6 @@
                         </div>
                     </div>
 
-
                     <div class="ibox-content">
                         <h1>{{ node|capitalize }} : {{ taxon.name }}</h1>
                         <div class="panel">
@@ -208,46 +206,48 @@
                                             <ul class="list-unstyled">
                                                 {% for vernacular in taxon.vernaculars %}
                                                     <li>{{ vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}</li>
-                                                    {% endfor %}
+                                                        {% if vernacular.locale == app.request.locale %}
+                                                        <meta itemprop="alternateName" content="{{ vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}" >
+                                                    {% endif %}
+                                                    {#<meta itemprop="alternateName" content="{{ vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}" >#}
+                                                {% endfor %}
                                             </ul>
                                         {% endif %}
 
                                         <h5>{{ "page.taxon.h5.taxonomic_structure"|trans }}</h5>
-                                        <ul class="list-unstyled">
+                                        <ul class="list-unstyled" itemscope itemtype="http://schema.org/ListItem">
                                             {% if taxon.taxonNodeName == 'genus' %}
-                                                <li>{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode.parentNode.parentNode) }}</li>
-                                                <li>{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode.parentNode) }}</li>
-                                                <li>{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode) }}</li>
-                                                <li>{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
-                                                <li>{{ "page.species.label.species_family"|trans }}: {{ link_to_taxon(taxon.parentNode) }}</li>
-                                                <li>{{ "page.species.label.species_genus"|trans }}: {{ link_to_taxon(taxon) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode.parentNode.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_family"|trans }}: {{ link_to_taxon(taxon.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_genus"|trans }}: {{ link_to_taxon(taxon) }}</li>
                                                 {%elseif taxon.taxonNodeName == 'family' %}
-                                                <li>{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode.parentNode) }}</li>
-                                                <li>{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode) }}</li>
-                                                <li>{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
-                                                <li>{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(taxon.parentNode) }}</li>
-                                                <li>{{ "page.species.label.species_family"|trans }}: {{ link_to_taxon(taxon) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(taxon.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_family"|trans }}: {{ link_to_taxon(taxon) }}</li>
                                                 {%elseif taxon.taxonNodeName == 'order' %}
-                                                <li>{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode) }}</li>
-                                                <li>{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
-                                                <li>{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(taxon.parentNode) }}</li>
-                                                <li>{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(taxon) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(taxon.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(taxon) }}</li>
                                                 {%elseif taxon.taxonNodeName == 'class' %}
-                                                <li>{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
-                                                <li>{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon.parentNode) }}</li>
-                                                <li>{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(taxon) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(taxon) }}</li>
                                                 {%elseif taxon.taxonNodeName == 'phylum' %}
-                                                <li>{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode) }}</li>
-                                                <li>{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon) }}</li>
                                                 {%elseif taxon.taxonNodeName == 'kingdom' %}
-                                                <li>{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon) }}</li>
                                                 {% endif %}
                                         </ul>
 
                                         <div id="jstree" style="text-align: left;"></div>
                                     </div>
-
-
 
                                     <div id="tab-2" class="tab-pane">
                                         <h3>{{ "page.taxon.h3.photos"|trans }}</h3>
@@ -268,13 +268,16 @@
                                             </thead>
                                             <tbody>
                                                 {% for p in photographers %}
-                                                    <tr>
-                                                        <td>{{ link_to_user(p.user) }}</td>
-                                                        <td>
-                                                            <a href="{{ path('photos', {'fosUser': p.user.id, (taxon.taxonNodeName) : taxon.id}) }}">{{ p.photo_count }}</a>
-                                                        </td>
-                                                    </tr>
-                                                {% endfor%}
+                                                <span itemscope itemtype="http://schema.org/Person">
+                                                    <meta itemprop="name" content="{{ p.user }}">
+                                                </span>
+                                                <tr>
+                                                    <td>{{ link_to_user(p.user) }}</td>
+                                                    <td>
+                                                        <a href="{{ path('photos', {'fosUser': p.user.id, (taxon.taxonNodeName) : taxon.id}) }}">{{ p.photo_count }}</a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor%}
                                             </tbody>
                                             <tfoot>
                                                 <tr>

@@ -50,39 +50,27 @@
     {{ photo.title }}
 {% endblock %}
 
-
 {% block heading_breadcrumbs %}
-    <ol class="breadcrumb">
-        <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
-        <li><a href="{{ path('photos') }}">{{ "breadcrumb.photos"|trans }}</a></li>
-        <li class="active"><strong>{{ photo.title }}</strong></li>
+    <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+        <li itemprop="itemListElement"><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
+        <li itemprop="itemListElement"><a href="{{ path('photos') }}">{{ "breadcrumb.photos"|trans }}</a></li>
+        <li itemprop="itemListElement" class="active"><strong>{{ photo.title }}</strong></li>
     </ol>
 {% endblock %}
-
 
 {% block heading_action %}
     <a href="{{ path('photo_admin_new') }}" class="btn btn-primary">{{ "form.photo.btn.add"|trans }}</a>
 {% endblock %}
 
-
-
-
-
-
 {% block body %}
 
-    <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="wrapper wrapper-content animated fadeInRight" itemscope itemtype="http://schema.org/Photograph">
         <div class="row">
             <div class="col col-lg-12" >
-                <img alt="{{photo.title}}" class="img-responsive child" src="{{ photo.getWebPath | imagine_filter('sk_downscale_800_600') }}" />
+                <img itemprop="image" alt="{{photo.title}}" class="img-responsive child" src="{{ photo.getWebPath | imagine_filter('sk_downscale_800_600') }}" />
                 <br/>
             </div>
         </div>
-
-
-
-
-
 
         <div class="row">
             <div class="col-lg-6">
@@ -91,36 +79,51 @@
                         <h5>{{ "page.photo.h5.photo_detail"|trans }}</h5>
                     </div>
                     <div class="ibox-content ">
-                        <h4><strong>{{photo.title}}</strong></h4>
+                        <h4 itemprop="name"><strong>{{photo.title}}</strong></h4>
 
                         <dl class="dl-horizontal">
-                            <dt>{{ "page.photo.h3.photographer"|trans }}: </dt><dd>{{ link_to_user(photo.fosuser) }}</dd>
-                            <dt>{{ "page.photo.label.taken_at"|trans }}:</dt> <dd>{{ photo.takenAt|date('Y-m-d H:i:s') }}</dd>
-                            <dt>{{ "page.photo.label.uploaded_at"|trans }}:</dt> <dd>  {{ photo.createdAt|date('Y-m-d H:i:s') }}</dd>
+                            <dt>{{ "page.photo.h3.photographer"|trans }}: </dt>
+                            <dd>
+                                <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                                    <meta itemprop="name" content="{{ photo.fosuser }}">
+                                    <meta itemprop="url" content="{{ url_to_user(photo.fosuser) }}">
+                                </span>
+                                {{ link_to_user(photo.fosuser) }}
+                            </dd>
+                            <dt>{{ "page.photo.label.taken_at"|trans }}:</dt> 
+                            <dd>
+                                <meta itemprop="datePublished" content="{{ photo.takenAt|date("Y-m-d") }}">
+                                {{ photo.takenAt|date('Y-m-d H:i:s') }}
+                            </dd>
+                            <dt>{{ "page.photo.label.uploaded_at"|trans }}:</dt> 
+                            <dd>
+                                <meta itemprop="dateCreated" content="{{ photo.createdAt|date("Y-m-d") }}">
+                                {{ photo.createdAt|date('Y-m-d H:i:s') }}
+                            </dd>
                             {% if photo.creative is not empty %}
-                                <dt>{{ "page.photo.label.licensed_under"|trans }}:</dt> <dd><a class="text-navy" href="#"> {{ photo.creative.name }}</a> </dd>
+                                <dt>{{ "page.photo.label.licensed_under"|trans }}:</dt> 
+                                <dd>
+                                    <meta itemprop="license" content="{{ photo.creative.name }}">
+                                    <a class="text-navy" href="#">{{ photo.creative.name }}</a> 
+                                </dd>
                             {% endif %}
                             {% if photo.model is not empty %}
-                                <dt>{{ "page.photo.label.camera"|trans }}:</dt> <dd> 	{{ photo.model.name }} </dd> 
+                                <dt>{{ "page.photo.label.camera"|trans }}:</dt> 
+                                <dd>{{ photo.model.name }}</dd> 
                             {% endif %}
                         </dl>
 
                         {% if photo.description is not empty %}
                             <h5>{{ "page.photo.h5.description"|trans }}</h5>
-                            <p>{{ photo.description }}</p>
+                            <p itemprop="description">{{ photo.description }}</p>
                         {% endif %}
-
-
 
                         {#{% if is_granted("IS_AUTHENTICATED_FULLY") %}#}
                         {% include 'SkaphandrusAppBundle:Comments:async.html.twig' with {'id': 'SkPhoto-' ~ photo.id } %}
                         {# {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': 'SkPhoto-' ~ photo.id} %}#}
                         {#{% endif %}#}
 
-                    </div>
-
-
-
+                    </div>  
                 </div>
             </div>
 
@@ -149,40 +152,24 @@
 
                     <div class="ibox-content ">
 
-
-
-
-
-
-                        {#                            <div class="row m-t-md">
-                                                        <div class="col-md-4">
-                                                            <h5><strong>{{photo.views}}</strong> {{ "page.photo.h5.views"|trans }}</h5>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <h5><strong>{{photo.countLikes}}</strong> {{ "page.photo.h5.likes"|trans }}</h5>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <h5><strong>{{photo.countComments}}</strong> {{ "page.photo.h5.comments"|trans }}</h5>
-                                                        </div>
-                                                    </div>  #}
-
-
-
-
-
-
-
-
-
-
-
+                        {#<div class="row m-t-md">
+                            <div class="col-md-4">
+                                <h5><strong>{{photo.views}}</strong> {{ "page.photo.h5.views"|trans }}</h5>
+                            </div>
+                            <div class="col-md-4">
+                                <h5><strong>{{photo.countLikes}}</strong> {{ "page.photo.h5.likes"|trans }}</h5>
+                            </div>
+                            <div class="col-md-4">
+                                <h5><strong>{{photo.countComments}}</strong> {{ "page.photo.h5.comments"|trans }}</h5>
+                            </div>
+                        </div>#}
 
                         {% if photo.keyword|length > 0 %}
                             <h3 class="tag-title">{{ "page.photo.h3.tags"|trans }}</h3>
                             <ul class="tag-list" style="padding: 0;">
                                 {% for keyword in photo.keyword %}
-                                    <li><a href="">{{ keyword.keyword }}</a></li>
-                                    {% endfor %}
+                                    <li itemprop="keywords"><a href="">{{ keyword.keyword }}</a></li>
+                                {% endfor %}
                             </ul>
                             <div class="clearfix"></div>
                         {% endif %}
@@ -247,6 +234,15 @@
 
                         {% if photo.spot is not empty %}
                             <h3>{{ "page.photo.h3.spot"|trans }}</h3>
+                            <span itemscope itemtype="http://schema.org/TouristAttraction ">
+                                <meta itemprop="name" content="{{ photo.spot }}">
+                            </span>
+                            <span itemscope itemtype="http://schema.org/City ">
+                                <meta itemprop="name" content="{{ photo.spot.location }}">
+                            </span>
+                            <span itemscope itemtype="http://schema.org/Country ">
+                                <meta itemprop="name" content="{{  photo.spot.location.region.country }}">
+                            </span>
                             <p>{{ link_to_spot(photo.spot)}}, {{ link_to_location(photo.spot.location)}}, {{ link_to_country(photo.spot.location.region.country)}}</p>
                         {% endif %}
 
@@ -261,11 +257,5 @@
         </div>
     </div><!-- end wrapper-->
 
-
-
-
-
-
-
-
 {% endblock %}
+
