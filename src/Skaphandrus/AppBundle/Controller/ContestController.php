@@ -108,6 +108,9 @@ class ContestController extends Controller {
 
         // Fetch needed entities
         $user = $this->get('security.token_storage')->getToken()->getUser();
+        
+        
+        
         $category = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')
                 ->findOneById($category_id);
         $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')

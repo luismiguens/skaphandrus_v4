@@ -65,7 +65,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                <a href="{{ url_to_contest_sponsors(contest) }}">
+                                    <a href="{{ url_to_contest_sponsors(contest) }}">
                                         {{ "page.contest.tab.sponsors"|trans }}
                                     </a>
                                 </li>
@@ -120,12 +120,33 @@
                                                 <tr>
                                                     <td>
                                                         {% if award.winnerFosUser %}
-                                                            <img class="img-rounded" src="{{ award.winnerFosUser.settings.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ award.winnerFosUser.name }}" title="{{ award.winnerFosUser.name }}">
-                                                            <h5>award.winnerFosUser.name</h5>
-                                                            
+                                                            {#    <img class="img-rounded" src="{{ award.winnerFosUser.settings.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ award.winnerFosUser.name }}" title="{{ award.winnerFosUser.name }}">
+                                                                #}
+                                                            <a href="{{ url_to_user(award.winnerFosUser) }}">
+                                                                <img alt="{{award.winnerFosUser.name}}" class="img-circle" src="{{ award.winnerFosUser.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
+                                                            </a>
+
+                                                            <a href="{{ url_to_user(award.winnerFosUser) }}">
+                                                                {{award.winnerFosUser.name}}
+                                                            </a>
+
+                                                            {#      
+                                                                  <h5>{{award.winnerFosUser.name}}</h5>#}
+
+
                                                         {%else%}    
-                                                            <img class="img-rounded" src="{{ award.winnerPhoto.fosUser.settings.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{award.winnerPhoto.fosUser.name}}" title="{{award.winnerPhoto.fosUser.name}}">
-                                                            <h5>{{award.winnerPhoto.fosUser.name}}</h5>
+                                                            {# <img class="img-rounded" src="{{ award.winnerPhoto.fosUser.settings.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{award.winnerPhoto.fosUser.name}}" title="{{award.winnerPhoto.fosUser.name}}">
+                                                             #}
+                                                            <a href="{{ url_to_user(award.winnerPhoto.fosUser) }}">
+                                                                <img alt="{{award.winnerPhoto.fosUser.name}}" class="img-circle" src="{{ award.winnerPhoto.fosUser.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
+                                                            </a>
+
+                                                            <a href="{{ url_to_user(award.winnerPhoto.fosUser) }}">
+                                                                {{award.winnerPhoto.fosUser.name}}
+                                                            </a>
+
+
+                                                            {#<h5>{{award.winnerPhoto.fosUser.name}}</h5>#}
                                                         {% endif %}
                                                     </td>
                                                     <td>
