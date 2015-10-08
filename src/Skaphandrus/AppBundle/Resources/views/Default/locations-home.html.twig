@@ -41,38 +41,41 @@
 
             $('.footable').footable();
 
-            var mapData = {                {% for c in countries %}
-                        "{{ c.name }}":{{ c.spotsCount }}{% if not loop.last %},{% endif %}                {% endfor %}
-                                };
-
-                                $('#world-map').vectorMap({
-                                    map: 'world_mill_en',
-                                    backgroundColor: "transparent",
-                                    regionStyle: {
-                                        initial: {
-                                            fill: '#e4e4e4',
-                                            "fill-opacity": 1,
-                                            stroke: 'none',
-                                            "stroke-width": 0,
-                                            "stroke-opacity": 0
-                                        }
-                                    },
-                                    series: {
-                                        regions: [{
-                                                values: mapData,
-                                                scale: ["#1ab394", "#22d6b1"],
-                                                normalizeFunction: 'polynomial'
-                                            }]
-                                    },
-                                    onRegionClick: function (event, code) {
+            var mapData = {
         {% for c in countries %}
-                                    if (code == "{{ c.name }}") {
-                                        window.location = "{{ url_to_country(c) }}";
-                                    }
+                "{{ c.name }}":{{ c.spotsCount }}
+            {% if not loop.last %}
+            ,            {% endif %}
         {% endfor %}
-                                }
-                            });
-                        });
+            };
+                    $('#world-map').vectorMap({
+            map: 'world_mill_en',
+                    backgroundColor: "transparent",
+                    regionStyle: {
+                    initial: {
+                    fill: '#e4e4e4',
+                            "fill-opacity": 1,
+                            stroke: 'none',
+                            "stroke-width": 0,
+                            "stroke-opacity": 0
+                    }
+                    },
+                    series: {
+                    regions: [{
+                    values: mapData,
+                            scale: ["#1ab394", "#22d6b1"],
+                            normalizeFunction: 'polynomial'
+                    }]
+                    },
+                    onRegionClick: function (event, code) {
+        {% for c in countries %}
+                        if (code == "{{ c.name }}") {
+                            window.location = "{{ url_to_country(c) }}";
+                        }
+        {% endfor %}
+                    }
+            });
+            });
     </script>
 {% endblock %}
 
@@ -122,11 +125,12 @@
                     </div>
 
                     <div class="ibox-content">
-                        <div id="world-map" style="height: 300px; margin-bottom: 25px;">
-                            <span itemscope itemtype="http://schema.org/Map">
-                                <meta itemprop="name" content="World Map">
-                            </span>
-                        </div>
+                        <span itemscope itemtype="http://schema.org/Map">
+                            <meta itemprop="name" content="World Map">
+                            <div id="world-map" style="height: 300px; margin-bottom: 25px;">
+                            </div>
+                        </span>
+
                         <input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
                         <table class="footable table" data-page-size="50" data-filter=#filter>
                             <thead>
@@ -136,21 +140,21 @@
                             </thead>
                             <tbody>
                                 {% for c in countries %}
-                                    <span itemscope itemtype="http://schema.org/Country">
-                                        <meta itemprop="name" content="{{ c }}">
-                                    </span>
-                                    <tr>
-                                        <td>{{ link_to_country(c) }}</td>
-                                        <td>{{ c.spotsCount }}</td>
-                                        <td>
-                                            {% if c.photosCount > 0 %}
-                                                <a href="{{ path('photos', {'country': c.id}) }}">{{ c.photosCount }}</a>
-                                            {% else %}
-                                                {{ c.photosCount }}
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
+                                <span itemscope itemtype="http://schema.org/Country">
+                                    <meta itemprop="name" content="{{ c }}">
+                                </span>
+                                <tr>
+                                    <td>{{ link_to_country(c) }}</td>
+                                    <td>{{ c.spotsCount }}</td>
+                                    <td>
+                                        {% if c.photosCount > 0 %}
+                                            <a href="{{ path('photos', {'country': c.id}) }}">{{ c.photosCount }}</a>
+                                        {% else %}
+                                            {{ c.photosCount }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
                             </tbody>
                             <tfoot>
                                 <tr>
