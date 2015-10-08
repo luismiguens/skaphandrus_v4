@@ -11,8 +11,39 @@ use Doctrine\ORM\EntityRepository;
  * repository methods below.
  */
 class SkPhotoContestRepository extends EntityRepository {
- 
+    
+    public function getPhotographers($contest_id) {
+                
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT distinct f.id as id, count(p.id) as num_photos
+                FROM fos_user as f
+                JOIN sk_photo as p
+                on f.id = p.fos_user_id
+                JOIN sk_photo_contest_category_photo as cat_pho
+                ON p.id = cat_pho.photo_id
+                JOIN sk_photo_contest_category as cat
+                ON cat_pho.category_id = cat.id
+                where cat.contest_id = " . $contest_id . " 
+                group by id";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+        
+        foreach ($values as $value) {
+            $user = $em->getRepository('SkaphandrusAppBundle:FosUser')->find($value['id']);
+            $user->setPhotosInContest($value['num_photos']);
+            $result[] = $user;
+        }
+  
+        return $result;
+    }
+
     public function findPhotographers($contest) {
+
         $categories = $contest->getCategories();
         $users = array();
 
@@ -58,14 +89,8 @@ class SkPhotoContestRepository extends EntityRepository {
         return $photos;
     }
     
-    
-    
+        
 //      public function findPhotosFromUserInContest($user_id, $contest_id) {
-//        
-//          
-//          
-//          
-//          
 //          
 //          $categories = $this->getEntityManager()->createQuery(
 //            'SELECT cat
@@ -94,7 +119,5 @@ class SkPhotoContestRepository extends EntityRepository {
 //
 //        return $photos;
 //    }
-    
-    
     
 }

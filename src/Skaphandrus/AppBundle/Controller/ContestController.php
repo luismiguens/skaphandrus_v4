@@ -14,8 +14,14 @@ class ContestController extends Controller {
         $contests = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
                 ->findBy(array('isVisible' => true), array('beginAt' => 'DESC'));
 
+        foreach ($contests as $contest) {
+            $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
+                ->getPhotographers($contest->getId());
+            $contest->setPhotographers($photographers);
+        }
+        
         return $this->render('SkaphandrusAppBundle:Contest:landing.html.twig', array(
-                    'contests' => $contests,
+                    'contests' => $contests
         ));
     }
 
@@ -143,19 +149,21 @@ class ContestController extends Controller {
 
         $contest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
                 ->findOneByName($name);
+        
+        $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
+                ->getPhotographers($contest->getId());
 
-
-        foreach ($contest->getPhotographers() as $fosUser) {
-            $photosInContest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-                    ->getPhotosInContest($contest->getId(), $fosUser->getId());
-
-            $fosUser->setPhotosInContest($photosInContest);
-        }
+//        foreach ($contest->getPhotographers() as $fosUser) {
+//            $photosInContest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
+//                    ->getPhotosInContest($contest->getId(), $fosUser->getId());
+//
+//            $fosUser->setPhotosInContest($photosInContest);
+//        }
 
         if ($contest) {
             return $this->render('SkaphandrusAppBundle:Contest:photographers.html.twig', array(
                         'contest' => $contest,
-//                'photographers' => $photographers,
+                        'photographers' => $photographers
             ));
         } else {
             throw $this->createNotFoundException('The contest "' . $name . '" does not exist.');
@@ -188,7 +196,7 @@ class ContestController extends Controller {
                 ->findOneByName($name);
 
         $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
-                ->findPhotographers($contest);
+                ->getPhotographers($contest->getId());
 
         $sponsors = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestSponsor')
                 ->findSponsorsByContest($contest);

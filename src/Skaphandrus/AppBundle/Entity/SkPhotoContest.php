@@ -511,19 +511,23 @@ class SkPhotoContest {
      */
     public function getPhotographers() {
 
-        $photographers = array();
-        $category = new SkPhotoContestCategory();
-        $photo = new SkPhoto();
-
-        foreach ($this->getCategories() as $category) {
-            foreach ($category->getPhoto() as $photo) {
-                $photographers[]= $photo->getFosUser();
-            }
-        }
+//        $photographers = array();
+//        $category = new SkPhotoContestCategory();
+//        $photo = new SkPhoto();
+//
+//        foreach ($this->getCategories() as $category) {
+//            foreach ($category->getPhoto() as $photo) {
+//                $photographers[]= $photo->getFosUser();
+//            }
+//        }
         
 //        $this->photographers=$photographers;    
-        $this->photographers = array_unique($photographers);
+//        $this->photographers = array_unique($photographers);
         return $this->photographers;
+    }
+    
+    public function setPhotographers($param) {
+        $this->photographers = $param;
     }
     
 

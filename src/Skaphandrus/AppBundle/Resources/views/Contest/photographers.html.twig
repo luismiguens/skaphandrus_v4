@@ -94,7 +94,7 @@
 
                                 {#<h2>{{ "page.contests_photographers.h3.photographers"|trans }}: {{ contest.name }}</h2>#}
 
-                                {% for p in contest.photographers %}
+                                {% for p in photographers %}
                                     <div class="col-md-6">
                                         <div class="contact-box">
                                             <a href="{{ url_to_user(p) }}">
@@ -106,7 +106,7 @@
                                                 </div>
                                                 <div class="col-sm-8">
                                                     <h3><strong>{{ p.name }}</strong></h3>
-                                                    <p><i class="fa fa-photo"></i> {{ p.photosInContest|length }} {{ "page.contest_photographers.label.number_photos"|trans }}</p>
+                                                    <p><i class="fa fa-photo"></i> {{ p.photosInContest }} {{ "page.contest_photographers.label.number_photos"|trans }}</p>
                                                     {#<address>
                                                         <strong>Twitter, Inc.</strong><br>
                                                         795 Folsom Ave, Suite 600<br>
@@ -119,6 +119,7 @@
                                         </div>
                                     </div>
                                 {% endfor %}
+                                
                             </div>
                         </div>
                     </div>
