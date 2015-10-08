@@ -27,10 +27,10 @@
 {% endblock %}
 
 {% block heading_breadcrumbs %}
-    <ol class="breadcrumb">
-        <li><a href="{{ path('index')}}">{{ "page.common.breadcrumb.homepage"|trans }}</a></li>
-        <li><a href="{{ path('modules')}}">{{ "page.modules.breadcrumb.modules"|trans }}</a></li>
-        <li class="active"><strong>{{ module.name }}</strong></li>
+    <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+        <li itemprop="itemListElement"><a href="{{ path('index')}}">{{ "page.common.breadcrumb.homepage"|trans }}</a></li>
+        <li itemprop="itemListElement"><a href="{{ path('modules')}}">{{ "page.modules.breadcrumb.modules"|trans }}</a></li>
+        <li itemprop="itemListElement" class="active"><strong>{{ module.name }}</strong></li>
     </ol>
 {% endblock %}
 
@@ -151,10 +151,7 @@
     
     </script>
 
-
-
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
-
 
     <script>
         $(function(){
@@ -167,9 +164,7 @@
         });
     </script>
 
-
 {% endblock %}
-
 
 {% block body %}
     <div class="wrapper wrapper-content">
@@ -294,39 +289,14 @@
                             Back to Criterias
                         </button>
 
-
-
                     </div>
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             </div><!-- end tab 2-->
             <!-- </div> end main tabs -->
         </div> <!-- end row -->
 
-
-
         <style>
-
-
-
-
-
 
             input[type=checkbox] {
                 display:none;
@@ -369,7 +339,6 @@
 
 
         </style>
-
 
     </div><!-- end wrapper -->
 

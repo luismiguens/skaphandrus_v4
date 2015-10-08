@@ -2,7 +2,7 @@
 
 {% block page_title %}{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.meta_tag.title{% endtrans %}{% endblock %}
 
-{% block page_description %}{{ location.description [0:160]}}{% endblock %}
+{% block page_description %}{{location.description[0:160]}}{% endblock %}
 
 {% set keywords = location.region.country %}
 {% set keywords = keywords~', '~location.name %}

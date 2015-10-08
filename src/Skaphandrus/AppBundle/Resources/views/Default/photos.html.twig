@@ -2,35 +2,35 @@
 
 {#-----title-----#}
 {% if params.species is defined %}
-    {% set title %}{% trans with {'%type%': "page.photos.keyword.species"|trans, '%value%': pagination[0].species.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
+{% set title %}{% trans with {'%type%': "page.photos.keyword.species"|trans, '%value%': pagination[0].species.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
 {% elseif params.genus is defined %}
-    {% set title %}{% trans with {'%type%': "page.photos.keyword.genus"|trans, '%value%': pagination[0].species.genus.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}    
+{% set title %}{% trans with {'%type%': "page.photos.keyword.genus"|trans, '%value%': pagination[0].species.genus.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}    
 {% elseif params.family is defined %}
-    {% set title %}{% trans with {'%type%': "page.photos.keyword.family"|trans, '%value%': pagination[0].species.genus.family.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
+{% set title %}{% trans with {'%type%': "page.photos.keyword.family"|trans, '%value%': pagination[0].species.genus.family.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
 {% elseif params.order is defined %}
-    {% set title %}{% trans with {'%type%': "page.photos.keyword.order"|trans, '%value%': pagination[0].species.genus.family.order.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
+{% set title %}{% trans with {'%type%': "page.photos.keyword.order"|trans, '%value%': pagination[0].species.genus.family.order.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
 {% elseif params.class is defined %}
-    {% set title %}{% trans with {'%type%': "page.photos.keyword.class"|trans, '%value%': pagination[0].species.genus.family.order.class.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
+{% set title %}{% trans with {'%type%': "page.photos.keyword.class"|trans, '%value%': pagination[0].species.genus.family.order.class.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
 {% elseif params.phylum is defined %}
-    {% set title %}{% trans with {'%type%': "page.photos.keyword.phylum"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
+{% set title %}{% trans with {'%type%': "page.photos.keyword.phylum"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
 {% elseif params.kingdom is defined %}
-    {% set title %}{% trans with {'%type%': "page.photos.keyword.kingdom"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.kingdom.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
+{% set title %}{% trans with {'%type%': "page.photos.keyword.kingdom"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.kingdom.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
 
-    {#-----spots-----#}
+{#-----spots-----#}
 {% elseif params.spot is defined %}
-    {% set title %}{% trans with {'%type%': "page.photos.keyword.spot"|trans, '%value%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
+{% set title %}{% trans with {'%type%': "page.photos.keyword.spot"|trans, '%value%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
 {% elseif params.location is defined %}
-    {% set title %}{% trans with {'%type%': "page.photos.keyword.location"|trans, '%value%': pagination[0].spot.location.name~", "~pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.title {% endtrans %}{% endset %}    
+{% set title %}{% trans with {'%type%': "page.photos.keyword.location"|trans, '%value%': pagination[0].spot.location.name~", "~pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.title {% endtrans %}{% endset %}    
 {% elseif params.region is defined %}
-    {% set title %}{% trans with {'%type%': "page.photos.keyword.region"|trans, '%value%': pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.title {% endtrans %}{% endset %}    
+{% set title %}{% trans with {'%type%': "page.photos.keyword.region"|trans, '%value%': pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.title {% endtrans %}{% endset %}    
 {% elseif params.country is defined %}
-    {% set title %}{% trans with {'%type%': "page.photos.keyword.country"|trans, '%value%': pagination[0].spot.location.region.country} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
+{% set title %}{% trans with {'%type%': "page.photos.keyword.country"|trans, '%value%': pagination[0].spot.location.region.country} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
 
-    {#-----fosuser-----#}
+{#-----fosuser-----#}
 {% elseif params.fosUser is defined %}
-    {% set title %}{% trans with {'%type%': "page.photos.keyword.fosUser"|trans, '%value%': pagination[0].fosUser} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
+{% set title %}{% trans with {'%type%': "page.photos.keyword.fosUser"|trans, '%value%': pagination[0].fosUser} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
 
-    {#-----someting else-----#}
+{#-----someting else-----#}
 {% else %}
     {% set title = ("page.photos_something_else.meta_tag.title"|trans) %}
 {% endif %}
@@ -39,35 +39,35 @@
 
 {#-----description-----#}
 {% if params.species is defined %}
-    {% set description %}{% trans with {'%type%': "page.photos.keyword.species"|trans, '%value%': pagination[0].species.name} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
+{% set description %}{% trans with {'%type%': "page.photos.keyword.species"|trans, '%value%': pagination[0].species.name} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
 {% elseif params.genus is defined %}
-    {% set description %}{% trans with {'%type%': "page.photos.keyword.genus"|trans, '%value%': pagination[0].species.genus.name} %} page.photos.meta_tag.description {% endtrans %}{% endset %}    
+{% set description %}{% trans with {'%type%': "page.photos.keyword.genus"|trans, '%value%': pagination[0].species.genus.name} %} page.photos.meta_tag.description {% endtrans %}{% endset %}    
 {% elseif params.family is defined %}
-    {% set description %}{% trans with {'%type%': "page.photos.keyword.family"|trans, '%value%': pagination[0].species.genus.family.name} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
+{% set description %}{% trans with {'%type%': "page.photos.keyword.family"|trans, '%value%': pagination[0].species.genus.family.name} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
 {% elseif params.order is defined %}
-    {% set description %}{% trans with {'%type%': "page.photos.keyword.order"|trans, '%value%': pagination[0].species.genus.family.order.name} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
+{% set description %}{% trans with {'%type%': "page.photos.keyword.order"|trans, '%value%': pagination[0].species.genus.family.order.name} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
 {% elseif params.class is defined %}
-    {% set description %}{% trans with {'%type%': "page.photos.keyword.class"|trans, '%value%': pagination[0].species.genus.family.order.class.name} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
+{% set description %}{% trans with {'%type%': "page.photos.keyword.class"|trans, '%value%': pagination[0].species.genus.family.order.class.name} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
 {% elseif params.phylum is defined %}
-    {% set description %}{% trans with {'%type%': "page.photos.keyword.phylum"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.name} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
+{% set description %}{% trans with {'%type%': "page.photos.keyword.phylum"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.name} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
 {% elseif params.kingdom is defined %}
-    {% set description %}{% trans with {'%type%': "page.photos.keyword.kingdom"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.kingdom.name} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
+{% set description %}{% trans with {'%type%': "page.photos.keyword.kingdom"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.kingdom.name} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
 
-    {#-----spots-----#}
+{#-----spots-----#}
 {% elseif params.spot is defined %}
-    {% set description %}{% trans with {'%type%': "page.photos.keyword.spot"|trans, '%value%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.description{% endtrans %}{% endset %}
+{% set description %}{% trans with {'%type%': "page.photos.keyword.spot"|trans, '%value%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.description{% endtrans %}{% endset %}
 {% elseif params.location is defined %}
-    {% set description %}{% trans with {'%type%': "page.photos.keyword.location"|trans, '%value%': pagination[0].spot.location.name~", "~pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.description {% endtrans %}{% endset %}    
+{% set description %}{% trans with {'%type%': "page.photos.keyword.location"|trans, '%value%': pagination[0].spot.location.name~", "~pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.description {% endtrans %}{% endset %}    
 {% elseif params.region is defined %}
-    {% set description %}{% trans with {'%type%': "page.photos.keyword.region"|trans, '%value%': pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.description {% endtrans %}{% endset %}    
+{% set description %}{% trans with {'%type%': "page.photos.keyword.region"|trans, '%value%': pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.description {% endtrans %}{% endset %}    
 {% elseif params.country is defined %}
-    {% set description %}{% trans with {'%type%': "page.photos.keyword.country"|trans, '%value%': pagination[0].spot.location.region.country} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
+{% set description %}{% trans with {'%type%': "page.photos.keyword.country"|trans, '%value%': pagination[0].spot.location.region.country} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
 
-    {#-----fosuser-----#}
+{#-----fosuser-----#}
 {% elseif params.fosUser is defined %}
-    {% set description %}{% trans with {'%type%': "page.photos.keyword.fosUser"|trans, '%value%': pagination[0].fosUser} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
+{% set description %}{% trans with {'%type%': "page.photos.keyword.fosUser"|trans, '%value%': pagination[0].fosUser} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
 
-    {#-----someting else-----#}
+{#-----someting else-----#}
 {% else %}
     {% set description = ("page.photos_something_else.meta_tag.description"|trans) %}
 {% endif %}
@@ -238,97 +238,87 @@
 {% endblock %}
 
 {% block heading_breadcrumbs %}
-    <ol class="breadcrumb">
-        <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
+    <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+        <li itemprop="itemListElement"><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
             {% if params.species is defined %}
 
-            <li><a href="{{ url_to_photos( {'order': pagination[0].species.genus.family.order.id}) }}">{{pagination[0].species.genus.family.order.name}}</a></li>
-            <li><a href="{{ url_to_photos( {'family': pagination[0].species.genus.family.id}) }}">{{pagination[0].species.genus.family.name}}</a></li>
-            <li><a href="{{ url_to_photos( {'genus': pagination[0].species.genus.id}) }}">{{pagination[0].species.genus.name}}</a></li>
-            <li class="active"><strong>{{ pagination[0].species.name}} </strong></li>
+            <li itemprop="itemListElement"><a href="{{ url_to_photos( {'order': pagination[0].species.genus.family.order.id}) }}">{{pagination[0].species.genus.family.order.name}}</a></li>
+            <li itemprop="itemListElement"><a href="{{ url_to_photos( {'family': pagination[0].species.genus.family.id}) }}">{{pagination[0].species.genus.family.name}}</a></li>
+            <li itemprop="itemListElement"><a href="{{ url_to_photos( {'genus': pagination[0].species.genus.id}) }}">{{pagination[0].species.genus.name}}</a></li>
+            <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].species.name}} </strong></li>
 
         {% elseif params.genus is defined %}
 
-            <li><a href="{{ url_to_photos( {'class': pagination[0].species.genus.family.order.class.id}) }}">{{pagination[0].species.genus.family.order.class.name}}</a></li>
-            <li><a href="{{ url_to_photos( {'order': pagination[0].species.genus.family.order.id}) }}">{{pagination[0].species.genus.family.order.name}}</a></li>
-            <li><a href="{{ url_to_photos( {'family': pagination[0].species.genus.family.id}) }}">{{pagination[0].species.genus.family.name}}</a></li>
-            <li class="active"><strong>{{ pagination[0].species.genus.name}} </strong></li>
+            <li itemprop="itemListElement"><a href="{{ url_to_photos( {'class': pagination[0].species.genus.family.order.class.id}) }}">{{pagination[0].species.genus.family.order.class.name}}</a></li>
+            <li itemprop="itemListElement"><a href="{{ url_to_photos( {'order': pagination[0].species.genus.family.order.id}) }}">{{pagination[0].species.genus.family.order.name}}</a></li>
+            <li itemprop="itemListElement"><a href="{{ url_to_photos( {'family': pagination[0].species.genus.family.id}) }}">{{pagination[0].species.genus.family.name}}</a></li>
+            <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].species.genus.name}} </strong></li>
 
         {% elseif params.family is defined %}
 
-            <li><a href="{{ url_to_photos( {'phylum': pagination[0].species.genus.family.order.class.phylum.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.name}}</a></li>
-            <li><a href="{{ url_to_photos( {'class': pagination[0].species.genus.family.order.class.id}) }}">{{pagination[0].species.genus.family.order.class.name}}</a></li>
-            <li><a href="{{ url_to_photos( {'order': pagination[0].species.genus.family.order.id}) }}">{{pagination[0].species.genus.family.order.name}}</a></li>
-            <li class="active"><strong>{{ pagination[0].species.genus.family.name}} </strong></li>
+            <li itemprop="itemListElement"><a href="{{ url_to_photos( {'phylum': pagination[0].species.genus.family.order.class.phylum.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.name}}</a></li>
+            <li itemprop="itemListElement"><a href="{{ url_to_photos( {'class': pagination[0].species.genus.family.order.class.id}) }}">{{pagination[0].species.genus.family.order.class.name}}</a></li>
+            <li itemprop="itemListElement"><a href="{{ url_to_photos( {'order': pagination[0].species.genus.family.order.id}) }}">{{pagination[0].species.genus.family.order.name}}</a></li>
+            <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].species.genus.family.name}} </strong></li>
 
         {% elseif params.order is defined %}
 
-            <li><a href="{{ url_to_photos( {'kingdom': pagination[0].species.genus.family.order.class.phylum.kingdom.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}</a></li>
-            <li><a href="{{ url_to_photos( {'phylum': pagination[0].species.genus.family.order.class.phylum.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.name}}</a></li>
-            <li><a href="{{ url_to_photos( {'class': pagination[0].species.genus.family.order.class.id}) }}">{{pagination[0].species.genus.family.order.class.name}}</a></li>
-            <li class="active"><strong>{{ pagination[0].species.genus.family.order.name}} </strong></li>
+            <li itemprop="itemListElement"><a href="{{ url_to_photos( {'kingdom': pagination[0].species.genus.family.order.class.phylum.kingdom.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}</a></li>
+            <li itemprop="itemListElement"><a href="{{ url_to_photos( {'phylum': pagination[0].species.genus.family.order.class.phylum.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.name}}</a></li>
+            <li itemprop="itemListElement"><a href="{{ url_to_photos( {'class': pagination[0].species.genus.family.order.class.id}) }}">{{pagination[0].species.genus.family.order.class.name}}</a></li>
+            <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].species.genus.family.order.name}} </strong></li>
 
         {% elseif params.class is defined %}
 
-            <li><a href="{{ url_to_photos( {'kingdom': pagination[0].species.genus.family.order.class.phylum.kingdom.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}</a></li>
-            <li><a href="{{ url_to_photos( {'phylum': pagination[0].species.genus.family.order.class.phylum.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.name}}</a></li>
-            <li class="active"><strong>{{ pagination[0].species.genus.family.order.class.name}} </strong></li>
+            <li itemprop="itemListElement"><a href="{{ url_to_photos( {'kingdom': pagination[0].species.genus.family.order.class.phylum.kingdom.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}</a></li>
+            <li itemprop="itemListElement"><a href="{{ url_to_photos( {'phylum': pagination[0].species.genus.family.order.class.phylum.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.name}}</a></li>
+            <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].species.genus.family.order.class.name}} </strong></li>
 
         {% elseif params.phylum is defined %}
 
-            <li><a href="{{ url_to_photos( {'kingdom': pagination[0].species.genus.family.order.class.phylum.kingdom.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}</a></li>
-            <li class="active"><strong>{{ pagination[0].species.genus.family.order.class.phylum.name}} </strong></li>
+            <li itemprop="itemListElement"><a href="{{ url_to_photos( {'kingdom': pagination[0].species.genus.family.order.class.phylum.kingdom.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}</a></li>
+            <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].species.genus.family.order.class.phylum.name}} </strong></li>
 
         {% elseif params.kingdom is defined %}
 
-            <li class="active"><strong>{{ pagination[0].species.genus.family.order.class.phylum.kingdom.name}} </strong></li>
-
+            <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].species.genus.family.order.class.phylum.kingdom.name}} </strong></li>
 
             <!-- spots-->
         {% elseif params.spot is defined %}
 
-            <li><a href="{{ url_to_photos( {'country': pagination[0].spot.location.region.country.id}) }}">{{pagination[0].spot.location.region.country}}</a></li>
-            <li><a href="{{ url_to_photos( {'region': pagination[0].spot.location.region.id}) }}">{{pagination[0].spot.location.region.name}}</a></li>
-            <li><a href="{{ url_to_photos( {'location': pagination[0].spot.location.id}) }}">{{pagination[0].spot.location.name}}</a></li>
-            <li class="active"><strong>{{ pagination[0].spot.name}} </strong></li>
+            <li itemprop="itemListElement"><a href="{{ url_to_photos( {'country': pagination[0].spot.location.region.country.id}) }}">{{pagination[0].spot.location.region.country}}</a></li>
+            <li itemprop="itemListElement"><a href="{{ url_to_photos( {'region': pagination[0].spot.location.region.id}) }}">{{pagination[0].spot.location.region.name}}</a></li>
+            <li itemprop="itemListElement"><a href="{{ url_to_photos( {'location': pagination[0].spot.location.id}) }}">{{pagination[0].spot.location.name}}</a></li>
+            <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].spot.name}} </strong></li>
 
         {% elseif params.location is defined %}
 
-            <li><a href="{{ url_to_photos( {'country': pagination[0].spot.location.region.country.id}) }}">{{pagination[0].spot.location.region.country}}</a></li>
-            <li><a href="{{ url_to_photos( {'region': pagination[0].spot.location.region.id}) }}">{{pagination[0].spot.location.region.name}}</a></li>
-            <li class="active"><strong>{{ pagination[0].spot.location.name}} </strong></li>
+            <li itemprop="itemListElement"><a href="{{ url_to_photos( {'country': pagination[0].spot.location.region.country.id}) }}">{{pagination[0].spot.location.region.country}}</a></li>
+            <li itemprop="itemListElement"><a href="{{ url_to_photos( {'region': pagination[0].spot.location.region.id}) }}">{{pagination[0].spot.location.region.name}}</a></li>
+            <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].spot.location.name}} </strong></li>
 
         {% elseif params.region is defined %}
 
-            <li><a href="{{ url_to_photos( {'country': pagination[0].spot.location.region.country.id}) }}">{{pagination[0].spot.location.region.country}}</a></li>
-            <li class="active"><strong>{{ pagination[0].spot.location.region.name}} </strong></li>
+            <li itemprop="itemListElement"><a href="{{ url_to_photos( {'country': pagination[0].spot.location.region.country.id}) }}">{{pagination[0].spot.location.region.country}}</a></li>
+            <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].spot.location.region.name}} </strong></li>
 
         {% elseif params.country is defined %}
-            <li class="active"><strong>{{ pagination[0].spot.location.region.country}} </strong></li>
-
+            <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].spot.location.region.country}} </strong></li>
 
             <!-- fosUser -->
         {% elseif params.fosUser is defined %}
 
-            <li class="active"><strong>{{ pagination[0].fosUser}} </strong></li>
-
-
-
+            <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].fosUser}} </strong></li>
 
         {% else %}
-            <li class="active"><strong>{{ "breadcrumb.photos"|trans }}  </strong></li>
+            <li itemprop="itemListElement" class="active"><strong>{{ "breadcrumb.photos"|trans }}  </strong></li>
             {% endif %}
     </ol>
 {% endblock %}
 
-
-
-
 {% block heading_action %}
     <a href="{{ path('photo_admin_new') }}" class="btn btn-primary">{{ "form.photo.btn.add"|trans }}</a>
 {% endblock %}
-
-
 
 {% block javascripts %}
     {{ parent() }}
@@ -351,30 +341,38 @@
 
 
 {% block body %}
-    <div class="wrapper wrapper-content">
+    <div class="wrapper wrapper-content" itemscope itemtype="http://schema.org/ImageGallery">
         <h2>{{ "page.photos.h2.photos"|trans }}</h2>
         <div class="row grid">
             {% for photo in pagination %}
-
                 <div class="col-lg-4 grid-item">
                     <div class="ibox float-e-margins">
                         <!--<div class="ibox-title"><h5>{{photo.title}}</h5></div>-->
-                        <div>
+                        <div itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
                             <div class="ibox-content ibox-content no-padding border-left-right">
+                                <meta itemprop="name" content="{{photo.title}}">
                                 <a href="{{ url_to_photo(photo) }}" title="{{ photo.title }}">
-                                    <img alt="image" class="img-responsive" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />
+                                    <img itemprop="image" alt="image" class="img-responsive" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />
                                 </a>
                             </div>
                             <div class="ibox-content profile-content">
                                 <h4><strong>{{ photo.title }}</strong></h4>
                                 <ul class="list-unstyled">
-                                    <li>{{ "page.photos.label.username"|trans }}: <a href="{{ url_to_user(photo.fosUser) }}">{{ photo.fosUser.name }}</a></li>
-                                        {% if photo.spot is not null %}
-                                        <li>{{ "page.photos.label.spot"|trans }}: <a href="{{ url_to_spot(photo.spot) }}">{{ photo.spot.name }}</a></li>
-                                        {% endif %}
-                                        {% if photo.species is not null %}
-                                        <li>{{ "page.photos.label.species"|trans }}: <a href="{{ url_to_species(photo.species) }}">{{ photo.species.name }}</a></li>
-                                        {% endif %}
+                                    <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                                        <meta itemprop="name" content="{{ photo.fosUser.name }}">
+                                        {{ "page.photos.label.username"|trans }}: <a href="{{ url_to_user(photo.fosUser) }}">{{ photo.fosUser.name }}</a>
+                                    </li>
+                                    {% if photo.spot is not null %}
+                                        <li itemprop="contentLocation" itemscope itemtype="http://schema.org/TouristAttraction">
+                                            <meta itemprop="name" content="{{ photo.spot.name }}">
+                                            {{ "page.photos.label.spot"|trans }}: <a href="{{ url_to_spot(photo.spot) }}">{{ photo.spot.name }}</a>
+                                        </li>
+                                    {% endif %}
+                                    {% if photo.species is not null %}
+                                        <li>
+                                            {{ "page.photos.label.species"|trans }}: <a href="{{ url_to_species(photo.species) }}">{{ photo.species.name }}</a>
+                                        </li>
+                                    {% endif %}
                                 </ul>
                             </div>
                         </div>
@@ -387,8 +385,6 @@
         <div class="navigation">
             {{ knp_pagination_render(pagination) }}
         </div>
-
-
 
     </div>
 {% endblock %}
