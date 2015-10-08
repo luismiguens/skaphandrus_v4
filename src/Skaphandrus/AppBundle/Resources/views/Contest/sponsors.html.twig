@@ -102,7 +102,8 @@
                                         {% for sponsor in sponsors %}
                                             <tr>
                                                 <td>
-                                                    {% if sponsor.getWebPath %}
+                                                    {% if sponsor.image %}
+                                                        
                                                     <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
                                                     {% endif %}
                                                 </td>

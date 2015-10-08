@@ -266,6 +266,14 @@ liip_imagine:
         sk_widen_240:
             filters:
                 relative_resize: { widen: 240 }
+        
+        #galeria de fotografias das categorias dos concursos
+        sk_widen_265:
+            filters:
+                relative_resize: { widen: 265 }
+                
+                
+        #galeria de fotografias        
         sk_widen_400:
             filters:
                 relative_resize: { widen: 400 } 
