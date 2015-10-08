@@ -136,7 +136,7 @@
                     <div class="ibox-title">
                         <h5>{{ "page.taxon.h5.taxon_activity"|trans }}</h5>
                     </div>
-                    <div class="ibox-content" itemprop="name">{{ node|capitalize }} : {{ taxon.name }}
+                    <div class="ibox-content" itemprop="name" content="{{ node|capitalize }}: {{ taxon.name }}">{{ node|capitalize }} : {{ taxon.name }}
                         <div>
                             {% if taxon.taxonNodeName == 'genus' %}
                                 {{ render(controller('SkaphandrusAppBundle:Common:skActivity', { 'parameters': { 'genus_id' : taxon.id },'limit':20 } )) }}

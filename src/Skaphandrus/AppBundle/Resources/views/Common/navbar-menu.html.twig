@@ -1,9 +1,10 @@
 <nav class="navbar navbar-inverse navbar-static-top {% if color is defined %}{{ color }}{% endif %}" role="navigation" style="margin-bottom: 0">
     <div class="navbar-header">
         <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-        <form role="search" class="navbar-form-custom" action="{{ path('search') }}">
+        <form role="search" class="navbar-form-custom" action="{{ path('search') }}" {#itemprop="potentialAction" itemscope itemtype="http://schema.org/SearchAction"#}>
             <div class="form-group">
-                <input type="text" placeholder="{{ "pages.common.label.search_something"|trans }}" class="form-control" name="string" id="string" minlength="3">
+                {#                <meta itemprop="target" content="http://www.skaphandrus.com/search?q={string}"/>#}
+                <input {#itemprop="query-input"#} type="text" placeholder="{{ "pages.common.label.search_something"|trans }}" class="form-control" name="string" id="string" minlength="3">
             </div>
         </form>
 
@@ -11,20 +12,19 @@
             .navbar-top-links li:hover{
                 background-color: white;
             }
-        </style> 
+        </style>    
 
-
-        <ul class="nav navbar-top-links navbar-right">
-            <li><a href="{{path('index') }}">{{ "navbar.menu.label.home"|trans }}</a></li>
-            <li><a href="{{path('modules')}}">{{"navbar.menu.label.identification"|trans}}</a></li>
-            <li><a href="{{path('contests_landing_page')}}">{{"navbar.menu.label.uw_contests"|trans}}</a></li>
+        <ul class="nav navbar-top-links navbar-right" itemscope itemtype="http://schema.org/SiteNavigationElement">
+            <li itemprop="name" content="{{ "navbar.menu.label.home"|trans }}"><a itemprop="url" content="{{url('index') }}" href="{{path('index') }}">{{ "navbar.menu.label.home"|trans }}</a></li>
+            <li itemprop="name" content="{{ "navbar.menu.label.identification"|trans }}"><a itemprop="url" content="{{url('modules') }}" href="{{path('modules')}}">{{"navbar.menu.label.identification"|trans}}</a></li>
+            <li itemprop="name" content="{{ "navbar.menu.label.uw_contests"|trans }}"><a itemprop="url" content="{{url('contests_landing_page') }}" href="{{path('contests_landing_page')}}">{{"navbar.menu.label.uw_contests"|trans}}</a></li>
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{"navbar.menu.label.contents"|trans}} <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="{{path('locations_home')}}">{{"navbar.menu.label.world_map"|trans}} </a></li>
-                    <li><a href="{{path('taxonomy')}}">{{"navbar.menu.label.taxonomy"|trans}} </a></li>
-                    <li><a href="{{path('photos')}}">{{"navbar.menu.label.photos"|trans}} </a></li>
-                    <li><a href="#">{{"navbar.menu.label.users"|trans}} </a></li>
+                    <li itemprop="name" content="{{ "navbar.menu.label.world_map"|trans }}"><a itemprop="url" content="{{url('locations_home') }}" href="{{path('locations_home')}}">{{"navbar.menu.label.world_map"|trans}} </a></li>
+                    <li itemprop="name" content="{{ "navbar.menu.label.taxonomy"|trans }}"><a itemprop="url" content="{{url('taxonomy') }}" href="{{path('taxonomy')}}">{{"navbar.menu.label.taxonomy"|trans}} </a></li>
+                    <li itemprop="name" content="{{ "navbar.menu.label.photos"|trans }}"><a itemprop="url" content="{{url('photos') }}" href="{{path('photos')}}">{{"navbar.menu.label.photos"|trans}} </a></li>
+                    <li itemprop="name" content="{{ "navbar.menu.label.users"|trans }}"><a itemprop="url" content="#" href="#">{{"navbar.menu.label.users"|trans}} </a></li>
                 </ul>
             </li>
         </ul>
@@ -34,8 +34,8 @@
 
         {% if is_granted("IS_AUTHENTICATED_FULLY") %}
             <li>
-                 <span class="m-r-sm text-muted welcome-message">{{ "pages.common.label.welcome_skaphandrus"|trans }}</span>
-             </li>
+                <span class="m-r-sm text-muted welcome-message">{{ "pages.common.label.welcome_skaphandrus"|trans }}</span>
+            </li>
 
             <!-- begin messages dropdown -->
             {{ render(controller('SkaphandrusAppBundle:Common:skMessages')) }}
@@ -45,9 +45,9 @@
             {{ render(controller('SkaphandrusAppBundle:Common:skNotifications')) }}
             <!-- end notifications dropdown -->
 
-{#            <li>
-                <span class="m-r-sm text-muted welcome-message">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span>
-            </li>#}
+            {#            <li>
+                            <span class="m-r-sm text-muted welcome-message">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span>
+                        </li>#}
             <li>
                 <a href="{{ path('fos_user_security_logout') }}">
                     <i class="fa fa-sign-out"></i> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}

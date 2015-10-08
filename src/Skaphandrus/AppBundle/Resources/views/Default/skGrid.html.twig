@@ -9,7 +9,7 @@
                 <meta itemprop="url" content="{{ url_to_user(photo.fosUser) }}">
             </span>
             {% if photo.spot is not empty %}
-                <span itemprop="contentLocation" itemscope itemtype="http://schema.org/Place">
+                <span itemprop="contentLocation" itemscope itemtype="http://schema.org/TouristAttraction">
                     <meta itemprop="name" content="{{ photo.spot }}, {{ photo.spot.location }}">
                 </span>
             {% endif %}
