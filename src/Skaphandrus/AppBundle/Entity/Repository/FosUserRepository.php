@@ -5,6 +5,7 @@ namespace Skaphandrus\AppBundle\Entity\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\DBAL\DriverManager;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * SkPhotoRepository
@@ -54,10 +55,6 @@ class FosUserRepository extends EntityRepository {
             $qb->join('r.country', 'c', 'WITH', 'r.country = ?6');
             $qb->setParameter(6, $params['country']);
         }
-
-
-
-
 
         //species, genus, families, orders, classes, kingdoms
         if (array_key_exists('species', $params)) {
@@ -139,11 +136,10 @@ class FosUserRepository extends EntityRepository {
 //        
 
         $query = $this->getEntityManager()
-                ->createQuery(
-                        'SELECT u as user, COUNT(photo.id) as photo_count
+                        ->createQuery(
+                                'SELECT u as user, COUNT(photo.id) as photosInUser
                 FROM SkaphandrusAppBundle:FosUser u
-                JOIN SkaphandrusAppBundle:SkPhoto photo
-                    WITH u.id = IDENTITY(photo.fosUser)
+                JOIN SkaphandrusAppBundle:SkPhoto photo WITH u.id = IDENTITY(photo.fosUser)
                 JOIN photo.species s
                 JOIN s.genus g
                 JOIN g.family f
@@ -153,11 +149,9 @@ class FosUserRepository extends EntityRepository {
                 JOIN p.kingdom k
                 WHERE ' . substr($taxon_name, 0, 1) . '.id = :taxon_id 
                 GROUP BY u.id
-                ORDER BY photo_count DESC'
-                )->setParameter('taxon_id', $taxon_id)
+                ORDER BY photosInUser DESC'
+                        )->setParameter('taxon_id', $taxon_id)
                 ->setMaxResults($limit);
-
-
 //        dump($query->getDQL());
         try {
             return $query->getResult();
@@ -165,13 +159,11 @@ class FosUserRepository extends EntityRepository {
             return null;
         }
     }
-    
+
     public function getPhotosInContest($contest_id, $user_id) {
-        
 
         $queryBuilder = $this->getEntityManager()->createQueryBuilder();
-        
-        
+
 //        $queryBuilder
 //            ->select('pho')
 //            ->from('SkaphandrusAppBundle:SkPhotoContest', 'con')
@@ -180,31 +172,272 @@ class FosUserRepository extends EntityRepository {
 //            ->where( 'pho.fos_user_id :user_id')
 //            ->andWhere('con.id :contest_id')
 //            ->setParameter('user_id',  $user_id)
-//            ->setParameter('contest_id',  $contest_id);
-        
+//            ->setParameter('contest_id',  $contest_id);    
 //        
 //        $qb->select('u')
 //                ->from('SkaphandrusAppBundle:FosUser', 'u');
 //        $qb->leftJoin('u.photos', 'p', 'WITH', 'p.fosUser = u.id');
-//        
-//        
-        
+
         $queryBuilder->select('p')
                 ->from('SkaphandrusAppBundle:SkPhoto', 'p')
                 ->join('p.category', 'c')
                 ->join('c.contest', 'ct')
-                ->where( 'p.fosUser = ?1')
-            ->andWhere('c.contest = ?2')
-            ->setParameter(1,  $user_id)
-            ->setParameter(2,  $contest_id);
-        
-        
-        
-        
-        
+                ->where('p.fosUser = ?1')
+                ->andWhere('c.contest = ?2')
+                ->setParameter(1, $user_id)
+                ->setParameter(2, $contest_id);
+
         $photosInContest = $queryBuilder->getQuery()->getResult();
-          return $photosInContest;
-         
+        return $photosInContest;
+    }
+
+    public function findUsersInCountry($country_id) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT u.id as fosUser, count(p.id) as num_photos
+                FROM fos_user as u
+                JOIN sk_photo as p
+                on u.id = p.fos_user_id
+                JOIN sk_spot as s
+                on s.id = p.spot_id
+                JOIN sk_location as l
+                ON l.id = s.location_id
+                JOIN sk_region as r
+                ON l.region_id = r.id
+                JOIN sk_country as c
+                ON r.country_id = c.id
+                where c.id = " . $country_id . "
+                group by fosUser";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+            $user = $em->getRepository('SkaphandrusAppBundle:FosUser')->find($value['fosUser']);
+            $user->setPhotosInUser($value['num_photos']);
+            $result[] = $user;
+        }
+
+        return $result;
+    }
+
+    public function findUsersInCountry2($country_id) {
+        $query = $this->getEntityManager()
+                        ->createQuery(
+                                "SELECT u as fosUser, COUNT(photo.id) as photosInUser
+                FROM SkaphandrusAppBundle:FosUser u
+                JOIN SkaphandrusAppBundle:SkPhoto photo WITH u.id = photo.fosUser
+                JOIN photo.spot s
+                JOIN s.location l
+                JOIN l.region r
+                WHERE r.country = :country_id
+                GROUP BY u.id"
+                        )->setParameter('country_id', $country_id);
+
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function findUsersInCountry3($country_id) {
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('u as fosUser')
+                ->addSelect('Count(p.id) as photosInUser')
+                ->from('SkaphandrusAppBundle:FosUser', 'u')
+
+                //users
+                ->join('u.photos', 'p', 'WITH', 'p.fosUser = u.id')
+
+                //spots, locations, regions and countries
+                ->join('p.spot', 's', 'WITH', 'p.spot = s.id')
+                ->join('s.location', 'l', 'WITH', 's.location = l.id')
+                ->join('l.region', 'r', 'WITH', 'l.region = r.id')
+                ->join('r.country', 'c', 'WITH', 'r.country = ?1')
+                ->groupBy('u.id')
+                ->setParameter(1, $country_id);
+
+        $result = $qb->getQuery()->getResult();
+        
+        return $result;
+    }
+
+    public function findUsersInLocation($location_id) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT u.id as user, count(p.id) as num_photos
+                FROM fos_user as u
+                JOIN sk_photo as p
+                on u.id = p.fos_user_id
+                JOIN sk_spot as s
+                on s.id = p.spot_id
+                JOIN sk_location as l
+                ON l.id = s.location_id
+                where l.id = " . $location_id . "
+                group by user";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+            $user = $em->getRepository('SkaphandrusAppBundle:FosUser')->find($value['user']);
+            $user->setPhotosInUser($value['num_photos']);
+            $result[] = $user;
+        }
+
+        return $result;
+    }
+
+    public function findUsersInSpot($spot_id) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT u.id as user, count(p.id) as num_photos
+                FROM fos_user as u
+                JOIN sk_photo as p
+                on u.id = p.fos_user_id
+                JOIN sk_spot as s
+                on s.id = p.spot_id
+                where s.id = " . $spot_id . "
+                group by user";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+            $user = $em->getRepository('SkaphandrusAppBundle:FosUser')->find($value['user']);
+            $user->setPhotosInUser($value['num_photos']);
+            $result[] = $user;
+        }
+
+        return $result;
+    }
+
+    public function findUsersInSpecies($species_id) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT u.id as user, count(p.id) as num_photos
+                FROM fos_user as u
+                JOIN sk_photo as p
+                on u.id = p.fos_user_id
+                JOIN sk_species as sp
+                on sp.id = p.species_id
+                where sp.id = " . $species_id . "
+                group by user";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+            $user = $em->getRepository('SkaphandrusAppBundle:FosUser')->find($value['user']);
+            $user->setPhotosInUser($value['num_photos']);
+            $result[] = $user;
+        }
+
+        return $result;
+    }
+    
+    
+    public function findUsersInTaxon2($next_taxon, $taxon_name, $taxon_id) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT u.id as user, up.id, up.fos_user_id, up.firstname, up.middlename, up.lastname, count(p.id) as photosInUser 
+                    FROM fos_user as u
+                    JOIN sk_personal as up
+                    on u.id = up.fos_user_id
+                    JOIN sk_photo as p
+                    on u.id = p.fos_user_id
+                    JOIN sk_species as sp
+                    on sp.id = p.species_id
+                    JOIN sk_genus as g
+                    on g.id = sp.genus_id
+                    JOIN sk_family as f
+                    on f.id = g.family_id
+                    JOIN sk_order as o
+                    on o.id = f.order_id
+                    JOIN sk_class as c
+                    on c.id = o.class_id
+                    JOIN sk_phylum as phy
+                    on phy.id = c.phylum_id
+                    JOIN sk_kingdom as k
+                    on k.id = phy.kingdom_id
+                    where " . substr($taxon_name, 0, 1) . ".id = ". $taxon_id . "
+                    group by user";
+        
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+            $user = $em->getRepository('SkaphandrusAppBundle:FosUser')->find($value['user']);
+            $user->setPhotosInUser($value['photosInUser']);
+            $result[] = $user;
+        }
+
+        return $result;
+    }
+    
+    
+    
+    public function findUsersInTaxon($next_taxon, $taxon_name, $taxon_id) {
+
+        $rsm = new ResultSetMapping();
+        $rsm->addEntityResult('SkaphandrusAppBundle:FosUser', 'u');
+        $rsm->addFieldResult('u', 'id', 'id');
+        $rsm->addFieldResult('u', 'username', 'username');
+        $rsm->addJoinedEntityResult('SkaphandrusAppBundle:SkPersonal', 'up', 'u', 'personal');
+        $rsm->addFieldResult('up', 'id', 'id');
+//        $rsm->addFieldResult('up', 'fos_user_id', 'fosUser');
+        $rsm->addFieldResult('up', 'firstname', 'firstname');
+        $rsm->addFieldResult('up', 'middlename', 'middlename');
+        $rsm->addFieldResult('up', 'lastname', 'lastname');
+        
+        $query = $this->getEntityManager()->createNativeQuery(
+                "SELECT u.id, up.id, up.fos_user_id, up.firstname, up.middlename, up.lastname, count(p.id) as photosInUser 
+                    FROM fos_user as u
+                    JOIN sk_personal as up
+                    on u.id = up.fos_user_id
+                    JOIN sk_photo as p
+                    on u.id = p.fos_user_id
+                    JOIN sk_species as sp
+                    on sp.id = p.species_id
+                    JOIN sk_genus as g
+                    on g.id = sp.genus_id
+                    JOIN sk_family as f
+                    on f.id = g.family_id
+                    JOIN sk_order as o
+                    on o.id = f.order_id
+                    JOIN sk_class as c
+                    on c.id = o.class_id
+                    JOIN sk_phylum as phy
+                    on phy.id = c.phylum_id
+                    JOIN sk_kingdom as k
+                    on k.id = phy.kingdom_id
+                    where " . substr($taxon_name, 0, 1) . ".id = ?
+                    group by u.id", $rsm);
+
+//        dump($query);
+        
+        $query->setParameter(1, $taxon_id);
+
+        dump($query->getResult());
+        
+        return $query->getResult();
     }
 
 }

@@ -60,11 +60,20 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
+    <!-- FooTable -->
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/footable/footable.core.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
+    <!-- FooTable -->
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
+    <script>
+        $(function () {
+            $('.footable-users').footable();
+        });
+    </script>
 {% endblock %}
 
 {% block heading_title %}
@@ -75,7 +84,7 @@
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
         <li itemprop="itemListElement"><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
-        {#<li>{{ link_to_taxon(species.genus.family.order.class) }}</li>#}
+            {#<li>{{ link_to_taxon(species.genus.family.order.class) }}</li>#}
         <li itemprop="itemListElement">{{ link_to_taxon(species.genus.family.order) }}</li>
         <li itemprop="itemListElement">{{ link_to_taxon(species.genus.family) }}</li>
         <li itemprop="itemListElement">{{ link_to_taxon(species.genus) }}</li>
@@ -254,14 +263,34 @@
                                     {% if users is not empty %}
                                         <div id="tab-{{tab_users_id}}" class="tab-pane {{tab_users_id==1?'active'}}">
                                             <h3>{{ "page.species.h3.contributors"|trans }}</h3>
-                                            {% for u in users %}
-                                                <span itemscope itemtype="http://schema.org/Person">
-                                                    <meta itemprop="name" content="{{ u.0 }}">
-                                                </span>
-                                                <p>
-                                                    {{ "user_id"|trans }}: {{ link_to_user(u.0) }} ({{ u.countable }} {{ "page.species.label.photos"|trans }})
-                                                </p>
-                                            {% endfor %}
+                                            <input type="text" class="form-control input-sm m-b-xs" id="filter-users" placeholder="Search in table">
+                                            <table class="footable footable-users table" data-page-size="50" data-filter=#filter-users>
+                                                <thead>
+                                                <th>{{ "page.species.table.name"|trans }}</th>
+                                                <th>{{ "page.species.label.photos"|trans }}</th>
+                                                </thead>
+                                                <tbody>
+                                                    {% for u in users %}
+                                                        <span itemscope itemtype="http://schema.org/Person">
+                                                            <meta itemprop="name" content="{{ u }}">
+                                                        </span>
+
+                                                        <tr>
+                                                            <td>{{ link_to_user(u) }}</td>
+                                                            <td>
+                                                                <a href="{{ path('photos', {'fosUser': u.id, (species.taxonNodeName) : species.id}) }}">{{ u.photosInUser }}</a>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <ul class="pagination pull-right"></ul>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
                                         </div>
                                     {% endif %}
                                 </div>

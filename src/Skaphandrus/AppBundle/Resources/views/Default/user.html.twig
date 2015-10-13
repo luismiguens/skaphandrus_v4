@@ -188,9 +188,11 @@
                                                 <tbody>
                                                     {% for s in species %}
                                                     <tr>
-                                                        <td>{{ link_to_species(s.species) }}</td>
+                                                        <td>{{ link_to_species(s) }}</td>
                                                         <td>
-                                                            <a href="{{ path('photos', {'fosUser': user.id, 'species': s.species.id}) }}">{{ s.photo_count }}</a>
+                                                            <a href="{{ path('photos', {'fosUser': user.id, 'species': s.id}) }}">
+                                                                {{ s.photosInSpecies }}
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                 {% endfor %}
@@ -219,12 +221,14 @@
                                                 <tbody>
                                                     {% for s in spots %}
                                                         <span itemscope itemtype="http://schema.org/TouristAttraction ">
-                                                            <meta itemprop="name" content="{{ s.spot }}">
+                                                            <meta itemprop="name" content="{{ s }}">
                                                         </span>
                                                         <tr>
-                                                            <td>{{ link_to_spot(s.spot) }}</td>
+                                                            <td>{{ link_to_spot(s) }}</td>
                                                             <td>
-                                                                <a href="{{ path('photos', {'fosUser': user.id, 'spot': s.spot.id}) }}">{{ s.photo_count }}</a>
+                                                                <a href="{{ path('photos', {'fosUser': user.id, 'spot': s.id}) }}">
+                                                                    {{ s.photosInSpot }}
+                                                                </a>
                                                             </td>
                                                         </tr>
                                                     {% endfor %}

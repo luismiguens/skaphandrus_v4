@@ -162,8 +162,8 @@ class ContestController extends Controller {
 
         if ($contest) {
             return $this->render('SkaphandrusAppBundle:Contest:photographers.html.twig', array(
-                        'contest' => $contest,
-                        'photographers' => $photographers
+                'contest' => $contest,
+                'photographers' => $photographers
             ));
         } else {
             throw $this->createNotFoundException('The contest "' . $name . '" does not exist.');

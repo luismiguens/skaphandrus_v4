@@ -40,6 +40,8 @@ class SkLocation {
     private $spotsCount = 0;
 
     private $photosCount = 0;
+    
+    private $photosInLocation;
 
     /**
      * Set createdAt
@@ -205,5 +207,13 @@ class SkLocation {
 
     public function setPhotosCount($photosCount) {
         $this->photosCount = $photosCount;
+    }
+    
+    public function getPhotosInLocation() {
+        return $this->photosInLocation;
+    }
+
+    public function setPhotosInLocation($photosInLocation) {
+        $this->photosInLocation = $photosInLocation;
     }
 }

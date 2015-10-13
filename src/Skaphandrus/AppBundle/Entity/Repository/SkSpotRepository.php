@@ -68,22 +68,22 @@ class SkSpotRepository extends EntityRepository {
         }
     }
 
-    public function findWithPhotoCountByUserId($user_id) {
-        $query = $this->getEntityManager()
-            ->createQuery(
-                'SELECT s as spot, COUNT(p) as photo_count
-                FROM SkaphandrusAppBundle:SkSpot s
-                JOIN SkaphandrusAppBundle:SkPhoto p
-                    WITH s.id = IDENTITY(p.spot)
-                WHERE IDENTITY(p.fosUser) = :user_id
-                GROUP BY s.id'
-                )->setParameter('user_id', $user_id);
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-    }
+//    public function findWithPhotoCountByUserId($user_id) {
+//        $query = $this->getEntityManager()
+//            ->createQuery(
+//                'SELECT s as spot, COUNT(p) as photo_count
+//                FROM SkaphandrusAppBundle:SkSpot s
+//                JOIN SkaphandrusAppBundle:SkPhoto p
+//                    WITH s.id = IDENTITY(p.spot)
+//                WHERE IDENTITY(p.fosUser) = :user_id
+//                GROUP BY s.id'
+//                )->setParameter('user_id', $user_id);
+//        try {
+//            return $query->getResult();
+//        } catch (\Doctrine\ORM\NoResultException $e) {
+//            return null;
+//        }
+//    }
 
     public function findPhotos($spot_id) {
         $query = $entityManager->createQuery(
@@ -95,18 +95,18 @@ class SkSpotRepository extends EntityRepository {
         return $query->getResult();
     }
 
-    public function getPhotographers($spot_id) {
-        return $this->getEntityManager()
-            ->createQuery(
-                'SELECT u as fosUser, count(p.id) as photoCount
-                FROM SkaphandrusAppBundle:FosUser u
-                JOIN SkaphandrusAppBundle:SkPhoto p
-                    WITH IDENTITY(p.fosUser) = u.id
-                JOIN p.spot s
-                WHERE s.id = :spot_id
-                GROUP BY u.id'
-            )->setParameter('spot_id', $spot_id)->getResult();
-    }
+//    public function getPhotographers($spot_id) {
+//        return $this->getEntityManager()
+//            ->createQuery(
+//                'SELECT u as fosUser, count(p.id) as photoCount
+//                FROM SkaphandrusAppBundle:FosUser u
+//                JOIN SkaphandrusAppBundle:SkPhoto p
+//                    WITH IDENTITY(p.fosUser) = u.id
+//                JOIN p.spot s
+//                WHERE s.id = :spot_id
+//                GROUP BY u.id'
+//            )->setParameter('spot_id', $spot_id)->getResult();
+//    }
 
     public function findSearchResults($string, $locale) {
         return $this->getEntityManager()
@@ -127,5 +127,57 @@ class SkSpotRepository extends EntityRepository {
                 AND lt.locale = :locale
                 AND st.name LIKE :string'
             )->setParameter('locale', $locale)->setParameter('string', '%'.$string.'%')->getResult();
+    }
+    
+    public function findSpotsInLocation($location_id) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT s.id as spot, count(p.id) as num_photos
+                FROM sk_photo as p
+                JOIN sk_spot as s
+                on s.id = p.spot_id
+                JOIN sk_location as l
+                ON l.id = s.location_id
+                where l.id = " . $location_id . "
+                group by spot";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+            $spot = $em->getRepository('SkaphandrusAppBundle:SkSpot')->find($value['spot']);
+            $spot->setPhotosInSpot($value['num_photos']);
+            $result[] = $spot;
+        }
+
+        return $result;
+    }
+    
+    public function findSpotsInUser($user_id) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT s.id as spot, count(p.id) as num_photos
+                FROM sk_photo as p
+                JOIN sk_spot as s
+                on s.id = p.spot_id
+                where p.fos_user_id = " . $user_id . "
+                group by spot";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+            $spot = $em->getRepository('SkaphandrusAppBundle:SkSpot')->find($value['spot']);
+            $spot->setPhotosInSpot($value['num_photos']);
+            $result[] = $spot;
+        }
+
+        return $result;
     }
 }

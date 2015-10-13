@@ -52,6 +52,10 @@ class SkCountry
         $this->regions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    public function setId($param) {
+        $this->id = $param;
+    }
+    
     /**
      * Set name
      *

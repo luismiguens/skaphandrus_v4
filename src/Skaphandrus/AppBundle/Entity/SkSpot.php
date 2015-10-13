@@ -63,19 +63,23 @@ class SkSpot {
      */
     private $photos;
 
+    private $photosInSpot;
 
+    public function getPhotosInSpot(){
+        return $this->photosInSpot;
+    }
     
-    
+    public function setPhotosInSpot($param) {
+        $this->photosInSpot = $param;
+    }
+
      /**
      * Constructor
      */
     public function __construct() {
         $this->createdAt = new \DateTime();
     }
-    
-    
-    
-    
+
     /**
      * Set maxDepth
      *

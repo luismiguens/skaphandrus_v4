@@ -178,7 +178,9 @@
                                                 <tr>
                                                     <td>{{ link_to_user(p.fosUser) }}</td>
                                                     <td>
-                                                        <a href="{{ path('photos', {'fosUser': p.fosUser.id, 'spot': spot.id}) }}">{{ p.photoCount }}</a>
+                                                        <a href="{{ path('photos', {'fosUser': p.fosUser.id, 'spot': spot.id}) }}">
+                                                            {{ p.photosInUser }}
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             {% endfor%}
@@ -209,7 +211,9 @@
                                                 <tr>
                                                     <td>{{ link_to_species(sp) }}</td>
                                                     <td>
-                                                        <a href="{{ path('photos', {'species': sp.id, 'spot': spot.id}) }}">{{ sp.photosCount }}</a>
+                                                        <a href="{{ path('photos', {'species': sp.id, 'spot': spot.id}) }}">
+                                                            {{ sp.photosInSpecies }}
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             {% endfor%}

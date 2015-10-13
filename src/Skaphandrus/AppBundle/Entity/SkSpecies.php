@@ -58,6 +58,7 @@ class SkSpecies {
     private $image_refs;
     private $photosCount = 0;
 
+    private $photosInSpecies;
     
     private $criterias;
     
@@ -68,6 +69,10 @@ class SkSpecies {
     public function __construct() {
         $this->character = new \Doctrine\Common\Collections\ArrayCollection();
         $this->image_refs = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    public function setId($param) {
+        $this->id = $param;
     }
 
     /**
@@ -402,4 +407,14 @@ class SkSpecies {
         $entityManager->flush();
     }
 
+    public function getPhotosInSpecies() {
+        return $this->photosInSpecies;
+    }
+
+    public function setPhotosInSpecies($photosInSpecies) {
+        $this->photosInSpecies = $photosInSpecies;
+    }
+    
+    
+    
 }

@@ -45,7 +45,15 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
     private $settings;
     
     private $photosInContest;
+    private $photosInUser;
+
+    public function getPhotosInUser(){
+        return $this->photosInUser;
+    }
     
+    public function setPhotosInUser($param) {
+        $this->photosInUser = $param;
+    }
     
     public function getPhotosInContest(){
         return $this->photosInContest;
@@ -330,11 +338,12 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
 
     public function __toString() {
 
-        if ($this->getName()){
-            return $this->getName();
-        }else{
-            return $this->getUsername();
-        }
+        return "bla";
+//        if ($this->getName()){
+//            return $this->getName();
+//        }else{
+//            return $this->getUsername();
+//        }
     }
 
     public function getFosUser() {

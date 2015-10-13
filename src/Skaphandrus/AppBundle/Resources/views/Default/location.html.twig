@@ -202,14 +202,16 @@
                                                 </thead>
                                                 <tbody>
                                                     {% set c = location.region.country %}
-                                                    {% for spot in location.spots %}
+                                                    {% for spot in spots %}
                                                         <span itemscope itemtype="http://schema.org/TouristAttraction ">
                                                             <meta itemprop="name" content="{{ spot }}">
                                                         </span>
                                                         <tr>
                                                             <td>{{ link_to_spot(spot, location, c) }}</td>
                                                             <td>
-                                                                <a href="{{ path('photos', {'spot': spot.id}) }}">{{ spot.photos|length }}</a>
+                                                                <a href="{{ path('photos', {'spot': spot.id}) }}">
+                                                                    {{ spot.photosInSpot }}
+                                                                </a>
                                                             </td>
                                                         </tr>
                                                     {% endfor %}
@@ -242,7 +244,9 @@
                                                     <tr>
                                                         <td>{{ link_to_species(sp) }}</td>
                                                         <td>
-                                                            <a href="{{ path('photos', {'species': sp.id, 'location': location.id}) }}">{{ sp.photosCount }}</a>
+                                                            <a href="{{ path('photos', {'species': sp.id, 'location': location.id}) }}">
+                                                                {{ sp.photosInSpecies }}
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                     </tr>
@@ -279,7 +283,9 @@
                                                 <tr>
                                                     <td>{{ link_to_user(p.fosUser) }}</td>
                                                     <td>
-                                                        <a href="{{ path('photos', {'fosUser': p.fosUser.id, 'location': location.id}) }}">{{ p.photoCount }}</a>
+                                                        <a href="{{ path('photos', {'fosUser': p.fosUser.id, 'location': location.id}) }}">
+                                                            {{ p.photosInUser }}
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             {% endfor%}
