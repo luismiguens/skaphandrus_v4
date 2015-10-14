@@ -42,8 +42,8 @@ class SkPhotoContestAwardType extends AbstractType
                
             ->add('category', null, array(
                 'attr' => array('class' => 'form-control'),
-                'label'=>'form.photo_contest_award.label.category'
-                ))
+                'label'=>'form.photo_contest_award.label.category'  ,
+'property' => 'CategoryJoinContestString',                ))
                 
 //            ->add('judge', 'entity', array(
 //                'label'=>'form.photo_contest_award.label.judge',

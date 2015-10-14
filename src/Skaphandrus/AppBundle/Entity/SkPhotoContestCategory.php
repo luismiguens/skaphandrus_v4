@@ -233,6 +233,10 @@ class SkPhotoContestCategory
     public function __toString() {
         return $this->getName();
     }
+    
+    public function getCategoryJoinContestString() {
+        return $this->getName()." » ".$this->getContest();
+    }
 
     public function getName() {
         return $this->translate()->getName();
