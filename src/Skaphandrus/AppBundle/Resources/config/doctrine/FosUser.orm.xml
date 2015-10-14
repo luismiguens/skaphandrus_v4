@@ -67,5 +67,52 @@
         <lifecycle-callbacks>
             <lifecycle-callback type="postLoad" method="doStuffOnPostLoad"/>
         </lifecycle-callbacks>
+    
+        <named-native-queries>
+    <named-native-query name="fetchTagsByExpertise" result-set-mapping="mappingCount">
+            <query>SELECT u.id, u.username, COUNT(p.id) as photosInUser
+                    FROM fos_user as u
+                    JOIN sk_personal as up
+                    on u.id = up.fos_user_id
+                    JOIN sk_photo as p
+                    on u.id = p.fos_user_id
+                    JOIN sk_species as sp
+                    on sp.id = p.species_id
+                    JOIN sk_genus as g
+                    on g.id = sp.genus_id
+                    JOIN sk_family as f
+                    on f.id = g.family_id
+                    JOIN sk_order as o
+                    on o.id = f.order_id
+                    JOIN sk_class as c
+                    on c.id = o.class_id
+                    JOIN sk_phylum as phy
+                    on phy.id = c.phylum_id
+                    JOIN sk_kingdom as k
+                    on k.id = phy.kingdom_id
+                    where k.id = 1
+                    group by u.id</query>
+        </named-native-query>
+        </named-native-queries>
+        <sql-result-set-mappings>
+            <sql-result-set-mapping name="mappingCount">
+                <entity-result entity-class="__CLASS__">
+                    <field-result name="id"/>
+                    <field-result name="username"/>
+<!--                    
+                    <field-result name="address.id" column="a_id"/>
+                    <field-result name="address.zip"  column="a_zip"/>
+                    <field-result name="address.city"  column="a_city"/>
+                    <field-result name="address.country" column="a_country"/>-->
+                </entity-result>
+                <column-result name="photosInUser"/>
+            </sql-result-set-mapping>
+        </sql-result-set-mappings>
+    
+    
+    
+    
+    
     </entity>
+    
 </doctrine-mapping>

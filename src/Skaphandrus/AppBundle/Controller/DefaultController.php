@@ -249,9 +249,23 @@ class DefaultController extends Controller {
 //        
 //        dump($taxon);
 //        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->getQueryBuilder([$taxon->getTaxonNodeName() => $taxon->getId()], 20);
+       
+        
+        
+        
         $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
                 ->findUsersInTaxon($next_taxon, $taxon->getTaxonNodeName(), $taxon->getId());
 
+//        $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
+//                ->createNativeNamedQuery('fetchTagsByExpertise')
+//    ->getResult();
+                
+
+        
+        dump($photographers);
+        
+        
+        
         if ($taxon) {
             return $this->render('SkaphandrusAppBundle:Default:taxon.html.twig', array(
                         "node" => $node,

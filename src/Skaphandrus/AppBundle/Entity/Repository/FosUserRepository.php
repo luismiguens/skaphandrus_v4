@@ -3,9 +3,9 @@
 namespace Skaphandrus\AppBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Tools\Pagination\Paginator;
-use Doctrine\DBAL\DriverManager;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Skaphandrus\AppBundle\Entity\FosUser;
 
 /**
  * SkPhotoRepository
@@ -155,7 +155,7 @@ class FosUserRepository extends EntityRepository {
 //        dump($query->getDQL());
         try {
             return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
+        } catch (NoResultException $e) {
             return null;
         }
     }
@@ -239,7 +239,7 @@ class FosUserRepository extends EntityRepository {
 
         try {
             return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
+        } catch (NoResultException $e) {
             return null;
         }
     }
@@ -351,11 +351,11 @@ class FosUserRepository extends EntityRepository {
     }
     
     
-    public function findUsersInTaxon2($next_taxon, $taxon_name, $taxon_id) {
+    public function findUsersInTaxon($next_taxon, $taxon_name, $taxon_id) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
-        $sql = "SELECT u.id as user, up.id, up.fos_user_id, up.firstname, up.middlename, up.lastname, count(p.id) as photosInUser 
+        $sql = "SELECT u.id as id, u.username as username, up.id as p_id, up.firstname as firstname, up.middlename as middlename, up.lastname as lastname, count(p.id) as photosInUser 
                     FROM fos_user as u
                     JOIN sk_personal as up
                     on u.id = up.fos_user_id
@@ -376,7 +376,8 @@ class FosUserRepository extends EntityRepository {
                     JOIN sk_kingdom as k
                     on k.id = phy.kingdom_id
                     where " . substr($taxon_name, 0, 1) . ".id = ". $taxon_id . "
-                    group by user";
+                    group by u.id";
+       
         
         $statement = $connection->prepare($sql);
         $statement->execute();
@@ -384,8 +385,22 @@ class FosUserRepository extends EntityRepository {
         $result = array();
 
         foreach ($values as $value) {
-            $user = $em->getRepository('SkaphandrusAppBundle:FosUser')->find($value['user']);
+            
+            $user = new FosUser();
+            $user->setId($value['id']);
+            $user->setUsername($value['username']);
             $user->setPhotosInUser($value['photosInUser']);
+                        
+            $personal =  new \Skaphandrus\AppBundle\Entity\SkPersonal();
+            $personal->setFirstname($value['firstname']);
+            $personal->setMiddlename($value['middlename']);
+            $personal->setLastname($value['lastname']);
+            
+            $user->setPersonal($personal);
+            
+            
+            //$user = $em->getRepository('SkaphandrusAppBundle:FosUser')->find($value['id']);
+            
             $result[] = $user;
         }
 
@@ -394,21 +409,27 @@ class FosUserRepository extends EntityRepository {
     
     
     
-    public function findUsersInTaxon($next_taxon, $taxon_name, $taxon_id) {
+    public function findUsersInTaxon2($next_taxon, $taxon_name, $taxon_id) {
 
         $rsm = new ResultSetMapping();
         $rsm->addEntityResult('SkaphandrusAppBundle:FosUser', 'u');
         $rsm->addFieldResult('u', 'id', 'id');
         $rsm->addFieldResult('u', 'username', 'username');
-        $rsm->addJoinedEntityResult('SkaphandrusAppBundle:SkPersonal', 'up', 'u', 'personal');
-        $rsm->addFieldResult('up', 'id', 'id');
-//        $rsm->addFieldResult('up', 'fos_user_id', 'fosUser');
-        $rsm->addFieldResult('up', 'firstname', 'firstname');
-        $rsm->addFieldResult('up', 'middlename', 'middlename');
-        $rsm->addFieldResult('up', 'lastname', 'lastname');
+        //$rsm->addFieldResult('u', 'photosInUser', 'photosInUser');
+        //$rsm->addScalarResult('photosInUser', 'photosInUser');
+        
+        
+//        
+        //$rsm->addJoinedEntityResult('SkaphandrusAppBundle:SkPersonal', 'up', 'u', 'personal');
+//        $rsm->addFieldResult('up', 'id', 'id');
+//        //$rsm->addFieldResult('up', 'fos_user_id', 'fosUser');
+//        //$rsm->addMetaResult('u', 'personal', 'address_id');
+//        $rsm->addFieldResult('up', 'firstname', 'firstname');
+//        $rsm->addFieldResult('up', 'middlename', 'middlename');
+//        $rsm->addFieldResult('up', 'lastname', 'lastname');
         
         $query = $this->getEntityManager()->createNativeQuery(
-                "SELECT u.id, up.id, up.fos_user_id, up.firstname, up.middlename, up.lastname, count(p.id) as photosInUser 
+                "SELECT u.id, u.username, COUNT(p.id) as count
                     FROM fos_user as u
                     JOIN sk_personal as up
                     on u.id = up.fos_user_id
@@ -428,14 +449,28 @@ class FosUserRepository extends EntityRepository {
                     on phy.id = c.phylum_id
                     JOIN sk_kingdom as k
                     on k.id = phy.kingdom_id
-                    where " . substr($taxon_name, 0, 1) . ".id = ?
+                    where k.id = ?
                     group by u.id", $rsm);
 
+        //" . substr($taxon_name, 0, 1) . "
+        
+        
 //        dump($query);
         
         $query->setParameter(1, $taxon_id);
 
-        dump($query->getResult());
+        $values = $query->getResult();
+        
+        dump($values);
+        
+        
+//         foreach ($values as $user) {
+//            //$user = $em->getRepository('SkaphandrusAppBundle:FosUser')->find($value['user']);
+//            $user->setPhotosInUser($value['photosInUser']);
+//            $result[] = $user;
+//        }
+        
+        
         
         return $query->getResult();
     }
