@@ -424,17 +424,18 @@ class SkSpeciesRepository extends EntityRepository {
         $result = array();
         
         foreach ($values as $value) {
+//            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->find($value['species']);
+            
             $species = new \Skaphandrus\AppBundle\Entity\SkSpecies();
             $species->setId($value['species_id']);
             $scientific_name = new \Skaphandrus\AppBundle\Entity\SkSpeciesScientificName();
             $scientific_name->setName($value['ssn_name']);
             $scientific_name->setAuthor($value['sss_author']);
             $species->addScientificName($scientific_name);
-//            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->find($value['species']);
             $species->setPhotosInSpecies($value['num_photos']);
             $result[] = $species;
         }
-  
+
         return $result;
     }
 
@@ -461,13 +462,14 @@ class SkSpeciesRepository extends EntityRepository {
         $result = array();
         
         foreach ($values as $value) {
+//            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->find($value['species']);
+            
             $species = new \Skaphandrus\AppBundle\Entity\SkSpecies();
             $species->setId($value['species_id']);
             $scientific_name = new \Skaphandrus\AppBundle\Entity\SkSpeciesScientificName();
             $scientific_name->setName($value['ssn_name']);
             $scientific_name->setAuthor($value['sss_author']);
             $species->addScientificName($scientific_name);
-//            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->find($value['species']);
             $species->setPhotosInSpecies($value['num_photos']);
             $result[] = $species;
         }
@@ -496,13 +498,14 @@ class SkSpeciesRepository extends EntityRepository {
         $result = array();
         
         foreach ($values as $value) {
+//            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->find($value['species']);  
+            
             $species = new \Skaphandrus\AppBundle\Entity\SkSpecies();
             $species->setId($value['species_id']);
             $scientific_name = new \Skaphandrus\AppBundle\Entity\SkSpeciesScientificName();
             $scientific_name->setName($value['ssn_name']);
             $scientific_name->setAuthor($value['sss_author']);
             $species->addScientificName($scientific_name);
-//            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->find($value['species']);
             $species->setPhotosInSpecies($value['num_photos']);
             $result[] = $species;
         }
@@ -529,13 +532,14 @@ class SkSpeciesRepository extends EntityRepository {
         $result = array();
         
         foreach ($values as $value) {
+//            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->find($value['species']);
+            
             $species = new \Skaphandrus\AppBundle\Entity\SkSpecies();
             $species->setId($value['species_id']);
             $scientific_name = new \Skaphandrus\AppBundle\Entity\SkSpeciesScientificName();
             $scientific_name->setName($value['ssn_name']);
             $scientific_name->setAuthor($value['sss_author']);
             $species->addScientificName($scientific_name);
-//            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->find($value['species']);
             $species->setPhotosInSpecies($value['num_photos']);
             $result[] = $species;
         }

@@ -57,23 +57,22 @@ class SkSpot {
      */
     private $location;
 
-    
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $photos;
-
+    
     private $photosInSpot;
 
-    public function getPhotosInSpot(){
+    public function getPhotosInSpot() {
         return $this->photosInSpot;
     }
-    
+
     public function setPhotosInSpot($param) {
         $this->photosInSpot = $param;
     }
 
-     /**
+    /**
      * Constructor
      */
     public function __construct() {
@@ -221,6 +220,10 @@ class SkSpot {
         return $this->id;
     }
 
+    public function setId($id) {
+        $this->id = $id;
+    }
+
     /**
      * Set fosUser
      *
@@ -268,16 +271,14 @@ class SkSpot {
     public function __toString() {
         return $this->translate()->getName();
     }
-    
+
     public function getName() {
         return $this->translate()->getName();
     }
-    
-      public function getDescription() {
+
+    public function getDescription() {
         return $this->translate()->getDescription();
     }
-    
-    
 
     /**
      * Add photo
@@ -286,8 +287,7 @@ class SkSpot {
      *
      * @return SkSpot
      */
-    public function addPhoto(\Skaphandrus\AppBundle\Entity\skPhoto $photo)
-    {
+    public function addPhoto(\Skaphandrus\AppBundle\Entity\skPhoto $photo) {
         $this->photos[] = $photo;
 
         return $this;
@@ -298,8 +298,7 @@ class SkSpot {
      *
      * @param \Skaphandrus\AppBundle\Entity\skPhoto $photo
      */
-    public function removePhoto(\Skaphandrus\AppBundle\Entity\skPhoto $photo)
-    {
+    public function removePhoto(\Skaphandrus\AppBundle\Entity\skPhoto $photo) {
         $this->photos->removeElement($photo);
     }
 
@@ -308,13 +307,12 @@ class SkSpot {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPhotos()
-    {
+    public function getPhotos() {
         return $this->photos;
     }
-    
-      public function doStuffOnPreUpdate()
-    {
-       $this->updatedAt = new \DateTime();
+
+    public function doStuffOnPreUpdate() {
+        $this->updatedAt = new \DateTime();
     }
+
 }

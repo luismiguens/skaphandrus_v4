@@ -246,26 +246,17 @@ class DefaultController extends Controller {
         }
 
 //        $photographers = array();
-//        
 //        dump($taxon);
 //        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->getQueryBuilder([$taxon->getTaxonNodeName() => $taxon->getId()], 20);
-       
-        
-        
-        
+
         $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
                 ->findUsersInTaxon($next_taxon, $taxon->getTaxonNodeName(), $taxon->getId());
 
 //        $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
 //                ->createNativeNamedQuery('fetchTagsByExpertise')
-//    ->getResult();
-                
+//                ->getResult();
+//        dump($photographers);
 
-        
-        dump($photographers);
-        
-        
-        
         if ($taxon) {
             return $this->render('SkaphandrusAppBundle:Default:taxon.html.twig', array(
                         "node" => $node,
@@ -284,12 +275,11 @@ class DefaultController extends Controller {
 
         if ($species) {
 
+            $photo = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkPhoto")
+                    ->getPrimaryPhotoForSpecies($species->getId());
 
-            $photo = $this->getDoctrine()
-                            ->getRepository("SkaphandrusAppBundle:SkPhoto")->getPrimaryPhotoForSpecies($species->getId());
-
-//            $users = $this->getDoctrine()
-//                            ->getRepository("SkaphandrusAppBundle:SkPhoto")->findPhotosCountByUserForModel($species->getId());
+//            $users = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkPhoto")
+//                    ->findPhotosCountByUserForModel($species->getId());
 
             $users = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
                 ->findUsersInSpecies($species->getId());
@@ -309,7 +299,6 @@ class DefaultController extends Controller {
         //spot
         $spot = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')
                 ->findBySlug($slug, $location, $country, $locale);
-
 
 ////        photos
 //        $qb_photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder(['spot' => $spot], 20);
@@ -430,7 +419,7 @@ class DefaultController extends Controller {
             // $photographers = $query_photographers->getResult();
 
             $spots = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')
-                    ->findSpotsInLocation($location->getId());
+                    ->findSpotsInLocation($location->getId(), $locale);
 
             $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
                     ->findSpeciesInLocatinon($location->getId());
@@ -533,7 +522,7 @@ class DefaultController extends Controller {
 
         if ($country) {
             $locations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
-                    ->findLocationsInCountry2($country->getId());
+                    ->findLocationsInCountry($country->getId(), $locale);
 
             $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
                     ->findSpeciesInCountry($country->getId());
@@ -565,7 +554,7 @@ class DefaultController extends Controller {
 //            }
 
             $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-                    ->findUsersInCountry2($country->getId());
+                    ->findUsersInCountry($country->getId());
 
             return $this->render('SkaphandrusAppBundle:Default:country.html.twig', array(
                         'country' => $country,
@@ -733,14 +722,15 @@ class DefaultController extends Controller {
         $params = $request->query->all();
 
         $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($params, 30);
-        $query = $qb->getQuery();
+//        $query = $qb->getQuery();
 
         //var_dump($params);
 
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-                $query, $this->get('request')->query->getInt('page', 1)/* page number */, 30/* limit per page */
+                $qb, $this->get('request')->query->getInt('page', 1)/* page number */, 30/* limit per page */
+//                $query, $this->get('request')->query->getInt('page', 1)/* page number */, 30/* limit per page */
         );
 
         // parameters to template
@@ -752,6 +742,8 @@ class DefaultController extends Controller {
      */
 
     public function userAction($id) {
+        $locale = $this->get('request')->getLocale();
+        
         $user = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
                 ->findOneById($id);
 
@@ -759,7 +751,9 @@ class DefaultController extends Controller {
                 ->findSpeciesInUser($user->getId());
 
         $spots = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')
-                ->findSpotsInUser($user->getId());
+                ->findSpotsInUser($user->getId(), $locale);
+        
+        dump($spots);
 
         if ($user) {
             return $this->render('SkaphandrusAppBundle:Default:user.html.twig', array(
@@ -783,9 +777,11 @@ class DefaultController extends Controller {
      */
     public function skBoardAction($parameters, $limit = 20, $order = array('id' => 'desc')) {
         $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($parameters, $limit, $order);
-        $query = $qb->getQuery();
-        $photos = $query->getResult();
+//        $query = $qb->getQuery();
+//        $photos = $query->getResult();
 
+        $photos = $qb->getResult();
+        
         return $this->render('SkaphandrusAppBundle:Default:skBoard.html.twig', array(
                     'photos' => $photos,
                     'parameters' => $parameters,
@@ -808,9 +804,11 @@ class DefaultController extends Controller {
             $photos = $parameters['photos'];
             unset($parameters['photos']);
         } else {
-            $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($parameters, $limit, $order);
-            $query = $qb->getQuery();
-            $photos = $query->getResult();
+            $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($parameters, $limit, $order);
+//            $query = $qb->getQuery();
+//            $photos = $query->getResult();
+
+//            $photos = $qb->getResult();
         }
 
         return $this->render('SkaphandrusAppBundle:Default:skGrid.html.twig', array(

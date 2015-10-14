@@ -1,7 +1,7 @@
 <div class="lightBoxGallery">
     {% for photo in photos %}
         <span itemscope itemtype="http://schema.org/Photograph">
-            <meta itemprop="name" content="{{ photo.title }}">
+            {#<meta itemprop="name" content="{{ photo.title }}">
             <meta itemprop="dateCreated" content="{{ photo.createdAt|date("Y-m-d") }}">
             <meta itemprop="datePublished" content="{{ photo.takenAt|date("Y-m-d") }}">
             <span itemprop="author" itemscope itemtype="http://schema.org/Person"  >
@@ -12,7 +12,7 @@
                 <span itemprop="contentLocation" itemscope itemtype="http://schema.org/TouristAttraction">
                     <meta itemprop="name" content="{{ photo.spot }}, {{ photo.spot.location }}">
                 </span>
-            {% endif %}
+            {% endif %}#}
             <a href="{{ url_to_photo(photo) }}" title="{{ photo.title }}">
                 <img itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('new_sk_thumbnail_outbound_100') }}" />
             </a>

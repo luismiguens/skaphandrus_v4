@@ -208,7 +208,7 @@ class SkSpecies {
     
     
     
-        public function setCriterias($criterias) {
+    public function setCriterias($criterias) {
         $this->criterias = $criterias;
     }
     

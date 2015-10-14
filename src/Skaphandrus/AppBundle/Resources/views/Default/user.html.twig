@@ -245,7 +245,7 @@
                                     {% endif %}
                                     <!-- End Spots Tab -->
                                     <!-- Start Photos Validated Tab -->
-                                    {% if user.photosValidated|first is not empty %}
+                                    {#{% if user.photosValidated|first is not empty %}
                                         <div id="tab-{{tab_photosv_id}}" class="tab-pane {{tab_photosv_id==1?'active'}}">
                                             <h3>{{ "page.user.h3.photos_validated"|trans }}</h3>
                                             {% set pva = [] %}
@@ -254,7 +254,7 @@
                                             {% endfor %}
                                             {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'photos': pva } })) }}
                                         </div>
-                                    {% endif %}
+                                    {% endif %}#}
                                     <!-- End Photos Validated Tab -->
                                 </div>
                             </div>

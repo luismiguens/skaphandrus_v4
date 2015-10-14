@@ -45,21 +45,23 @@ class SkLocationRepository extends EntityRepository {
                 )->setParameter('term', '%' . $term . '%')->setParameter('locale', $locale)->getResult();
     }
 
-    public function findLocationsInCountry($country_id) {
+    public function findLocationsInCountry($country_id, $locale) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
-        $sql = "SELECT l.id as location, count(p.id) as num_photos
+        $sql = "SELECT l.id as location, lt.id as lt_id, lt.name as lt_name, count(p.id) as num_photos
                 FROM sk_photo as p
                 JOIN sk_spot as s
                 on s.id = p.spot_id
                 JOIN sk_location as l
                 ON l.id = s.location_id
+                JOIN sk_location_translation as lt
+                ON l.id = lt.translatable_id
                 JOIN sk_region as r
                 ON l.region_id = r.id
                 JOIN sk_country as c
                 ON r.country_id = c.id
-                where c.id = " . $country_id . "
+                where c.id = " . $country_id . " and lt.locale = '" . $locale . "'
                 group by location";
 
         $statement = $connection->prepare($sql);
@@ -68,11 +70,16 @@ class SkLocationRepository extends EntityRepository {
         $result = array();
 
         foreach ($values as $value) {
-            $location = $em->getRepository('SkaphandrusAppBundle:SkLocation')->find($value['location']);
+            //$location = $em->getRepository('SkaphandrusAppBundle:SkLocation')->find($value['location']);
+
+            $location = new \Skaphandrus\AppBundle\Entity\SkLocation();
+            $location->setId($value['location']);
+            $location->translate($locale)->setName($value['lt_name']);
+            
             $location->setPhotosInLocation($value['num_photos']);
             $result[] = $location;
         }
-
+        
         return $result;
     }
     

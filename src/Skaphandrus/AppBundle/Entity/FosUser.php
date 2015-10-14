@@ -328,10 +328,6 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
     }
 
     public function getName() {
-
-//return "bla";
-
-
         if ($this->getPersonal()):
             return $this->getPersonal()->__toString();
         endif;
@@ -340,13 +336,11 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
     }
 
     public function __toString() {
-
-        return "bla";
-//        if ($this->getName()){
-//            return $this->getName();
-//        }else{
-//            return $this->getUsername();
-//        }
+        if ($this->getName()){
+            return $this->getName();
+        }else{
+            return $this->getUsername();
+        }
     }
 
     public function getFosUser() {

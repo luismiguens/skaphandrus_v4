@@ -129,17 +129,19 @@ class SkSpotRepository extends EntityRepository {
             )->setParameter('locale', $locale)->setParameter('string', '%'.$string.'%')->getResult();
     }
     
-    public function findSpotsInLocation($location_id) {
+    public function findSpotsInLocation($location_id, $locale) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
-        $sql = "SELECT s.id as spot, count(p.id) as num_photos
+        $sql = "SELECT s.id as spot, st.id as st_id, st.name as st_name, count(p.id) as num_photos
                 FROM sk_photo as p
                 JOIN sk_spot as s
                 on s.id = p.spot_id
+                JOIN sk_spot_translation as st
+                on s.id = st.translatable_id
                 JOIN sk_location as l
                 ON l.id = s.location_id
-                where l.id = " . $location_id . "
+                where l.id = " . $location_id . " and st.locale = '" . $locale . "'
                 group by spot";
 
         $statement = $connection->prepare($sql);
@@ -148,7 +150,12 @@ class SkSpotRepository extends EntityRepository {
         $result = array();
 
         foreach ($values as $value) {
-            $spot = $em->getRepository('SkaphandrusAppBundle:SkSpot')->find($value['spot']);
+//            $spot = $em->getRepository('SkaphandrusAppBundle:SkSpot')->find($value['spot']);
+            
+            $spot = new \Skaphandrus\AppBundle\Entity\SkSpot();
+            $spot->setId($value['spot']);
+            $spot->translate($locale)->setName($value['st_name']);
+            
             $spot->setPhotosInSpot($value['num_photos']);
             $result[] = $spot;
         }
@@ -157,14 +164,48 @@ class SkSpotRepository extends EntityRepository {
     }
     
     public function findSpotsInUser($user_id) {
+            $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT s as spot, COUNT(p.id) as photosInSpot
+                FROM SkaphandrusAppBundle:SkSpot s
+                JOIN SkaphandrusAppBundle:SkPhoto p WITH s.id = p.spot
+                WHERE p.fosUser = :user_id
+                GROUP BY spot'
+                )->setParameter('user_id', $user_id);
+            
+//            dump($query->getResult());
+            
+            foreach ($query->getResult() as $value) {
+//            $spot = $em->getRepository('SkaphandrusAppBundle:SkSpot')->find($value['spot']);
+                
+                $value['spot']->setPhotosInSpot($value['photosInSpot']);
+            
+                
+                $result[] = $value['spot'];
+        }
+
+//        return $result;
+            
+        try {
+            return $result;
+//            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    
+    public function findSpotsInUser2($user_id, $locale) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
-        $sql = "SELECT s.id as spot, count(p.id) as num_photos
+        $sql = "SELECT s.id as spot, st.id as st_id, st.name as st_name, count(p.id) as num_photos
                 FROM sk_photo as p
                 JOIN sk_spot as s
                 on s.id = p.spot_id
-                where p.fos_user_id = " . $user_id . "
+                JOIN sk_spot_translation as st
+                on s.id = st.translatable_id
+                where p.fos_user_id = " . $user_id . " and st.locale = '" . $locale . "'
                 group by spot";
 
         $statement = $connection->prepare($sql);
@@ -173,10 +214,17 @@ class SkSpotRepository extends EntityRepository {
         $result = array();
 
         foreach ($values as $value) {
-            $spot = $em->getRepository('SkaphandrusAppBundle:SkSpot')->find($value['spot']);
+//            $spot = $em->getRepository('SkaphandrusAppBundle:SkSpot')->find($value['spot']);
+            
+            $spot = new \Skaphandrus\AppBundle\Entity\SkSpot();
+            $spot->setId($value['spot']);
+            $spot->translate($locale)->setName($value['st_name']);
+            
             $spot->setPhotosInSpot($value['num_photos']);
             $result[] = $spot;
         }
+        
+        dump($result);
 
         return $result;
     }

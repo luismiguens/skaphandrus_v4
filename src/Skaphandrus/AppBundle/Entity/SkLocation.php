@@ -95,6 +95,10 @@ class SkLocation {
     public function getId() {
         return $this->id;
     }
+    
+    public function setId($id) {
+        $this->id = $id;
+    }
 
     /**
      * Set region
@@ -162,9 +166,9 @@ class SkLocation {
 
     public function getName() {
         return $this->translate()->getName();
-        
     }
 
+    
     public function getDescription() {
         return $this->translate()->getDescription();
     }

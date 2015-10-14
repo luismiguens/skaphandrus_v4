@@ -165,13 +165,13 @@
                                                 <tbody>
                                                     {% for l in locations %}
                                                         <span itemscope itemtype="http://schema.org/City ">
-                                                            <meta itemprop="name" content="{{ l.location }}">
+                                                            <meta itemprop="name" content="{{ l }}">
                                                         </span>
                                                         <tr>
-                                                            <td>{{ link_to_location(l.location, country) }}</td>
+                                                            <td>{{ link_to_location(l, country) }}</td>
 {#                                                            <td>{{ l.spotsCount }}</td>#}
                                                             <td>
-                                                                <a href="{{ path('photos', {'location': l.location.id}) }}">
+                                                                <a href="{{ path('photos', {'location': l.id}) }}">
                                                                     {{ l.photosInLocation }}
                                                                 </a>
                                                             </td>
