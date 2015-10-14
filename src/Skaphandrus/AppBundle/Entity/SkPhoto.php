@@ -122,6 +122,10 @@ class SkPhoto {
         return $this->imageFile;
     }
 
+    
+    
+    
+    
     /**
      * Constructor
      */
@@ -301,6 +305,14 @@ class SkPhoto {
         return $this->createdAt;
     }
 
+    
+    public function setId($param){
+        
+        $this->id = $param;
+    }
+    
+    
+    
     /**
      * Get id
      *

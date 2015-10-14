@@ -800,11 +800,13 @@ class DefaultController extends Controller {
 
         // ini_set('memory_limit', '64M');
 
+       $locale = $this->get('request')->getLocale();
+        
         if (isset($parameters['photos'])) {
             $photos = $parameters['photos'];
             unset($parameters['photos']);
         } else {
-            $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($parameters, $limit, $order);
+            $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($parameters, $limit, $order,0, $locale);
 //            $query = $qb->getQuery();
 //            $photos = $query->getResult();
 

@@ -162,24 +162,33 @@ class SkPhotoRepository extends EntityRepository {
 //        return $qb;
 //    }
 
-    public function getQueryBuilder($params, $limit = 20, $order = array('id' => 'desc'), $offset = 0) {
+    public function getQueryBuilder($params, $limit = 20, $order = array('id' => 'desc'), $offset = 0, $locale = "en") {
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
-        $sql = "SELECT p.id as id, p.title as title FROM sk_photo as p ";
+        $sql = "SELECT p.id as photo_id, p.title as photo_title, p.image as photo_image, "
+                . "s.id as spot_id, st.name as spot_name, "
+                . "l.id as location_id, lt.name as location_name "
+                . "FROM sk_photo as p "
+                . "JOIN sk_spot as s on p.spot_id = s.id "
+                . "JOIN sk_spot_translation as st on s.id = st.translatable_id "
+                . "JOIN sk_location as l on s.location_id = l.id "
+                . "JOIN sk_location_translation as lt on l.id = lt.translatable_id ";
+
+
 
         //users
         if (array_key_exists('fosUser', $params)) {
             $sql = $sql . ' where p.fos_user_id = ' . $params['fosUser'];
         }
 
-//        //spots, locations, regions and countries
-//        if (array_key_exists('spot', $params)) {
-//            $qb->andWhere('p.spot = ?3');
-//            $qb->setParameter(3, $params['spot']);
-//        }
-//
+        //spots, locations, regions and countries
+        if (array_key_exists('spot', $params)) {
+
+            $sql = $sql . ' where p.spot_id = ' . $params['spot'];
+        }
+
 //        if (array_key_exists('location', $params)) {
 //            $qb->join('p.spot', 's', 'WITH', 'p.spot = s.id');
 //            $qb->join('s.location', 'l', 'WITH', 's.location = ?4');
@@ -274,24 +283,55 @@ class SkPhotoRepository extends EntityRepository {
 //
 //        $qb->setMaxResults($limit);
 
+        if ($order) {
+            $sql = $sql . " order by p." . key($order) . " " . $order[key($order)];
+        }
+
+        if ($offset) {
+            $sql = $sql . " offset " . $offset;
+        }
+
+        $sql = $sql . " limit " . $limit;
+
+
+
+
+
+
+
+        dump($sql);
+
+
+
 
         $statement = $connection->prepare($sql);
         $statement->execute();
         $values = $statement->fetchAll();
         $result = array();
-        
+
         foreach ($values as $value) {
             //$location = $em->getRepository('SkaphandrusAppBundle:SkLocation')->find($value['location']);
 
             $photo = new \Skaphandrus\AppBundle\Entity\SkPhoto();
-            $photo->setId($value['id']);
-            $photo->setTitle($value['title']);
-            
+            $photo->setId($value['photo_id']);
+            $photo->setTitle($value['photo_title']);
+            $photo->setImage($value['photo_image']);
+
+            $spot = new \Skaphandrus\AppBundle\Entity\SkSpot();
+            $spot->setId($value['spot_id']);
+            $spot->translate($locale)->setName($value['spot_name']);
+
+            $location = new \Skaphandrus\AppBundle\Entity\SkLocation();
+            $location->setId($value['location_id']);
+            $location->translate($locale)->setName($value['location_name']);
+
+
+
+
             $result[] = $photo;
         }
-        
-        return $result;
 
+        return $result;
     }
 
     public function findLikeName($string) {
