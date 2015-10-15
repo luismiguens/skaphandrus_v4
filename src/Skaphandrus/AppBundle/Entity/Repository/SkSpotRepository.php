@@ -135,14 +135,15 @@ class SkSpotRepository extends EntityRepository {
 
         $sql = "SELECT s.id as spot, st.id as st_id, st.name as st_name, count(p.id) as num_photos
                 FROM sk_photo as p
-                JOIN sk_spot as s
+                RIGHT JOIN sk_spot as s
                 on s.id = p.spot_id
                 JOIN sk_spot_translation as st
                 on s.id = st.translatable_id
                 JOIN sk_location as l
                 ON l.id = s.location_id
                 where l.id = " . $location_id . " and st.locale = '" . $locale . "'
-                group by spot";
+                group by spot
+                order by num_photos desc";
 
         $statement = $connection->prepare($sql);
         $statement->execute();
@@ -150,11 +151,11 @@ class SkSpotRepository extends EntityRepository {
         $result = array();
 
         foreach ($values as $value) {
-//            $spot = $em->getRepository('SkaphandrusAppBundle:SkSpot')->find($value['spot']);
-
-            $spot = new \Skaphandrus\AppBundle\Entity\SkSpot();
-            $spot->setId($value['spot']);
-            $spot->translate($locale)->setName($value['st_name']);
+            $spot = $em->getRepository('SkaphandrusAppBundle:SkSpot')->find($value['spot']);
+//
+//            $spot = new \Skaphandrus\AppBundle\Entity\SkSpot();
+//            $spot->setId($value['spot']);
+//            $spot->translate($locale)->setName($value['st_name']);
 
             $spot->setPhotosInSpot($value['num_photos']);
             $result[] = $spot;
@@ -193,7 +194,7 @@ class SkSpotRepository extends EntityRepository {
         }
     }
 
-    public function findSpotsInUser2($user_id, $locale) {
+    public function findSpotsInUser_to_delete($user_id, $locale) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 

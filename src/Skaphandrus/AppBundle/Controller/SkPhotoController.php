@@ -25,7 +25,7 @@ class SkPhotoController extends Controller {
         $fos_user = $this->get('security.token_storage')->getToken()->getUser();
                 $params = array('fosUser'=>$fos_user->getId());
 
-        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($params, 20);
+        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder4($params, 20);
         $query = $qb->getQuery();
 
         //var_dump($params);

@@ -1,20 +1,31 @@
 <div class="lightBoxGallery">
-    {% for photo in photos %}
+    
+    
+
+
+<!-- resultset rows --> 
+    {% for row in photos %}
+        {#{{dump(row)}}#}
+        
         <span itemscope itemtype="http://schema.org/Photograph">
-            <meta itemprop="name" content="{{ photo.title }}">
-            <meta itemprop="dateCreated" content="{{ photo.createdAt|date("Y-m-d") }}">
-            <meta itemprop="datePublished" content="{{ photo.takenAt|date("Y-m-d") }}">
+            <meta itemprop="name" content="{{ row.photo_title}}">
+            <meta itemprop="dateCreated" content="{{ row.photo_created_at|date("Y-m-d") }}">
+            <meta itemprop="datePublished" content="{{ row.photo_taken_at|date("Y-m-d") }}">
             <span itemprop="author" itemscope itemtype="http://schema.org/Person"  >
-                <meta itemprop="name" content="{{ photo.fosUser}}">
-{#                <meta itemprop="url" content="{{ url_to_user(photo.fosUser) }}">#}
+                <meta itemprop="name" content="{{ row.personal_firstname}} {{ row.personal_middlename}} {{ row.personal_lastname}}">
+                <meta itemprop="url" content="{{ path('user',  { 'id': row.fos_user_id }) }}">
             </span>
-            {% if photo.spot is not empty %}
+            {% if row.spot_id is not empty %}
                 <span itemprop="contentLocation" itemscope itemtype="http://schema.org/TouristAttraction">
-                    <meta itemprop="name" content="{{ photo.spot }}, {{ photo.spot.location }}">
+                    <meta itemprop="name" content="{{ row.spot_name }}, {{ row.location_name }}">
                 </span>
             {% endif %}
-            <a href="{{ url_to_photo(photo) }}" title="{{ photo.title }}">
-                <img itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('new_sk_thumbnail_outbound_100') }}" />
+            <a href="{{ path('photo_no_slug',  { 'id': row.photo_id }) }}" title="{{ row.photo_title }}">
+                {#<img itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('new_sk_thumbnail_outbound_100') }}" />#}
+                
+                <img itemprop="image" alt="{{ row.photo_title }}" src="{{ ('upload/fotografias/'~row.photo_image) | imagine_filter('new_sk_thumbnail_outbound_100') }}" />
+                
+                
             </a>
         </span>
     {% endfor %}

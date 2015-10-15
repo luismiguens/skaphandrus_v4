@@ -439,7 +439,7 @@ class SkSpeciesRepository extends EntityRepository {
         return $result;
     }
 
-    public function findSpeciesInLocatinon($location_id) {
+    public function findSpeciesInLocation($location_id) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
@@ -547,7 +547,7 @@ class SkSpeciesRepository extends EntityRepository {
         return $result;
     }
     
-    public function findSpeciesInCountry2($country_id) {
+    public function findSpeciesInCountry_to_delete($country_id) {
         $query = $this->getEntityManager()
             ->createQuery(
                 'SELECT sp
@@ -558,8 +558,7 @@ class SkSpeciesRepository extends EntityRepository {
                 JOIN SkaphandrusAppBundle:SkLocation l WITH l.id = s.location
                 JOIN SkaphandrusAppBundle:SkRegion r WITH r.id = l.region
                 JOIN SkaphandrusAppBundle:SkCountry c WITH c.id = r.country
-                WHERE c.id = :country_id
-                '
+                WHERE c.id = :country_id'
                 )->setParameter('country_id', $country_id);
         try {
             return $query->getResult();

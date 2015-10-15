@@ -282,8 +282,8 @@ class DefaultController extends Controller {
 //                    ->findPhotosCountByUserForModel($species->getId());
 
             $users = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-                ->findUsersInSpecies($species->getId());
-            
+                    ->findUsersInSpecies($species->getId());
+
             return $this->render('SkaphandrusAppBundle:Default:species.html.twig', array(
                         "species" => $species,
                         "photo" => $photo,
@@ -721,9 +721,8 @@ class DefaultController extends Controller {
 
         $params = $request->query->all();
 
-        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($params, 30);
+        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder4($params, 30);
 //        $query = $qb->getQuery();
-
         //var_dump($params);
 
 
@@ -743,7 +742,7 @@ class DefaultController extends Controller {
 
     public function userAction($id) {
         $locale = $this->get('request')->getLocale();
-        
+
         $user = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
                 ->findOneById($id);
 
@@ -773,18 +772,18 @@ class DefaultController extends Controller {
      * <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
      * <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
      */
-    public function skBoardAction($parameters, $limit = 20, $order = array('id' => 'desc')) {
-        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($parameters, $limit, $order);
-//        $query = $qb->getQuery();
-//        $photos = $query->getResult();
-
-        $photos = $qb->getResult();
-        
-        return $this->render('SkaphandrusAppBundle:Default:skBoard.html.twig', array(
-                    'photos' => $photos,
-                    'parameters' => $parameters,
-        ));
-    }
+//    public function skBoardAction($parameters, $limit = 20, $order = array('id' => 'desc')) {
+//        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($parameters, $limit, $order);
+////        $query = $qb->getQuery();
+////        $photos = $query->getResult();
+//
+//        $photos = $qb->getResult();
+//
+//        return $this->render('SkaphandrusAppBundle:Default:skBoard.html.twig', array(
+//                    'photos' => $photos,
+//                    'parameters' => $parameters,
+//        ));
+//    }
 
     /*
      * Prints a grid of photos.
@@ -798,20 +797,19 @@ class DefaultController extends Controller {
 
         // ini_set('memory_limit', '64M');
 
-       $locale = $this->get('request')->getLocale();
-        
+        $locale = $this->get('request')->getLocale();
+
         if (isset($parameters['photos'])) {
             $photos = $parameters['photos'];
             unset($parameters['photos']);
         } else {
-            $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
-                    ->getQueryBuilder($parameters, $limit, $order,0, $locale);
-//            $query = $qb->getQuery();
-//            $photos = $query->getResult();
+            $conn = $this->get('database_connection');
 
-//            $photos = $qb->getResult();
+            $sql = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
+                    ->getQueryForGrid($parameters, $limit, $order, 0, $locale);
+            $photos = $conn->fetchAll($sql);
         }
-        
+
         return $this->render('SkaphandrusAppBundle:Default:skGrid.html.twig', array(
                     'photos' => $photos,
                     'parameters' => $parameters,

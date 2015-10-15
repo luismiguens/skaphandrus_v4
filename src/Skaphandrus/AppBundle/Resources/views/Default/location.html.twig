@@ -204,7 +204,7 @@
                                                     {% set c = location.region.country %}
                                                     {% for spot in spots %}
                                                         <span itemscope itemtype="http://schema.org/TouristAttraction ">
-                                                            <meta itemprop="name" content="{{ spot }}">
+                                                            <meta itemprop="name" content="{{ spot.name }}">
                                                         </span>
                                                         <tr>
                                                             <td>{{ link_to_spot(spot, location, c) }}</td>

@@ -127,7 +127,7 @@
                                         <h3>{{ "page.country.h3.info"|trans }}</h3>
 
                                         <h5>{{ "page.country.h5.overview"|trans }}</h5>
-                                        <p itemprop="description">{{ country.translate(app.request.locale).overview }}</p>
+                                        <p itemprop="description">{{ country.translate(app.request.locale).overview|raw  }}</p>
 
                                         <h5>{{ "page.country.h5.geography_and_climate"|trans }}</h5>
                                         <p>{{ country.translate(app.request.locale).geographyAndClimate }}</p>
@@ -165,10 +165,13 @@
                                                 <tbody>
                                                     {% for l in locations %}
                                                         <span itemscope itemtype="http://schema.org/City ">
-                                                            <meta itemprop="name" content="{{ l }}">
+                                                            <meta itemprop="name" content="{{ l.name }}">
                                                         </span>
                                                         <tr>
-                                                            <td>{{ link_to_location(l, country) }}</td>
+                                                            <td>
+                                                                
+                                                                
+                                                                {{ link_to_location(l, country) }}</td>
 {#                                                            <td>{{ l.spotsCount }}</td>#}
                                                             <td>
                                                                 <a href="{{ path('photos', {'location': l.id}) }}">

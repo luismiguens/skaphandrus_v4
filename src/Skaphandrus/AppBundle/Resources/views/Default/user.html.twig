@@ -252,7 +252,7 @@
                                             {% for pv in user.photosValidated[:35] %}
                                                 {% set pva = pva|merge([pv.photo]) %}
                                             {% endfor %}
-                                            {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'photos': pva } })) }}
+                                            {#{{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'photos': pva } })) }}#}
                                         </div>
                                     {% endif %}
                                     <!-- End Photos Validated Tab -->
