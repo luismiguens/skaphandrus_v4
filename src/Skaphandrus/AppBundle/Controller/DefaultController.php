@@ -752,8 +752,6 @@ class DefaultController extends Controller {
 
         $spots = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')
                 ->findSpotsInUser($user->getId(), $locale);
-        
-        dump($spots);
 
         if ($user) {
             return $this->render('SkaphandrusAppBundle:Default:user.html.twig', array(
@@ -806,13 +804,14 @@ class DefaultController extends Controller {
             $photos = $parameters['photos'];
             unset($parameters['photos']);
         } else {
-            $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder($parameters, $limit, $order,0, $locale);
+            $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
+                    ->getQueryBuilder($parameters, $limit, $order,0, $locale);
 //            $query = $qb->getQuery();
 //            $photos = $query->getResult();
 
 //            $photos = $qb->getResult();
         }
-
+        
         return $this->render('SkaphandrusAppBundle:Default:skGrid.html.twig', array(
                     'photos' => $photos,
                     'parameters' => $parameters,

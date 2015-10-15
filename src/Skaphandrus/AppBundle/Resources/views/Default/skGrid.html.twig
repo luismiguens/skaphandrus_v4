@@ -2,11 +2,11 @@
     {% for photo in photos %}
         <span itemscope itemtype="http://schema.org/Photograph">
             <meta itemprop="name" content="{{ photo.title }}">
-{#            <meta itemprop="dateCreated" content="{{ photo.createdAt|date("Y-m-d") }}">
-            <meta itemprop="datePublished" content="{{ photo.takenAt|date("Y-m-d") }}">#}
+            <meta itemprop="dateCreated" content="{{ photo.createdAt|date("Y-m-d") }}">
+            <meta itemprop="datePublished" content="{{ photo.takenAt|date("Y-m-d") }}">
             <span itemprop="author" itemscope itemtype="http://schema.org/Person"  >
-{#                <meta itemprop="name" content="{{ photo.fosUser}}">
-                <meta itemprop="url" content="{{ url_to_user(photo.fosUser) }}">#}
+                <meta itemprop="name" content="{{ photo.fosUser}}">
+{#                <meta itemprop="url" content="{{ url_to_user(photo.fosUser) }}">#}
             </span>
             {% if photo.spot is not empty %}
                 <span itemprop="contentLocation" itemscope itemtype="http://schema.org/TouristAttraction">

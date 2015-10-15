@@ -168,16 +168,20 @@ class SkPhotoRepository extends EntityRepository {
         $connection = $em->getConnection();
 
         $sql = "SELECT p.id as photo_id, p.title as photo_title, p.image as photo_image, "
+                . "p.created_at as photo_created_at, p.taken_at as photo_taken_at, "
+                . "f.id as fos_user_id, f.username as fos_user_username, fp.id as personal_id,"
+                . "fp.firstname as personal_firstname, fp.middlename as personal_middlename, fp.lastname as personal_lastname, "
                 . "s.id as spot_id, st.name as spot_name, "
                 . "l.id as location_id, lt.name as location_name "
                 . "FROM sk_photo as p "
+                . "JOIN fos_user as f on f.id = p.fos_user_id "
+                . "JOIN sk_personal as fp on f.id = fp.fos_user_id "
                 . "JOIN sk_spot as s on p.spot_id = s.id "
                 . "JOIN sk_spot_translation as st on s.id = st.translatable_id "
                 . "JOIN sk_location as l on s.location_id = l.id "
                 . "JOIN sk_location_translation as lt on l.id = lt.translatable_id ";
 
-
-
+        
         //users
         if (array_key_exists('fosUser', $params)) {
             $sql = $sql . ' where p.fos_user_id = ' . $params['fosUser'];
@@ -185,7 +189,6 @@ class SkPhotoRepository extends EntityRepository {
 
         //spots, locations, regions and countries
         if (array_key_exists('spot', $params)) {
-
             $sql = $sql . ' where p.spot_id = ' . $params['spot'];
         }
 
@@ -293,16 +296,7 @@ class SkPhotoRepository extends EntityRepository {
 
         $sql = $sql . " limit " . $limit;
 
-
-
-
-
-
-
-        dump($sql);
-
-
-
+//        dump($sql);
 
         $statement = $connection->prepare($sql);
         $statement->execute();
@@ -316,7 +310,21 @@ class SkPhotoRepository extends EntityRepository {
             $photo->setId($value['photo_id']);
             $photo->setTitle($value['photo_title']);
             $photo->setImage($value['photo_image']);
+            $photo->setCreatedAt($value['photo_created_at']);
+            $photo->setTakenAt($value['photo_taken_at']);
 
+            $personal = new \Skaphandrus\AppBundle\Entity\SkPersonal();
+            $personal->setFirstname($value['personal_firstname']);
+            $personal->setMiddlename($value['personal_middlename']);
+            $personal->setLastname($value['personal_lastname']);
+            
+            $fosUser = new \Skaphandrus\AppBundle\Entity\FosUser();
+            $fosUser->setId($value['fos_user_id']);
+            $fosUser->setUsername($value['fos_user_username']);
+            $fosUser->setPersonal($personal);
+            
+            $photo->setFosUser($fosUser);
+            
             $spot = new \Skaphandrus\AppBundle\Entity\SkSpot();
             $spot->setId($value['spot_id']);
             $spot->translate($locale)->setName($value['spot_name']);
@@ -325,12 +333,15 @@ class SkPhotoRepository extends EntityRepository {
             $location->setId($value['location_id']);
             $location->translate($locale)->setName($value['location_name']);
 
-
-
-
+            $spot->setLocation($location);
+            
+            $photo->setSpot($spot);
+            
             $result[] = $photo;
         }
 
+        
+        
         return $result;
     }
 
