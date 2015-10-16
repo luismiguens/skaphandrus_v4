@@ -99,13 +99,13 @@
                                         {{ "page.contest.tab.sponsors"|trans }}
                                     </a>
                                 </li>
-                                
+                                {% if category.contest.endAt|date("m/d/Y") < "now"|date("m/d/Y") %} 
                                 <li>
                                 <a href="{{ url_to_contest_winners(category.contest) }}">
                                     {{ "page.contest.tab.winners"|trans }}
                                 </a>
                             </li>
-                            
+                            {%endif%}
                             
                             </ul>
                         </div>

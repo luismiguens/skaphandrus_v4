@@ -134,7 +134,7 @@
                                                                   <h5>{{award.winnerFosUser.name}}</h5>#}
 
 
-                                                        {%else%}    
+                                                        {%elseif award.winnerPhoto %}    
                                                             {# <img class="img-rounded" src="{{ award.winnerPhoto.fosUser.settings.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{award.winnerPhoto.fosUser.name}}" title="{{award.winnerPhoto.fosUser.name}}">
                                                              #}
                                                             <a href="{{ url_to_user(award.winnerPhoto.fosUser) }}">

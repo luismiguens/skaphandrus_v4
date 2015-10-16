@@ -46,7 +46,12 @@
             {% for entity in entities %}
                 <tr>
                     <td>{{ entity.name }}</a></td>
-                    <td><img class="thumbnail" src="{{ entity.getWebPath | imagine_filter('sk_widen_75') }}"/></td>
+                    <td>
+                        {% if entity.image %}
+                        <img class="thumbnail" src="{{ entity.getWebPath | imagine_filter('sk_widen_75') }}"/>
+                    {% endif %}
+                    
+                    </td>
                     <td>{% if entity.endAt %}{{ entity.endAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                     <td>
 {#                        <a class="btn btn-white btn-sm" href="{{ path('photo_contest_admin_show', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.view"|trans }}</a>#}

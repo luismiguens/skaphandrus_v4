@@ -87,6 +87,8 @@
                                         {% for photographer in photographers %}
 
                                             <a href="{{ url_to_user(photographer) }}">
+                                                
+                                                
                                                 <img alt="image" class="img-circle" src="{{ photographer.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
                                             </a>
                                         {% endfor %}
@@ -142,11 +144,16 @@
                                                         {{ "page.contest.tab.sponsors"|trans }}
                                                     </a>
                                                 </li>
+                                               
+                                                {% if contest.endAt|date("m/d/Y") < "now"|date("m/d/Y") %} 
                                                 <li>
                                                     <a href="{{ url_to_contest_winners(contest) }}">
                                                         {{ "page.contest.tab.winners"|trans }}
                                                     </a>
                                                 </li>
+                                                 {% endif%}
+                                                
+                                                
                                             </ul>
                                         </div>
                                     </div>
@@ -170,7 +177,7 @@
                                                             {% for category in contest.categories %}
                                                                 <tr>
                                                                     <td>
-                                                                        {% if category.image is not empty %}
+                                                                        {% if category.image %}
                                                                             {# <img src="/{{ category.photo.0.webPath }}" alt="{{ category.photo.0.title }}" title="{{ category.photo.0.title }}"> #}
                                                                             <img class="img-rounded" src="{{ category.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ category.name }}" title="{{ category.name }}">
                                                                         {% endif %}

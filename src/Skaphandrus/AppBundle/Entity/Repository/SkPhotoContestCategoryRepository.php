@@ -13,7 +13,7 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkPhotoContestCategoryRepository extends EntityRepository {
 
-    public function findOneBySlug($slug, $locale) {
+    public function findOneBySlug($contest, $slug, $locale) {
         $name = Utils::unslugify($slug);
 
         $query = $this->getEntityManager()
@@ -22,8 +22,9 @@ class SkPhotoContestCategoryRepository extends EntityRepository {
                 FROM SkaphandrusAppBundle:SkPhotoContestCategory cc
                 JOIN cc.translations t
                 WHERE t.name = :name
-                AND t.locale = :locale'
-                        )->setParameter('name', $name)->setParameter('locale', $locale);
+                AND t.locale = :locale
+                AND cc.contest = :contest'
+                        )->setParameter('name', $name)->setParameter('locale', $locale)->setParameter('contest', $contest);
         try {
             return $query->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

@@ -57,7 +57,11 @@
                                 {% endif %}
                                 <tr>
                                     <td class="project-logo">
-                                        <a href="{{ url_to_contest(contest) }}"><img alt="image" class="img-rounded" src="{{ contest.getWebPath | imagine_filter('sk_widen_160') }} "></a>
+                                        <a href="{{ url_to_contest(contest) }}">
+                                        {% if contest.image %}    
+                                            <img alt="image" class="img-rounded" src="{{ contest.getWebPath | imagine_filter('sk_widen_160') }} ">
+                                        {% endif %}
+                                        </a>
                                     </td>
                                     <td class="project-title">
                                         <a href="{{ url_to_contest(contest) }}">{{ contest.name }}</a>

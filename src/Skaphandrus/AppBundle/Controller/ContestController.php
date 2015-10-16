@@ -26,11 +26,18 @@ class ContestController extends Controller {
     }
 
     public function photosAction($contest_slug, $category_slug) {
+        
+           $name = str_replace('-', ' ', $contest_slug);
+
+        $contest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
+                ->findOneByName($name);
+        
+        
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $locale = $this->get('request')->getLocale();
 
         $category = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')
-                ->findOneBySlug($category_slug, $locale);
+                ->findOneBySlug($contest, $category_slug, $locale);
 
         if ($category) {
             if ($category->getContest()->getName() != str_replace('-', ' ', $contest_slug)) {
