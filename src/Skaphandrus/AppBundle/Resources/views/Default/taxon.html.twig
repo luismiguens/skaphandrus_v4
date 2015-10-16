@@ -255,7 +255,7 @@
                                             <h5>{{ child.name }}<h5>
                                                     {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { (child.taxonNodeName) : child.id }, 'limit':8 } )) }}
                                         {% endfor #}
-                                        {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { (taxon.taxonNodeName) : taxon.id }, 'limit': 20 } )) }}
+                                        {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { (taxon.taxonNodeName) : taxon.id }, 'limit': 24 } )) }}
                                     </div>
 
                                     <div id="tab-3" class="tab-pane">

@@ -793,7 +793,7 @@ class DefaultController extends Controller {
      * <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
      */
 
-    public function skGridAction($parameters, $limit = 35, $order = array('id' => 'desc')) {
+    public function skGridAction($parameters, $limit = 24, $order = array('id' => 'desc')) {
 
         // ini_set('memory_limit', '64M');
 

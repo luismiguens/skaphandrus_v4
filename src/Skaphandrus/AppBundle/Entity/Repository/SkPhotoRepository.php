@@ -171,12 +171,12 @@ class SkPhotoRepository extends EntityRepository {
                 )->setMaxResults($limit)->setParameter('id', 26)
                 ->getResult();
 
-        dump($photos);
+        //dump($photos);
 
         return $photos;
     }
 
-    public function getQueryForGrid($params, $limit = 35, $order = array('id' => 'desc'), $offset = 0, $locale = "en") {
+    public function getQueryForGrid($params, $limit = 24, $order = array('id' => 'desc'), $offset = 0, $locale = "en") {
 
         $sql = "SELECT p.id as photo_id, p.title as photo_title, p.image as photo_image, "
                 . "p.created_at as photo_created_at, p.taken_at as photo_taken_at, "
@@ -275,7 +275,7 @@ class SkPhotoRepository extends EntityRepository {
 
         $sql = $sql . " limit " . $limit;
 
-        dump($sql);
+        //dump($sql);
         
         return $sql;
     }

@@ -248,7 +248,7 @@
 
                         {% if photo.species is not empty %}
                             <h3>{{ "page.photo.h3.species_photos"|trans }}</h3>
-                            {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': photo.species.id } } )) }}
+                            {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': photo.species.id },'limit':24  } )) }}
                         {% endif %}
                     </div>
                 </div>

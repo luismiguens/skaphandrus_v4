@@ -255,7 +255,7 @@
                                     {% if species.photos|first is not empty %}
                                         <div id="tab-{{tab_photos_id}}" class="tab-pane {{tab_photos_id==1?'active'}}">
                                             <h3>{{ "page.species.h3.photos"|trans }}</h3>
-                                            {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': species.id },'limit':35 } )) }}
+                                            {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': species.id },'limit':24 } )) }}
 
                                         </div>
                                     {% endif %}                                                
