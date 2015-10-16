@@ -44,7 +44,6 @@ class SkPhotoRepository extends EntityRepository {
         return $this->findOneBy(array('species' => $species_id), array('id' => 'DESC'));
     }
 
-    
     //utilizado na galeria de fotografias
     public function getQueryBuilder4($params, $limit = 20, $order = array('id' => 'desc'), $offset = 0) {
 
@@ -155,39 +154,29 @@ class SkPhotoRepository extends EntityRepository {
             $qb->setFirstResult($offset);
         }
 
-
         $qb->setMaxResults($limit);
-
-
-//        echo $qb;
 
         return $qb;
     }
 
-    
-    
     public function getQueryBuilder3($params, $limit = 20, $order = array('id' => 'desc'), $offset = 0, $locale = "en") {
 
-    $photos = $this->getEntityManager()
-                        ->createQuery(
-                                "SELECT p
+        $photos = $this->getEntityManager()
+                ->createQuery(
+                        "SELECT p
             FROM SkaphandrusAppBundle:FosUser u
             JOIN SkaphandrusAppBundle:SkPhoto p WITH u.id = IDENTITY(p.fosUser)
             JOIN SkaphandrusAppBundle:SkPersonal ps WITH u.id = IDENTITY(ps.fosUser)
                 WHERE IDENTITY(p.fosUser) = :id "
-                        )->setMaxResults($limit)->setParameter('id', 26)
-            ->getResult();
-    
-    dump($photos);
-    
-    return $photos;
-    
-    
-    
+                )->setMaxResults($limit)->setParameter('id', 26)
+                ->getResult();
+
+        dump($photos);
+
+        return $photos;
     }
-    
-    
-    public function getQueryForGrid($params, $limit = 20, $order = array('id' => 'desc'), $offset = 0, $locale = "en") {
+
+    public function getQueryForGrid($params, $limit = 35, $order = array('id' => 'desc'), $offset = 0, $locale = "en") {
 
         $sql = "SELECT p.id as photo_id, p.title as photo_title, p.image as photo_image, "
                 . "p.created_at as photo_created_at, p.taken_at as photo_taken_at, "
@@ -202,7 +191,7 @@ class SkPhotoRepository extends EntityRepository {
                 . "JOIN sk_spot_translation as st on s.id = st.translatable_id "
                 . "JOIN sk_location as l on s.location_id = l.id "
                 . "JOIN sk_location_translation as lt on l.id = lt.translatable_id ";
-        
+
         //users
         if (array_key_exists('fosUser', $params)) {
             $sql = $sql . ' where p.fos_user_id = ' . $params['fosUser'];
@@ -215,88 +204,67 @@ class SkPhotoRepository extends EntityRepository {
 
         if (array_key_exists('location', $params)) {
             $sql = $sql . ' where s.location_id = ' . $params['location'];
-            
+        }
+
+        if (array_key_exists('country', $params)) {
+            $sql = $sql . "JOIN sk_region as r on l.region_id = r.id ";
+            $sql = $sql . ' where r.country_id = ' . $params['country'];
         }
 
 
-//
-//        if (array_key_exists('country', $params)) {
-//            $qb->join('p.spot', 's', 'WITH', 'p.spot = s.id');
-//            $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
-//            $qb->join('l.region', 'r', 'WITH', 'l.region = r.id');
-//            $qb->join('r.country', 'c', 'WITH', 'r.country = ?6');
-//            $qb->setParameter(6, $params['country']);
-//        }
-//
-//
-//        //species, genus, families, orders, classes, kingdoms
-//        if (array_key_exists('species', $params)) {
-//            $qb->andWhere('p.species = ?7');
-//            $qb->setParameter(7, $params['species']);
-//        }
-//
-//        if (array_key_exists('kingdom', $params)) {
-//            $qb->join('p.species', 's', 'WITH', 'p.species = s.id');
-//            $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
-//            $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
-//            $qb->join('f.order', 'o', 'WITH', 'f.order = o.id');
-//            $qb->join('o.class', 'c', 'WITH', 'o.class = c.id');
-//            $qb->join('c.phylum', 'ph', 'WITH', 'c.phylum = ph.id');
-//            $qb->join('ph.kingdom', 'k', 'WITH', 'ph.kingdom = ?8');
-//            $qb->setParameter(8, $params['kingdom']);
-//        }
-//
-//
-//        if (array_key_exists('phylum', $params)) {
-//            $qb->join('p.species', 's', 'WITH', 'p.species = s.id');
-//            $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
-//            $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
-//            $qb->join('f.order', 'o', 'WITH', 'f.order = o.id');
-//            $qb->join('o.class', 'c', 'WITH', 'o.class = c.id');
-//            $qb->join('c.phylum', 'ph', 'WITH', 'c.phylum = ?9');
-//            $qb->setParameter(9, $params['phylum']);
-//        }
-//
-//        if (array_key_exists('class', $params)) {
-//            $qb->join('p.species', 's', 'WITH', 'p.species = s.id');
-//            $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
-//            $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
-//            $qb->join('f.order', 'o', 'WITH', 'f.order = o.id');
-//            $qb->join('o.class', 'c', 'WITH', 'o.class = ?10');
-//            $qb->setParameter(10, $params['class']);
-//        }
-//
-//        if (array_key_exists('order', $params)) {
-//            $qb->join('p.species', 's', 'WITH', 'p.species = s.id');
-//            $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
-//            $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
-//            $qb->join('f.order', 'o', 'WITH', 'f.order = ?11');
-//            $qb->setParameter(11, $params['order']);
-//        }
-//
-//        if (array_key_exists('family', $params)) {
-//            $qb->join('p.species', 's', 'WITH', 'p.species = s.id');
-//            $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
-//            $qb->join('g.family', 'f', 'WITH', 'g.family = ?12');
-//            $qb->setParameter(12, $params['family']);
-//        }
-//
-//        if (array_key_exists('genus', $params)) {
-//            $qb->join('p.species', 's', 'WITH', 'p.species = s.id');
-//            $qb->join('s.genus', 'g', 'WITH', 's.genus = ?13');
-////            $qb->join('p.species', 's');
-////            $qb->join('s.genus', 'g');
-//            
-//            //$qb->andWhere('g.genus = ?13');
-//            $qb->setParameter(13, $params['genus']);
-//        }
-//
+        //species, genus, families, orders, classes, kingdoms
+        if (array_key_exists('species', $params)) {
+            $sql = $sql . ' where p.species_id = ' . $params['species'];
+        }
 
-        
-        
-        $sql = $sql . " and st.locale = '". $locale."' ";
-        $sql = $sql . " and lt.locale = '". $locale."' ";
-        
+        if (array_key_exists('kingdom', $params)) {
+            $sql = $sql . "JOIN sk_species as sp on p.species_id = sp.id ";
+            $sql = $sql . "JOIN sk_genus as g on sp.genus_id = g.id ";
+            $sql = $sql . "JOIN sk_family as fa on g.family_id = fa.id ";
+            $sql = $sql . "JOIN sk_order as o on fa.order_id = o.id ";
+            $sql = $sql . "JOIN sk_class as c on o.class_id = c.id ";
+            $sql = $sql . "JOIN sk_phylum as ph on c.phylum_id = ph.id ";
+            $sql = $sql . ' where ph.kingdom_id = ' . $params['kingdom'];
+        }
+
+        if (array_key_exists('phylum', $params)) {
+            $sql = $sql . "JOIN sk_species as sp on p.species_id = sp.id ";
+            $sql = $sql . "JOIN sk_genus as g on sp.genus_id = g.id ";
+            $sql = $sql . "JOIN sk_family as fa on g.family_id = fa.id ";
+            $sql = $sql . "JOIN sk_order as o on fa.order_id = o.id ";
+            $sql = $sql . "JOIN sk_class as c on o.class_id = c.id ";
+            $sql = $sql . ' where c.phylum_id = ' . $params['phylum'];
+        }
+
+        if (array_key_exists('class', $params)) {
+            $sql = $sql . "JOIN sk_species as sp on p.species_id = sp.id ";
+            $sql = $sql . "JOIN sk_genus as g on sp.genus_id = g.id ";
+            $sql = $sql . "JOIN sk_family as fa on g.family_id = fa.id ";
+            $sql = $sql . "JOIN sk_order as o on fa.order_id = o.id ";
+            $sql = $sql . ' where o.class_id = ' . $params['class'];
+        }
+
+        if (array_key_exists('order', $params)) {
+            $sql = $sql . "JOIN sk_species as sp on p.species_id = sp.id ";
+            $sql = $sql . "JOIN sk_genus as g on sp.genus_id = g.id ";
+            $sql = $sql . "JOIN sk_family as fa on g.family_id = fa.id ";
+            $sql = $sql . ' where fa.order_id = ' . $params['order'];
+        }
+
+        if (array_key_exists('family', $params)) {
+            $sql = $sql . "JOIN sk_species as sp on p.species_id = sp.id ";
+            $sql = $sql . "JOIN sk_genus as g on sp.genus_id = g.id ";
+            $sql = $sql . ' where g.family_id = ' . $params['family'];
+        }
+
+        if (array_key_exists('genus', $params)) {
+            $sql = $sql . "JOIN sk_species as sp on p.species_id = sp.id ";
+            $sql = $sql . ' where sp.genus_id = ' . $params['genus'];
+        }
+
+        $sql = $sql . " and st.locale = '" . $locale . "' ";
+        $sql = $sql . " and lt.locale = '" . $locale . "' ";
+
         if ($order) {
             $sql = $sql . " order by p." . key($order) . " " . $order[key($order)];
         }
@@ -306,9 +274,10 @@ class SkPhotoRepository extends EntityRepository {
         }
 
         $sql = $sql . " limit " . $limit;
+
+        dump($sql);
         
         return $sql;
-
     }
 
     public function findLikeName($string) {

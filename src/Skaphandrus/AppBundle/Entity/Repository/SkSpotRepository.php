@@ -111,12 +111,10 @@ class SkSpotRepository extends EntityRepository {
     public function findSearchResults($string, $locale) {
         return $this->getEntityManager()
                         ->createQuery(
-                                'SELECT
-                    s as spot,
-                    st.name as title,
-                    st.description as description,
-                    lt.name as location_name,
-                    c.name as country_name
+                                'SELECT s as spot,
+                st.name as title, st.description as description,
+                lt.name as location_name,
+                c.name as country_name
                 FROM SkaphandrusAppBundle:SkSpot s
                 JOIN s.translations st
                 JOIN s.location l
@@ -129,7 +127,57 @@ class SkSpotRepository extends EntityRepository {
                         )->setParameter('locale', $locale)->setParameter('string', '%' . $string . '%')->getResult();
     }
 
-    public function findSpotsInLocation($location_id, $locale) {
+    public function findSpotsInLocation($location_id) {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('s as spot')
+                ->addSelect('Count(p.id) as photosInSpot');
+        $qb->from('SkaphandrusAppBundle:SkSpot', 's');
+        $qb->leftjoin('SkaphandrusAppBundle:SkPhoto', 'p', 'WITH', 's.id = p.spot');
+        $qb->join('s.location', 'l', 'WITH', 'l.id = :location_id');
+        $qb->groupBy('spot');
+        $qb->orderBy('photosInSpot', 'desc');
+        
+        $qb->setParameter('location_id', $location_id);
+
+        $result = array();
+
+        foreach ($qb->getQuery()->getResult() as $value) {
+            $value['spot']->setPhotosInSpot($value['photosInSpot']);
+            $result[] = $value['spot'];
+        }
+
+        try {
+            return $result;
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function findSpotsInUser($user_id) {
+        $query = $this->getEntityManager()
+                        ->createQuery(
+                                'SELECT s as spot, COUNT(p.id) as photosInSpot
+                FROM SkaphandrusAppBundle:SkSpot s
+                JOIN SkaphandrusAppBundle:SkPhoto p WITH s.id = p.spot
+                WHERE p.fosUser = :user_id
+                GROUP BY spot
+                order by photosInSpot desc'
+                        )->setParameter('user_id', $user_id);
+
+        foreach ($query->getResult() as $value) {
+            $value['spot']->setPhotosInSpot($value['photosInSpot']);
+            $result[] = $value['spot'];
+        }
+
+        try {
+            return $result;
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function findSpotsInLocation_to_delete($location_id, $locale) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
@@ -164,36 +212,6 @@ class SkSpotRepository extends EntityRepository {
         return $result;
     }
 
-    public function findSpotsInUser($user_id) {
-        $query = $this->getEntityManager()
-                        ->createQuery(
-                                'SELECT s as spot, COUNT(p.id) as photosInSpot
-                FROM SkaphandrusAppBundle:SkSpot s
-                JOIN SkaphandrusAppBundle:SkPhoto p WITH s.id = p.spot
-                WHERE p.fosUser = :user_id
-                GROUP BY spot'
-                        )->setParameter('user_id', $user_id);
-
-//            dump($query->getResult());
-
-        foreach ($query->getResult() as $value) {
-//            $spot = $em->getRepository('SkaphandrusAppBundle:SkSpot')->find($value['spot']);
-
-            $value['spot']->setPhotosInSpot($value['photosInSpot']);
-
-            $result[] = $value['spot'];
-        }
-
-//        return $result;
-
-        try {
-            return $result;
-//            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-    }
-
     public function findSpotsInUser_to_delete($user_id, $locale) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
@@ -222,8 +240,6 @@ class SkSpotRepository extends EntityRepository {
             $spot->setPhotosInSpot($value['num_photos']);
             $result[] = $spot;
         }
-
-        dump($result);
 
         return $result;
     }

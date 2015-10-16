@@ -422,7 +422,7 @@ class DefaultController extends Controller {
                     ->findSpotsInLocation($location->getId(), $locale);
 
             $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
-                    ->findSpeciesInLocatinon($location->getId());
+                    ->findSpeciesInLocation($location->getId());
 
             $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
                     ->findUsersInLocation($location->getId());

@@ -185,10 +185,7 @@
                                             <h5>{{ "page.location.h5.extra_dive"|trans }}</h5>
                                             <p>{{ location.extraDive }}</p>
                                         {% endif %}
-
-
                                     </div>
-
 
                                     <div id="tab-2" class="tab-pane">
                                         <h3>{{ "page.location.h3.spots"|trans }}</h3>
@@ -203,18 +200,18 @@
                                                 <tbody>
                                                     {% set c = location.region.country %}
                                                     {% for spot in spots %}
-                                                        <span itemscope itemtype="http://schema.org/TouristAttraction ">
-                                                            <meta itemprop="name" content="{{ spot.name }}">
-                                                        </span>
-                                                        <tr>
-                                                            <td>{{ link_to_spot(spot, location, c) }}</td>
-                                                            <td>
-                                                                <a href="{{ path('photos', {'spot': spot.id}) }}">
-                                                                    {{ spot.photosInSpot }}
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    {% endfor %}
+                                                    <span itemscope itemtype="http://schema.org/TouristAttraction ">
+                                                        <meta itemprop="name" content="{{ spot }}">
+                                                    </span>
+                                                    <tr>
+                                                        <td>{{ link_to_spot(spot, location, c) }}</td>
+                                                        <td>
+                                                            <a href="{{ path('photos', {'spot': spot.id}) }}">
+                                                                {{ spot.photosInSpot }}
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
@@ -237,20 +234,20 @@
                                             </thead>
                                             <tbody>
                                                 {% for sp in species %}
-                                                    <span itemprop="additionalProperty" itemscope itemtype="http://schema.org/PropertyValue">
-                                                        <meta itemprop="name" content="sea animal">
-                                                        <meta itemprop="value" content="{{ sp }}">
-                                                    </span>
-                                                    <tr>
-                                                        <td>{{ link_to_species(sp) }}</td>
-                                                        <td>
-                                                            <a href="{{ path('photos', {'species': sp.id, 'location': location.id}) }}">
-                                                                {{ sp.photosInSpecies }}
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    </tr>
-                                                {% endfor%}
+                                                <span itemprop="additionalProperty" itemscope itemtype="http://schema.org/PropertyValue">
+                                                    <meta itemprop="name" content="sea animal">
+                                                    <meta itemprop="value" content="{{ sp }}">
+                                                </span>
+                                                <tr>
+                                                    <td>{{ link_to_species(sp) }}</td>
+                                                    <td>
+                                                        <a href="{{ path('photos', {'species': sp.id, 'location': location.id}) }}">
+                                                            {{ sp.photosInSpecies }}
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                </tr>
+                                            {% endfor%}
                                             </tbody>
                                             <tfoot>
                                                 <tr>

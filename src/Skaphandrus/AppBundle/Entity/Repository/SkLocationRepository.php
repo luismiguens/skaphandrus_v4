@@ -17,15 +17,15 @@ class SkLocationRepository extends EntityRepository {
         $name = Utils::unslugify($slug);
 
         $query = $this->getEntityManager()
-                ->createQuery(
-                    'SELECT l, t
+                        ->createQuery(
+                                'SELECT l, t
                     FROM SkaphandrusAppBundle:SkLocation l
                     JOIN l.translations t
                     JOIN l.region r
                     WHERE t.name = :name
                     AND t.locale = :locale
                     AND IDENTITY(r.country) = ' . $this->getEntityManager()->getRepository('SkaphandrusAppBundle:SkCountry')->findBySlug($country)->getId()
-                )->setParameter('name', $name)->setParameter('locale', $locale);
+                        )->setParameter('name', $name)->setParameter('locale', $locale);
         try {
             return $query->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -36,13 +36,125 @@ class SkLocationRepository extends EntityRepository {
     public function findLikeName($term, $locale) {
 
         return $this->getEntityManager()->createQuery(
-                    "SELECT l
+                        "SELECT l
                     FROM SkaphandrusAppBundle:SkLocation l
                     JOIN l.translations t
                     WHERE t.name LIKE :term
                     AND t.locale = :locale
                     ORDER BY t.name DESC"
                 )->setParameter('term', '%' . $term . '%')->setParameter('locale', $locale)->getResult();
+    }
+
+    public function findLocationsInCountry($country_id) {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('l as location')
+                ->addSelect('Count(p.id) as photosInLocation');
+        $qb->from('SkaphandrusAppBundle:SkLocation', 'l');
+        $qb->join('l.region', 'r', 'WITH', 'l.region = r.id');
+        $qb->join('r.country', 'c', 'WITH', 'r.country = :coutry_id');
+        $qb->join('SkaphandrusAppBundle:SkSpot', 's', 'WITH', 's.location = l.id');
+        $qb->leftJoin('SkaphandrusAppBundle:SkPhoto', 'p', 'WITH', 'p.spot = s.id');
+        $qb->groupBy('location');
+        $qb->orderBy('photosInLocation', 'desc');
+        
+        $qb->setParameter('coutry_id', $country_id);
+
+        $result = array();
+
+        foreach ($qb->getQuery()->getResult() as $value) {
+            $value['location']->setPhotosInLocation($value['photosInLocation']);
+            $result[] = $value['location'];
+        }
+
+        try {
+            return $result;
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+//    public function findAllForList($country_id) {
+//        return $this->getEntityManager()
+//                        ->createQuery(
+//                                'SELECT l
+//                FROM SkaphandrusAppBundle:SkLocation l
+//                JOIN l.region r
+//                JOIN r.country c
+//                JOIN SkaphandrusAppBundle:SkSpot s
+//                    WITH IDENTITY(s.location) = l.id
+//                WHERE IDENTITY(r.country) = :country_id
+//                GROUP BY l.id')->setParameter('country_id', $country_id)->getResult();
+//    }
+
+    public function countSpotsArray() {
+        $spots = $this->getEntityManager()
+                        ->createQuery(
+                                'SELECT l.id location_id, count(s.id) as spot_count
+                    FROM SkaphandrusAppBundle:SkSpot s
+                    JOIN s.location l
+                    GROUP BY l.id'
+                        )->getResult();
+
+        $spots_array = array();
+        foreach ($spots as $result) {
+            $spots_array[$result['location_id']] = $result['spot_count'];
+        }
+        return $spots_array;
+    }
+
+    public function countPhotosArray() {
+        $photos = $this->getEntityManager()
+                        ->createQuery(
+                                'SELECT l.id location_id, count(p.id) as photo_count
+                    FROM SkaphandrusAppBundle:SkPhoto p
+                    JOIN p.spot s
+                    JOIN s.location l
+                    group by l.id'
+                        )->getResult();
+
+        $photos_array = array();
+        foreach ($photos as $result) {
+            $photos_array[$result['location_id']] = $result['photo_count'];
+        }
+        return $photos_array;
+    }
+
+//    public function getPhotographers($location_id) {
+//        return $this->getEntityManager()
+//                        ->createQuery(
+//                                'SELECT u as fosUser, count(p.id) as photoCount
+//                FROM SkaphandrusAppBundle:FosUser u
+//                JOIN SkaphandrusAppBundle:SkPhoto p
+//                    WITH IDENTITY(p.fosUser) = u.id
+//                JOIN p.spot s
+//                JOIN s.location l
+//                WHERE l.id = :location_id
+//                GROUP BY u.id'
+//                        )->setParameter('location_id', $location_id)->getResult();
+//    }
+
+    public function findSearchResults($string, $locale) {
+        return $this->getEntityManager()
+                        ->createQuery(
+                                'SELECT l as location, lt.name as title, lt.description as description, c.name as country_name
+                    FROM SkaphandrusAppBundle:SkLocation l
+                    JOIN l.translations lt
+                    JOIN l.region r
+                    JOIN r.country c
+                    WHERE lt.locale = :locale
+                    AND lt.name LIKE :string'
+                        )->setParameter('locale', $locale)->setParameter('string', '%' . $string . '%')->getResult();
+    }
+
+    public function getSpots($location_id) {
+        return $this->getEntityManager()
+                        ->createQuery(
+                                'SELECT s 
+                    FROM SkaphandrusAppBundle:SkSpot s
+                    JOIN s.location l
+                    WHERE l.id = :location_id'
+                        )->setParameter('location_id', $location_id)->getResult();
     }
 
     public function findLocationsInCountry_to_delete($country_id, $locale) {
@@ -80,123 +192,7 @@ class SkLocationRepository extends EntityRepository {
             $location->setPhotosInLocation($value['num_photos']);
             $result[] = $location;
         }
-        
+
         return $result;
     }
-    
-    public function findLocationsInCountry($country_id) {
-        
-        $query = $this->getEntityManager()
-            ->createQuery(
-                'SELECT l as location, COUNT(photo.id) as photosInLocation
-                FROM SkaphandrusAppBundle:SkLocation l
-                JOIN l.region r
-                JOIN r.country c
-                JOIN SkaphandrusAppBundle:SkSpot s WITH s.location = l.id
-                JOIN SkaphandrusAppBundle:SkPhoto photo WITH photo.spot = s.id
-                WHERE r.country = :country_id
-                GROUP BY location'
-            )->setParameter('country_id', $country_id);
-
-        $results = array();
-        
-        foreach ($query->getResult() as $value) {
-//            $spot = $em->getRepository('SkaphandrusAppBundle:SkSpot')->find($value['spot']);
-
-            $value['location']->setPhotosInLocation($value['photosInLocation']);
-            
-            $results[] = $value['location'];
-        }
-        
-        try {
-            return $results;
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-
-    }
-
-//    public function findAllForList($country_id) {
-//        return $this->getEntityManager()
-//                        ->createQuery(
-//                                'SELECT l
-//                FROM SkaphandrusAppBundle:SkLocation l
-//                JOIN l.region r
-//                JOIN r.country c
-//                JOIN SkaphandrusAppBundle:SkSpot s
-//                    WITH IDENTITY(s.location) = l.id
-//                WHERE IDENTITY(r.country) = :country_id
-//                GROUP BY l.id')->setParameter('country_id', $country_id)->getResult();
-//    }
-
-    public function countSpotsArray() {
-        $spots = $this->getEntityManager()
-                ->createQuery(
-                    'SELECT l.id location_id, count(s.id) as spot_count
-                    FROM SkaphandrusAppBundle:SkSpot s
-                    JOIN s.location l
-                    GROUP BY l.id'
-                )->getResult();
-
-        $spots_array = array();
-        foreach ($spots as $result) {
-            $spots_array[$result['location_id']] = $result['spot_count'];
-        }
-        return $spots_array;
-    }
-
-    public function countPhotosArray() {
-        $photos = $this->getEntityManager()
-                ->createQuery(
-                    'SELECT l.id location_id, count(p.id) as photo_count
-                    FROM SkaphandrusAppBundle:SkPhoto p
-                    JOIN p.spot s
-                    JOIN s.location l
-                    group by l.id'
-                )->getResult();
-
-        $photos_array = array();
-        foreach ($photos as $result) {
-            $photos_array[$result['location_id']] = $result['photo_count'];
-        }
-        return $photos_array;
-    }
-
-//    public function getPhotographers($location_id) {
-//        return $this->getEntityManager()
-//                        ->createQuery(
-//                                'SELECT u as fosUser, count(p.id) as photoCount
-//                FROM SkaphandrusAppBundle:FosUser u
-//                JOIN SkaphandrusAppBundle:SkPhoto p
-//                    WITH IDENTITY(p.fosUser) = u.id
-//                JOIN p.spot s
-//                JOIN s.location l
-//                WHERE l.id = :location_id
-//                GROUP BY u.id'
-//                        )->setParameter('location_id', $location_id)->getResult();
-//    }
-
-    public function findSearchResults($string, $locale) {
-        return $this->getEntityManager()
-                ->createQuery(
-                    'SELECT l as location, lt.name as title, lt.description as description, c.name as country_name
-                    FROM SkaphandrusAppBundle:SkLocation l
-                    JOIN l.translations lt
-                    JOIN l.region r
-                    JOIN r.country c
-                    WHERE lt.locale = :locale
-                    AND lt.name LIKE :string'
-                )->setParameter('locale', $locale)->setParameter('string', '%' . $string . '%')->getResult();
-    }
-
-    public function getSpots($location_id) {
-        return $this->getEntityManager()
-                ->createQuery(
-                    'SELECT s 
-                    FROM SkaphandrusAppBundle:SkSpot s
-                    JOIN s.location l
-                    WHERE l.id = :location_id'
-                )->setParameter('location_id', $location_id)->getResult();
-    }
-
 }

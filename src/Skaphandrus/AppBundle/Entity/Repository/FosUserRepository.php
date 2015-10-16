@@ -195,7 +195,9 @@ class FosUserRepository extends EntityRepository {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
-        $sql = "SELECT u.id as id, u.username as username, up.id as p_id, up.firstname as firstname, up.middlename as middlename, up.lastname as lastname, count(p.id) as photosInUser 
+        $sql = "SELECT u.id as id, u.username as username, 
+                up.id as p_id, up.firstname as firstname, up.middlename as middlename, up.lastname as lastname, 
+                count(p.id) as photosInUser 
                 FROM fos_user as u
                 JOIN sk_personal as up
                 on u.id = up.fos_user_id
@@ -210,7 +212,8 @@ class FosUserRepository extends EntityRepository {
                 JOIN sk_country as c
                 ON r.country_id = c.id
                 where c.id = " . $country_id . "
-                group by id";
+                group by id
+                order by photosInUser desc";
 
         $statement = $connection->prepare($sql);
         $statement->execute();
@@ -238,7 +241,7 @@ class FosUserRepository extends EntityRepository {
         return $result;
     }
 
-    public function findUsersInCountry2($country_id) {
+    public function findUsersInCountry_to_delete($country_id) {
         $query = $this->getEntityManager()->createQuery(
                         "SELECT u as fosUser, COUNT(photo.id) as photosInUser
                 FROM SkaphandrusAppBundle:FosUser u
@@ -247,26 +250,30 @@ class FosUserRepository extends EntityRepository {
                 JOIN s.location l
                 JOIN l.region r
                 WHERE r.country = :country_id
-                GROUP BY u.id"
+                GROUP BY u.id
+                order by photosInUser desc"
                 )->setParameter('country_id', $country_id);
 
+        foreach ($query->getResult() as $value) {
+            $value['fosUser']->setPhotosInUser($value['photosInUser']);
+            $result[] = $value['fosUser'];
+        }
+
         try {
-            return $query->getResult();
-        } catch (NoResultException $e) {
+            return $result;
+        } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
     }
 
-    public function findUsersInCountry3($country_id) {
+    public function findUsersInCountry2_to_delete($country_id) {
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('u as fosUser')
                 ->addSelect('Count(p.id) as photosInUser')
                 ->from('SkaphandrusAppBundle:FosUser', 'u')
-
                 //users
                 ->join('u.photos', 'p', 'WITH', 'p.fosUser = u.id')
-
                 //spots, locations, regions and countries
                 ->join('p.spot', 's', 'WITH', 'p.spot = s.id')
                 ->join('s.location', 'l', 'WITH', 's.location = l.id')
@@ -284,7 +291,9 @@ class FosUserRepository extends EntityRepository {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
-        $sql = "SELECT u.id as id, u.username as username, up.id as p_id, up.firstname as firstname, up.middlename as middlename, up.lastname as lastname, count(p.id) as photosInUser 
+        $sql = "SELECT u.id as id, u.username as username, 
+                up.id as p_id, up.firstname as firstname, up.middlename as middlename, up.lastname as lastname, 
+                count(p.id) as photosInUser 
                 FROM fos_user as u
                 JOIN sk_personal as up
                 on u.id = up.fos_user_id
@@ -295,7 +304,8 @@ class FosUserRepository extends EntityRepository {
                 JOIN sk_location as l
                 ON l.id = s.location_id
                 where l.id = " . $location_id . "
-                group by id";
+                group by id
+                order by photosInUser desc";
 
         $statement = $connection->prepare($sql);
         $statement->execute();
@@ -327,7 +337,9 @@ class FosUserRepository extends EntityRepository {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
-        $sql = "SELECT u.id as id, u.username as username, up.id as p_id, up.firstname as firstname, up.middlename as middlename, up.lastname as lastname, count(p.id) as photosInUser 
+        $sql = "SELECT u.id as id, u.username as username, 
+                up.id as p_id, up.firstname as firstname, up.middlename as middlename, up.lastname as lastname, 
+                count(p.id) as photosInUser 
                 FROM fos_user as u
                 JOIN sk_personal as up
                 on u.id = up.fos_user_id
@@ -336,7 +348,8 @@ class FosUserRepository extends EntityRepository {
                 JOIN sk_spot as s
                 on s.id = p.spot_id
                 where s.id = " . $spot_id . "
-                group by id";
+                group by id
+                order by photosInUser desc";
 
         $statement = $connection->prepare($sql);
         $statement->execute();
@@ -368,7 +381,9 @@ class FosUserRepository extends EntityRepository {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
-        $sql = "SELECT u.id as id, u.username as username, up.id as p_id, up.firstname as firstname, up.middlename as middlename, up.lastname as lastname, count(p.id) as photosInUser 
+        $sql = "SELECT u.id as id, u.username as username, 
+                up.id as p_id, up.firstname as firstname, up.middlename as middlename, up.lastname as lastname, 
+                count(p.id) as photosInUser 
                 FROM fos_user as u
                 JOIN sk_personal as up
                 on u.id = up.fos_user_id
@@ -377,7 +392,8 @@ class FosUserRepository extends EntityRepository {
                 JOIN sk_species as sp
                 on sp.id = p.species_id
                 where sp.id = " . $species_id . "
-                group by id";
+                group by id
+                order by photosInUser desc";
 
         $statement = $connection->prepare($sql);
         $statement->execute();
@@ -409,28 +425,31 @@ class FosUserRepository extends EntityRepository {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
-        $sql = "SELECT u.id as id, u.username as username, up.id as p_id, up.firstname as firstname, up.middlename as middlename, up.lastname as lastname, count(pho.id) as photosInUser 
-                    FROM fos_user as u
-                    JOIN sk_personal as up
-                    on u.id = up.fos_user_id
-                    JOIN sk_photo as pho
-                    on u.id = pho.fos_user_id
-                    JOIN sk_species as sp
-                    on sp.id = pho.species_id
-                    JOIN sk_genus as g
-                    on g.id = sp.genus_id
-                    JOIN sk_family as f
-                    on f.id = g.family_id
-                    JOIN sk_order as o
-                    on o.id = f.order_id
-                    JOIN sk_class as c
-                    on c.id = o.class_id
-                    JOIN sk_phylum as p
-                    on p.id = c.phylum_id
-                    JOIN sk_kingdom as k
-                    on k.id = p.kingdom_id
-                    where " . substr($taxon_name, 0, 1) . ".id = " . $taxon_id . "
-                    group by u.id";
+        $sql = "SELECT u.id as id, u.username as username, 
+                up.id as p_id, up.firstname as firstname, up.middlename as middlename, up.lastname as lastname, 
+                count(pho.id) as photosInUser 
+                FROM fos_user as u
+                JOIN sk_personal as up
+                on u.id = up.fos_user_id
+                JOIN sk_photo as pho
+                on u.id = pho.fos_user_id
+                JOIN sk_species as sp
+                on sp.id = pho.species_id
+                JOIN sk_genus as g
+                on g.id = sp.genus_id
+                JOIN sk_family as f
+                on f.id = g.family_id
+                JOIN sk_order as o
+                on o.id = f.order_id
+                JOIN sk_class as c
+                on c.id = o.class_id
+                JOIN sk_phylum as p
+                on p.id = c.phylum_id
+                JOIN sk_kingdom as k
+                on k.id = p.kingdom_id
+                where " . substr($taxon_name, 0, 1) . ".id = " . $taxon_id . "
+                group by u.id
+                order by photosInUser desc";
 
         $statement = $connection->prepare($sql);
         $statement->execute();
@@ -458,7 +477,7 @@ class FosUserRepository extends EntityRepository {
         return $result;
     }
 
-    public function findUsersInTaxon2($next_taxon, $taxon_name, $taxon_id) {
+    public function findUsersInTaxon_to_delete($next_taxon, $taxon_name, $taxon_id) {
 
         $rsm = new ResultSetMapping();
         $rsm->addEntityResult('SkaphandrusAppBundle:FosUser', 'u');

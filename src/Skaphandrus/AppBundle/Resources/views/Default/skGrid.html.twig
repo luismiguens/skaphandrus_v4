@@ -1,12 +1,6 @@
 <div class="lightBoxGallery">
-    
-    
-
-
-<!-- resultset rows --> 
+    <!-- resultset rows --> 
     {% for row in photos %}
-        {#{{dump(row)}}#}
-        
         <span itemscope itemtype="http://schema.org/Photograph">
             <meta itemprop="name" content="{{ row.photo_title}}">
             <meta itemprop="dateCreated" content="{{ row.photo_created_at|date("Y-m-d") }}">
@@ -22,10 +16,7 @@
             {% endif %}
             <a href="{{ path('photo_no_slug',  { 'id': row.photo_id }) }}" title="{{ row.photo_title }}">
                 {#<img itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('new_sk_thumbnail_outbound_100') }}" />#}
-                
                 <img itemprop="image" alt="{{ row.photo_title }}" src="{{ ('upload/fotografias/'~row.photo_image) | imagine_filter('new_sk_thumbnail_outbound_100') }}" />
-                
-                
             </a>
         </span>
     {% endfor %}
