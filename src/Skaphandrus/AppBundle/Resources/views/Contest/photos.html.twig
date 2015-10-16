@@ -139,8 +139,6 @@
                                                                 {% set text = "page.contest.btn.voted"|trans %}
                                                             {% endif %}
 
-
-
                                                             {% if category.contest.isInProgress %}
 
                                                                 {% if is_granted("IS_AUTHENTICATED_FULLY") %}
@@ -149,8 +147,6 @@
                                                                     <a class="btn btn-sm btn-white btn-block" href="{{ path('fos_user_security_login') }}">Please login to vote.</a>
                                                                 {% endif %}
                                                             {% endif %}
-
-
                                                         </div>
                                                         {#                                                        {% if photo.description is not empty %}
                                                                                                                     <p>{{ photo.description }}</p>
@@ -171,7 +167,7 @@
             <div class="wrapper wrapper-content project-manager hidden-sm hidden-xs hidden-md" data-spy="affix" data-offset-top="156" style="top: 0; max-width: 250px;">
                 <h2>{{ category.contest.name }}</h2>
                 <!--<img src="{{ category.contest.logo }}" class="img-responsive">-->
-                <img src="{{ category.contest.getWebPath | imagine_filter('sk_widen_400') }}" class="img-responsive">
+                <img alt="image"  src="{{ category.contest.getWebPathImage | imagine_filter('sk_widen_400') }}" class="img-responsive">
                 <p class="small">
                     {{ category.contest.translate.description|raw }}
                 </p>
