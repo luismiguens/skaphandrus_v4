@@ -535,4 +535,16 @@ class SkPhotoContest {
         return $this->getName();
     }
 
+    
+    public function isInProgress() {
+        
+        if(date("Y-m-d H:i:s") > $this->getBeginAt() and date("Y-m-d H:i:s") < $this->getEndAt()){
+            return true;
+        }
+        
+        return false;
+    }
+    
+    
+    
 }
