@@ -171,7 +171,7 @@
 
                         <div class="panel">
                             <div class="panel-heading">
-                                <div class="panel-title m-b-md"><h4>{{ species.name }}</h4></div>
+                        {#        <div class="panel-title m-b-md"><h1>{{ species.name }}</h1></div>#}
                                 <div class="panel-options">
                                     <ul class="nav nav-tabs">
                                         {% set tab_id = 0 %}
@@ -207,7 +207,7 @@
 
                                     {% if true %}
                                         <div id="tab-{{tab_info_id}}" class="tab-pane {{tab_info_id==1?'active'}}">
-                                            {#<h3>{{ "page.species.h3.information"|trans }}</h3>#}
+                                            <h3>{{ "page.species.h3.information"|trans }}</h3>
                                             <h5>{{ "page.species.h5.taxonomic_structure"|trans }}</h5>
                                             <ul class="list-unstyled" itemscope itemtype="http://schema.org/ListItem">
                                                 <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.kingdom) }}</li>
