@@ -72,7 +72,7 @@
 {% endblock %}
 
 {% block heading_title %}
-    {{ taxon.taxonNodeName|capitalize }} : {{ taxon.name }}
+    {{ taxon.taxonNodeName|capitalize }}: {{ taxon.name }}
 {% endblock %}
 
 
@@ -136,7 +136,7 @@
                     <div class="ibox-title">
                         <h5>{{ "page.taxon.h5.taxon_activity"|trans }}</h5>
                     </div>
-                    <div class="ibox-content" itemprop="name" content="{{ node|capitalize }}: {{ taxon.name }}">{{ node|capitalize }} : {{ taxon.name }}
+                    <div class="ibox-content" itemprop="name" content="{{ taxon.taxonNodeName|capitalize }}: {{ taxon.name }}">{{ taxon.taxonNodeName|capitalize }}: {{ taxon.name }}
                         <div>
                             {#{% if taxon.taxonNodeName == 'genus' %}
                                 {{ render(controller('SkaphandrusAppBundle:Common:skActivity', { 'parameters': { 'genus_id' : taxon.id },'limit':20 } )) }}
@@ -184,7 +184,7 @@
                     </div>
 
                     <div class="ibox-content">
-                        <h1>{{ node|capitalize }} : {{ taxon.name }}</h1>
+                        <h1>{{ taxon.taxonNodeName|capitalize }}: {{ taxon.name }}</h1>
                         <div class="panel">
                             <div class="panel-heading">
                                 <!--<div class="panel-title m-b-md"><h4>Blank Panel with text tabs</h4></div>-->
@@ -200,7 +200,7 @@
                             <div class="panel-body">
                                 <div class="tab-content">
                                     <div id="tab-1" class="tab-pane active">
-
+                                        <h3>{% trans with {'%node%': taxon.taxonNodeName|capitalize, '%taxon_name%': taxon.name } %} page.taxon.h3.information {% endtrans %}</h3>
                                         {% if taxon.vernaculars is not empty %}
                                             <h5>{{ "page.taxon.h5.common_names"|trans }}</h5>
                                             <ul class="list-unstyled">
@@ -250,7 +250,7 @@
                                     </div>
 
                                     <div id="tab-2" class="tab-pane">
-                                        <h3>{{ "page.taxon.h3.photos"|trans }}</h3>
+                                        <h3>{% trans with {'%node%': taxon.taxonNodeName|capitalize, '%taxon_name%': taxon.name } %} page.taxon.h3.photos {% endtrans %}</h3>
                                         {# for child in taxon.childNodes %}
                                             <h5>{{ child.name }}<h5>
                                                     {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { (child.taxonNodeName) : child.id }, 'limit':8 } )) }}
@@ -259,7 +259,7 @@
                                     </div>
 
                                     <div id="tab-3" class="tab-pane">
-                                        <h3>{{ "page.taxon.h3.contributors"|trans }}</h3>
+                                        <h3>{% trans with {'%node%': taxon.taxonNodeName|capitalize, '%taxon_name%': taxon.name } %} page.taxon.h3.contributors {% endtrans %}</h3>
                                         <input type="text" class="form-control input-sm m-b-xs" id="filter-photographers" placeholder="Search in table">
                                         <table class="footable footable-photographers table" data-page-size="50" data-filter=#filter-photographers>
                                             <thead>

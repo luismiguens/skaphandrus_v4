@@ -73,11 +73,15 @@
         $(function () {
             $('.footable-users').footable();
         });
+        $(function () {
+            $('.footable-common_names').footable();
+        });
     </script>
 {% endblock %}
 
 {% block heading_title %}
-    {{ species.taxonNodeName|capitalize }} : {{ species.name }}
+    {#{{ species.taxonNodeName|capitalize }}#}
+    {{ "page.species.h2.heading_title"|trans }}: {{ species.name }}
 {% endblock %}
 
 
@@ -167,11 +171,11 @@
 
                     <div class="ibox-content">
 
-                        <h1 itemprop="name">{{ species.name }} </h1>
+                        <h1 itemprop="name">{{ "page.species.h2.heading_title"|trans }}: {{ species.name }}</h1>
 
                         <div class="panel">
                             <div class="panel-heading">
-                        {#        <div class="panel-title m-b-md"><h1>{{ species.name }}</h1></div>#}
+                                {#<div class="panel-title m-b-md"><h1>{{ species.name }}</h1></div>#}
                                 <div class="panel-options">
                                     <ul class="nav nav-tabs">
                                         {% set tab_id = 0 %}
@@ -207,7 +211,7 @@
 
                                     {% if true %}
                                         <div id="tab-{{tab_info_id}}" class="tab-pane {{tab_info_id==1?'active'}}">
-                                            <h3>{{ "page.species.h3.information"|trans }}</h3>
+                                            <h3>{% trans with {'%specie%': species.name } %} page.species.h3.information {% endtrans %}</h3>
                                             <h5>{{ "page.species.h5.taxonomic_structure"|trans }}</h5>
                                             <ul class="list-unstyled" itemscope itemtype="http://schema.org/ListItem">
                                                 <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.kingdom) }}</li>
@@ -226,26 +230,41 @@
 
                                     {% if true %}
                                         <div id="tab-{{tab_names_id}}" class="tab-pane {{tab_names_id==1?'active'}}">
-                                            {#<h3>{{ "page.species.h3.information"|trans }}</h3>#}
+                                            <h3>{% trans with {'%specie%': species.name } %} page.species.h3.common_names {% endtrans %}</h3>
                                             {% if species.speciesVernaculars is not empty %}
-
-                                                <h5>{{ "page.species.h5.common_names"|trans }}</h5>
-                                                <ul class="list-unstyled">
+{#                                                <h5>{{ "page.species.h5.common_names"|trans }}</h5>#}
+                                                <table class="footable footable-common_names table" data-page-size="100">
+                                                    <thead>
+                                                    <th>{{ "page.species.table.common_name"|trans }}</th>
+                                                    <th>{{ "page.species.label.language"|trans }}</th>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for vernacular in species.speciesVernaculars %}
+                                                            <tr>
+                                                                <td>{{ vernacular.vernacular.name|capitalize }}</td>
+                                                                <td>{{ intl_locale_name(vernacular.locale) }}</td>
+                                                            </tr>
+                                                            {% if vernacular.locale == app.request.locale %}
+                                                                <meta itemprop="alternateName" content="{{ vernacular.vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}" >
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                                {#<ul class="list-unstyled">
                                                     {% for vernacular in species.speciesVernaculars %}
                                                         <li>{{ vernacular.vernacular.name|capitalize ~ " - " ~ intl_locale_name(vernacular.locale) }}</li>
-                                                            {% if vernacular.locale == app.request.locale %}
+                                                        {% if vernacular.locale == app.request.locale %}
                                                             <meta itemprop="alternateName" content="{{ vernacular.vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}" >
                                                         {% endif %}
-                                                        {#<meta itemprop="alternateName" content="{{ vernacular.vernacular.name|capitalize ~ " - " ~ intl_locale_name(vernacular.locale) }}" >#}
                                                     {% endfor %}
-                                                </ul>
+                                                </ul>#}
                                             {% endif %}
                                         </div>
                                     {% endif %}
 
                                     {% if species.character is not empty %}
                                         <div id="tab-{{tab_chars_id}}" class="tab-pane {{tab_chars_id==1?'active'}}">
-                                            <h3>{{ "page.species.h3.species_criteria"|trans }}</h3>
+                                            <h3>{% trans with {'%specie%': species.name } %} page.species.h3.species_criteria {% endtrans %}</h3>
                                             {% for c in species.character %}
                                                 <p>{{ c.criteria.translate(app.request.locale).name }} -> {{ c.image }}</p>
                                             {% endfor %}
@@ -254,15 +273,15 @@
 
                                     {% if species.photos|first is not empty %}
                                         <div id="tab-{{tab_photos_id}}" class="tab-pane {{tab_photos_id==1?'active'}}">
-                                            <h3>{{ "page.species.h3.photos"|trans }}</h3>
-                                            {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': species.id },'limit':24 } )) }}
+                                            <h3>{% trans with {'%specie%': species.name } %} page.species.h3.photos {% endtrans %}</h3>
+                                            {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': species.id }, 'limit':24 } )) }}
 
                                         </div>
                                     {% endif %}                                                
 
                                     {% if users is not empty %}
                                         <div id="tab-{{tab_users_id}}" class="tab-pane {{tab_users_id==1?'active'}}">
-                                            <h3>{{ "page.species.h3.contributors"|trans }}</h3>
+                                            <h3>{% trans with {'%specie%': species.name } %} page.species.h3.contributors {% endtrans %}</h3>
                                             <input type="text" class="form-control input-sm m-b-xs" id="filter-users" placeholder="Search in table">
                                             <table class="footable footable-users table" data-page-size="50" data-filter=#filter-users>
                                                 <thead>
@@ -271,17 +290,17 @@
                                                 </thead>
                                                 <tbody>
                                                     {% for u in users %}
-                                                        <span itemscope itemtype="http://schema.org/Person">
-                                                            <meta itemprop="name" content="{{ u }}">
-                                                        </span>
+                                                    <span itemscope itemtype="http://schema.org/Person">
+                                                        <meta itemprop="name" content="{{ u }}">
+                                                    </span>
 
-                                                        <tr>
-                                                            <td>{{ link_to_user(u) }}</td>
-                                                            <td>
-                                                                <a href="{{ path('photos', {'fosUser': u.id, (species.taxonNodeName) : species.id}) }}">{{ u.photosInUser }}</a>
-                                                            </td>
-                                                        </tr>
-                                                    {% endfor %}
+                                                    <tr>
+                                                        <td>{{ link_to_user(u) }}</td>
+                                                        <td>
+                                                            <a href="{{ path('photos', {'fosUser': u.id, (species.taxonNodeName) : species.id}) }}">{{ u.photosInUser }}</a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>

@@ -65,7 +65,7 @@
 {% endblock %}
 
 {% block heading_title %}
-    {{ location.name }}, {{ location.region.country }}
+    {% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h1.title{% endtrans %}
 {% endblock %}
 
 
@@ -132,7 +132,7 @@
 
                     <div class="ibox-content" itemscope itemtype="http://schema.org/City">
                         <meta itemprop="isicV4" content="96590">
-                        <h1 itemprop="name">{{ location.name }}, {{ location.region.country }}</h1>
+                        <h1 itemprop="name">{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h1.title{% endtrans %}</h1>
                         <div class="panel">
                             <div class="panel-heading">
                                 <!--<div class="panel-title m-b-md"><h4>Blank Panel with text tabs</h4></div>-->
@@ -150,7 +150,7 @@
                             <div class="panel-body">
                                 <div class="tab-content">
                                     <div id="tab-1" class="tab-pane active">
-                                        <h3>{{ "page.location.h3.info"|trans }}</h3>
+                                        <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.info{% endtrans %}</h3>
                                         {% if location.description is not empty %}
                                             <h5>{{ "page.location.h5.description"|trans }}</h5>
                                             <p itemprop="description">{{ location.description }}</p>
@@ -188,44 +188,43 @@
                                     </div>
 
                                     <div id="tab-2" class="tab-pane">
-                                        <h3>{{ "page.location.h3.spots"|trans }}</h3>
-                                        <div class="row">
-                                            {{ google_map(map) }}
-                                            <input type="text" class="form-control input-sm m-b-xs" id="filter-spots" placeholder="Search in table">
-                                            <table class="footable footable-spots table" data-page-size="50" data-filter=#filter-spots>
-                                                <thead>
-                                                <th>{{ "page.location.table.name"|trans }}</th>
-                                                <th>{{ "page.location.table.num_photos"|trans }}</th>
-                                                </thead>
-                                                <tbody>
-                                                    {% set c = location.region.country %}
-                                                    {% for spot in spots %}
-                                                    <span itemscope itemtype="http://schema.org/TouristAttraction ">
-                                                        <meta itemprop="name" content="{{ spot }}">
-                                                    </span>
-                                                    <tr>
-                                                        <td>{{ link_to_spot(spot, location, c) }}</td>
-                                                        <td>
-                                                            <a href="{{ path('photos', {'spot': spot.id}) }}">
-                                                                {{ spot.photosInSpot }}
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                {% endfor %}
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <td colspan="2">
-                                                            <ul class="pagination pull-right"></ul>
-                                                        </td>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                        </div>
+                                        <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.spots_map{% endtrans %}</h3>
+                                        {{ google_map(map) }}
+                                        <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.spots{% endtrans %}</h3>
+                                        <input type="text" class="form-control input-sm m-b-xs" id="filter-spots" placeholder="Search in table">
+                                        <table class="footable footable-spots table" data-page-size="50" data-filter=#filter-spots>
+                                            <thead>
+                                            <th>{{ "page.location.table.name"|trans }}</th>
+                                            <th>{{ "page.location.table.num_photos"|trans }}</th>
+                                            </thead>
+                                            <tbody>
+                                                {% set c = location.region.country %}
+                                                {% for spot in spots %}
+                                                <span itemscope itemtype="http://schema.org/TouristAttraction ">
+                                                    <meta itemprop="name" content="{{ spot }}">
+                                                </span>
+                                                <tr>
+                                                    <td>{{ link_to_spot(spot, location, c) }}</td>
+                                                    <td>
+                                                        <a href="{{ path('photos', {'spot': spot.id}) }}">
+                                                            {{ spot.photosInSpot }}
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <ul class="pagination pull-right"></ul>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
                                     </div>
 
                                     <div id="tab-3" class="tab-pane">
-                                        <h3>{{ "page.location.h3.species"|trans }}</h3>
+                                        <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.species{% endtrans %}</h3>
                                         <input type="text" class="form-control input-sm m-b-xs" id="filter-species" placeholder="Search in table">
                                         <table class="footable footable-species table" data-page-size="50" data-filter=#filter-species>
                                             <thead>
@@ -260,12 +259,12 @@
                                     </div>
 
                                     <div id="tab-4" class="tab-pane">
-                                        <h3>{{ "page.location.h3.photos"|trans }}</h3>
+                                        <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.photos{% endtrans %}</h3>
                                         {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'location': location.id },'limit':24 } )) }}
                                     </div>
 
                                     <div id="tab-5" class="tab-pane">
-                                        <h3>{{ "page.location.h3.contributors"|trans }}</h3>
+                                        <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.contributors{% endtrans %}</h3>
                                         <input type="text" class="form-control input-sm m-b-xs" id="filter-photographers" placeholder="Search in table">
                                         <table class="footable footable-photographers table" data-page-size="50" data-filter=#filter-photographers>
                                             <thead>

@@ -44,7 +44,7 @@
 {% endblock %}
 
 {% block heading_title %}
-    {{ spot.name }}, {{ spot.location.name }}, {{ spot.location.region.country }}
+    {% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h1.title{% endtrans %}
 {% endblock %}
 
 
@@ -130,16 +130,16 @@
 
                     <div class="ibox-content" itemscope itemtype="http://schema.org/TouristAttraction">
                         <meta itemprop="isicV4" content="96590">
-                        <h1 itemprop="name">{{ spot.name }}, {{ spot.location.name }}, {{ spot.location.region.country }}</h1>
+                        <h1 itemprop="name">{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h1.title{% endtrans %}</h1>
                         <div class="panel">
                             <div class="panel-heading">
                                 <!--<div class="panel-title m-b-md"><h4>Blank Panel with text tabs</h4></div>-->
                                 <div class="panel-options">
                                     <ul class="nav nav-tabs">
                                         <li class="active"><a data-toggle="tab" href="#tab-1">{{ "page.spot.tab.info"|trans }}</a></li>
-                                        <li><a data-toggle="tab" href="#tab-2">{{ "page.spot.tab.photos"|trans }}</a></li>
-                                        <li><a data-toggle="tab" href="#tab-3">{{ "page.spot.tab.contributors"|trans }}</a></li>
-                                        <li><a data-toggle="tab" href="#tab-4">{{ "page.spot.tab.species"|trans }}</a></li>
+                                        <li><a data-toggle="tab" href="#tab-2">{{ "page.spot.tab.species"|trans }}</a></li>
+                                        <li><a data-toggle="tab" href="#tab-3">{{ "page.spot.tab.photos"|trans }}</a></li>
+                                        <li><a data-toggle="tab" href="#tab-4">{{ "page.spot.tab.contributors"|trans }}</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -147,7 +147,7 @@
                             <div class="panel-body">
                                 <div class="tab-content">
                                     <div id="tab-1" class="tab-pane active">
-                                        <h3>{{ "page.spot.h3.info"|trans }}</h3>
+                                        <h3>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h3.info{% endtrans %}</h3>
                                         <span itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
                                             {% set coordinate = spot.coordinate|split(',') %}
                                             <meta itemprop="latitude" content="{{coordinate[0]}}">
@@ -158,44 +158,8 @@
                                             <p itemprop="description">{{ spot.description }}</p>
                                         {% endif %}
                                     </div>
-                                    <div id="tab-2" class="tab-pane" >
-                                        <h3>{{ "page.spot.h3.photos"|trans }}</h3>
-                                        {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'spot': spot.id },'limit':20 } )) }}
-                                    </div>
-                                    <div id="tab-3" class="tab-pane">
-                                        <h3>{{ "page.spot.h3.contributors"|trans }}</h3>
-                                        <input type="text" class="form-control input-sm m-b-xs" id="filter-photographers" placeholder="Search in table">
-                                        <table class="footable footable-photographers table" data-page-size="50" data-filter=#filter-photographers>
-                                            <thead>
-                                            <th>{{ "page.location.table.name"|trans }}</th>
-                                            <th>{{ "page.location.table.num_photos"|trans }}</th>
-                                            </thead>
-                                            <tbody>
-                                                {% for p in photographers %}
-                                                <span itemscope itemtype="http://schema.org/Person">
-                                                    <meta itemprop="name" content="{{ p.fosUser }}">
-                                                </span>
-                                                <tr>
-                                                    <td>{{ link_to_user(p.fosUser) }}</td>
-                                                    <td>
-                                                        <a href="{{ path('photos', {'fosUser': p.fosUser.id, 'spot': spot.id}) }}">
-                                                            {{ p.photosInUser }}
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            {% endfor%}
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <td colspan="2">
-                                                        <ul class="pagination pull-right"></ul>
-                                                    </td>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                    <div id="tab-4" class="tab-pane">
-                                        <h3>{{ "page.spot.h3.species"|trans }}</h3>
+                                    <div id="tab-2" class="tab-pane">
+                                        <h3>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h3.species{% endtrans %}</h3>
                                         <input type="text" class="form-control input-sm m-b-xs" id="filter-species" placeholder="Search in table">
                                         <table class="footable footable-species table" data-page-size="50" data-filter=#filter-species>
                                             <thead>
@@ -213,6 +177,42 @@
                                                     <td>
                                                         <a href="{{ path('photos', {'species': sp.id, 'spot': spot.id}) }}">
                                                             {{ sp.photosInSpecies }}
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor%}
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <ul class="pagination pull-right"></ul>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    <div id="tab-3" class="tab-pane" >
+                                        <h3>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h3.photos{% endtrans %}</h3>
+                                        {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'spot': spot.id },'limit':20 } )) }}
+                                    </div>
+                                    <div id="tab-4" class="tab-pane">
+                                        <h3>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h3.contributors{% endtrans %}</h3>
+                                        <input type="text" class="form-control input-sm m-b-xs" id="filter-photographers" placeholder="Search in table">
+                                        <table class="footable footable-photographers table" data-page-size="50" data-filter=#filter-photographers>
+                                            <thead>
+                                            <th>{{ "page.location.table.name"|trans }}</th>
+                                            <th>{{ "page.location.table.num_photos"|trans }}</th>
+                                            </thead>
+                                            <tbody>
+                                                {% for p in photographers %}
+                                                <span itemscope itemtype="http://schema.org/Person">
+                                                    <meta itemprop="name" content="{{ p.fosUser }}">
+                                                </span>
+                                                <tr>
+                                                    <td>{{ link_to_user(p.fosUser) }}</td>
+                                                    <td>
+                                                        <a href="{{ path('photos', {'fosUser': p.fosUser.id, 'spot': spot.id}) }}">
+                                                            {{ p.photosInUser }}
                                                         </a>
                                                     </td>
                                                 </tr>
