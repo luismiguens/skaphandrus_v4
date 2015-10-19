@@ -26,7 +26,8 @@ class SkPhotoContestRepository extends EntityRepository {
                 JOIN sk_photo_contest_category as cat
                 ON cat_pho.category_id = cat.id
                 where cat.contest_id = " . $contest_id . " 
-                group by id";
+                group by id
+                order by num_photos desc";
 
         $statement = $connection->prepare($sql);
         $statement->execute();

@@ -161,10 +161,14 @@ class SkPhotoContest {
     
 
     public function getAbsolutePath() {
-        return null === $this->logo ? null : $this->getUploadRootDir() . '/' . $this->logo;
+        return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
     }
 
-    public function getWebPath() {
+    public function getWebPathImage() {
+        return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image;
+    }
+    
+    public function getWebPathLogo() {
         return null === $this->logo ? null : $this->getUploadDir() . '/' . $this->logo;
     }
 

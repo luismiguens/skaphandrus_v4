@@ -174,7 +174,7 @@
             <div class="wrapper wrapper-content project-manager hidden-sm hidden-xs hidden-md" data-spy="affix" data-offset-top="112" style="top: 0; max-width: 250px;">
                 <h2>{{ contest.name }}</h2>
                 <!--<img src="{{ contest.logo }}" class="img-responsive">-->
-                <img src="{{ contest.getWebPath | imagine_filter('sk_widen_400') }}" class="img-responsive">
+                <img alt="image"  src="{{ contest.getWebPathImage | imagine_filter('sk_widen_400') }}" class="img-responsive">
                 <p class="small">
                     {{ contest.translate.description|raw }}
                 </p>

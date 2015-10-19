@@ -77,13 +77,13 @@
                                     </a>
                                 </li>
                                 {% if contest.endAt|date("m/d/Y") < "now"|date("m/d/Y") %} 
-                                <li>
-                                <a href="{{ url_to_contest_winners(contest) }}">
-                                    {{ "page.contest.tab.winners"|trans }}
-                                </a>
-                            </li>
-                            {%endif%}
-                            
+                                    <li>
+                                        <a href="{{ url_to_contest_winners(contest) }}">
+                                            {{ "page.contest.tab.winners"|trans }}
+                                        </a>
+                                    </li>
+                                {%endif%}
+
                             </ul>
                         </div>
                     </div>
@@ -102,7 +102,7 @@
                                                 <div class="col-sm-4">
                                                     <div class="text-center">
                                                         <img alt="image" class="img-circle m-t-xs img-responsive" src="{{ p.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
-                                                        <div class="m-t-xs font-bold">{{ p.personal.honorific }}</div>
+                                                        {#<div class="m-t-xs font-bold">{{ p.personal.honorific }}</div>#}
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-8">
@@ -120,7 +120,7 @@
                                         </div>
                                     </div>
                                 {% endfor %}
-                                
+
                             </div>
                         </div>
                     </div>
@@ -131,7 +131,7 @@
             <div class="wrapper wrapper-content project-manager hidden-sm hidden-xs hidden-md" data-spy="affix" data-offset-top="156" style="top: 0; max-width: 250px;">
                 <h2>{{ contest.name }}</h2>
                 <!--<img src="{{ contest.logo }}" class="img-responsive">-->
-                <img src="{{ contest.getWebPath | imagine_filter('sk_widen_400') }}" class="img-responsive">
+                <img alt="image"  src="{{ contest.getWebPathImage | imagine_filter('sk_widen_400') }}" class="img-responsive">
                 <p class="small">
                     {{ contest.translate.description|raw }}
                 </p>

@@ -36,8 +36,8 @@
         <thead>
             <tr>
                 <th>{{ "form.photo_contest.label.name"|trans }}</th>
-{#                <th>{{ "form.photo_contest.label.image"|trans }}</th>#}
-                <th>{{ "form.photo_contest.label.logo"|trans }}</th>
+                <th>{{ "form.photo_contest.label.image"|trans }}</th>
+{#                <th>{{ "form.photo_contest.label.logo"|trans }}</th>#}
                 <th>{{ "form.photo_contest.label.end_at"|trans }}</th>
                 <th>{{ "form.common.label.actions"|trans }}</th>
             </tr>
@@ -48,13 +48,13 @@
                     <td>{{ entity.name }}</a></td>
                     <td>
                         {% if entity.image %}
-                        <img class="thumbnail" src="{{ entity.getWebPath | imagine_filter('sk_widen_75') }}"/>
-                    {% endif %}
-                    
+                            <img alt="image" class="thumbnail" src="{{ entity.getWebPathImage | imagine_filter('sk_widen_75') }}"/>
+                        {% endif %}
+
                     </td>
                     <td>{% if entity.endAt %}{{ entity.endAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                     <td>
-{#                        <a class="btn btn-white btn-sm" href="{{ path('photo_contest_admin_show', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.view"|trans }}</a>#}
+                        {#                        <a class="btn btn-white btn-sm" href="{{ path('photo_contest_admin_show', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.view"|trans }}</a>#}
                         <a class="btn btn-white btn-sm" href="{{ path('photo_contest_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit"|trans }}</a>
                     </td>
                 </tr>
@@ -65,5 +65,5 @@
     <a class="btn btn-primary" href="{{ path('photo_contest_admin_new') }}">
         <i class="fa fa-pencil"></i>  {{ "form.photo_contest.btn.add"|trans }}
     </a>
-    
+
 {% endblock %}
