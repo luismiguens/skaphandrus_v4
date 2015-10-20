@@ -147,17 +147,32 @@ criterias:
     requirements:
         _locale:  en|pt
 
+
 species:
+    path:     /{_locale}/marine-animals/species/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:speciesPage, _locale: en }
+    requirements:
+        _locale:  en|pt
+        
+species_v3:
     path:     /{_locale}/marine-species/info/species/{slug}
     defaults: { _controller: SkaphandrusAppBundle:Default:speciesPage, _locale: en }
     requirements:
         _locale:  en|pt
 
 taxonomy:
+    path:     /{_locale}/marine-animals/taxonomy
+    defaults: { _controller: SkaphandrusAppBundle:Default:taxonomy, locale: en }
+    requirements:
+        _locale:  en|pt
+        
+        
+taxonomy_v3:
     path:     /{_locale}/marine-species/taxonomy
     defaults: { _controller: SkaphandrusAppBundle:Default:taxonomy, locale: en }
     requirements:
         _locale:  en|pt
+        
 
 taxonomy_source:
     path:     /{_locale}/species/source
@@ -166,34 +181,74 @@ taxonomy_source:
         _locale:  en|pt
 
 taxon:
+    path:     /{_locale}/marine-animals/{node}/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:taxon, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+taxon_v3:
     path:     /{_locale}/marine-species/{node}/{slug}
     defaults: { _controller: SkaphandrusAppBundle:Default:taxon, _locale: en }
     requirements:
         _locale:  en|pt
 
+
 spot:
+    path:     /{_locale}/scuba-diving-sites/spot/{country}/{location}/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:spot, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+
+
+spot_v3:
     path:     /{_locale}/scuba-dive-locations/info/spot/{country}/{location}/{slug}
     defaults: { _controller: SkaphandrusAppBundle:Default:spot, _locale: en }
     requirements:
         _locale:  en|pt
 
+
 location:
+    path:     /{_locale}/scuba-diving-sites/location/{country}/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:location, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+location_v3:
     path:     /{_locale}/scuba-dive-locations/info/location/{country}/{slug}
     defaults: { _controller: SkaphandrusAppBundle:Default:location, _locale: en }
     requirements:
         _locale:  en|pt
 
+
+
 country:
+    path:     /{_locale}/scuba-diving-sites/country/{slug}
+    defaults: { _controller: SkaphandrusAppBundle:Default:country, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+
+country_v3:
     path:     /{_locale}/scuba-dive-locations/info/country/{slug}
     defaults: { _controller: SkaphandrusAppBundle:Default:country, _locale: en }
     requirements:
         _locale:  en|pt
 
 locations_home:
+    path:     /{_locale}/scuba-diving-sites
+    defaults: { _controller: SkaphandrusAppBundle:Default:locationsHome, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+
+locations_home_v3:
     path:     /{_locale}/scuba-dive-locations
     defaults: { _controller: SkaphandrusAppBundle:Default:locationsHome, _locale: en }
     requirements:
         _locale:  en|pt
+
+
 
 photo:
     path:     /{_locale}/underwater-photography/photo/{id}-{slug}
