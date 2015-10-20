@@ -20,6 +20,10 @@
 
 {% block page_keywords %}{{keywords}}{% endblock %}
 
+{% block heading_title %}
+    {{ "page.taxonomy.h2.heading_title"|trans }}
+{% endblock %}
+
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
         <li itemprop="itemListElement"><a href="{{ path('index') }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
@@ -63,7 +67,7 @@
             <div class="col-md-12">
                 <div  class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>{{ "page.taxonomy.h5.title"|trans }}</h5>
+                        <h1>{{ "page.taxonomy.h1.title"|trans }}</h1>
                     </div>
                     <div>
                         <div class="ibox-content">

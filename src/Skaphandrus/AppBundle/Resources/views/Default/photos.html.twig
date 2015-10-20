@@ -201,41 +201,43 @@
 {% block page_keywords %}{{keywords}}{% endblock %}
 
 
-{% block heading_title %}
-    {% if params.species is defined %}
-        {{ "page.photos.keyword.species"|trans }}: {{ pagination[0].species.name}}, 
-    {% elseif params.genus is defined %}
-        {{ "page.photos.keyword.genus"|trans }}: {{pagination[0].species.genus.name}}, 
-    {% elseif params.family is defined %}
-        {{ "page.photos.keyword.family"|trans }}: {{pagination[0].species.genus.family.name}}, 
-    {% elseif params.order is defined %}
-        {{ "page.photos.keyword.order"|trans }}: {{pagination[0].species.genus.family.order.name}},
-    {% elseif params.class is defined %}
-        {{ "page.photos.keyword.class"|trans }}: {{pagination[0].species.genus.family.order.class.name}},
-    {% elseif params.phylum is defined %}
-        {{ "page.photos.keyword.phylum"|trans }}: {{pagination[0].species.genus.family.order.class.phylum.name}},
-    {% elseif params.kingdom is defined %}
-        {{ "page.photos.keyword.kingdom"|trans }}: {{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}
 
-        {#-----spots-----#}
-    {% elseif params.spot is defined %}
-        {{ "page.photos.keyword.spot"|trans }}: {{ pagination[0].spot.name}}, {{pagination[0].spot.location.name}}, {{pagination[0].spot.location.region.country}}
-    {% elseif params.location is defined %}
-        {{ "page.photos.keyword.location"|trans }}: {{pagination[0].spot.location.name}}, {{pagination[0].spot.location.region.name}}, {{pagination[0].spot.location.region.country}}
-    {% elseif params.region is defined %}
-        {{ "page.photos.keyword.region"|trans }}: {{pagination[0].spot.location.region.name}}, {{pagination[0].spot.location.region.country}}
-    {% elseif params.country is defined %}
-        {{ "page.photos.keyword.country"|trans }}: {{pagination[0].spot.location.region.country}} 
+{#-----heading_title-----#}
+{% if params.species is defined %}
+{% set heading_title %}{% trans with {'%value%': pagination[0].species.name} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
+{% elseif params.genus is defined %}
+{% set heading_title %}{% trans with {'%value%': pagination[0].species.genus.name} %} page.photos.h2.heading_title {% endtrans %}{% endset %}    
+{% elseif params.family is defined %}
+{% set heading_title %}{% trans with {'%value%': pagination[0].species.genus.family.name} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
+{% elseif params.order is defined %}
+{% set heading_title %}{% trans with {'%value%': pagination[0].species.genus.family.order.name} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
+{% elseif params.class is defined %}
+{% set heading_title %}{% trans with {'%value%': pagination[0].species.genus.family.order.class.name} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
+{% elseif params.phylum is defined %}
+{% set heading_title %}{% trans with {'%value%': pagination[0].species.genus.family.order.class.phylum.name} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
+{% elseif params.kingdom is defined %}
+{% set heading_title %}{% trans with {'%value%': pagination[0].species.genus.family.order.class.phylum.kingdom.name} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
 
-        {#-----fosuser-----#}
-    {% elseif params.fosUser is defined %}
-        {{ "page.photos.keyword.fosUser"|trans }}: {{pagination[0].fosUser}} 
+{#-----spots-----#}
+{% elseif params.spot is defined %}
+{% set heading_title %}{% trans with {'%value%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
+{% elseif params.location is defined %}
+{% set heading_title %}{% trans with {'%value%': pagination[0].spot.location.name~", "~pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.h2.heading_title {% endtrans %}{% endset %}    
+{% elseif params.region is defined %}
+{% set heading_title %}{% trans with {'%value%': pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.h2.heading_title {% endtrans %}{% endset %}    
+{% elseif params.country is defined %}
+{% set heading_title %}{% trans with {'%value%': pagination[0].spot.location.region.country} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
 
+{#-----fosuser-----#}
+{% elseif params.fosUser is defined %}
+{% set heading_title %}{% trans with {'%value%': pagination[0].fosUser} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
 
-    {% else %}
-        {{ "page.photos"|trans }}
-    {% endif %}
-{% endblock %}
+{#-----someting else-----#}
+{% else %}
+    {% set heading_title = ("page.photos_something_else.h2.heading_title"|trans) %}
+{% endif %}
+
+{% block heading_title %}{{heading_title}}{% endblock %}
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
@@ -342,7 +344,43 @@
 
 {% block body %}
     <div class="wrapper wrapper-content" itemscope itemtype="http://schema.org/ImageGallery">
-        <h2>{{ "page.photos.h2.photos"|trans }}</h2>
+        {#-----h1 title-----#}
+        {% if params.species is defined %}
+            <h1>{% trans with {'%type%': "page.photos.keyword.species"|trans, '%value%': pagination[0].species.name} %} page.photos.h1.title {% endtrans %}</h1>
+        {% elseif params.genus is defined %}
+            <h1>{% trans with {'%type%': "page.photos.keyword.genus"|trans, '%value%': pagination[0].species.genus.name} %} page.photos.h1.title {% endtrans %}</h1>
+        {% elseif params.family is defined %}
+            <h1>{% trans with {'%type%': "page.photos.keyword.family"|trans, '%value%': pagination[0].species.genus.family.name} %} page.photos.h1.title {% endtrans %}</h1>
+        {% elseif params.order is defined %}
+            <h1>{% trans with {'%type%': "page.photos.keyword.order"|trans, '%value%': pagination[0].species.genus.family.order.name} %} page.photos.h1.title {% endtrans %}</h1>
+        {% elseif params.class is defined %}
+            <h1>{% trans with {'%type%': "page.photos.keyword.class"|trans, '%value%': pagination[0].species.genus.family.order.class.name} %} page.photos.h1.title {% endtrans %}</h1>
+        {% elseif params.phylum is defined %}
+            <h1>{% trans with {'%type%': "page.photos.keyword.phylum"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.name} %} page.photos.h1.title {% endtrans %}</h1>
+        {% elseif params.kingdom is defined %}
+            <h1>{% trans with {'%type%': "page.photos.keyword.kingdom"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.kingdom.name} %} page.photos.h1.title {% endtrans %}</h1>
+
+        {#-----spots-----#}
+        {% elseif params.spot is defined %}
+            <h1>{% trans with {'%type%': "page.photos.keyword.spot"|trans, '%value%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.h1.title {% endtrans %}</h1>
+        {% elseif params.location is defined %}
+            <h1>{% trans with {'%type%': "page.photos.keyword.location"|trans, '%value%': pagination[0].spot.location.name~", "~pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.h1.title {% endtrans %}</h1>
+        {% elseif params.region is defined %}
+            <h1>{% trans with {'%type%': "page.photos.keyword.region"|trans, '%value%': pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.h1.title {% endtrans %}</h1>  
+        {% elseif params.country is defined %}
+            <h1>{% trans with {'%type%': "page.photos.keyword.country"|trans, '%value%': pagination[0].spot.location.region.country} %} page.photos.h1.title {% endtrans %}</h1>
+
+        {#-----fosuser-----#}
+        {% elseif params.fosUser is defined %}
+            <h1>{% trans with {'%type%': "page.photos.keyword.fosUser"|trans, '%value%': pagination[0].fosUser} %} page.photos.h1.title {% endtrans %}</h1>
+
+        {#-----someting else-----#}
+        {% else %}
+            <h1>{{ "page.photos_something_else.h1.title"|trans }}</h1>
+        {% endif %}
+        
+        <br>
+        
         <div class="row grid">
             {% for photo in pagination %}
                 <div class="col-lg-4 grid-item">

@@ -111,6 +111,26 @@
             <!-- End Left Column -->
             <!-- Right Column -->
             <div class="col-md-8">
+                <div class="ibox-title">
+                    <h5>{{ "page.photo.h5.related_contents"|trans }}</h5>
+                    {#<div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a href="#">Config option 1</a>
+                            </li>
+                            <li><a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>#}
+                </div>
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
                         <h1 itemprop="name">{{ user.name }}</h1>
@@ -170,7 +190,7 @@
                                     <!-- Start Photos Tab -->
                                     {% if user.photos|first is not empty %}
                                         <div id="tab-{{tab_photos_id}}" class="tab-pane {{tab_photos_id==1?'active'}}">
-                                            <h3>{{ "page.user.h3.photos"|trans }}</h3>
+                                            <h3>{% trans with {'%name%': user.personal.name|title} %}page.user.h3.photos{% endtrans %}</h3>
                                             {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'fosUser': user.id },'limit':24  })) }}
                                         </div>
                                     {% endif %}
@@ -178,7 +198,7 @@
                                     <!-- Start Species Tab -->
                                     {% if species|first is not empty %}
                                         <div id="tab-{{tab_species_id}}" class="tab-pane {{tab_species_id==1?'active'}}">
-                                            <h3>{{ "page.user.h3.species"|trans }}</h3>
+                                            <h3>{% trans with {'%name%': user.personal.name|title} %}page.user.h3.species{% endtrans %}</h3>
                                             <input type="text" class="form-control input-sm m-b-xs" id="filter-species" placeholder="Search in table">
                                             <table class="footable footable-species table" data-page-size="50" data-filter=#filter-species>
                                                 <thead>
@@ -211,7 +231,7 @@
                                     <!-- Start Spots Tab -->
                                     {% if spots|first is not empty %}
                                         <div id="tab-{{tab_spots_id}}" class="tab-pane {{tab_spots_id==1?'active'}}">
-                                            <h3>{{ "page.user.h3.spots"|trans }}</h3>
+                                            <h3>{% trans with {'%name%': user.personal.name|title} %}page.user.h3.spots{% endtrans %}</h3>
                                             <input type="text" class="form-control input-sm m-b-xs" id="filter-spots" placeholder="Search in table">
                                             <table class="footable footable-spots table" data-page-size="50" data-filter=#filter-spots>
                                                 <thead>
@@ -247,7 +267,7 @@
                                     <!-- Start Photos Validated Tab -->
                                     {% if user.photosValidated|first is not empty %}
                                         <div id="tab-{{tab_photosv_id}}" class="tab-pane {{tab_photosv_id==1?'active'}}">
-                                            <h3>{{ "page.user.h3.photos_validated"|trans }}</h3>
+                                            <h3>{% trans with {'%name%': user.personal.name|title} %}page.user.h3.photos_validated{% endtrans %}</h3>
                                             {% set pva = [] %}
                                             {% for pv in user.photosValidated[:35] %}
                                                 {% set pva = pva|merge([pv.photo]) %}

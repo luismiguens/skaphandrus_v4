@@ -58,7 +58,7 @@
                             <div class="col-lg-12">
                                 <div class="m-b-md">
                                     {# <a href="#" class="btn btn-white btn-xs pull-right">Edit project</a> #}
-                                    <h2>{{ contest.name }}</h2>
+                                    <h1>{% trans with {'%contest%': contest.name} %}page.contest.h1.title{% endtrans %}</h1>
                                 </div>
                                 <dl class="dl-horizontal">
                                     <dt>{{ "page.contest.dt.status"|trans }}:</dt> <dd><span class="label label-primary">{{ ("page.contest.label.status_" ~ contest_status)|trans }}</span></dd>
