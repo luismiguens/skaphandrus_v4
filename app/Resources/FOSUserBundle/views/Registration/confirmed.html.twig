@@ -8,4 +8,6 @@
         {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
         {% if targetUrl is not empty %}<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>{% endif %}
     {% endif %}
+    <a href="{{ path('profile_admin_edit') }}" type="button" class="btn btn-primary btn-lg btn-block">Complete your profile</a>
+    
 {% endblock %}
