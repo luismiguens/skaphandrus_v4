@@ -3,8 +3,8 @@
 ### ADMIN ROUTES
 ################################################################################ 
 
-teste:
-    path:     /sitemap
+sitemap:
+    path:     /{_locale}/sitemap/{model}
     defaults: { _controller: "SkaphandrusAppBundle:Sitemap:sitemap" }
 
 teste:

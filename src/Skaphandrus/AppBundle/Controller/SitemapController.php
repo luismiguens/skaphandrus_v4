@@ -7,31 +7,58 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SitemapController extends Controller {
 
-    public function sitemapAction() {
+    public function sitemapAction($model) {
 
-        $em = $this->getDoctrine()->getManager();
-        $teste = $em->getRepository('SkaphandrusAppBundle:SkCountry')->findAll();
+        $locale = $this->get('request')->getLocale();
 
-        foreach ($teste as $test) {
-//            $name = $test->getName();
-            $id = $test->getId();
+        $str_begin = "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"  
+        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"  
+        xsi:schemaLocation=\"http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\">";
+
+        $str_end = "</urlset>";
+
+        $str = "";
+        $file = "";
+
+        switch ($model) {
+            case "SkCountry":
+                $str = $this->generateCountries();
+                $file = fopen("uploads/sitemaps/country_" . $locale . ".xml", "w") or die("Unable to open file!");
+
+                break;
+
+            case "SkLocation":
+                //    $str = $this->generateCountries($em);
+                //    $file = fopen("uploads/sitemaps/country_" . $locale . ".xml", "w") or die("Unable to open file!");
+
+                break;
+
+            default:
+                break;
         }
-        
-        $myfile = fopen("newfile.xml", "w") or die("Unable to open file!");
-        $txt = "
-        <url>
-            <loc>http://skaphandrus.com".skaphandrus::url_for_country($id)."</loc>  
-            <lastmod>". date("Y-m-d") ."</lastmod>  
-            <changefreq>monthly</changefreq>
-            <priority>0.8</priority>
-        </url>
-        ";
 
-        if (fwrite($myfile, print_r($txt, TRUE))) {
-            echo $myfile . " ok<br/>";
+        $str = $str_begin . $str . $str_end;
+
+        if (fwrite($file, print_r($str, TRUE))) {
+            return $this->render('SkaphandrusAppBundle:Sitemap:Sitemap.html.twig', array(
+                        'str' => $str,
+            ));
         } else {
-            echo "<b>" . $myfile . "nok</b><br/>";
+            return "nok<br/>";
         }
+    }
+
+    public function generateCountries() {
+        $em = $this->getDoctrine()->getManager();
+        $countries = $em->getRepository('SkaphandrusAppBundle:SkCountry')->findAll();
+        $str = "";
+
+        foreach ($countries as $country) {
+            $renderedTemplate = $this->get('twig')->render('SkaphandrusAppBundle:Sitemap:country.html.twig', array('country' => $country));
+            $str = $str . $renderedTemplate;
+        }
+
+        return $str;
     }
 
 }
