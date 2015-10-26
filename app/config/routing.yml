@@ -62,3 +62,11 @@ fos_comment_api:
 fos_message:
     resource: "@FOSMessageBundle/Resources/config/routing.xml"
     prefix: /{_locale}/message_admin
+
+
+i18nroute:
+    resource: "@SkaphandrusAppBundle/Resources/config/i18n.yml"
+    type: be_simple_i18n
+    prefix:   /
+    
+    

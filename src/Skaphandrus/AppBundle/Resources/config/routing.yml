@@ -4,6 +4,10 @@
 ################################################################################ 
 
 teste:
+    path:     /sitemap
+    defaults: { _controller: "SkaphandrusAppBundle:Sitemap:sitemap" }
+
+teste:
     path:     /teste
     defaults: { _controller: "SkaphandrusAppBundle:Testes:testes" }
 
@@ -53,9 +57,6 @@ skaphandrus_app_identification_images_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skidentificationimages.yml"
     prefix:   /{_locale}/identification_images_admin
 
-
-
-
 skaphandrus_app_identification_module_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skidentificationmodule.yml"
     prefix:   /{_locale}/identification_module_admin
@@ -69,7 +70,6 @@ skaphandrus_app_identification_criteria_admin:
     prefix:   /{_locale}/identification_criteria_admin
 
 
-#
 #skaphandrus_app_fos_user:
 #    resource: "@SkaphandrusAppBundle/Resources/config/routing/fosuser.yml"
 #    prefix:   /{_locale}/fos_user
@@ -147,12 +147,11 @@ criterias:
     requirements:
         _locale:  en|pt
 
-
-species:
-    path:     /{_locale}/marine-animals/species/{slug}
-    defaults: { _controller: SkaphandrusAppBundle:Default:speciesPage, _locale: en }
-    requirements:
-        _locale:  en|pt
+#species:
+#    path:     /{_locale}/marine-animals/species/{slug}
+#    defaults: { _controller: SkaphandrusAppBundle:Default:speciesPage, _locale: en }
+#    requirements:
+#        _locale:  en|pt
         
 species_v3:
     path:     /{_locale}/marine-species/info/species/{slug}
@@ -160,31 +159,29 @@ species_v3:
     requirements:
         _locale:  en|pt
 
-taxonomy:
-    path:     /{_locale}/marine-animals/taxonomy
-    defaults: { _controller: SkaphandrusAppBundle:Default:taxonomy, locale: en }
-    requirements:
-        _locale:  en|pt
-        
-        
+#taxonomy:
+#    path:     /{_locale}/marine-animals/taxonomy
+#    defaults: { _controller: SkaphandrusAppBundle:Default:taxonomy, locale: en }
+#    requirements:
+#        _locale:  en|pt
+
 taxonomy_v3:
     path:     /{_locale}/marine-species/taxonomy
     defaults: { _controller: SkaphandrusAppBundle:Default:taxonomy, locale: en }
     requirements:
         _locale:  en|pt
-        
 
-taxonomy_source:
-    path:     /{_locale}/species/source
-    defaults: { _controller: SkaphandrusAppBundle:Default:source, locale: en }
-    requirements:
-        _locale:  en|pt
+#taxonomy_source:
+#    path:     /{_locale}/species/source
+#    defaults: { _controller: SkaphandrusAppBundle:Default:source, locale: en }
+#    requirements:
+#        _locale:  en|pt
 
-taxon:
-    path:     /{_locale}/marine-animals/{node}/{slug}
-    defaults: { _controller: SkaphandrusAppBundle:Default:taxon, _locale: en }
-    requirements:
-        _locale:  en|pt
+#taxon:
+#    path:     /{_locale}/marine-animals/{node}/{slug}
+#    defaults: { _controller: SkaphandrusAppBundle:Default:taxon, _locale: en }
+#    requirements:
+#        _locale:  en|pt
 
 taxon_v3:
     path:     /{_locale}/marine-species/{node}/{slug}
@@ -192,14 +189,11 @@ taxon_v3:
     requirements:
         _locale:  en|pt
 
-
-spot:
-    path:     /{_locale}/scuba-diving-sites/spot/{country}/{location}/{slug}
-    defaults: { _controller: SkaphandrusAppBundle:Default:spot, _locale: en }
-    requirements:
-        _locale:  en|pt
-
-
+#spot:
+#    path:     /{_locale}/scuba-diving-sites/spot/{country}/{location}/{slug}
+#    defaults: { _controller: SkaphandrusAppBundle:Default:spot, _locale: en }
+#    requirements:
+#        _locale:  en|pt
 
 spot_v3:
     path:     /{_locale}/scuba-dive-locations/info/spot/{country}/{location}/{slug}
@@ -207,12 +201,11 @@ spot_v3:
     requirements:
         _locale:  en|pt
 
-
-location:
-    path:     /{_locale}/scuba-diving-sites/location/{country}/{slug}
-    defaults: { _controller: SkaphandrusAppBundle:Default:location, _locale: en }
-    requirements:
-        _locale:  en|pt
+#location:
+#    path:     /{_locale}/scuba-diving-sites/location/{country}/{slug}
+#    defaults: { _controller: SkaphandrusAppBundle:Default:location, _locale: en }
+#    requirements:
+#        _locale:  en|pt
 
 location_v3:
     path:     /{_locale}/scuba-dive-locations/info/location/{country}/{slug}
@@ -220,14 +213,11 @@ location_v3:
     requirements:
         _locale:  en|pt
 
-
-
-country:
-    path:     /{_locale}/scuba-diving-sites/country/{slug}
-    defaults: { _controller: SkaphandrusAppBundle:Default:country, _locale: en }
-    requirements:
-        _locale:  en|pt
-
+#country:
+#    path:     /{_locale}/scuba-diving-sites/country/{slug}
+#    defaults: { _controller: SkaphandrusAppBundle:Default:country, _locale: en }
+#    requirements:
+#        _locale:  en|pt
 
 country_v3:
     path:     /{_locale}/scuba-dive-locations/info/country/{slug}
@@ -235,12 +225,11 @@ country_v3:
     requirements:
         _locale:  en|pt
 
-locations_home:
-    path:     /{_locale}/scuba-diving-sites
-    defaults: { _controller: SkaphandrusAppBundle:Default:locationsHome, _locale: en }
-    requirements:
-        _locale:  en|pt
-
+#locations_home:
+#    path:     /{_locale}/scuba-diving-sites
+#    defaults: { _controller: SkaphandrusAppBundle:Default:locationsHome, _locale: en }
+#    requirements:
+#        _locale:  en|pt
 
 locations_home_v3:
     path:     /{_locale}/scuba-dive-locations
@@ -248,41 +237,40 @@ locations_home_v3:
     requirements:
         _locale:  en|pt
 
+#photo:
+#    path:     /{_locale}/underwater-photography/photo/{id}-{slug}
+#    defaults: { _controller: SkaphandrusAppBundle:Default:photo, _locale: en }
+#    requirements:
+#        _locale:  en|pt
 
-
-photo:
-    path:     /{_locale}/underwater-photography/photo/{id}-{slug}
-    defaults: { _controller: SkaphandrusAppBundle:Default:photo, _locale: en }
-    requirements:
-        _locale:  en|pt
-
-photo_no_slug:
-    path:     /{_locale}/underwater-photography/photo/{id}
-    defaults: { _controller: SkaphandrusAppBundle:Default:photo, _locale: en }
-    requirements:
-        _locale:  en|pt
-
-photos:
-    path:     /{_locale}/underwater-photography/photos
-    defaults: { _controller: SkaphandrusAppBundle:Default:photos, _locale: en }
-    requirements:
-        _locale:  en|pt
-
-user:
-    path:     /{_locale}/users/username/{id}
-    defaults: { _controller: SkaphandrusAppBundle:Default:user, _locale: en }
-    requirements:
-        _locale:  en|pt
-
-search:
-    path:     /{_locale}/search-results
-    defaults: { _controller: SkaphandrusAppBundle:Default:search, _locale: en }
-    requirements:
-        _locale:  en|pt
+#photo_no_slug:
+#    path:     /{_locale}/underwater-photography/photo/{id}
+#    defaults: { _controller: SkaphandrusAppBundle:Default:photo, _locale: en }
+#    requirements:
+#        _locale:  en|pt
+#
+#photos:
+#    path:     /{_locale}/underwater-photography/photos
+#    defaults: { _controller: SkaphandrusAppBundle:Default:photos, _locale: en }
+#    requirements:
+#        _locale:  en|pt
+#
+#user:
+#    path:     /{_locale}/users/username/{id}
+#    defaults: { _controller: SkaphandrusAppBundle:Default:user, _locale: en }
+#    requirements:
+#        _locale:  en|pt
+#
+#search:
+#    path:     /{_locale}/search-results
+#    defaults: { _controller: SkaphandrusAppBundle:Default:search, _locale: en }
+#    requirements:
+#        _locale:  en|pt
 
 test_thumbnail:
     path:     /testThumbnail
     defaults: { _controller: SkaphandrusAppBundle:Default:testThumbnail}    
+
 
 
 
@@ -301,63 +289,61 @@ test_thumbnail:
 #  param: { module: photoContest, action: contestResults }
 #
 
-contests_landing_page:
+contests_landing_page_v3:
     path:     /{_locale}/underwater-photo-contest
     defaults: { _controller: SkaphandrusAppBundle:Contest:landing, _locale: en }
     requirements:
         _locale:  en|pt
 
-contests_photos:
+contests_photos_v3:
     path:     /{_locale}/underwater-photo-contest/photos/{contest_slug}/{category_slug}
     defaults: { _controller: SkaphandrusAppBundle:Contest:photos, _locale: en }
     requirements:
         _locale:  en|pt
 
-contest_participate:
+contest_participate_v3:
     path:     /{_locale}/underwater-photo-contest/participate/{contest_id}
     defaults: { _controller: SkaphandrusAppBundle:Contest:participate, _locale: en }
     requirements:
         _locale:  en|pt
 
-contest_add_photo:
+contest_add_photo_v3:
     path:     /{_locale}/category/{category_id}/add-photo/{photo_id}
     defaults: { _controller: SkaphandrusAppBundle:Contest:addPhoto, _locale: en }
     requirements:
         _locale:  en|pt
 
-contest_remove_photo:
+contest_remove_photo_v3:
     path:     /{_locale}/category/{category_id}/remove-photo/{photo_id}
     defaults: { _controller: SkaphandrusAppBundle:Contest:removePhoto, _locale: en }
     requirements:
         _locale:  en|pt
 
-contest_vote_photo:
+contest_vote_photo_v3:
     path:     /{_locale}/category/{category_id}/vote-photo/{photo_id}
     defaults: { _controller: SkaphandrusAppBundle:Contest:votePhoto, _locale: en }
     requirements:
         _locale:  en|pt
 
-contests_photographers:
+contests_photographers_v3:
     path:     /{_locale}/underwater-photo-contest/photographers/{contest_slug}
     defaults: { _controller: SkaphandrusAppBundle:Contest:photographers, _locale: en }
     requirements:
         _locale:  en|pt
 
-contests_sponsors:
+contests_sponsors_v3:
     path:     /{_locale}/underwater-photo-contest/sponsors/{contest_slug}
     defaults: { _controller: SkaphandrusAppBundle:Contest:sponsors, _locale: en }
     requirements:
         _locale:  en|pt
 
-contests_winners:
+contests_winners_v3:
     path:     /{_locale}/underwater-photo-contest/winners/{contest_slug}
     defaults: { _controller: SkaphandrusAppBundle:Contest:winners, _locale: en }
     requirements:
         _locale:  en|pt
 
-
-
-contests_contest:
+contests_contest_v3:
     path:     /{_locale}/underwater-photo-contest/{slug}
     defaults: { _controller: SkaphandrusAppBundle:Contest:contest, _locale: en }
     requirements:

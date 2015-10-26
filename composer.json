@@ -6,7 +6,8 @@
     "autoload": {
         "psr-0": {
             "": "src/",
-            "SymfonyStandard": "app/"
+            "SymfonyStandard": "app/",
+            "I18nRoutingBundle": "src/BeSimple/"
         }
     },
     "require": {
@@ -38,8 +39,9 @@
         "willdurand/geocoder": "*",
         "widop/http-adapter-bundle": "~1.2",
         "friendsofsymfony/message-bundle": "^1.2",
-        "vich/uploader-bundle": "^0.14.0"
-
+        "vich/uploader-bundle": "^0.14.0",
+        "besimple/i18n-routing-bundle": "dev-master"
+        
 
     },
     "require-dev": {

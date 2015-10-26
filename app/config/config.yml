@@ -428,3 +428,5 @@ vich_uploader:
             delete_on_remove:   true
             namer:              vich_uploader.namer_uniqid
             
+            
+be_simple_i18n_routing: ~

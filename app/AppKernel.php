@@ -50,6 +50,7 @@ class AppKernel extends Kernel {
             new FOS\MessageBundle\FOSMessageBundle(),
             
             new Vich\UploaderBundle\VichUploaderBundle(),
+            new BeSimple\I18nRoutingBundle\BeSimpleI18nRoutingBundle(),
             
         );
 
