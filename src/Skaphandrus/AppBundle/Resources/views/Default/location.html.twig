@@ -153,7 +153,7 @@
                                         <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.info{% endtrans %}</h3>
                                         {% if location.description is not empty %}
                                             <h5>{{ "page.location.h5.description"|trans }}</h5>
-                                            <p itemprop="description">{{ location.description }}</p>
+                                            <p itemprop="description">{{ location.description|raw }}</p>
                                         {% endif %}
 
                                         {% if location.waterTemp is not empty %}
