@@ -23,7 +23,7 @@ class DefaultController extends Controller {
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
         $modules = $em->getRepository('SkaphandrusAppBundle:SkIdentificationModule')->findBy(array('isEnabled' => '1'), array('id' => 'DESC'), 8);
-        $contests = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')->findBy(array(), array('createdAt' => 'DESC'), 8);
+        $contests = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')->findBy(array('isVisible' => true), array('createdAt' => 'DESC'), 8);
 
         return $this->render('SkaphandrusAppBundle:Default:index.html.twig', array('modules' => $modules, 'contests' => $contests));
     }

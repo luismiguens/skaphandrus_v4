@@ -229,7 +229,7 @@ class SkSpotController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('spot'));
+        return $this->redirect($this->generateUrl('spot_admin'));
     }
 
     /**

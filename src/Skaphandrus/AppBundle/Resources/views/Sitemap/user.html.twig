@@ -1,6 +1,9 @@
 {# empty Twig template #}
 <url>
     <loc>http://skaphandrus.com{{ path('user', {'id':user.id, 'locale': 'en'}) }}</loc>
+    <lastmod>{{ "now"|date("Y-m-d") }}</lastmod>  
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
     <xhtml:link 
         rel="alternate"
         hreflang="en"
@@ -12,11 +15,3 @@
         href="http://skaphandrus.com{{ path('user', {'id':user.id, 'locale': 'pt'}) }}"
         />
 </url>
-
-
-{#<url>
-    <loc>http://skaphandrus.com{{ url_to_user(user) }}</loc>  
-    <lastmod>{{ "now"|date("Y-m-d") }}</lastmod>  
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-</url>#}

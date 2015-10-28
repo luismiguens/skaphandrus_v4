@@ -6,7 +6,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-
 class FosUserModulesType extends AbstractType {
 
     /**
@@ -19,14 +18,14 @@ class FosUserModulesType extends AbstractType {
                     'class' => 'SkaphandrusAppBundle:SkIdentificationModule',
                     'property' => 'name',
                     'expanded' => true,
-                    'multiple' => true
-                    )
-                        );
+                    'multiple' => true,
+                    'query_builder' => function (\Doctrine\ORM\EntityRepository $er) use ($options) {
+                        return $er->createQueryBuilder('m')
+                                ->select('m')
+                                ->where('m.isActive = 1');
+                    }
+        ));
     }
-        
-
- 
-    
 
     /**
      * @param OptionsResolverInterface $resolver
