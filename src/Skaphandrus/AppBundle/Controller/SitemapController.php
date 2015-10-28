@@ -17,13 +17,13 @@ class SitemapController extends Controller {
         switch ($model) {
             case "SkCountry":
                 $str = $this->generateCountry();
-                $file = fopen("uploads/sitemaps/country_" . $locale . ".xml", "w") or die("Unable to open file!");
+                $file = fopen("uploads/sitemaps/country.xml", "w") or die("Unable to open file!");
                 $this->writeFile($str, $file);
                 break;
 
             case "SkLocation":
                 $str = $this->generateLocation();
-                $file = fopen("uploads/sitemaps/location_" . $locale . ".xml", "w") or die("Unable to open file!");
+                $file = fopen("uploads/sitemaps/location.xml", "w") or die("Unable to open file!");
                 $this->writeFile($str, $file);
                 break;
 
@@ -35,7 +35,7 @@ class SitemapController extends Controller {
 
             case "SkPhoto":
                 $str = $this->generatePhoto();
-                $file = fopen("uploads/sitemaps/photo_" . $locale . ".xml", "w") or die("Unable to open file!");
+                $file = fopen("uploads/sitemaps/photo.xml", "w") or die("Unable to open file!");
                 $this->writeFile($str, $file);
                 break;
 
@@ -52,7 +52,7 @@ class SitemapController extends Controller {
                     ini_set('max_execution_time', 300);
                     $offset = $i * $limit;
                     $str = $this->generateSpecies($limit, $offset);
-                    $file = fopen("uploads/sitemaps/specie_" . $i . "_" . $locale . ".xml", "w") or die("Unable to open file!");
+                    $file = fopen("uploads/sitemaps/specie_" . $i . ".xml", "w") or die("Unable to open file!");
 
                     $this->writeFile($str, $file);
                 }
@@ -60,37 +60,37 @@ class SitemapController extends Controller {
 
             case "SkKingdom":
                 $str = $this->generateKingdom();
-                $file = fopen("uploads/sitemaps/kingdom_" . $locale . ".xml", "w") or die("Unable to open file!");
+                $file = fopen("uploads/sitemaps/kingdom.xml", "w") or die("Unable to open file!");
                 $this->writeFile($str, $file);
                 break;
 
             case "SkPhylum":
                 $str = $this->generatePhylum();
-                $file = fopen("uploads/sitemaps/phylum_" . $locale . ".xml", "w") or die("Unable to open file!");
+                $file = fopen("uploads/sitemaps/phylum.xml", "w") or die("Unable to open file!");
                 $this->writeFile($str, $file);
                 break;
 
             case "SkClass":
                 $str = $this->generateClass();
-                $file = fopen("uploads/sitemaps/class_" . $locale . ".xml", "w") or die("Unable to open file!");
+                $file = fopen("uploads/sitemaps/class.xml", "w") or die("Unable to open file!");
                 $this->writeFile($str, $file);
                 break;
 
             case "SkOrder":
                 $str = $this->generateOrder();
-                $file = fopen("uploads/sitemaps/order_" . $locale . ".xml", "w") or die("Unable to open file!");
+                $file = fopen("uploads/sitemaps/order.xml", "w") or die("Unable to open file!");
                 $this->writeFile($str, $file);
                 break;
 
             case "SkFamily":
                 $str = $this->generateFamily();
-                $file = fopen("uploads/sitemaps/family_" . $locale . ".xml", "w") or die("Unable to open file!");
+                $file = fopen("uploads/sitemaps/family.xml", "w") or die("Unable to open file!");
                 $this->writeFile($str, $file);
                 break;
 
             case "SkGenus":
                 $str = $this->generateGenus();
-                $file = fopen("uploads/sitemaps/genus_" . $locale . ".xml", "w") or die("Unable to open file!");
+                $file = fopen("uploads/sitemaps/genus.xml", "w") or die("Unable to open file!");
                 $this->writeFile($str, $file);
                 break;
             default:

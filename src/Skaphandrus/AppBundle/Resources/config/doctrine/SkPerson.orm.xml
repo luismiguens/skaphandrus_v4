@@ -23,7 +23,7 @@
     
         
         <one-to-one field="skaphandrusId" target-entity="FosUser" >
-            <cascade><cascade-remove /></cascade>
+            <!--<cascade><cascade-remove /></cascade>-->
             <join-column name="skaphandrus_id" referenced-column-name="id"/>
         </one-to-one>
     

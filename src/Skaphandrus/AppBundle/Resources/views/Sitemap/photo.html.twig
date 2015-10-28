@@ -1,7 +1,17 @@
 {# empty Twig template #}
 <url>
-    <loc>http://skaphandrus.com{{ url_to_photo(photo) }}</loc>  
+    <loc>http://skaphandrus.com{{ path('photo', {'id':photo.id, 'slug':slugify(photo.title), 'locale': 'en'}) }}</loc>
     <lastmod>{{ "now"|date("Y-m-d") }}</lastmod>  
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link 
+        rel="alternate"
+        hreflang="en"
+        href="http://skaphandrus.com{{ path('photo', {'id':photo.id, 'slug':slugify(photo.title), 'locale': 'en'}) }}"
+        />
+    <xhtml:link 
+        rel="alternate"
+        hreflang="pt"
+        href="http://skaphandrus.com{{ path('photo', {'id':photo.id, 'slug':slugify(photo.title), 'locale': 'pt'}) }}"
+        />
 </url>
