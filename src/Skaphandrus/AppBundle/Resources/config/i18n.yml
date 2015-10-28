@@ -31,7 +31,7 @@ taxon:
 
 ################################################################################
 spot:
-    locales:  { en: "/en/scuba-diving-sites/dive-site/{country}/{location}/{slug}", pt: "/pt/spots-mergulho/spot/{country}/{location}/{slug}" }
+    locales:  { en: "/en/scuba-diving-sites/spot/{country}/{location}/{slug}", pt: "/pt/spots-mergulho/spot/{country}/{location}/{slug}" }
     defaults: { _controller: SkaphandrusAppBundle:Default:spot }
 
 location:

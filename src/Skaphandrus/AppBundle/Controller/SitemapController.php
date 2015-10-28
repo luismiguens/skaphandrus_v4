@@ -16,7 +16,7 @@ class SitemapController extends Controller {
 
         switch ($model) {
             case "SkCountry":
-                $str = $this->generateCountries();
+                $str = $this->generateCountry();
                 $file = fopen("uploads/sitemaps/country_" . $locale . ".xml", "w") or die("Unable to open file!");
                 $this->writeFile($str, $file);
                 break;
@@ -118,7 +118,7 @@ class SitemapController extends Controller {
         }
     }
 
-    public function generateCountries() {
+    public function generateCountry() {
         $em = $this->getDoctrine()->getManager();
         $countries = $em->getRepository('SkaphandrusAppBundle:SkCountry')->findAll();
         $str = "";
@@ -149,10 +149,11 @@ class SitemapController extends Controller {
     public function generateSpot() {
         $em = $this->getDoctrine()->getManager();
         $spots = $em->getRepository('SkaphandrusAppBundle:SkSpot')->findAll();
+        //$spots = $em->getRepository('SkaphandrusAppBundle:SkSpot')->findBy(array(), array(), 10000, 0);
         $str = "";
 
         foreach ($spots as $spot) {
-            $renderedTemplate = $this->get('twig')->render('SkaphandrusAppBundle:Sitemap:spots.html.twig', array(
+            $renderedTemplate = $this->get('twig')->render('SkaphandrusAppBundle:Sitemap:spot.html.twig', array(
                 'spot' => $spot
             ));
             $str = $str . $renderedTemplate;

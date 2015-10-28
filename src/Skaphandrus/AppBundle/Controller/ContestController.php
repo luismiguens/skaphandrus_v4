@@ -62,23 +62,15 @@ class ContestController extends Controller {
         $contest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
                 ->findOneById($contest_id);
 
+       
+        $userPhotos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
+                ->findPhotosFromUserNotAssociatedToContest($user->getId(), $contest->getId());
+        
         $categoryPhotos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
                 ->findPhotosFromUserInContest($user->getId(), $contest->getId());
 
-        $categoryPhotosIds = array();
-        foreach ($categoryPhotos as $cat) {
-            foreach ($cat as $p) {
-                $categoryPhotosIds[] = $p->getId();
-            }
-        }
 
-        $userPhotos = array();
-        foreach ($user->getPhotos() as $photo) {
-            if (!in_array($photo->getId(), $categoryPhotosIds)) {
-                $userPhotos[] = $photo;
-            }
-        }
-
+        
         return $this->render('SkaphandrusAppBundle:Contest:participate.html.twig', array(
                     'contest' => $contest,
                     'categories' => $contest->getCategories(),

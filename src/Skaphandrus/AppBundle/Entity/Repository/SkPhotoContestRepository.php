@@ -11,9 +11,9 @@ use Doctrine\ORM\EntityRepository;
  * repository methods below.
  */
 class SkPhotoContestRepository extends EntityRepository {
-    
+
     public function getPhotographers($contest_id) {
-                
+
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
@@ -33,13 +33,13 @@ class SkPhotoContestRepository extends EntityRepository {
         $statement->execute();
         $values = $statement->fetchAll();
         $result = array();
-        
+
         foreach ($values as $value) {
             $user = $em->getRepository('SkaphandrusAppBundle:FosUser')->find($value['id']);
             $user->setPhotosInContest($value['num_photos']);
             $result[] = $user;
         }
-  
+
         return $result;
     }
 
@@ -61,64 +61,82 @@ class SkPhotoContestRepository extends EntityRepository {
         return $users;
     }
 
+    public function findPhotosFromUserNotAssociatedToContest($user_id, $contest_id) {
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT *
+                FROM sk_photo as p
+                WHERE p.fos_user_id = " . $user_id . " 
+                AND p.id NOT IN( 
+                    SELECT photo_id 
+                    FROM sk_photo_contest_category_photo 
+                    WHERE category_id IN (
+                        SELECT id 
+                        FROM sk_photo_contest_category 
+                        WHERE contest_id = " . $contest_id . "))
+                ORDER BY id DESC";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+            $photo = new \Skaphandrus\AppBundle\Entity\SkPhoto();
+            $photo->setId($value['id']);
+            $photo->setTitle($value['title']);
+            $photo->setImage($value['image']);
+            $result[] = $photo;
+        }
+
+        return $result;
+    }
+
+    public function findPhotosFromUserInCategory($user_id, $category_id) {
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT *
+                FROM sk_photo
+                JOIN sk_photo_contest_category_photo ON sk_photo.id = sk_photo_contest_category_photo.photo_id 
+                WHERE sk_photo.fos_user_id = " . $user_id . " 
+                AND sk_photo_contest_category_photo.category_id = " . $category_id . "
+                ORDER BY sk_photo.id DESC";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+            $photo = new \Skaphandrus\AppBundle\Entity\SkPhoto();
+            $photo->setId($value['id']);
+            $photo->setTitle($value['title']);
+            $photo->setImage($value['image']);
+            $result[] = $photo;
+        }
+
+        return $result;
+    }
+
     public function findPhotosFromUserInContest($user_id, $contest_id) {
         $categories = $this->getEntityManager()->createQuery(
-            'SELECT cat
+                        'SELECT cat
             FROM SkaphandrusAppBundle:SkPhotoContestCategory cat
             WHERE IDENTITY(cat.contest) = :contest_id'
-        )->setParameter('contest_id', $contest_id)->getResult();
+                )->setParameter('contest_id', $contest_id)->getResult();
 
-        $photos = array();
         foreach ($categories as $category) {
-            $photo_ids = array();
-
-            foreach ($category->getPhoto() as $photo) {
-                $photo_ids[] = $photo->getId();
-            }
-
-            $query = $this->getEntityManager()->createQuery(
-                'SELECT p
-                FROM SkaphandrusAppBundle:SkPhoto p
-                WHERE IDENTITY(p.fosUser) = :user_id
-                AND p.id IN (:photo_ids)'
-            )->setParameter('user_id', $user_id)
-            ->setParameter('photo_ids', implode(',', $photo_ids));
-
-            $photos[$category->getId()] = $query->getResult();
+            $photos[$category->getId()] = $this->findPhotosFromUserInCategory($user_id, $category->getId());
         }
+
+
 
         return $photos;
     }
-    
-        
-//      public function findPhotosFromUserInContest($user_id, $contest_id) {
-//          
-//          $categories = $this->getEntityManager()->createQuery(
-//            'SELECT cat
-//            FROM SkaphandrusAppBundle:SkPhotoContestCategory cat
-//            WHERE IDENTITY(cat.contest) = :contest_id'
-//        )->setParameter('contest_id', $contest_id)->getResult();
-//
-//        $photos = array();
-//        foreach ($categories as $category) {
-//            $photo_ids = array();
-//
-//            foreach ($category->getPhoto() as $photo) {
-//                $photo_ids[] = $photo->getId();
-//            }
-//
-//            $query = $this->getEntityManager()->createQuery(
-//                'SELECT p
-//                FROM SkaphandrusAppBundle:SkPhoto p
-//                WHERE IDENTITY(p.fosUser) = :user_id
-//                AND p.id IN (:photo_ids)'
-//            )->setParameter('user_id', $user_id)
-//            ->setParameter('photo_ids', implode(',', $photo_ids));
-//
-//            $photos[$category->getId()] = $query->getResult();
-//        }
-//
-//        return $photos;
-//    }
-    
+
+
 }

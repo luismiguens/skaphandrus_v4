@@ -1,9 +1,9 @@
 {# empty Twig template #}
 
-{% set name = spot.name|replace({' ': '-'}) %}
 
+{% if spot.name %} 
 <url>
-    <loc>http://skaphandrus.com{{ path('spot', {'country':spot.location.region.country, 'location':spot.location, 'slug':name, 'locale': 'en'}) }}</loc>
+    <loc>http://skaphandrus.com{{ path('spot', {'country':slugify(spot.location.region.country), 'location':slugify(spot.location), 'slug':slugify(spot.name), 'locale': 'en'}) }}</loc>
     {#<xhtml:link 
         rel="alternate"
         hreflang="en"
@@ -22,3 +22,4 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
 </url>#}
+{% endif %}
