@@ -394,6 +394,36 @@ class SkSpeciesRepository extends EntityRepository {
                         )->setParameter('locale', $locale)->setParameter('string', '%' . $string . '%')->getResult();
     }
 
+    public function findAllSpeciesLite($limit, $offset) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT sp.id as species_id, ssn.name as ssn_name
+                FROM sk_species_scientific_name as ssn
+                join sk_species as sp
+                on sp.id = ssn.species_id
+                group by species_id 
+                order by species_id asc
+                limit " . $limit . "
+                offset " . $offset;
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+            $species = new \Skaphandrus\AppBundle\Entity\SkSpecies();
+            $species->setId($value['species_id']);
+            $scientific_name = new \Skaphandrus\AppBundle\Entity\SkSpeciesScientificName();
+            $scientific_name->setName($value['ssn_name']);
+            $species->addScientificName($scientific_name);
+            $result[] = $species;
+        }
+
+        return $result;
+    }
+    
     public function findSpeciesInCountry($country_id) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();

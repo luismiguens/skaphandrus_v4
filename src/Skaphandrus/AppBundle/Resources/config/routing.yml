@@ -4,7 +4,7 @@
 ################################################################################ 
 
 sitemap:
-    path:     /{_locale}/sitemap/{model}
+    path:     /sitemap/{model}
     defaults: { _controller: "SkaphandrusAppBundle:Sitemap:sitemap" }
 
 teste:
@@ -129,24 +129,24 @@ skaphandrus_app_users_migration:
 ### TRANSVERSAL
 ################################################################################    
 
-index:
-    path:      /{_locale}
-    defaults:  { _controller: SkaphandrusAppBundle:Default:index, _locale: en }
-    requirements:
-        _locale:  en|pt
-
-modules:
-    path:      /{_locale}/ocean-life-identification
-    defaults:  { _controller: SkaphandrusAppBundle:Identification:modules, _locale: en }
-    requirements:
-        _locale:  en|pt
-
-criterias:
-    path:      /{_locale}/ocean-life-identification/{slug}
-    defaults:  { _controller: SkaphandrusAppBundle:Identification:criterias, _locale: en }
-    requirements:
-        _locale:  en|pt
-
+#index:
+#    path:      /{_locale}
+#    defaults:  { _controller: SkaphandrusAppBundle:Default:index, _locale: en }
+#    requirements:
+#        _locale:  en|pt
+#
+#modules:
+#    path:      /{_locale}/ocean-life-identification
+#    defaults:  { _controller: SkaphandrusAppBundle:Identification:modules, _locale: en }
+#    requirements:
+#        _locale:  en|pt
+#
+#criterias:
+#    path:      /{_locale}/ocean-life-identification/{slug}
+#    defaults:  { _controller: SkaphandrusAppBundle:Identification:criterias, _locale: en }
+#    requirements:
+#        _locale:  en|pt
+#
 #species:
 #    path:     /{_locale}/marine-animals/species/{slug}
 #    defaults: { _controller: SkaphandrusAppBundle:Default:speciesPage, _locale: en }
@@ -288,72 +288,68 @@ test_thumbnail:
 #  url:   /:sf_culture/underwater-photo-contest/results/:slug/*
 #  param: { module: photoContest, action: contestResults }
 #
-
-contests_landing_page_v3:
-    path:     /{_locale}/underwater-photo-contest
-    defaults: { _controller: SkaphandrusAppBundle:Contest:landing, _locale: en }
-    requirements:
-        _locale:  en|pt
-
-contests_photos_v3:
-    path:     /{_locale}/underwater-photo-contest/photos/{contest_slug}/{category_slug}
-    defaults: { _controller: SkaphandrusAppBundle:Contest:photos, _locale: en }
-    requirements:
-        _locale:  en|pt
-
-contest_participate_v3:
-    path:     /{_locale}/underwater-photo-contest/participate/{contest_id}
-    defaults: { _controller: SkaphandrusAppBundle:Contest:participate, _locale: en }
-    requirements:
-        _locale:  en|pt
-
-contest_add_photo_v3:
-    path:     /{_locale}/category/{category_id}/add-photo/{photo_id}
-    defaults: { _controller: SkaphandrusAppBundle:Contest:addPhoto, _locale: en }
-    requirements:
-        _locale:  en|pt
-
-contest_remove_photo_v3:
-    path:     /{_locale}/category/{category_id}/remove-photo/{photo_id}
-    defaults: { _controller: SkaphandrusAppBundle:Contest:removePhoto, _locale: en }
-    requirements:
-        _locale:  en|pt
-
-contest_vote_photo_v3:
-    path:     /{_locale}/category/{category_id}/vote-photo/{photo_id}
-    defaults: { _controller: SkaphandrusAppBundle:Contest:votePhoto, _locale: en }
-    requirements:
-        _locale:  en|pt
-
-contests_photographers_v3:
-    path:     /{_locale}/underwater-photo-contest/photographers/{contest_slug}
-    defaults: { _controller: SkaphandrusAppBundle:Contest:photographers, _locale: en }
-    requirements:
-        _locale:  en|pt
-
-contests_sponsors_v3:
-    path:     /{_locale}/underwater-photo-contest/sponsors/{contest_slug}
-    defaults: { _controller: SkaphandrusAppBundle:Contest:sponsors, _locale: en }
-    requirements:
-        _locale:  en|pt
-
-contests_winners_v3:
-    path:     /{_locale}/underwater-photo-contest/winners/{contest_slug}
-    defaults: { _controller: SkaphandrusAppBundle:Contest:winners, _locale: en }
-    requirements:
-        _locale:  en|pt
-
-contests_contest_v3:
-    path:     /{_locale}/underwater-photo-contest/{slug}
-    defaults: { _controller: SkaphandrusAppBundle:Contest:contest, _locale: en }
-    requirements:
-        _locale:  en|pt
-
-
-
-
-
-
+#
+#contests_landing_page:
+#    path:     /{_locale}/underwater-photo-contest
+#    defaults: { _controller: SkaphandrusAppBundle:Contest:landing, _locale: en }
+#    requirements:
+#        _locale:  en|pt
+#
+#contests_photos:
+#    path:     /{_locale}/underwater-photo-contest/photos/{contest_slug}/{category_slug}
+#    defaults: { _controller: SkaphandrusAppBundle:Contest:photos, _locale: en }
+#    requirements:
+#        _locale:  en|pt
+#
+#contest_participate:
+#    path:     /{_locale}/underwater-photo-contest/participate/{contest_id}
+#    defaults: { _controller: SkaphandrusAppBundle:Contest:participate, _locale: en }
+#    requirements:
+#        _locale:  en|pt
+#
+#contest_add_photo:
+#    path:     /{_locale}/category/{category_id}/add-photo/{photo_id}
+#    defaults: { _controller: SkaphandrusAppBundle:Contest:addPhoto, _locale: en }
+#    requirements:
+#        _locale:  en|pt
+#
+#contest_remove_photo:
+#    path:     /{_locale}/category/{category_id}/remove-photo/{photo_id}
+#    defaults: { _controller: SkaphandrusAppBundle:Contest:removePhoto, _locale: en }
+#    requirements:
+#        _locale:  en|pt
+#
+#contest_vote_photo:
+#    path:     /{_locale}/category/{category_id}/vote-photo/{photo_id}
+#    defaults: { _controller: SkaphandrusAppBundle:Contest:votePhoto, _locale: en }
+#    requirements:
+#        _locale:  en|pt
+#
+#contests_photographers:
+#    path:     /{_locale}/underwater-photo-contest/photographers/{contest_slug}
+#    defaults: { _controller: SkaphandrusAppBundle:Contest:photographers, _locale: en }
+#    requirements:
+#        _locale:  en|pt
+#
+#contests_sponsors:
+#    path:     /{_locale}/underwater-photo-contest/sponsors/{contest_slug}
+#    defaults: { _controller: SkaphandrusAppBundle:Contest:sponsors, _locale: en }
+#    requirements:
+#        _locale:  en|pt
+#
+#contests_winners:
+#    path:     /{_locale}/underwater-photo-contest/winners/{contest_slug}
+#    defaults: { _controller: SkaphandrusAppBundle:Contest:winners, _locale: en }
+#    requirements:
+#        _locale:  en|pt
+#
+#contests_contest:
+#    path:     /{_locale}/underwater-photo-contest/{slug}
+#    defaults: { _controller: SkaphandrusAppBundle:Contest:contest, _locale: en }
+#    requirements:
+#        _locale:  en|pt
+#
+#
 #################################################################################  
 #### IDENTIFICATION APP
 #################################################################################

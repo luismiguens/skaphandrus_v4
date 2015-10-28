@@ -1,6 +1,17 @@
 ################################################################################
 ### TRANSVERSAL
 ################################################################################
+index:
+    locales:  { en: "/", pt: "/pt" }
+    defaults: { _controller: SkaphandrusAppBundle:Default:index }
+
+modules:
+    locales:  { en: "/en/ocean-life-identification", pt: "/pt/identificacao-vida-oceanos" }
+    defaults: { _controller: SkaphandrusAppBundle:Identification:modules }
+
+criterias:
+    locales:  { en: "/en/ocean-life-identification/{slug}", pt: "/pt/identificacao-vida-oceanos/{slug}" }
+    defaults: { _controller: SkaphandrusAppBundle:Identification:criterias }
 
 species:
     locales:  { en: "/en/marine-animals/species/{slug}", pt: "/pt/animais-marinhos/especie/{slug}" }
@@ -11,51 +22,51 @@ taxonomy:
     defaults: { _controller: SkaphandrusAppBundle:Default:taxonomy }
 
 taxonomy_source:
-    locales:  { en: "/{_locale}/species/source", pt: "/{_locale}/species/source" }
+    locales:  { en: "/en/species/source", pt: "/pt/species/source" }
     defaults: { _controller: SkaphandrusAppBundle:Default:source }
 
 taxon:
-    locales:  { en: "/{_locale}/marine-animals/{node}/{slug}", pt: "/{_locale}/animais-marinhos/{node}/{slug}" }
+    locales:  { en: "/en/marine-animals/{node}/{slug}", pt: "/pt/animais-marinhos/{node}/{slug}" }
     defaults: { _controller: SkaphandrusAppBundle:Default:taxon }
 
 ################################################################################
 spot:
-    locales:  { en: "/{_locale}/scuba-diving-sites/dive-site/{country}/{location}/{slug}", pt: "/{_locale}/spots-mergulho/spot/{country}/{location}/{slug}" }
+    locales:  { en: "/en/scuba-diving-sites/dive-site/{country}/{location}/{slug}", pt: "/pt/spots-mergulho/spot/{country}/{location}/{slug}" }
     defaults: { _controller: SkaphandrusAppBundle:Default:spot }
 
 location:
-    locales:  { en: "/{_locale}/scuba-diving-sites/location/{country}/{slug}", pt: "/{_locale}/spots-mergulho/local/{country}/{slug}" }
+    locales:  { en: "/en/scuba-diving-sites/location/{country}/{slug}", pt: "/pt/spots-mergulho/local/{country}/{slug}" }
     defaults: { _controller: SkaphandrusAppBundle:Default:location }
 
 country:
-    locales:  { en: "/{_locale}/scuba-diving-sites/country/{slug}", pt: "/{_locale}/spots-mergulho/pais/{slug}" }
+    locales:  { en: "/en/scuba-diving-sites/country/{slug}", pt: "/pt/spots-mergulho/pais/{slug}" }
     defaults: { _controller: SkaphandrusAppBundle:Default:country }
 
 locations_home:
-    locales:  { en: "/{_locale}/scuba-diving-sites", pt: "/{_locale}/spots-mergulho" }
+    locales:  { en: "/en/scuba-diving-sites", pt: "/pt/spots-mergulho" }
     defaults: { _controller: SkaphandrusAppBundle:Default:locationsHome }
 
 ################################################################################
 photo:
-    locales:  { en: "/{_locale}/underwater-photography/photo/{id}-{slug}", pt: "/{_locale}/fotografia-subaquatica/fotografia/{id}-{slug}" }
+    locales:  { en: "/en/underwater-photography/photo/{id}-{slug}", pt: "/pt/fotografia-subaquatica/fotografia/{id}-{slug}" }
     defaults: { _controller: SkaphandrusAppBundle:Default:photo }
     
 photo_no_slug:
-    locales:  { en: "/{_locale}/underwater-photography/photo/{id}", pt: "/{_locale}/fotografia-subaquatica/fotografia/{id}" }
+    locales:  { en: "/en/underwater-photography/photo/{id}", pt: "/pt/fotografia-subaquatica/fotografia/{id}" }
     defaults: { _controller: SkaphandrusAppBundle:Default:photo }
 
 photos:
-    locales:  { en: "/{_locale}/underwater-photography/photos", pt: "/{_locale}/fotografia-subaquatica/fotografias" }
+    locales:  { en: "/en/underwater-photography/photos", pt: "/pt/fotografia-subaquatica/fotografias" }
     defaults: { _controller: SkaphandrusAppBundle:Default:photos }
 
 ################################################################################
 user:
-    locales:  { en: "/{_locale}/users/username/{id}", pt: "/{_locale}/utilizadores/utilizador/{id}" }
+    locales:  { en: "/en/users/username/{id}", pt: "/pt/utilizadores/utilizador/{id}" }
     defaults: { _controller: SkaphandrusAppBundle:Default:user }
 
 ################################################################################
 search:
-    locales:  { en: "/{_locale}/search-results", pt: "/{_locale}/resultados-pesquisa" }
+    locales:  { en: "/en/search-results", pt: "/pt/resultados-pesquisa" }
     defaults: { _controller: SkaphandrusAppBundle:Default:search }
 
 
@@ -66,43 +77,43 @@ search:
 #################################################################################
 
 contests_landing_page:
-    locales:  { en: "/{_locale}/underwater-photo-contest", pt: "/{_locale}/concurso-fotografia-subaquatica" }
+    locales:  { en: "/en/underwater-photo-contest", pt: "/pt/concurso-fotografia-subaquatica" }
     defaults: { _controller: SkaphandrusAppBundle:Contest:landing }
 
 contests_photos:
-    locales:  { en: "/{_locale}/underwater-photo-contest/photos/{contest_slug}/{category_slug}", pt: "/{_locale}/concurso-fotografia-subaquatica/fotografias/{contest_slug}/{category_slug}" }
+    locales:  { en: "/en/underwater-photo-contest/photos/{contest_slug}/{category_slug}", pt: "/pt/concurso-fotografia-subaquatica/fotografias/{contest_slug}/{category_slug}" }
     defaults: { _controller: SkaphandrusAppBundle:Contest:photos }
 
 contest_participate:
-    locales:  { en: "/{_locale}/underwater-photo-contest/participate/{contest_id}", pt: "/{_locale}/concurso-fotografia-subaquatica/participa/{contest_id}" }
+    locales:  { en: "/en/underwater-photo-contest/participate/{contest_id}", pt: "/pt/concurso-fotografia-subaquatica/participa/{contest_id}" }
     defaults: { _controller: SkaphandrusAppBundle:Contest:participate }
 
 contest_add_photo:
-    locales:  { en: "/{_locale}/category/{category_id}/add-photo/{photo_id}", pt: "/{_locale}/categoria/{category_id}/adicionar-fotografia/{photo_id}" }
+    locales:  { en: "/en/category/{category_id}/add-photo/{photo_id}", pt: "/pt/categoria/{category_id}/adicionar-fotografia/{photo_id}" }
     defaults: { _controller: SkaphandrusAppBundle:Contest:addPhoto }
 
 contest_remove_photo:
-    locales:  { en: "/{_locale}/category/{category_id}/remove-photo/{photo_id}", pt: "/{_locale}/category/{category_id}/remover-fotografia/{photo_id}" }
+    locales:  { en: "/en/category/{category_id}/remove-photo/{photo_id}", pt: "/pt/category/{category_id}/remover-fotografia/{photo_id}" }
     defaults: { _controller: SkaphandrusAppBundle:Contest:removePhoto }
 
 contest_vote_photo:
-    locales:  { en: "/{_locale}/category/{category_id}/vote-photo/{photo_id}", pt: "/{_locale}/category/{category_id}/votar-fotografia/{photo_id}" }
+    locales:  { en: "/en/category/{category_id}/vote-photo/{photo_id}", pt: "/pt/category/{category_id}/votar-fotografia/{photo_id}" }
     defaults: { _controller: SkaphandrusAppBundle:Contest:votePhoto }
 
 contests_photographers:
-    locales:  { en: "/{_locale}/underwater-photo-contest/photographers/{contest_slug}", pt: "/{_locale}/concurso-fotografia-subaquatica/fotografos/{contest_slug}" }
+    locales:  { en: "/en/underwater-photo-contest/photographers/{contest_slug}", pt: "/pt/concurso-fotografia-subaquatica/fotografos/{contest_slug}" }
     defaults: { _controller: SkaphandrusAppBundle:Contest:photographers }
 
 contests_sponsors:
-    locales:  { en: "/{_locale}/underwater-photo-contest/sponsors/{contest_slug}", pt: "/{_locale}/concurso-fotografia-subaquatica/patrocinadores/{contest_slug}" }
+    locales:  { en: "/en/underwater-photo-contest/sponsors/{contest_slug}", pt: "/pt/concurso-fotografia-subaquatica/patrocinadores/{contest_slug}" }
     defaults: { _controller: SkaphandrusAppBundle:Contest:sponsors }
 
 contests_winners:
-    locales:  { en: "/{_locale}/underwater-photo-contest/winners/{contest_slug}", pt: "/{_locale}/concurso-fotografia-subaquatica/vencedores/{contest_slug}" }
+    locales:  { en: "/en/underwater-photo-contest/winners/{contest_slug}", pt: "/pt/concurso-fotografia-subaquatica/vencedores/{contest_slug}" }
     defaults: { _controller: SkaphandrusAppBundle:Contest:winners }
 
 contests_contest:
-    locales:  { en: "/{_locale}/underwater-photo-contest/{slug}", pt: "/{_locale}/concurso-fotografia-subaquatica/{slug}" }
+    locales:  { en: "/en/underwater-photo-contest/{slug}", pt: "/pt/concurso-fotografia-subaquatica/{slug}" }
     defaults: { _controller: SkaphandrusAppBundle:Contest:contest }
 
 

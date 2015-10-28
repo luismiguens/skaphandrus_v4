@@ -191,6 +191,30 @@ class FosUserRepository extends EntityRepository {
         return $photosInContest;
     }
 
+    public function findAllUsersLite() {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT u.id as user_id
+                FROM fos_user as u
+                group by user_id 
+                order by user_id asc";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+            $user = new FosUser();
+            $user->setId($value['user_id']);
+
+            $result[] = $user;
+        }
+
+        return $result;
+    }
+
     public function findUsersInCountry($country_id) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
