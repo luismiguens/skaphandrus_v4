@@ -188,8 +188,6 @@
                                                                             {% for sponsor in award.sponsor %}
                                                                                 {% if sponsor.getWebPath %}
 
-                                                                                    {# <img class="img-rounded" src="{{ sponsor.image|imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}"> #}
-
                                                                                     <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
                                                                                 {% endif %}
 
@@ -229,13 +227,9 @@
                                                                         <p>{{ award.translate.description }}</p>
                                                                     </td>
                                                                     <td>
-                                                                        {# <img src="/{{ award.sponsor.0.image }}" alt="{{ award.sponsor.0.name }}" title="{{ award.sponsor.0.name }}"> #}
-                                                                        {#<img src="{{ "uploads/11138585_1606358319621583_5687423293522990896_n.jpg"|imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ award.sponsor.0.name }}" title="{{ award.sponsor.0.name }}">#}
-
-
 
                                                                         {% for sponsor in award.sponsor %}
-                                                                            {# <img class="img-rounded" src="{{ sponsor.image|imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}"> #}
+                                                                            
                                                                             {% if sponsor.getWebPath %}
                                                                                 <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
 
@@ -296,7 +290,7 @@
                                                                 <tr>
                                                                     <td>
                                                                         {% if sponsor.getWebPath %}
-                                                                            {# <img class="img-rounded" src="{{ sponsor.image|imagine_filter('sk_thumbnail_outbound_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}"> #}
+                                                                            
                                                                             <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
                                                                         {% endif %}
                                                                     </td>

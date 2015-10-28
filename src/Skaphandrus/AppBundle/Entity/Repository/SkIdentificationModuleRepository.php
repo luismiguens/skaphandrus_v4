@@ -18,6 +18,7 @@ class SkIdentificationModuleRepository extends EntityRepository {
     public function findBySlug($slug,$locale) {
         $name = Utils::unslugify($slug);
 
+        
         $query = $this->getEntityManager()
                         ->createQuery(
                                 'SELECT m

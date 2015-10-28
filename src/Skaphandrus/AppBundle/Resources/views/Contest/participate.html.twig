@@ -7,13 +7,17 @@
    {{ "page.contest_participate.h1.title"|trans }}
 {% endblock %}
 
+
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
-          <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
         <li><a href="{{ path("contests_landing_page") }}">{{ "page.contest.breadcrumb.contests"|trans }}</a></li>
-        <li class="active"><strong>{{ "page.contest_participate.h1.title"|trans }}</strong></li>
+        <li class="active"><strong>{{ contest.name}}</strong></li>
     </ol>
 {% endblock %}
+
+
+
 
 {% block stylesheets %}
     {{ parent() }}

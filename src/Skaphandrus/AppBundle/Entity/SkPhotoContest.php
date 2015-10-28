@@ -542,7 +542,9 @@ class SkPhotoContest {
     
     public function isInProgress() {
         
-        if(date("Y-m-d H:i:s") > $this->getBeginAt() and date("Y-m-d H:i:s") < $this->getEndAt()){
+        $now = new \DateTime();
+        
+        if($this->getBeginAt() < $now and $this->getEndAt() > $now){
             return true;
         }
         

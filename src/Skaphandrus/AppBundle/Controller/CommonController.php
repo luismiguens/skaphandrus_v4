@@ -5,6 +5,23 @@ namespace Skaphandrus\AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class CommonController extends Controller {
+
+    public function skContestsListAction() {
+
+        //$locale = $this->get('request')->getLocale();
+        $em = $this->getDoctrine()->getManager();
+
+
+        $query = $em->createQuery("SELECT c FROM SkaphandrusAppBundle:SkPhotoContest c WHERE c.beginAt < ?1 AND c.endAt > ?2");
+        $query->setParameter(1, date("Y-m-d H:i:s"));
+        $query->setParameter(2, date("Y-m-d H:i:s"));
+        $contests = $query->getResult();
+
+        return $this->render('SkaphandrusAppBundle:Common:skContestsList.html.twig', array(
+                    'contests' => $contests
+        ));
+    }
+
     /*
      * Prints the activity feed
      *
@@ -108,8 +125,8 @@ class CommonController extends Controller {
         }
 
 
-        
-         //order
+
+        //order
         if (array_key_exists('order_id', $parameters)) {
             $em = $this->getDoctrine()->getManager();
             $species = $em->getRepository('SkaphandrusAppBundle:SkOrder')->getSpecies($parameters['order_id']);
@@ -122,7 +139,7 @@ class CommonController extends Controller {
             $sql = $sql . ") ";
         }
 
-  //class
+        //class
         if (array_key_exists('class_id', $parameters)) {
 
             $em = $this->getDoctrine()->getManager();
@@ -134,9 +151,9 @@ class CommonController extends Controller {
             }
             $sql = $sql . implode(',', $species_ids);
             $sql = $sql . ") ";
-        }        
-        
-         //phylum
+        }
+
+        //phylum
         if (array_key_exists('phylum_id', $parameters)) {
 
             $em = $this->getDoctrine()->getManager();
@@ -148,10 +165,10 @@ class CommonController extends Controller {
             }
             $sql = $sql . implode(',', $species_ids);
             $sql = $sql . ") ";
-        }        
-        
+        }
 
-        
+
+
         //kingdom
         if (array_key_exists('kingdom_id', $parameters)) {
 
@@ -164,9 +181,9 @@ class CommonController extends Controller {
             }
             $sql = $sql . implode(',', $species_ids);
             $sql = $sql . ") ";
-        }        
+        }
 
-        
+
 
         $sql = $sql . "ORDER BY " . key($order) . " " . $order[key($order)] . " ";
         $sql = $sql . "LIMIT " . $limit;

@@ -1,0 +1,8 @@
+{# empty Twig template #}
+{% for contest in contests %}
+    <li>
+        <a href="{{ path('contest_participate', { 'contest_id': contest.id }) }}">{{contest.name}}</a>
+    </li>
+{% endfor %}
+
+

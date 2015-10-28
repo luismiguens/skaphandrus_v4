@@ -655,6 +655,10 @@ $this->translator->setLocale($locale);
         return call_user_func($path_function, 'criterias', array(
             'slug' => Utils::slugify($module_name)
         ));
+        
+
+        
+        
     }
 
     public function url_to_message($message) {
