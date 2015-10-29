@@ -438,64 +438,73 @@ class DefaultController extends Controller {
 //                    $specie->setPhotosCount($photos_count[$specie->getId()]);
 //                }
 //            }
-            // Get markers from spots for the map
-            $markers = array();
-            // $totalLatitude = 0;
-            // $totalLongitude = 0;
-            foreach ($location->getSpots() as $spot) {
-                if ($spot->getCoordinate()) {
-                    $marker = new Marker();
-                    $latitude = explode(",", $spot->getCoordinate())[0];
-                    $longitude = explode(",", $spot->getCoordinate())[1];
 
-                    // Marker options
-                    $marker->setPrefixJavascriptVariable('marker_');
-                    $marker->setPosition($latitude, $longitude, true);
-                    $marker->setAnimation(Animation::DROP);
-                    $marker->setOption('clickable', false);
-                    $marker->setOption('flat', true);
-                    $marker->setOptions(array(
-                        'clickable' => false,
-                        'flat' => true,
-                    ));
 
-                    // $totalLatitude += $latitude;
-                    // $totalLongitude += $longitude;
-                    $markers[] = $marker;
+            $map = null;
+            $centerLatitude = null;
+            $centerLongitude = null;
+
+            if (count($location->getSpots()) > 0) {
+
+
+                // Get markers from spots for the map
+                $markers = array();
+                // $totalLatitude = 0;
+                // $totalLongitude = 0;
+                foreach ($location->getSpots() as $spot) {
+                    if ($spot->getCoordinate()) {
+                        $marker = new Marker();
+                        $latitude = explode(",", $spot->getCoordinate())[0];
+                        $longitude = explode(",", $spot->getCoordinate())[1];
+
+                        // Marker options
+                        $marker->setPrefixJavascriptVariable('marker_');
+                        $marker->setPosition($latitude, $longitude, true);
+                        $marker->setAnimation(Animation::DROP);
+                        $marker->setOption('clickable', false);
+                        $marker->setOption('flat', true);
+                        $marker->setOptions(array(
+                            'clickable' => false,
+                            'flat' => true,
+                        ));
+
+                        // $totalLatitude += $latitude;
+                        // $totalLongitude += $longitude;
+                        $markers[] = $marker;
+                    }
+                }
+
+                // Create the map
+                // $centerLatitude = $totalLatitude / count($markers);
+                // $centerLongitude = $totalLongitude / count($markers);
+                $centerLatitude = explode(",", $location->getSpots()->toArray()[0]->getCoordinate())[0];
+                $centerLongitude = explode(",", $location->getSpots()->toArray()[0]->getCoordinate())[1];
+                $map = new \Ivory\GoogleMap\Map();
+                $map->setPrefixJavascriptVariable('map_');
+                $map->setHtmlContainerId('map_canvas');
+                $map->setAsync(false);
+                $map->setCenter($centerLatitude, $centerLongitude, true);
+                $map->setMapOption('zoom', 10);
+                $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
+                $map->setMapOption('disableDefaultUI', true);
+                $map->setMapOption('disableDoubleClickZoom', true);
+                $map->setMapOptions(array(
+                    'disableDefaultUI' => true,
+                    'disableDoubleClickZoom' => true,
+                ));
+                $map->setStylesheetOption('width', 'auto');
+                $map->setStylesheetOption('height', '300px');
+                $map->setStylesheetOptions(array(
+                    'width' => 'auto',
+                    'height' => '300px',
+                ));
+                $map->setLanguage('en');
+
+                // Add the spots to the map
+                foreach ($markers as $marker) {
+                    $map->addMarker($marker);
                 }
             }
-
-            // Create the map
-            // $centerLatitude = $totalLatitude / count($markers);
-            // $centerLongitude = $totalLongitude / count($markers);
-            $centerLatitude = explode(",", $location->getSpots()->toArray()[0]->getCoordinate())[0];
-            $centerLongitude = explode(",", $location->getSpots()->toArray()[0]->getCoordinate())[1];
-            $map = new \Ivory\GoogleMap\Map();
-            $map->setPrefixJavascriptVariable('map_');
-            $map->setHtmlContainerId('map_canvas');
-            $map->setAsync(false);
-            $map->setCenter($centerLatitude, $centerLongitude, true);
-            $map->setMapOption('zoom', 10);
-            $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
-            $map->setMapOption('disableDefaultUI', true);
-            $map->setMapOption('disableDoubleClickZoom', true);
-            $map->setMapOptions(array(
-                'disableDefaultUI' => true,
-                'disableDoubleClickZoom' => true,
-            ));
-            $map->setStylesheetOption('width', 'auto');
-            $map->setStylesheetOption('height', '300px');
-            $map->setStylesheetOptions(array(
-                'width' => 'auto',
-                'height' => '300px',
-            ));
-            $map->setLanguage('en');
-
-            // Add the spots to the map
-            foreach ($markers as $marker) {
-                $map->addMarker($marker);
-            }
-
             return $this->render('SkaphandrusAppBundle:Default:location.html.twig', array(
                         'location' => $location,
                         'spots' => $spots,

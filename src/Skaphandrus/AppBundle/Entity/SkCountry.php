@@ -79,6 +79,18 @@ class SkCountry
     {
         return $this->name;
     }
+    
+    
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getCountryName($locale)
+    {
+        return $this->__toString($locale);
+    }
+    
 
     /**
      * Set fipsCode
@@ -174,11 +186,22 @@ class SkCountry
     
     
     public function __toString() {
-        $name = Intl::getRegionBundle()->getCountryName($this->name);
+        
+        
+        $locale = "en";
+        
+        $name = Intl::getRegionBundle()->getCountryName($this->name, $locale);
 
         if ($this->name == 'AN') {
             $name = 'Netherlands Antilles';
         }
+                
+        if ($this->name == 'TL') {
+            $name = 'East Timor';
+        }
+        
+        //echo $this->name;
+
 
         return $name ? $name : '';
     }

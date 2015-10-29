@@ -21,6 +21,7 @@ class SkCountryRepository extends EntityRepository {
 
         $exceptions = array(
             'AN' => 'Netherlands Antilles',
+            'TL' => 'East Timor'
         );
 
         $countries = array_merge($countries, $exceptions);
@@ -34,8 +35,8 @@ class SkCountryRepository extends EntityRepository {
 
     public function findAllWithSpots() {
         return $this->getEntityManager()
-            ->createQuery(
-                'SELECT DISTINCT c
+                        ->createQuery(
+                                'SELECT DISTINCT c
                 FROM SkaphandrusAppBundle:SkCountry c
                 JOIN SkaphandrusAppBundle:SkRegion r
                     WITH IDENTITY(r.country) = c.id
@@ -50,14 +51,14 @@ class SkCountryRepository extends EntityRepository {
 
     public function countSpotsArray() {
         $spots = $this->getEntityManager()
-            ->createQuery(
-                'SELECT c.name code, count(s.id) as spot_count
+                        ->createQuery(
+                                'SELECT c.name code, count(s.id) as spot_count
                 FROM SkaphandrusAppBundle:SkSpot s
                 JOIN s.location l
                 JOIN l.region r
                 JOIN r.country c
                 GROUP BY c.name'
-                )->getResult();
+                        )->getResult();
 
         $spots_array = array();
         foreach ($spots as $result) {
@@ -68,15 +69,15 @@ class SkCountryRepository extends EntityRepository {
 
     public function countPhotosArray() {
         $photos = $this->getEntityManager()
-            ->createQuery(
-                'SELECT c.name code, count(p.id) as photo_count
+                        ->createQuery(
+                                'SELECT c.name code, count(p.id) as photo_count
                 FROM SkaphandrusAppBundle:SkPhoto p
                 JOIN p.spot s
                 JOIN s.location l
                 JOIN l.region r
                 JOIN r.country c
                 GROUP BY c.name'
-                )->getResult();
+                        )->getResult();
 
         $photos_array = array();
         foreach ($photos as $result) {
@@ -100,18 +101,18 @@ class SkCountryRepository extends EntityRepository {
 //                GROUP BY u.id'
 //            )->setParameter('country_id', $country_id)->getResult();
 //    }
-    
-    
-      public function getSpots($country_id) {
+
+
+    public function getSpots($country_id) {
         return $this->getEntityManager()
-            ->createQuery(
-                'SELECT s 
+                        ->createQuery(
+                                'SELECT s 
                 FROM SkaphandrusAppBundle:SkSpot s
                 JOIN s.location l
                 JOIN l.region r
                 JOIN r.country c
                 WHERE c.id = :country_id'
-            )->setParameter('country_id', $country_id)->getResult();
+                        )->setParameter('country_id', $country_id)->getResult();
     }
-    
+
 }

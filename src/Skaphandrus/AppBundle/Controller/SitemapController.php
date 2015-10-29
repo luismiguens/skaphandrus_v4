@@ -162,7 +162,7 @@ class SitemapController extends Controller {
         $em = $this->getDoctrine()->getManager();
         
         
-        $locations = $em->getRepository('SkaphandrusAppBundle:SkLocation')->findLocationsWithSpotsInCountry();
+        $locations = $em->getRepository('SkaphandrusAppBundle:SkLocation')->findAllLocationsWithSpots();
         $str = "";
 
         foreach ($locations as $location) {
