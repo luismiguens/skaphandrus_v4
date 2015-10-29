@@ -193,7 +193,7 @@
                                     </div>
                                     <div id="tab-3" class="tab-pane" >
                                         <h3>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h3.photos{% endtrans %}</h3>
-                                        {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'spot': spot.id },'limit':20 } )) }}
+                                        {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'spot': spot.id },'limit':24 } )) }}
                                     </div>
                                     <div id="tab-4" class="tab-pane">
                                         <h3>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h3.contributors{% endtrans %}</h3>

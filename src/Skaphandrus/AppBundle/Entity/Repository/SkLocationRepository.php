@@ -45,6 +45,20 @@ class SkLocationRepository extends EntityRepository {
                 )->setParameter('term', '%' . $term . '%')->setParameter('locale', $locale)->getResult();
     }
 
+    public function findLocationsWithSpotsInCountry($country_id) {
+        
+        $qb = $this->getEntityManager()->createQuery(
+                        "SELECT l
+                    FROM SkaphandrusAppBundle:SkLocation l
+                    JOIN l.region r WITH l.region = r.id
+                    JOIN SkaphandrusAppBundle:SkSpot s WITH s.location = l.id
+                    WHERE r.country = :coutry_id"
+                )->setParameter('coutry_id', $country_id)->getResult();
+        
+        return $qb;
+    }
+    
+    
     public function findLocationsInCountry($country_id) {
         $qb = $this->getEntityManager()->createQueryBuilder();
 

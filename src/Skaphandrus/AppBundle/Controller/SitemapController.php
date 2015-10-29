@@ -28,12 +28,38 @@ class SitemapController extends Controller {
                 break;
 
             case "SkSpot":
+                //16000
+//                $limit = 3000;
+//                for ($i = 0; $i <= 5; $i++) {
+//                    ini_set('memory_limit', 3000000000);
+//                    ini_set('max_execution_time', 300);
+//                    $offset = $i * $limit;
+//                    $str = $this->generateSpot($limit, $offset);
+//                    $file = fopen("uploads/sitemaps/spot_" . $i . ".xml", "w") or die("Unable to open file!");
+//
+//                    $this->writeFile($str, $file);
+//                }
+                ini_set('memory_limit', 3000000000);
+                ini_set('max_execution_time', 300);
                 $str = $this->generateSpot();
                 $file = fopen("uploads/sitemaps/spot.xml", "w") or die("Unable to open file!");
                 $this->writeFile($str, $file);
                 break;
 
             case "SkPhoto":
+                //30000
+//                $limit = 3000;
+//                for ($i = 0; $i <= 7; $i++) {
+//                    ini_set('memory_limit', 3000000000);
+//                    ini_set('max_execution_time', 300);
+//                    $offset = $i * $limit;
+//                    $str = $this->generatePhoto($limit, $offset);
+//                    $file = fopen("uploads/sitemaps/photo_" . $i . ".xml", "w") or die("Unable to open file!");
+//
+//                    $this->writeFile($str, $file);
+//                }
+                ini_set('memory_limit', 3000000000);
+                ini_set('max_execution_time', 300);
                 $str = $this->generatePhoto();
                 $file = fopen("uploads/sitemaps/photo.xml", "w") or die("Unable to open file!");
                 $this->writeFile($str, $file);
@@ -134,7 +160,9 @@ class SitemapController extends Controller {
 
     public function generateLocation() {
         $em = $this->getDoctrine()->getManager();
-        $locations = $em->getRepository('SkaphandrusAppBundle:SkLocation')->findAll();
+        
+        
+        $locations = $em->getRepository('SkaphandrusAppBundle:SkLocation')->findLocationsWithSpotsInCountry();
         $str = "";
 
         foreach ($locations as $location) {
@@ -149,7 +177,7 @@ class SitemapController extends Controller {
     public function generateSpot() {
         $em = $this->getDoctrine()->getManager();
         $spots = $em->getRepository('SkaphandrusAppBundle:SkSpot')->findAll();
-        //$spots = $em->getRepository('SkaphandrusAppBundle:SkSpot')->findBy(array(), array(), 10000, 0);
+//        $spots = $em->getRepository('SkaphandrusAppBundle:SkSpot')->findby(array(),array('id' => 'ASC'),$limit, $offset);
         $str = "";
 
         foreach ($spots as $spot) {
@@ -164,6 +192,7 @@ class SitemapController extends Controller {
     public function generatePhoto() {
         $em = $this->getDoctrine()->getManager();
         $photos = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->findAll();
+//        $photos = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->findby(array(),array('id' => 'ASC'), $limit, $offset);
         $str = "";
 
         foreach ($photos as $photo) {
@@ -272,7 +301,7 @@ class SitemapController extends Controller {
         }
         return $str;
     }
-    
+
     public function generateGenus() {
         $em = $this->getDoctrine()->getManager();
         $taxons = $em->getRepository('SkaphandrusAppBundle:SkGenus')->findAll();

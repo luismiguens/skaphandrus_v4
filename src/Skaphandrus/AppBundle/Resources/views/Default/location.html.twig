@@ -183,7 +183,7 @@
 
                                         {% if location.extraDive is not empty %}
                                             <h5>{{ "page.location.h5.extra_dive"|trans }}</h5>
-                                            <p>{{ location.extraDive }}</p>
+                                            <p>{{ location.extraDive|raw }}</p>
                                         {% endif %}
                                     </div>
 
