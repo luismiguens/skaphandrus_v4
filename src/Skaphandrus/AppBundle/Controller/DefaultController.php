@@ -444,8 +444,8 @@ class DefaultController extends Controller {
             $centerLatitude = null;
             $centerLongitude = null;
 
+            
             if (count($location->getSpots()) > 0) {
-
 
                 // Get markers from spots for the map
                 $markers = array();
@@ -456,7 +456,7 @@ class DefaultController extends Controller {
                         $marker = new Marker();
                         $latitude = explode(",", $spot->getCoordinate())[0];
                         $longitude = explode(",", $spot->getCoordinate())[1];
-
+                        
                         // Marker options
                         $marker->setPrefixJavascriptVariable('marker_');
                         $marker->setPosition($latitude, $longitude, true);
@@ -527,7 +527,7 @@ class DefaultController extends Controller {
         $name = Utils::unslugify($slug);
         $locale = $this->get('request')->getLocale();
         $country = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')
-                ->findBySlug($slug);
+                ->findBySlug($slug, $locale);
 
         if ($country) {
             $locations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')

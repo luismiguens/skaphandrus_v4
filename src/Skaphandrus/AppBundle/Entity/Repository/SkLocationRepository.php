@@ -24,7 +24,7 @@ class SkLocationRepository extends EntityRepository {
                     JOIN l.region r
                     WHERE t.name = :name
                     AND t.locale = :locale
-                    AND IDENTITY(r.country) = ' . $this->getEntityManager()->getRepository('SkaphandrusAppBundle:SkCountry')->findBySlug($country)->getId()
+                    AND IDENTITY(r.country) = ' . $this->getEntityManager()->getRepository('SkaphandrusAppBundle:SkCountry')->findBySlug($country, $locale)->getId()
                         )->setParameter('name', $name)->setParameter('locale', $locale);
         try {
             return $query->getSingleResult();

@@ -43,6 +43,9 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
+    
+    
+    {% if map %}
     <script>
         // Fix bug on Gmap inside tabs
         $('.nav-tabs').on('shown.bs.tab', function () {
@@ -52,6 +55,9 @@
                 }, 100);
             });
     </script>
+    {% endif %}
+    
+    
     <!-- FooTable -->
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
     <script>
@@ -99,7 +105,9 @@
                     </div>
                     <div class="ibox-content">
                         <div>
+                            {% if map %}
                             {{ render(controller('SkaphandrusAppBundle:Common:skActivity', { 'parameters': { 'location_id': location.id },'limit':20 } )) }}
+                            {% endif%}
                             {#<button class="btn btn-primary btn-block m-t"><i class="fa fa-arrow-down"></i> Show More</button>#}
                         </div>
                     </div>
@@ -113,7 +121,7 @@
                 <div class="ibox">
                     <div class="ibox-title">
                         <h5>{{ "page.location.h5.location_related_contents"|trans }}</h5>
-                        <div class="ibox-tools">
+                        {#<div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
                             </a>
@@ -127,7 +135,7 @@
                             <a class="close-link">
                                 <i class="fa fa-times"></i>
                             </a>
-                        </div>
+                        </div>#}
                     </div>
 
                     <div class="ibox-content" itemscope itemtype="http://schema.org/City">
@@ -189,7 +197,9 @@
 
                                     <div id="tab-2" class="tab-pane">
                                         <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.spots_map{% endtrans %}</h3>
+                                        {% if map %}
                                         {{ google_map(map) }}
+                                        
                                         <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.spots{% endtrans %}</h3>
                                         <input type="text" class="form-control input-sm m-b-xs" id="filter-spots" placeholder="Search in table">
                                         <table class="footable footable-spots table" data-page-size="50" data-filter=#filter-spots>
@@ -221,6 +231,7 @@
                                                 </tr>
                                             </tfoot>
                                         </table>
+                                            {% endif %}
                                     </div>
 
                                     <div id="tab-3" class="tab-pane">

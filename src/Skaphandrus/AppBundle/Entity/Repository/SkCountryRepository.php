@@ -14,15 +14,27 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkCountryRepository extends EntityRepository {
 
-    public function findBySlug($slug) {
+    public function findBySlug($slug, $locale) {
         $countries = Intl::getRegionBundle()->getCountryNames();
         $country = FALSE;
         $name = Utils::unslugify($slug);
 
-        $exceptions = array(
-            'AN' => 'Netherlands Antilles',
-            'TL' => 'East Timor'
-        );
+
+        if ($locale == "pt") {
+            $exceptions = array(
+                'AN' => 'Antilhas Holandesas',
+                'TL' => 'Timor Leste'
+            );
+        }
+
+        if ($locale == "en") {
+            $exceptions = array(
+                'AN' => 'Netherlands Antilles',
+                'TL' => 'East Timor'
+            );
+        }
+
+
 
         $countries = array_merge($countries, $exceptions);
 

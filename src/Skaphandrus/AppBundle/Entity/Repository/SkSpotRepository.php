@@ -31,7 +31,7 @@ class SkSpotRepository extends EntityRepository {
 
         $location = $this->getEntityManager()->getRepository('SkaphandrusAppBundle:SkLocation')->findBySlug($location, $country, $locale);
         //dump($location);
-        $location_id = $location->getId();
+        //$location_id = $location->getId();
 
         $query = $this->getEntityManager()
                 ->createQuery(

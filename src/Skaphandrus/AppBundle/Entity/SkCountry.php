@@ -9,8 +9,7 @@ use Symfony\Component\Intl\Intl;
 /**
  * SkCountry
  */
-class SkCountry
-{
+class SkCountry {
 
     use ORMBehaviors\Translatable\Translatable;
 
@@ -38,24 +37,20 @@ class SkCountry
      * @var \Doctrine\Common\Collections\Collection
      */
     private $regions;
-
     private $photosCount = 0;
-
     private $spotsCount = 0;
-
 
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->regions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function setId($param) {
         $this->id = $param;
     }
-    
+
     /**
      * Set name
      *
@@ -63,8 +58,7 @@ class SkCountry
      *
      * @return SkCountry
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -75,22 +69,9 @@ class SkCountry
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
-    
-    
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getCountryName($locale)
-    {
-        return $this->__toString($locale);
-    }
-    
 
     /**
      * Set fipsCode
@@ -99,8 +80,7 @@ class SkCountry
      *
      * @return SkCountry
      */
-    public function setFipsCode($fipsCode)
-    {
+    public function setFipsCode($fipsCode) {
         $this->fipsCode = $fipsCode;
 
         return $this;
@@ -111,8 +91,7 @@ class SkCountry
      *
      * @return string
      */
-    public function getFipsCode()
-    {
+    public function getFipsCode() {
         return $this->fipsCode;
     }
 
@@ -121,8 +100,7 @@ class SkCountry
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -133,8 +111,7 @@ class SkCountry
      *
      * @return SkCountry
      */
-    public function setContinent(\Skaphandrus\AppBundle\Entity\SkContinent $continent = null)
-    {
+    public function setContinent(\Skaphandrus\AppBundle\Entity\SkContinent $continent = null) {
         $this->continent = $continent;
 
         return $this;
@@ -145,8 +122,7 @@ class SkCountry
      *
      * @return \Skaphandrus\AppBundle\Entity\SkContinent
      */
-    public function getContinent()
-    {
+    public function getContinent() {
         return $this->continent;
     }
 
@@ -157,8 +133,7 @@ class SkCountry
      *
      * @return SkCountry
      */
-    public function addRegion(\Skaphandrus\AppBundle\Entity\SkRegion $region)
-    {
+    public function addRegion(\Skaphandrus\AppBundle\Entity\SkRegion $region) {
         $this->regions[] = $region;
 
         return $this;
@@ -169,8 +144,7 @@ class SkCountry
      *
      * @param \Skaphandrus\AppBundle\Entity\SkRegion $region
      */
-    public function removeRegion(\Skaphandrus\AppBundle\Entity\SkRegion $region)
-    {
+    public function removeRegion(\Skaphandrus\AppBundle\Entity\SkRegion $region) {
         $this->regions->removeElement($region);
     }
 
@@ -179,27 +153,37 @@ class SkCountry
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getRegions()
-    {
+    public function getRegions() {
         return $this->regions;
     }
-    
-    
+
     public function __toString() {
-        
-        
-        $locale = "en";
-        
+
+        $locale = $this->translate()->getLocale();
+
         $name = Intl::getRegionBundle()->getCountryName($this->name, $locale);
 
-        if ($this->name == 'AN') {
-            $name = 'Netherlands Antilles';
+        if ($locale == "pt") {
+            if ($this->name == 'AN') {
+                $name = 'Antilhas Holandesas';
+            }
+            if ($this->name == 'TL') {
+                $name = 'Timor Leste';
+            }
         }
-                
-        if ($this->name == 'TL') {
-            $name = 'East Timor';
+
+        if ($locale == "en") {
+            if ($this->name == 'AN') {
+               $name = 'Netherlands Antilles';
+            }
+           if ($this->name == 'TL') {
+                $name = 'East Timor';
+            }
         }
+
         
+
+
         //echo $this->name;
 
 
@@ -221,19 +205,17 @@ class SkCountry
     public function setPhotosCount($photosCount) {
         $this->photosCount = $photosCount;
     }
-    
-    
-     public function getSpots() {
+
+    public function getSpots() {
         return $this->getEntityManager()
-            ->createQuery(
-                'SELECT s 
+                        ->createQuery(
+                                'SELECT s 
                 FROM SkaphandrusAppBundle:SkSpot s
                 JOIN s.location l
                 JOIN l.region r
                 JOIN r.country c
                 WHERE c.id = :country_id'
-            )->setParameter('country_id', $this->getId())->getResult();
+                        )->setParameter('country_id', $this->getId())->getResult();
     }
-    
-    
+
 }
