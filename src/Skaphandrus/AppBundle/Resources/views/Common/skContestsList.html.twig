@@ -1,8 +1,15 @@
 {# empty Twig template #}
-{% for contest in contests %}
-    <li>
-        <a href="{{ path('contest_participate', { 'contest_id': contest.id }) }}">{{contest.name}}</a>
+
+
+{% if contests %}
+    <li class="{{ 'ContestController' in app.request.attributes.get("_controller")?'active' }}">
+        <a href="#"><i class="fa fa-trophy"></i> <span class="nav-label">{{ "contest_admin"|trans }} </span><span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level collapse" stylse="height: 0px;">
+            {% for contest in contests %}
+                <li>
+                    <a href="{{ path('contest_participate', { 'contest_id': contest.id }) }}">{{contest.name}}</a>
+                </li>
+            {% endfor %}
+        </ul>
     </li>
-{% endfor %}
-
-
+{% endif %}

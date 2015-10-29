@@ -75,17 +75,8 @@
             </li>
             
             
-            
-              <li class="{{ 'ContestController' in app.request.attributes.get("_controller")?'active' }}">
-                    <a href="#"><i class="fa fa-trophy"></i> <span class="nav-label">{{ "contest_admin"|trans }} </span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse" stylse="height: 0px;">
-                        
-                        {{ render(controller('SkaphandrusAppBundle:Common:skContestsList')) }}
-                        
-                       
-</ul>
-                </li>
-            
+            {#contests list#}
+            {{ render(controller('SkaphandrusAppBundle:Common:skContestsList')) }}
             
             
             {% if is_granted("ROLE_ADMIN") %}
