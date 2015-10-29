@@ -17,11 +17,11 @@ class SkCountryRepository extends EntityRepository {
     public function findBySlug($slug, $locale) {
         
         
-        dump($slug);
+        //dump($slug);
         
         $countries = Intl::getRegionBundle()->getCountryNames($locale);
         
-        dump($countries);
+        //dump($countries);
         
         $country = FALSE;
         $name = Utils::unslugify($slug);
