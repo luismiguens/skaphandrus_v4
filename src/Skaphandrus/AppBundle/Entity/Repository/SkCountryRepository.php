@@ -15,7 +15,14 @@ use Skaphandrus\AppBundle\Utils\Utils;
 class SkCountryRepository extends EntityRepository {
 
     public function findBySlug($slug, $locale) {
-        $countries = Intl::getRegionBundle()->getCountryNames();
+        
+        
+        dump($slug);
+        
+        $countries = Intl::getRegionBundle()->getCountryNames($locale);
+        
+        dump($countries);
+        
         $country = FALSE;
         $name = Utils::unslugify($slug);
 
