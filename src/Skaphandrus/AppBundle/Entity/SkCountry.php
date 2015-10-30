@@ -170,6 +170,9 @@ class SkCountry {
             if ($this->name == 'TL') {
                 $name = 'Timor Leste';
             }
+            if ($this->name == 'PG') {
+                $name = 'Papua Nova Guiné';
+            }
         }
 
         if ($locale == "en") {
@@ -178,6 +181,9 @@ class SkCountry {
             }
            if ($this->name == 'TL') {
                 $name = 'East Timor';
+            }
+            if ($this->name == 'PG') {
+                $name = 'Papua New Guinea';
             }
         }
 

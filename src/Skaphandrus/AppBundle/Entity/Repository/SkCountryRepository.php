@@ -30,14 +30,16 @@ class SkCountryRepository extends EntityRepository {
         if ($locale == "pt") {
             $exceptions = array(
                 'AN' => 'Antilhas Holandesas',
-                'TL' => 'Timor Leste'
+                'TL' => 'Timor Leste',
+                'PG' => 'Papua Nova Guiné'
             );
         }
 
         if ($locale == "en") {
             $exceptions = array(
                 'AN' => 'Netherlands Antilles',
-                'TL' => 'East Timor'
+                'TL' => 'East Timor',
+                'PG' => 'Papua New Guinea'
             );
         }
 
