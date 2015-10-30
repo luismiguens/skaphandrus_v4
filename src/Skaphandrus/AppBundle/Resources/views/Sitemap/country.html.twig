@@ -12,6 +12,6 @@
     <xhtml:link 
         rel="alternate"
         hreflang="pt"
-        href="http://skaphandrus.com{{ path('country', {'slug':slugify(country), 'locale': 'pt'}) }}"
+        href="http://skaphandrus.com{{ path('country', {'slug':slugify(country.getCountryName('pt')), 'locale': 'pt'}) }}"
         />
 </url>

@@ -157,10 +157,17 @@ class SkCountry {
         return $this->regions;
     }
 
+    
+    
     public function __toString() {
 
         $locale = $this->translate()->getLocale();
+        return $this->getCountryName($locale);
+        
+    }
 
+    
+    public function getCountryName($locale){
         $name = Intl::getRegionBundle()->getCountryName($this->name, $locale);
 
         if ($locale == "pt") {
@@ -187,15 +194,12 @@ class SkCountry {
             }
         }
 
-        
-
-
-        //echo $this->name;
-
-
         return $name ? $name : '';
     }
-
+    
+    
+    
+    
     public function getSpotsCount() {
         return $this->spotsCount;
     }

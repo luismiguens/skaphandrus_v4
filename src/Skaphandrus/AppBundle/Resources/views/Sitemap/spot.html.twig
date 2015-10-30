@@ -13,7 +13,7 @@
     <xhtml:link 
         rel="alternate"
         hreflang="pt"
-        href="http://skaphandrus.com{{ path('spot', {'country':slugify(spot.location.region.country), 'location':slugify(spot.location), 'slug':slugify(spot.name), 'locale': 'pt'}) }}"
+        href="http://skaphandrus.com{{ path('spot', {'country':slugify(spot.location.region.country.getCountryName('pt')), 'location':slugify(spot.location), 'slug':slugify(spot.name), 'locale': 'pt'}) }}"
         />
 </url>
 {% endif %}
