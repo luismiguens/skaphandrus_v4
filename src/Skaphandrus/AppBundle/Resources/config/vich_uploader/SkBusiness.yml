@@ -1,0 +1,5 @@
+Skaphandrus\AppBundle\Entity\SkBusiness:
+    imageFile:
+        mapping:           business_photo
+        filename_property: picture
+

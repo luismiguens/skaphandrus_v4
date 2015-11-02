@@ -2,11 +2,13 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use Symfony\Component\HttpFoundation\File\File;
+
 /**
  * SkBusiness
  */
-class SkBusiness
-{
+class SkBusiness {
+
     /**
      * @var string
      */
@@ -45,6 +47,7 @@ class SkBusiness
     /**
      * @var string
      */
+    //nome da imagem
     private $picture;
 
     /**
@@ -60,8 +63,60 @@ class SkBusiness
     /**
      * @var integer
      */
+
+    /**
+     * id    
+     */
     private $id;
 
+    /**
+     * @var \Skaphandrus\AppBundle\Entity\SkAddress
+     */
+    private $address;
+
+    /**
+     * @var \Skaphandrus\AppBundle\Entity\SkContact
+     */
+    private $contact;
+
+    /**
+     * file   
+     */
+    private $imageFile;
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
+     */
+    public function setImageFile(File $image = null) {
+        $this->imageFile = $image;
+
+        // Only change the updated af if the file is really uploaded to avoid database updates.
+        // This is needed when the file should be set when loading the entity.
+        if ($this->imageFile instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    /**
+     * @return File
+     */
+    public function getImageFile() {
+        return $this->imageFile;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
 
     /**
      * Set name
@@ -70,8 +125,7 @@ class SkBusiness
      *
      * @return SkBusiness
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -82,8 +136,7 @@ class SkBusiness
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -94,8 +147,7 @@ class SkBusiness
      *
      * @return SkBusiness
      */
-    public function setFoundedAt($foundedAt)
-    {
+    public function setFoundedAt($foundedAt) {
         $this->foundedAt = $foundedAt;
 
         return $this;
@@ -106,8 +158,7 @@ class SkBusiness
      *
      * @return \DateTime
      */
-    public function getFoundedAt()
-    {
+    public function getFoundedAt() {
         return $this->foundedAt;
     }
 
@@ -118,8 +169,7 @@ class SkBusiness
      *
      * @return SkBusiness
      */
-    public function setCurrency($currency)
-    {
+    public function setCurrency($currency) {
         $this->currency = $currency;
 
         return $this;
@@ -130,8 +180,7 @@ class SkBusiness
      *
      * @return string
      */
-    public function getCurrency()
-    {
+    public function getCurrency() {
         return $this->currency;
     }
 
@@ -142,8 +191,7 @@ class SkBusiness
      *
      * @return SkBusiness
      */
-    public function setAbout($about)
-    {
+    public function setAbout($about) {
         $this->about = $about;
 
         return $this;
@@ -154,8 +202,7 @@ class SkBusiness
      *
      * @return string
      */
-    public function getAbout()
-    {
+    public function getAbout() {
         return $this->about;
     }
 
@@ -166,8 +213,7 @@ class SkBusiness
      *
      * @return SkBusiness
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -178,8 +224,7 @@ class SkBusiness
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -190,8 +235,7 @@ class SkBusiness
      *
      * @return SkBusiness
      */
-    public function setMission($mission)
-    {
+    public function setMission($mission) {
         $this->mission = $mission;
 
         return $this;
@@ -202,8 +246,7 @@ class SkBusiness
      *
      * @return string
      */
-    public function getMission()
-    {
+    public function getMission() {
         return $this->mission;
     }
 
@@ -214,8 +257,7 @@ class SkBusiness
      *
      * @return SkBusiness
      */
-    public function setAwards($awards)
-    {
+    public function setAwards($awards) {
         $this->awards = $awards;
 
         return $this;
@@ -226,8 +268,7 @@ class SkBusiness
      *
      * @return string
      */
-    public function getAwards()
-    {
+    public function getAwards() {
         return $this->awards;
     }
 
@@ -238,8 +279,7 @@ class SkBusiness
      *
      * @return SkBusiness
      */
-    public function setPicture($picture)
-    {
+    public function setPicture($picture) {
         $this->picture = $picture;
 
         return $this;
@@ -250,8 +290,7 @@ class SkBusiness
      *
      * @return string
      */
-    public function getPicture()
-    {
+    public function getPicture() {
         return $this->picture;
     }
 
@@ -262,8 +301,7 @@ class SkBusiness
      *
      * @return SkBusiness
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
 
         return $this;
@@ -274,8 +312,7 @@ class SkBusiness
      *
      * @return \DateTime
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->createdAt;
     }
 
@@ -286,8 +323,7 @@ class SkBusiness
      *
      * @return SkBusiness
      */
-    public function setUpdatedAt($updatedAt)
-    {
+    public function setUpdatedAt($updatedAt) {
         $this->updatedAt = $updatedAt;
 
         return $this;
@@ -298,8 +334,7 @@ class SkBusiness
      *
      * @return \DateTime
      */
-    public function getUpdatedAt()
-    {
+    public function getUpdatedAt() {
         return $this->updatedAt;
     }
 
@@ -308,16 +343,76 @@ class SkBusiness
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
-    
-    
-    
-    
+
     public function __toString() {
         return $this->getName();
     }
-}
 
+    /**
+     * Get address
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkAddress
+     */
+    public function getAddress() {
+        return $this->address;
+    }
+
+    /**
+     * Set address
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkAddress $address
+     *
+     * @return SkBusiness
+     */
+    public function setAddress(\Skaphandrus\AppBundle\Entity\SkAddress $address = null) {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get contact
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkContact
+     */
+    public function getContact() {
+        return $this->contact;
+    }
+
+    /**
+     * Set contact
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkContact $contact
+     *
+     * @return SkBusiness
+     */
+    public function setContact(\Skaphandrus\AppBundle\Entity\SkContact $contact = null) {
+        $this->contact = $contact;
+
+        return $this;
+    }
+
+    public function getAbsolutePath() {
+        return null === $this->picture ? null : $this->getUploadRootDir() . '/' . $this->picture;
+    }
+
+    public function getWebPath() {
+        return null === $this->picture ? null : $this->getUploadDir() . '/' . $this->picture;
+    }
+
+    protected function getUploadRootDir() {
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+
+    protected function getUploadDir() {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'uploads/business';
+    }
+
+}

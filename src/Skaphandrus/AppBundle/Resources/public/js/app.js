@@ -93,4 +93,9 @@ $(document).ready(function () {
         $('#skaphandrus_appbundle_skphotocontestaward_winnerFosUser').autocompleter({url_list: '/en/ajax_search_fosUser/', url_get: '/en/ajax_get_fosUser/'});
     }
     
+    // Formulário SkBusiness
+    if ($('#skaphandrus_appbundle_skbusiness_address_location').length) {
+        $('#skaphandrus_appbundle_skbusiness_address_location').autocompleter({url_list: '/en/ajax_search_location/', url_get: '/en/ajax_get_location/'});
+    }
+    
 });

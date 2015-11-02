@@ -1,0 +1,83 @@
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% form_theme form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/hack/autocompleter-jqueryui.js') }}"></script>
+    <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/gmaps.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/form_business.js') }}"></script>
+
+{% endblock %}
+
+
+{% block styleshets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block heading_title %}
+    {{ "form.business.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="{{ path('business_admin')}}">{{ "breadcrumb.business"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.add_business"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block heading_action %}
+    <a href="{{ path('business_admin_new') }}" class="btn btn-primary">{{ "form.business.btn.add"|trans }}</a>
+{% endblock %}
+
+{% block form_title_description %}
+    {{ "form.business.text.description"|trans }}
+{% endblock %}
+
+
+{% block body %}
+
+
+
+    <style>
+        .ui-autocomplete-loading {
+            background: white url("http://jqueryui.com/resources/demos/autocomplete/images/ui-anim_basic_16x16.gif") right center no-repeat;
+        }
+    </style>
+
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+
+    {{ form_row(form.name) }}
+    {{ form_row(form.foundedAt) }}
+    {{ form_row(form.currency) }}
+    {{ form_row(form.about) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.mission) }}
+    {{ form_row(form.awards) }}
+    {{ form_row(form.imageFile) }}
+    {{ form_row(form.createdAt) }}
+
+    {{ form_row(form.address.postcode) }}
+    {{ form_row(form.address.province) }}
+    {{ form_row(form.address.street) }}
+
+    {{ form_row(form.address.location) }}
+
+    <div class="popin">
+        <div id="map" style="height: 300px;margin-bottom: 10px;"></div>
+    </div>
+
+    {{ form_row(form.address.coordinate) }}
+    {{ form_row(form.address.zoom) }}
+
+    <br>
+    {{ form_row(form.contact) }}
+
+    {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'business_admin', 'new_form':false} %}
+    {{ form_end(form) }}
+
+{% endblock %}

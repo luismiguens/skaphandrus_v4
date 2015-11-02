@@ -429,6 +429,13 @@ vich_uploader:
             delete_on_update:   true
             delete_on_remove:   true
             namer:              vich_uploader.namer_uniqid
+        business_photo:
+            uri_prefix:         /uploads/business
+            upload_destination: %kernel.root_dir%/../web/uploads/business
+            inject_on_load:     false
+            delete_on_update:   true
+            delete_on_remove:   true
+            namer:              vich_uploader.namer_uniqid
             
             
 be_simple_i18n_routing: ~

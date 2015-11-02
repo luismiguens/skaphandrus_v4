@@ -1,82 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Skaphandrus\AppBundle\Entity\SkContact" table="sk_contact">
-    <indexes>
-      <index name="sk_contact_FI_1" columns="fos_user_id"/>
-      <index name="sk_contact_FI_2" columns="business_id"/>
-      <index name="sk_contact_FI_3" columns="person_id"/>
-      <index name="sk_contact_FI_4" columns="sponsor_id"/>
-    </indexes>
-    <id name="id" type="integer" column="id">
-      <generator strategy="IDENTITY"/>
-    </id>
-    <field name="email" type="string" column="email" length="255" nullable="true">
-      <options>
-        <option name="fixed"/>
-      </options>
-    </field>
-    <field name="fax" type="string" column="fax" length="255" nullable="true">
-      <options>
-        <option name="fixed"/>
-      </options>
-    </field>
-    <field name="homepage" type="string" column="homepage" length="255" nullable="true">
-      <options>
-        <option name="fixed"/>
-      </options>
-    </field>
-    <field name="mobilephone" type="string" column="mobilephone" length="50" nullable="true">
-      <options>
-        <option name="fixed"/>
-      </options>
-    </field>
-    <field name="phone" type="string" column="phone" length="50" nullable="true">
-      <options>
-        <option name="fixed"/>
-      </options>
-    </field>
-    <field name="shopId" type="integer" column="shop_id" nullable="true">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
-    <field name="operatorId" type="integer" column="operator_id" nullable="true">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
-    <field name="accomodationId" type="integer" column="accomodation_id" nullable="true">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
-    <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
-    <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
-    <many-to-one field="person" target-entity="SkPerson" fetch="LAZY">
-      <join-columns>
-        <join-column name="person_id" referenced-column-name="id"/>
-      </join-columns>
-    </many-to-one>
-    <many-to-one field="business" target-entity="SkBusiness" fetch="LAZY">
-      <join-columns>
-        <join-column name="business_id" referenced-column-name="id"/>
-      </join-columns>
-    </many-to-one>
-<!--    <many-to-one field="fosUser" target-entity="FosUser" fetch="LAZY">
-      <join-columns>
-        <join-column name="fos_user_id" referenced-column-name="id"/>
-      </join-columns>
-    </many-to-one>-->
-    <many-to-one field="sponsor" target-entity="SkPhotoContestSponsor" fetch="LAZY">
-      <join-columns>
-        <join-column name="sponsor_id" referenced-column-name="id"/>
-      </join-columns>
-    </many-to-one>
+    <entity name="Skaphandrus\AppBundle\Entity\SkContact" table="sk_contact">
+        <indexes>
+            <index name="sk_contact_FI_1" columns="fos_user_id"/>
+            <index name="sk_contact_FI_2" columns="business_id"/>
+            <index name="sk_contact_FI_3" columns="person_id"/>
+            <index name="sk_contact_FI_4" columns="sponsor_id"/>
+        </indexes>
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="email" type="string" column="email" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="fax" type="string" column="fax" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="homepage" type="string" column="homepage" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="mobilephone" type="string" column="mobilephone" length="50" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="phone" type="string" column="phone" length="50" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="shopId" type="integer" column="shop_id" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="operatorId" type="integer" column="operator_id" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="accomodationId" type="integer" column="accomodation_id" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <many-to-one field="person" target-entity="SkPerson" fetch="LAZY">
+            <join-columns>
+                <join-column name="person_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        
+        <!--        <many-to-one field="business" target-entity="SkBusiness" fetch="LAZY">
+            <join-columns>
+                <join-column name="business_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>-->
+        
+        <!--    <many-to-one field="fosUser" target-entity="FosUser" fetch="LAZY">
+          <join-columns>
+            <join-column name="fos_user_id" referenced-column-name="id"/>
+          </join-columns>
+        </many-to-one>-->
+        
+        <many-to-one field="sponsor" target-entity="SkPhotoContestSponsor" fetch="LAZY">
+            <join-columns>
+                <join-column name="sponsor_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
     
-            <one-to-one field="fosUser" target-entity="FosUser" inversed-by="contact">
+        <one-to-one field="business" target-entity="SkBusiness" inversed-by="contact">
+            <join-column name="business_id" referenced-column-name="id" />
+        </one-to-one>
+    
+        <one-to-one field="fosUser" target-entity="FosUser" inversed-by="contact">
             <join-column name="fos_user_id" referenced-column-name="id" />
         </one-to-one>
     
     
-  </entity>
+    </entity>
 </doctrine-mapping>
