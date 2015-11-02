@@ -42,8 +42,8 @@
 
 
     {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
-
-    {{ form_row(edit_form.settings.imageFile) }}
+{{ form_widget(edit_form) }}
+{#    {{ form_row(edit_form.settings.imageFile) }}
 
     {{ form_row(edit_form.personal.honorific) }}
     {{ form_row(edit_form.personal.firstname) }}
@@ -51,7 +51,7 @@
     {{ form_row(edit_form.personal.lastname) }}
     {{ form_row(edit_form.personal.birthdate) }}
     {{ form_row(edit_form.personal.sexType) }}
-    {{ form_row(edit_form.settings.observations) }}
+    {{ form_row(edit_form.settings.observations) }}#}
     <button type="submit" class="btn btn-primary">{{ "form.common.btn.update"|trans }}</button>
     {{ form_end(edit_form) }}
 

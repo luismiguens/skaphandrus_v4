@@ -83,6 +83,17 @@ class SkContact
     private $sponsor;
 
 
+    
+     /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->updatedAt = new \DateTime();
+    }
+    
+    
+    
+    
     /**
      * Set email
      *

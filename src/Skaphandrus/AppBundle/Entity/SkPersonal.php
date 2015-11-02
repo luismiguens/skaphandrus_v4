@@ -94,7 +94,13 @@ class SkPersonal {
 
     
  
-    
+        
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->updatedAt = new \DateTime();
+    }
     
     
     

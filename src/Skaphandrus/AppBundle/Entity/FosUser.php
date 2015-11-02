@@ -43,22 +43,21 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
     private $address;
     private $contact;
     private $settings;
-    
     private $photosInContest;
     private $photosInUser;
 
-    public function getPhotosInUser(){
+    public function getPhotosInUser() {
         return $this->photosInUser;
     }
-    
+
     public function setPhotosInUser($param) {
         $this->photosInUser = $param;
     }
-    
-    public function getPhotosInContest(){
+
+    public function getPhotosInContest() {
         return $this->photosInContest;
     }
-    
+
     public function setPhotosInContest($param) {
         $this->photosInContest = $param;
     }
@@ -270,8 +269,7 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
     public function getPhotos() {
         return $this->photos;
     }
-    
-    
+
     /**
      * Add photosValidated
      *
@@ -336,9 +334,9 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
     }
 
     public function __toString() {
-        if ($this->getName()){
+        if ($this->getName()) {
             return $this->getName();
-        }else{
+        } else {
             return $this->getUsername();
         }
     }
@@ -349,26 +347,51 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
 
     public function doStuffOnPostLoad(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
         $entity = $args->getEntity();
+        
+        
+        //$entity = new FosUser();
+        
         $entityManager = $args->getEntityManager();
 
+        
+        
+        
+        
         if (!$entity->getSettings()) {
             $settings = new SkSettings();
             $settings->setFosUser($entity);
             $entity->setSettings($settings);
-
             $entityManager->persist($settings);
         }
+
         if (!$entity->getPersonal()) {
             $personal = new SkPersonal();
+            $personal->setFirstname($entity->getUsername());
             $personal->setFosUser($entity);
             $entity->setPersonal($personal);
-
             $entityManager->persist($personal);
+        }elseif($entity->getPersonal()->getFirstname()==""){
+            $entity->getPersonal()->setFirstname($entity->getUsername());
         }
+
+        if (!$entity->getContact()) {
+            $contact = new SkContact();
+            $contact->setFosUser($entity);
+            $entity->setContact($contact);
+            $entityManager->persist($contact);
+        }
+
+        if (!$entity->getAddress()) {
+            $address = new SkAddress();
+            $address->setFosUser($entity);
+            $entity->setAddress($address);
+            $entityManager->persist($address);
+        }
+
+
 
         $entityManager->persist($entity);
         $entityManager->flush();
     }
-    
 
 }
