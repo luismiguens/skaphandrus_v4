@@ -40,7 +40,7 @@ class ContestController extends Controller {
                 ->findOneBySlug($contest, $category_slug, $locale);
 
         
-        dump($category);
+        //dump($category);
         
         
         if ($category) {
