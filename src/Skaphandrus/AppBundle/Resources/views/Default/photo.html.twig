@@ -68,7 +68,9 @@
         <div class="row">
             <div class="col col-lg-12" >
                 <img itemprop="image" alt="{{photo.title}}" class="img-responsive child" src="{{ photo.getWebPath | imagine_filter('sk_downscale_800_600') }}" />
-                <br/>
+               
+                <div style="text-align: center">{% include 'SkaphandrusAppBundle:Common:addThis.html.twig' with {'photography': photo} %}</div>
+               
             </div>
         </div>
 
