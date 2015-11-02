@@ -133,33 +133,7 @@
             </div>
         </div>
         <div class="col-lg-3">
-            <div class="wrapper wrapper-content project-manager hidden-sm hidden-xs hidden-md" data-spy="affix" data-offset-top="112" style="top: 0; max-width: 250px;">
-                <h2>{{ contest.name }}</h2>
-                <!--<img src="{{ contest.logo }}" class="img-responsive">-->
-                <img alt="image"  src="{{ contest.getWebPathImage | imagine_filter('sk_widen_400') }}" class="img-responsive">
-                <p class="small">
-                    {{ contest.translate.description|raw }}
-                </p>
-                {# Calculate the project completeness #}
-                {% if "now"|date("U") < contest.beginAt|date("U") %}
-                    {% set percentage = 0 %}
-                    {% set contest_status = 'not-started' %}
-                {% elseif "now"|date("U") < contest.endAt|date("U") %}
-                    {% set time_length = contest.endAt|date("U") - contest.beginAt|date("U") %}
-                    {% set current_time_length = "now"|date("U") - contest.beginAt|date("U") %}
-                    {% set percentage = ( (current_time_length * 100) / time_length )|number_format %}
-                    {% set contest_status = 'active' %}
-                {% else %}
-                    {% set percentage = 100 %}
-                    {% set contest_status = 'completed' %}
-                {% endif %}
-                <p><strong>{{ "page.contest.dt.status"|trans }}:</strong> <span class="label label-primary">{{ ("page.contest.label.status_" ~ contest_status)|trans }}</span></p>
-                    {#<p><strong>{{ "page.contest.label.created_by"|trans }}:</strong> Alex Smith</p>#}
-                <p><strong>{{ "page.contest.label.client"|trans }}:</strong> <a href="#" class="text-navy"> Skaphandrus</a></p>
-                <p><strong>{{ "page.contest.label.created"|trans }}:</strong> {{ contest.createdAt|date }}</p>
-                <p><strong>{{ "page.contest.label.starts_at"|trans }}:</strong> {{ contest.beginAt|date }}</p>
-                <p><strong>{{ "page.contest.label.ends_at"|trans }}:</strong> {{ contest.endAt|date }}</p>
-            </div>
+            {% include 'SkaphandrusAppBundle:Contest:right-sidebar-contest.html.twig' with {'contest': contest} %}
         </div>
     </div>
 
