@@ -158,7 +158,7 @@
                                                                 {% endif %}
                                                             {% endif %}
                                                         </div>
-                                                        <div style="text-align: center">{% include 'SkaphandrusAppBundle:Common:addThisUnique.html.twig' with {'photography': photo} %}</div>
+                                                        {% include 'SkaphandrusAppBundle:Common:addThisUnique.html.twig' with {'photography': photo} %}
                 
                                                         {#                                                        {% if photo.description is not empty %}
                                                                                                                     <p>{{ photo.description }}</p>
