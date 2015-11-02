@@ -335,7 +335,7 @@
                 </div>
                         <br/>
                                         {% if contest.isInProgress %}
-                                            <a href="{{ path('contest_participate', { 'contest_id': contest.id }) }}" class="btn btn-primary btn-block"><i class="fa fa-upload"></i>{{ "page.contests.link.join"|trans }}</a>
+                                            <a href="{{ path('contest_participate', { 'contest_id': contest.id }) }}" class="btn btn-primary btn-block"><i class="fa fa-upload"></i> {{ "page.contests.link.join"|trans }}</a>
                                         {% endif %}
             </div>
         </div>

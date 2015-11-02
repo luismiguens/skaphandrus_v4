@@ -106,7 +106,7 @@
 
                                     <td class="project-actions">
                                         {% if contest.isInProgress %}
-                                            <a href="{{ path('contest_participate', { 'contest_id': contest.id }) }}" class="btn btn-primary btn-sm"><i class="fa fa-upload"></i>{{ "page.contests.link.join"|trans }}</a>
+                                            <a href="{{ path('contest_participate', { 'contest_id': contest.id }) }}" class="btn btn-primary btn-sm"><i class="fa fa-upload"></i> {{ "page.contests.link.join"|trans }}</a>
                                         {% endif %}
                                         <a href="{{ url_to_contest(contest) }}" class="btn btn-default btn-sm"><i class="fa fa-folder"></i> {{ "page.contests.link.view"|trans }} </a>
                                     </td>
