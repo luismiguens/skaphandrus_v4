@@ -16,7 +16,7 @@ class ProfileContactType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('fax')
+            //->add('fax')
             ->add('homepage')
             ->add('mobilephone')
             ->add('phone')
