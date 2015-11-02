@@ -67,8 +67,8 @@
     <div class="wrapper wrapper-content animated fadeInRight" itemscope itemtype="http://schema.org/Photograph">
         <div class="row">
             <div class="col col-lg-12" >
-                <img itemprop="image" alt="{{photo.title}}" class="img-responsive child" src="{{ photo.getWebPath | imagine_filter('sk_downscale_800_600') }}" />
-                <br/>
+                <img style="margin-bottom: 4px" itemprop="image" alt="{{photo.title}}" class="img-responsive child" src="{{ photo.getWebPath | imagine_filter('sk_downscale_800_600') }}" />
+                
                 <div style="text-align: center">{% include 'SkaphandrusAppBundle:Common:addThis.html.twig' with {'photography': photo} %}</div>
                 
             </div>
