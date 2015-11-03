@@ -347,16 +347,10 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
 
     public function doStuffOnPostLoad(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
         $entity = $args->getEntity();
-        
-        
         //$entity = new FosUser();
-        
+
         $entityManager = $args->getEntityManager();
 
-        
-        
-        
-        
         if (!$entity->getSettings()) {
             $settings = new SkSettings();
             $settings->setFosUser($entity);
@@ -370,7 +364,7 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
             $personal->setFosUser($entity);
             $entity->setPersonal($personal);
             $entityManager->persist($personal);
-        }elseif($entity->getPersonal()->getFirstname()==""){
+        } elseif ($entity->getPersonal()->getFirstname() == "") {
             $entity->getPersonal()->setFirstname($entity->getUsername());
         }
 
@@ -387,8 +381,6 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
             $entity->setAddress($address);
             $entityManager->persist($address);
         }
-
-
 
         $entityManager->persist($entity);
         $entityManager->flush();

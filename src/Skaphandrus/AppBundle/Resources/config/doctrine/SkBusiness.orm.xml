@@ -10,11 +10,19 @@
             </options>
         </field>
         <field name="foundedAt" type="date" column="founded_at" nullable="true"/>
-        <field name="currency" type="string" column="currency" length="45" nullable="true">
+        
+        <one-to-many target-entity="SkBusinessCurrency" mapped-by="business" field="currency">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        
+<!--        <field name="currency" type="string" column="currency" length="45" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
-        </field>
+        </field>-->
+        
         <field name="about" type="text" column="about" length="65535" nullable="true">
             <options>
                 <option name="fixed"/>
@@ -54,7 +62,10 @@
                 <cascade-persist/>
             </cascade>
         </one-to-one>
-    
-    
+        
+        <lifecycle-callbacks>
+            <lifecycle-callback type="postLoad" method="doStuffOnPostLoad"/>
+        </lifecycle-callbacks>
+        
     </entity>
 </doctrine-mapping>

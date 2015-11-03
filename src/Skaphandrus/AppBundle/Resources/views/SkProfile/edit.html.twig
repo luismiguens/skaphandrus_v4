@@ -4,6 +4,8 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/hack/autocompleter-jqueryui.js') }}"></script>
 {% endblock %}
 
 
@@ -25,9 +27,9 @@
 {% endblock %}
 
 
-{% block heading_action %}
+{#{% block heading_action %}
     <a href="{{ path('photo_admin_new') }}" class="btn btn-primary">{{ "form.photo.btn.add"|trans }}</a>
-{% endblock %}
+{% endblock %}#}
 
 
 {% block form_title_description %}
@@ -42,7 +44,11 @@
 
 
     {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
-{{ form_widget(edit_form) }}
+    {{ form_row(edit_form.personal) }}
+    {{ form_row(edit_form.settings) }}
+    {{ form_row(edit_form.contact) }}
+    {{ form_row(edit_form.address) }}
+    
 {#    {{ form_row(edit_form.settings.imageFile) }}
 
     {{ form_row(edit_form.personal.honorific) }}

@@ -114,7 +114,6 @@ class SkBusiness {
      * Constructor
      */
     public function __construct() {
-        $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
 
@@ -162,27 +161,45 @@ class SkBusiness {
         return $this->foundedAt;
     }
 
-    /**
-     * Set currency
-     *
-     * @param string $currency
-     *
-     * @return SkBusiness
-     */
-    public function setCurrency($currency) {
-        $this->currency = $currency;
+//    /**
+//     * Set currency
+//     *
+//     * @param string $currency
+//     *
+//     * @return SkBusiness
+//     */
+//    public function setCurrency($currency) {
+//        $this->currency = $currency;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get currency
+//     *
+//     * @return string
+//     */
+//    public function getCurrency() {
+//        return $this->currency;
+//    }
+    
+    public function addCurrency($currency) {
+        $this->currency[] = $currency;
 
         return $this;
     }
 
-    /**
-     * Get currency
-     *
-     * @return string
-     */
+    
+    public function removeCurrency($currency) {
+        $this->currency->removeElement($currency);
+    }
+
+    
     public function getCurrency() {
         return $this->currency;
     }
+    
+    
 
     /**
      * Set about
@@ -413,6 +430,34 @@ class SkBusiness {
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
         return 'uploads/business';
+    }
+
+    public function doStuffOnPostLoad(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+        $entity = $args->getEntity();
+        $originalEntity = $entity;
+        
+        $entityManager = $args->getEntityManager();
+
+        if (!$entity->getContact()) {
+            $contact = new SkContact();
+            $contact->setBusiness($entity);
+            $entity->setContact($contact);
+            $entityManager->persist($contact);
+        }
+
+        if (!$entity->getAddress()) {
+            $address = new SkAddress();
+            $address->setBusiness($entity);
+            $entity->setAddress($address);
+            $entityManager->persist($address);
+        }
+
+        if($originalEntity != $entity){
+            $entityManager->persist($entity);
+            $entityManager->flush();
+        }
+        
+        
     }
 
 }

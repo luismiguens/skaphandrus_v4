@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SkAddressType extends AbstractType {
+class SkBusinessAddressType extends AbstractType {
 
     /**
      * @param FormBuilderInterface $builder
@@ -14,9 +14,21 @@ class SkAddressType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('postcode')
-                ->add('province')
-                ->add('street')
+                ->add('postcode', 'text', array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.address.label.postcode',
+                    'required' => false
+                ))
+                ->add('province', 'text', array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.address.label.province',
+                    'required' => false
+                ))
+                ->add('street', 'text', array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.address.label.street',
+                    'required' => false
+                ))
                 //->add('shopId')
                 //->add('personId')
                 //->add('createdAt')

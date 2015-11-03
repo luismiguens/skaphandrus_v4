@@ -44,7 +44,7 @@ class SkBusinessController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('business_admin_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('business_admin_edit', array('id' => $entity->getId())));
         }
 
         return $this->render('SkaphandrusAppBundle:SkBusiness:new.html.twig', array(

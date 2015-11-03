@@ -5,6 +5,7 @@ namespace Skaphandrus\AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Intl\Intl;
 
 class SkBusinessType extends AbstractType {
 
@@ -18,8 +19,17 @@ class SkBusinessType extends AbstractType {
                     'attr' => array('class' => 'form-control'),
                     'label' => 'form.business.label.name'
                 ))
-                ->add('foundedAt')
+                ->add('foundedAt', null, array(
+                    'years' => range(1900, 2030),
+                    'label' => 'form.business.label.founded_at'
+                ))
+//                ->add('currency', 'choice', array(
+//                    'choices' => Intl::getCurrencyBundle()->getCurrencyNames(),
+//                    'multiple' => true,
+//                ))
+                
                 ->add('currency')
+                
                 ->add('about', null, array(
                     'attr' => array('class' => 'form-control'),
                     'label' => 'form.business.label.about'
@@ -42,10 +52,13 @@ class SkBusinessType extends AbstractType {
                     'allow_delete' => false, // not mandatory, default is true
                     'download_link' => false, // not mandatory, default is true
                 ))
-                ->add('createdAt')
-//            ->add('updatedAt')
-                ->add('address', new SkAddressType())   
-                ->add('contact', new SkContactType())
+                ->add('createdAt', null, array(
+                    'years' => range(1900, 2030),
+                    'label' => 'form.business.label.created_at'
+                ))
+//                ->add('updatedAt')
+                ->add('address', new SkBusinessAddressType())
+                ->add('contact', new SkBusinessContactType())
         ;
     }
 

@@ -6,20 +6,25 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProfileContactType extends AbstractType {
-
+class SkBusinessContactType extends AbstractType
+{
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
         $builder
-                ->add('email', 'text', array(
+            ->add('email', 'text', array(
                     'attr' => array('class' => 'form-control', 'placeholder' => "email@example.com"),
                     'label' => 'form.contact.label.email',
                     'required' => false
                 ))
-                //->add('fax')
+                ->add('fax', 'text', array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.contact.label.fax',
+                    'required' => false
+                ))
                 ->add('homepage', 'text', array(
                     'attr' => array('class' => 'form-control'),
                     'label' => 'form.contact.label.homepage',
@@ -35,22 +40,23 @@ class ProfileContactType extends AbstractType {
                     'label' => 'form.contact.label.phone',
                     'required' => false
                 ))
-        //->add('shopId')
-        //->add('operatorId')
-        //->add('accomodationId')
-        //->add('createdAt')
-        //->add('updatedAt')
-        //->add('person')
-        //->add('business')
-        //->add('fosUser')
-        //->add('sponsor')
+            //->add('shopId')
+            //->add('operatorId')
+            //->add('accomodationId')
+            //->add('createdAt')
+            //->add('updatedAt')
+            //->add('person')
+            //->add('business')
+            //->add('fosUser')
+            //->add('sponsor')
         ;
     }
-
+    
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
         $resolver->setDefaults(array(
             'data_class' => 'Skaphandrus\AppBundle\Entity\SkContact'
         ));
@@ -59,8 +65,8 @@ class ProfileContactType extends AbstractType {
     /**
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return 'skaphandrus_appbundle_skcontact';
     }
-
 }
