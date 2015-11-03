@@ -70,9 +70,9 @@
                                 <dl class="dl-horizontal">
                                     {#<dt>{{ "page.contest.dt.created_by"|trans }}:</dt> <dd>Alex Smith</dd>#}
                                     <dt>{{ "page.contest.dt.client"|trans }}:</dt> <dd><a href="#" class="text-navy"> Skaphandrus</a> </dd>
-                                    <dt>{{ "page.contest.dt.created"|trans }}:</dt> <dd>  {{ contest.createdAt|date }} </dd>
-                                    <dt>{{ "page.contest.dt.starts_at"|trans }}:</dt> <dd>{{ contest.beginAt|date }}</dd>
-                                    <dt>{{ "page.contest.dt.ends_at"|trans }}:</dt> <dd>{{ contest.endAt|date }}</dd>
+                                    {#<dt>{{ "page.contest.dt.created"|trans }}:</dt> <dd>  {{ contest.createdAt|date("m/d/Y") }} </dd>#}
+                                    <dt>{{ "page.contest.dt.starts_at"|trans }}:</dt> <dd>{{ contest.beginAt|date("d-m-Y") }}</dd>
+                                    <dt>{{ "page.contest.dt.ends_at"|trans }}:</dt> <dd>{{ contest.endAt|date("d-m-Y") }}</dd>
                                 </dl>
                                 <dl class="dl-horizontal">
                                     <dt>{{ "page.contest.dt.numero_photos"|trans }}:</dt> <dd>{{ contest.photos|length }}</dd>
@@ -319,12 +319,12 @@
                 <h2>{{ contest.name }}</h2>
                 <!--<img src="{{ contest.image }}" class="img-responsive">-->
                 <img alt="image"  src="{{ contest.getWebPathImage | imagine_filter('sk_widen_400') }}" class="img-responsive">
-                <p class="small">
+                <p class="">
                     {{ contest.translate.description|raw }}
                 </p>
                 <div class="row">
                     <nav role="navigation" id="navbar-sidebar">
-                        <ul class="nav nav-pills">
+                        <ul class="nav nav-pills nav-stacked">
                             <li><a href="#categories">{{ "page.contest.menu.categories"|trans }}</a></li>
                             <li><a href="#awards">{{ "page.contest.menu.awards"|trans }}</a></li>
                             <li><a href="#rules">{{ "page.contest.menu.rules"|trans }}</a></li>
@@ -333,6 +333,10 @@
                         </ul>
                     </nav>
                 </div>
+                        <br/>
+                                        {% if contest.isInProgress %}
+                                            <a href="{{ path('contest_participate', { 'contest_id': contest.id }) }}" class="btn btn-primary btn-block"><i class="fa fa-upload"></i> {{ "page.contests.link.join"|trans }}</a>
+                                        {% endif %}
             </div>
         </div>
     </div>

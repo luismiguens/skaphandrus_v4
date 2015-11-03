@@ -52,12 +52,12 @@
             $('.vote-button').click(function () {
                 photo_id = $(this).attr('id');
 
-                if ($(this).hasClass('btn-default')) {
+                if ($(this).hasClass('btn-primary')) {
                     $.ajax({
                         url: "/{{ app.request.locale }}/category/{{ category.id }}/vote-photo/" + $(this).attr('id'),
                         success: function (data) {
-                            $('.vote-button.btn-primary').removeClass('btn-primary').addClass('btn-default').html('{{ "page.contest.btn.vote"|trans }}');
-                            $('.vote-button#' + photo_id).removeClass('btn-default').addClass('btn-primary').html('{{ "page.contest.btn.voted"|trans }}');
+                            $('.vote-button.btn-success').removeClass('btn-success').addClass('btn-primary').html('<i class="fa fa-check"></i> {{ "page.contest.btn.vote"|trans }}');
+                            $('.vote-button#' + photo_id).removeClass('btn-primary').addClass('btn-success').html('<i class="fa fa-check"></i> {{ "page.contest.btn.voted"|trans }}');
                         },
                     });
                 }
@@ -136,31 +136,26 @@
                                                         </a>
                                                     </div>
                                                     <div class="ibox-content profile-content">
-                                                        <h4><strong>{{ photo.title }}</strong></h4>
+                                                       {# <h4><strong>{{ photo.title }}</strong></h4>#}
                                                         <div>
-                                                            {% set class = 'btn-default' %}
+                                                            {% set class = 'btn-primary' %}
                                                             {% set text = "page.contest.btn.vote"|trans %}
 
                                                             {% if votedPhoto is not empty and photo.id == votedPhoto.photo.id %}
-                                                                {% set class = 'btn-primary' %}
+                                                                {% set class = 'btn-success' %}
                                                                 {% set text = "page.contest.btn.voted"|trans %}
                                                             {% endif %}
 
-                                                            
-                                                           
-                                                            
                                                             {% if category.contest.isInProgress %}
-
                                                                 {% if is_granted("IS_AUTHENTICATED_FULLY") %}
-                                                                    <button type="button" class="vote-button btn {{ class }}" id="{{ photo.id }}">{{ text }}</button>
+                                                                    <button type="button" class="vote-button btn-block btn {{ class }}" id="{{ photo.id }}"><i class="fa fa-check"></i> {{ text }}</button>
                                                                 {% else %}
-                                                                    <a class="btn btn-sm btn-white btn-block" href="{{ path('fos_user_security_login') }}">Please login to vote.</a>
+                                                                    <a class="btn btn-success btn-outline btn-block" href="{{ path('fos_user_security_login') }}">Login to vote <i class="fa fa-long-arrow-right"></i></a>
                                                                 {% endif %}
                                                             {% endif %}
+
+                                                           {# {% include 'SkaphandrusAppBundle:Common:addThisUnique.html.twig' with {'photography': photo} %}#}
                                                         </div>
-                                                        {#                                                        {% if photo.description is not empty %}
-                                                                                                                    <p>{{ photo.description }}</p>
-                                                                                                                {% endif %}#}
                                                     </div>
                                                 </div>
                                             </div>
@@ -174,33 +169,7 @@
             </div>
         </div>
         <div class="col-lg-3">
-            <div class="wrapper wrapper-content project-manager hidden-sm hidden-xs hidden-md" data-spy="affix" data-offset-top="156" style="top: 0; max-width: 250px;">
-                <h2>{{ category.contest.name }}</h2>
-                <!--<img src="{{ category.contest.logo }}" class="img-responsive">-->
-                <img alt="image"  src="{{ category.contest.getWebPathImage | imagine_filter('sk_widen_400') }}" class="img-responsive">
-                <p class="small">
-                    {{ category.contest.translate.description|raw }}
-                </p>
-                {# Calculate the project completeness #}
-                {% if "now"|date("U") < category.contest.beginAt|date("U") %}
-                    {% set percentage = 0 %}
-                    {% set contest_status = 'not-started' %}
-                {% elseif "now"|date("U") < category.contest.endAt|date("U") %}
-                    {% set time_length = category.contest.endAt|date("U") - category.contest.beginAt|date("U") %}
-                    {% set current_time_length = "now"|date("U") - category.contest.beginAt|date("U") %}
-                    {% set percentage = ( (current_time_length * 100) / time_length )|number_format %}
-                    {% set contest_status = 'active' %}
-                {% else %}
-                    {% set percentage = 100 %}
-                    {% set contest_status = 'completed' %}
-                {% endif %}
-                <p><strong>{{ "page.contest.dt.status"|trans }}:</strong> <span class="label label-primary">{{ ("page.contest.label.status_" ~ contest_status)|trans }}</span></p>
-                    {#<p><strong>{{ "page.contest.label.created_by"|trans }}:</strong> Alex Smith</p>#}
-                <p><strong>{{ "page.contest.label.client"|trans }}:</strong> <a href="#" class="text-navy"> Skaphandrus</a></p>
-                <p><strong>{{ "page.contest.label.created"|trans }}:</strong> {{ category.contest.createdAt|date }}</p>
-                <p><strong>{{ "page.contest.label.starts_at"|trans }}:</strong> {{ category.contest.beginAt|date }}</p>
-                <p><strong>{{ "page.contest.label.ends_at"|trans }}:</strong> {{ category.contest.endAt|date }}</p>
-            </div>
+            {% include 'SkaphandrusAppBundle:Contest:right-sidebar-contest.html.twig' with {'contest': category.contest} %}
         </div>
     </div>
 

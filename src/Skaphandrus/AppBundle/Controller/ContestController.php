@@ -39,6 +39,10 @@ class ContestController extends Controller {
         $category = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')
                 ->findOneBySlug($contest, $category_slug, $locale);
 
+        
+        //dump($category);
+        
+        
         if ($category) {
             if ($category->getContest()->getName() != str_replace('-', ' ', $contest_slug)) {
                 throw $this->createNotFoundException('The category "' . $category_slug . '" does not belong to this contest.');
