@@ -11,17 +11,20 @@
         </field>
         <field name="foundedAt" type="date" column="founded_at" nullable="true"/>
         
-        <one-to-many target-entity="SkBusinessCurrency" mapped-by="business" field="currency">
-            <cascade>
-                <cascade-persist/>
-            </cascade>
-        </one-to-many>
-        
-<!--        <field name="currency" type="string" column="currency" length="45" nullable="true">
-            <options>
-                <option name="fixed"/>
-            </options>
-        </field>-->
+<many-to-many field="currency" target-entity="SkCurrency" inversed-by="business" fetch="LAZY">
+            <join-table name="sk_business_currency">
+                <join-columns>
+                    <join-column name="business_id" referenced-column-name="id"/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="currency_id" referenced-column-name="id"/>
+                </inverse-join-columns>
+            </join-table>
+</many-to-many>
+    
+    
+    
+    
         
         <field name="about" type="text" column="about" length="65535" nullable="true">
             <options>

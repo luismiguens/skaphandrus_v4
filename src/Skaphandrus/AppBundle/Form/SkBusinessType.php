@@ -23,12 +23,12 @@ class SkBusinessType extends AbstractType {
                     'years' => range(1900, 2030),
                     'label' => 'form.business.label.founded_at'
                 ))
-//                ->add('currency', 'choice', array(
-//                    'choices' => Intl::getCurrencyBundle()->getCurrencyNames(),
-//                    'multiple' => true,
-//                ))
+            ->add('currency', 'entity', array(
+                'label'=>'form.business.label.currency',
+                'class' => 'SkaphandrusAppBundle:SkCurrency','expanded' => true, 
+                'multiple' => true ))
                 
-                ->add('currency')
+                //->add('currency')
                 
                 ->add('about', null, array(
                     'attr' => array('class' => 'form-control'),

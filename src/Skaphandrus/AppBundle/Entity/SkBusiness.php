@@ -19,9 +19,7 @@ class SkBusiness {
      */
     private $foundedAt;
 
-    /**
-     * @var string
-     */
+
     private $currency;
 
     /**
@@ -84,7 +82,7 @@ class SkBusiness {
      */
     private $imageFile;
 
-    /**
+    /**symfony advanced forms
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the  update. If this
      * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
@@ -114,6 +112,7 @@ class SkBusiness {
      * Constructor
      */
     public function __construct() {
+        $this->currency = new ArrayCollection();
         $this->updatedAt = new \DateTime();
     }
 
@@ -161,44 +160,66 @@ class SkBusiness {
         return $this->foundedAt;
     }
 
-//    /**
-//     * Set currency
-//     *
-//     * @param string $currency
-//     *
-//     * @return SkBusiness
-//     */
-//    public function setCurrency($currency) {
-//        $this->currency = $currency;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get currency
-//     *
-//     * @return string
-//     */
-//    public function getCurrency() {
-//        return $this->currency;
-//    }
+
     
-    public function addCurrency($currency) {
+        /**
+     * Add currency
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkCurrency $currency
+     *
+     * @return SkPhoto
+     */
+    public function addCurrency(\Skaphandrus\AppBundle\Entity\SkCurrency $currency) {
         $this->currency[] = $currency;
 
         return $this;
     }
 
-    
-    public function removeCurrency($currency) {
+    /**
+     * Remove currency
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkCurrency $currency
+     */
+    public function removeCurrency(\Skaphandrus\AppBundle\Entity\SkCurrency $currency) {
         $this->currency->removeElement($currency);
     }
 
-    
+    /**
+     * Get currency
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
     public function getCurrency() {
         return $this->currency;
     }
+
     
+    
+    
+    
+    
+    
+        /**
+     * Get currency
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkCurrency
+     */
+//    public function getCurrency() {
+//        return $this->currency;
+//    }
+//
+//    /**
+//     * Set currency
+//     *
+//     * @param \Skaphandrus\AppBundle\Entity\SkCurrency $currency
+//     *
+//     * @return SkBusiness
+//     */
+//    public function setCurrency($currency = null) {
+//        $this->currency = $currency;
+//
+//        return $this;
+//    }
     
 
     /**

@@ -2,14 +2,20 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="Skaphandrus\AppBundle\Entity\SkBusinessCurrency" table="sk_business_currency">
     <indexes>
-      <index name="sk_business_currency_FK_2_idx" columns="currency"/>
-      <index name="IDX_641D736BA89DB457" columns="business_id"/>
+      <index name="fk_sk_business_currency_1_idx" columns="business_id"/>
+      <index name="fk_sk_business_currency_2_idx" columns="currency_id"/>
     </indexes>
-    <id name="currency" type="string" column="currency" length="45"/>
-    <id name="business" association-key="true"/>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
     <many-to-one field="business" target-entity="SkBusiness" fetch="LAZY">
       <join-columns>
         <join-column name="business_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="currency" target-entity="SkCurrency" fetch="LAZY">
+      <join-columns>
+        <join-column name="currency_id" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
   </entity>
