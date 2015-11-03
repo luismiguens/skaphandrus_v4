@@ -356,6 +356,8 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
             $settings->setFosUser($entity);
             $entity->setSettings($settings);
             $entityManager->persist($settings);
+        }elseif ($entity->getSettings()->getPhoto() == "") {
+            $entity->getSettings()->setPhoto("user-profile.jpg");
         }
 
         if (!$entity->getPersonal()) {
