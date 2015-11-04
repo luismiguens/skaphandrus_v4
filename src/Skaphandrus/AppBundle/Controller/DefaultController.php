@@ -614,6 +614,8 @@ class DefaultController extends Controller {
         $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
                 ->findOneById($id);
 
+        $em = $this->getDoctrine()->getManager();
+        
         if ($photo) {
             $request = $this->get('request');
             $securityContext = $this->container->get('security.context');
@@ -622,8 +624,12 @@ class DefaultController extends Controller {
             if (!$photo->getSpecies()) {
                 if (count($photo->getSpeciesValidations())>0) {
                     $photo->setSpecies($photo->getSpeciesValidations()[0]->getSpecies());
+                    $em->persist($skSocialNotify);
+                    $em->flush();
                 } elseif (count($photo->getSpeciesSugestions())>0) {
                     $photo->setSpecies($photo->getSpeciesValidations()[0]->getSpecies());
+                    $em->persist($skSocialNotify);
+                    $em->flush();
                 }
             }
 
