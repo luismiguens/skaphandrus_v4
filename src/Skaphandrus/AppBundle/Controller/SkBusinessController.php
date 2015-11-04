@@ -17,23 +17,23 @@ class SkBusinessController extends Controller {
      * Create currencies records in table.
      *
      */
-//    public function createCurrenciesAction() {
-//        $em = $this->getDoctrine()->getManager();
-//        $list = array("USD", "EUR", "JPY", "GBP", "AUD", "CHF", "CAD", "MXN", "CNY", "NZD", "SEK", "RUB", "HKD", "NOK", "SGD", "TRY", "KRW", "ZAR", "BRL", "INR");
-//
-//        foreach ($list as $key => $value) {
-//            $object = new \Skaphandrus\AppBundle\Entity\SkCurrency();
-//            $object->setName($value);
-//            $em->persist($object);
-//        }
-//        $em->flush();
-//
-//        $entities = $em->getRepository('SkaphandrusAppBundle:SkCurrency')->findAll();
-//
-//        return $this->render('SkaphandrusAppBundle:SkBusiness:createCurrencies.html.twig', array(
-//                    'entities' => $entities,
-//        ));
-//    }
+    public function createCurrenciesAction() {
+        $em = $this->getDoctrine()->getManager();
+        $list = array("USD", "EUR", "JPY", "GBP", "AUD", "CHF", "CAD", "MXN", "CNY", "NZD", "SEK", "RUB", "HKD", "NOK", "SGD", "TRY", "KRW", "ZAR", "BRL", "INR");
+
+        foreach ($list as $key => $value) {
+            $object = new \Skaphandrus\AppBundle\Entity\SkCurrency();
+            $object->setName($value);
+            $em->persist($object);
+        }
+        $em->flush();
+
+        $entities = $em->getRepository('SkaphandrusAppBundle:SkCurrency')->findAll();
+
+        return $this->render('SkaphandrusAppBundle:SkBusiness:createCurrencies.html.twig', array(
+                    'entities' => $entities,
+        ));
+    }
     
         /**
      * Create languages records in table.
