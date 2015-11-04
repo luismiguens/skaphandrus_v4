@@ -16,3 +16,8 @@ and open the template in the editor.
 .ui-autocomplete-loading {
     background: white url("http://jqueryui.com/resources/demos/autocomplete/images/ui-anim_basic_16x16.gif") right center no-repeat;
 }
+
+label.required:before {
+    content: "* ";
+    color: red;
+}

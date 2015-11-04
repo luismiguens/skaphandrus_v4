@@ -83,6 +83,15 @@ class SkAddress
     private $business;
 
 
+     /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
+    
+    
     /**
      * Set postcode
      *
@@ -414,7 +423,9 @@ class SkAddress
      */
     public function setBusiness(\Skaphandrus\AppBundle\Entity\SkBusiness $business = null)
     {
+       
         $this->business = $business;
+         
 
         return $this;
     }

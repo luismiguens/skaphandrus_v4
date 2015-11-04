@@ -423,6 +423,7 @@ class SkBusiness {
      */
     public function setAddress(\Skaphandrus\AppBundle\Entity\SkAddress $address = null) {
         $this->address = $address;
+        $address->setBusiness($this);
 
         return $this;
     }
@@ -445,6 +446,7 @@ class SkBusiness {
      */
     public function setContact(\Skaphandrus\AppBundle\Entity\SkContact $contact = null) {
         $this->contact = $contact;
+        $contact->setBusiness($this);
 
         return $this;
     }
@@ -469,30 +471,30 @@ class SkBusiness {
         return 'uploads/business';
     }
 
-    public function doStuffOnPostLoad(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
-        $entity = $args->getEntity();
-        $originalEntity = $entity;
-
-        $entityManager = $args->getEntityManager();
-
-        if (!$entity->getContact()) {
-            $contact = new SkContact();
-            $contact->setBusiness($entity);
-            $entity->setContact($contact);
-            $entityManager->persist($contact);
-        }
-
-        if (!$entity->getAddress()) {
-            $address = new SkAddress();
-            $address->setBusiness($entity);
-            $entity->setAddress($address);
-            $entityManager->persist($address);
-        }
-
-        if ($originalEntity != $entity) {
-            $entityManager->persist($entity);
-            $entityManager->flush();
-        }
-    }
+//    public function doStuffOnPostLoad(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+//        $entity = $args->getEntity();
+//        $originalEntity = $entity;
+//
+//        $entityManager = $args->getEntityManager();
+//
+//        if (!$entity->getContact()) {
+//            $contact = new SkContact();
+//            $contact->setBusiness($entity);
+//            $entity->setContact($contact);
+//            $entityManager->persist($contact);
+//        }
+//
+//        if (!$entity->getAddress()) {
+//            $address = new SkAddress();
+//            $address->setBusiness($entity);
+//            $entity->setAddress($address);
+//            $entityManager->persist($address);
+//        }
+//
+//        if ($originalEntity != $entity) {
+//            $entityManager->persist($entity);
+//            $entityManager->flush();
+//        }
+//    }
 
 }

@@ -16,7 +16,7 @@
 
                 {% if activity.photo %}
                     <div class="photos">
-                        <a href="{{path('photo_no_slug', { 'id': activity.photo.id })}}" target="_blank"> 
+                        <a href="{{path('photo_no_slug', { 'id': activity.photo.id })}}" > 
                             <img src="{{ activity.photo.getWebPath | imagine_filter('sk_widen_240') }}" class="feed-photo" alt="image">
                         </a>
                     </div>

@@ -34,6 +34,6 @@ business_admin_create_currencies:
     path:     /createCurrencies
     defaults: { _controller: "SkaphandrusAppBundle:SkBusiness:createCurrencies" }
     
-business_admin_create_language:
-    path:     /createLanguage
+business_admin_create_languages:
+    path:     /createLanguages
     defaults: { _controller: "SkaphandrusAppBundle:SkBusiness:createLanguages" }

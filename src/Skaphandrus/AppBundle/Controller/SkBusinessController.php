@@ -39,23 +39,23 @@ class SkBusinessController extends Controller {
      * Create languages records in table.
      *
      */
-//    public function createLanguagesAction() {
-//        $em = $this->getDoctrine()->getManager();
-//        $list = array("zh", "en", "es", "hi", "bn", "pt", "ru", "fr", "ur", "ja", "de", "ko", "tr", "it", "ar");
-//
-//        foreach ($list as $key => $value) {
-//            $object = new \Skaphandrus\AppBundle\Entity\SkLanguage();
-//            $object->setName($value);
-//            $em->persist($object);
-//        }
-//        $em->flush();
-//
-//        $entities = $em->getRepository('SkaphandrusAppBundle:SkLanguage')->findAll();
-//
-//        return $this->render('SkaphandrusAppBundle:SkBusiness:createLanguage.html.twig', array(
-//                    'entities' => $entities,
-//        ));
-//    }
+    public function createLanguagesAction() {
+        $em = $this->getDoctrine()->getManager();
+        $list = array("zh", "en", "es", "hi", "bn", "pt", "ru", "fr", "ur", "ja", "de", "ko", "tr", "it", "ar");
+
+        foreach ($list as $key => $value) {
+            $object = new \Skaphandrus\AppBundle\Entity\SkLanguage();
+            $object->setName($value);
+            $em->persist($object);
+        }
+        $em->flush();
+
+        $entities = $em->getRepository('SkaphandrusAppBundle:SkLanguage')->findAll();
+
+        return $this->render('SkaphandrusAppBundle:SkBusiness:createLanguage.html.twig', array(
+                    'entities' => $entities,
+        ));
+    }
 
     /**
      * Lists all SkBusiness entities.

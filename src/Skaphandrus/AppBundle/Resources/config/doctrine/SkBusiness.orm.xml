@@ -73,9 +73,9 @@
             </cascade>
         </one-to-one>
         
-        <lifecycle-callbacks>
+<!--        <lifecycle-callbacks>
             <lifecycle-callback type="postLoad" method="doStuffOnPostLoad"/>
-        </lifecycle-callbacks>
+        </lifecycle-callbacks>-->
         
     </entity>
 </doctrine-mapping>
