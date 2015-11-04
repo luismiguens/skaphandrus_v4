@@ -91,16 +91,13 @@ class SkPhoto {
      * @var \Doctrine\Common\Collections\Collection
      */
     private $speciesSugestions;
-    
-    
     private $imageFile;
-    
+
     /**
      * var used in photo contests results
      * @var type 
      */
     private $points;
-    
 
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
@@ -122,10 +119,6 @@ class SkPhoto {
         return $this->imageFile;
     }
 
-    
-    
-    
-    
     /**
      * Constructor
      */
@@ -160,8 +153,7 @@ class SkPhoto {
         return $this->title;
     }
 
-    
-      /**
+    /**
      * Set points
      *
      * @param string $points
@@ -182,10 +174,7 @@ class SkPhoto {
     public function getPoints() {
         return $this->points;
     }
-    
-    
-    
-    
+
     /**
      * Get title
      *
@@ -305,14 +294,11 @@ class SkPhoto {
         return $this->createdAt;
     }
 
-    
-    public function setId($param){
-        
+    public function setId($param) {
+
         $this->id = $param;
     }
-    
-    
-    
+
     /**
      * Get id
      *
@@ -555,7 +541,6 @@ class SkPhoto {
 //    public function getFile() {
 //        return $this->file;
 //    }
-
 //    /**
 //     * 
 //     * @return type
@@ -587,7 +572,7 @@ class SkPhoto {
 //        // clean up the file property as you won't need it anymore
 //        $this->file = null;
 //    }
-    
+
     public function getKeywordsString() {
         $string = '';
 
@@ -606,10 +591,6 @@ class SkPhoto {
     public function countLikes() {
 
         return "321";
-    }
-
-    public function doStuffOnPreUpdate() {
-        $this->updatedAt = new \DateTime();
     }
 
     /**
@@ -674,6 +655,10 @@ class SkPhoto {
         return $this->speciesSugestions;
     }
 
+    public function doStuffOnPreUpdate() {
+        $this->updatedAt = new \DateTime();
+    }
+
     public function doStuffOnPostPersist(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
 
         $entity = $args->getEntity();
@@ -712,7 +697,22 @@ class SkPhoto {
         }
     }
 
-    
-    
-    
+//    public function doStuffOnPostLoad(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+//        $entity = $args->getEntity();
+//        //$entity = new SkPhoto();
+//
+//        $entityManager = $args->getEntityManager();
+//
+//        if (!$entity->getSpecies()) {
+//            if ($entity->getSpeciesValidations()) {
+//                //$entity->setSpecies($entity->getSpeciesValidations()[0]->getSpecies());
+//            } elseif ($entity->getSpeciesSugestions()) {
+//                //$entity->setSpecies($entity->getSpeciesValidations()[0]->getSpecies());
+//            }
+//        }
+//
+//        $entityManager->persist($entity);
+//        $entityManager->flush();
+//    }
+
 }

@@ -444,7 +444,7 @@ class DefaultController extends Controller {
             $centerLatitude = null;
             $centerLongitude = null;
 
-            
+
             if (count($location->getSpots()) > 0) {
 
                 // Get markers from spots for the map
@@ -456,7 +456,7 @@ class DefaultController extends Controller {
                         $marker = new Marker();
                         $latitude = explode(",", $spot->getCoordinate())[0];
                         $longitude = explode(",", $spot->getCoordinate())[1];
-                        
+
                         // Marker options
                         $marker->setPrefixJavascriptVariable('marker_');
                         $marker->setPosition($latitude, $longitude, true);
@@ -617,6 +617,17 @@ class DefaultController extends Controller {
         if ($photo) {
             $request = $this->get('request');
             $securityContext = $this->container->get('security.context');
+
+            //set species is user dont set, but we have sugestion or validation
+            if (!$photo->getSpecies()) {
+                if (count($photo->getSpeciesValidations())>0) {
+                    $photo->setSpecies($photo->getSpeciesValidations()[0]->getSpecies());
+                } elseif (count($photo->getSpeciesSugestions())>0) {
+                    $photo->setSpecies($photo->getSpeciesValidations()[0]->getSpecies());
+                }
+            }
+
+
 
             // Check for validations
             $validations = $this->getDoctrine()->getManager()->createQuery(

@@ -81,6 +81,7 @@
         <lifecycle-callbacks>
             <lifecycle-callback type="preUpdate" method="doStuffOnPreUpdate"/>
             <lifecycle-callback type="postPersist" method="doStuffOnPostPersist"/>
+<!--            <lifecycle-callback type="postLoad" method="doStuffOnPostLoad"/>-->
         </lifecycle-callbacks>
 
         <one-to-many field="speciesValidations" target-entity="SkPhotoSpeciesValidation" mapped-by="photo" />
