@@ -35,7 +35,7 @@ class SkBusinessAddressType extends AbstractType {
                 //->add('updatedAt')
                 ->add('location', 'autocomplete', array(
                     'class' => 'SkaphandrusAppBundle:SkLocation',
-                    'attr' => array('class' => 'form-control m-b'),
+                    'attr' => array('class' => 'form-control'),
                     'label' => 'form.address.label.location'
                    
                 ))

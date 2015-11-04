@@ -49,43 +49,6 @@
 
     {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
 
-    {#    {{ form_row(form.name) }}
-        {{ form_row(form.foundedAt) }}
-        {{ form_row(form.currency) }}
-        {{ form_row(form.language) }}
-        {{ form_row(form.about) }}
-        {{ form_row(form.description) }}
-        {{ form_row(form.mission) }}
-        {{ form_row(form.awards) }}
-        {{ form_row(form.imageFile) }}
-    
-        <br/>
-        <label>{{ "form.business.label.address"|trans }}</label>
-        <br/>
-        <br/>
-        {{ form_row(form.address.postcode) }}
-        {{ form_row(form.address.province) }}
-        {{ form_row(form.address.street) }}
-    
-        {{ form_row(form.address.location) }}
-    
-        <div class="popin">
-            <div id="map" style="height: 300px;margin-bottom: 10px;"></div>
-        </div>
-    
-        {{ form_row(form.address.coordinate) }}
-        {{ form_row(form.address.zoom) }}
-    
-        <br/>
-        <label>{{ "form.business.label.contact"|trans }}</label>
-        <br/>
-        <br/>
-        {{ form_row(form.contact.email) }}
-        {{ form_row(form.contact.fax) }}
-        {{ form_row(form.contact.homepage) }}
-        {{ form_row(form.contact.mobilephone) }}
-        {{ form_row(form.contact.phone) }}#}
-
     {{ form_row(form.name) }}
     {{ form_row(form.foundedAt) }}
     {{ form_row(form.currency) }}
@@ -95,15 +58,16 @@
     {{ form_row(form.mission) }}
     {{ form_row(form.awards) }}
     {{ form_row(form.imageFile) }}
+    
     {{ form_row(form.address) }}
+    
     <div class="popin">
         <div id="map" style="height: 300px;margin-bottom: 10px;"></div>
     </div>
+    
     <div class="hr-line-dashed"></div>
+    
     {{ form_row(form.contact) }}
-
-
-
 
     {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'business_admin', 'new_form':false} %}
     {{ form_end(form) }}

@@ -27,13 +27,15 @@ class SkBusinessType extends AbstractType {
                     'label' => 'form.business.label.currency',
                     'class' => 'SkaphandrusAppBundle:SkCurrency',
                     'expanded' => true,
-                    'multiple' => true
+                    'multiple' => true,
+                    'required' => false
                 ))
                 ->add('language', 'entity', array(
                     'label' => 'form.business.label.language',
                     'class' => 'SkaphandrusAppBundle:SkLanguage',
                     'expanded' => true,
-                    'multiple' => true
+                    'multiple' => true,
+                    'required' => false
                 ))
                 //->add('currency')
                 ->add('about', null, array(
@@ -54,7 +56,7 @@ class SkBusinessType extends AbstractType {
                 ))
                 ->add('imageFile', 'vich_image', array(
                     'label' => 'form.business.label.picture',
-                    'required' => false,
+                    'required' => true,
                     'allow_delete' => false, // not mandatory, default is true
                     'download_link' => false, // not mandatory, default is true
                 ))
@@ -63,8 +65,12 @@ class SkBusinessType extends AbstractType {
 //                    'label' => 'form.business.label.created_at'
 //                ))
 //                ->add('updatedAt')
-                ->add('address', new SkBusinessAddressType())
-                ->add('contact', new SkBusinessContactType())
+                ->add('address', new SkBusinessAddressType(), array(
+                    'label' => 'form.business.label.address'
+                ))
+                ->add('contact', new SkBusinessContactType(), array(
+                    'label' => 'form.business.label.contact'
+                ))
         ;
     }
 

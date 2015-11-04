@@ -50,33 +50,15 @@
     {{ form_row(edit_form.awards) }}
     {{ form_row(edit_form.imageFile) }}
 
-    <br/>
-    <label>{{ "form.business.label.address"|trans }}</label>
-    <br/>
-    <br/>
-    {{ form_row(edit_form.address.postcode) }}
-    {{ form_row(edit_form.address.province) }}
-    {{ form_row(edit_form.address.street) }}
-
-    {{ form_row(edit_form.address.location) }}
+    {{ form_row(edit_form.address) }}
 
     <div class="popin">
         <div id="map" style="height: 300px;margin-bottom: 10px;"></div>
     </div>
 
-    {{ form_row(edit_form.address.coordinate) }}
-    {{ form_row(edit_form.address.zoom) }}
+    <div class="hr-line-dashed"></div>
 
-    <br/>
-    <label>{{ "form.business.label.contact"|trans }}</label>
-    <br/>
-    <br/>
-    {{ form_row(edit_form.contact.email) }}
-    {{ form_row(edit_form.contact.email) }}
-    {{ form_row(edit_form.contact.fax) }}
-    {{ form_row(edit_form.contact.homepage) }}
-    {{ form_row(edit_form.contact.mobilephone) }}
-    {{ form_row(edit_form.contact.phone) }}
+    {{ form_row(edit_form.contact) }}
 
     {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'business_admin', 'new_form':false} %}
     {{ form_end(edit_form) }}

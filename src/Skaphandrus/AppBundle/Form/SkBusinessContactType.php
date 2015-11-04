@@ -17,8 +17,7 @@ class SkBusinessContactType extends AbstractType
         $builder
             ->add('email', 'text', array(
                     'attr' => array('class' => 'form-control', 'placeholder' => "email@example.com"),
-                    'label' => 'form.contact.label.email',
-                    'required' => false
+                    'label' => 'form.contact.label.email'
                 ))
                 ->add('fax', 'text', array(
                     'attr' => array('class' => 'form-control'),
