@@ -624,11 +624,11 @@ class DefaultController extends Controller {
             if (!$photo->getSpecies()) {
                 if (count($photo->getSpeciesValidations())>0) {
                     $photo->setSpecies($photo->getSpeciesValidations()[0]->getSpecies());
-                    $em->persist($skSocialNotify);
+                    $em->persist($photo);
                     $em->flush();
                 } elseif (count($photo->getSpeciesSugestions())>0) {
                     $photo->setSpecies($photo->getSpeciesValidations()[0]->getSpecies());
-                    $em->persist($skSocialNotify);
+                    $em->persist($photo);
                     $em->flush();
                 }
             }
