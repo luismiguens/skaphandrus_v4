@@ -13,11 +13,14 @@
                 <small class="pull-right text-navy">{{activity.createdAt|time_diff}}</small>
                 {{ activity_message(activity, app.request.locale)|raw }} <br>
                 <small class="text-muted">{{activity.createdAt|date("F jS \\a\\t g:ia")}}</small>
-                {#<div class="photos">
-                    <a href="{{url_to_photo(activity.photoId)}}" target="_blank"> 
-                        <img src="{{ activity.photoId.getWebPath | imagine_filter('sk_widen_240') }}" class="feed-photo" alt="image">
-                    </a>
-                </div>#}
+
+                {% if activity.photo %}
+                    <div class="photos">
+                        <a href="{{path('photo_no_slug', { 'id': activity.photo.id })}}" target="_blank"> 
+                            <img src="{{ activity.photo.getWebPath | imagine_filter('sk_widen_240') }}" class="feed-photo" alt="image">
+                        </a>
+                    </div>
+                {% endif %} 
             </div>
         </div>
     {% endfor %}

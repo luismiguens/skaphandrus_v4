@@ -13,7 +13,7 @@ use Doctrine\ORM\Query\ResultSetMapping;
  */
 class SkPhotoContestJudgeRepository extends EntityRepository {
 
-    public function findJudgesByContest($contest) {
+    public function findJudgesByContest_old($contest) {
 
 //        $rsm = new ResultSetMapping();
 //        $rsm->addEntityResult('SkaphandrusAppBundle:SkPersonal', 'p');
@@ -43,12 +43,9 @@ class SkPhotoContestJudgeRepository extends EntityRepository {
         $query = $this->getEntityManager()->createNativeQuery(
                 'SELECT j.id, f.id 
                     FROM fos_user f
-                    INNER JOIN sk_photo_contest_judge j
-                    ON f.id = j.fos_user_id
-                    INNER JOIN sk_photo_contest_judge_award judgeAwd 
-                    ON j.id = judgeAwd.judge_id
-                    INNER JOIN sk_photo_contest_award a 
-                    ON a.id = judgeAwd.award_id
+                    INNER JOIN sk_photo_contest_judge j ON f.id = j.fos_user_id
+                    INNER JOIN sk_photo_contest_judge_award judgeAwd ON j.id = judgeAwd.judge_id
+                    INNER JOIN sk_photo_contest_award a ON a.id = judgeAwd.award_id
                     WHERE a.contest_id = ?', $rsm);
 
         $query->setParameter(1, $contest);
@@ -56,6 +53,14 @@ class SkPhotoContestJudgeRepository extends EntityRepository {
         $judges = $query->getResult();
 
         return $judges;
+    }
+
+    public function findJudgesByContest($contest) {
+        return $this->getEntityManager()->createQuery(
+                        "SELECT j
+                FROM SkaphandrusAppBundle:SkPhotoContestJudge j
+                JOIN j.award a
+         WHERE a.contest = :contest")->setParameter('contest', $contest)->getResult();
     }
 
 }

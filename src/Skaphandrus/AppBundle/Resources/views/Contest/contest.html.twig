@@ -229,7 +229,7 @@
                                                                     <td>
 
                                                                         {% for sponsor in award.sponsor %}
-                                                                            
+
                                                                             {% if sponsor.getWebPath %}
                                                                                 <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
 
@@ -268,7 +268,12 @@
                                                                     </td>
                                                                     <td>
                                                                         <h4>{{ judge.fosUser.name }}</h4>
-                                                                        <p>{{ judge.fosUser.settings.observations|truncate(250, true) }} <a href="{{ url_to_user(judge.fosUser) }}">{{ "page.contest.table.read_more"|trans }}</a></p>
+
+                                                                        {% if judge.description %}
+                                                                            <p>{{ judge.description|truncate(250, true) }} <a href="{{ url_to_user(judge.fosUser) }}">{{ "page.contest.table.read_more"|trans }}</a></p>
+                                                                        {% else %}
+                                                                            <p>{{ judge.fosUser.settings.observations|truncate(250, true) }} <a href="{{ url_to_user(judge.fosUser) }}">{{ "page.contest.table.read_more"|trans }}</a></p>
+                                                                        {% endif %}
                                                                     </td>
                                                                 </tr>
                                                             {% endfor %}
@@ -290,7 +295,6 @@
                                                                 <tr>
                                                                     <td>
                                                                         {% if sponsor.getWebPath %}
-                                                                            
                                                                             <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
                                                                         {% endif %}
                                                                     </td>
@@ -333,10 +337,10 @@
                         </ul>
                     </nav>
                 </div>
-                        <br/>
-                                        {% if contest.isInProgress %}
-                                            <a href="{{ path('contest_participate', { 'contest_id': contest.id }) }}" class="btn btn-primary btn-block"><i class="fa fa-upload"></i> {{ "page.contests.link.join"|trans }}</a>
-                                        {% endif %}
+                <br/>
+                {% if contest.isInProgress %}
+                    <a href="{{ path('contest_participate', { 'contest_id': contest.id }) }}" class="btn btn-primary btn-block"><i class="fa fa-upload"></i> {{ "page.contests.link.join"|trans }}</a>
+                {% endif %}
             </div>
         </div>
     </div>

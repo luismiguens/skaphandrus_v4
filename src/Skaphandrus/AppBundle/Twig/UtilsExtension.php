@@ -323,8 +323,10 @@ $this->translator->setLocale($locale);
             case 'activity_001':
                 $user_from = $activity->getUserFrom();
                 $species = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkSpecies')->findOneById($activity->getSpeciesId());
-                $photo = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($activity->getPhotoId());
-
+                //$photo = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($activity->getPhotoId());
+$photo = $activity->getPhoto();
+                
+                
                 return $this->translator->trans(
                                 '%1% associou especie %2% na fotografia %3%.', array('%1%' => $this->link_to_user($user_from),
                             '%2%' => $this->link_to_species($species),
@@ -335,7 +337,8 @@ $this->translator->setLocale($locale);
             case 'activity_002':
                 $user_from = $activity->getUserFrom();
                 $spot = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkSpot')->findOneById($activity->getSpotId());
-                $photo = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($activity->getPhotoId());
+                //$photo = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($activity->getPhotoId());
+$photo = $activity->getPhoto();
 
                 return $this->translator->trans(
                                 '%1% associou spot %2% na fotografia %3%.', array('%1%' => $this->link_to_user($activity->getUserFrom()),
@@ -347,8 +350,8 @@ $this->translator->setLocale($locale);
             case 'activity_011':
                 $user_from = $activity->getUserFrom();
                 $species = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkSpecies')->findOneById($activity->getSpeciesId());
-                $photo = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($activity->getPhotoId());
-
+                //$photo = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($activity->getPhotoId());
+$photo = $activity->getPhoto();
                 return $this->translator->trans(
                                 '%1% sugeriu especie %2% na fotografia %3%.', array('%1%' => $this->link_to_user($user_from),
                             '%2%' => $this->link_to_species($species),
@@ -359,8 +362,11 @@ $this->translator->setLocale($locale);
             case 'activity_012':
                 $user_from = $activity->getUserFrom();
                 $species = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkSpecies')->findOneById($activity->getSpeciesId());
-                $photo = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($activity->getPhotoId());
+                //$photo = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($activity->getPhotoId());
 
+                $photo = $activity->getPhoto();
+                
+                
                 return $this->translator->trans(
                                 '%1% validou especie %2% na fotografia %3%.', array('%1%' => $this->link_to_user($user_from),
                             '%2%' => $this->link_to_species($species),
@@ -370,7 +376,9 @@ $this->translator->setLocale($locale);
             ### activity_021 x comentou fotografia y
             case 'activity_021':
                 $user_from = $activity->getUserFrom();
-                $photo = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($activity->getPhotoId());
+                //$photo = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($activity->getPhotoId());
+$photo = $activity->getPhoto();
+
 
                 return $this->translator->trans(
                                 '%1% comentou fotografia %2%.', array('%1%' => $this->link_to_user($user_from),
@@ -408,7 +416,8 @@ $this->translator->setLocale($locale);
             ### activity_061 x associou fotografia x a categoria y	
             case 'activity_061':
                 $user_from = $activity->getUserFrom();
-                $photo = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($activity->getPhotoId());
+//                $photo = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($activity->getPhotoId());
+                $photo = $activity->getPhoto();
                 $category = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')->findOneById($activity->getCategoryId());
 
                 return $this->translator->trans(
@@ -420,7 +429,8 @@ $this->translator->setLocale($locale);
             ### activity_062 x votou na fotografia y da categoria z	
             case 'activity_062':
                 $user_from = $activity->getUserFrom();
-                $photo = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($activity->getPhotoId());
+                //$photo = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($activity->getPhotoId());
+                $photo = $activity->getPhoto();
                 $category = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')->findOneById($activity->getCategoryId());
 
                 return $this->translator->trans(
