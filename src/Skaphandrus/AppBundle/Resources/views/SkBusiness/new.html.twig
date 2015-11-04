@@ -1,6 +1,6 @@
 {% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
 
-{% form_theme form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
+{% form_theme form 'SkaphandrusAppBundle:Form:vertical_choices_rows.html.twig' %}
 
 {% block javascripts %}
     {{ parent() }}
@@ -52,13 +52,17 @@
     {{ form_row(form.name) }}
     {{ form_row(form.foundedAt) }}
     {{ form_row(form.currency) }}
+    {{ form_row(form.language) }}
     {{ form_row(form.about) }}
     {{ form_row(form.description) }}
     {{ form_row(form.mission) }}
     {{ form_row(form.awards) }}
     {{ form_row(form.imageFile) }}
-    {{ form_row(form.createdAt) }}
 
+    <br/>
+    <label>{{ "form.business.label.address"|trans }}</label>
+    <br/>
+    <br/>
     {{ form_row(form.address.postcode) }}
     {{ form_row(form.address.province) }}
     {{ form_row(form.address.street) }}
@@ -72,9 +76,16 @@
     {{ form_row(form.address.coordinate) }}
     {{ form_row(form.address.zoom) }}
 
-    <br>
-    {{ form_row(form.contact) }}
-
+    <br/>
+    <label>{{ "form.business.label.contact"|trans }}</label>
+    <br/>
+    <br/>
+    {{ form_row(form.contact.email) }}
+    {{ form_row(form.contact.fax) }}
+    {{ form_row(form.contact.homepage) }}
+    {{ form_row(form.contact.mobilephone) }}
+    {{ form_row(form.contact.phone) }}
+    
     {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'business_admin', 'new_form':false} %}
     {{ form_end(form) }}
 

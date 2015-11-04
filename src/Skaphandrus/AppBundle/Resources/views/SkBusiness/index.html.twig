@@ -3,24 +3,20 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/skaphandrus.js') }}"></script>
-    <!-- FooTable -->
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
-    <script>
-        $(document).ready(function () {
-
-            $('.footable').footable();
-        });
-
-    </script>
-
-
+    <!-- Data Tables -->
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.bootstrap.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.responsive.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.tableTools.min.js') }}"></script>
 {% endblock %}
 
 
 {% block stylesheets %}
     {{ parent() }}
-    <!-- FooTable -->
-    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/footable/footable.core.css') }}" rel="stylesheet">
+    <!-- Data Tables -->
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/dataTables.responsive.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/dataTables.tableTools.min.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block heading_title %}
@@ -46,59 +42,66 @@
 
 {% block body -%}
 
-    <div class="ibox-content">
-        <input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
-        <table class="footable table" data-page-size="400" data-filter=#filter>
-            <thead>
-            <th>{{ "form.business.label.name"|trans }}</th>
+    <table id="datatable-list" class="table display table-striped table-bordered table-hover " cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>{{ "form.business.label.name"|trans }}</th>
+                <th>{{ "form.business.label.laocation"|trans }}</th>
+                <th>{{ "form.business.label.country"|trans }}</th>
                 {#<th>{{ "form.business.label.founded_at"|trans }}</th>
                 <th>{{ "form.business.label.currency"|trans }}</th>
+                <th>{{ "form.business.label.language"|trans }}</th>
                 <th>{{ "form.business.label.description"|trans }}</th>
                 <th>{{ "form.business.label.mission"|trans }}</th>
-                <th>{{ "form.business.label.awards"|trans }}</th>#}
+                <th>{{ "form.business.label.awards"|trans }}</th>
                 <th>{{ "form.business.label.picture"|trans }}</th>
-                {#<th>{{ "form.business.label.created_at"|trans }}</th>#}
-            <th>{{ "form.common.label.actions"|trans }}</th>
-            </thead>
-            <tbody>
-                {% for entity in entities %}
-                    <tr>
-                        <td>{{ entity.name }}</td>
-                        {#<td>
-                            {% if entity.foundedAt %}
-                                {{ entity.foundedAt|date('Y-m-d H:i:s') }}
-                            {% endif %}
-                        </td>
-                        <td>{{ entity.currency }}</td>
-                        <td>{{ entity.about }}</td>
-                        <td>{{ entity.description }}</td>
-                        <td>{{ entity.mission }}</td>
-                        <td>{{ entity.awards }}</td>#}
-                        <td>
-                            {% if entity.picture %}
-                                <img alt="picture" class="thumbnail" src="{{ entity.getWebPath | imagine_filter('sk_widen_75') }}"/>
-                            {% endif %}
-                        </td>
-                        {#<td>
-                            {% if entity.createdAt %}
-                                {{ entity.createdAt|date('Y-m-d H:i:s') }}
-                            {% endif %}
-                        </td>#}
-                        <td>
-                            <a class="btn btn-white btn-sm" href="{{ path('business_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit"|trans }}</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-            <tfoot>
+                <th>{{ "form.business.label.created_at"|trans }}</th>#}
+                <th>{{ "form.common.label.actions"|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
                 <tr>
-                    <td colspan="2">
-                        <ul class="pagination pull-right"></ul>
+                    <td>{{ entity.name }}</td>
+                    <td>{{ entity.location_name }}</td>
+                    <td>{{ entity.country_name }}</td>
+                    {#<td>
+                        {% if entity.foundedAt %}
+                            {{ entity.foundedAt|date('Y-m-d H:i:s') }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% for currency in entity.currency %}
+                            <li>{{ currency.name }}</li>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for language in entity.language %}
+                            <li>{{ language.name }}</li>
+                        {% endfor %}
+                    </td>
+                    <td>{{ entity.about }}</td>
+                    <td>{{ entity.description }}</td>
+                    <td>{{ entity.mission }}</td>
+                    <td>{{ entity.awards }}</td>
+                    <td>
+                        {% if entity.picture %}
+                            <img alt="picture" class="thumbnail" src="{{ entity.getWebPath | imagine_filter('sk_widen_75') }}"/>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if entity.createdAt %}
+                            {{ entity.createdAt|date('Y-m-d H:i:s') }}
+                        {% endif %}
+                    </td>#}
+                    <td>
+                        <a class="btn btn-white btn-sm" href="{{ path('business_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit"|trans }}</a>
                     </td>
                 </tr>
-            </tfoot>
-        </table>
-    </div>
+            {% endfor %}
+        </tbody>
+    </table>
+
 
     <a class="btn btn-primary" href="{{ path('business_admin_new') }}">
         <i class="fa fa-pencil"></i>  {{ "form.business.btn.add"|trans }}

@@ -33,3 +33,7 @@ business_admin_delete:
 business_admin_create_currencies:
     path:     /createCurrencies
     defaults: { _controller: "SkaphandrusAppBundle:SkBusiness:createCurrencies" }
+    
+business_admin_create_language:
+    path:     /createLanguage
+    defaults: { _controller: "SkaphandrusAppBundle:SkBusiness:createLanguages" }

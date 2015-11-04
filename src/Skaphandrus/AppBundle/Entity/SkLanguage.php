@@ -3,13 +3,13 @@
 namespace Skaphandrus\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Intl\Intl;
+use Test\Midgard\CreatePHP\Collection;
 
 /**
- * SkCurrency
+ * SkLanguage
  */
-class SkCurrency {
+class SkLanguage {
 
     /**
      * @var string
@@ -34,29 +34,29 @@ class SkCurrency {
     }
 
     /**
-     * Set currency
+     * Set name
      *
-     * @param string $currency
+     * @param string $name
      *
-     * @return SkCurrency
+     * @return SkLanguage
      */
-    public function setName($currency) {
-        $this->name = $currency;
+    public function setName($name) {
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get currency
+     * Get name
      *
      * @return string
      */
     public function getName() {
-        return Intl::getCurrencyBundle()->getCurrencyName($this->name) . " (" . Intl::getCurrencyBundle()->getCurrencySymbol($this->name). ")";
+        return Intl::getLanguageBundle()->getLanguageName($this->name);
     }
 
     public function __toString() {
-        return Intl::getCurrencyBundle()->getCurrencyName($this->name) . " (" . Intl::getCurrencyBundle()->getCurrencySymbol($this->name). ")";
+        return Intl::getLanguageBundle()->getLanguageName($this->name);
     }
 
     /**
@@ -73,7 +73,7 @@ class SkCurrency {
      *
      * @param SkBusiness $business
      *
-     * @return SkCurrency
+     * @return SkLanguage
      */
     public function addBusiness(SkBusiness $business) {
         $this->business[] = $business;

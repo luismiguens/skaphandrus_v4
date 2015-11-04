@@ -1,0 +1,66 @@
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/skaphandrus.js') }}"></script>
+    <!-- FooTable -->
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('.footable').footable();
+        });
+
+    </script>
+
+
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- FooTable -->
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/footable/footable.core.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block heading_title %}
+    {{ "form.business.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.business"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block heading_action %}
+    <a href="{{ path('business_admin_new') }}" class="btn btn-primary">{{ "form.business.btn.add"|trans }}</a>
+{% endblock %}
+
+{% block form_title_description %}
+    {{ "form.business.text.description"|trans }}
+{% endblock %}
+
+
+{% block body -%}
+
+    <div class="ibox-content">
+        <input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
+        <table class="footable table" data-page-size="400" data-filter=#filter>
+            <thead>
+            <th>{{ "form.business.label.name"|trans }}</th>
+            </thead>
+            <tbody>
+                {% for entity in entities %}
+                    <tr>
+                        <td>{{ entity.name }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock %}

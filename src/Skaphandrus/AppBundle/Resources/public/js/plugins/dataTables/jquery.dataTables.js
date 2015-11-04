@@ -11332,7 +11332,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sSearch": "Search:",
+			"sSearch": "Search: ",
 	
 	
 			/**

@@ -3,6 +3,7 @@
 namespace Skaphandrus\AppBundle\Entity;
 
 use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * SkBusiness
@@ -19,8 +20,15 @@ class SkBusiness {
      */
     private $foundedAt;
 
-
+    /**
+     * @var Collection
+     */
     private $currency;
+
+    /**
+     * @var Collection
+     */
+    private $language;
 
     /**
      * @var string
@@ -82,7 +90,7 @@ class SkBusiness {
      */
     private $imageFile;
 
-    /**symfony advanced forms
+    /*     * symfony advanced forms
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the  update. If this
      * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
@@ -91,6 +99,7 @@ class SkBusiness {
      *
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
      */
+
     public function setImageFile(File $image = null) {
         $this->imageFile = $image;
 
@@ -113,6 +122,7 @@ class SkBusiness {
      */
     public function __construct() {
         $this->currency = new ArrayCollection();
+        $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
 
@@ -160,9 +170,7 @@ class SkBusiness {
         return $this->foundedAt;
     }
 
-
-    
-        /**
+    /**
      * Add currency
      *
      * @param \Skaphandrus\AppBundle\Entity\SkCurrency $currency
@@ -193,34 +201,36 @@ class SkBusiness {
         return $this->currency;
     }
 
-    
-    
-    
-    
-    
-    
-        /**
-     * Get currency
+    /**
+     * Add language
      *
-     * @return \Skaphandrus\AppBundle\Entity\SkCurrency
+     * @param \Skaphandrus\AppBundle\Entity\SkLanguage $language
+     *
+     * @return SkPhoto
      */
-//    public function getCurrency() {
-//        return $this->currency;
-//    }
-//
-//    /**
-//     * Set currency
-//     *
-//     * @param \Skaphandrus\AppBundle\Entity\SkCurrency $currency
-//     *
-//     * @return SkBusiness
-//     */
-//    public function setCurrency($currency = null) {
-//        $this->currency = $currency;
-//
-//        return $this;
-//    }
-    
+    public function addLanguage(\Skaphandrus\AppBundle\Entity\SkLanguage $language) {
+        $this->language[] = $language;
+
+        return $this;
+    }
+
+    /**
+     * Remove language
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkLanguage $language
+     */
+    public function removeLanguage(\Skaphandrus\AppBundle\Entity\SkLanguage $language) {
+        $this->language->removeElement($language);
+    }
+
+    /**
+     * Get language
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLanguage() {
+        return $this->language;
+    }
 
     /**
      * Set about
@@ -384,6 +394,12 @@ class SkBusiness {
     public function getId() {
         return $this->id;
     }
+    
+    public function setId($id) {
+        $this->id = $id;
+
+        return $this;
+    }
 
     public function __toString() {
         return $this->getName();
@@ -456,7 +472,7 @@ class SkBusiness {
     public function doStuffOnPostLoad(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
         $entity = $args->getEntity();
         $originalEntity = $entity;
-        
+
         $entityManager = $args->getEntityManager();
 
         if (!$entity->getContact()) {
@@ -473,12 +489,10 @@ class SkBusiness {
             $entityManager->persist($address);
         }
 
-        if($originalEntity != $entity){
+        if ($originalEntity != $entity) {
             $entityManager->persist($entity);
             $entityManager->flush();
         }
-        
-        
     }
 
 }

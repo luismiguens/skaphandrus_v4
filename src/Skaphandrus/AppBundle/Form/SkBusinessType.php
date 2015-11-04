@@ -23,13 +23,19 @@ class SkBusinessType extends AbstractType {
                     'years' => range(1900, 2030),
                     'label' => 'form.business.label.founded_at'
                 ))
-            ->add('currency', 'entity', array(
-                'label'=>'form.business.label.currency',
-                'class' => 'SkaphandrusAppBundle:SkCurrency','expanded' => true, 
-                'multiple' => true ))
-                
+                ->add('currency', 'entity', array(
+                    'label' => 'form.business.label.currency',
+                    'class' => 'SkaphandrusAppBundle:SkCurrency',
+                    'expanded' => true,
+                    'multiple' => true
+                ))
+                ->add('language', 'entity', array(
+                    'label' => 'form.business.label.language',
+                    'class' => 'SkaphandrusAppBundle:SkLanguage',
+                    'expanded' => true,
+                    'multiple' => true
+                ))
                 //->add('currency')
-                
                 ->add('about', null, array(
                     'attr' => array('class' => 'form-control'),
                     'label' => 'form.business.label.about'
@@ -52,10 +58,10 @@ class SkBusinessType extends AbstractType {
                     'allow_delete' => false, // not mandatory, default is true
                     'download_link' => false, // not mandatory, default is true
                 ))
-                ->add('createdAt', null, array(
-                    'years' => range(1900, 2030),
-                    'label' => 'form.business.label.created_at'
-                ))
+//                ->add('createdAt', null, array(
+//                    'years' => range(1900, 2030),
+//                    'label' => 'form.business.label.created_at'
+//                ))
 //                ->add('updatedAt')
                 ->add('address', new SkBusinessAddressType())
                 ->add('contact', new SkBusinessContactType())

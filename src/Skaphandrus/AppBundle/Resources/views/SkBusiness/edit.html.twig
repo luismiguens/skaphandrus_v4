@@ -1,6 +1,6 @@
 {% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
 
-{% form_theme edit_form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
+{% form_theme edit_form 'SkaphandrusAppBundle:Form:vertical_choices_rows.html.twig' %}
 
 {% block javascripts %}
     {{ parent() }}
@@ -9,7 +9,7 @@
     <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/gmaps.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/form_business.js') }}"></script>
-    
+
 {% endblock %}
 
 
@@ -43,13 +43,17 @@
     {{ form_row(edit_form.name) }}
     {{ form_row(edit_form.foundedAt) }}
     {{ form_row(edit_form.currency) }}
+    {{ form_row(edit_form.language) }}
     {{ form_row(edit_form.about) }}
     {{ form_row(edit_form.description) }}
     {{ form_row(edit_form.mission) }}
     {{ form_row(edit_form.awards) }}
     {{ form_row(edit_form.imageFile) }}
-    {{ form_row(edit_form.createdAt) }}
 
+    <br/>
+    <label>{{ "form.business.label.address"|trans }}</label>
+    <br/>
+    <br/>
     {{ form_row(edit_form.address.postcode) }}
     {{ form_row(edit_form.address.province) }}
     {{ form_row(edit_form.address.street) }}
@@ -63,8 +67,16 @@
     {{ form_row(edit_form.address.coordinate) }}
     {{ form_row(edit_form.address.zoom) }}
 
-    <br>
-    {{ form_row(edit_form.contact) }}
+    <br/>
+    <label>{{ "form.business.label.contact"|trans }}</label>
+    <br/>
+    <br/>
+    {{ form_row(edit_form.contact.email) }}
+    {{ form_row(edit_form.contact.email) }}
+    {{ form_row(edit_form.contact.fax) }}
+    {{ form_row(edit_form.contact.homepage) }}
+    {{ form_row(edit_form.contact.mobilephone) }}
+    {{ form_row(edit_form.contact.phone) }}
 
     {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'business_admin', 'new_form':false} %}
     {{ form_end(edit_form) }}
