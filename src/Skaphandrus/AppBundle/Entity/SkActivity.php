@@ -37,7 +37,7 @@ class SkActivity
     /**
      * @var integer
      */
-    private $photoId;
+    private $photo;
 
     /**
      * @var integer
@@ -185,27 +185,27 @@ class SkActivity
     }
 
     /**
-     * Set photoId
+     * Set photo
      *
-     * @param integer $photoId
+     * @param integer $photo
      *
      * @return SkActivity
      */
-    public function setPhotoId($photoId)
+    public function setPhoto($photo)
     {
-        $this->photoId = $photoId;
+        $this->photo = $photo;
 
         return $this;
     }
 
     /**
-     * Get photoId
+     * Get photo
      *
      * @return integer
      */
-    public function getPhotoId()
+    public function getPhoto()
     {
-        return $this->photoId;
+        return $this->photo;
     }
 
     /**

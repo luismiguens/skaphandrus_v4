@@ -137,5 +137,15 @@ class SkPhotoContestJudge
         return $this->getFosUser()->getName();
     }
     
+    
+       /**
+     * Get description
+     *
+     * @return string
+     */
+     public function getDescription() {
+        return $this->translate()->getDescription();
+    }
+    
 }
 

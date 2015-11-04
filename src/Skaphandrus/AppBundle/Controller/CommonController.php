@@ -202,10 +202,12 @@ class CommonController extends Controller {
             $activity->setMessageName($value['message_name']);
 
             $user_from = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->findOneById($value['user_from']);
+            $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($value['photo_id']);
+            
             $activity->setUserFrom($user_from);
             $activity->setSpeciesId($value['species_id']);
             $activity->setSpotId($value['spot_id']);
-            $activity->setPhotoId($value['photo_id']);
+            $activity->setPhoto($photo);
             $activity->setCategoryId($value['category_id']);
             $activity->setCommentId($value['comment_id']);
             $activity->setModuleId($value['module_id']);
