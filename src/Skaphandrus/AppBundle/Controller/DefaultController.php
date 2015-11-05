@@ -627,7 +627,7 @@ class DefaultController extends Controller {
                     $em->persist($photo);
                     $em->flush();
                 } elseif (count($photo->getSpeciesSugestions())>0) {
-                    $photo->setSpecies($photo->getSpeciesValidations()[0]->getSpecies());
+                    $photo->setSpecies($photo->getSpeciesSugestions()[0]->getSpecies());
                     $em->persist($photo);
                     $em->flush();
                 }
