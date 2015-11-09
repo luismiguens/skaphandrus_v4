@@ -137,7 +137,7 @@ fos_user:
     service:
         mailer: fos_user.mailer.twig_swift
     from_email:
-        address:     support@skaphandrus.com
+        address:     support-noreply@skaphandrus.com
         sender_name: Skaphandrus
     registration:
         confirmation:
