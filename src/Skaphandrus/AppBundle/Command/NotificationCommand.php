@@ -63,7 +63,7 @@ class NotificationCommand extends ContainerAwareCommand {
                     ->setBcc('luis.miguens@skaphandrus.com')
                     ->setBody(
                     $this->getContainer()->get('templating')->render(
-                            'SkaphandrusAppBundle:FOSUserEmail:alert.html.twig', array(
+                            'SkaphandrusAppBundle:FOSUserEmail:notification.html.twig', array(
                         'fos_user' => $fos_user,
                         'notifications' => $notifications)
                     ), 'text/html'
@@ -90,7 +90,7 @@ class NotificationCommand extends ContainerAwareCommand {
             
             
              $output->writeln($this->getContainer()->get('templating')->render(
-                            'SkaphandrusAppBundle:FOSUserEmail:alert.html.twig', array(
+                            'SkaphandrusAppBundle:FOSUserEmail:notification.html.twig', array(
                         'fos_user' => $fos_user,
                         'notifications' => $notifications)
                     ));
