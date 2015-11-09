@@ -40,6 +40,14 @@ class NotificationCommand extends ContainerAwareCommand {
         $container = $this->getContainer();
         $mailer = $container->get('mailer');
 
+        
+        $context = $this->getContainer()->get('router')->getContext();
+        $context->setHost('skaphandrus.com');
+        $context->setScheme('http');
+        //$context->setBaseUrl('my/path');
+        
+        
+        
         $em = $container->get('doctrine')->getManager();
         $time = $input->getArgument('time');
         //$users = $em->getRepository('SkaphandrusAppBundle:SkSocialNotify')->findUsersToNotify($time);
@@ -58,12 +66,12 @@ class NotificationCommand extends ContainerAwareCommand {
 
             $message = \Swift_Message::newInstance()
                     ->setSubject($subject)
-                    ->setFrom('support@skaphandrus.com')
+                    ->setFrom('support-noreply@skaphandrus.com')
                     ->setTo($fos_user->getEmail())
                     ->setBcc('luis.miguens@skaphandrus.com')
                     ->setBody(
                     $this->getContainer()->get('templating')->render(
-                            'SkaphandrusAppBundle:FOSUserEmail:alert.html.twig', array(
+                            'SkaphandrusAppBundle:FOSUserEmail:notification.html.twig', array(
                         'fos_user' => $fos_user,
                         'notifications' => $notifications)
                     ), 'text/html'
@@ -82,18 +90,18 @@ class NotificationCommand extends ContainerAwareCommand {
 
             $mailer->send($message);
             $output->writeln("mail sent to " . $fos_user->getName());
-            
-            
-            
-            
-            $output->writeln("mail sent to " . $fos_user->getName());
-            
-            
-             $output->writeln($this->getContainer()->get('templating')->render(
-                            'SkaphandrusAppBundle:FOSUserEmail:alert.html.twig', array(
-                        'fos_user' => $fos_user,
-                        'notifications' => $notifications)
-                    ));
+//            
+//            
+//            
+//            
+//            $output->writeln("mail sent to " . $fos_user->getName());
+//            
+//            
+//             $output->writeln($this->getContainer()->get('templating')->render(
+//                            'SkaphandrusAppBundle:FOSUserEmail:notification.html.twig', array(
+//                        'fos_user' => $fos_user,
+//                        'notifications' => $notifications)
+//                    ));
             
             
         }
