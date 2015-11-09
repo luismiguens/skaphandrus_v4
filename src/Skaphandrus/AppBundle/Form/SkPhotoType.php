@@ -32,11 +32,10 @@ class SkPhotoType extends AbstractType {
 //                )
                 ->add('imageFile', 'vich_image', array(
                     'label' => 'form.photo.label.file',
-                    'required'      => false,
-                    'allow_delete'  => false, // not mandatory, default is true
+                    'required' => true,
+                    'allow_delete' => false, // not mandatory, default is true
                     'download_link' => false, // not mandatory, default is true
-                    ))
-                
+                ))
                 ->add('description', 'textarea', array(
                     'attr' => array('class' => 'form-control'),
                     'label' => 'form.photo.label.description',

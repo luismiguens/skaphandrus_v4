@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SkBusinessDivePriceType extends AbstractType {
+class SkBusinessRentEquipmentType extends AbstractType {
 
     /**
      * @param FormBuilderInterface $builder
@@ -14,14 +14,10 @@ class SkBusinessDivePriceType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('numberofdives', null, array(
-                    'attr' => array('class' => 'form-control'),
-                    'label' => 'form.dive_price.label.number_of_dives'
-                ))
-                ->add('valueperdives', null, array(
-                    'attr' => array('class' => 'form-control'),
-                    'label' => 'form.dive_price.label.value_per_dives'
-                ))
+                ->add('quantity')
+                ->add('rentvalue')
+//                ->add('businessboat')
+//                ->add('equipmenttype')
         ;
     }
 
@@ -30,7 +26,7 @@ class SkBusinessDivePriceType extends AbstractType {
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'Skaphandrus\AppBundle\Entity\SkBusinessDivePrice'
+            'data_class' => 'Skaphandrus\AppBundle\Entity\SkBusinessRentEquipment'
         ));
     }
 
@@ -38,7 +34,7 @@ class SkBusinessDivePriceType extends AbstractType {
      * @return string
      */
     public function getName() {
-        return 'skaphandrus_appbundle_skbusinessdiveprice';
+        return 'skaphandrus_appbundle_skbusinessrentequipment';
     }
 
 }

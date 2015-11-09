@@ -14,18 +14,54 @@ class SkBusinessDiveAccessType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('daydiveboat')
-                ->add('shoredive')
-                ->add('nightdive')
-                ->add('housereef')
-                ->add('daytours')
-                ->add('halfdaytours')
-                ->add('unguideddives')
-                ->add('perdaydives')
-                ->add('maxdepthdives')
-                ->add('maxminutesdives')
-                ->add('maxpersonsperdive')
-                ->add('observations')
+                ->add('daydiveboat', null, array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.dive_access.label.day_dive_boat'
+                ))
+                ->add('shoredive', null, array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.dive_access.label.shore_dive'
+                ))
+                ->add('nightdive', null, array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.dive_access.label.night_dive'
+                ))
+                ->add('housereef', null, array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.dive_access.label.house_reef'
+                ))
+                ->add('daytours', null, array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.dive_access.label.day_tours'
+                ))
+                ->add('halfdaytours', null, array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.dive_access.label.half_day_tours'
+                ))
+                ->add('unguideddives', null, array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.dive_access.label.unguided_dives'
+                ))
+                ->add('perdaydives', null, array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.dive_access.label.per_day_dives'
+                ))
+                ->add('maxdepthdives', null, array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.dive_access.label.max_depth_dives'
+                ))
+                ->add('maxminutesdives', null, array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.dive_access.label.max_minutes_dives'
+                ))
+                ->add('maxpersonsperdive', null, array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.dive_access.label.max_persons_per_dive'
+                ))
+                ->add('observations', null, array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.dive_access.label.observations'
+                ))
         ;
     }
 

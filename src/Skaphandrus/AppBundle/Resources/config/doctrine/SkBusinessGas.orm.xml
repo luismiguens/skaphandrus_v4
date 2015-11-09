@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Skaphandrus\AppBundle\Entity\SkBusinessGas" table="sk_business_gas">
+        <indexes>
+            <index name="fk_sk_business_gases_sk_business1" columns="business_id"/>
+            <index name="sk_fkI_1" columns="businessboat_id"/>
+        </indexes>
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="atmosphericair" type="boolean" column="atmosphericair" nullable="true"/>
+        <field name="nitrox" type="boolean" column="nitrox" nullable="true"/>
+        <field name="trimix" type="boolean" column="trimix" nullable="true"/>
+        <!--        <many-to-one field="businessboat" target-entity="SkBusinessBoat" fetch="LAZY">
+            <join-columns>
+                <join-column name="businessboat_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>-->
+        <one-to-one field="business" target-entity="SkBusiness" inversed-by="gas">
+            <join-column name="business_id" referenced-column-name="id" />
+        </one-to-one>
+    </entity>
+</doctrine-mapping>

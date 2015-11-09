@@ -158,12 +158,6 @@ class SkBusinessSpotController extends Controller {
             throw $this->createNotFoundException('Unable to find SkBusiness entity.');
         }
 
-        // Set parent ID on embedded forms
-        $embedded = $request->request->get('skaphandrus_appbundle_skbusiness');
-        foreach ($embedded['divePrice'] as &$divePrice) {
-            $divePrice['divePrice'] = $id;
-        }
-        
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);

@@ -85,6 +85,24 @@
             </cascade>
         </one-to-many>
         
+        <one-to-one field="gas" target-entity="SkBusinessGas" mapped-by="business" >
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-one>
+        
+        <one-to-one field="safety" target-entity="SkBusinessSafety" mapped-by="business" >
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-one>
+        
+        <one-to-many field="rentEquipment" target-entity="SkBusinessRentEquipment" mapped-by="business">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        
         <!--        <lifecycle-callbacks>
             <lifecycle-callback type="postLoad" method="doStuffOnPostLoad"/>
         </lifecycle-callbacks>-->

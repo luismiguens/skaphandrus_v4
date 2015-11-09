@@ -96,6 +96,21 @@ class SkBusiness {
      */
     private $divePrice;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $rentEquipment;
+
+    /**
+     * @var \Skaphandrus\AppBundle\Entity\SkBusinessGas
+     */
+    private $gas;
+
+    /**
+     * @var \Skaphandrus\AppBundle\Entity\SkBusinessSafety
+     */
+    private $safety;
+
     /*     * symfony advanced forms
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the  update. If this
@@ -459,6 +474,116 @@ class SkBusiness {
     }
 
     /**
+     * Get gas
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkBusinessGas
+     */
+    public function getGas() {
+        return $this->gas;
+    }
+
+    /**
+     * Set gas
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBusinessGas $gas
+     *
+     * @return SkBusiness
+     */
+    public function setGas(\Skaphandrus\AppBundle\Entity\SkBusinessGas $gas = null) {
+        $this->gas = $gas;
+        $gas->setBusiness($this);
+
+        return $this;
+    }
+
+    /**
+     * Get safety
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkBusinessSafety
+     */
+    public function getSafety() {
+        return $this->safety;
+    }
+
+    /**
+     * Set safety
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBusinessSafety $safety
+     *
+     * @return SkBusiness
+     */
+    public function setSafety(\Skaphandrus\AppBundle\Entity\SkBusinessSafety $safety = null) {
+        $this->safety = $safety;
+        $safety->setBusiness($this);
+
+        return $this;
+    }
+
+    /**
+     * Add rentEquipment
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBusinessRentEquipment $rentEquipment
+     *
+     * @return SkIdentificationCriteria
+     */
+    public function addRentEquipment(\Skaphandrus\AppBundle\Entity\SkBusinessRentEquipment $rentEquipment) {
+        $this->rentEquipment[] = $rentEquipment;
+        $rentEquipment->setBusiness($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove rentEquipment
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBusinessRentEquipment $rentEquipment
+     */
+    public function removeRentEquipment(\Skaphandrus\AppBundle\Entity\SkBusinessRentEquipment $rentEquipment) {
+        $this->rentEquipment->removeElement($rentEquipment);
+    }
+
+    /**
+     * Get rentEquipment
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRentEquipment() {
+        return $this->rentEquipment;
+    }
+
+    /**
+     * Add divePrice
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBusinessDivePrice $divePrice
+     *
+     * @return SkIdentificationCriteria
+     */
+    public function addDiveProuse(\Skaphandrus\AppBundle\Entity\SkBusinessDivePrice $divePrice) {
+        $this->divePrice[] = $divePrice;
+        $divePrice->setBusiness($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove divePrice
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBusinessDivePrice $divePrice
+     */
+    public function removeDiveProuse(\Skaphandrus\AppBundle\Entity\SkBusinessDivePrice $divePrice) {
+        $this->divePrice->removeElement($divePrice);
+    }
+
+    /**
+     * Get divePrice
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDivePrice() {
+        return $this->divePrice;
+    }
+
+    /**
      * Get diveAccess
      *
      * @return \Skaphandrus\AppBundle\Entity\SkBusinessDiveAccess
@@ -479,38 +604,6 @@ class SkBusiness {
         $diveAccess->setBusiness($this);
 
         return $this;
-    }
-
-    /**
-     * Add divePrice
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkBusinessDivePrice $divePrice
-     *
-     * @return SkIdentificationCriteria
-     */
-    public function addDivePrice(\Skaphandrus\AppBundle\Entity\SkBusinessDivePrice $divePrice) {
-        $this->divePrice[] = $divePrice;
-        $divePrice->setBusiness($this);
-
-        return $this;
-    }
-
-    /**
-     * Remove divePrice
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkBusinessDivePrice $divePrice
-     */
-    public function removeDivePrice(\Skaphandrus\AppBundle\Entity\SkBusinessDivePrice $divePrice) {
-        $this->divePrice->removeElement($divePrice);
-    }
-
-    /**
-     * Get divePrices
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getDivePrice() {
-        return $this->divePrice;
     }
 
     public function getAbsolutePath() {

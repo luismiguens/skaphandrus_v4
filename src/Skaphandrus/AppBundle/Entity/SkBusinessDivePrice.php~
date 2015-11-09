@@ -5,8 +5,8 @@ namespace Skaphandrus\AppBundle\Entity;
 /**
  * SkBusinessDivePrice
  */
-class SkBusinessDivePrice {
-
+class SkBusinessDivePrice
+{
     /**
      * @var integer
      */
@@ -27,6 +27,7 @@ class SkBusinessDivePrice {
      */
     private $business;
 
+
     /**
      * Set numberofdives
      *
@@ -34,7 +35,8 @@ class SkBusinessDivePrice {
      *
      * @return SkBusinessDivePrice
      */
-    public function setNumberofdives($numberofdives) {
+    public function setNumberofdives($numberofdives)
+    {
         $this->numberofdives = $numberofdives;
 
         return $this;
@@ -45,7 +47,8 @@ class SkBusinessDivePrice {
      *
      * @return integer
      */
-    public function getNumberofdives() {
+    public function getNumberofdives()
+    {
         return $this->numberofdives;
     }
 
@@ -56,7 +59,8 @@ class SkBusinessDivePrice {
      *
      * @return SkBusinessDivePrice
      */
-    public function setValueperdives($valueperdives) {
+    public function setValueperdives($valueperdives)
+    {
         $this->valueperdives = $valueperdives;
 
         return $this;
@@ -67,7 +71,8 @@ class SkBusinessDivePrice {
      *
      * @return integer
      */
-    public function getValueperdives() {
+    public function getValueperdives()
+    {
         return $this->valueperdives;
     }
 
@@ -76,7 +81,8 @@ class SkBusinessDivePrice {
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -87,7 +93,8 @@ class SkBusinessDivePrice {
      *
      * @return SkBusinessDivePrice
      */
-    public function setBusiness(\Skaphandrus\AppBundle\Entity\SkBusiness $business = null) {
+    public function setBusiness(\Skaphandrus\AppBundle\Entity\SkBusiness $business = null)
+    {
         $this->business = $business;
 
         return $this;
@@ -98,8 +105,9 @@ class SkBusinessDivePrice {
      *
      * @return \Skaphandrus\AppBundle\Entity\SkBusiness
      */
-    public function getBusiness() {
+    public function getBusiness()
+    {
         return $this->business;
     }
-
 }
+

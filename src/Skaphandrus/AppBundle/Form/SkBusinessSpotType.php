@@ -19,12 +19,29 @@ class SkBusinessSpotType extends AbstractType {
                     'allow_add' => true,
                     'prototype' => true,
                     'by_reference' => false,
+                    'required' => false,
                     'label' => 'form.business.label.dive_price'
                 ))
-                ->add('diveAccess', new SkBusinessDiveAccessType(), array(
-                    'label' => 'form.business.label.dive_access'
+                ->add('rentEquipment', 'collection', array(
+                    'type' => new SkBusinessRentEquipmentType(),
+                    'allow_add' => true,
+                    'prototype' => true,
+                    'by_reference' => false,
+                    'required' => false,
+                    'label' => 'form.business.label.rent_equipment'
                 ))
-
+                ->add('diveAccess', new SkBusinessDiveAccessType(), array(
+                    'label' => 'form.business.label.dive_access',
+                    'required' => false,
+                ))
+                ->add('gas', new SkBusinessGasType(), array(
+                    'label' => 'form.business.label.gas',
+                    'required' => false,
+                ))
+                ->add('safety', new SkBusinessSafetyType(), array(
+                    'label' => 'form.business.label.safety',
+                    'required' => false,
+                ))
         ;
     }
 
