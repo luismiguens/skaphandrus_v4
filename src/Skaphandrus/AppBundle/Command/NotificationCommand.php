@@ -82,18 +82,18 @@ class NotificationCommand extends ContainerAwareCommand {
 
             $mailer->send($message);
             $output->writeln("mail sent to " . $fos_user->getName());
-            
-            
-            
-            
-            $output->writeln("mail sent to " . $fos_user->getName());
-            
-            
-             $output->writeln($this->getContainer()->get('templating')->render(
-                            'SkaphandrusAppBundle:FOSUserEmail:notification.html.twig', array(
-                        'fos_user' => $fos_user,
-                        'notifications' => $notifications)
-                    ));
+//            
+//            
+//            
+//            
+//            $output->writeln("mail sent to " . $fos_user->getName());
+//            
+//            
+//             $output->writeln($this->getContainer()->get('templating')->render(
+//                            'SkaphandrusAppBundle:FOSUserEmail:notification.html.twig', array(
+//                        'fos_user' => $fos_user,
+//                        'notifications' => $notifications)
+//                    ));
             
             
         }
