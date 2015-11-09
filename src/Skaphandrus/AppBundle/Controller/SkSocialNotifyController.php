@@ -20,7 +20,7 @@ class SkSocialNotifyController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $fos_user = $this->get('security.token_storage')->getToken()->getUser();
 
-        $entities = $em->getRepository('SkaphandrusAppBundle:SkSocialNotify')->findByUserTo($fos_user);
+        $entities = $em->getRepository('SkaphandrusAppBundle:SkSocialNotify')->findByUserTo($fos_user, array('id'=>'desc'));
 
         //$notification = new \Skaphandrus\AppBundle\Entity\SkSocialNotify();
 

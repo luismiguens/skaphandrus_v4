@@ -183,7 +183,52 @@ class SkSocialNotifyRepository extends EntityRepository {
         }
     }
 
-    
+    public function findUsersToNotify($time) {
+
+
+        if ($time == 'hourly' or $time == '1')
+            $str_time = 'INTERVAL 1 HOUR';
+        if ($time == 'daily' or $time == '2')
+            $str_time = 'INTERVAL 24 HOUR';
+        if ($time == 'weekly' or $time == '3')
+            $str_time = 'INTERVAL 7 DAY';
+
+
+         $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+        
+        $sql = "SELECT distinct user_to FROM sk_social_notify 
+            join sk_settings on sk_settings.fos_user_id = sk_social_notify.user_to 
+            WHERE created_at > (now() - " . $str_time . " ) 
+                and is_read = 0 
+                and sk_settings.email_notification_time_id = " . $time;
+
+
+
+        echo "sql = " . $sql;
+
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        return $statement->fetchAll();
+//        $result = array();
+//
+//        foreach ($values as $value) {
+////            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->find($value['species']);
+//
+//            $species = new \Skaphandrus\AppBundle\Entity\SkSpecies();
+//            $species->setId($value['species_id']);
+//            $scientific_name = new \Skaphandrus\AppBundle\Entity\SkSpeciesScientificName();
+//            $scientific_name->setName($value['ssn_name']);
+//            $scientific_name->setAuthor($value['sss_author']);
+//            $species->addScientificName($scientific_name);
+//            $species->setPhotosInSpecies($value['num_photos']);
+//            $result[] = $species;
+//        }
+//
+//        return $result;
+    }
+
     
 
 }
