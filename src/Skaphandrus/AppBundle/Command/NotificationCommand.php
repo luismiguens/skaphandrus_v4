@@ -40,6 +40,14 @@ class NotificationCommand extends ContainerAwareCommand {
         $container = $this->getContainer();
         $mailer = $container->get('mailer');
 
+        
+        $context = $this->getContainer()->get('router')->getContext();
+        $context->setHost('skaphandrus.com');
+        $context->setScheme('http');
+        //$context->setBaseUrl('my/path');
+        
+        
+        
         $em = $container->get('doctrine')->getManager();
         $time = $input->getArgument('time');
         //$users = $em->getRepository('SkaphandrusAppBundle:SkSocialNotify')->findUsersToNotify($time);
