@@ -1,0 +1,84 @@
+<?php
+
+namespace Skaphandrus\AppBundle\Entity;
+
+/**
+ * SkBusinessSpot
+ */
+class SkBusinessSpot
+{
+//    /**
+//     * @var integer
+//     */
+//    private $id;
+
+    /**
+     * @var \Skaphandrus\AppBundle\Entity\SkBusiness
+     */
+    private $business;
+
+    /**
+     * @var \Skaphandrus\AppBundle\Entity\SkSpot
+     */
+    private $spot;
+
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set business
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBusiness $business
+     *
+     * @return SkBusinessSpot
+     */
+    public function setBusiness(\Skaphandrus\AppBundle\Entity\SkBusiness $business = null)
+    {
+        $this->business = $business;
+
+        return $this;
+    }
+
+    /**
+     * Get business
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkBusiness
+     */
+    public function getBusiness()
+    {
+        return $this->business;
+    }
+
+    /**
+     * Set spot
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkSpot $spot
+     *
+     * @return SkBusinessSpot
+     */
+    public function setSpot(\Skaphandrus\AppBundle\Entity\SkSpot $spot = null)
+    {
+        $this->spot = $spot;
+
+        return $this;
+    }
+
+    /**
+     * Get spot
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkSpot
+     */
+    public function getSpot()
+    {
+        return $this->spot;
+    }
+}
+

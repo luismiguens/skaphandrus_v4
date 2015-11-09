@@ -61,8 +61,12 @@ class SkSpot {
      * @var \Doctrine\Common\Collections\Collection
      */
     private $photos;
-    
     private $photosInSpot;
+
+    /**
+     * @var Collection
+     */
+    private $business;
 
     public function getPhotosInSpot() {
         return $this->photosInSpot;
@@ -313,6 +317,37 @@ class SkSpot {
 
     public function doStuffOnPreUpdate() {
         $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * Add business
+     *
+     * @param SkBusiness $business
+     *
+     * @return SkSpot
+     */
+    public function addBusiness(SkBusiness $business) {
+        $this->business[] = $business;
+
+        return $this;
+    }
+
+    /**
+     * Remove business
+     *
+     * @param SkBusiness $business
+     */
+    public function removeBusiness(SkBusiness $business) {
+        $this->business->removeElement($business);
+    }
+
+    /**
+     * Get business
+     *
+     * @return Collection
+     */
+    public function getBusiness() {
+        return $this->business;
     }
 
 }

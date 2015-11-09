@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Skaphandrus\AppBundle\Entity\SkBusinessDiveAccess" table="sk_business_dive_access">
+        <indexes>
+            <index name="fk_sk_business_diveaccess_sk_business1" columns="business_id"/>
+        </indexes>
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="daydiveboat" type="boolean" column="daydiveboat" nullable="true"/>
+        <field name="shoredive" type="boolean" column="shoredive" nullable="true"/>
+        <field name="nightdive" type="boolean" column="nightdive" nullable="true"/>
+        <field name="housereef" type="boolean" column="housereef" nullable="true"/>
+        <field name="daytours" type="boolean" column="daytours" nullable="true"/>
+        <field name="halfdaytours" type="boolean" column="halfdaytours" nullable="true"/>
+        <field name="unguideddives" type="boolean" column="unguideddives" nullable="true"/>
+        <field name="perdaydives" type="integer" column="perdaydives" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="maxdepthdives" type="integer" column="maxdepthdives" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="maxminutesdives" type="integer" column="maxminutesdives" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="maxpersonsperdive" type="integer" column="maxpersonsperdive" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="observations" type="text" column="observations" length="65535" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <!--    <many-to-one field="business" target-entity="SkBusiness" fetch="LAZY">
+          <join-columns>
+            <join-column name="business_id" referenced-column-name="id"/>
+          </join-columns>
+        </many-to-one>-->
+    
+        <one-to-one field="business" target-entity="SkBusiness" inversed-by="diveAccess">
+            <join-column name="business_id" referenced-column-name="id" />
+        </one-to-one>
+    
+    </entity>
+</doctrine-mapping>

@@ -18,6 +18,10 @@ contests:
 skaphandrus_app_business_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skbusiness.yml"
     prefix:   /{_locale}/business_admin
+    
+skaphandrus_app_business_spot_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skbusinessspot.yml"
+    prefix:   /{_locale}/business_spot_admin
 
 skaphandrus_app_sk_identification_criteria_group:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skidentificationcriteriagroup.yml"

@@ -5,57 +5,13 @@ namespace Skaphandrus\AppBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Skaphandrus\AppBundle\Entity\SkBusiness;
-use Skaphandrus\AppBundle\Form\SkBusinessType;
+use Skaphandrus\AppBundle\Form\SkBusinessSpotType;
 
 /**
  * SkBusiness controller.
  *
  */
-class SkBusinessController extends Controller {
-
-    /**
-     * Create currencies records in table.
-     *
-     */
-    public function createCurrenciesAction() {
-        $em = $this->getDoctrine()->getManager();
-        $list = array("USD", "EUR", "JPY", "GBP", "AUD", "CHF", "CAD", "MXN", "CNY", "NZD", "SEK", "RUB", "HKD", "NOK", "SGD", "TRY", "KRW", "ZAR", "BRL", "INR");
-
-        foreach ($list as $key => $value) {
-            $object = new \Skaphandrus\AppBundle\Entity\SkCurrency();
-            $object->setName($value);
-            $em->persist($object);
-        }
-        $em->flush();
-
-        $entities = $em->getRepository('SkaphandrusAppBundle:SkCurrency')->findAll();
-
-        return $this->render('SkaphandrusAppBundle:SkBusiness:createCurrencies.html.twig', array(
-                    'entities' => $entities,
-        ));
-    }
-    
-        /**
-     * Create languages records in table.
-     *
-     */
-    public function createLanguagesAction() {
-        $em = $this->getDoctrine()->getManager();
-        $list = array("zh", "en", "es", "hi", "bn", "pt", "ru", "fr", "ur", "ja", "de", "ko", "tr", "it", "ar");
-
-        foreach ($list as $key => $value) {
-            $object = new \Skaphandrus\AppBundle\Entity\SkLanguage();
-            $object->setName($value);
-            $em->persist($object);
-        }
-        $em->flush();
-
-        $entities = $em->getRepository('SkaphandrusAppBundle:SkLanguage')->findAll();
-
-        return $this->render('SkaphandrusAppBundle:SkBusiness:createLanguage.html.twig', array(
-                    'entities' => $entities,
-        ));
-    }
+class SkBusinessSpotController extends Controller {
 
     /**
      * Lists all SkBusiness entities.
@@ -164,7 +120,7 @@ class SkBusinessController extends Controller {
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('SkaphandrusAppBundle:SkBusiness:edit.html.twig', array(
+        return $this->render('SkaphandrusAppBundle:SkBusinessSpot:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
@@ -179,8 +135,8 @@ class SkBusinessController extends Controller {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createEditForm(SkBusiness $entity) {
-        $form = $this->createForm(new SkBusinessType(), $entity, array(
-            'action' => $this->generateUrl('business_admin_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new SkBusinessSpotType(), $entity, array(
+            'action' => $this->generateUrl('business_spot_admin_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -202,6 +158,12 @@ class SkBusinessController extends Controller {
             throw $this->createNotFoundException('Unable to find SkBusiness entity.');
         }
 
+        // Set parent ID on embedded forms
+        $embedded = $request->request->get('skaphandrus_appbundle_skbusiness');
+        foreach ($embedded['divePrice'] as &$divePrice) {
+            $divePrice['divePrice'] = $id;
+        }
+        
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
@@ -209,10 +171,10 @@ class SkBusinessController extends Controller {
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('business_admin_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('business_spot_admin_edit', array('id' => $id)));
         }
 
-        return $this->render('SkaphandrusAppBundle:SkBusiness:edit.html.twig', array(
+        return $this->render('SkaphandrusAppBundle:SkBusinessSpot:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),

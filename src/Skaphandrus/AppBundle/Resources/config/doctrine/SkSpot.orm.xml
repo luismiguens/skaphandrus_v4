@@ -39,6 +39,8 @@
     
         <one-to-many field="photos" target-entity="skPhoto" mapped-by="spot"/>
     
+        <many-to-many field="business" target-entity="SkBusiness" mapped-by="spot" fetch="LAZY"/>
+        
         <lifecycle-callbacks>
             <lifecycle-callback type="preUpdate" method="doStuffOnPreUpdate"/>
         </lifecycle-callbacks>

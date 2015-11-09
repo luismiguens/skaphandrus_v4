@@ -95,7 +95,14 @@
                         {% endif %}
                     </td>#}
                     <td>
-                        <a class="btn btn-white btn-sm" href="{{ path('business_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit"|trans }}</a>
+                        <ul>
+                            <li>
+                                <a class="btn btn-white btn-sm" href="{{ path('business_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit"|trans }}</a>
+                            </li>
+                            <li>
+                                <a class="btn btn-white btn-sm" href="{{ path('business_spot_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_spot"|trans }}</a>
+                            </li>
+                        </ul>
                     </td>
                 </tr>
             {% endfor %}

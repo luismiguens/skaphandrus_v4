@@ -72,8 +72,20 @@
                 <cascade-persist/>
             </cascade>
         </one-to-one>
+                
+        <one-to-one field="diveAccess" target-entity="SkBusinessDiveAccess" mapped-by="business" >
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-one>
         
-<!--        <lifecycle-callbacks>
+        <one-to-many field="divePrice" target-entity="SkBusinessDivePrice" mapped-by="business">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        
+        <!--        <lifecycle-callbacks>
             <lifecycle-callback type="postLoad" method="doStuffOnPostLoad"/>
         </lifecycle-callbacks>-->
         

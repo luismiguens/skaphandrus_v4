@@ -5,8 +5,13 @@ namespace Skaphandrus\AppBundle\Entity;
 /**
  * SkBusinessCurrency
  */
-class SkBusinessCurrency
-{
+class SkBusinessCurrency {
+
+    /**
+     * @var integer
+     */
+    private $id;
+
     /**
      * @var string
      */
@@ -17,7 +22,6 @@ class SkBusinessCurrency
      */
     private $business;
 
-
     /**
      * Set currency
      *
@@ -25,8 +29,7 @@ class SkBusinessCurrency
      *
      * @return SkBusinessCurrency
      */
-    public function setCurrency($currency)
-    {
+    public function setCurrency($currency) {
         $this->currency = $currency;
 
         return $this;
@@ -37,11 +40,9 @@ class SkBusinessCurrency
      *
      * @return string
      */
-    public function getCurrency()
-    {
+    public function getCurrency() {
         //return $this->currency;
-        return array('EUR'=>Intl::getCurrencyBundle()->getCurrencyName('INR'));
-        
+        return array('EUR' => Intl::getCurrencyBundle()->getCurrencyName('INR'));
     }
 
     /**
@@ -51,8 +52,7 @@ class SkBusinessCurrency
      *
      * @return SkBusinessCurrency
      */
-    public function setBusiness(\Skaphandrus\AppBundle\Entity\SkBusiness $business)
-    {
+    public function setBusiness(\Skaphandrus\AppBundle\Entity\SkBusiness $business) {
         $this->business = $business;
 
         return $this;
@@ -63,28 +63,17 @@ class SkBusinessCurrency
      *
      * @return \Skaphandrus\AppBundle\Entity\SkBusiness
      */
-    public function getBusiness()
-    {
+    public function getBusiness() {
         return $this->business;
     }
-    
-//    public function __toString() {
-//        return 'lalala';
-//    }
-    
-    /**
-     * @var integer
-     */
-    private $id;
-
 
     /**
      * Get id
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
 }

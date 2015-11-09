@@ -69,10 +69,6 @@ class SkBusiness {
     /**
      * @var integer
      */
-
-    /**
-     * id    
-     */
     private $id;
 
     /**
@@ -89,6 +85,16 @@ class SkBusiness {
      * file   
      */
     private $imageFile;
+
+    /**
+     * @var \Skaphandrus\AppBundle\Entity\SkBusinessDiveAccess
+     */
+    private $diveAccess;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $divePrice;
 
     /*     * symfony advanced forms
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
@@ -124,6 +130,7 @@ class SkBusiness {
         $this->currency = new ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
+        $this->divePrice = new ArrayCollection();
     }
 
     /**
@@ -394,7 +401,7 @@ class SkBusiness {
     public function getId() {
         return $this->id;
     }
-    
+
     public function setId($id) {
         $this->id = $id;
 
@@ -451,6 +458,61 @@ class SkBusiness {
         return $this;
     }
 
+    /**
+     * Get diveAccess
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkBusinessDiveAccess
+     */
+    public function getDiveAccess() {
+        return $this->diveAccess;
+    }
+
+    /**
+     * Set diveAccess
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBusinessDiveAccess $diveAccess
+     *
+     * @return SkBusiness
+     */
+    public function setDiveAccess(\Skaphandrus\AppBundle\Entity\SkBusinessDiveAccess $diveAccess = null) {
+        $this->diveAccess = $diveAccess;
+        $diveAccess->setBusiness($this);
+
+        return $this;
+    }
+
+    /**
+     * Add divePrice
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBusinessDivePrice $divePrice
+     *
+     * @return SkIdentificationCriteria
+     */
+    public function addDivePrice(\Skaphandrus\AppBundle\Entity\SkBusinessDivePrice $divePrice) {
+        $this->divePrice[] = $divePrice;
+        $divePrice->setBusiness($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove divePrice
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBusinessDivePrice $divePrice
+     */
+    public function removeDivePrice(\Skaphandrus\AppBundle\Entity\SkBusinessDivePrice $divePrice) {
+        $this->divePrice->removeElement($divePrice);
+    }
+
+    /**
+     * Get divePrices
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDivePrice() {
+        return $this->divePrice;
+    }
+
     public function getAbsolutePath() {
         return null === $this->picture ? null : $this->getUploadRootDir() . '/' . $this->picture;
     }
@@ -496,5 +558,4 @@ class SkBusiness {
 //            $entityManager->flush();
 //        }
 //    }
-
 }
