@@ -205,7 +205,7 @@ class SkSocialNotifyRepository extends EntityRepository {
 
 
 
-        echo "sql = " . $sql;
+        //echo "sql = " . $sql;
 
 
         $statement = $connection->prepare($sql);

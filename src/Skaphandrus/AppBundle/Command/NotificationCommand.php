@@ -66,7 +66,7 @@ class NotificationCommand extends ContainerAwareCommand {
 
             $message = \Swift_Message::newInstance()
                     ->setSubject($subject)
-                    ->setFrom('support-noreply@skaphandrus.com')
+                    ->setFrom('support-noreply@skaphandrus.com', 'Skaphandrus')
                     ->setTo($fos_user->getEmail())
                     ->setBcc('luis.miguens@skaphandrus.com')
                     ->setBody(
