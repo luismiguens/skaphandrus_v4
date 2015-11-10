@@ -17,6 +17,7 @@ class SkBusinessSpotType extends AbstractType {
                 ->add('divePrice', 'collection', array(
                     'type' => new SkBusinessDivePriceType(),
                     'allow_add' => true,
+                    'allow_delete'=> true,
                     'prototype' => true,
                     'by_reference' => false,
                     'required' => false,

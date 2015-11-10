@@ -17,7 +17,7 @@ class SkBusinessRentEquipmentType extends AbstractType {
                 ->add('quantity')
                 ->add('rentvalue')
 //                ->add('businessboat')
-//                ->add('equipmenttype')
+                ->add('equipmenttype')
         ;
     }
 

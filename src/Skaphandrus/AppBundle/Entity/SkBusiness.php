@@ -145,7 +145,7 @@ class SkBusiness {
         $this->currency = new ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
-        $this->divePrice = new ArrayCollection();
+        //$this->divePrice = new ArrayCollection();
     }
 
     /**

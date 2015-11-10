@@ -3,8 +3,8 @@
     <entity name="Skaphandrus\AppBundle\Entity\SkBusinessRentEquipment" table="sk_business_rent_equipment">
         <indexes>
             <index name="fk_sk_business_rent_equipment_sk_business1" columns="business_id"/>
-            <!--            <index name="sk_business_rent_equipment_FK_2" columns="equipmenttype_id"/>
-            <index name="sk_business_rent_equipment_FK_3" columns="businessboat_id"/>-->
+                        <index name="sk_business_rent_equipment_FK_2" columns="equipmenttype_id"/>
+           <!-- <index name="sk_business_rent_equipment_FK_3" columns="businessboat_id"/>-->
         </indexes>
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
@@ -23,12 +23,12 @@
             <join-columns>
                 <join-column name="businessboat_id" referenced-column-name="id"/>
             </join-columns>
-        </many-to-one>
+        </many-to-one>-->
         <many-to-one field="equipmenttype" target-entity="SkEquipmentType" fetch="LAZY">
             <join-columns>
                 <join-column name="equipmenttype_id" referenced-column-name="id"/>
             </join-columns>
-        </many-to-one>-->
+        </many-to-one>
         <many-to-one field="business" target-entity="SkBusiness" fetch="LAZY">
             <join-columns>
                 <join-column name="business_id" referenced-column-name="id"/>

@@ -26,11 +26,11 @@ class SkBusinessRentEquipment {
 //     * @var \Skaphandrus\AppBundle\Entity\SkBusinessBoat
 //     */
 //    private $businessboat;
-//
-//    /**
-//     * @var \Skaphandrus\AppBundle\Entity\SkEquipmentType
-//     */
-//    private $equipmenttype;
+
+    /**
+     * @var \Skaphandrus\AppBundle\Entity\SkEquipmentType
+     */
+    private $equipmenttype;
 
     /**
      * @var \Skaphandrus\AppBundle\Entity\SkBusiness
@@ -112,27 +112,27 @@ class SkBusinessRentEquipment {
 //        return $this->businessboat;
 //    }
 //
-//    /**
-//     * Set equipmenttype
-//     *
-//     * @param \Skaphandrus\AppBundle\Entity\SkEquipmentType $equipmenttype
-//     *
-//     * @return SkBusinessRentEquipment
-//     */
-//    public function setEquipmenttype(\Skaphandrus\AppBundle\Entity\SkEquipmentType $equipmenttype = null) {
-//        $this->equipmenttype = $equipmenttype;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get equipmenttype
-//     *
-//     * @return \Skaphandrus\AppBundle\Entity\SkEquipmentType
-//     */
-//    public function getEquipmenttype() {
-//        return $this->equipmenttype;
-//    }
+    /**
+     * Set equipmenttype
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkEquipmentType $equipmenttype
+     *
+     * @return SkBusinessRentEquipment
+     */
+    public function setEquipmenttype(\Skaphandrus\AppBundle\Entity\SkEquipmentType $equipmenttype = null) {
+        $this->equipmenttype = $equipmenttype;
+
+        return $this;
+    }
+
+    /**
+     * Get equipmenttype
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkEquipmentType
+     */
+    public function getEquipmenttype() {
+        return $this->equipmenttype;
+    }
 
     /**
      * Set business
