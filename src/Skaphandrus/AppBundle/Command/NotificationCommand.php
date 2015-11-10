@@ -50,9 +50,9 @@ class NotificationCommand extends ContainerAwareCommand {
         
         $em = $container->get('doctrine')->getManager();
         $time = $input->getArgument('time');
-        //$users = $em->getRepository('SkaphandrusAppBundle:SkSocialNotify')->findUsersToNotify($time);
+        $users = $em->getRepository('SkaphandrusAppBundle:SkSocialNotify')->findUsersToNotify($time);
 
-        $users = array(5, 791);
+        //$users = array(5, 791);
 
 
         foreach ($users as $key => $user_id) {
