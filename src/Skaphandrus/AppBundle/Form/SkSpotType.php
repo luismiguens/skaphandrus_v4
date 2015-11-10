@@ -19,11 +19,11 @@ class SkSpotType extends AbstractType {
                     'label' => 'form.spot.label.maxDepth'
                 ))
                 ->add('coordinate', 'text', array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'form-control', 'readonly' => true),
                     'label' => 'form.spot.label.coordinate'
                 ))
                 ->add('zoom', 'text', array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'form-control', 'readonly' => true),
                     'label' => 'form.spot.label.zoom'
                 ))
                 //->add('isAproved')

@@ -40,12 +40,12 @@ class SkBusinessAddressType extends AbstractType {
                    
                 ))
                 ->add('coordinate', 'text', array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'form-control', 'readonly' => true),
                     'label' => 'form.address.label.coordinate',
                     'required' => false
                 ))
                 ->add('zoom', 'text', array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'form-control', 'readonly' => true),
                     'label' => 'form.address.label.zoom',
                     'required' => false
                 ))
