@@ -4,6 +4,19 @@
 
 {% block page_description %}{{location.description[0:160]}}{% endblock %}
 
+
+
+{% block hreflang %}
+    
+  
+    
+<link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('location', {'country':slugify(location.region.country.getCountryName('pt')), 'slug':slugify(location.getLocationName('pt')), 'locale': 'pt'}) }}" />
+<link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('location', {'country':slugify(location.region.country.getCountryName('en')), 'slug':slugify(location.getLocationName('en')), 'locale': 'en'}) }}" />
+{% endblock %}
+
+
+
+
 {% set keywords = location.region.country %}
 {% set keywords = keywords~', '~location.name %}
 {% set keywords = keywords~', '~("meta_tag.keyword.holidays"|trans) %}
@@ -93,6 +106,11 @@
 
 {% block body %}
 
+    {{ location.translate('ru').name }}
+    
+    {{location.translate('pt').name  }}
+    {{location.translate('en').name  }}
+    
     <div class="wrapper wrapper-content">
         <div class="row animated fadeInRight">
             <!-- left column -->

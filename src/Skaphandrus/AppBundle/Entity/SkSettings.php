@@ -64,7 +64,7 @@ class SkSettings
     /**
      * @var \Skaphandrus\AppBundle\Entity\SkEmailNotificationTime
      */
-    private $emailNotificationTime;
+    private $emailNotificationTime = '1';
 
     
     private $imageFile;

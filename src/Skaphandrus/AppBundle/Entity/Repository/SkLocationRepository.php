@@ -13,6 +13,22 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkLocationRepository extends EntityRepository {
 
+    
+    public function findOneWithTranslations($id)
+    {
+        $qb = $this->createQueryBuilder('l')
+            ->select('l, t')
+            ->join('l.translations', 't')
+            ->where('l.id = :id')
+            ->setParameter('id', $id);
+
+        //dump($qb->getQuery()->getSingleResult());
+        
+        return $qb->getQuery()->getSingleResult();
+    }
+    
+    
+    
     public function findBySlug($slug, $country, $locale) {
         $name = Utils::unslugify($slug);
 

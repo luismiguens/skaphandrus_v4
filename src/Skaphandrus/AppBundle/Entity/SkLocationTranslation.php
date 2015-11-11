@@ -75,6 +75,9 @@ class SkLocationTranslation
      */
     public function getName()
     {
+        
+        
+        
         return $this->name;
     }
 

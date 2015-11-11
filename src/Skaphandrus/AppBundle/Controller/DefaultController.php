@@ -36,6 +36,12 @@ class DefaultController extends Controller {
     }
 
     public function index2Action() {
+        
+        
+             
+        $location = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
+                ->findOneWithTranslations(21);
+        
         return $this->render('SkaphandrusAppBundle:Default:index2.html.twig');
     }
 
@@ -132,6 +138,7 @@ class DefaultController extends Controller {
 
     public function sourceAction() {
         $id = $this->get('request')->query->get('id');
+        $locale = $this->get('request')->getLocale();
 
         $dados = explode(".", $id);
         $taxon = null;
@@ -167,7 +174,7 @@ class DefaultController extends Controller {
                         'children' => TRUE,
                         'a_attr' => array(
                             'href' => $this->generateUrl('taxon', array(
-                                'node' => $taxon,
+                                'node' => $this->get('translator')->trans($taxon),
                                 'slug' => $object->getName(),
                             )),
                         ),
@@ -208,7 +215,7 @@ class DefaultController extends Controller {
                 $url = $this->generateUrl('taxon', array('node' => 'kingdom', 'slug' => $object->getName()));
                 $categ_next_id = 'li.phylum.' . $object->getId();
                 $url = $this->generateUrl('taxon', array(
-                    'node' => 'kingdom',
+                    'node' => $this->get('translator')->trans('kingdom'),
                     'slug' => $object->getName(),
                 ));
 
@@ -220,7 +227,7 @@ class DefaultController extends Controller {
                     'children' => TRUE,
                     'a_attr' => array(
                         'href' => $this->generateUrl('taxon', array(
-                            'node' => 'kingdom',
+                            'node' => $this->get('translator')->trans('kingdom'),
                             'slug' => $object->getName(),
                         )),
                     ),
@@ -232,6 +239,33 @@ class DefaultController extends Controller {
     }
 
     public function taxonAction($node, $slug) {
+
+$node = lcfirst($node);
+        
+        switch ($node) {
+            case 'género':
+                $node = 'genus';
+                break;
+            case 'família':
+                $node = 'family';
+                break;
+            case 'ordem':
+                $node = 'order';
+                break;
+            case 'classe':
+                $node = 'class';
+                break;
+            case 'filo':
+                $node = 'phylum';
+                break;
+            case 'reino':
+                $node = 'kingdom';
+                break;
+            default:
+                break;
+        }
+
+
         $taxon_name = ucfirst($node);
         $taxon = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:Sk" . $taxon_name)
                 ->findOneBy(array('name' => $slug));
@@ -409,9 +443,27 @@ class DefaultController extends Controller {
     public function locationAction($country, $slug) {
         $name = Utils::unslugify($slug);
         $locale = $this->get('request')->getLocale();
-        $location = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        
+        $location = $em->getRepository('SkaphandrusAppBundle:SkLocation')
                 ->findBySlug($name, $country, $locale);
 
+        $id = $location->getId();
+        
+        
+        
+        $em->clear($location);
+        unset($location);
+     $location = null;
+        
+        $location = $em->getRepository('SkaphandrusAppBundle:SkLocation')
+                ->findOneWithTranslations(21);
+        
+        
+        dump($location);
+        
         if ($location) {
             //photographers
             // $qb_photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->getQueryBuilder(['location' => $location], 20);
@@ -615,18 +667,18 @@ class DefaultController extends Controller {
                 ->findOneById($id);
 
         $em = $this->getDoctrine()->getManager();
-        
+
         if ($photo) {
             $request = $this->get('request');
             $securityContext = $this->container->get('security.context');
 
             //set species is user dont set, but we have sugestion or validation
             if (!$photo->getSpecies()) {
-                if (count($photo->getSpeciesValidations())>0) {
+                if (count($photo->getSpeciesValidations()) > 0) {
                     $photo->setSpecies($photo->getSpeciesValidations()[0]->getSpecies());
                     $em->persist($photo);
                     $em->flush();
-                } elseif (count($photo->getSpeciesSugestions())>0) {
+                } elseif (count($photo->getSpeciesSugestions()) > 0) {
                     $photo->setSpecies($photo->getSpeciesSugestions()[0]->getSpecies());
                     $em->persist($photo);
                     $em->flush();

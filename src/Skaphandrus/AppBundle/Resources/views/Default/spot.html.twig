@@ -4,6 +4,12 @@
 
 {% block page_description %}{{spot.description [0:160]}}{% endblock %}
 
+{% block hreflang %}
+<link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('spot', {'country':slugify(spot.location.region.country), 'location':slugify(spot.location), 'slug':slugify(spot.name), 'locale': 'pt'}) }} " />
+<link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('spot', {'country':slugify(spot.location.region.country), 'location':slugify(spot.location), 'slug':slugify(spot.name), 'locale': 'en'}) }}" />
+{% endblock %}
+
+
 {% set keywords = spot.name %}
 {% set keywords = keywords~', '~spot.location.name %}
 {% set keywords = keywords~', '~spot.location.region.country %}

@@ -3,6 +3,12 @@
 ### ADMIN ROUTES
 ################################################################################ 
 
+index2:
+    path:     /{_locale}/index2
+    defaults: { _controller: SkaphandrusAppBundle:Default:index2, _locale: en }
+    requirements:
+        _locale:  en|pt
+
 sitemap:
     path:     /sitemap/{model}
     defaults: { _controller: "SkaphandrusAppBundle:Sitemap:sitemap" }

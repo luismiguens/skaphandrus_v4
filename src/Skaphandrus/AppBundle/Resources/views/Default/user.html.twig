@@ -4,6 +4,12 @@
 
 {% block page_description %}{{ user.settings.observations [0:160]}}{% endblock %}
 
+{% block hreflang %}
+<link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('user', {'id':user.id, 'locale': 'pt'}) }}" />
+<link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('user', {'id':user.id, 'locale': 'en'}) }}" />
+{% endblock %}
+
+
 {% set keywords = user.personal.name %}
 {% set keywords = keywords~', '~("meta_tag.keyword.profile"|trans) %}
 {% set keywords = keywords~', '~("meta_tag.keyword.photos"|trans) %}

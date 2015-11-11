@@ -481,8 +481,8 @@ class UtilsExtension extends \Twig_Extension {
         return '<a href="' . $this->url_to_photo($photo) . '" title="' . $photo->getTitle() . '">' . $photo->getTitle() . '</a>';
     }
 
-    public function link_to_taxon($taxon) {
-        return '<a href="' . $this->url_to_taxon($taxon) . '" title="' . $taxon->getName() . '">' . $taxon->getName() . '</a>';
+    public function link_to_taxon($node, $taxon) {
+        return '<a href="' . $this->url_to_taxon($node, $taxon) . '" title="' . $taxon->getName() . '">' . $taxon->getName() . '</a>';
     }
 
     public function link_to_identification() {
@@ -620,9 +620,9 @@ class UtilsExtension extends \Twig_Extension {
         ));
     }
 
-    public function url_to_taxon($taxon) {
+    public function url_to_taxon($node, $taxon) {
         $path_function = $this->getPathFunction();
-        $node = strtolower(str_replace('Sk', '', (new \ReflectionClass($taxon))->getShortName()));
+        //$node = strtolower(str_replace('Sk', '', (new \ReflectionClass($taxon))->getShortName()));
 
         return call_user_func($path_function, 'taxon', array(
             'node' => $node,
