@@ -14,8 +14,7 @@ class SkBusinessEducationType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('educationCourse', 'collection', array(
-                    'type' => new SkBusinessEducationCourseType(),
+                ->add('educationCourse', 'collection', array('type' => new SkBusinessEducationCourseType(),
                     'allow_add' => true,
                     'allow_delete' => true,
                     'prototype' => true,

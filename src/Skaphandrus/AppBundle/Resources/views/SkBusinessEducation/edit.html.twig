@@ -41,7 +41,7 @@
 
                 var newForm = $prototype.replace(/__name__/g, $container.children().length - 1);
 
-                var $newFormLi = $('<li></li>').append(newForm);
+                var $newFormLi = $("<li style='background-color:gray; margin-bottom:1px';></li>").append(newForm);
                 $newLinkLi.before($newFormLi);
 
                 addCourseDeleteLink($newFormLi);
@@ -50,7 +50,7 @@
 
             function addCourseDeleteLink($paramFormLi) {
 
-                var $removeFormA = $('<br/><a href="#" class="btn btn-danger  btn-xs">{{ "form.common.btn.delete"|trans }}</a>');
+                var $removeFormA = $('<a href="#" class="btn btn-danger  btn-xs">{{ "form.common.btn.delete"|trans }}</a>');
 
                 $paramFormLi.append($removeFormA);
 
@@ -94,44 +94,33 @@
 {% endblock %}
 
 {% block body %}
-    
+
     <style>
         ul {
             list-style-type: none;
         }
     </style>
 
-    {#    {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
-    
-        {{ form_widget(edit_form) }}
-    
-        {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'business_admin', 'new_form':false} %}
-        {{ form_end(edit_form) }}#}
-
     {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
-
-    {{ form_label(edit_form.educationCourse) }}
-
-    <ul class=educationCourse data-prototype="{{ form_widget(edit_form.educationCourse.vars.prototype)|e }}">
-        {% for course in edit_form.educationCourse %}
-            <li>
-                {{ form_label(course.price) }}
-                {{ form_widget(course.price) }}
-                {{ form_label(course.course) }}
-                {{ form_widget(course.course) }}
-            </li>
-        {% endfor %}
-    </ul>
-
-    <div class="hr-line-dashed"></div>
 
     {{ form_row(edit_form.educationConditions) }}
 
+    
+    <label class="col-sm-3 control-label">{{ form_label(edit_form.educationCourse) }}</label>
+    <div class="col-sm-9">
+        <ul class=educationCourse data-prototype="{{ form_widget(edit_form.educationCourse.vars.prototype)|e }}">
+            {% for course in edit_form.educationCourse %}
+                <li>
+                    {{ form_widget(course) }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
     {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'business_admin', 'new_form':false} %}
 
+    {% do edit_form.educationCourse.setRendered %}
     {{ form_end(edit_form) }}
 
-
-    {#{{ form(delete_form) }}#}
 
 {% endblock %}

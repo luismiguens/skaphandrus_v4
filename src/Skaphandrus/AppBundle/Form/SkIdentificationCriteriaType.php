@@ -26,8 +26,7 @@ class SkIdentificationCriteriaType extends AbstractType
             ->add('isCumulative')
             ->add('type')
             ->add('groups')
-            ->add('characters', 'collection', array(
-                'type' => new SkIdentificationCharacterType(),
+            ->add('characters', 'collection', array('type' => new SkIdentificationCharacterType(),
                 'allow_add' => TRUE,
                 'prototype' => TRUE,
                 'by_reference' => FALSE,

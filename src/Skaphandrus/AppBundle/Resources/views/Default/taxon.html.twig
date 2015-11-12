@@ -275,7 +275,7 @@
                                             <tbody>
                                                 {% for p in photographers %}
                                                 <span itemscope itemtype="http://schema.org/Person">
-                                                    <meta itemprop="name" content="{{ p }}">
+                                                    <meta itemprop="name" content="{{ p }}"/>
                                                 </span>
                                                 <tr>
                                                     <td>{{ link_to_user(p) }}</td>
@@ -302,6 +302,10 @@
                     </div>
                 </div>
             </div><!--end right column -->
+            
+            
+            
+            
         </div><!-- end row-->
     </div><!-- end wrapper-->
 {% endblock %}
