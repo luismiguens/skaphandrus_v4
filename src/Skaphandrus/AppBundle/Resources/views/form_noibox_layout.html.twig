@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
-<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
-<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
+<!--[if IE 8]> <html lang="{{ app.request.locale }}" class="ie8"> <![endif]-->  
+<!--[if IE 9]> <html lang="{{ app.request.locale }}" class="ie9"> <![endif]-->  
 <!--[if !IE]><!--> <html lang="{{ app.request.locale }}" xmlns:fb="http://www.facebook.com/2008/fbml" > <!--<![endif]--> 
 
 
@@ -33,7 +33,6 @@
         {% block stylesheets %}
             <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">
             <link href="{{ asset('bundles/skaphandrusapp/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
-
             <link href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}" rel="stylesheet">
             <link href="{{ asset('bundles/skaphandrusapp/css/style.css') }}" rel="stylesheet">
             <link href="{{ asset('bundles/skaphandrusapp/css/app.css') }}" rel="stylesheet">

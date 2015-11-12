@@ -4,17 +4,10 @@
 
 {% block page_description %}{{location.description[0:160]}}{% endblock %}
 
-
-
 {% block hreflang %}
-    
-  
-    
-<link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('location', {'country':slugify(location.region.country.getCountryName('pt')), 'slug':slugify(location.getLocationName('pt')), 'locale': 'pt'}) }}" />
-<link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('location', {'country':slugify(location.region.country.getCountryName('en')), 'slug':slugify(location.getLocationName('en')), 'locale': 'en'}) }}" />
+    <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('location', {'country':slugify(location.region.country.getCountryName('pt')), 'slug':slugify(location.translate('pt').name), 'locale': 'pt'}) }}" />
+    <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('location', {'country':slugify(location.region.country.getCountryName('en')), 'slug':slugify(location.translate('en').name), 'locale': 'en'}) }}" />
 {% endblock %}
-
-
 
 
 {% set keywords = location.region.country %}
@@ -56,21 +49,21 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
-    
-    
+
+
     {% if map %}
-    <script>
-        // Fix bug on Gmap inside tabs
-        $('.nav-tabs').on('shown.bs.tab', function () {
-            google.maps.event.trigger(window, 'resize', {});
-            setTimeout(function () {
-        {{ map.javascriptVariable }}.setCenter({{ map.center.javascriptVariable }});
-                }, 100);
-            });
-    </script>
+        <script>
+            // Fix bug on Gmap inside tabs
+            $('.nav-tabs').on('shown.bs.tab', function () {
+                google.maps.event.trigger(window, 'resize', {});
+                setTimeout(function () {
+            {{ map.javascriptVariable }}.setCenter({{ map.center.javascriptVariable }});
+                    }, 100);
+                });
+        </script>
     {% endif %}
-    
-    
+
+
     <!-- FooTable -->
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
     <script>
@@ -105,12 +98,6 @@
 
 
 {% block body %}
-
-    {{ location.translate('ru').name }}
-    
-    {{location.translate('pt').name  }}
-    {{location.translate('en').name  }}
-    
     <div class="wrapper wrapper-content">
         <div class="row animated fadeInRight">
             <!-- left column -->
@@ -124,7 +111,7 @@
                     <div class="ibox-content">
                         <div>
                             {% if map %}
-                            {{ render(controller('SkaphandrusAppBundle:Common:skActivity', { 'parameters': { 'location_id': location.id },'limit':20 } )) }}
+                                {{ render(controller('SkaphandrusAppBundle:Common:skActivity', { 'parameters': { 'location_id': location.id },'limit':20 } )) }}
                             {% endif%}
                             {#<button class="btn btn-primary btn-block m-t"><i class="fa fa-arrow-down"></i> Show More</button>#}
                         </div>
@@ -216,40 +203,40 @@
                                     <div id="tab-2" class="tab-pane">
                                         <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.spots_map{% endtrans %}</h3>
                                         {% if map %}
-                                        {{ google_map(map) }}
-                                        
-                                        <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.spots{% endtrans %}</h3>
-                                        <input type="text" class="form-control input-sm m-b-xs" id="filter-spots" placeholder="Search in table">
-                                        <table class="footable footable-spots table" data-page-size="50" data-filter=#filter-spots>
-                                            <thead>
-                                            <th>{{ "page.location.table.name"|trans }}</th>
-                                            <th>{{ "page.location.table.num_photos"|trans }}</th>
-                                            </thead>
-                                            <tbody>
-                                                {% set c = location.region.country %}
-                                                {% for spot in spots %}
-                                                <span itemscope itemtype="http://schema.org/TouristAttraction ">
-                                                    <meta itemprop="name" content="{{ spot }}">
-                                                </span>
-                                                <tr>
-                                                    <td>{{ link_to_spot(spot, location, c) }}</td>
-                                                    <td>
-                                                        <a href="{{ path('photos', {'spot': spot.id}) }}">
-                                                            {{ spot.photosInSpot }}
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            {% endfor %}
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <td colspan="2">
-                                                        <ul class="pagination pull-right"></ul>
-                                                    </td>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                            {% endif %}
+                                            {{ google_map(map) }}
+
+                                            <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.spots{% endtrans %}</h3>
+                                            <input type="text" class="form-control input-sm m-b-xs" id="filter-spots" placeholder="Search in table">
+                                            <table class="footable footable-spots table" data-page-size="50" data-filter=#filter-spots>
+                                                <thead>
+                                                <th>{{ "page.location.table.name"|trans }}</th>
+                                                <th>{{ "page.location.table.num_photos"|trans }}</th>
+                                                </thead>
+                                                <tbody>
+                                                    {% set c = location.region.country %}
+                                                    {% for spot in spots %}
+                                                    <span itemscope itemtype="http://schema.org/TouristAttraction ">
+                                                        <meta itemprop="name" content="{{ spot }}">
+                                                    </span>
+                                                    <tr>
+                                                        <td>{{ link_to_spot(spot, location, c) }}</td>
+                                                        <td>
+                                                            <a href="{{ path('photos', {'spot': spot.id}) }}">
+                                                                {{ spot.photosInSpot }}
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <ul class="pagination pull-right"></ul>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        {% endif %}
                                     </div>
 
                                     <div id="tab-3" class="tab-pane">

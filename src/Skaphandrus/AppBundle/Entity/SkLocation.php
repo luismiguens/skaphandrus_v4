@@ -222,16 +222,16 @@ class SkLocation {
     }
     
     
-    public function getLocationName($locale){
-        
-        //$locale = $this->translate()->setLocale($locale);
-        
-        //echo "bla : " . $locale;
-        return $this->translate($locale)->getName();
-        
-      
-        
-    }
+//    public function getLocationName($locale){
+//        
+//        //$locale = $this->translate()->setLocale($locale);
+//        
+//        //echo "bla : " . $locale;
+//        return $this->translate($locale)->getName();
+//        
+//      
+//        
+//    }
     
     
     

@@ -450,19 +450,9 @@ $node = lcfirst($node);
         $location = $em->getRepository('SkaphandrusAppBundle:SkLocation')
                 ->findBySlug($name, $country, $locale);
 
-        $id = $location->getId();
         
         
-        
-        $em->clear($location);
-        unset($location);
-     $location = null;
-        
-        $location = $em->getRepository('SkaphandrusAppBundle:SkLocation')
-                ->findOneWithTranslations(21);
-        
-        
-        dump($location);
+        //dump($location);
         
         if ($location) {
             //photographers

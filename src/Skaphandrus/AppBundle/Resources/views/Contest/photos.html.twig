@@ -4,6 +4,12 @@
 
 {% block page_description %}{% trans with {'%category%': category.translate.name, '%contest%': category.contest.name} %}page.contest_photos.meta_tag.description{% endtrans %}{% endblock %}
 
+{% block hreflang %}
+    <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('contests_photos', {'contest_slug': slugify(category.contest.name), 'category_slug': slugify(category.translate('pt').name), 'locale': 'pt'}) }}" />
+    <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('contests_photos', {'contest_slug': slugify(category.contest.name), 'category_slug': slugify(category.translate('en').name), 'locale': 'en'}) }}" />
+{% endblock %}
+
+
 {% set keywords = category.contest.name %}
 {% set keywords = keywords~', '~("meta_tag.keyword.categories"|trans) %}
 {% set keywords = keywords~', '~("meta_tag.keyword.pictures"|trans) %}

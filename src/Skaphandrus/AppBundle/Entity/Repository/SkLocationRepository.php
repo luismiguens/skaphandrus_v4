@@ -14,18 +14,18 @@ use Skaphandrus\AppBundle\Utils\Utils;
 class SkLocationRepository extends EntityRepository {
 
     
-    public function findOneWithTranslations($id)
-    {
-        $qb = $this->createQueryBuilder('l')
-            ->select('l, t')
-            ->join('l.translations', 't')
-            ->where('l.id = :id')
-            ->setParameter('id', $id);
-
-        //dump($qb->getQuery()->getSingleResult());
-        
-        return $qb->getQuery()->getSingleResult();
-    }
+//    public function findOneWithTranslations($id)
+//    {
+//        $qb = $this->createQueryBuilder('l')
+//            ->select('l, t')
+//            ->join('l.translations', 't')
+//            ->where('l.id = :id')
+//            ->setParameter('id', $id);
+//
+//        //dump($qb->getQuery()->getSingleResult());
+//        
+//        return $qb->getQuery()->getSingleResult();
+//    }
     
     
     
@@ -34,7 +34,7 @@ class SkLocationRepository extends EntityRepository {
 
         $query = $this->getEntityManager()
                         ->createQuery(
-                                'SELECT l, t
+                                'SELECT l
                     FROM SkaphandrusAppBundle:SkLocation l
                     JOIN l.translations t
                     JOIN l.region r
