@@ -97,7 +97,19 @@
             </cascade>
         </one-to-one>
         
+        <one-to-one field="educationConditions" target-entity="SkBusinessEducationConditions" mapped-by="business" >
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-one>
+        
         <one-to-many field="rentEquipment" target-entity="SkBusinessRentEquipment" mapped-by="business">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        
+        <one-to-many field="educationCourse" target-entity="SkBusinessEducationCourse" mapped-by="business">
             <cascade>
                 <cascade-persist/>
             </cascade>

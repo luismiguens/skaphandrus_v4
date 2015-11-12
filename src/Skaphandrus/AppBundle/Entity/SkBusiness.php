@@ -111,6 +111,16 @@ class SkBusiness {
      */
     private $safety;
 
+    /**
+     * @var \Skaphandrus\AppBundle\Entity\SkBusinessEducationConditions
+     */
+    private $educationConditions;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $educationCourse;
+
     /*     * symfony advanced forms
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the  update. If this
@@ -517,6 +527,61 @@ class SkBusiness {
         $safety->setBusiness($this);
 
         return $this;
+    }
+
+    /**
+     * Get educationConditions
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkBusinessEducationConditions
+     */
+    public function getEducationConditions() {
+        return $this->educationConditions;
+    }
+
+    /**
+     * Set educationConditions
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBusinessEducationConditions $educationConditions
+     *
+     * @return SkBusiness
+     */
+    public function setEducationConditions(\Skaphandrus\AppBundle\Entity\SkBusinessEducationConditions $educationConditions = null) {
+        $this->educationConditions = $educationConditions;
+        $educationConditions->setBusiness($this);
+
+        return $this;
+    }
+
+    /**
+     * Add educationCourse
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBusinessEducationCourse $educationCourse
+     *
+     * @return SkIdentificationCriteria
+     */
+    public function addEducationCourse(\Skaphandrus\AppBundle\Entity\SkBusinessEducationCourse $educationCourse) {
+        $this->educationCourse[] = $educationCourse;
+        $educationCourse->setBusiness($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove educationCourse
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBusinessEducationCourse $educationCourse
+     */
+    public function removeEducationCourse(\Skaphandrus\AppBundle\Entity\SkBusinessEducationCourse $educationCourse) {
+        $this->educationCourse->removeElement($educationCourse);
+    }
+
+    /**
+     * Get educationCourse
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEducationCourse() {
+        return $this->educationCourse;
     }
 
     /**

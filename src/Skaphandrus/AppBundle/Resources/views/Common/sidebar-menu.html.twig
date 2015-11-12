@@ -108,9 +108,23 @@
                 </li>
                 
                 <li class="{{ 'SkBusinessController' in app.request.attributes.get("_controller")?'active' }}">
-                    <a href="#"><i class="fa fa-photo"></i> <span class="nav-label">{{ "menu_business_admin"|trans }} </span><span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-briefcase"></i> <span class="nav-label">{{ "menu_business_admin"|trans }} </span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse" stylse="height: 0px;">
                         <li><a href="{{ path('business_admin') }}">{{ "business_admin"|trans }}</a></li>
+                    </ul>
+                </li>
+                
+                <li class="{{ 'SkCourseController' in app.request.attributes.get("_controller")?'active' }}">
+                    <a href="#"><i class="fa fa-graduation-cap"></i> <span class="nav-label">{{ "menu_course_admin"|trans }} </span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse" stylse="height: 0px;">
+                        <li><a href="{{ path('course_admin') }}">{{ "course_admin"|trans }}</a></li>
+                    </ul>
+                </li>
+                
+                <li class="{{ 'SkCourseAffiliationController' in app.request.attributes.get("_controller")?'active' }}">
+                    <a href="#"><i class="fa fa-book"></i> <span class="nav-label">{{ "menu_course_affiliation_admin"|trans }} </span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse" stylse="height: 0px;">
+                        <li><a href="{{ path('course_affiliation_admin') }}">{{ "course_affiliation_admin"|trans }}</a></li>
                     </ul>
                 </li>
                 

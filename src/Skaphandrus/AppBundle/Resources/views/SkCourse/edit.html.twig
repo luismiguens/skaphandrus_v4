@@ -1,0 +1,46 @@
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% form_theme edit_form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/hack/autocompleter-jqueryui.js') }}"></script>
+
+{% endblock %}
+
+
+{% block heading_title %}
+    {{ "form.course.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="{{ path('course_admin')}}">{{ "breadcrumb.course"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.edit_course"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+
+{% block heading_action %}
+    <a href="{{ path('course_admin_new') }}" class="btn btn-primary">{{ "form.course.btn.add"|trans }}</a>
+{% endblock %}
+
+
+{% block form_title_description %}
+    {{ "form.course.text.description"|trans }}
+{% endblock %}
+
+{% block body -%}
+
+    {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_widget(edit_form) }}
+    {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'course_admin', 'new_form':false} %}
+    {{ form_end(edit_form) }}
+
+
+    {{ form(delete_form) }}
+
+{% endblock %}

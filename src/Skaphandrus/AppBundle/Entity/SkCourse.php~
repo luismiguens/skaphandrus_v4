@@ -1,0 +1,142 @@
+<?php
+
+namespace Skaphandrus\AppBundle\Entity;
+
+/**
+ * SkCourse
+ */
+class SkCourse
+{
+    /**
+     * @var string
+     */
+    private $nome;
+
+    /**
+     * @var \DateTime
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     */
+    private $updatedAt;
+
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var \Skaphandrus\AppBundle\Entity\SkCourseAffiliation
+     */
+    private $federacao;
+
+
+    /**
+     * Set nome
+     *
+     * @param string $nome
+     *
+     * @return SkCourse
+     */
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+
+        return $this;
+    }
+
+    /**
+     * Get nome
+     *
+     * @return string
+     */
+    public function getNome()
+    {
+        return $this->nome;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return SkCourse
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return SkCourse
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set federacao
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkCourseAffiliation $federacao
+     *
+     * @return SkCourse
+     */
+    public function setFederacao(\Skaphandrus\AppBundle\Entity\SkCourseAffiliation $federacao = null)
+    {
+        $this->federacao = $federacao;
+
+        return $this;
+    }
+
+    /**
+     * Get federacao
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkCourseAffiliation
+     */
+    public function getFederacao()
+    {
+        return $this->federacao;
+    }
+}
+

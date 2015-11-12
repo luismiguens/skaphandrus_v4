@@ -1,0 +1,142 @@
+<?php
+
+namespace Skaphandrus\AppBundle\Entity;
+
+/**
+ * SkCourseAffiliation
+ */
+class SkCourseAffiliation
+{
+    /**
+     * @var string
+     */
+    private $sigla;
+
+    /**
+     * @var string
+     */
+    private $website;
+
+    /**
+     * @var string
+     */
+    private $image;
+
+    /**
+     * @var \DateTime
+     */
+    private $updatedAt;
+
+    /**
+     * @var integer
+     */
+    private $id;
+
+
+    /**
+     * Set sigla
+     *
+     * @param string $sigla
+     *
+     * @return SkCourseAffiliation
+     */
+    public function setSigla($sigla)
+    {
+        $this->sigla = $sigla;
+
+        return $this;
+    }
+
+    /**
+     * Get sigla
+     *
+     * @return string
+     */
+    public function getSigla()
+    {
+        return $this->sigla;
+    }
+
+    /**
+     * Set website
+     *
+     * @param string $website
+     *
+     * @return SkCourseAffiliation
+     */
+    public function setWebsite($website)
+    {
+        $this->website = $website;
+
+        return $this;
+    }
+
+    /**
+     * Get website
+     *
+     * @return string
+     */
+    public function getWebsite()
+    {
+        return $this->website;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return SkCourseAffiliation
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return SkCourseAffiliation
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}
+

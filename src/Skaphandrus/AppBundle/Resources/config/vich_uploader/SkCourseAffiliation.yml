@@ -1,0 +1,4 @@
+Skaphandrus\AppBundle\Entity\SkCourseAffiliation:
+    imageFile:
+        mapping:           course_affiliation_photo
+        filename_property: image

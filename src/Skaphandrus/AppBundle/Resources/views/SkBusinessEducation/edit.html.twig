@@ -1,0 +1,137 @@
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% form_theme edit_form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/hack/autocompleter-jqueryui.js') }}"></script>
+    <script>
+
+        var $container = $('ul.educationCourse');
+        // button to add a new SportParam
+        var $addCourseLink = $('<br/><a href="#" class="btn btn-primary btn-xs">{{ "form.common.btn.create"|trans }}</a>');
+        var $newLinkLi = $('<li></li>').append($addCourseLink);
+
+        $(document).ready(function () {
+            //delete button on each existing SportParam
+            $container.find('li').each(function () {
+                addCourseDeleteLink($(this));
+            });
+
+            //add button
+            $container.append($newLinkLi);
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $container.data('index', $container.find(':input').length);
+
+            // adding a new form when cliking Add button
+            $addCourseLink.on('click', function (e) {
+                e.preventDefault();
+
+                addCourseForm($container, $newLinkLi);
+
+            });
+
+            // adding a new form SportParam
+            function addCourseForm($container, $newLinkLi) {
+
+                var $prototype = $container.attr('data-prototype');
+
+                var newForm = $prototype.replace(/__name__/g, $container.children().length - 1);
+
+                var $newFormLi = $('<li></li>').append(newForm);
+                $newLinkLi.before($newFormLi);
+
+                addCourseDeleteLink($newFormLi);
+            }
+
+
+            function addCourseDeleteLink($paramFormLi) {
+
+                var $removeFormA = $('<br/><a href="#" class="btn btn-danger  btn-xs">{{ "form.common.btn.delete"|trans }}</a>');
+
+                $paramFormLi.append($removeFormA);
+
+                $removeFormA.on('click', function (e) {
+
+                    e.preventDefault();
+
+                    $paramFormLi.remove();
+                });
+            }
+
+        });
+
+    </script>
+
+
+{% endblock %}
+
+
+{% block heading_title %}
+    {{ "form.business.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="{{ path('business_admin')}}">{{ "breadcrumb.business"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.edit_business"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+
+{#{% block heading_action %}
+    <a href="{{ path('business_admin_new') }}" class="btn btn-primary">{{ "form.business.btn.add"|trans }}</a>
+{% endblock %}#}
+
+
+{% block form_title_description %}
+    {{ "form.business.text.description"|trans }}
+{% endblock %}
+
+{% block body %}
+    
+    <style>
+        ul {
+            list-style-type: none;
+        }
+    </style>
+
+    {#    {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
+    
+        {{ form_widget(edit_form) }}
+    
+        {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'business_admin', 'new_form':false} %}
+        {{ form_end(edit_form) }}#}
+
+    {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
+
+    {{ form_label(edit_form.educationCourse) }}
+
+    <ul class=educationCourse data-prototype="{{ form_widget(edit_form.educationCourse.vars.prototype)|e }}">
+        {% for course in edit_form.educationCourse %}
+            <li>
+                {{ form_label(course.price) }}
+                {{ form_widget(course.price) }}
+                {{ form_label(course.course) }}
+                {{ form_widget(course.course) }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="hr-line-dashed"></div>
+
+    {{ form_row(edit_form.educationConditions) }}
+
+    {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'business_admin', 'new_form':false} %}
+
+    {{ form_end(edit_form) }}
+
+
+    {#{{ form(delete_form) }}#}
+
+{% endblock %}
