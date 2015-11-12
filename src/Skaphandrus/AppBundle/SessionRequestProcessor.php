@@ -11,6 +11,9 @@
  *
  * @author luis
  */
+
+namespace Skaphandrus\AppBundle;
+
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class SessionRequestProcessor
