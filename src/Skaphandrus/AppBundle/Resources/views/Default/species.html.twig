@@ -29,6 +29,13 @@
 
 {% block page_description %}{{description}}{% endblock %}
 
+{% block hreflang %}
+<link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('species', {'slug':slugify(species.name), 'locale': 'pt'}) }} " />
+<link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('species', {'slug':slugify(species.name), 'locale': 'en'}) }}" />
+{% endblock %}
+
+
+
 {% set keywords = species.name %}
 {% if species.speciesVernaculars is not empty %}
     {% set i=0 %}
@@ -80,7 +87,6 @@
 {% endblock %}
 
 {% block heading_title %}
-    {#{{ species.taxonNodeName|capitalize }}#}
     {{ "page.species.h1.heading_title"|trans }}: {{ species.name }}
 {% endblock %}
 
@@ -88,10 +94,9 @@
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
         <li itemprop="itemListElement"><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
-            {#<li>{{ link_to_taxon(species.genus.family.order.class) }}</li>#}
-        <li itemprop="itemListElement">{{ link_to_taxon(species.genus.family.order) }}</li>
-        <li itemprop="itemListElement">{{ link_to_taxon(species.genus.family) }}</li>
-        <li itemprop="itemListElement">{{ link_to_taxon(species.genus) }}</li>
+        <li itemprop="itemListElement">{{ link_to_taxon(species.genus.family.order.taxonNodeName|trans, species.genus.family.order) }}</li>
+        <li itemprop="itemListElement">{{ link_to_taxon(species.genus.family.taxonNodeName|trans, species.genus.family) }}</li>
+        <li itemprop="itemListElement">{{ link_to_taxon(species.genus.taxonNodeName|trans, species.genus) }}</li>
         <li itemprop="itemListElement" class="active"><strong>{{ species.name }}</strong></li>
     </ol>
 {% endblock %}
@@ -214,12 +219,12 @@
                                             <h3>{% trans with {'%specie%': species.name } %} page.species.h3.information {% endtrans %}</h3>
                                             <h5>{{ "page.species.h5.taxonomic_structure"|trans }}</h5>
                                             <ul class="list-unstyled" itemscope itemtype="http://schema.org/ListItem">
-                                                <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.kingdom) }}</li>
-                                                <li itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum) }}</li>
-                                                <li itemprop="item">{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(species.genus.family.order.class) }}</li>
-                                                <li itemprop="item">{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(species.genus.family.order) }}</li>
-                                                <li itemprop="item">{{ "page.species.label.species_family"|trans }}: {{ link_to_taxon(species.genus.family) }}</li>
-                                                <li itemprop="item">{{ "page.species.label.species_genus"|trans }}: {{ link_to_taxon(species.genus) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.kingdom.taxonNodeName|trans, species.genus.family.order.class.phylum.kingdom) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.taxonNodeName|trans, species.genus.family.order.class.phylum) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(species.genus.family.order.class.taxonNodeName|trans, species.genus.family.order.class) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(species.genus.family.order.taxonNodeName|trans, species.genus.family.order) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_family"|trans }}: {{ link_to_taxon(species.genus.family.taxonNodeName|trans, species.genus.family) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_genus"|trans }}: {{ link_to_taxon(species.genus.taxonNodeName|trans, species.genus) }}</li>
                                             </ul>
                                             {% if species.translate(app.request.locale).description is not empty %}
                                                 <h5>{{ "page.species.h5.description"|trans }}</h5>

@@ -13,6 +13,13 @@
 
 {% block page_keywords %}{{keywords}}{% endblock %}
 
+{% block hreflang %}
+<link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('locations_home', {'locale': 'pt'}) }}" />
+<link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('locations_home', {'locale': 'en'}) }}" />
+{% endblock %}
+
+
+
 {% block heading_title %}
     {{ "page.locations_home.h1.heading_title"|trans }}
 {% endblock %}

@@ -220,4 +220,19 @@ class SkLocation {
     public function setPhotosInLocation($photosInLocation) {
         $this->photosInLocation = $photosInLocation;
     }
+    
+    
+//    public function getLocationName($locale){
+//        
+//        //$locale = $this->translate()->setLocale($locale);
+//        
+//        //echo "bla : " . $locale;
+//        return $this->translate($locale)->getName();
+//        
+//      
+//        
+//    }
+    
+    
+    
 }

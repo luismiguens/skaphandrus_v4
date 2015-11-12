@@ -4,6 +4,13 @@
 {% block page_description %}{{ "page.search.text.description"|trans }}{% endblock %}
 {% block page_keywords %}{{ "page.search.h1.title"|trans }}{% endblock %}
 
+
+{% block hreflang %}
+<link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('search', {'string':string, 'locale': 'pt'}) }}" />
+<link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('search', {'string':string, 'locale': 'en'}) }}" />
+{% endblock %}
+
+
 {% block heading_title %}
     {{ "page.search.h1.title"|trans }}
 {% endblock %}

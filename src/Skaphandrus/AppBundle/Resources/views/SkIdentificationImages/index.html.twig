@@ -1,12 +1,4 @@
-
-    
-    
-    
-    
-    
-    
-    
-    {% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
 
 {% block javascripts %}
     {{ parent() }}
@@ -15,22 +7,18 @@
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.bootstrap.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.responsive.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.tableTools.min.js') }}"></script>
-<script>
-    $(function(){
-      // bind change event to select
-      $('#group_id').on('change', function () {
-          var url = $(this).val(); // get selected value
-          if (url) { // require a URL
-              window.location = url; // redirect
-          }
-          return false;
-      });
-    });
-    
-    
- 
-    
-</script>
+    <script>
+        $(function () {
+            // bind change event to select
+            $('#group_id').on('change', function () {
+                var url = $(this).val(); // get selected value
+                if (url) { // require a URL
+                    window.location = url; // redirect
+                }
+                return false;
+            });
+        });
+    </script>
 {% endblock %}
 
 {% block stylesheets %}
@@ -62,31 +50,26 @@
             <option value="{{ group.id }}" {% if group.id == group_id %} selected="selected"{% endif %}>{{ group.name }}</option>
         {% endfor %}
     </select> 
-
-
-
-
-    {#{{ form(modules_form) }}#}
 {% endblock %}
 
 {% block body -%}
-    
+
     <ul>
-{% for criteria in criterias %}
-    
-        <li>{{criteria}}</li>
-        <ul class="list-inline">
-        {% for character in criteria.characters %}
-            <li>{{character}}<br/>
-            <img alt="image" class="img-responsive" style="width: 100px" src="{{ character.getWebPath | imagine_filter('sk_widen_240') }}" />
-            </li>
-        
-        
+        {% for criteria in criterias %}
+
+            <li>{{criteria}}</li>
+            <ul class="list-inline">
+                {% for character in criteria.characters %}
+                    <li>{{character}}<br/>
+                        <img alt="image" class="img-responsive" style="width: 100px" src="{{ character.getWebPath | imagine_filter('sk_widen_240') }}" />
+                    </li>
+
+
+                {% endfor %}
+            </ul>
+
         {% endfor %}
-        </ul>
-    
-     {% endfor %}
-     </ul>
-    
-    
-    {% endblock %}
+    </ul>
+
+
+{% endblock %}

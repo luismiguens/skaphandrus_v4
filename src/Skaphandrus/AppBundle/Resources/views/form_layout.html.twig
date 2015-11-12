@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
-<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
-<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
+<!--[if IE 8]> <html lang="{{ app.request.locale }}" class="ie8"> <![endif]-->  
+<!--[if IE 9]> <html lang="{{ app.request.locale }}" class="ie9"> <![endif]-->  
 <!--[if !IE]><!--><html lang="{{ app.request.locale }}" xmlns:fb="http://www.facebook.com/2008/fbml" ><!--<![endif]--> 
 
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# skaphandrus: http://ogp.me/ns/fb/skaphandrus#">
@@ -15,7 +15,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="google-site-verification" content="4Tm2ZPRBKI8g1uSYzNSLcRPniZr0ZB-PJAOnU-Glshc" />
         <meta name="msvalidate.01" content="A46E7B6BA16D68E9F871752AAB51389E" />
-        <meta name="robots" content="noodp">
+        <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
         <meta name="keywords" content="{% block page_keywords %}{% endblock %}" />
         <meta name="description" content="{% block page_description %}{% endblock %}" />
 
@@ -24,8 +24,7 @@
         <meta name="google-play-app" content="app-id=com.skaphandrus.oceanlifeid">
 
         <!-- hreflang for language -->
-        <link rel="alternate" hreflang="pt" href="http://skaphandrus.com/pt" />
-        <link rel="alternate" hreflang="en" href="http://skaphandrus.com/en" />
+        <meta itemprop="inLanguage" content="{{app.request.locale}}">
         
         {% block stylesheets %}
             <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">

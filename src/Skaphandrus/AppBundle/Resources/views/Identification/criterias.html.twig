@@ -22,6 +22,12 @@
 
 {% block page_keywords %}{{keywords}}{% endblock %}
 
+{% block hreflang %}
+    <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('criterias', {'slug': slugify(module.translate('pt').name), 'locale': 'pt'}) }}" />
+    <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('criterias', {'slug': slugify(module.translate('en').name), 'locale': 'en'}) }}" />
+{% endblock %}
+
+
 {% block heading_title %}
     {{ module.name }}
 {% endblock %}
@@ -47,121 +53,116 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
 
     <script type="text/javascript">
-        
-        angular.module('criteriasApp', []).controller('MainCtrl', ['$http', function ($http) {
-            
-            var self = this;
-            //views vars
-            self.criterias = [];
-            self.species = [];
-            self.infoSpecies;
-            //visible view
-            self.showCriterias = true;
-            //selected ids from vars
-            self.characters_ids = [];
-            self.species_ids = [];
-            self.criterias_ids = [];
-            self.selected = [];
-            //get criterias list on server
-            var updateCriterias = function () {
-                
-            return $http({
-                url: '/{{ app.request.locale }}/app/criterias.json',
-                method: "POST",
-                params: {module_id:{{module.id}}, 'species[]': self.species_ids}
-            })
-                .then(function (response) {
-                    //show and hide criterias according response
-                    //need implementation!!!!!!
 
-                    //update criterias view
-                self.criterias = response.data;
-                //update matched criterias(not implemented)
-                for (key in response.data) {
-                    self.criterias_ids.push(self.criterias[key].id);
-                }
+                angular.module('criteriasApp', []).controller('MainCtrl', ['$http', function ($http) {
 
-                }, function (errResponse) {
-                    console.error('Error while fetching criterias');
-                });
-            };
-            //get species list on server
-            var updateSpecies = function(){
-                return $http({
-                    url: '/{{ app.request.locale }}/app/species.json',
-                    method: "POST",
-                    params: {module_id:{{module.id}}, 'characters[]': self.characters_ids}
-                })
-                .then(function (response) {
-                    //update species view
-                    self.species = response.data;
-                    //update species ids lista (para ser utilizada na chamadas dos criterios)
-                    for (key in self.species) {
-                        self.species_ids.push(self.species[key].id);
-                    }
-                }, function (errResponse) {
-                    console.error('Error while fetching species');
-                });
-            };
-            updateCriterias();
-            updateSpecies();
-            
-            //user click criterias
-            self.clickCriterias = function () {
+        var self = this;
+                //views vars
+                self.criterias = [];
+                self.species = [];
+                self.infoSpecies;
+                //visible view
                 self.showCriterias = true;
-                $("html, body").animate({ scrollTop: 0 }, "slow");
-            };
-            
-            //user click species
-            self.clickSpecies = function (id) {
-                $http({
-                    url: '/{{ app.request.locale }}/app/speciesinfo.json',
-                    method: "GET",
-                    params: {module_id:{{module.id}}, species_id: id}
+                //selected ids from vars
+                self.characters_ids = [];
+                self.species_ids = [];
+                self.criterias_ids = [];
+                self.selected = [];
+                //get criterias list on server
+                var updateCriterias = function () {
+
+                return $http({
+                url: '/{{ app.request.locale }}/app/criterias.json',
+                        method: "POST",
+                        params: {module_id:{{module.id}}, 'species[]': self.species_ids}
                 })
-                .then(function (response) {
-                    self.infoSpecies = response.data;
-                    //self.currentTab = tab;
-                    self.showCriterias = false;
-                }, function (errResponse) {
-                    console.error('Error while fetching infoSpecies');
-                });
-                $("html, body").animate({ scrollTop: 0 }, "slow");
-            };
-            
-            //user click character
-            self.clickCharacter = function (id, selected) {
+                        .then(function (response) {
+                        //show and hide criterias according response
+                        //need implementation!!!!!!
+
+                        //update criterias view
+                        self.criterias = response.data;
+                                //update matched criterias(not implemented)
+                                for (key in response.data) {
+                        self.criterias_ids.push(self.criterias[key].id);
+                        }
+
+                        }, function (errResponse) {
+                        console.error('Error while fetching criterias');
+                        });
+                };
+                //get species list on server
+                var updateSpecies = function(){
+                return $http({
+                url: '/{{ app.request.locale }}/app/species.json',
+                        method: "POST",
+                        params: {module_id:{{module.id}}, 'characters[]': self.characters_ids}
+                })
+                        .then(function (response) {
+                        //update species view
+                        self.species = response.data;
+                                //update species ids lista (para ser utilizada na chamadas dos criterios)
+                                for (key in self.species) {
+                        self.species_ids.push(self.species[key].id);
+                        }
+                        }, function (errResponse) {
+                        console.error('Error while fetching species');
+                        });
+                };
+                updateCriterias();
+                updateSpecies();
+                //user click criterias
+                self.clickCriterias = function () {
+                self.showCriterias = true;
+                        $("html, body").animate({ scrollTop: 0 }, "slow");
+                };
+                //user click species
+                self.clickSpecies = function (id) {
+                $http({
+                url: '/{{ app.request.locale }}/app/speciesinfo.json',
+                        method: "GET",
+                        params: {module_id:{{module.id}}, species_id: id}
+                })
+                        .then(function (response) {
+                        self.infoSpecies = response.data;
+                                //self.currentTab = tab;
+                                self.showCriterias = false;
+                        }, function (errResponse) {
+                        console.error('Error while fetching infoSpecies');
+                        });
+                        $("html, body").animate({ scrollTop: 0 }, "slow");
+                };
+                //user click character
+                self.clickCharacter = function (id, selected) {
                 //find clicked characters
                 if (selected) {
-                    self.characters_ids.push(id);
+                self.characters_ids.push(id);
                 }
                 else {
-                    self.characters_ids.splice(self.characters_ids.indexOf(id), 1);
+                self.characters_ids.splice(self.characters_ids.indexOf(id), 1);
                 }
                 updateSpecies();
-                // .then(updateCriterias);
-            };
+                        // .then(updateCriterias);
+                };
         }])
-        .config(['$httpProvider', '$interpolateProvider', function ($httpProvider, $interpolateProvider) {
-            // Set the content type to be FORM type for all post requests
-            // This does not add it for GET requests.
-            $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-            $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
-        }]);
-    
-    </script>
+                .config(['$httpProvider', '$interpolateProvider', function ($httpProvider, $interpolateProvider) {
+                // Set the content type to be FORM type for all post requests
+                // This does not add it for GET requests.
+                $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+                        $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+                }]);    </script>
 
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
     <script>
-        $(function(){
-            $('.ibox-content-species').slimScroll({
+                $(function(){
+                $('.ibox-content-species').slimScroll({
                 height: '600px'
-            });
-            $('.ibox-content-criterias').slimScroll({
+                });
+                        $('.ibox-content-criterias').slimScroll({
                 height: '600px'
-            });
-        });
+                });
+                });
     </script>
 
 {% endblock %}

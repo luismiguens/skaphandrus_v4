@@ -21,6 +21,12 @@
 
 {% block page_description %}{% endblock %}
 
+{% block hreflang %}
+<link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('taxon', {'node':taxon.taxonNodeName | trans({}, "messages", "pt"), 'slug':slugify(taxon.name), 'locale': 'pt'}) }} " />
+<link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('taxon', {'node':taxon.taxonNodeName | trans({}, "messages", "en"), 'slug':slugify(taxon.name), 'locale': 'en'}) }}" />
+{% endblock %}
+
+
 {% set keywords = taxon.taxonNodeName|trans|capitalize %}
 {% set keywords = keywords~', '~taxon.name %}
 {% set keywords = keywords~', '~("meta_tag.keyword.information"|trans) %}
@@ -81,26 +87,26 @@
     <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
         <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
             {% if taxon.taxonNodeName == 'genus' %}
-                {# <li>{{ link_to_taxon(taxon.parentNode.parentNode.parentNode) }}</li>#}
-            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
-            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode) }}</li>
+            
+            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode.parentNode.taxonNodeName|trans, taxon.parentNode.parentNode) }}</li>
+            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode.taxonNodeName|trans, taxon.parentNode) }}</li>
             <li itemprop="itemListElement" class="active"><strong>{{taxon.name}}</strong></li>
                 {%elseif taxon.taxonNodeName == 'family' %}
-                    {#<li>{{ link_to_taxon(taxon.parentNode.parentNode.parentNode) }}</li>#}
-            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
-            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode) }}</li>
+            
+            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode.parentNode.taxonNodeName|trans, taxon.parentNode.parentNode) }}</li>
+            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode.taxonNodeName|trans, taxon.parentNode) }}</li>
             <li itemprop="itemListElement" class="active"><strong>{{taxon.name}}</strong></li>
                 {%elseif taxon.taxonNodeName == 'order' %}
-                    {#<li>{{ link_to_taxon(taxon.parentNode.parentNode.parentNode) }}</li>#}
-            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
-            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode) }}</li>
+            
+            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode.parentNode.taxonNodeName|trans, taxon.parentNode.parentNode) }}</li>
+            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode.taxonNodeName|trans, taxon.parentNode) }}</li>
             <li itemprop="itemListElement" class="active"><strong>{{taxon.name}}</strong></li>
                 {%elseif taxon.taxonNodeName == 'class' %}
-            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
-            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode) }}</li>
+            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode.parentNode.taxonNodeName|trans, taxon.parentNode.parentNode) }}</li>
+            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode.taxonNodeName|trans, taxon.parentNode) }}</li>
             <li itemprop="itemListElement" class="active"><strong>{{taxon.name}}</strong></li>
                 {%elseif taxon.taxonNodeName == 'phylum' %}
-            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode) }}</li>
+            <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode.taxonNodeName|trans, taxon.parentNode) }}</li>
             <li itemprop="itemListElement" class="active"><strong>{{taxon.name}}</strong></li>
                 {%elseif taxon.taxonNodeName == 'kingdom' %}
             <li itemprop="itemListElement" class="active"><strong>{{taxon.name}}</strong></li>
@@ -217,32 +223,32 @@
                                         <h5>{{ "page.taxon.h5.taxonomic_structure"|trans }}</h5>
                                         <ul class="list-unstyled" itemscope itemtype="http://schema.org/ListItem">
                                             {% if taxon.taxonNodeName == 'genus' %}
-                                                <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode.parentNode.parentNode) }}</li>
-                                                <li itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode.parentNode) }}</li>
-                                                <li itemprop="item">{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode) }}</li>
-                                                <li itemprop="item">{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
-                                                <li itemprop="item">{{ "page.species.label.species_family"|trans }}: {{ link_to_taxon(taxon.parentNode) }}</li>
-                                                <li itemprop="item">{{ "page.species.label.species_genus"|trans }}: {{ link_to_taxon(taxon) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode.parentNode.parentNode.taxonNodeName|trans, taxon.parentNode.parentNode.parentNode.parentNode.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode.parentNode.taxonNodeName|trans, taxon.parentNode.parentNode.parentNode.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode.taxonNodeName|trans, taxon.parentNode.parentNode.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.taxonNodeName|trans, taxon.parentNode.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_family"|trans }}: {{ link_to_taxon(taxon.parentNode.taxonNodeName|trans, taxon.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_genus"|trans }}: {{ link_to_taxon(taxon.taxonNodeName|trans, taxon) }}</li>
                                                 {%elseif taxon.taxonNodeName == 'family' %}
-                                                <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode.parentNode) }}</li>
-                                                <li itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode) }}</li>
-                                                <li itemprop="item">{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
-                                                <li itemprop="item">{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(taxon.parentNode) }}</li>
-                                                <li itemprop="item">{{ "page.species.label.species_family"|trans }}: {{ link_to_taxon(taxon) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode.parentNode.taxonNodeName|trans, taxon.parentNode.parentNode.parentNode.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode.taxonNodeName|trans, taxon.parentNode.parentNode.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.taxonNodeName|trans, taxon.parentNode.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(taxon.parentNode.taxonNodeName|trans, taxon.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_family"|trans }}: {{ link_to_taxon(taxon.taxonNodeName|trans, taxon) }}</li>
                                                 {%elseif taxon.taxonNodeName == 'order' %}
-                                                <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode) }}</li>
-                                                <li itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
-                                                <li itemprop="item">{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(taxon.parentNode) }}</li>
-                                                <li itemprop="item">{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(taxon) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode.taxonNodeName|trans, taxon.parentNode.parentNode.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.taxonNodeName|trans, taxon.parentNode.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(taxon.parentNode.taxonNodeName|trans, taxon.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(taxon.taxonNodeName|trans, taxon) }}</li>
                                                 {%elseif taxon.taxonNodeName == 'class' %}
-                                                <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode) }}</li>
-                                                <li itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon.parentNode) }}</li>
-                                                <li itemprop="item">{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(taxon) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.taxonNodeName|trans, taxon.parentNode.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon.parentNode.taxonNodeName|trans, taxon.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(taxon.taxonNodeName|trans, taxon) }}</li>
                                                 {%elseif taxon.taxonNodeName == 'phylum' %}
-                                                <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode) }}</li>
-                                                <li itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode.taxonNodeName|trans, taxon.parentNode) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(taxon.taxonNodeName|trans, taxon) }}</li>
                                                 {%elseif taxon.taxonNodeName == 'kingdom' %}
-                                                <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon) }}</li>
+                                                <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.taxonNodeName|trans, taxon) }}</li>
                                                 {% endif %}
                                         </ul>
 

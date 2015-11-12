@@ -37,6 +37,14 @@
 
 {% block page_title %}{{title}}{% endblock %}
 
+
+{% block hreflang %}
+<link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('photos', {'locale': 'pt'}) }}" />
+<link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('photos', {'locale': 'en'}) }}" />
+{% endblock %}
+
+
+
 {#-----description-----#}
 {% if params.species is defined %}
 {% set description %}{% trans with {'%type%': "page.photos.keyword.species"|trans, '%value%': pagination[0].species.name} %} page.photos.meta_tag.description {% endtrans %}{% endset %}

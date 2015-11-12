@@ -4,6 +4,11 @@
 
 {% block page_description %}{% trans with {'%contest%': contest.name} %}page.contest_sponsors.meta_tag.description{% endtrans %}{% endblock %}
 
+{% block hreflang %}
+    <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('contests_sponsors', {'contest_slug': slugify(contest.name), 'locale': 'pt'}) }}" />
+    <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('contests_sponsors', {'contest_slug': slugify(contest.name), 'locale': 'en'}) }}" />
+{% endblock %}
+
 {% set keywords = contest.name %}
 {% set keywords = keywords~', '~("meta_tag.keyword.sponsors"|trans) %}
 {% set keywords = keywords~', '~("meta_tag.keyword.pictures"|trans) %}

@@ -15,11 +15,71 @@ monolog:
     handlers:
         main:
             type:         fingers_crossed
-            action_level: error
-            handler:      nested
-        nested:
+            action_level: critical
+            handler:      grouped
+            formatter:    monolog.formatter.session_request
+        grouped:
+            type:    group
+            members: [streamed, buffered]
+        streamed:
             type:  stream
             path:  "%kernel.logs_dir%/%kernel.environment%.log"
             level: debug
-        console:
-            type:  console
+        buffered:
+            type:    buffer
+            handler: swift
+        swift:
+            type:       swift_mailer
+            from_email: error@skaphandrus.com
+            to_email:   error@skaphandrus.com
+            subject:    An Error Occurred!
+            level:      debug
+
+
+services:
+    monolog.formatter.session_request:
+        class: Monolog\Formatter\LineFormatter
+        arguments:
+            - "[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%\n"
+
+    monolog.processor.session_request:
+        class: Skaphandrus\AppBundle\SessionRequestProcessor
+        arguments:  ["@session"]
+        tags:
+            - { name: monolog.processor, method: processRecord }
+
+#monolog:
+#    handlers:
+#        main:
+#            type: stream
+#            path: "%kernel.logs_dir%/%kernel.environment%.log"
+#            level: debug
+           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#        main:
+#            type:         fingers_crossed
+#            action_level: error
+#            handler:      nested
+#        nested:
+#            type:  stream
+#            path:  "%kernel.logs_dir%/%kernel.environment%.log"
+#            level: debug
+#        console:
+#            type:  console
+#        
+#          
