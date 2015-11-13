@@ -32,9 +32,9 @@
 
 {% for commentinfo in comments %}
     <span itemprop="comment" itemscope itemtype="http://schema.org/Comment">
-        <meta itemprop="name" content="{{ commentinfo.comment }}">
+        <meta itemprop="name" content="{{ commentinfo.comment }}" />
         <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-            <meta itemprop="name" content="{{ commentinfo.author }}">
+            <meta itemprop="name" content="{{ commentinfo.author }}" />
         </span>
     </span>
     {% include "FOSCommentBundle:Thread:comment.html.twig" with { "children": commentinfo.children, "comment": commentinfo.comment, "depth": depth, "view": view } %}

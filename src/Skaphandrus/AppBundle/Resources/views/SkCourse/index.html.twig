@@ -52,7 +52,7 @@
         <tbody>
             {% for entity in entities %}
                 <tr>
-                    <td>{{ entity.nome }}</td>
+                    <td>{{ entity.name }}</td>
                     <td>{{ entity.affiliation }}</td>
                     <td>
                         <a class="btn btn-white btn-sm" href="{{ path('course_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit"|trans }}</a>

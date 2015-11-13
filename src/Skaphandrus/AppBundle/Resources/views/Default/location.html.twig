@@ -144,7 +144,7 @@
                     </div>
 
                     <div class="ibox-content" itemscope itemtype="http://schema.org/City">
-                        <meta itemprop="isicV4" content="96590">
+                        <meta itemprop="isicV4" content="96590" />
                         <h1 itemprop="name">{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h1.title{% endtrans %}</h1>
                         <div class="panel">
                             <div class="panel-heading">
@@ -216,7 +216,7 @@
                                                     {% set c = location.region.country %}
                                                     {% for spot in spots %}
                                                     <span itemscope itemtype="http://schema.org/TouristAttraction ">
-                                                        <meta itemprop="name" content="{{ spot }}">
+                                                        <meta itemprop="name" content="{{ spot }}" />
                                                     </span>
                                                     <tr>
                                                         <td>{{ link_to_spot(spot, location, c) }}</td>
@@ -250,8 +250,8 @@
                                             <tbody>
                                                 {% for sp in species %}
                                                 <span itemprop="additionalProperty" itemscope itemtype="http://schema.org/PropertyValue">
-                                                    <meta itemprop="name" content="sea animal">
-                                                    <meta itemprop="value" content="{{ sp }}">
+                                                    <meta itemprop="name" content="sea animal" />
+                                                    <meta itemprop="value" content="{{ sp }}" />
                                                 </span>
                                                 <tr>
                                                     <td>{{ link_to_species(sp) }}</td>
@@ -290,7 +290,7 @@
                                             <tbody>
                                                 {% for p in photographers %}
                                                 <span itemscope itemtype="http://schema.org/Person">
-                                                    <meta itemprop="name" content="{{ p.fosUser }}">
+                                                    <meta itemprop="name" content="{{ p.fosUser }}" />
                                                 </span>
                                                 <tr>
                                                     <td>{{ link_to_user(p.fosUser) }}</td>

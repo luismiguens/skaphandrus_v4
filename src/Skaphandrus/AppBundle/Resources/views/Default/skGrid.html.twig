@@ -2,16 +2,16 @@
     <!-- resultset rows --> 
     {% for row in photos %}
         <span itemscope itemtype="http://schema.org/Photograph">
-            <meta itemprop="name" content="{{ row.photo_title}}">
-            <meta itemprop="dateCreated" content="{{ row.photo_created_at|date("Y-m-d") }}">
-            <meta itemprop="datePublished" content="{{ row.photo_taken_at|date("Y-m-d") }}">
+            <meta itemprop="name" content="{{ row.photo_title}}" />
+            <meta itemprop="dateCreated" content="{{ row.photo_created_at|date("Y-m-d") }}" />
+            <meta itemprop="datePublished" content="{{ row.photo_taken_at|date("Y-m-d") }}" />
             <span itemprop="author" itemscope itemtype="http://schema.org/Person"  >
-                <meta itemprop="name" content="{{ row.personal_firstname}} {{ row.personal_middlename}} {{ row.personal_lastname}}">
-                <meta itemprop="url" content="{{ path('user',  { 'id': row.fos_user_id }) }}">
+                <meta itemprop="name" content="{{ row.personal_firstname}} {{ row.personal_middlename}} {{ row.personal_lastname}}" />
+                <meta itemprop="url" content="{{ path('user',  { 'id': row.fos_user_id }) }}" />
             </span>
             {% if row.spot_id is not empty %}
                 <span itemprop="contentLocation" itemscope itemtype="http://schema.org/TouristAttraction">
-                    <meta itemprop="name" content="{{ row.spot_name }}, {{ row.location_name }}">
+                    <meta itemprop="name" content="{{ row.spot_name }}, {{ row.location_name }}" />
                 </span>
             {% endif %}
             <a href="{{ path('photo_no_slug',  { 'id': row.photo_id }) }}" title="{{ row.photo_title }}">

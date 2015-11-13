@@ -57,7 +57,7 @@
                             <img alt="image" class="thumbnail" src="{{ entity.getWebPath | imagine_filter('sk_widen_75') }}"/>
                         {% endif %}
                     </td>
-                    <td>{{ entity.sigla }}</a></td>
+                    <td>{{ entity.initials }}</a></td>
                     <td>
                         <a class="btn btn-white btn-sm" href="{{ path('course_affiliation_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit"|trans }}</a>
                     </td>

@@ -250,7 +250,7 @@
                                                                 <td>{{ intl_locale_name(vernacular.locale) }}</td>
                                                             </tr>
                                                             {% if vernacular.locale == app.request.locale %}
-                                                                <meta itemprop="alternateName" content="{{ vernacular.vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}" >
+                                                                <meta itemprop="alternateName" content="{{ vernacular.vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}" />
                                                             {% endif %}
                                                         {% endfor %}
                                                     </tbody>
@@ -259,7 +259,7 @@
                                                     {% for vernacular in species.speciesVernaculars %}
                                                         <li>{{ vernacular.vernacular.name|capitalize ~ " - " ~ intl_locale_name(vernacular.locale) }}</li>
                                                         {% if vernacular.locale == app.request.locale %}
-                                                            <meta itemprop="alternateName" content="{{ vernacular.vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}" >
+                                                            <meta itemprop="alternateName" content="{{ vernacular.vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}" />
                                                         {% endif %}
                                                     {% endfor %}
                                                 </ul>#}
@@ -296,7 +296,7 @@
                                                 <tbody>
                                                     {% for u in users %}
                                                     <span itemscope itemtype="http://schema.org/Person">
-                                                        <meta itemprop="name" content="{{ u }}">
+                                                        <meta itemprop="name" content="{{ u }}" />
                                                     </span>
 
                                                     <tr>

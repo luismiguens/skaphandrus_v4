@@ -7,7 +7,7 @@
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
         </id>
-        <field name="sigla" type="string" column="sigla" length="255" nullable="true">
+        <field name="initials" type="string" column="initials" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
