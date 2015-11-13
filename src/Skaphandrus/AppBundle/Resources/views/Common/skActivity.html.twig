@@ -7,7 +7,7 @@
         </span>
         <div class="feed-element">
             <a href="{{url_to_user(activity.userFrom)}}" class="pull-left">
-                <img alt="image" class="img-circle" src="{{ activity.userFrom.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}" />
+                <img alt="{{ activity.userFrom}}" class="img-circle" src="{{ activity.userFrom.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}" />
             </a>
             <div class="media-body ">
                 <small class="pull-right text-navy">{{activity.createdAt|time_diff}}</small>
@@ -17,7 +17,7 @@
                 {% if activity.photo %}
                     <div class="photos">
                         <a href="{{path('photo_no_slug', { 'id': activity.photo.id })}}" > 
-                            <img src="{{ activity.photo.getWebPath | imagine_filter('sk_widen_240') }}" class="feed-photo" alt="image">
+                            <img src="{{ activity.photo.getWebPath | imagine_filter('sk_widen_240') }}" class="feed-photo" alt="{{ activity.photo.title}}">
                         </a>
                     </div>
                 {% endif %} 

@@ -156,7 +156,7 @@
                                     </div>
                                     <div class="col-xs-7 content">
                                         <p class="m-b-xs"><strong>{{module}}</strong></p>
-                                        <p><a href="{{ url_to_module(module) }}"><img class="thumbnail" src="{{ module.getWebPath | imagine_filter('sk_widen_160') }}"/></a></p>
+                                        <p><a href="{{ url_to_module(module) }}"><img class="thumbnail" src="{{ module.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{module.name}}" /></a></p>
                                                 {#<p>Conference on the sales results for the previous year. Monica please examine sales trends in marketing and products.</p>#}
 
                                     </div>
@@ -218,7 +218,12 @@
                             </thead>
                             <tbody>
                                 {% for contest in contests %}
-                                <meta itemprop="name" content="{{ contest }}" />
+                                
+                                
+                               
+                                <tr>
+                                    <td class="text-navy">
+                                        <meta itemprop="name" content="{{ contest }}" />
                                 <meta itemprop="startDate" content="{{ contest.beginAt|date("Y-m-d") }}" />
                                 <meta itemprop="endDate" content="{{ contest.endAt|date("Y-m-d") }}" />
                                 <span itemprop="location" itemscope itemtype="http://schema.org/Place">
@@ -227,18 +232,10 @@
                                         <meta itemprop="name" content="Azores" />
                                     </span>
                                 </span>
-                                {% for award in contest.awards %}
-                                    <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                                        <meta itemprop="name" content="{{ award.name }}" />
-                                        <meta itemprop="category" content="{{ award.category }}" />
-                                        {% for sponsor in award.sponsor %}
-                                            <span itemprop="seller" itemscope itemtype="http://schema.org/Person">
-                                                <meta itemprop="name" content="{{ sponsor.name }}" />
-                                            </span>
-                                        {% endfor %}
-                                    </span>
-                                {% endfor %}
-                                {# Calculate the project completeness #}
+                                        
+                                        {{link_to_contest(contest)}}</td>
+                                    <td>
+                                         {# Calculate the project completeness #}
                                 {% if "now"|date("U") < contest.beginAt|date("U") %}
                                     {% set percentage = 0 %}
                                     {% set contest_status = 'not-started' %}
@@ -257,11 +254,21 @@
                                     {% set button_class = 'primary' %}
                                     <meta itemprop="eventStatus" content="completed" />
                                 {% endif %}
-                                <tr>
-                                    <td class="text-navy">{{link_to_contest(contest)}}</td>
-                                    <td><span class="label label-{{ button_class }}"><small>{{ ("page.contests.label.status_" ~ contest_status)|trans }}</small></span></td>
+                                        <span class="label label-{{ button_class }}"><small>{{ ("page.contests.label.status_" ~ contest_status)|trans }}</small></span></td>
                                     <td>{{ contest.photos|length }}</td>
-                                    <td>{{ contest.awards|length }}</td>
+                                    <td>
+                                        {% for award in contest.awards %}
+                                    <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                        <meta itemprop="name" content="{{ award.name }}" />
+                                        <meta itemprop="category" content="{{ award.category }}" />
+                                        {% for sponsor in award.sponsor %}
+                                            <span itemprop="seller" itemscope itemtype="http://schema.org/Person">
+                                                <meta itemprop="name" content="{{ sponsor.name }}" />
+                                            </span>
+                                        {% endfor %}
+                                    </span>
+                                {% endfor %}
+                                        {{ contest.awards|length }}</td>
                                 </tr>
                             {% endfor %}
 
