@@ -11,7 +11,7 @@ class Utils {
 
     public static function unslugify($string) {
         //return str_replace(array('-', '_', '   '), array(' ', '/', ' - '), $string);
-        return str_replace(array('-', '_'), array(' ', '/'), $string);
+        return str_replace(array('-', '_', '+'), array(' ', '/', ' '), $string);
     }
 
     public static function taxonomyStructure() {

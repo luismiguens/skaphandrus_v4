@@ -36,12 +36,12 @@ class DefaultController extends Controller {
     }
 
     public function index2Action() {
-        
-        
-             
+
+
+
         $location = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
                 ->findOneWithTranslations(21);
-        
+
         return $this->render('SkaphandrusAppBundle:Default:index2.html.twig');
     }
 
@@ -240,8 +240,8 @@ class DefaultController extends Controller {
 
     public function taxonAction($node, $slug) {
 
-$node = lcfirst($node);
-        
+        $node = lcfirst($node);
+
         switch ($node) {
             case 'género':
                 $node = 'genus';
@@ -267,31 +267,34 @@ $node = lcfirst($node);
 
 
         $taxon_name = ucfirst($node);
-        $taxon = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:Sk" . $taxon_name)
-                ->findOneBy(array('name' => $slug));
 
-        $structure = Utils::taxonomyStructure();
+       
 
-        $next_taxon = "";
-        if (array_key_exists($node, $structure)) {
-            $next_taxon = $structure[$node]['next'];
-        } elseif ($node = 'kingdom') {
-            $next_taxon = 'phylum';
-        }
+            $taxon = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:Sk" . $taxon_name)
+                    ->findOneBy(array('name' => $slug));
+ if ($taxon) {
+            $structure = Utils::taxonomyStructure();
+
+            $next_taxon = "";
+            if (array_key_exists($node, $structure)) {
+                $next_taxon = $structure[$node]['next'];
+            } elseif ($node = 'kingdom') {
+                $next_taxon = 'phylum';
+            }
 
 //        $photographers = array();
 //        dump($taxon);
 //        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->getQueryBuilder([$taxon->getTaxonNodeName() => $taxon->getId()], 20);
 
-        $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-                ->findUsersInTaxon($next_taxon, $taxon->getTaxonNodeName(), $taxon->getId());
+            $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
+                    ->findUsersInTaxon($next_taxon, $taxon->getTaxonNodeName(), $taxon->getId());
 
 //        $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
 //                ->createNativeNamedQuery('fetchTagsByExpertise')
 //                ->getResult();
 //        dump($photographers);
 
-        if ($taxon) {
+
             return $this->render('SkaphandrusAppBundle:Default:taxon.html.twig', array(
                         "node" => $node,
                         "taxon" => $taxon,
@@ -443,17 +446,17 @@ $node = lcfirst($node);
     public function locationAction($country, $slug) {
         $name = Utils::unslugify($slug);
         $locale = $this->get('request')->getLocale();
-        
+
         $em = $this->getDoctrine()->getManager();
-        
-        
+
+
         $location = $em->getRepository('SkaphandrusAppBundle:SkLocation')
                 ->findBySlug($name, $country, $locale);
 
-        
-        
+
+
         //dump($location);
-        
+
         if ($location) {
             //photographers
             // $qb_photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->getQueryBuilder(['location' => $location], 20);
@@ -496,12 +499,12 @@ $node = lcfirst($node);
                 // $totalLatitude = 0;
                 // $totalLongitude = 0;
                 foreach ($location->getSpots() as $spot) {
-                    
+
                     //dump($spot->getCoordinate());
-                    
+
                     if ($spot->getCoordinate()) {
                         $marker = new Marker();
-                        
+
                         //remove white spaces
                         $latitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[0]);
                         $longitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[1]);
@@ -528,10 +531,10 @@ $node = lcfirst($node);
                 // $centerLongitude = $totalLongitude / count($markers);
 //                $centerLatitude = explode(",", $location->getSpots()->toArray()[0]->getCoordinate())[0];
 //                $centerLongitude = explode(",", $location->getSpots()->toArray()[0]->getCoordinate())[1];
-                
+
                 $centerLatitude = $latitude;
                 $centerLongitude = $longitude;
-                
+
                 $map = new \Ivory\GoogleMap\Map();
                 $map->setPrefixJavascriptVariable('map_');
                 $map->setHtmlContainerId('map_canvas');
