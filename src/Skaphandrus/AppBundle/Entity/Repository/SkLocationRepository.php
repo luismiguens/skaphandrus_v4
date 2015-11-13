@@ -29,7 +29,7 @@ class SkLocationRepository extends EntityRepository {
     
     
     
-    public function findBySlug($slug, $country, $locale) {
+    public function findBySlug_old($slug, $country, $locale) {
         $name = Utils::unslugify($slug);
 
         $query = $this->getEntityManager()
@@ -49,6 +49,29 @@ class SkLocationRepository extends EntityRepository {
         }
     }
 
+    
+    
+        public function findBySlug($slug, $country, $locale) {
+        $name = Utils::unslugify($slug);
+
+        $query = $this->getEntityManager()
+                        ->createQuery(
+                                'SELECT l
+                    FROM SkaphandrusAppBundle:SkLocation l
+                    JOIN l.translations t
+                    JOIN l.region r
+                    WHERE REPLACE(t.name, \'-\', \' \') = :name
+                    AND IDENTITY(r.country) = ' . $this->getEntityManager()->getRepository('SkaphandrusAppBundle:SkCountry')->findBySlug($country, $locale)->getId()
+                        )->setParameter('name', $name);
+        try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    
+    
     public function findLikeName($term, $locale) {
 
         return $this->getEntityManager()->createQuery(

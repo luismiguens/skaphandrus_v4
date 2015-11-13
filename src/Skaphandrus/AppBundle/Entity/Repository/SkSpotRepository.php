@@ -26,12 +26,9 @@ class SkSpotRepository extends EntityRepository {
                 )->setParameter('term', '%' . $term . '%')->setParameter('locale', $locale)->getResult();
     }
 
-    public function findBySlug($slug, $location, $country, $locale) {
+    public function findBySlug_old($slug, $location, $country, $locale) {
         $name = Utils::unslugify($slug);
-
         $location = $this->getEntityManager()->getRepository('SkaphandrusAppBundle:SkLocation')->findBySlug($location, $country, $locale);
-        //dump($location);
-        //$location_id = $location->getId();
 
         $query = $this->getEntityManager()
                 ->createQuery(
@@ -52,6 +49,32 @@ class SkSpotRepository extends EntityRepository {
         }
     }
 
+    
+        public function findBySlug($slug, $location, $country, $locale) {
+        $name = Utils::unslugify($slug);
+        $location = $this->getEntityManager()->getRepository('SkaphandrusAppBundle:SkLocation')->findBySlug($location, $country, $locale);
+
+        $query = $this->getEntityManager()
+                ->createQuery(
+                        'SELECT s
+                FROM SkaphandrusAppBundle:SkSpot s
+                JOIN s.translations t
+                JOIN s.location l
+                WHERE REPLACE(t.name, \'-\', \' \') = :name
+                AND IDENTITY(s.location) = :location_id')
+                ->setParameter('name', $name)
+                ->setParameter('location_id', $location->getId());
+        try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    
+    
+    
+    
     public function findByUserId($user_id) {
         $query = $this->getEntityManager()
                         ->createQuery(

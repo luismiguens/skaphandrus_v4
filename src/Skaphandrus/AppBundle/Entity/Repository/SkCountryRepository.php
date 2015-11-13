@@ -15,39 +15,29 @@ use Skaphandrus\AppBundle\Utils\Utils;
 class SkCountryRepository extends EntityRepository {
 
     public function findBySlug($slug, $locale) {
-        
-        
-        //dump($slug);
-        
-        $countries = Intl::getRegionBundle()->getCountryNames($locale);
-        
-        //dump($countries);
-        
-        $country = FALSE;
-        $name = Utils::unslugify($slug);
 
-
-        if ($locale == "pt") {
-            $exceptions = array(
+        //@LM - procurar nas duas listas de paises porque existem links antigos com os país em Inglês na rota em português.
+        //http://skaphandrus.com/pt/spots-mergulho/pais/Spain
+        
+            $exceptions_pt = array(
                 'AN' => 'Antilhas Holandesas',
                 'TL' => 'Timor Leste',
                 'PG' => 'Papua Nova Guiné'
             );
-        }
-
-        if ($locale == "en") {
-            $exceptions = array(
+       
+            $exceptions_en = array(
                 'AN' => 'Netherlands Antilles',
                 'TL' => 'East Timor',
                 'PG' => 'Papua New Guinea'
             );
-        }
+       
+        $name = Utils::unslugify($slug);
+        $countries_pt = array_merge(Intl::getRegionBundle()->getCountryNames('pt'), $exceptions_pt);
+        $countries_en = array_merge(Intl::getRegionBundle()->getCountryNames('en'), $exceptions_en);
 
-
-
-        $countries = array_merge($countries, $exceptions);
-
-        if ($key = array_search($name, $countries)) {
+        if ($key = array_search($name, $countries_pt)) {
+            return $this->findOneByName($key);
+        } elseif ($key = array_search($name, $countries_en)) {
             return $this->findOneByName($key);
         }
 
