@@ -483,8 +483,10 @@ $node = lcfirst($node);
 
 
             $map = null;
-            $centerLatitude = null;
-            $centerLongitude = null;
+            $latitude = 0;
+            $longitude = 0;
+            $centerLatitude = 0;
+            $centerLongitude = 0;
 
 
             if (count($location->getSpots()) > 0) {
@@ -494,10 +496,15 @@ $node = lcfirst($node);
                 // $totalLatitude = 0;
                 // $totalLongitude = 0;
                 foreach ($location->getSpots() as $spot) {
+                    
+                    //dump($spot->getCoordinate());
+                    
                     if ($spot->getCoordinate()) {
                         $marker = new Marker();
-                        $latitude = explode(",", $spot->getCoordinate())[0];
-                        $longitude = explode(",", $spot->getCoordinate())[1];
+                        
+                        //remove white spaces
+                        $latitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[0]);
+                        $longitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[1]);
 
                         // Marker options
                         $marker->setPrefixJavascriptVariable('marker_');
@@ -519,8 +526,12 @@ $node = lcfirst($node);
                 // Create the map
                 // $centerLatitude = $totalLatitude / count($markers);
                 // $centerLongitude = $totalLongitude / count($markers);
-                $centerLatitude = explode(",", $location->getSpots()->toArray()[0]->getCoordinate())[0];
-                $centerLongitude = explode(",", $location->getSpots()->toArray()[0]->getCoordinate())[1];
+//                $centerLatitude = explode(",", $location->getSpots()->toArray()[0]->getCoordinate())[0];
+//                $centerLongitude = explode(",", $location->getSpots()->toArray()[0]->getCoordinate())[1];
+                
+                $centerLatitude = $latitude;
+                $centerLongitude = $longitude;
+                
                 $map = new \Ivory\GoogleMap\Map();
                 $map->setPrefixJavascriptVariable('map_');
                 $map->setHtmlContainerId('map_canvas');
