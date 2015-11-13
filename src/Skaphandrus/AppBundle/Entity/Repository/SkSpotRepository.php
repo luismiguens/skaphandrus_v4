@@ -39,7 +39,7 @@ class SkSpotRepository extends EntityRepository {
                 FROM SkaphandrusAppBundle:SkSpot s
                 JOIN s.translations t
                 JOIN s.location l
-                WHERE t.name = :name
+                WHERE REPLACE(t.name, \'-\', \' \') = :name
                 AND t.locale = :locale
                 AND IDENTITY(s.location) = :location_id')
                 ->setParameter('name', $name)

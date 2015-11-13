@@ -80,8 +80,12 @@ doctrine:
                     FOSUserBundle: ~
                     SkaphandrusAppBundle: ~
                     LexikTranslationBundle: ~
+                dql:
+                    string_functions:
+                        replace: Skaphandrus\AppBundle\DQL\ReplaceFunction
         auto_generate_proxy_classes: "%kernel.debug%"
 #        auto_mapping: true
+        
 
 # Swiftmailer Configuration
 swiftmailer:
