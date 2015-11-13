@@ -560,15 +560,10 @@ class SkBusiness {
      * @return SkIdentificationCriteria
      */
     public function addEducationCourse(\Skaphandrus\AppBundle\Entity\SkBusinessEducationCourse $educationCourse) {
-//        $this->educationCourse[] = $educationCourse;
-//        $educationCourse->setBusiness($this);
-//
-//        return $this;
-        
-            $educationCourse->addBusiness($this);
+        $this->educationCourse[] = $educationCourse;
+        $educationCourse->setBusiness($this);
 
-    $this->educationCourse->add($educationCourse);
-        
+        return $this;        
     }
 
     /**

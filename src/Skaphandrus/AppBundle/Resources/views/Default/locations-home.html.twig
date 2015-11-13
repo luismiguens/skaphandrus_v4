@@ -135,7 +135,7 @@
                         <h1>{{ "page.locations_home.h1.world_map"|trans }}</h1>
                         <br>
                         <span itemscope itemtype="http://schema.org/Map">
-                            <meta itemprop="name" content="World Map">
+                            <meta itemprop="name" content="World Map" />
                             <div id="world-map" style="height: 300px; margin-bottom: 25px;">
                             </div>
                         </span>
@@ -150,7 +150,7 @@
                             <tbody>
                                 {% for c in countries %}
                                 <span itemscope itemtype="http://schema.org/Country">
-                                    <meta itemprop="name" content="{{ c }}">
+                                    <meta itemprop="name" content="{{ c }}" />
                                 </span>
                                 <tr>
                                     <td>{{ link_to_country(c) }}</td>

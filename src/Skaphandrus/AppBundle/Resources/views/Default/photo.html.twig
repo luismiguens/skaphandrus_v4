@@ -97,25 +97,25 @@
                             <dt>{{ "page.photo.h3.photographer"|trans }}: </dt>
                             <dd>
                                 <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-                                    <meta itemprop="name" content="{{ photo.fosuser }}">
-                                    <meta itemprop="url" content="{{ url_to_user(photo.fosuser) }}">
+                                    <meta itemprop="name" content="{{ photo.fosuser }}" />
+                                    <meta itemprop="url" content="{{ url_to_user(photo.fosuser) }}" />
                                 </span>
                                 {{ link_to_user(photo.fosuser) }}
                             </dd>
                             <dt>{{ "page.photo.label.taken_at"|trans }}:</dt> 
                             <dd>
-                                <meta itemprop="datePublished" content="{{ photo.takenAt|date("Y-m-d") }}">
+                                <meta itemprop="datePublished" content="{{ photo.takenAt|date("Y-m-d") }}" />
                                 {{ photo.takenAt|date('Y-m-d H:i:s') }}
                             </dd>
                             <dt>{{ "page.photo.label.uploaded_at"|trans }}:</dt> 
                             <dd>
-                                <meta itemprop="dateCreated" content="{{ photo.createdAt|date("Y-m-d") }}">
+                                <meta itemprop="dateCreated" content="{{ photo.createdAt|date("Y-m-d") }}" />
                                 {{ photo.createdAt|date('Y-m-d H:i:s') }}
                             </dd>
                             {% if photo.creative is not empty %}
                                 <dt>{{ "page.photo.label.licensed_under"|trans }}:</dt> 
                                 <dd>
-                                    <meta itemprop="license" content="{{ photo.creative.name }}">
+                                    <meta itemprop="license" content="{{ photo.creative.name }}" />
                                     <a class="text-navy" href="#">{{ photo.creative.name }}</a> 
                                 </dd>
                             {% endif %}
@@ -247,13 +247,13 @@
                         {% if photo.spot is not empty %}
                             <h3>{{ "page.photo.h3.spot"|trans }}</h3>
                             <span itemscope itemtype="http://schema.org/TouristAttraction ">
-                                <meta itemprop="name" content="{{ photo.spot }}">
+                                <meta itemprop="name" content="{{ photo.spot }}" />
                             </span>
                             <span itemscope itemtype="http://schema.org/City ">
-                                <meta itemprop="name" content="{{ photo.spot.location }}">
+                                <meta itemprop="name" content="{{ photo.spot.location }}" />
                             </span>
                             <span itemscope itemtype="http://schema.org/Country ">
-                                <meta itemprop="name" content="{{  photo.spot.location.region.country }}">
+                                <meta itemprop="name" content="{{  photo.spot.location.region.country }}" />
                             </span>
                             <p>{{ link_to_spot(photo.spot)}}, {{ link_to_location(photo.spot.location)}}, {{ link_to_country(photo.spot.location.region.country)}}</p>
                         {% endif %}

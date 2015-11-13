@@ -213,9 +213,9 @@
                                                 {% for vernacular in taxon.vernaculars %}
                                                     <li>{{ vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}</li>
                                                         {% if vernacular.locale == app.request.locale %}
-                                                        <meta itemprop="alternateName" content="{{ vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}" >
+                                                        <meta itemprop="alternateName" content="{{ vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}" />
                                                     {% endif %}
-                                                    {#<meta itemprop="alternateName" content="{{ vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}" >#}
+                                                    {#<meta itemprop="alternateName" content="{{ vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}" />#}
                                                 {% endfor %}
                                             </ul>
                                         {% endif %}
@@ -275,7 +275,7 @@
                                             <tbody>
                                                 {% for p in photographers %}
                                                 <span itemscope itemtype="http://schema.org/Person">
-                                                    <meta itemprop="name" content="{{ p }}"/>
+                                                    <meta itemprop="name" content="{{ p }}" />
                                                 </span>
                                                 <tr>
                                                     <td>{{ link_to_user(p) }}</td>

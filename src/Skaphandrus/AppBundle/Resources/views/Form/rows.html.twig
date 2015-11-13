@@ -22,6 +22,15 @@
 {% endblock form_row %}
 
 
+{% block _skaphandrus_appbundle_skbusiness_educationConditions_row %}
+        <div class="form-group">
+        <label class="col-lg-3 control-label">{{ form_label(form) }}</label>
+        {{ form_errors(form) }}
+        <div class="col-lg-9">
+            {{ form_widget(form) }} 
+        </div>
+    </div>
+{% endblock %}
 
 
 {% block _skaphandrus_appbundle_skspot_translations_en_name_row %}

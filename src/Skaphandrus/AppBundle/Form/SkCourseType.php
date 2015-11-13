@@ -14,7 +14,7 @@ class SkCourseType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('nome', null, array(
+                ->add('name', null, array(
                     'attr' => array('class' => 'form-control'),
                     'label' => 'form.course.label.name',
                     'required' => true,
@@ -29,7 +29,7 @@ class SkCourseType extends AbstractType {
                 ->add('translations', 'a2lix_translations', array(
                     'required' => true,
                     'fields' => array(
-                        'descricao' => array(
+                        'description' => array(
                             'attr' => array('class' => 'form-control', 'rows'=>'20'),
                         )
                     )

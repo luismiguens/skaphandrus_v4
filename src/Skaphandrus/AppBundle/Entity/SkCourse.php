@@ -15,7 +15,7 @@ class SkCourse {
     /**
      * @var string
      */
-    private $nome;
+    private $name;
 
     /**
      * @var \DateTime
@@ -46,14 +46,14 @@ class SkCourse {
     }
 
     /**
-     * Set nome
+     * Set name
      *
-     * @param string $nome
+     * @param string $name
      *
      * @return SkCourse
      */
-    public function setNome($nome) {
-        $this->nome = $nome;
+    public function setName($name) {
+        $this->name = $name;
 
         return $this;
     }
@@ -63,8 +63,8 @@ class SkCourse {
      *
      * @return string
      */
-    public function getNome() {
-        return $this->nome;
+    public function getName() {
+        return $this->name;
     }
 
     /**
@@ -143,7 +143,7 @@ class SkCourse {
     }
 
     public function __toString() {
-        return $this->getNome();
+        return $this->getName();
     }
 
 }

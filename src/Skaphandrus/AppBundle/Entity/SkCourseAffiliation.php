@@ -13,7 +13,7 @@ class SkCourseAffiliation {
     /**
      * @var string
      */
-    private $sigla;
+    private $initials;
 
     /**
      * @var string
@@ -71,25 +71,25 @@ class SkCourseAffiliation {
     }
 
     /**
-     * Set sigla
+     * Set initials
      *
-     * @param string $sigla
+     * @param string $initials
      *
      * @return SkCourseAffiliation
      */
-    public function setSigla($sigla) {
-        $this->sigla = $sigla;
+    public function setInitials($initials) {
+        $this->initials = $initials;
 
         return $this;
     }
 
     /**
-     * Get sigla
+     * Get initials
      *
      * @return string
      */
-    public function getSigla() {
-        return $this->sigla;
+    public function getInitials() {
+        return $this->initials;
     }
 
     /**
@@ -168,7 +168,7 @@ class SkCourseAffiliation {
     }
 
     public function __toString() {
-        return $this->getSigla();
+        return $this->getInitials();
     }
 
     public function getAbsolutePath() {

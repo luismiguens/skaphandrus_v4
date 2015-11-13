@@ -14,7 +14,7 @@ class SkCourseAffiliationType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('sigla', null, array(
+                ->add('initials', null, array(
                     'required' => true,
                     'attr' => array('class' => 'form-control'),
                     'label' => 'form.course_affiliation.label.sigla'

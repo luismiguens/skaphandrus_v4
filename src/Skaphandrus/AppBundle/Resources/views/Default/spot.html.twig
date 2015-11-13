@@ -135,7 +135,7 @@
                     </div>
 
                     <div class="ibox-content" itemscope itemtype="http://schema.org/TouristAttraction">
-                        <meta itemprop="isicV4" content="96590">
+                        <meta itemprop="isicV4" content="96590" />
                         <h1 itemprop="name">{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h1.title{% endtrans %}</h1>
                         <div class="panel">
                             <div class="panel-heading">
@@ -156,8 +156,8 @@
                                         <h3>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h3.info{% endtrans %}</h3>
                                         <span itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
                                             {% set coordinate = spot.coordinate|split(',') %}
-                                            <meta itemprop="latitude" content="{{coordinate[0]}}">
-                                            <meta itemprop="longitude" content="{{coordinate[1]}}">
+                                            <meta itemprop="latitude" content="{{coordinate[0]}}" />
+                                            <meta itemprop="longitude" content="{{coordinate[1]}}" />
                                         </span>
                                         {% if spot.description is not empty %}
                                             <h5>{{ "page.spot.h5.description"|trans }}</h5>
@@ -175,8 +175,8 @@
                                             <tbody>
                                                 {% for sp in species %}
                                                 <span itemprop="additionalProperty" itemscope itemtype="http://schema.org/PropertyValue">
-                                                    <meta itemprop="name" content="sea animal">
-                                                    <meta itemprop="value" content="{{ sp }}">
+                                                    <meta itemprop="name" content="sea animal" />
+                                                    <meta itemprop="value" content="{{ sp }}" />
                                                 </span>
                                                 <tr>
                                                     <td>{{ link_to_species(sp) }}</td>
@@ -212,7 +212,7 @@
                                             <tbody>
                                                 {% for p in photographers %}
                                                 <span itemscope itemtype="http://schema.org/Person">
-                                                    <meta itemprop="name" content="{{ p.fosUser }}">
+                                                    <meta itemprop="name" content="{{ p.fosUser }}" />
                                                 </span>
                                                 <tr>
                                                     <td>{{ link_to_user(p.fosUser) }}</td>

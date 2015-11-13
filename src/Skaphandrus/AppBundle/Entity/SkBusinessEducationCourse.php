@@ -141,18 +141,6 @@ class SkBusinessEducationCourse {
     public function getBusiness() {
         return $this->business;
     }
-
-    
-    
-    public function addBusiness(SkBusiness $business)
-{
-    //if (!$this->business->contains($business)) {
-        $this->setBusiness($business);
-    //}
-}
-    
-    
-    
     
     /**
      * Set course

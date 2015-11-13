@@ -15,7 +15,7 @@ class SkCourseTranslation {
     /**
      * @var string
      */
-    private $descricao;
+    private $description;
 
 //    /**
 //     * @var string
@@ -33,14 +33,14 @@ class SkCourseTranslation {
 //    private $traslatable;
 
     /**
-     * Set descricao
+     * Set description
      *
-     * @param string $descricao
+     * @param string $description
      *
      * @return SkCourseTranslation
      */
-    public function setDescricao($descricao) {
-        $this->descricao = $descricao;
+    public function setDescription($description) {
+        $this->description = $description;
 
         return $this;
     }
@@ -50,8 +50,8 @@ class SkCourseTranslation {
      *
      * @return string
      */
-    public function getDescricao() {
-        return $this->descricao;
+    public function getDescription() {
+        return $this->description;
     }
 
 //    /**

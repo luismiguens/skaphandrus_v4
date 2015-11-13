@@ -41,7 +41,7 @@
 
                 var newForm = $prototype.replace(/__name__/g, $container.children().length - 1);
 
-                var $newFormLi = $("<li style='background-color:gray; margin-bottom:1px';></li>").append(newForm);
+                var $newFormLi = $("<li style='background-color:lightgray; margin-bottom:1px';></li>").append(newForm);
                 $newLinkLi.before($newFormLi);
 
                 addCourseDeleteLink($newFormLi);
@@ -105,7 +105,7 @@
 
     {{ form_row(edit_form.educationConditions) }}
 
-    
+
     <label class="col-sm-3 control-label">{{ form_label(edit_form.educationCourse) }}</label>
     <div class="col-sm-9">
         <ul class=educationCourse data-prototype="{{ form_widget(edit_form.educationCourse.vars.prototype)|e }}">
