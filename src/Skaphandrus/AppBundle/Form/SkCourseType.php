@@ -31,6 +31,7 @@ class SkCourseType extends AbstractType {
                     'fields' => array(
                         'description' => array(
                             'attr' => array('class' => 'form-control', 'rows'=>'20'),
+                            'label' => 'form.course.label.description',
                         )
                     )
                 ))

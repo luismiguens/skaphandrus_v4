@@ -41,7 +41,7 @@
 
                 var newForm = $prototype.replace(/__name__/g, $container.children().length - 1);
 
-                var $newFormLi = $("<li style='background-color:lightgray; margin-bottom:1px';></li>").append(newForm);
+                var $newFormLi = $("<li margin-bottom:1px';></li>").append(newForm);
                 $newLinkLi.before($newFormLi);
 
                 addCourseDeleteLink($newFormLi);
@@ -71,7 +71,7 @@
 
 
 {% block heading_title %}
-    {{ "form.business.h1.title"|trans }}
+    {{ "form.business_education.h1.title"|trans }}
 {% endblock %}
 
 
@@ -79,18 +79,18 @@
     <ol class="breadcrumb">
         <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
         <li><a href="{{ path('business_admin')}}">{{ "breadcrumb.business"|trans }}</a></li>
-        <li class="active"><strong>{{ "breadcrumb.edit_business"|trans }}</strong></li>
+        <li class="active"><strong>{{ "breadcrumb.edit_business_education"|trans }}</strong></li>
     </ol>
 {% endblock %}
 
 
 {#{% block heading_action %}
-    <a href="{{ path('business_admin_new') }}" class="btn btn-primary">{{ "form.business.btn.add"|trans }}</a>
+    <a href="{{ path('business_admin_new') }}" class="btn btn-primary">{{ "form.business_education.btn.add"|trans }}</a>
 {% endblock %}#}
 
 
 {% block form_title_description %}
-    {{ "form.business.text.description"|trans }}
+    {{ "form.business_education.text.description"|trans }}
 {% endblock %}
 
 {% block body %}
