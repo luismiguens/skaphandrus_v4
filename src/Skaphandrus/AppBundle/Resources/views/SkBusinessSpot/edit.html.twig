@@ -14,8 +14,8 @@
         var $collectionHolder1 = $(collectionHolderId1);
 
         // setup an "add a tag" link
-        var $addDivePriceLink = $('<a href="#" class="add_price_link">{{ "form.business.label.add_dive_price"|trans }}</a>');
-        var $addRentEquipmentLink = $('<a href="#" class="add_rent_link">{{ "form.business.label.add_rent_equipment"|trans }}</a>');
+        var $addDivePriceLink = $('<a href="#" class="btn btn-primary btn-xs">{{ "form.common.btn.create"|trans }}</a>');
+        var $addRentEquipmentLink = $('<a href="#" class="btn btn-primary btn-xs">{{ "form.common.btn.create"|trans }}</a>');
         //$(collectionHolderId).after($addCharacterLink);
         $addDivePriceLink.insertAfter(collectionHolderId);
         $addRentEquipmentLink.insertAfter(collectionHolderId1);
@@ -97,7 +97,7 @@
 
 
 {% block heading_title %}
-    {{ "form.business.h1.title"|trans }}
+    {{ "form.business_dive.h1.title"|trans }}
 {% endblock %}
 
 
@@ -105,18 +105,18 @@
     <ol class="breadcrumb">
         <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
         <li><a href="{{ path('business_admin')}}">{{ "breadcrumb.business"|trans }}</a></li>
-        <li class="active"><strong>{{ "breadcrumb.edit_business"|trans }}</strong></li>
+        <li class="active"><strong>{{ "breadcrumb.edit_.business_dive"|trans }}</strong></li>
     </ol>
 {% endblock %}
 
 
 {#{% block heading_action %}
-    <a href="{{ path('business_admin_new') }}" class="btn btn-primary">{{ "form.business.btn.add"|trans }}</a>
+    <a href="{{ path('business_admin_new') }}" class="btn btn-primary">{{ "form.business_dive.btn.add"|trans }}</a>
 {% endblock %}#}
 
 
 {% block form_title_description %}
-    {{ "form.business.text.description"|trans }}
+    {{ "form.business_dive.text.description"|trans }}
 {% endblock %}
 
 {% block body %}

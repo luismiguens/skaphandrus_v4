@@ -17,7 +17,7 @@ class SkCourseAffiliationType extends AbstractType {
                 ->add('initials', null, array(
                     'required' => true,
                     'attr' => array('class' => 'form-control'),
-                    'label' => 'form.course_affiliation.label.sigla'
+                    'label' => 'form.course_affiliation.label.name'
                 ))
                 ->add('website', null, array(
                     'required' => true,
@@ -25,7 +25,7 @@ class SkCourseAffiliationType extends AbstractType {
                     'label' => 'form.course_affiliation.label.website'
                 ))
                 ->add('imageFile', 'vich_image', array(
-                    'label' => 'form.course_affiliation.label.image_file',
+                    'label' => 'form.course_affiliation.label.logo',
                     'required' => false,
                     'allow_delete' => false, // not mandatory, default is true
                     'download_link' => false, // not mandatory, default is true
