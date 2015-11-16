@@ -8,8 +8,8 @@
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# skaphandrus: http://ogp.me/ns/fb/skaphandrus#">
 
         <title>{% block page_title %}{% endblock %}</title>
-       <link rel="icon" href="{{ app.request.getSchemeAndHttpHost() ~ "/favicon.ico"}}"/>
-       <link rel="shortcut icon" href="{{ app.request.getSchemeAndHttpHost() ~ "/favicon.ico"}}"  />
+        <link rel="icon" href="{{ app.request.getSchemeAndHttpHost() ~ "/favicon.ico"}}"/>
+        <link rel="shortcut icon" href="{{ app.request.getSchemeAndHttpHost() ~ "/favicon.ico"}}"  />
 
 
 
@@ -32,15 +32,6 @@
     {% block hreflang %}{% endblock %}
 
 
-<<<<<<< HEAD
-        {% block stylesheets %}
-            <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">
-            <link href="{{ asset('bundles/skaphandrusapp/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
-            <link href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}" rel="stylesheet">
-            <link href="{{ asset('bundles/skaphandrusapp/css/style.css') }}" rel="stylesheet">
-            <link href="{{ asset('bundles/skaphandrusapp/css/app.css') }}" rel="stylesheet">
-            <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet" />
-=======
     {% block stylesheets %}
         <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{ asset('bundles/skaphandrusapp/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
@@ -48,8 +39,6 @@
         <link href="{{ asset('bundles/skaphandrusapp/css/style.css') }}" rel="stylesheet">
         <link href="{{ asset('bundles/skaphandrusapp/css/app.css') }}" rel="stylesheet">
         <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
->>>>>>> de3660556a8852a461510ebe4ea6caa3e67707fc
-
     {% endblock %}
 </head>
 
