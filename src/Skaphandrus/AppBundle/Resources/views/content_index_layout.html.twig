@@ -8,7 +8,8 @@
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# skaphandrus: http://ogp.me/ns/fb/skaphandrus#">
 
         <title>{% block page_title %}{% endblock %}</title>
-        <link rel="shortcut icon" href="favicon.ico"> 
+       <link rel="icon" href="{{ app.request.getSchemeAndHttpHost() ~ "/favicon.ico"}}"/>
+       <link rel="shortcut icon" href="{{ app.request.getSchemeAndHttpHost() ~ "/favicon.ico"}}"  />
 
 
         <!-- Meta -->
