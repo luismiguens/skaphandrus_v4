@@ -1,6 +1,6 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block page_title %}{% trans with {'%title%': photo.title, '%taked_by%': photo.fosuser } %}page.photo.meta_tag.title{% endtrans %}{% endblock %}
+{% block page_title %}{% trans with {'%title%': photo.title, '%taken_by%': photo.fosuser } %}page.photo.meta_tag.title{% endtrans %}{% endblock %}
 
 {% block page_description %}{{ photo.description [0:160]}}{% endblock %}
 
