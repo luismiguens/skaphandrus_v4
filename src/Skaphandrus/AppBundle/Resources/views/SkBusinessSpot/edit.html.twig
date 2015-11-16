@@ -89,7 +89,63 @@
             $collectionHolder.append(newForm);
             //$('#skaphandrus_appbundle_skidentificationcriteria_characters_'+ index +'_criteria').val({{ entity.id }});
         }
-        
+
+        var $container = $('ul.diveSpot');
+        // button to add a new SportParam
+        var $addDiveSpotLink = $('<br/><a href="#" class="btn btn-primary btn-xs">{{ "form.common.btn.create"|trans }}</a>');
+        var $newLinkLi = $('<li></li>').append($addDiveSpotLink);
+
+        $(document).ready(function () {
+            //delete button on each existing SportParam
+            $container.find('li').each(function () {
+                addDiveSpotDeleteLink($(this));
+            });
+
+            //add button
+            $container.append($newLinkLi);
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $container.data('index', $container.find(':input').length);
+
+            // adding a new form when cliking Add button
+            $addDiveSpotLink.on('click', function (e) {
+                e.preventDefault();
+
+                addDiveSpotForm($container, $newLinkLi);
+
+            });
+
+            // adding a new form SportParam
+            function addDiveSpotForm($container, $newLinkLi) {
+
+                var $prototype = $container.attr('data-prototype');
+
+                var newForm = $prototype.replace(/__name__/g, $container.children().length - 1);
+
+                var $newFormLi = $("<li margin-bottom:1px';></li>").append(newForm);
+                $newLinkLi.before($newFormLi);
+
+                addDiveSpotDeleteLink($newFormLi);
+            }
+
+
+            function addDiveSpotDeleteLink($paramFormLi) {
+
+                var $removeFormA = $('<a href="#" class="btn btn-danger  btn-xs">{{ "form.common.btn.delete"|trans }}</a>');
+
+                $paramFormLi.append($removeFormA);
+
+                $removeFormA.on('click', function (e) {
+
+                    e.preventDefault();
+
+                    $paramFormLi.remove();
+                });
+            }
+
+        });
+
     </script>
 
 
@@ -123,12 +179,33 @@
 
     {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
 
-    {{ form_widget(edit_form) }}
+    <style>
+        ul {
+            list-style-type: none;
+        }
+    </style>
+
+    <label class="col-sm-3 control-label">{{ form_label(edit_form.spot) }}</label>
+    <div class="col-sm-9">
+        <ul class=diveSpot data-prototype="{{ form_widget(edit_form.spot.vars.prototype)|e }}">
+            {% for diveSpot in edit_form.spot %}
+                <li>
+                    {{ form_widget(diveSpot) }}
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="hr-line-dashed"></div>
+    </div>
+
+    {{ form_row(edit_form.divePrice) }}
+    {{ form_row(edit_form.rentEquipment) }}
+    {{ form_row(edit_form.diveAccess) }}
+    {{ form_row(edit_form.gas) }}
+    {{ form_row(edit_form.safety) }}
 
     {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'business_admin', 'new_form':false} %}
+
+    {% do edit_form.spot.setRendered %}
     {{ form_end(edit_form) }}
-
-
-    {#{{ form(delete_form) }}#}
 
 {% endblock %}

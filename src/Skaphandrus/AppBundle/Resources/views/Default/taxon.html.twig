@@ -22,8 +22,8 @@
 {% block page_description %}{% endblock %}
 
 {% block hreflang %}
-<link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('taxon', {'node':taxon.taxonNodeName | trans({}, "messages", "pt"), 'slug':slugify(taxon.name), 'locale': 'pt'}) }} " />
-<link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('taxon', {'node':taxon.taxonNodeName | trans({}, "messages", "en"), 'slug':slugify(taxon.name), 'locale': 'en'}) }}" />
+    <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('taxon', {'node':taxon.taxonNodeName | trans({}, "messages", "pt"), 'slug':slugify(taxon.name), 'locale': 'pt'}) }} " />
+    <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('taxon', {'node':taxon.taxonNodeName | trans({}, "messages", "en"), 'slug':slugify(taxon.name), 'locale': 'en'}) }}" />
 {% endblock %}
 
 
@@ -87,17 +87,17 @@
     <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
         <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
             {% if taxon.taxonNodeName == 'genus' %}
-            
+
             <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode.parentNode.taxonNodeName|trans, taxon.parentNode.parentNode) }}</li>
             <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode.taxonNodeName|trans, taxon.parentNode) }}</li>
             <li itemprop="itemListElement" class="active"><strong>{{taxon.name}}</strong></li>
                 {%elseif taxon.taxonNodeName == 'family' %}
-            
+
             <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode.parentNode.taxonNodeName|trans, taxon.parentNode.parentNode) }}</li>
             <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode.taxonNodeName|trans, taxon.parentNode) }}</li>
             <li itemprop="itemListElement" class="active"><strong>{{taxon.name}}</strong></li>
                 {%elseif taxon.taxonNodeName == 'order' %}
-            
+
             <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode.parentNode.taxonNodeName|trans, taxon.parentNode.parentNode) }}</li>
             <li itemprop="itemListElement">{{ link_to_taxon(taxon.parentNode.taxonNodeName|trans, taxon.parentNode) }}</li>
             <li itemprop="itemListElement" class="active"><strong>{{taxon.name}}</strong></li>
@@ -150,13 +150,13 @@
                                 {{ render(controller('SkaphandrusAppBundle:Common:skActivity', { 'parameters': { 'family_id' : taxon.id },'limit':20 } )) }}
                             {%elseif taxon.taxonNodeName == 'order' %}
                                 {{ render(controller('SkaphandrusAppBundle:Common:skActivity', { 'parameters': { 'order_id' : taxon.id },'limit':20 } )) }}#}
-                                {#                            {%elseif taxon.taxonNodeName == 'class' %}
-                                                                {{ render(controller('SkaphandrusAppBundle:Common:skActivity', { 'parameters': { 'class_id' : taxon.id },'limit':20 } )) }}
-                                                            {%elseif taxon.taxonNodeName == 'phylum' %}
-                                                                {{ render(controller('SkaphandrusAppBundle:Common:skActivity', { 'parameters': { 'phylum_id' : taxon.id },'limit':20 } )) }}
-                                                            {%elseif taxon.taxonNodeName == 'kingdom' %}
-                                                                {{ render(controller('SkaphandrusAppBundle:Common:skActivity', { 'parameters': { 'kingdom_id' : taxon.id },'limit':20 } )) }}#}
-{#                            {% endif %}#}
+                            {#                            {%elseif taxon.taxonNodeName == 'class' %}
+                                                            {{ render(controller('SkaphandrusAppBundle:Common:skActivity', { 'parameters': { 'class_id' : taxon.id },'limit':20 } )) }}
+                                                        {%elseif taxon.taxonNodeName == 'phylum' %}
+                                                            {{ render(controller('SkaphandrusAppBundle:Common:skActivity', { 'parameters': { 'phylum_id' : taxon.id },'limit':20 } )) }}
+                                                        {%elseif taxon.taxonNodeName == 'kingdom' %}
+                                                            {{ render(controller('SkaphandrusAppBundle:Common:skActivity', { 'parameters': { 'kingdom_id' : taxon.id },'limit':20 } )) }}#}
+                            {#                            {% endif %}#}
                             {#<button class="btn btn-primary btn-block m-t"><i class="fa fa-arrow-down"></i> Show More</button>#}
                         </div>
                     </div>
@@ -170,23 +170,23 @@
                 <div class="ibox">
                     <div class="ibox-title">
                         <h5>{{ "page.taxon.h5.taxon_related_contents"|trans }}</h5>
-{#                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="#">Config option 1</a>
-                                </li>
-                                <li><a href="#">Config option 2</a>
-                                </li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>#}
+                        {#                        <div class="ibox-tools">
+                                                    <a class="collapse-link">
+                                                        <i class="fa fa-chevron-up"></i>
+                                                    </a>
+                                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                                        <i class="fa fa-wrench"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu dropdown-user">
+                                                        <li><a href="#">Config option 1</a>
+                                                        </li>
+                                                        <li><a href="#">Config option 2</a>
+                                                        </li>
+                                                    </ul>
+                                                    <a class="close-link">
+                                                        <i class="fa fa-times"></i>
+                                                    </a>
+                                                </div>#}
                     </div>
 
                     <div class="ibox-content">
@@ -269,23 +269,27 @@
                                         <input type="text" class="form-control input-sm m-b-xs" id="filter-photographers" placeholder="Search in table">
                                         <table class="footable footable-photographers table" data-page-size="50" data-filter=#filter-photographers>
                                             <thead>
-                                            <th>{{ "page.location.table.name"|trans }}</th>
-                                            <th>{{ "page.location.table.num_photos"|trans }}</th>
+                                                <tr>
+                                                    <th>{{ "page.location.table.name"|trans }}</th>
+                                                    <th>{{ "page.location.table.num_photos"|trans }}</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
                                                 {% for p in photographers %}
-                                                <span itemscope itemtype="http://schema.org/Person">
-                                                    <meta itemprop="name" content="{{ p }}" />
-                                                </span>
-                                                <tr>
-                                                    <td>{{ link_to_user(p) }}</td>
-                                                    <td>
-                                                        <a href="{{ path('photos', {'fosUser': p.id, (taxon.taxonNodeName) : taxon.id}) }}">
-                                                            {{ p.photosInUser }}
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            {% endfor%}
+                                                    <tr>
+                                                        <td>
+                                                            {{ link_to_user(p) }}
+                                                            <span itemscope itemtype="http://schema.org/Person">
+                                                                <meta itemprop="name" content="{{ p }}" />
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ path('photos', {'fosUser': p.id, (taxon.taxonNodeName) : taxon.id}) }}">
+                                                                {{ p.photosInUser }}
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor%}
                                             </tbody>
                                             <tfoot>
                                                 <tr>
@@ -302,10 +306,6 @@
                     </div>
                 </div>
             </div><!--end right column -->
-            
-            
-            
-            
         </div><!-- end row-->
     </div><!-- end wrapper-->
 {% endblock %}

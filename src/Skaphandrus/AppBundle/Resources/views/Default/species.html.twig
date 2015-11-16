@@ -30,11 +30,9 @@
 {% block page_description %}{{description}}{% endblock %}
 
 {% block hreflang %}
-<link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('species', {'slug':slugify(species.name), 'locale': 'pt'}) }} " />
-<link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('species', {'slug':slugify(species.name), 'locale': 'en'}) }}" />
+    <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('species', {'slug':slugify(species.name), 'locale': 'pt'}) }} " />
+    <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('species', {'slug':slugify(species.name), 'locale': 'en'}) }}" />
 {% endblock %}
-
-
 
 {% set keywords = species.name %}
 {% if species.speciesVernaculars is not empty %}
@@ -90,7 +88,6 @@
     {{ "page.species.h1.heading_title"|trans }}: {{ species.name }}
 {% endblock %}
 
-
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
         <li itemprop="itemListElement"><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
@@ -101,12 +98,9 @@
     </ol>
 {% endblock %}
 
-
 {% block heading_action %}
     <a href="{{ path('photo_admin_new') }}" class="btn btn-primary">{{ "form.photo.btn.add"|trans }}</a>
 {% endblock %}
-
-
 
 {% block body %}
 
@@ -114,23 +108,23 @@
         <div class="row animated fadeInRight">
             <!-- left column -->
 
-            {#            <div class="col-md-4">
-                            <div class="ibox float-e-margins">
-                                <div class="ibox-title">
-                                    <h5>{{ "page.species.h5.species_detail"|trans }}</h5>
-                                </div>
-                                <div>
-                                    <div class="ibox-content ibox-content border-left-right">
-                                        {% if photo %}
-                                        <img alt="image" class="img-responsive img-rounded" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />
-                                        {% endif %}
-                                    </div>
-                                    <div class="ibox-content profile-content">
-                                        <h4><strong>{{ species.name }}</strong></h4>
-                                </div>
-                                </div>
-                            </div>
-                        </div>#}
+            {#<div class="col-md-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>{{ "page.species.h5.species_detail"|trans }}</h5>
+                    </div>
+                    <div>
+                        <div class="ibox-content ibox-content border-left-right">
+                            {% if photo %}
+                                <img alt="image" class="img-responsive img-rounded" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />
+                            {% endif %}
+                        </div>
+                        <div class="ibox-content profile-content">
+                            <h4><strong>{{ species.name }}</strong></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>#}
 
             <!-- species activity -->              
             <div class="col-lg-4">
@@ -155,7 +149,7 @@
                 <div class="ibox">
                     <div class="ibox-title">
                         <h5>{{ "page.photo.h5.species_related_contents"|trans }}</h5>
-{#                        <div class="ibox-tools">
+                        {#<div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
                             </a>
@@ -175,9 +169,7 @@
                     </div>
 
                     <div class="ibox-content">
-
                         <h1 itemprop="name">{{ "page.species.h1.title"|trans }}: {{ species.name }}</h1>
-
                         <div class="panel">
                             <div class="panel-heading">
                                 {#<div class="panel-title m-b-md"><h1>{{ species.name }}</h1></div>#}
@@ -237,21 +229,25 @@
                                         <div id="tab-{{tab_names_id}}" class="tab-pane {{tab_names_id==1?'active'}}">
                                             <h3>{% trans with {'%specie%': species.name } %} page.species.h3.common_names {% endtrans %}</h3>
                                             {% if species.speciesVernaculars is not empty %}
-{#                                                <h5>{{ "page.species.h5.common_names"|trans }}</h5>#}
+                                                {#                                                <h5>{{ "page.species.h5.common_names"|trans }}</h5>#}
                                                 <table class="footable footable-common_names table" data-page-size="100">
                                                     <thead>
-                                                    <th>{{ "page.species.table.common_name"|trans }}</th>
-                                                    <th>{{ "page.species.label.language"|trans }}</th>
+                                                        <tr>
+                                                            <th>{{ "page.species.table.common_name"|trans }}</th>
+                                                            <th>{{ "page.species.label.language"|trans }}</th>
+                                                        </tr>
                                                     </thead>
                                                     <tbody>
                                                         {% for vernacular in species.speciesVernaculars %}
                                                             <tr>
                                                                 <td>{{ vernacular.vernacular.name|capitalize }}</td>
-                                                                <td>{{ intl_locale_name(vernacular.locale) }}</td>
+                                                                <td>
+                                                                    {{ intl_locale_name(vernacular.locale) }}
+                                                                    {% if vernacular.locale == app.request.locale %}
+                                                                        <meta itemprop="alternateName" content="{{ vernacular.vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}" />
+                                                                    {% endif %}
+                                                                </td>
                                                             </tr>
-                                                            {% if vernacular.locale == app.request.locale %}
-                                                                <meta itemprop="alternateName" content="{{ vernacular.vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}" />
-                                                            {% endif %}
                                                         {% endfor %}
                                                     </tbody>
                                                 </table>
@@ -290,22 +286,25 @@
                                             <input type="text" class="form-control input-sm m-b-xs" id="filter-users" placeholder="Search in table">
                                             <table class="footable footable-users table" data-page-size="50" data-filter=#filter-users>
                                                 <thead>
-                                                <th>{{ "page.species.table.name"|trans }}</th>
-                                                <th>{{ "page.species.label.photos"|trans }}</th>
+                                                    <tr>
+                                                        <th>{{ "page.species.table.name"|trans }}</th>
+                                                        <th>{{ "page.species.label.photos"|trans }}</th>
+                                                    </tr>
                                                 </thead>
                                                 <tbody>
                                                     {% for u in users %}
-                                                    <span itemscope itemtype="http://schema.org/Person">
-                                                        <meta itemprop="name" content="{{ u }}" />
-                                                    </span>
-
-                                                    <tr>
-                                                        <td>{{ link_to_user(u) }}</td>
-                                                        <td>
-                                                            <a href="{{ path('photos', {'fosUser': u.id, (species.taxonNodeName) : species.id}) }}">{{ u.photosInUser }}</a>
-                                                        </td>
-                                                    </tr>
-                                                {% endfor %}
+                                                        <tr>
+                                                            <td>
+                                                                {{ link_to_user(u) }}
+                                                                <span itemscope itemtype="http://schema.org/Person">
+                                                                    <meta itemprop="name" content="{{ u }}" />
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="{{ path('photos', {'fosUser': u.id, (species.taxonNodeName) : species.id}) }}">{{ u.photosInUser }}</a>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>

@@ -121,6 +121,11 @@ class SkBusiness {
      */
     private $educationCourse;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $spot;
+
     /*     * symfony advanced forms
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the  update. If this
@@ -563,7 +568,7 @@ class SkBusiness {
         $this->educationCourse[] = $educationCourse;
         $educationCourse->setBusiness($this);
 
-        return $this;        
+        return $this;
     }
 
     /**
@@ -669,6 +674,37 @@ class SkBusiness {
         $diveAccess->setBusiness($this);
 
         return $this;
+    }
+
+    /**
+     * Add spot
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkSpot $spot
+     *
+     * @return SkBusiness
+     */
+    public function addSpot(\Skaphandrus\AppBundle\Entity\SkSpot $spot) {
+        $this->spot[] = $spot;
+
+        return $this;
+    }
+
+    /**
+     * Remove spot
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkSpot $spot
+     */
+    public function removeSpot(\Skaphandrus\AppBundle\Entity\SkSpot $spot) {
+        $this->spot->removeElement($spot);
+    }
+
+    /**
+     * Get spot
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSpot() {
+        return $this->spot;
     }
 
     public function getAbsolutePath() {

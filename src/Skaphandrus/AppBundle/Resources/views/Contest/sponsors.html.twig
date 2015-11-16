@@ -118,7 +118,6 @@
                                                 <tr>
                                                     <td>
                                                         {% if sponsor.image %}
-
                                                             <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
                                                         {% endif %}
                                                     </td>
@@ -141,7 +140,5 @@
             {% include 'SkaphandrusAppBundle:Contest:right-sidebar-contest.html.twig' with {'contest': contest} %}
         </div>
     </div>
-
-
 
 {% endblock %}

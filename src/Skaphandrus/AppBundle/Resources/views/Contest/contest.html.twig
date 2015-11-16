@@ -4,12 +4,10 @@
 
 {% block page_description %}{% trans with {'%contest%': contest.name} %}page.contest.meta_tag.description{% endtrans %}{% endblock %}
 
-
 {% block hreflang %}
     <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('contests_contest', {'slug': slugify(contest.name), 'locale': 'pt'}) }}" />
     <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('contests_contest', {'slug': slugify(contest.name), 'locale': 'en'}) }}" />
 {% endblock %}
-
 
 {% set keywords = contest.name %}
 {% set keywords = keywords~', '~("meta_tag.keyword.pictures"|trans) %}
@@ -92,11 +90,8 @@
                                     <dd class="project-people">
                                         {#{% for photographer in photographers[:5] %}#}
                                         {% for photographer in photographers %}
-
                                             <a href="{{ url_to_user(photographer) }}">
-
-
-                                                <img alt="image" class="img-circle" src="{{ photographer.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
+                                                <img alt="{{ photographer }}" class="img-circle" src="{{ photographer.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
                                             </a>
                                         {% endfor %}
                                         <a href="{{ url_to_contest_photographers(contest) }}">
@@ -278,9 +273,9 @@
 
                                                                         {% if judge.description %}
                                                                             <p>{{ judge.description|truncate(250, true) }} <a href="{{ url_to_user(judge.fosUser) }}">{{ "page.contest.table.read_more"|trans }}</a></p>
-                                                                        {% else %}
+                                                                            {% else %}
                                                                             <p>{{ judge.fosUser.settings.observations|truncate(250, true) }} <a href="{{ url_to_user(judge.fosUser) }}">{{ "page.contest.table.read_more"|trans }}</a></p>
-                                                                        {% endif %}
+                                                                            {% endif %}
                                                                     </td>
                                                                 </tr>
                                                             {% endfor %}
@@ -329,12 +324,12 @@
             <div class="wrapper wrapper-content project-manager hidden-sm hidden-xs hidden-md" data-spy="affix" data-offset-top="155" style="top: 0; max-width: 250px;">
                 <h2>{{ contest.name }}</h2>
                 <!--<img src="{{ contest.image }}" class="img-responsive">-->
-                <img alt="image"  src="{{ contest.getWebPathImage | imagine_filter('sk_widen_400') }}" class="img-responsive">
+                <img alt="{{ contest.name }}" src="{{ contest.getWebPathImage | imagine_filter('sk_widen_400') }}" class="img-responsive">
                 <p class="">
                     {{ contest.translate.description|raw }}
                 </p>
                 <div class="row">
-                    <nav role="navigation" id="navbar-sidebar">
+                    <nav id="navbar-sidebar">
                         <ul class="nav nav-pills nav-stacked">
                             <li><a href="#categories">{{ "page.contest.menu.categories"|trans }}</a></li>
                             <li><a href="#awards">{{ "page.contest.menu.awards"|trans }}</a></li>

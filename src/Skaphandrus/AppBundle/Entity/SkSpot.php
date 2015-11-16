@@ -64,7 +64,7 @@ class SkSpot {
     private $photosInSpot;
 
     /**
-     * @var Collection
+     * @var \Doctrine\Common\Collections\Collection
      */
     private $business;
 

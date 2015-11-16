@@ -39,8 +39,8 @@
 
 
 {% block hreflang %}
-<link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('photos', {'locale': 'pt'}) }}" />
-<link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('photos', {'locale': 'en'}) }}" />
+    <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('photos', {'locale': 'pt'}) }}" />
+    <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('photos', {'locale': 'en'}) }}" />
 {% endblock %}
 
 
@@ -368,7 +368,7 @@
         {% elseif params.kingdom is defined %}
             <h1>{% trans with {'%type%': "page.photos.keyword.kingdom"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.kingdom.name} %} page.photos.h1.title {% endtrans %}</h1>
 
-        {#-----spots-----#}
+            {#-----spots-----#}
         {% elseif params.spot is defined %}
             <h1>{% trans with {'%type%': "page.photos.keyword.spot"|trans, '%value%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.h1.title {% endtrans %}</h1>
         {% elseif params.location is defined %}
@@ -378,17 +378,17 @@
         {% elseif params.country is defined %}
             <h1>{% trans with {'%type%': "page.photos.keyword.country"|trans, '%value%': pagination[0].spot.location.region.country} %} page.photos.h1.title {% endtrans %}</h1>
 
-        {#-----fosuser-----#}
+            {#-----fosuser-----#}
         {% elseif params.fosUser is defined %}
             <h1>{% trans with {'%type%': "page.photos.keyword.fosUser"|trans, '%value%': pagination[0].fosUser} %} page.photos.h1.title {% endtrans %}</h1>
 
-        {#-----someting else-----#}
+            {#-----someting else-----#}
         {% else %}
             <h1>{{ "page.photos_something_else.h1.title"|trans }}</h1>
         {% endif %}
-        
+
         <br>
-        
+
         <div class="row grid">
             {% for photo in pagination %}
                 <div class="col-lg-4 grid-item">
@@ -398,7 +398,7 @@
                             <div class="ibox-content ibox-content no-padding border-left-right">
                                 <meta itemprop="name" content="{{photo.title}}">
                                 <a href="{{ url_to_photo(photo) }}" title="{{ photo.title }}">
-                                    <img itemprop="image" alt="image" class="img-responsive" src="{{ photo.getWebPath | imagine_filter('sk_widen_400') }}" />
+                                    <img itemprop="image" alt="{{photo.title}}" class="img-responsive" src="{{ photo.getWebPath | imagine_filter('sk_widen_400') }}" />
                                 </a>
                             </div>
                             <div class="ibox-content profile-content">

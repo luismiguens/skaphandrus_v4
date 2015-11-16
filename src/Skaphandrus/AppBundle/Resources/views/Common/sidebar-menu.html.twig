@@ -1,8 +1,5 @@
 
-
-
-
-<nav class="navbar-default navbar-static-side" role="navigation">
+<nav class="navbar-default navbar-static-side">
     <div class="sidebar-collapse">
         <!-- close button-->
         {% if layout == 'content' %}
@@ -15,7 +12,7 @@
                     <div class="dropdown profile-element"> 
                         <span>
                             {% if app.user.settings.getWebPath is not empty %}
-                                <img alt="image" class="img-circle" src="{{ app.user.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_48') }}" />
+                                <img alt="{{ app.user.name }}" class="img-circle" src="{{ app.user.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_48') }}" />
                             {% endif %}
                         </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -74,10 +71,8 @@
                 <a href="{{ path('points_admin') }}"><i class="fa fa-star"></i> <span class="nav-label">{{ "points_admin"|trans }} </span>{#<span class="label label-warning pull-right">16/24</span>#}</a>
             </li>
 
-
             {#contests list#}
             {{ render(controller('SkaphandrusAppBundle:Common:skContestsList')) }}
-
 
             {% if is_granted("ROLE_ADMIN") %}
 

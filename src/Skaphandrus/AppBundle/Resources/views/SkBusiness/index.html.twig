@@ -10,7 +10,6 @@
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.tableTools.min.js') }}"></script>
 {% endblock %}
 
-
 {% block stylesheets %}
     {{ parent() }}
     <!-- Data Tables -->
@@ -22,7 +21,6 @@
 {% block heading_title %}
     {{ "form.business.h1.title"|trans }}
 {% endblock %}
-
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
@@ -39,7 +37,6 @@
     {{ "form.business.text.description"|trans }}
 {% endblock %}
 
-
 {% block body -%}
 
     <table id="datatable-list" class="table display table-striped table-bordered table-hover " cellspacing="0" width="100%">
@@ -48,14 +45,14 @@
                 <th>{{ "form.business.label.name"|trans }}</th>
                 <th>{{ "form.business.label.laocation"|trans }}</th>
                 <th>{{ "form.business.label.country"|trans }}</th>
-                {#<th>{{ "form.business.label.founded_at"|trans }}</th>
-                <th>{{ "form.business.label.currency"|trans }}</th>
-                <th>{{ "form.business.label.language"|trans }}</th>
-                <th>{{ "form.business.label.description"|trans }}</th>
-                <th>{{ "form.business.label.mission"|trans }}</th>
-                <th>{{ "form.business.label.awards"|trans }}</th>
-                <th>{{ "form.business.label.picture"|trans }}</th>
-                <th>{{ "form.business.label.created_at"|trans }}</th>#}
+                    {#<th>{{ "form.business.label.founded_at"|trans }}</th>
+                    <th>{{ "form.business.label.currency"|trans }}</th>
+                    <th>{{ "form.business.label.language"|trans }}</th>
+                    <th>{{ "form.business.label.description"|trans }}</th>
+                    <th>{{ "form.business.label.mission"|trans }}</th>
+                    <th>{{ "form.business.label.awards"|trans }}</th>
+                    <th>{{ "form.business.label.picture"|trans }}</th>
+                    <th>{{ "form.business.label.created_at"|trans }}</th>#}
                 <th>{{ "form.common.label.actions"|trans }}</th>
             </tr>
         </thead>
@@ -111,7 +108,6 @@
             {% endfor %}
         </tbody>
     </table>
-
 
     <a class="btn btn-primary" href="{{ path('business_admin_new') }}">
         <i class="fa fa-pencil"></i>  {{ "form.business.btn.add"|trans }}

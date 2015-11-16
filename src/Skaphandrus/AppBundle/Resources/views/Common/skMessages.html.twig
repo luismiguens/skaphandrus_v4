@@ -2,14 +2,14 @@
 
 <li class="dropdown">
     <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-         <i class="fa fa-envelope"></i>  <span class="label label-warning">{{ fos_message_nb_unread() }}</span>
+        <i class="fa fa-envelope"></i>  <span class="label label-warning">{{ fos_message_nb_unread() }}</span>
     </a>
     <ul class="dropdown-menu dropdown-messages">
         {% for notification in message_notifications %}
             <li>
                 <div class="dropdown-messages-box">
                     <a href="{{url_to_user(notification.userFrom)}}" class="pull-left">
-                      {# <img alt="image" class="img-circle" src="{{ notification.userFrom.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}" />#}
+                        {# <img alt="image" class="img-circle" src="{{ notification.userFrom.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}" />#}
                     </a>
                     <div class="media-body ">
                         <small class="pull-right text-navy">{{notification.createdAt|time_diff}}</small>

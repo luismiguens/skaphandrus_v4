@@ -1,10 +1,10 @@
-<nav class="navbar navbar-inverse navbar-static-top {% if color is defined %}{{ color }}{% endif %}" role="navigation" style="margin-bottom: 0">
+<nav class="navbar navbar-inverse navbar-static-top {% if color is defined %}{{ color }}{% endif %}" style="margin-bottom: 0">
     <div class="navbar-header">
         <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-        <form role="search" class="navbar-form-custom" action="{{ path('search') }}" {#itemprop="potentialAction" itemscope itemtype="http://schema.org/SearchAction"#}>
+        <form class="navbar-form-custom" action="{{ path('search') }}" {#itemprop="potentialAction" itemscope itemtype="http://schema.org/SearchAction"#}>
             <div class="form-group">
                 {#                <meta itemprop="target" content="http://www.skaphandrus.com/search?q={string}" />#}
-                <input {#itemprop="query-input"#} type="text" placeholder="{{ "pages.common.label.search_something"|trans }}" class="form-control" name="string" id="string" minlength="3">
+                <input {#itemprop="query-input"#} type="text" placeholder="{{ "pages.common.label.search_something"|trans }}" class="form-control" name="string" id="string">
             </div>
         </form>
 

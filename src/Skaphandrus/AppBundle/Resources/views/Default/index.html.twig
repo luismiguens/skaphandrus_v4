@@ -218,61 +218,56 @@
                             </thead>
                             <tbody>
                                 {% for contest in contests %}
-                                
-                                
-                               
-                                <tr>
-                                    <td class="text-navy">
-                                        <meta itemprop="name" content="{{ contest }}" />
-                                <meta itemprop="startDate" content="{{ contest.beginAt|date("Y-m-d") }}" />
-                                <meta itemprop="endDate" content="{{ contest.endAt|date("Y-m-d") }}" />
-                                <span itemprop="location" itemscope itemtype="http://schema.org/Place">
-                                    <meta itemprop="name" content="Azores" />
-                                    <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-                                        <meta itemprop="name" content="Azores" />
-                                    </span>
-                                </span>
-                                        
-                                        {{link_to_contest(contest)}}</td>
-                                    <td>
-                                         {# Calculate the project completeness #}
-                                {% if "now"|date("U") < contest.beginAt|date("U") %}
-                                    {% set percentage = 0 %}
-                                    {% set contest_status = 'not-started' %}
-                                    {% set button_class = 'default' %}
-                                    <meta itemprop="eventStatus" content="not-started" />
-                                {% elseif "now"|date("U") < contest.endAt|date("U") %}
-                                    {% set time_length = contest.endAt|date("U") - contest.beginAt|date("U") %}
-                                    {% set current_time_length = "now"|date("U") - contest.beginAt|date("U") %}
-                                    {% set percentage = ( (current_time_length * 100) / time_length )|number_format %}
-                                    {% set contest_status = 'active' %}
-                                    {% set button_class = 'warning' %}
-                                    <meta itemprop="eventStatus" content="active" />
-                                {% else %}
-                                    {% set percentage = 100 %}
-                                    {% set contest_status = 'completed' %}
-                                    {% set button_class = 'primary' %}
-                                    <meta itemprop="eventStatus" content="completed" />
-                                {% endif %}
-                                        <span class="label label-{{ button_class }}"><small>{{ ("page.contests.label.status_" ~ contest_status)|trans }}</small></span></td>
-                                    <td>{{ contest.photos|length }}</td>
-                                    <td>
-                                        {% for award in contest.awards %}
-                                    <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                                        <meta itemprop="name" content="{{ award.name }}" />
-                                        <meta itemprop="category" content="{{ award.category }}" />
-                                        {% for sponsor in award.sponsor %}
-                                            <span itemprop="seller" itemscope itemtype="http://schema.org/Person">
-                                                <meta itemprop="name" content="{{ sponsor.name }}" />
+                                    <tr>
+                                        <td class="text-navy">
+                                            <meta itemprop="name" content="{{ contest }}" />
+                                            <meta itemprop="startDate" content="{{ contest.beginAt|date("Y-m-d") }}" />
+                                            <meta itemprop="endDate" content="{{ contest.endAt|date("Y-m-d") }}" />
+                                            <span itemprop="location" itemscope itemtype="http://schema.org/Place">
+                                                <meta itemprop="name" content="Azores" />
+                                                <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+                                                    <meta itemprop="name" content="Azores" />
+                                                </span>
                                             </span>
-                                        {% endfor %}
-                                    </span>
+
+                                            {{link_to_contest(contest)}}</td>
+                                        <td>
+                                            {# Calculate the project completeness #}
+                                            {% if "now"|date("U") < contest.beginAt|date("U") %}
+                                                {% set percentage = 0 %}
+                                                {% set contest_status = 'not-started' %}
+                                                {% set button_class = 'default' %}
+                                                <meta itemprop="eventStatus" content="not-started" />
+                                            {% elseif "now"|date("U") < contest.endAt|date("U") %}
+                                                {% set time_length = contest.endAt|date("U") - contest.beginAt|date("U") %}
+                                                {% set current_time_length = "now"|date("U") - contest.beginAt|date("U") %}
+                                                {% set percentage = ( (current_time_length * 100) / time_length )|number_format %}
+                                                {% set contest_status = 'active' %}
+                                                {% set button_class = 'warning' %}
+                                                <meta itemprop="eventStatus" content="active" />
+                                            {% else %}
+                                                {% set percentage = 100 %}
+                                                {% set contest_status = 'completed' %}
+                                                {% set button_class = 'primary' %}
+                                                <meta itemprop="eventStatus" content="completed" />
+                                            {% endif %}
+                                            <span class="label label-{{ button_class }}"><small>{{ ("page.contests.label.status_" ~ contest_status)|trans }}</small></span></td>
+                                        <td>{{ contest.photos|length }}</td>
+                                        <td>
+                                            {% for award in contest.awards %}
+                                                <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                                    <meta itemprop="name" content="{{ award.name }}" />
+                                                    <meta itemprop="category" content="{{ award.category }}" />
+                                                    {% for sponsor in award.sponsor %}
+                                                        <span itemprop="seller" itemscope itemtype="http://schema.org/Person">
+                                                            <meta itemprop="name" content="{{ sponsor.name }}" />
+                                                        </span>
+                                                    {% endfor %}
+                                                </span>
+                                            {% endfor %}
+                                            {{ contest.awards|length }}</td>
+                                    </tr>
                                 {% endfor %}
-                                        {{ contest.awards|length }}</td>
-                                </tr>
-                            {% endfor %}
-
-
                             </tbody>
                         </table>
                     </div>
@@ -297,8 +292,6 @@
             <!-- end activity -->
         </div>
     </div>
-
-
 
 {% endblock %}
 

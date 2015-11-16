@@ -143,17 +143,22 @@
                         <input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
                         <table class="footable table" data-page-size="50" data-filter=#filter>
                             <thead>
-                            <th>{{ "page.locations_home.label.country"|trans }}</th>
-                            <th>{{ "page.locations_home.label.spots"|trans }}</th>
-                            <th>{{ "page.locations_home.label.photos"|trans }}</th>
+                                <tr>
+                                    <th>{{ "page.locations_home.label.country"|trans }}</th>
+                                    <th>{{ "page.locations_home.label.spots"|trans }}</th>
+                                    <th>{{ "page.locations_home.label.photos"|trans }}</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 {% for c in countries %}
-                                <span itemscope itemtype="http://schema.org/Country">
-                                    <meta itemprop="name" content="{{ c }}" />
-                                </span>
+                                
                                 <tr>
-                                    <td>{{ link_to_country(c) }}</td>
+                                    <td>
+                                        {{ link_to_country(c) }}
+                                        <span itemscope itemtype="http://schema.org/Country">
+                                            <meta itemprop="name" content="{{ c }}" />
+                                        </span>
+                                    </td>
                                     <td>{{ c.spotsCount }}</td>
                                     <td>
                                         {% if c.photosCount > 0 %}

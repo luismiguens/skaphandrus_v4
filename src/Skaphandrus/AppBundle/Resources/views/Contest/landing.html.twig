@@ -9,7 +9,6 @@
     <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('contests_landing_page', {'locale': 'en'}) }}" />
 {% endblock %}
 
-
 {% set keywords = ("meta_tag.keyword.pictures"|trans) %}
 {% set keywords = keywords~', '~("meta_tag.keyword.images"|trans) %}
 {% set keywords = keywords~', '~("meta_tag.keyword.photos"|trans) %}
@@ -65,7 +64,7 @@
                                     <td class="project-logo">
                                         <a href="{{ url_to_contest(contest) }}">
                                             {% if contest.image %}    
-                                                <img alt="logo" class="img-rounded" src="{{ contest.getWebPathLogo | imagine_filter('sk_widen_160') }} ">
+                                                <img alt="{{ contest.name }}" class="img-rounded" src="{{ contest.getWebPathLogo | imagine_filter('sk_widen_160') }} ">
                                             {% endif %}
                                         </a>
                                     </td>
@@ -108,7 +107,6 @@
                                         </a>
                                         {#                                        {% endif %}#}
                                     </td>
-
 
                                     <td class="project-actions">
                                         {% if contest.isInProgress %}

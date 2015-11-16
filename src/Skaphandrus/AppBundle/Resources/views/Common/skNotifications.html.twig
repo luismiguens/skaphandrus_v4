@@ -1,6 +1,5 @@
 {# empty Twig template #}
 
-
 <li class="dropdown">
     <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
         <i class="fa fa-bell"></i>  <span class="label label-primary">{{notification_unread}}</span>
@@ -11,8 +10,7 @@
             <li>
                 <div class="dropdown-messages-box">
                     <a href="{{url_to_user(notification.userFrom)}}" class="pull-left">
-                        
-                       {# <img alt="image" class="img-circle" src="{{ notification.userFrom.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}" />#}
+                        {# <img alt="image" class="img-circle" src="{{ notification.userFrom.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}" />#}
                     </a>
                     <div class="media-body ">
                         <small class="pull-right text-navy">{{notification.createdAt|time_diff}}</small>

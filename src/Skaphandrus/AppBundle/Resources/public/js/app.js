@@ -103,4 +103,8 @@ $(document).ready(function () {
         $('#skaphandrus_appbundle_fosuser_address_location').autocompleter({url_list: '/en/ajax_search_location/', url_get: '/en/ajax_get_location/'});
     }
     
+    // Formulário SkBusinessDiveSpot
+    if ($('#skaphandrus_appbundle_skbusiness_spot_0_name').length) {
+        $('#skaphandrus_appbundle_skbusiness_spot_0_name').autocompleter({url_list: '/en/ajax_search_spot/', url_get: '/en/ajax_search_spot/'});
+    }
 });

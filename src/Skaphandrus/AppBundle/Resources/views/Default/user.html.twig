@@ -5,8 +5,8 @@
 {% block page_description %}{{ user.settings.observations [0:160]}}{% endblock %}
 
 {% block hreflang %}
-<link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('user', {'id':user.id, 'locale': 'pt'}) }}" />
-<link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('user', {'id':user.id, 'locale': 'en'}) }}" />
+    <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('user', {'id':user.id, 'locale': 'pt'}) }}" />
+    <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('user', {'id':user.id, 'locale': 'en'}) }}" />
 {% endblock %}
 
 
@@ -79,7 +79,7 @@
                     </div>
                     <div>
                         <div class="ibox-content no-padding border-left-right">
-                            <img itemprop="image" alt="image" class="img-responsive" src="{{ user.settings.getWebPath | imagine_filter('sk_widen_590') }}" />
+                            <img itemprop="image" alt="{{ user.personal.name }}" class="img-responsive" src="{{ user.settings.getWebPath | imagine_filter('sk_widen_590') }}" />
                         </div>
                         <div class="ibox-content profile-content">
                             <h4><strong>{{ user.personal.name }}</strong></h4>
@@ -208,20 +208,22 @@
                                             <input type="text" class="form-control input-sm m-b-xs" id="filter-species" placeholder="Search in table">
                                             <table class="footable footable-species table" data-page-size="50" data-filter=#filter-species>
                                                 <thead>
-                                                <th>{{ "page.location.table.name"|trans }}</th>
-                                                <th>{{ "page.user.table.num_photos"|trans }}</th>
+                                                    <tr>
+                                                        <th>{{ "page.location.table.name"|trans }}</th>
+                                                        <th>{{ "page.user.table.num_photos"|trans }}</th>
+                                                    </tr>
                                                 </thead>
                                                 <tbody>
                                                     {% for s in species %}
-                                                    <tr>
-                                                        <td>{{ link_to_species(s) }}</td>
-                                                        <td>
-                                                            <a href="{{ path('photos', {'fosUser': user.id, 'species': s.id}) }}">
-                                                                {{ s.photosInSpecies }}
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                {% endfor %}
+                                                        <tr>
+                                                            <td>{{ link_to_species(s) }}</td>
+                                                            <td>
+                                                                <a href="{{ path('photos', {'fosUser': user.id, 'species': s.id}) }}">
+                                                                    {{ s.photosInSpecies }}
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
@@ -241,16 +243,20 @@
                                             <input type="text" class="form-control input-sm m-b-xs" id="filter-spots" placeholder="Search in table">
                                             <table class="footable footable-spots table" data-page-size="50" data-filter=#filter-spots>
                                                 <thead>
-                                                <th>{{ "page.location.table.name"|trans }}</th>
-                                                <th>{{ "page.user.table.num_photos"|trans }}</th>
+                                                    <tr>
+                                                        <th>{{ "page.location.table.name"|trans }}</th>
+                                                        <th>{{ "page.user.table.num_photos"|trans }}</th>
+                                                    </tr>
                                                 </thead>
                                                 <tbody>
                                                     {% for s in spots %}
-                                                        <span itemscope itemtype="http://schema.org/TouristAttraction ">
-                                                            <meta itemprop="name" content="{{ s }}" />
-                                                        </span>
                                                         <tr>
-                                                            <td>{{ link_to_spot(s) }}</td>
+                                                            <td>
+                                                                {{ link_to_spot(s) }}
+                                                                <span itemscope itemtype="http://schema.org/TouristAttraction ">
+                                                                    <meta itemprop="name" content="{{ s }}" />
+                                                                </span>
+                                                            </td>
                                                             <td>
                                                                 <a href="{{ path('photos', {'fosUser': user.id, 'spot': s.id}) }}">
                                                                     {{ s.photosInSpot }}

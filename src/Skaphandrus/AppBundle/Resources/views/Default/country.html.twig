@@ -6,8 +6,8 @@
 
 
 {% block hreflang %}
-<link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('country', {'slug':slugify(country.getCountryName('pt')), 'locale': 'pt'}) }}" />
-<link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('country', {'slug':slugify(country.getCountryName('en')), 'locale': 'en'}) }}" />
+    <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('country', {'slug':slugify(country.getCountryName('pt')), 'locale': 'pt'}) }}" />
+    <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('country', {'slug':slugify(country.getCountryName('en')), 'locale': 'en'}) }}" />
 {% endblock %}
 
 
@@ -164,25 +164,29 @@
                                         <input type="text" class="form-control input-sm m-b-xs" id="filter-locations" placeholder="Search in table">
                                         <table class="footable-locations table" data-page-size="50" data-filter=#filter-locations>
                                             <thead>
-                                            <th>{{ "page.location.table.name"|trans }}</th>
-                                                {#                                                <th>{{ "page.country.label.spots"|trans }}</th>#}
-                                            <th>{{ "page.country.label.photos"|trans }}</th>
+                                                <tr>
+                                                    <th>{{ "page.location.table.name"|trans }}</th>
+                                                        {#                                                <th>{{ "page.country.label.spots"|trans }}</th>#}
+                                                    <th>{{ "page.country.label.photos"|trans }}</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
                                                 {% for l in locations %}
-                                                <span itemscope itemtype="http://schema.org/City ">
-                                                    <meta itemprop="name" content="{{ l }}" />
-                                                </span>
-                                                <tr>
-                                                    <td>{{ link_to_location(l, country) }}</td>
-                                                    {#<td>{{ l.spotsCount }}</td>#}
-                                                    <td>
-                                                        <a href="{{ path('photos', {'location': l.id}) }}">
-                                                            {{ l.photosInLocation }}
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            {% endfor %}
+                                                    <tr>
+                                                        <td>
+                                                            {{ link_to_location(l, country) }}
+                                                            <span itemscope itemtype="http://schema.org/City ">
+                                                                <meta itemprop="name" content="{{ l }}" />
+                                                            </span>
+                                                        </td>
+                                                        {#<td>{{ l.spotsCount }}</td>#}
+                                                        <td>
+                                                            <a href="{{ path('photos', {'location': l.id}) }}">
+                                                                {{ l.photosInLocation }}
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
                                             </tbody>
                                             <tfoot>
                                                 <tr>
@@ -200,25 +204,28 @@
                                         <input type="text" class="form-control input-sm m-b-xs" id="filter-species" placeholder="Search in table">
                                         <table class="footable footable-species table" data-page-size="50" data-filter=#filter-species>
                                             <thead>
-                                            <th>{{ "page.location.table.name"|trans }}</th>
-                                            <th>{{ "page.country.table.num_photos"|trans }}</th>
+                                                <tr>
+                                                    <th>{{ "page.location.table.name"|trans }}</th>
+                                                    <th>{{ "page.country.table.num_photos"|trans }}</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
                                                 {% for sp in species %}
-                                                <span itemprop="additionalProperty" itemscope itemtype="http://schema.org/PropertyValue">
-                                                    <meta itemprop="name" content="sea animal" />
-                                                    <meta itemprop="value" content="{{ sp }}" />
-                                                </span>
-                                                <tr>
-                                                    <td>{{ link_to_species(sp) }}</td>
-                                                    <td>
-                                                        <a href="{{ path('photos', {'species': sp.id, 'country': country.id}) }}">
-                                                            {{ sp.photosInSpecies }}
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                </tr>
-                                            {% endfor %}
+                                                    <tr>
+                                                        <td>
+                                                            {{ link_to_species(sp) }}
+                                                            <span itemprop="additionalProperty" itemscope itemtype="http://schema.org/PropertyValue">
+                                                                <meta itemprop="name" content="sea animal" />
+                                                                <meta itemprop="value" content="{{ sp }}" />
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ path('photos', {'species': sp.id, 'country': country.id}) }}">
+                                                                {{ sp.photosInSpecies }}
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
                                             </tbody>
                                             <tfoot>
                                                 <tr>
@@ -240,24 +247,27 @@
                                         <input type="text" class="form-control input-sm m-b-xs" id="filter-photographers" placeholder="Search in table">
                                         <table class="footable footable-photographers table" data-page-size="50" data-filter=#filter-photographers>
                                             <thead>
-                                            <th>{{ "page.location.table.name"|trans }}</th>
-                                            <th>{{ "page.location.table.num_photos"|trans }}</th>
+                                                <tr>
+                                                    <th>{{ "page.location.table.name"|trans }}</th>
+                                                    <th>{{ "page.location.table.num_photos"|trans }}</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
                                                 {% for p in photographers %}
-                                                <span itemscope itemtype="http://schema.org/Person">
-                                                    <meta itemprop="name" content="{{ p.fosUser }}" />
-                                                </span>
-                                                <tr>
-                                                    <td>{{ link_to_user(p.fosUser) }}</td>
-                                                    <td>
-                                                        <a href="{{ path('photos', {'fosUser': p.fosUser.id, 'country': country.id}) }}">
-                                                            {{ p.photosInUser }}
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                </tr>
-                                            {% endfor%}
+                                                    <tr>
+                                                        <td>
+                                                            {{ link_to_user(p.fosUser) }}
+                                                            <span itemscope itemtype="http://schema.org/Person">
+                                                                <meta itemprop="name" content="{{ p.fosUser }}" />
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ path('photos', {'fosUser': p.fosUser.id, 'country': country.id}) }}">
+                                                                {{ p.photosInUser }}
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor%}
                                             </tbody>
                                             <tfoot>
                                                 <tr>

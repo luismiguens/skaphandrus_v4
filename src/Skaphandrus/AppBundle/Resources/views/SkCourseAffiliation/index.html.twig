@@ -54,7 +54,7 @@
                 <tr>
                     <td>
                         {% if entity.image %}
-                            <img alt="image" class="thumbnail" src="{{ entity.getWebPath | imagine_filter('sk_widen_75') }}"/>
+                            <img alt="{{ entity.initials }}" class="thumbnail" src="{{ entity.getWebPath | imagine_filter('sk_widen_75') }}"/>
                         {% endif %}
                     </td>
                     <td>{{ entity.initials }}</a></td>

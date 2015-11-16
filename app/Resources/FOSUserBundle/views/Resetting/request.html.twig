@@ -8,7 +8,7 @@
     {% if invalid_username is defined %}
         <div class="alert alert-danger">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</div>
     {% endif %}
-    <form class="fos_user_resetting_request m-t" role="form" action="{{ path('fos_user_resetting_send_email') }}" method="POST">
+    <form class="fos_user_resetting_request m-t" action="{{ path('fos_user_resetting_send_email') }}" method="POST">
         <div class="form-group">
             <input type="text" class="form-control" id="username" name="username" placeholder="{{ 'resetting.request.email'|trans }}" required="required">
         </div>

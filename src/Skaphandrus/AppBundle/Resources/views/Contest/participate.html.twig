@@ -4,9 +4,8 @@
 {% block page_description %}description{% endblock %}
 
 {% block heading_title %}
-   {{ "page.contest_participate.h1.title"|trans }}
+    {{ "page.contest_participate.h1.title"|trans }}
 {% endblock %}
-
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
@@ -15,9 +14,6 @@
         <li class="active"><strong>{{ contest.name}}</strong></li>
     </ol>
 {% endblock %}
-
-
-
 
 {% block stylesheets %}
     {{ parent() }}
@@ -59,10 +55,10 @@
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             $(".sortable-list").sortable({
                 connectWith: ".connectList",
-                receive: function( event, ui ) {
+                receive: function (event, ui) {
                     // ui.item.attr('id') -> photo id
                     // $(this).attr('id') -> category id
                     if ($(this).attr('id') != 'own-photos') {
@@ -71,7 +67,7 @@
                         });
                     }
                 },
-                remove: function( event, ui ) {
+                remove: function (event, ui) {
                     if ($(this).attr('id') != 'own-photos') {
                         $.ajax({
                             url: "/{{ app.request.locale }}/category/" + $(this).attr('id') + "/remove-photo/" + ui.item.attr('id')
@@ -90,9 +86,9 @@
                 <h3>{{ "page.contest_participate.h3.your_photos"|trans }}</h3>
                 <ul id="own-photos" class="sortable-list connectList own-photos agile-list">
                     {% for photo in userPhotos %}
-                    <li id="{{ photo.id }}">
-                        <img src="{{ photo.webPath | imagine_filter('sk_thumbnail_outbound_110') }}" alt="{{ photo.title }}" title="{{ photo.title }}">
-                    </li>
+                        <li id="{{ photo.id }}">
+                            <img src="{{ photo.webPath | imagine_filter('sk_thumbnail_outbound_110') }}" alt="{{ photo.title }}" title="{{ photo.title }}">
+                        </li>
                     {% endfor %}
                 </ul>
                 <div class="clearfix"></div>
@@ -105,26 +101,26 @@
                 <h3>{{ "page.contest_participate.h3.categories"|trans }}</h3>
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                     {% for category in categories %}
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="heading-{{ category.id }}">
-                            <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ category.id }}" aria-expanded="true" aria-controls="collapse-{{ category.id }}">
-                                    {{ category.translate.name }}
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapse-{{ category.id }}" class="panel-collapse collapse{% if loop.index == 1 %} in{% endif %}" role="tabpanel" aria-labelledby="heading-{{ category.id }}">
-                            <div class="panel-body">
-                                <ul id="{{ category.id }}" class="sortable-list connectList contest-photos agile-list">
-                                    {% for photo in categoryPhotos[category.id] %}
-                                        <li id="{{ photo.id }}">
-                                            <img src="{{ photo.webPath | imagine_filter('sk_thumbnail_outbound_110') }}" alt="{{ photo.title }}" title="{{ photo.title }}">
-                                        </li>
-                                    {% endfor %}
-                                </ul>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="heading-{{ category.id }}">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ category.id }}" aria-expanded="true" aria-controls="collapse-{{ category.id }}">
+                                        {{ category.translate.name }}
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapse-{{ category.id }}" class="panel-collapse collapse{% if loop.index == 1 %} in{% endif %}" role="tabpanel" aria-labelledby="heading-{{ category.id }}">
+                                <div class="panel-body">
+                                    <ul id="{{ category.id }}" class="sortable-list connectList contest-photos agile-list">
+                                        {% for photo in categoryPhotos[category.id] %}
+                                            <li id="{{ photo.id }}">
+                                                <img src="{{ photo.webPath | imagine_filter('sk_thumbnail_outbound_110') }}" alt="{{ photo.title }}" title="{{ photo.title }}">
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     {% endfor %}
                 </div>
             </div>

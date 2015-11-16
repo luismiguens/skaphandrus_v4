@@ -5,8 +5,8 @@
 {% block page_description %}{{ photo.description [0:160]}}{% endblock %}
 
 {% block hreflang %}
-<link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('photo_no_slug', {'id':photo.id, 'locale': 'pt'}) }}" />
-<link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('photo_no_slug', {'id':photo.id, 'locale': 'en'}) }}" />
+    <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('photo_no_slug', {'id':photo.id, 'locale': 'pt'}) }}" />
+    <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('photo_no_slug', {'id':photo.id, 'locale': 'en'}) }}" />
 {% endblock %}
 
 
@@ -27,7 +27,7 @@
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}">
-    <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+    <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet" />
     <style>
         .ui-autocomplete {
             z-index: 2500 !important;
@@ -176,7 +176,7 @@
                             <ul class="tag-list" style="padding: 0;">
                                 {% for keyword in photo.keyword %}
                                     <li itemprop="keywords"><a href="">{{ keyword.keyword }}</a></li>
-                                {% endfor %}
+                                    {% endfor %}
                             </ul>
                             <div class="clearfix"></div>
                         {% endif %}

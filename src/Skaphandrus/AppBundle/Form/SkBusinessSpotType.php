@@ -14,10 +14,19 @@ class SkBusinessSpotType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
+                ->add('spot','collection', array(
+                    'type' => new SkBusinessDiveSpotType(),
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'prototype' => true,
+                    'by_reference' => false,
+                    'required' => false,
+                    'label' => 'form.business.label.dive_spot'
+                ))
                 ->add('divePrice', 'collection', array(
                     'type' => new SkBusinessDivePriceType(),
                     'allow_add' => true,
-                    'allow_delete'=> true,
+                    'allow_delete' => true,
                     'prototype' => true,
                     'by_reference' => false,
                     'required' => false,

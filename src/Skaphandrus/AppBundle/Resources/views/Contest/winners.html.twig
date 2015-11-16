@@ -9,8 +9,6 @@
     <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('contests_winners', {'contest_slug': slugify(contest.name), 'locale': 'en'}) }}" />
 {% endblock %}
 
-
-
 {% set keywords = contest.name %}
 {% set keywords = keywords~', '~("meta_tag.keyword.winners"|trans) %}
 {% set keywords = keywords~', '~("meta_tag.keyword.pictures"|trans) %}
@@ -104,7 +102,7 @@
                                                     <div>
                                                         <div class="ibox-content ibox-content no-padding border-left-right">
                                                             <a href="{{ url_to_photo(photo) }}" title="{{ photo.title }}">
-                                                                <img alt="image" class="img-responsive" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />
+                                                                <img alt="{{ photo.title }}" class="img-responsive" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />
                                                             </a>
                                                         </div>
                                                         <div class="ibox-content profile-content">
@@ -116,8 +114,6 @@
                                         {% endfor %}    
                                     {% endfor %}
                                 </section>
-
-
 
                                 <section id="awards">
                                     <h2>{{ "page.contest.h2.awards"|trans }}</h2>
@@ -144,9 +140,7 @@
                                                                 {{award.winnerFosUser.name}}
                                                             </a>
 
-                                                            {#      
-                                                                  <h5>{{award.winnerFosUser.name}}</h5>#}
-
+                                                            {#<h5>{{award.winnerFosUser.name}}</h5>#}
 
                                                         {%elseif award.winnerPhoto %}    
                                                             {# <img class="img-rounded" src="{{ award.winnerPhoto.fosUser.settings.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{award.winnerPhoto.fosUser.name}}" title="{{award.winnerPhoto.fosUser.name}}">
@@ -159,7 +153,6 @@
                                                                 {{award.winnerPhoto.fosUser.name}}
                                                             </a>
 
-
                                                             {#<h5>{{award.winnerPhoto.fosUser.name}}</h5>#}
                                                         {% endif %}
                                                     </td>
@@ -169,7 +162,7 @@
                                                     </td>
                                                     <td>
                                                         {% if award.winnerPhoto %}
-                                                            <img alt="image" class="img-responsive" src="{{ award.winnerPhoto.getWebPath | imagine_filter('sk_widen_265') }}" />
+                                                            <img alt="{{ award.winnerPhoto }}" class="img-responsive" src="{{ award.winnerPhoto.getWebPath | imagine_filter('sk_widen_265') }}" />
                                                         {% endif %}
                                                     </td>
                                                 </tr>
@@ -188,8 +181,5 @@
             {% include 'SkaphandrusAppBundle:Contest:right-sidebar-contest.html.twig' with {'contest': contest} %}
         </div>
     </div>
-
-
-
 
 {% endblock %}

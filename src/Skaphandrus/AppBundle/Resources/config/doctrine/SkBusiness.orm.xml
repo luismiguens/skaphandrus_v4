@@ -115,6 +115,17 @@
             </cascade>
         </one-to-many>
         
+        <many-to-many field="spot" target-entity="SkSpot" inversed-by="business" fetch="LAZY">
+            <join-table name="sk_business_spot">
+                <join-columns>
+                    <join-column name="business_id" referenced-column-name="id"/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="spot_id" referenced-column-name="id"/>
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+        
         <!--        <lifecycle-callbacks>
             <lifecycle-callback type="postLoad" method="doStuffOnPostLoad"/>
         </lifecycle-callbacks>-->

@@ -10,7 +10,7 @@
     {% if invalid_username is defined %}
         <div class="alert alert-danger">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</div>
     {% endif %}
-    <form class="fos_user_resetting_reset m-t" role="form" action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST">
+    <form class="fos_user_resetting_reset m-t" action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST">
         {{ form_widget(form) }}
         <input type="submit" class="btn btn-primary block full-width m-b" value="{{ 'resetting.reset.submit'|trans }}" />
     </form>

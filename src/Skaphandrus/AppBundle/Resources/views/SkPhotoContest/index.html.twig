@@ -37,7 +37,7 @@
             <tr>
                 <th>{{ "form.photo_contest.label.name"|trans }}</th>
                 <th>{{ "form.photo_contest.label.image"|trans }}</th>
-{#                <th>{{ "form.photo_contest.label.logo"|trans }}</th>#}
+                    {#                <th>{{ "form.photo_contest.label.logo"|trans }}</th>#}
                 <th>{{ "form.photo_contest.label.end_at"|trans }}</th>
                 <th>{{ "form.common.label.actions"|trans }}</th>
             </tr>
@@ -48,7 +48,7 @@
                     <td>{{ entity.name }}</a></td>
                     <td>
                         {% if entity.image %}
-                            <img alt="image" class="thumbnail" src="{{ entity.getWebPathImage | imagine_filter('sk_widen_75') }}"/>
+                            <img alt="{{ entity.name }}" class="thumbnail" src="{{ entity.getWebPathImage | imagine_filter('sk_widen_75') }}"/>
                         {% endif %}
 
                     </td>
