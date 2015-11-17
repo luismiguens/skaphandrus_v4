@@ -12,6 +12,8 @@
  * @author luis
  */
 
+//http://toni.uebernickel.info/2011/11/25/how-to-extend-form-fields-in-symfony2.html
+
 namespace Skaphandrus\AppBundle\Form\Extensions;
 
 use Symfony\Component\Form\AbstractTypeExtension;
