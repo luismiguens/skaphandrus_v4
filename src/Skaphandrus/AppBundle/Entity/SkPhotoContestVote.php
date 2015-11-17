@@ -5,8 +5,8 @@ namespace Skaphandrus\AppBundle\Entity;
 /**
  * SkPhotoContestVote
  */
-class SkPhotoContestVote
-{
+class SkPhotoContestVote {
+
     /**
      * @var \DateTime
      */
@@ -27,7 +27,6 @@ class SkPhotoContestVote
      */
     private $fosUser;
 
-
     /**
      * Set createdAt
      *
@@ -35,8 +34,7 @@ class SkPhotoContestVote
      *
      * @return SkPhotoContestVote
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
 
         return $this;
@@ -47,8 +45,7 @@ class SkPhotoContestVote
      *
      * @return \DateTime
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->createdAt;
     }
 
@@ -59,8 +56,7 @@ class SkPhotoContestVote
      *
      * @return SkPhotoContestVote
      */
-    public function setPhoto(\Skaphandrus\AppBundle\Entity\SkPhoto $photo)
-    {
+    public function setPhoto(\Skaphandrus\AppBundle\Entity\SkPhoto $photo) {
         $this->photo = $photo;
 
         return $this;
@@ -71,8 +67,7 @@ class SkPhotoContestVote
      *
      * @return \Skaphandrus\AppBundle\Entity\SkPhoto
      */
-    public function getPhoto()
-    {
+    public function getPhoto() {
         return $this->photo;
     }
 
@@ -83,8 +78,7 @@ class SkPhotoContestVote
      *
      * @return SkPhotoContestVote
      */
-    public function setCategory(\Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category)
-    {
+    public function setCategory(\Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category) {
         $this->category = $category;
 
         return $this;
@@ -95,8 +89,7 @@ class SkPhotoContestVote
      *
      * @return \Skaphandrus\AppBundle\Entity\SkPhotoContestCategory
      */
-    public function getCategory()
-    {
+    public function getCategory() {
         return $this->category;
     }
 
@@ -107,8 +100,7 @@ class SkPhotoContestVote
      *
      * @return SkPhotoContestVote
      */
-    public function setFosUser(\Skaphandrus\AppBundle\Entity\FosUser $fosUser)
-    {
+    public function setFosUser(\Skaphandrus\AppBundle\Entity\FosUser $fosUser) {
         $this->fosUser = $fosUser;
 
         return $this;
@@ -119,9 +111,19 @@ class SkPhotoContestVote
      *
      * @return \Skaphandrus\AppBundle\Entity\FosUser
      */
-    public function getFosUser()
-    {
+    public function getFosUser() {
         return $this->fosUser;
     }
-}
 
+    public function doStuffOnPostPersist(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+
+        $entity = $args->getEntity();
+        $entityManager = $args->getEntityManager();
+
+        //enviar notificação para dono da fotografia	
+        //(x votou na tua fotografia y) message_bba
+            
+        
+    }
+
+}

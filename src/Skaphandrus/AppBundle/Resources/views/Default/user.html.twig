@@ -43,6 +43,10 @@
     <link href="{{ asset('bundles/skaphandrusapp/css/plugins/footable/footable.core.css') }}" rel="stylesheet">
 {% endblock %}
 
+{% block heading_title %}
+    {{ user.personal.name }}
+{% endblock %}
+
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
         <li itemprop="itemListElement"><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>

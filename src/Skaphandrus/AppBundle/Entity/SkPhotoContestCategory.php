@@ -8,8 +8,7 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 /**
  * SkPhotoContestCategory
  */
-class SkPhotoContestCategory
-{
+class SkPhotoContestCategory {
 
     use ORMBehaviors\Translatable\Translatable;
 
@@ -37,30 +36,21 @@ class SkPhotoContestCategory
      * @var \Doctrine\Common\Collections\Collection
      */
     private $awards;
-    
-    
+
     /**
      * var used to save winner photos in category
      * @var type 
      */
     private $winnerPhotos;
-    
-    
-    
-    
-    
 
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->photo = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    
-        public function setWinnerPhotos($winnerPhotos)
-    {
+    public function setWinnerPhotos($winnerPhotos) {
         $this->winnerPhotos = $winnerPhotos;
 
         return $this;
@@ -71,18 +61,10 @@ class SkPhotoContestCategory
      *
      * @return string
      */
-    public function getWinnerPhotos()
-    {
+    public function getWinnerPhotos() {
         return $this->winnerPhotos;
     }
 
-    
-    
-    
-    
-    
-    
-    
     /**
      * Set image
      *
@@ -90,8 +72,7 @@ class SkPhotoContestCategory
      *
      * @return SkPhotoContestCategory
      */
-    public function setImage($image)
-    {
+    public function setImage($image) {
         $this->image = $image;
 
         return $this;
@@ -102,8 +83,7 @@ class SkPhotoContestCategory
      *
      * @return string
      */
-    public function getImage()
-    {
+    public function getImage() {
         return $this->image;
     }
 
@@ -112,8 +92,7 @@ class SkPhotoContestCategory
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -124,8 +103,7 @@ class SkPhotoContestCategory
      *
      * @return SkPhotoContestCategory
      */
-    public function setContest(\Skaphandrus\AppBundle\Entity\SkPhotoContest $contest = null)
-    {
+    public function setContest(\Skaphandrus\AppBundle\Entity\SkPhotoContest $contest = null) {
         $this->contest = $contest;
 
         return $this;
@@ -136,8 +114,7 @@ class SkPhotoContestCategory
      *
      * @return \Skaphandrus\AppBundle\Entity\SkPhotoContest
      */
-    public function getContest()
-    {
+    public function getContest() {
         return $this->contest;
     }
 
@@ -148,8 +125,7 @@ class SkPhotoContestCategory
      *
      * @return SkPhotoContestCategory
      */
-    public function addPhoto(\Skaphandrus\AppBundle\Entity\SkPhoto $photo)
-    {
+    public function addPhoto(\Skaphandrus\AppBundle\Entity\SkPhoto $photo) {
         $this->photo[] = $photo;
 
         return $this;
@@ -160,8 +136,7 @@ class SkPhotoContestCategory
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPhoto $photo
      */
-    public function removePhoto(\Skaphandrus\AppBundle\Entity\SkPhoto $photo)
-    {
+    public function removePhoto(\Skaphandrus\AppBundle\Entity\SkPhoto $photo) {
         $this->photo->removeElement($photo);
     }
 
@@ -170,8 +145,7 @@ class SkPhotoContestCategory
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPhoto()
-    {
+    public function getPhoto() {
         return $this->photo;
     }
 
@@ -182,8 +156,7 @@ class SkPhotoContestCategory
      *
      * @return SkPhotoContestCategory
      */
-    public function addAward(\Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award)
-    {
+    public function addAward(\Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award) {
         $this->awards[] = $award;
 
         return $this;
@@ -194,8 +167,7 @@ class SkPhotoContestCategory
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award
      */
-    public function removeAward(\Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award)
-    {
+    public function removeAward(\Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award) {
         $this->awards->removeElement($award);
     }
 
@@ -204,11 +176,10 @@ class SkPhotoContestCategory
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getAwards()
-    {
+    public function getAwards() {
         return $this->awards;
     }
-    
+
     public function getAbsolutePath() {
         return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
     }
@@ -228,19 +199,52 @@ class SkPhotoContestCategory
 // when displaying uploaded doc/image in the view.
         return 'uploads/fotografias';
     }
-    
-    
+
     public function __toString() {
         return $this->getName();
     }
-    
+
     public function getCategoryJoinContestString() {
-        return $this->getName()." » ".$this->getContest();
+        return $this->getName() . " » " . $this->getContest();
     }
 
     public function getName() {
         return $this->translate()->getName();
-        
     }
-    
+
+    public function doStuffOnPostPersist(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+
+        $entity = $args->getEntity();
+        $entityManager = $args->getEntityManager();
+
+        //enviar notificação para quem tem fotografias na categoria
+        //(x tambem adicionou fotografia y a categoria z)	message_baa
+        $query = $entityManager->createQuery(
+                        'SELECT p
+                        FROM SkaphandrusAppBundle:SkPhoto as p
+                        JOIN SkaphandrusAppBundle:SkPhotoContestCategory as c on c.photo = p
+                        JOIN SkaphandrusAppBundle:FosUser as u on u = p.fos_user
+                        WHERE c.category = :category_id'
+                )->setParameter('category_id', $entity->getPhotoContestCategory()->getId());
+        $photos = $query->getResult();
+
+        dump($photos);
+
+        foreach ($photos as $photo) {
+
+            if ($entity->getFosUser()->getId() <> $photo->getFosUser()->getId()) {
+
+                $skSocialNotify = new SkSocialNotify();
+                $skSocialNotify->setUserFrom($entity->getFosUser());
+                $skSocialNotify->setCategoryId($entity->getPhotoContestCategory()->getId());
+                $skSocialNotify->setPhoto($entity);
+                $skSocialNotify->setMessageName("message_baa");
+                $skSocialNotify->setCreatedAt(new \DateTime());
+                $skSocialNotify->setUserTo($photo->getFosUser());
+                $entityManager->persist($skSocialNotify);
+                $entityManager->flush();
+            }
+        }
+    }
+
 }
