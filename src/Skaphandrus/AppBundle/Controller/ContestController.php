@@ -16,33 +16,33 @@ class ContestController extends Controller {
 
         foreach ($contests as $contest) {
             $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
-                ->getPhotographers($contest->getId());
+                    ->getPhotographers($contest->getId());
             $contest->setPhotographers($photographers);
         }
-        
+
         return $this->render('SkaphandrusAppBundle:Contest:landing.html.twig', array(
                     'contests' => $contests
         ));
     }
 
     public function photosAction($contest_slug, $category_slug) {
-        
-           $name = str_replace('-', ' ', $contest_slug);
+
+        $name = str_replace('-', ' ', $contest_slug);
 
         $contest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
                 ->findOneByName($name);
-        
-        
+
+
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $locale = $this->get('request')->getLocale();
 
         $category = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')
                 ->findOneBySlug($contest, $category_slug, $locale);
 
-        
+
         //dump($category);
-        
-        
+
+
         if ($category) {
             if ($category->getContest()->getName() != str_replace('-', ' ', $contest_slug)) {
                 throw $this->createNotFoundException('The category "' . $category_slug . '" does not belong to this contest.');
@@ -66,15 +66,15 @@ class ContestController extends Controller {
         $contest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
                 ->findOneById($contest_id);
 
-       
+
         $userPhotos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
                 ->findPhotosFromUserNotAssociatedToContest($user->getId(), $contest->getId());
-        
+
         $categoryPhotos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
                 ->findPhotosFromUserInContest($user->getId(), $contest->getId());
 
 
-        
+
         return $this->render('SkaphandrusAppBundle:Contest:participate.html.twig', array(
                     'contest' => $contest,
                     'categories' => $contest->getCategories(),
@@ -117,9 +117,9 @@ class ContestController extends Controller {
 
         // Fetch needed entities
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        
-        
-        
+
+
+
         $category = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')
                 ->findOneById($category_id);
         $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
@@ -130,19 +130,34 @@ class ContestController extends Controller {
                 ->findOneBy(array('fosUser' => $user, 'category' => $category));
 
         $em = $this->getDoctrine()->getManager();
-        if ($existing_vote) {
-            $existing_vote->setPhoto($photo);
-            $em->persist($existing_vote);
-            $em->flush();
-        } else {
-            $vote = new SkPhotoContestVote();
-            $vote->setFosUser($user);
-            $vote->setCategory($category);
-            $vote->setPhoto($photo);
-            $vote->setCreatedAt(new \DateTime());
-            $em->persist($vote);
-            $em->flush();
+
+        if($existing_vote){
+                $em->remove($existing_vote);
+                $em->flush();
         }
+        $vote = new SkPhotoContestVote();
+        $vote->setFosUser($user);
+        $vote->setCategory($category);
+        $vote->setPhoto($photo);
+        $vote->setCreatedAt(new \DateTime());
+        $em->persist($vote);
+        $em->flush();
+
+
+
+//        if ($existing_vote) {
+//            $existing_vote->setPhoto($photo);
+//            $em->persist($existing_vote);
+//            $em->flush();
+//        } else {
+//            $vote = new SkPhotoContestVote();
+//            $vote->setFosUser($user);
+//            $vote->setCategory($category);
+//            $vote->setPhoto($photo);
+//            $vote->setCreatedAt(new \DateTime());
+//            $em->persist($vote);
+//            $em->flush();
+//        }
 
         return new JsonResponse(array());
     }
@@ -152,7 +167,7 @@ class ContestController extends Controller {
 
         $contest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
                 ->findOneByName($name);
-        
+
         $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
                 ->getPhotographers($contest->getId());
 
@@ -165,8 +180,8 @@ class ContestController extends Controller {
 
         if ($contest) {
             return $this->render('SkaphandrusAppBundle:Contest:photographers.html.twig', array(
-                'contest' => $contest,
-                'photographers' => $photographers
+                        'contest' => $contest,
+                        'photographers' => $photographers
             ));
         } else {
             throw $this->createNotFoundException('The contest "' . $name . '" does not exist.');

@@ -9,6 +9,9 @@ use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints\File;
 
 class SkPhotoType extends AbstractType {
+    
+    
+
 
     /**
      * @param FormBuilderInterface $builder
@@ -17,8 +20,10 @@ class SkPhotoType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('title', 'text', array(
+                    'help' => 'form.photo.help.title',
                     'attr' => array('class' => 'form-control'),
                     'label' => 'form.photo.label.title'
+                    
                         )
                 )
 //                ->add('file', 'file', array(

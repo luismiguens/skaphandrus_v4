@@ -29,9 +29,9 @@
         </many-to-many>
         <one-to-many field="awards" target-entity="SkPhotoContestAward" mapped-by="category"/>
         
-        <lifecycle-callbacks>
+<!--        <lifecycle-callbacks>
             <lifecycle-callback type="postPersist" method="doStuffOnPostPersist"/>
-        </lifecycle-callbacks>
+        </lifecycle-callbacks>-->
         
     </entity>
 </doctrine-mapping>

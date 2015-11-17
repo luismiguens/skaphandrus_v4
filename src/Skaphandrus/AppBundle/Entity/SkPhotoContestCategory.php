@@ -212,39 +212,39 @@ class SkPhotoContestCategory {
         return $this->translate()->getName();
     }
 
-    public function doStuffOnPostPersist(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
-
-        $entity = $args->getEntity();
-        $entityManager = $args->getEntityManager();
-
-        //enviar notificação para quem tem fotografias na categoria
-        //(x tambem adicionou fotografia y a categoria z)	message_baa
-        $query = $entityManager->createQuery(
-                        'SELECT p
-                        FROM SkaphandrusAppBundle:SkPhoto as p
-                        JOIN SkaphandrusAppBundle:SkPhotoContestCategory as c on c.photo = p
-                        JOIN SkaphandrusAppBundle:FosUser as u on u = p.fos_user
-                        WHERE c.category = :category_id'
-                )->setParameter('category_id', $entity->getPhotoContestCategory()->getId());
-        $photos = $query->getResult();
-
-        dump($photos);
-
-        foreach ($photos as $photo) {
-
-            if ($entity->getFosUser()->getId() <> $photo->getFosUser()->getId()) {
-
-                $skSocialNotify = new SkSocialNotify();
-                $skSocialNotify->setUserFrom($entity->getFosUser());
-                $skSocialNotify->setCategoryId($entity->getPhotoContestCategory()->getId());
-                $skSocialNotify->setPhoto($entity);
-                $skSocialNotify->setMessageName("message_baa");
-                $skSocialNotify->setCreatedAt(new \DateTime());
-                $skSocialNotify->setUserTo($photo->getFosUser());
-                $entityManager->persist($skSocialNotify);
-                $entityManager->flush();
-            }
-        }
-    }
+//    public function doStuffOnPostPersist(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+//
+//        $entity = $args->getEntity();
+//        $entityManager = $args->getEntityManager();
+//
+//        //enviar notificação para quem tem fotografias na categoria
+//        //(x tambem adicionou fotografia y a categoria z)	message_baa
+//        $query = $entityManager->createQuery(
+//                        'SELECT p
+//                        FROM SkaphandrusAppBundle:SkPhoto as p
+//                        JOIN SkaphandrusAppBundle:SkPhotoContestCategory as c on c.photo = p
+//                        JOIN SkaphandrusAppBundle:FosUser as u on u = p.fos_user
+//                        WHERE c.category = :category_id'
+//                )->setParameter('category_id', $entity->getPhotoContestCategory()->getId());
+//        $photos = $query->getResult();
+//
+//        dump($photos);
+//
+//        foreach ($photos as $photo) {
+//
+//            if ($entity->getFosUser()->getId() <> $photo->getFosUser()->getId()) {
+//
+//                $skSocialNotify = new SkSocialNotify();
+//                $skSocialNotify->setUserFrom($entity->getFosUser());
+//                $skSocialNotify->setCategoryId($entity->getPhotoContestCategory()->getId());
+//                $skSocialNotify->setPhoto($entity);
+//                $skSocialNotify->setMessageName("message_baa");
+//                $skSocialNotify->setCreatedAt(new \DateTime());
+//                $skSocialNotify->setUserTo($photo->getFosUser());
+//                $entityManager->persist($skSocialNotify);
+//                $entityManager->flush();
+//            }
+//        }
+//    }
 
 }

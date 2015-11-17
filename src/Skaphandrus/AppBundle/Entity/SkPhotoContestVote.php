@@ -120,10 +120,40 @@ class SkPhotoContestVote {
         $entity = $args->getEntity();
         $entityManager = $args->getEntityManager();
 
-        //enviar notificação para dono da fotografia	
+        //enviar notificação para dono da fotografia	validation
         //(x votou na tua fotografia y) message_bba
-            
-        
+
+        //$entity = new SkPhotoContestVote();
+
+        if ($entity->getFosUser()->getId() <> $entity->getPhoto()->getFosUser()->getId()) {
+
+
+            $query = $entityManager->createQuery(
+                            'SELECT v
+                                FROM SkaphandrusAppBundle:SkSocialNotify v
+                                WHERE v.photo = :photo_id
+                               AND v.categoryId = :category_id
+                               AND v.userFrom = :fos_user_id'
+                    )->setParameter('photo_id', $entity->getPhoto()->getId())
+                    ->setParameter('category_id', $entity->getCategory()->getId())
+                    ->setParameter('fos_user_id', $entity->getFosUser()->getId());
+            $vote = $query->getResult();
+
+            if (!$vote) {
+
+                //$entityManager = $this->getEntityManager();
+                $skSocialNotify = new SkSocialNotify();
+                $skSocialNotify->setUserFrom($entity->getFosUser());
+                //$skSocialNotify->setSpeciesId($entity->getSpecies()->getId());
+                $skSocialNotify->setPhoto($entity->getPhoto());
+                $skSocialNotify->setCategoryId($entity->getCategory()->getId());
+                $skSocialNotify->setMessageName("message_bba");
+                $skSocialNotify->setCreatedAt(new \DateTime());
+                $skSocialNotify->setUserTo($entity->getPhoto()->getFosUser());
+                $entityManager->persist($skSocialNotify);
+                $entityManager->flush();
+            }
+        }
     }
 
 }
