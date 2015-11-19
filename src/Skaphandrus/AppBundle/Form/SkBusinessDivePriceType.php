@@ -23,6 +23,7 @@ class SkBusinessDivePriceType extends AbstractType {
                     'attr' => array('class' => 'form-control'),
                     'label' => 'form.dive_price.label.value_per_dives',
                     'required' => false,
+                    'help' => 'form.dive_price.help.value_per_dives'
                 ))
         ;
     }

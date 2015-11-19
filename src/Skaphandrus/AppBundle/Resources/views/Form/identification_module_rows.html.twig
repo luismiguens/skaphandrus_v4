@@ -1,3 +1,13 @@
+{% extends 'form_div_layout.html.twig' %}
+
+{% block form_widget_simple %}
+    {{ parent() }}
+
+    {% if help is defined %}
+        <span class="help">{{ help|trans }}</span>
+    {% endif %}
+{% endblock %}
+
 {% block form_row %}
     {% spaceless %}
         <div class="form-group">
@@ -12,7 +22,6 @@
                     <img class="thumbnail" src="{{ form.parent.vars.value.getWebPath | imagine_filter('sk_downscale_600_400') }}" />
                 {% endif %}
                 {{ form_widget(form) }}
-
             </div>
         </div>
         <div class="hr-line-dashed"></div>

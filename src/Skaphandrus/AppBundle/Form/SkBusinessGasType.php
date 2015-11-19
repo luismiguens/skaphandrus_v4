@@ -15,15 +15,15 @@ class SkBusinessGasType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('atmosphericair', null, array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'checkbox'),
                     'label' => 'form.gas.label.atmospheric_air'
                 ))
                 ->add('nitrox', null, array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'checkbox'),
                     'label' => 'form.gas.label.nitrox'
                 ))
                 ->add('trimix', null, array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'checkbox'),
                     'label' => 'form.gas.label.trimix'
                 ))
         ;

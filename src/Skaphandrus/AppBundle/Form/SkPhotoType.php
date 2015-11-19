@@ -9,9 +9,6 @@ use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints\File;
 
 class SkPhotoType extends AbstractType {
-    
-    
-
 
     /**
      * @param FormBuilderInterface $builder
@@ -20,12 +17,9 @@ class SkPhotoType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('title', 'text', array(
-                    'help' => 'form.photo.help.title',
                     'attr' => array('class' => 'form-control'),
                     'label' => 'form.photo.label.title'
-                    
-                        )
-                )
+                ))
 //                ->add('file', 'file', array(
 //                    'label' => 'form.photo.label.file',
 //                    'constraints' => new File(array(
@@ -37,6 +31,7 @@ class SkPhotoType extends AbstractType {
 //                )
                 ->add('imageFile', 'vich_image', array(
                     'label' => 'form.photo.label.file',
+                    'help' => 'form.photo.help.imageFile',
                     'required' => true,
                     'allow_delete' => false, // not mandatory, default is true
                     'download_link' => false, // not mandatory, default is true
@@ -45,8 +40,7 @@ class SkPhotoType extends AbstractType {
                     'attr' => array('class' => 'form-control'),
                     'label' => 'form.photo.label.description',
                     'required' => false
-                        )
-                )
+                ))
                 //->add('views')
                 ->add('takenAt', 'datetime', array(
                     'label' => 'form.photo.label.taken_at',
@@ -58,29 +52,28 @@ class SkPhotoType extends AbstractType {
                     'class' => 'SkaphandrusAppBundle:SkCreativeCommons',
                     'attr' => array('class' => 'form-control'),
                     'label' => 'form.photo.label.creative'
-                        )
-                )
+                ))
                 ->add('model', 'autocomplete', array(
                     'class' => 'SkaphandrusAppBundle:SkPhotoMachineModel',
                     'attr' => array('class' => ''),
                     'label' => 'form.photo.label.model',
-                    'required' => false
-                        )
-                )
+                    'required' => false,
+                    'help' => 'form.photo.help.model'
+                ))
                 ->add('spot', 'autocomplete', array(
                     'class' => 'SkaphandrusAppBundle:SkSpot',
                     'attr' => array('class' => 'form-control m-b'),
                     'label' => 'form.photo.label.spot',
-                    'required' => false
-                        )
-                )
+                    'required' => false,
+                    'help' => 'form.photo.help.spot'
+                ))
                 ->add('species', 'autocomplete', array(
                     'class' => 'SkaphandrusAppBundle:SkSpecies',
                     'attr' => array('class' => 'form-control m-b'),
                     'label' => 'form.photo.label.species',
-                    'required' => false
-                        )
-                )
+                    'required' => false,
+                    'help' => 'form.photo.help.species'
+                ))
 //                ->add('fosUser', 'hidden', 
 //                        array(
 //                            'data_class' => 'Skaphandrus\AppBundle\Entity\FosUser',

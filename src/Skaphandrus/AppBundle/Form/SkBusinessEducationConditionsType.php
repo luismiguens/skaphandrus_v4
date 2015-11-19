@@ -15,17 +15,18 @@ class SkBusinessEducationConditionsType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('swimmingpool', null, array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'checkbox'),
                     'label' => 'form.education_conditions.label.swimming_pool',
                     'required' => false,
                 ))
                 ->add('separateclassroom', null, array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'checkbox'),
                     'label' => 'form.education_conditions.label.separate_classroom',
                     'required' => false,
+                    'help' => 'form.education_conditions.help.separate_classroom'
                 ))
                 ->add('singleeducation', null, array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'checkbox'),
                     'label' => 'form.education_conditions.label.single_education',
                     'required' => false,
                 ))

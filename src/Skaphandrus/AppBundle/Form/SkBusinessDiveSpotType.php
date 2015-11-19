@@ -17,7 +17,8 @@ class SkBusinessDiveSpotType extends AbstractType {
                 ->add('name', 'autocomplete', array(
                     'class' => 'SkaphandrusAppBundle:SkSpot',
                     'attr' => array('class' => 'form-control'),
-                    'label' => 'form.dive_spot.label.name'
+                    'label' => 'form.dive_spot.label.name',
+                    'help' => 'form.dive_spot.help.name'
                 ))
         ;
     }

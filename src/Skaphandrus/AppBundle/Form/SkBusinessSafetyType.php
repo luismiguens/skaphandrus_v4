@@ -15,18 +15,20 @@ class SkBusinessSafetyType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('oxigen', null, array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'checkbox'),
                     'label' => 'form.safety.label.oxigen'
                 ))
                 ->add('firstaidkit', null, array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'checkbox'),
                     'label' => 'form.safety.label.first_aid_kit'
                 ))
                 ->add('hourstohospital', null, array(
-                    'label' => 'form.safety.label.hours_to_hospital'
+                    'label' => 'form.safety.label.hours_to_hospital',
+                    'help' => 'form.safety.help.hours_to_hospital'
                 ))
                 ->add('hourstodecochamber', null, array(
-                    'label' => 'form.safety.label.hours_to_decochamber'
+                    'label' => 'form.safety.label.hours_to_decochamber',
+                    'help' => 'form.safety.help.hours_to_decochamber'
                 ))
         ;
     }

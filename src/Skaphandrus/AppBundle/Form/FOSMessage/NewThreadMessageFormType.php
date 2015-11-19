@@ -11,26 +11,25 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
-class NewThreadMessageFormType extends AbstractType
-{
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+class NewThreadMessageFormType extends AbstractType {
+
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            #->add('recipient', 'fos_user_username')
-            ->add('recipient', 'autocomplete', array(
-                'class' => 'SkaphandrusAppBundle:FosUser',
-                'attr' => array('class' => 'form-control m-b'),
-                'label'=>'form.new_message.label.user', 
-                'required' => false,
-            ))
-            ->add('subject', 'text')
-            ->add('body', 'textarea');
+                #->add('recipient', 'fos_user_username')
+                ->add('recipient', 'autocomplete', array(
+                    'class' => 'SkaphandrusAppBundle:FosUser',
+                    'attr' => array('class' => 'form-control m-b'),
+                    'label' => 'form.new_message.label.user',
+                    'required' => false,
+                    'help' => 'form.person.help.persontype'
+                ))
+                ->add('subject', 'text')
+                ->add('body', 'textarea');
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
+    public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'intention'  => 'message',
+            'intention' => 'message',
         ));
     }
 
@@ -39,8 +38,8 @@ class NewThreadMessageFormType extends AbstractType
     //     return 'fos_message_new_thread';
     // }
 
-    public function getName()
-    {
+    public function getName() {
         return 'skaphandrus_message_new_thread';
     }
+
 }

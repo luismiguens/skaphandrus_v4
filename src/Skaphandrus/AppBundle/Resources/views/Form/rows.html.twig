@@ -1,15 +1,12 @@
 {% extends 'form_div_layout.html.twig' %}
 
-{% block form_widget_simple %}
+{#{% block form_widget_simple %}
     {{ parent() }}
 
     {% if help is defined %}
         <span class="help">{{ help|trans }}</span>
     {% endif %}
-{% endblock %}
-
-
-
+{% endblock %}#}
 
 {% block form_row %}
     {% spaceless %}
@@ -27,6 +24,12 @@
                     {% endif %}
                 {% endif %}
                 {{ form_widget(form) }}
+                
+                <div style="margin-top:5px">
+                    {% if help is defined %}
+                        <span class="help">{{ help|trans }}</span>
+                    {% endif %}
+                </div>
             </div>
         </div>
         <div class="hr-line-dashed"></div>
@@ -35,7 +38,7 @@
 
 
 {% block _skaphandrus_appbundle_skbusiness_educationConditions_row %}
-        <div class="form-group">
+    <div class="form-group">
         <label class="col-lg-3 control-label">{{ form_label(form) }}</label>
         {{ form_errors(form) }}
         <div class="col-lg-9">

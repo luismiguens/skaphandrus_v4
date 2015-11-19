@@ -13,12 +13,13 @@ class FosUserSettingsType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $builder->add('username','text',
-                        array(
-                            'attr' => array('class' => 'form-control'),
-                            'label'=>'form.settings.label.username'
-                            ))
-                ->add('settings', new SkSettingsType())
+        $builder
+                ->add('username', 'text', array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.settings.label.username'
+                ))
+                ->add('settings', new SkSettingsType(
+                ))
         ;
     }
 

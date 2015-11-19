@@ -42,7 +42,8 @@ class ProfileAddressType extends AbstractType {
                     'class' => 'SkaphandrusAppBundle:SkLocation',
                     'attr' => array('class' => 'form-control m-b'),
                     'label' => 'form.address.label.location',
-                    'required' => false
+                    'required' => false,
+                    'help' => 'form.address.help.location'
                 ))
         //->add('business')
         ;

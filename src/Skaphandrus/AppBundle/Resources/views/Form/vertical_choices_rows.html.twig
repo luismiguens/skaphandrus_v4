@@ -1,3 +1,12 @@
+{% extends 'form_div_layout.html.twig' %}
+
+{#{% block form_widget_simple %}
+    {{ parent() }}
+
+    {% if help is defined %}
+        <span class="help">{{ help|trans }}</span>
+    {% endif %}
+{% endblock %}#}
 
 {% block form_row %}
     {% spaceless %}
@@ -15,6 +24,12 @@
                     {% endif %}
                 {% endif %}
                 {{ form_widget(form) }}
+                
+                <div style="margin-top:5px">
+                    {% if help is defined %}
+                        <span class="help">{{ help|trans }}</span>
+                    {% endif %}
+                </div>
             </div>
         </div>
         <div class="hr-line-dashed"></div>
@@ -73,60 +88,60 @@
 {#http://stackoverflow.com/questions/11507217/symfony2-how-to-put-label-and-input-for-checkboxes-radios-in-a-same-line#}
 
 {% block choice_widget %}
-{% spaceless %}
-    {% if expanded %}
-        <div {{ block('widget_container_attributes') }}>
-        {% for child in form %}
-            {{ form_widget(child) }}
-          
-        {% endfor %}
-        </div>
-    {% else %}
-    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
-        {%- if empty_value is not none -%}
-            <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ empty_value != '' ? empty_value|trans({}, translation_domain) }}</option>
-        {%- endif -%}
-        {%- if preferred_choices|length > 0 -%}
-            {% set options = preferred_choices %}
-            {{- block('choice_widget_options') -}}
-            {%- if choices|length > 0 and separator is not none -%}
+    {% spaceless %}
+        {% if expanded %}
+            <div {{ block('widget_container_attributes') }}>
+                {% for child in form %}
+                    {{ form_widget(child) }}
+
+                {% endfor %}
+            </div>
+        {% else %}
+            <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+                {%- if empty_value is not none -%}
+                <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ empty_value != '' ? empty_value|trans({}, translation_domain) }}</option>
+                {%- endif -%}
+                {%- if preferred_choices|length > 0 -%}
+                {% set options = preferred_choices %}
+                {{- block('choice_widget_options') -}}
+                {%- if choices|length > 0 and separator is not none -%}
                 <option disabled="disabled">{{ separator }}</option>
-            {%- endif -%}
-        {%- endif -%}
-        {%- set options = choices -%}
-        {{- block('choice_widget_options') -}}
-    </select>
-    {% endif %}
-{% endspaceless %}
+                {%- endif -%}
+                {%- endif -%}
+                {%- set options = choices -%}
+                {{- block('choice_widget_options') -}}
+            </select>
+        {% endif %}
+    {% endspaceless %}
 {% endblock choice_widget %}
 
 {% block checkbox_widget %}
-{% spaceless %}
-    <label  for="{{ id }}" class="checkbox {% if checked %}checked{% endif %}" >
-        <span class="icons">
-            <span class="first-icon fui-checkbox-unchecked"></span>
-            <span class="second-icon fui-checkbox-checked"></span>
-        </span>
-        <input type="checkbox" {{ block('widget_attributes') }}
-               {% if value is defined %} value="{{ value }}"{% endif %}
-               {% if checked %} checked="checked"{% endif %} />
-        {{ label|trans }}
-    </label>
-{% endspaceless %}
+    {% spaceless %}
+        <label  for="{{ id }}" class="checkbox {% if checked %}checked{% endif %}" >
+            <span class="icons">
+                <span class="first-icon fui-checkbox-unchecked"></span>
+                <span class="second-icon fui-checkbox-checked"></span>
+            </span>
+            <input type="checkbox" {{ block('widget_attributes') }}
+                   {% if value is defined %} value="{{ value }}"{% endif %}
+                   {% if checked %} checked="checked"{% endif %} />
+            {{ label|trans }}
+        </label>
+    {% endspaceless %}
 {% endblock checkbox_widget %}
 
 {% block radio_widget %}
-{% spaceless %}
-    <label  for="{{ id }}"><input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />{{ label|trans }}</label>
-{% endspaceless %}
-{% endblock radio_widget %}
+    {% spaceless %}
+        <label  for="{{ id }}"><input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />{{ label|trans }}</label>
+        {% endspaceless %}
+    {% endblock radio_widget %}
 
 {% block choice_widget_expanded %}
-{% spaceless %}
-    <div {{ block('widget_container_attributes') }}>
-    {% for child in form %}
-        {{ form_widget(child) }}
-    {% endfor %}
-    </div>
-{% endspaceless %}
+    {% spaceless %}
+        <div {{ block('widget_container_attributes') }}>
+            {% for child in form %}
+                {{ form_widget(child) }}
+            {% endfor %}
+        </div>
+    {% endspaceless %}
 {% endblock choice_widget_expanded %}

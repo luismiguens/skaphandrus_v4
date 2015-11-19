@@ -41,9 +41,7 @@
 
     {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
 
-    
     {{ form_row(edit_form.username) }}
-    
 
     {{ form_row(edit_form.settings.language) }}
     {{ form_row(edit_form.settings.emailMessageAtOnce) }}
@@ -51,14 +49,10 @@
     {{ form_row(edit_form.settings.emailUpdate) }}
     {{ form_row(edit_form.settings.emailNotificationTime) }}
     {{ form_row(edit_form.settings.facebookUid) }}
-    
+
     <button type="submit" class="btn btn-primary">{{ "form.common.btn.update"|trans }}</button>
-    
+
     {{ form_end(edit_form) }}
-
-
-
-
 
 {% endblock %}
 

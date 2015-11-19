@@ -14,6 +14,11 @@ class SkBusinessEducationCourseType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
+                ->add('course', null, array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.education_course.label.course',
+                    'required' => false,
+                ))
                 ->add('price', null, array(
                     'attr' => array('class' => 'form-control'),
                     'label' => 'form.education_course.label.price',
@@ -22,11 +27,6 @@ class SkBusinessEducationCourseType extends AbstractType {
 //                ->add('createdAt')
 //                ->add('updatedAt')
 //                ->add('business')
-                ->add('course', null, array(
-                    'attr' => array('class' => 'form-control'),
-                    'label' => 'form.education_course.label.course',
-                    'required' => false,
-                ))
         ;
     }
 

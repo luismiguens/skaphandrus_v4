@@ -24,6 +24,7 @@ class SkBusinessType extends AbstractType {
                     'label' => 'form.business.label.founded_at'
                 ))
                 ->add('currency', 'entity', array(
+                    'attr' => array('class' => 'checkbox'),
                     'label' => 'form.business.label.currency',
                     'class' => 'SkaphandrusAppBundle:SkCurrency',
                     'expanded' => true,
@@ -31,6 +32,7 @@ class SkBusinessType extends AbstractType {
                     'required' => false
                 ))
                 ->add('language', 'entity', array(
+                    'attr' => array('class' => 'checkbox'),
                     'label' => 'form.business.label.language',
                     'class' => 'SkaphandrusAppBundle:SkLanguage',
                     'expanded' => true,
@@ -56,6 +58,7 @@ class SkBusinessType extends AbstractType {
                 ))
                 ->add('imageFile', 'vich_image', array(
                     'label' => 'form.business.label.picture',
+                    'help' => 'form.business.help.picture',
                     'required' => true,
                     'allow_delete' => false, // not mandatory, default is true
                     'download_link' => false, // not mandatory, default is true

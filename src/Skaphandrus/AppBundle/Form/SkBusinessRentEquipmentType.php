@@ -14,22 +14,24 @@ class SkBusinessRentEquipmentType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('quantity', null, array(
-                    'attr' => array('class' => 'form-control'),
-                    'label' => 'form.rent_equipment.label.quantity',
-                    'required' => false,
-                ))
-                ->add('rentvalue', null, array(
-                    'attr' => array('class' => 'form-control'),
-                    'label' => 'form.rent_equipment.label.rent_value',
-                    'required' => false,
-                ))
-//                ->add('businessboat')
                 ->add('equipmenttype', null, array(
                     'attr' => array('class' => 'form-control'),
                     'label' => 'form.rent_equipment.label.equipment_type',
                     'required' => false,
                 ))
+                ->add('quantity', null, array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.rent_equipment.label.quantity',
+                    'required' => false,
+                    'help' => 'form.rent_equipment.help.quantity'
+                ))
+                ->add('rentvalue', null, array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.rent_equipment.label.rent_value',
+                    'required' => false,
+                    'help' => 'form.rent_equipment.help.rent_value'
+                ))
+//                ->add('businessboat')
         ;
     }
 

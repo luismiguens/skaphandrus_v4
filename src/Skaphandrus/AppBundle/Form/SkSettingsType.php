@@ -15,34 +15,32 @@ class SkSettingsType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('language', 'choice', array(
-                    'choices' => array('en' => 'English', 'pt' => 'Português'),  
+                    'choices' => array('en' => 'English', 'pt' => 'Português'),
                     'attr' => array('class' => 'form-control'),
-                    'label'=>'form.settings.label.language'
-                    ))
-                ->add('emailMessageAtOnce', 'checkbox',
-                        array(
-                            'label'=>'form.settings.label.email_message_once'
-                            ))
-                ->add('emailCommentAtOnce', 'checkbox',
-                        array(
-                            'label'=>'form.settings.label.email_comment_once'
-                            ))
-                ->add('emailUpdate', 'checkbox',
-                        array(
-                            'label'=>'form.settings.label.email_update_skaphandrus'
-                            ))
-                ->add('emailNotificationTime', 'entity',
-                        array(
-                            'class' => 'SkaphandrusAppBundle:SkEmailNotificationTime', 
-                            'attr' => array('class' => 'form-control'),
-                            'label'=>'form.settings.label.email_notification_time'
-                            )
-                        )
-                ->add('facebookUid','text',
-                        array(
-                            'attr' => array('class' => 'form-control'),
-                            'label'=>'form.settings.label.facebook_id'
-                            ))
+                    'label' => 'form.settings.label.language'
+                ))
+                ->add('emailMessageAtOnce', 'checkbox', array(
+                    'attr' => array('class' => 'checkbox'),
+                    'label' => 'form.settings.label.email_message_once'
+                ))
+                ->add('emailCommentAtOnce', 'checkbox', array(
+                    'attr' => array('class' => 'checkbox'),
+                    'label' => 'form.settings.label.email_comment_once'
+                ))
+                ->add('emailUpdate', 'checkbox', array(
+                    'attr' => array('class' => 'checkbox'),
+                    'label' => 'form.settings.label.email_update_skaphandrus'
+                ))
+                ->add('emailNotificationTime', 'entity', array(
+                    'class' => 'SkaphandrusAppBundle:SkEmailNotificationTime',
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.settings.label.email_notification_time',
+                    'help' => 'form.settings.help.email_notification_time'
+                ))
+                ->add('facebookUid', 'text', array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.settings.label.facebook_id'
+                ))
         //->add('points')
         //->add('fosUser')
 

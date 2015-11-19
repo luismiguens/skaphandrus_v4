@@ -5,7 +5,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
-     <script src="{{ asset('bundles/skaphandrusapp/js/hack/autocompleter-jqueryui.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/hack/autocompleter-jqueryui.js') }}"></script>
     <!-- Data picker -->
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
     <!-- Clock picker -->
@@ -13,7 +13,7 @@
     <!-- Tag It -->
     <script src="{{ asset('bundles/skaphandrusapp/js/tag-it/tag-it.min.js') }}"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#skaphandrus_appbundle_skphoto_takenAt_date').datepicker({
                 todayBtn: "linked",
                 keyboardNavigation: false,
@@ -68,15 +68,13 @@
 
 
 {% block body %}
-    
-    
-    
- <style>
-.ui-autocomplete-loading {
-background: white url("http://jqueryui.com/resources/demos/autocomplete/images/ui-anim_basic_16x16.gif") right center no-repeat;
-}
-</style>
-    
+
+    <style>
+        .ui-autocomplete-loading {
+            background: white url("http://jqueryui.com/resources/demos/autocomplete/images/ui-anim_basic_16x16.gif") right center no-repeat;
+        }
+    </style>
+
     {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
     {{ form_widget(form) }}
     <div class="form-group">
@@ -84,7 +82,9 @@ background: white url("http://jqueryui.com/resources/demos/autocomplete/images/u
             <label for="tags">{{"form.photo.label.tags"|trans}}</label>
         </label>
         <input type="text" id="tags" name="tags" />
+        <p style="margin-left: 25%">{{ "form.photo.help.tag"|trans }}</p>
     </div>
+
     {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'photo_admin', 'new_form':false} %}
     {{ form_end(form) }}
 

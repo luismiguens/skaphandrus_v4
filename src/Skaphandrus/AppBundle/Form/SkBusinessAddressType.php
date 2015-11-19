@@ -36,18 +36,21 @@ class SkBusinessAddressType extends AbstractType {
                 ->add('location', 'autocomplete', array(
                     'class' => 'SkaphandrusAppBundle:SkLocation',
                     'attr' => array('class' => 'form-control'),
-                    'label' => 'form.address.label.location'
+                    'label' => 'form.address.label.location',
+                    'help' => 'form.address.help.location'
                    
                 ))
                 ->add('coordinate', 'text', array(
                     'attr' => array('class' => 'form-control', 'readonly' => true),
                     'label' => 'form.address.label.coordinate',
-                    'required' => false
+                    'required' => false,
+                    'help' => 'form.address.help.coordinate'
                 ))
                 ->add('zoom', 'text', array(
                     'attr' => array('class' => 'form-control', 'readonly' => true),
                     'label' => 'form.address.label.zoom',
-                    'required' => false
+                    'required' => false,
+                    'help' => 'form.address.help.zoom'
                 ))
         //->add('accomodationId')
         //->add('operatorId')

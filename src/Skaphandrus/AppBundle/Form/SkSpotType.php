@@ -20,11 +20,13 @@ class SkSpotType extends AbstractType {
                 ))
                 ->add('coordinate', 'text', array(
                     'attr' => array('class' => 'form-control', 'readonly' => true),
-                    'label' => 'form.spot.label.coordinate'
+                    'label' => 'form.spot.label.coordinate',
+                    'help' => 'form.spot.help.coordinate'
                 ))
                 ->add('zoom', 'text', array(
                     'attr' => array('class' => 'form-control', 'readonly' => true),
-                    'label' => 'form.spot.label.zoom'
+                    'label' => 'form.spot.label.zoom',
+                    'help' => 'form.spot.help.zoom'
                 ))
                 //->add('isAproved')
                 //->add('createdAt')
@@ -34,38 +36,39 @@ class SkSpotType extends AbstractType {
                     'class' => 'SkaphandrusAppBundle:SkLocation',
                     'attr' => array('class' => 'form-control m-b'),
                     'label' => 'form.spot.label.location',
-                    'required' => false
-                        )
-                )
+                    'required' => false,
+                    'help' => 'form.spot.help.location'
+                ))
                 ->add('translations', 'a2lix_translations', array(
                     'fields' => array(
                         'name' => array(
                             'field_type' => 'text',
                             'label' => 'form.spot.label.name',
                             'attr' => array('class' => 'form-control'),
-//                'locale_options' => array(
-//                    'en' => array(
-//                        'label' => 'nom'
-//                    ),
-//                    'de' => array(
-//                      'label' => 'Name'
-//                  ),
-//                )
+//                            'locale_options' => array(
+//                                'en' => array(
+//                                    'label' => 'nom'
+//                                ),
+//                                'de' => array(
+//                                    'label' => 'Name'
+//                                ),
+//                            )
                         ),
                         'description' => array(
                             'field_type' => 'textarea',
                             'label' => 'form.spot.label.description',
                             'attr' => array('class' => 'form-control', 'rows' => '8'),
-//              'locale_options' => array(
-//                  'fr' => array(
-//                      'label' => 'description'
-//                  ),
-//                  'de' => array(
-//                      'label' => 'Beschreibung'
-//                  ),
-//              )
+//                            'locale_options' => array(
+//                                'fr' => array(
+//                                    'label' => 'description'
+//                                ),
+//                                'de' => array(
+//                                    'label' => 'Beschreibung'
+//                                ),
+//                            )
                         ),
-        )));
+                    )
+        ));
     }
 
     /**

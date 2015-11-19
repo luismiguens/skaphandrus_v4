@@ -6,18 +6,18 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SkBusinessContactType extends AbstractType
-{
+class SkBusinessContactType extends AbstractType {
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            ->add('email', 'text', array(
-                    'attr' => array('class' => 'form-control', 'placeholder' => "email@example.com"),
-                    'label' => 'form.contact.label.email'
+                ->add('email', 'text', array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.contact.label.email',
+                    'help' => 'form.contact.help.email'
                 ))
                 ->add('fax', 'text', array(
                     'attr' => array('class' => 'form-control'),
@@ -39,23 +39,22 @@ class SkBusinessContactType extends AbstractType
                     'label' => 'form.contact.label.phone',
                     'required' => false
                 ))
-            //->add('shopId')
-            //->add('operatorId')
-            //->add('accomodationId')
-            //->add('createdAt')
-            //->add('updatedAt')
-            //->add('person')
-            //->add('business')
-            //->add('fosUser')
-            //->add('sponsor')
+        //->add('shopId')
+        //->add('operatorId')
+        //->add('accomodationId')
+        //->add('createdAt')
+        //->add('updatedAt')
+        //->add('person')
+        //->add('business')
+        //->add('fosUser')
+        //->add('sponsor')
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
+    public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'Skaphandrus\AppBundle\Entity\SkContact'
         ));
@@ -64,8 +63,8 @@ class SkBusinessContactType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return 'skaphandrus_appbundle_skcontact';
     }
+
 }

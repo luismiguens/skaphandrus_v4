@@ -14,26 +14,26 @@ class SkPhotoSpeciesValidationType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            ->add('species', 'autocomplete', array(
-                'class' => 'SkaphandrusAppBundle:SkSpecies',
-                'attr' => array('class' => 'form-control'),
-                'label' => 'form.photo_validation.label.species', 
-                'required' => true
-            ))
-            ->add('rating', 'choice', array(
-                'label' => 'form.photo_validation.label.rating',
-                'choices'  => array(1 => '1 ' , 2 => '2 ', 3 => '3 ', 4 => '4 ', 5 => '5 '),
-                'required' => true,
-                'expanded' => true,
-                'multiple' => false,
-            ))
-            //->add('photo')
-            ->add('submit', 'submit', array(
-                'label' => 'form.common.btn.save',
-                'attr' => array(
-                    'class' => 'btn btn-primary'
-                ),
-            ));
+                ->add('species', 'autocomplete', array(
+                    'class' => 'SkaphandrusAppBundle:SkSpecies',
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.photo_validation.label.species',
+                    'required' => true
+                ))
+                ->add('rating', 'choice', array(
+                    'label' => 'form.photo_validation.label.rating',
+                    'choices' => array(1 => '1 ', 2 => '2 ', 3 => '3 ', 4 => '4 ', 5 => '5 '),
+                    'required' => true,
+                    'expanded' => true,
+                    'multiple' => false,
+                ))
+                //->add('photo')
+                ->add('submit', 'submit', array(
+                    'label' => 'form.common.btn.save',
+                    'attr' => array(
+                        'class' => 'btn btn-primary'
+                    ),
+        ));
     }
 
     /**

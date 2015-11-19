@@ -13,25 +13,24 @@ class ProfileSettingsType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $builder->add('observations', 'textarea',
-                        array(
-                            'attr' => array('class' => 'form-control','rows'=>'10'),
-                            'label'=>'form.settings.label.about_you'
-                            )
-                        )
+        $builder
+                ->add('observations', 'textarea', array(
+                    'attr' => array('class' => 'form-control', 'rows' => '10'),
+                    'label' => 'form.settings.label.about_you'
+                ))
 //                ->add('file', 'file', 
 //                        array(
 //                            'label'=>'form.settings.label.file',
 //                            'required' => false
 //                            )
 //                        )
-                
                 ->add('imageFile', 'vich_image', array(
                     'label' => 'form.settings.label.file',
-                    'required'      => false,
-                    'allow_delete'  => false, // not mandatory, default is true
+                    'help' => 'form.settings.help.file',
+                    'required' => false,
+                    'allow_delete' => false, // not mandatory, default is true
                     'download_link' => false, // not mandatory, default is true
-                    ))
+                ))
         ;
     }
 
