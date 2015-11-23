@@ -11,18 +11,15 @@
     <class name="Skaphandrus\AppBundle\Entity\SkPhoto">
         <property name="imageFile">
             <constraint name="File">
-                <option name="maxSize">5M</option>
+                <option name="maxSize">8M</option>
                 <option name="mimeTypes">
                     <value>image/jpeg</value>
                     <value>image/jpg</value>
                 </option>
-                <option name="maxSizeMessage">
-                    Your file is too large. Maximum size is 5M.
-                    O teu ficheiro é demasiado grande. O tamanho máximo permitido é 5M.
-                </option>
-                <option name="mimeTypesMessage">
-                    The type of the file is invalid. Allowed types are "image/jpg" and "image/jpeg".
-                </option>
+                <option name="maxSizeMessage">form.photo.error.max_size</option>
+                <option name="mimeTypesMessage">form.photo.error.mime_type</option>
+                
+                
             </constraint>
         </property>
     </class>
