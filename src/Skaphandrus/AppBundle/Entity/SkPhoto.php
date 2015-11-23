@@ -5,30 +5,11 @@ namespace Skaphandrus\AppBundle\Entity;
 //use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
 
-
-
 /**
  * SkPhoto
  */
 class SkPhoto {
 
-    
-    
-    
-//    public static function loadValidatorMetadata(ClassMetadata $metadata)
-//    {
-//        $metadata->addPropertyConstraint('imageFile', new Assert\File(array(
-//            'maxSize' => '8000k',
-//            'mimeTypes' => array(
-//                'image/jpg',
-//                'image/jpeg',
-//            ),
-//            'mimeTypesMessage' => 'Please upload a valid PDF',
-//            'maxSizeMessage' => 'Please upload a valid PDF',
-//        )));
-//    }
-    
-    
     /**
      * @var string
      */
@@ -678,6 +659,18 @@ class SkPhoto {
         $this->updatedAt = new \DateTime();
     }
 
+//    public static function loadValidatorMetadata(ClassMetadata $metadata) {
+//        $metadata->addPropertyConstraint('imageFile', new Assert\File(array(
+//            'maxSize' => '8000k',
+//            'mimeTypes' => array(
+//                'image/jpg',
+//                'image/jpeg',
+//            ),
+//            'mimeTypesMessage' => 'Please upload a valid PDF',
+//            'maxSizeMessage' => 'Please upload a valid PDF',
+//        )));
+//    }
+
     public function doStuffOnPostPersist(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
 
         $entity = $args->getEntity();
@@ -733,5 +726,4 @@ class SkPhoto {
 //        $entityManager->persist($entity);
 //        $entityManager->flush();
 //    }
-
 }

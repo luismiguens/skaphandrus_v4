@@ -11,15 +11,15 @@
     <class name="Skaphandrus\AppBundle\Entity\SkPhoto">
         <property name="imageFile">
             <constraint name="File">
-                <option name="maxSize">8M</option>
+                <option name="maxSize">12M</option>
                 <option name="mimeTypes">
                     <value>image/jpeg</value>
                     <value>image/jpg</value>
                 </option>
-                <option name="maxSizeMessage">form.photo.error.max_size</option>
-                <option name="mimeTypesMessage">form.photo.error.mime_type</option>
-                
-                
+            </constraint>
+            <constraint name="Image">
+                <option name="minWidth">640</option>
+                <option name="minHeight">640</option>
             </constraint>
         </property>
     </class>
