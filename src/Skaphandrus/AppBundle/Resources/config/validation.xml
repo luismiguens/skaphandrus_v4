@@ -8,5 +8,23 @@
             <constraint name="Skaphandrus\AppBundle\Validator\Constraints\ContainsSufficientPoints" />
         </property>
     </class>
+    <class name="Skaphandrus\AppBundle\Entity\SkPhoto">
+        <property name="imageFile">
+            <constraint name="File">
+                <option name="maxSize">10M</option>
+                <option name="mimeTypes">
+                    <value>image/jpeg</value>
+                    <value>image/jpg</value>
+                </option>
+                <option name="maxSizeMessage">
+                    Your file is too large. Maximum size is 5M.
+                    O teu ficheiro é demasiado grande. O tamanho máximo permitido é 5M.
+                </option>
+                <option name="mimeTypesMessage">
+                    The type of the file is invalid. Allowed types are "image/jpg" and "image/jpeg".
+                </option>
+            </constraint>
+        </property>
+    </class>
     
 </constraint-mapping>
