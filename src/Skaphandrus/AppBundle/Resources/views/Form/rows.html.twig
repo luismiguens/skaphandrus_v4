@@ -8,6 +8,28 @@
     {% endif %}
 {% endblock %}#}
 
+
+
+
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <ul>
+                    {% for error in errors %}
+                        <li>{{ error.message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}
+
+
+
+
+
 {% block form_row %}
     {% spaceless %}
         <div class="form-group">
@@ -24,7 +46,7 @@
                     {% endif %}
                 {% endif %}
                 {{ form_widget(form) }}
-                
+
                 <div style="margin-top:5px">
                     {% if help is defined %}
                         <span class="help">{{ help|trans }}</span>

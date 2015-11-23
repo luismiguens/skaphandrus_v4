@@ -15,6 +15,16 @@ class SkPhotoType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        
+         $entity = $builder->getData();
+         $required = true;
+         
+         //se estiver no edit, imagem nao é obrigatoria
+         if($entity->getId()):
+             $required = false; 
+         endif;
+             
+        
         $builder
                 ->add('title', 'text', array(
                     'attr' => array('class' => 'form-control'),
@@ -32,7 +42,7 @@ class SkPhotoType extends AbstractType {
                 ->add('imageFile', 'vich_image', array(
                     'label' => 'form.photo.label.file',
                     'help' => 'form.photo.help.imageFile',
-                    'required' => true,
+                    'required' => $required,
                     'allow_delete' => false, // not mandatory, default is true
                     'download_link' => false, // not mandatory, default is true
                 ))
