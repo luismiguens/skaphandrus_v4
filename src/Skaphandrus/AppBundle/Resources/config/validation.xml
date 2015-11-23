@@ -11,7 +11,7 @@
     <class name="Skaphandrus\AppBundle\Entity\SkPhoto">
         <property name="imageFile">
             <constraint name="File">
-                <option name="maxSize">10M</option>
+                <option name="maxSize">5M</option>
                 <option name="mimeTypes">
                     <value>image/jpeg</value>
                     <value>image/jpg</value>
