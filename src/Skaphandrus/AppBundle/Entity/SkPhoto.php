@@ -110,8 +110,8 @@ class SkPhoto {
      */
     public function setImageFile(File $image = null) {
         $this->imageFile = $image;
-        
-                if ($image) {
+
+        if ($image) {
             $this->updatedAt = new \DateTime('now');
         }
     }

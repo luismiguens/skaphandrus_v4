@@ -15,16 +15,15 @@ class SkPhotoType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        
-         $entity = $builder->getData();
-         $required = true;
-         
-         //se estiver no edit, imagem nao é obrigatoria
-         if($entity->getId()):
-             $required = false; 
-         endif;
-             
-        
+
+        $entity = $builder->getData();
+        $required = true;
+
+        //se estiver no edit, imagem nao é obrigatoria
+        if ($entity->getId()):
+            $required = false;
+        endif;
+
         $builder
                 ->add('title', 'text', array(
                     'attr' => array('class' => 'form-control'),

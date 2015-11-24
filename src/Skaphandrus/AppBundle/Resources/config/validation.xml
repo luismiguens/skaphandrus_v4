@@ -23,5 +23,35 @@
             </constraint>
         </property>
     </class>
+    <class name="Skaphandrus\AppBundle\Entity\SkBusiness">
+        <property name="imageFile">
+            <constraint name="File">
+                <option name="maxSize">12M</option>
+                <option name="mimeTypes">
+                    <value>image/jpeg</value>
+                    <value>image/jpg</value>
+                </option>
+            </constraint>
+            <constraint name="Image">
+                <option name="minWidth">640</option>
+                <option name="minHeight">640</option>
+            </constraint>
+        </property>
+    </class>
+    <class name="Skaphandrus\AppBundle\Entity\SkSettings">
+        <property name="imageFile">
+            <constraint name="File">
+                <option name="maxSize">12M</option>
+                <option name="mimeTypes">
+                    <value>image/jpeg</value>
+                    <value>image/jpg</value>
+                </option>
+            </constraint>
+            <constraint name="Image">
+                <option name="minWidth">640</option>
+                <option name="minHeight">640</option>
+            </constraint>
+        </property>
+    </class>
     
 </constraint-mapping>
