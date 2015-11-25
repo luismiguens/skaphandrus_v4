@@ -130,9 +130,9 @@ class IdentificationController extends Controller {
 
                 //100px 100px
 //                $character['image_url'] = 'http://skaphandrus.com/thumbnails/small/characters/' . $character_obj->getImage();
-                //$character['image_url'] = 'http://skaphandrus.com/media/cache/sk_widen_240/uploads/characters/' . $character_obj->getImage();
+                $character['image_url'] = 'http://skaphandrus.com/media/cache/sk_widen_240/uploads/characters/' . $character_obj->getImage();
 
-                $character['image_url'] = $this->get('liip_imagine.cache.manager')->getBrowserPath($character_obj->getWebPath(), 'sk_widen_240');
+                //$character['image_url'] = $this->get('liip_imagine.cache.manager')->getBrowserPath($character_obj->getWebPath(), 'sk_widen_240');
                 $character['image_hash'] = $character_obj->getImage();
                 $characters[] = $character;
             }
@@ -241,12 +241,32 @@ class IdentificationController extends Controller {
 
         //especies com base nos characteres já selecionados
         if ($character_ids) {
+            
+            
+            foreach ($character_ids as $key => $character_id) {
+                
+                $character_obj = $this->getDoctrine()
+                ->getRepository("SkaphandrusAppBundle:SkIdentificationCharacter")
+                ->findOneById($character_id);
+                
+                
+                $characters[$character_obj->getCriteria()->getId()][] = $character_obj->getId();
+            }
+
+            $pks = $this->getDoctrine()
+                    ->getRepository("SkaphandrusAppBundle:SkSpecies")
+                    ->getSpeciesIDSFromCharacterIDS($characters, $module_id);
+            
+            
+            
             $sql = "SELECT distinct(" . $view_name . ".species_id) as id, sk_species_scientific_name.name as name, image_refs.image_url as image_url, image_refs.image_src as image_src
                     FROM " . $view_name . "               
                     JOIN sk_species_scientific_name on " . $view_name . ".species_id = sk_species_scientific_name.species_id
                     JOIN ( select species_id, image_url, image_src, max(is_primary) from sk_species_image_ref group by species_id ) image_refs on image_refs.species_id = " . $view_name . ".species_id
-                    WHERE " . $view_name . ".character_id in (" . implode(", ", $character_ids) . ")
+                    WHERE " . $view_name . ".species_id in (" . implode(", ", $pks) . ")
                     ORDER by id asc";
+            
+            
 
             //especies com base no modulo selecionado
         } else {
