@@ -533,7 +533,25 @@ class IdentificationController extends Controller {
         return new JsonResponse($species);
     }
 
+    
+    
     public function taxonListJsonAction(Request $request) {
+        $module_id = $request->query->get('module_id');
+        if (!$module_id)
+            $module_id = $request->request->get('module_id');
+        $module_obj = $this->getDoctrine()
+                ->getRepository("SkaphandrusAppBundle:SkIdentificationModule")
+                ->findOneById($module_id);
+
+        $output = array();
+        
+              return new JsonResponse($output);
+    }
+        
+        
+    
+    
+    public function taxonListJsonAction_old(Request $request) {
         $module_id = $request->query->get('module_id');
         if (!$module_id)
             $module_id = $request->request->get('module_id');
