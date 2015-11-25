@@ -86,6 +86,9 @@ class SkBusinessController extends Controller {
             $em->persist($entity);
             $em->flush();
 
+            ##@LM
+            $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
+            
             return $this->redirect($this->generateUrl('business_admin_edit', array('id' => $entity->getId())));
         }
 
@@ -209,6 +212,9 @@ class SkBusinessController extends Controller {
         if ($editForm->isValid()) {
             $em->flush();
 
+            ##@LM
+            $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
+            
             return $this->redirect($this->generateUrl('business_admin_edit', array('id' => $id)));
         }
 

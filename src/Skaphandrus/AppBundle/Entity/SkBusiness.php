@@ -139,9 +139,7 @@ class SkBusiness {
     public function setImageFile(File $image = null) {
         $this->imageFile = $image;
 
-        // Only change the updated af if the file is really uploaded to avoid database updates.
-        // This is needed when the file should be set when loading the entity.
-        if ($this->imageFile instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
+        if ($image) {
             $this->updatedAt = new \DateTime('now');
         }
     }

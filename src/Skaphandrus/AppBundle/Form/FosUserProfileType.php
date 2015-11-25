@@ -25,8 +25,12 @@ class FosUserProfileType extends AbstractType {
     /**
      * @param OptionsResolverInterface $resolver
      */
+    // validation for embedded forms 
+    // http://stackoverflow.com/questions/10138505/symfony2-validation-not-working-for-embedded-form-type
+    //
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
+            'cascade_validation' => true,
             'data_class' => 'Skaphandrus\AppBundle\Entity\FosUser'
         ));
     }

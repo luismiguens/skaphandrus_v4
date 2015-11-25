@@ -14,6 +14,15 @@ class SkBusinessType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+
+        $entity = $builder->getData();
+        $required = true;
+
+        //se estiver no edit, imagem nao é obrigatoria
+        if ($entity->getId()):
+            $required = false;
+        endif;
+
         $builder
                 ->add('name', null, array(
                     'attr' => array('class' => 'form-control'),
@@ -59,7 +68,7 @@ class SkBusinessType extends AbstractType {
                 ->add('imageFile', 'vich_image', array(
                     'label' => 'form.business.label.picture',
                     'help' => 'form.business.help.picture',
-                    'required' => true,
+                    'required' => $required,
                     'allow_delete' => false, // not mandatory, default is true
                     'download_link' => false, // not mandatory, default is true
                 ))

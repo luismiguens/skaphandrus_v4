@@ -173,13 +173,14 @@ class SkProfileController extends Controller {
 
 //            $entity->getSettings()->upload();
             $em->flush();
+            
+            ##@LM
+            $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
+            
             return $this->redirect($this->generateUrl('profile_admin_edit'));
         }
 
-                    ##@LM
-            $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
-            
-            
+
         return $this->render('SkaphandrusAppBundle:SkProfile:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
