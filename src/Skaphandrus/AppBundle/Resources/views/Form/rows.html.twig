@@ -19,7 +19,7 @@
                 <ul>
                     {% for error in errors %}
                         <li>{{ error.message }}</li>
-                    {% endfor %}
+                        {% endfor %}
                 </ul>
             </div>
         {% endif %}
@@ -46,12 +46,11 @@
                     {% endif %}
                 {% endif %}
                 {{ form_widget(form) }}
-
-                <div style="margin-top:5px">
-                    {% if help is defined %}
+                {% if help is defined %}
+                    <div style="margin-top:5px">
                         <span class="help">{{ help|trans }}</span>
-                    {% endif %}
-                </div>
+                    </div> 
+                {% endif %}
             </div>
         </div>
         <div class="hr-line-dashed"></div>
