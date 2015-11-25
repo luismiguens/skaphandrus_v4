@@ -105,6 +105,8 @@ class IdentificationController extends Controller {
 
         }
 
+        //dump($sql);
+        
         $statement = $connection->prepare($sql);
         $statement->execute();
         $values = $statement->fetchAll();
