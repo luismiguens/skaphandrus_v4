@@ -37,14 +37,14 @@ class IdentificationController extends Controller {
          * 3) (UTILIZADOR COMPROU OU TROCOU POR PONTOS) = EXPLORE
          * 4) (OTHER) = APPLY POINTS
          * 
-         **/
+         * */
         $fos_user = $this->get('security.token_storage')->getToken()->getUser();
         //dump($fos_user);
-        
-        $modules = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkIdentificationModule')->findBy(array('isActive'=>true));
+
+        $modules = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkIdentificationModule')->findBy(array('isActive' => true));
 
         //dump($modules);
-        
+
         return $this->render('SkaphandrusAppBundle:Identification:modules.html.twig', array('modules' => $modules));
     }
 
@@ -64,17 +64,104 @@ class IdentificationController extends Controller {
      */
 
     public function criteriasListJsonAction(Request $request) {
-        
-        
+
+        $em = $this->getDoctrine()->getManager();
+        $connection = $em->getConnection();
+
         $character_obj = new \Skaphandrus\AppBundle\Entity\SkIdentificationCharacter();
-        
-        
+
+        $species = $request->query->get('species');
+        if (!$species)
+            $species = $request->request->get('species');
+
+        $module_id = $request->query->get('module_id');
+        if (!$module_id)
+            $module_id = $request->request->get('module_id');
+
+        $view_name = "sk_identification_criteria_matrix_" . $module_id;
+
+        // Já existem caracters selecionados
+        if ($species) {
+            // Critérios
+            $sql = "SELECT distinct(" . $view_name . ".criteria_id) as id 
+                    FROM " . $view_name . "               
+                    WHERE " . $view_name . ".species_id in (" . implode(", ", $species) . ")
+                    ORDER by id asc";
+        } else {
+            // Foi selecionado o módulo e ainda nao ha criterios selecionados
+            $sql = "SELECT distinct(" . $view_name . ".criteria_id) as id 
+                    FROM " . $view_name . "               
+                    ORDER by id asc";
+        }
+
+        //dump($sql);
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+
+        foreach ($values as $key => $value) {
+            $results_array[] = $value['id'];
+        }
+
+        //dump($sql);
+        //dump($values);
+
+        $criteria_objs = $this->getDoctrine()
+                ->getRepository('SkaphandrusAppBundle:SkIdentificationCriteria')
+                ->findById($results_array, array('orderBy' => 'asc'));
+
+        //dump($criteria_objs);
+
+        $output = array();
+        foreach ($criteria_objs as $key => $criteria_obj) {
+            $criteria = array();
+            $criteria['id'] = $criteria_obj->getId();
+            $criteria['name'] = $criteria_obj->translate()->getName();
+            $criteria['order_by'] = $criteria_obj->getOrderBy();
+            $criteria['is_cumulative'] = $criteria_obj->getIsCumulative();
+            $characters = array();
+
+            foreach ($criteria_obj->getCharacters() as $key => $character_obj) {
+
+                $character = array();
+                $character['id'] = $character_obj->getId();
+                $character['name'] = $character_obj->translate()->getName();
+
+                //100px 100px
+//                $character['image_url'] = 'http://skaphandrus.com/thumbnails/small/characters/' . $character_obj->getImage();
+                $character['image_url'] = 'http://skaphandrus.com/media/cache/sk_widen_240/uploads/characters/' . $character_obj->getImage();
+
+                //$character['image_url'] = $this->get('liip_imagine.cache.manager')->getBrowserPath($character_obj->getWebPath(), 'sk_widen_240');
+                $character['image_hash'] = $character_obj->getImage();
+                $characters[] = $character;
+            }
+            $criteria['characters'] = $characters;
+            $output[] = $criteria;
+        }
+        //dump($output);
+        return new JsonResponse($output);
+    }
+
+    /*
+     * Returns a list of Criterias
+     */
+
+    public function criteriasListJsonAction_old(Request $request) {
+
+
+
+        $character_obj = new \Skaphandrus\AppBundle\Entity\SkIdentificationCharacter();
+
+
         $species = $request->query->get('species');
         if (!$species)
             $species = $request->request->get('species');
         $module_id = $request->query->get('module_id');
         if (!$module_id)
             $module_id = $request->request->get('module_id');
+
+
 
         // Já existem caracters selecionados
         if ($species) {
@@ -114,11 +201,11 @@ class IdentificationController extends Controller {
 
                 //100px 100px
 //                $character['image_url'] = 'http://skaphandrus.com/thumbnails/small/characters/' . $character_obj->getImage();
-                  //$character['image_url'] = 'http://skaphandrus.com/media/cache/sk_widen_240/uploads/characters/' . $character_obj->getImage();
-                  
-                  $character['image_url'] =  $this->get('liip_imagine.cache.manager')->getBrowserPath($character_obj->getWebPath(), 'sk_widen_240');
-                  
-                
+                $character['image_url'] = 'http://skaphandrus.com/media/cache/sk_widen_240/uploads/characters/' . $character_obj->getImage();
+
+                //$character['image_url'] = $this->get('liip_imagine.cache.manager')->getBrowserPath($character_obj->getWebPath(), 'sk_widen_240');
+
+
                 $character['image_hash'] = $character_obj->getImage();
 
                 $characters[] = $character;
@@ -135,6 +222,74 @@ class IdentificationController extends Controller {
      */
 
     public function speciesListJsonAction(Request $request) {
+
+
+        $em = $this->getDoctrine()->getManager();
+        $connection = $em->getConnection();
+
+
+        $character_ids = $request->query->get('characters');
+        if (!$character_ids)
+            $character_ids = $request->request->get('characters');
+
+        $module_id = $request->query->get('module_id');
+        if (!$module_id)
+            $module_id = $request->request->get('module_id');
+
+        $view_name = "sk_identification_criteria_matrix_" . $module_id;
+
+
+        //especies com base nos characteres já selecionados
+        if ($character_ids) {
+            
+            
+            foreach ($character_ids as $key => $character_id) {
+                
+                $character_obj = $this->getDoctrine()
+                ->getRepository("SkaphandrusAppBundle:SkIdentificationCharacter")
+                ->findOneById($character_id);
+                
+                
+                $characters[$character_obj->getCriteria()->getId()][] = $character_obj->getId();
+            }
+
+            $pks = $this->getDoctrine()
+                    ->getRepository("SkaphandrusAppBundle:SkSpecies")
+                    ->getSpeciesIDSFromCharacterIDS($characters, $module_id);
+            
+            
+            
+            $sql = "SELECT distinct(" . $view_name . ".species_id) as id, sk_species_scientific_name.name as name, image_refs.image_src as image_url, image_refs.image_src as image_src
+                    FROM " . $view_name . "               
+                    JOIN sk_species_scientific_name on " . $view_name . ".species_id = sk_species_scientific_name.species_id
+                    JOIN ( select species_id, image_url, image_src, max(is_primary) from sk_species_image_ref group by species_id ) image_refs on image_refs.species_id = " . $view_name . ".species_id
+                    WHERE " . $view_name . ".species_id in (" . implode(", ", $pks) . ")
+                    ORDER by id asc";
+            
+            
+
+            //especies com base no modulo selecionado
+        } else {
+            $sql = "SELECT distinct(" . $view_name . ".species_id) as id, sk_species_scientific_name.name as name, image_refs.image_src as image_url, image_refs.image_src as image_src
+                    FROM " . $view_name . "               
+                    JOIN sk_species_scientific_name on " . $view_name . ".species_id = sk_species_scientific_name.species_id
+                    JOIN ( select species_id, image_url, image_src, max(is_primary) from sk_species_image_ref group by species_id ) image_refs on image_refs.species_id = " . $view_name . ".species_id
+                    ORDER by id asc";
+        }
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+
+
+        return new JsonResponse($values);
+    }
+
+    /*
+     * Returns a list of Species
+     */
+
+    public function speciesListJsonAction_old(Request $request) {
 
         $character_ids = $request->query->get('characters');
         if (!$character_ids)
@@ -184,6 +339,8 @@ class IdentificationController extends Controller {
         else:
             $image_url = 'http://skaphandrus.com/images/stuff/50-50/no-image-species.png';
         endif;
+
+
 
         foreach ($pks as $pk) {
             $species_obj = $this->getDoctrine()
@@ -258,9 +415,9 @@ class IdentificationController extends Controller {
                     //100px 100px
                     //$module['image_url'] = 'http://skaphandrus.com/thumbnails/default/characters/' . $module_object->getImage() . '.jpg';
                     //$module['image_url'] = 'http://skaphandrus.com/media/cache/sk_downscale_600_400/uploads/characters/' . $module_object->getImage();
-                    
-                    $module['image_url'] =  $this->get('liip_imagine.cache.manager')->getBrowserPath($module_object->getWebPath(), 'sk_downscale_600_400');
-                    
+
+                    $module['image_url'] = $this->get('liip_imagine.cache.manager')->getBrowserPath($module_object->getWebPath(), 'sk_downscale_600_400');
+
 
 
                     $modules[] = $module;
@@ -271,10 +428,10 @@ class IdentificationController extends Controller {
             $results[] = $master;
         }
 
-                header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Origin: *');
 
         //echo json_encode($output);
-        
+
         return new JsonResponse($results);
     }
 
@@ -370,15 +527,31 @@ class IdentificationController extends Controller {
             $species['criterias'] = $this->getDoctrine()
                     ->getRepository("SkaphandrusAppBundle:SkIdentificationCharacter")
                     ->getCharactersIDSFromSpecies($species_obj->getId(), $module_id, $this->get('request')->getLocale());
-            
+
             $species['criterias'] = array();
-            
-            
         }
         return new JsonResponse($species);
     }
 
+    
+    
     public function taxonListJsonAction(Request $request) {
+        $module_id = $request->query->get('module_id');
+        if (!$module_id)
+            $module_id = $request->request->get('module_id');
+        $module_obj = $this->getDoctrine()
+                ->getRepository("SkaphandrusAppBundle:SkIdentificationModule")
+                ->findOneById($module_id);
+
+        $output = array();
+        
+              return new JsonResponse($output);
+    }
+        
+        
+    
+    
+    public function taxonListJsonAction_old(Request $request) {
         $module_id = $request->query->get('module_id');
         if (!$module_id)
             $module_id = $request->request->get('module_id');
@@ -561,7 +734,8 @@ class IdentificationController extends Controller {
         return new JsonResponse($output);
     }
 
-     public function testsAction() {
-         return $this->render('SkaphandrusAppBundle:Identification:test.html.twig');
-     }
+    public function testsAction() {
+        return $this->render('SkaphandrusAppBundle:Identification:test.html.twig');
+    }
+
 }

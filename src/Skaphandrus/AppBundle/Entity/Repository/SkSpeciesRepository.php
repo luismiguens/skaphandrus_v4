@@ -291,6 +291,10 @@ class SkSpeciesRepository extends EntityRepository {
 
 
         $sql .= " order by T0.family_id, T0.genus_id";
+        
+        
+        //dump($sql);
+        
         $statement = $connection->prepare($sql);
         $statement->execute();
         $values = $statement->fetchAll();
@@ -325,6 +329,58 @@ class SkSpeciesRepository extends EntityRepository {
         return $result;
     }
 
+    
+    
+    
+//    
+//    SELECT distinct(sk_identification_criteria_matrix_13.species_id) as id, sk_species_scientific_name.name as name, image_refs.image_url
+//FROM sk_identification_criteria_matrix_13                
+//JOIN sk_species_scientific_name on sk_identification_criteria_matrix_13.species_id = sk_species_scientific_name.species_id
+//JOIN ( select species_id, image_url from sk_species_image_ref ) image_refs on image_refs.species_id = sk_identification_criteria_matrix_13.species_id
+//ORDER by id asc
+    
+    
+    
+    
+    
+    
+        /**
+     * Metodo que com base no modulo_id, devolve as especies que pertencem a esse modulo.
+     */
+    public function getSpeciesByPKS($pks) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT sp.id as species_id, ssn.name as ssn_name
+                FROM sk_species_scientific_name as ssn
+                join sk_species as sp on sp.id = ssn.species_id
+                where sp.id in (".implode(", ", $pks).")
+                order by species_id asc ";
+
+        //echo $sql;
+        
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+            $species = new \Skaphandrus\AppBundle\Entity\SkSpecies();
+            $species->setId($value['species_id']);
+            $scientific_name = new \Skaphandrus\AppBundle\Entity\SkSpeciesScientificName();
+            $scientific_name->setName($value['ssn_name']);
+            $species->addScientificName($scientific_name);
+            $result[] = $species;
+        }
+
+        return $result;
+    }
+    
+    
+    
+    
+    
+    
     public function countPhotosSpotArray($spot_id) {
         $photos = $this->getEntityManager()
                         ->createQuery(
