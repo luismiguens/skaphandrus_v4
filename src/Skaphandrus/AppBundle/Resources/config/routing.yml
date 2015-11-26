@@ -21,6 +21,10 @@ contests:
     path:     /contests
     defaults: { _controller: "SkaphandrusAppBundle:Testes:contests" }
 
+skaphandrus_app_votation:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skphotocontestcategoryjudgevotation.yml"
+    prefix:   /{_locale}/votation_category
+
 skaphandrus_app_business_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skbusiness.yml"
     prefix:   /{_locale}/business_admin

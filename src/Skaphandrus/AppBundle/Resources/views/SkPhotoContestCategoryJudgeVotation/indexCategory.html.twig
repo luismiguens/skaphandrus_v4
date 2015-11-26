@@ -1,0 +1,59 @@
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/skaphandrus.js') }}"></script>
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block heading_title %}
+    {{ "form.photo_contest_votation.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.photo_contest_votation"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{#{% block heading_action %}
+    <a href="#" class="btn btn-primary">{{ "form.photo_contest_votation.btn.add"|trans }}</a>
+{% endblock %}#}
+
+{% block form_title_description %}
+    {{ "form.photo_contest_votation.text.description"|trans }}
+{% endblock %}
+
+{% block body -%}
+    <h1>{{ "form.photo_contest_votation.h1.categorie_list"|trans }}</h1>
+
+    <table class="table table-striped" >
+        <thead>
+            <tr>
+                <td>Categories</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+                <tr>
+                    <td>
+                        <h4 class="panel-title">{{ category.translate.name }}</h4>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" href="{{ path('votation_show', { 'contest_id':contest.id, 'category_id': category.id }) }}">view</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{#    <a href="#" class="btn btn-primary">{{ "form.photo_contest_votation.btn.add"|trans }}</a>#}
+
+{% endblock %}

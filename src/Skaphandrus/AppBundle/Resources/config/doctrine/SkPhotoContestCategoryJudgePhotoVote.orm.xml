@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Skaphandrus\AppBundle\Entity\SkPhotoContestCategoryJudgePhotoVote" table="sk_photo_contest_category_judge_photo_vote">
-    <indexes>
-      <index name="sk_photo_contest_category_judge_photo_vote_FI_1" columns="votation_id"/>
-      <index name="sk_photo_contest_category_judge_photo_vote_FI_2" columns="photo_id"/>
-    </indexes>
-    <id name="id" type="integer" column="id">
-      <generator strategy="IDENTITY"/>
-    </id>
-    <field name="points" type="integer" column="points" nullable="false">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
-    <many-to-one field="photo" target-entity="SkPhoto" fetch="LAZY">
-      <join-columns>
-        <join-column name="photo_id" referenced-column-name="id"/>
-      </join-columns>
-    </many-to-one>
-    <many-to-one field="votation" target-entity="SkPhotoContestCategoryJudgeVotation" fetch="LAZY">
-      <join-columns>
-        <join-column name="votation_id" referenced-column-name="id"/>
-      </join-columns>
-    </many-to-one>
-  </entity>
+    <entity name="Skaphandrus\AppBundle\Entity\SkPhotoContestCategoryJudgePhotoVote" table="sk_photo_contest_category_judge_photo_vote">
+        <indexes>
+            <index name="sk_photo_contest_category_judge_photo_vote_FI_1" columns="votation_id"/>
+            <index name="sk_photo_contest_category_judge_photo_vote_FI_2" columns="photo_id"/>
+        </indexes>
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="points" type="integer" column="points" nullable="false">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <many-to-one field="photo" target-entity="SkPhoto" fetch="LAZY">
+            <join-columns>
+                <join-column name="photo_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-one field="votation" target-entity="SkPhotoContestCategoryJudgeVotation" fetch="LAZY">
+            <join-columns>
+                <join-column name="votation_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+    </entity>
 </doctrine-mapping>

@@ -1,0 +1,69 @@
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/skaphandrus.js') }}"></script>
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block heading_title %}
+    {{ "form.photo_contest_votation.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.photo_contest_votation"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block heading_action %}
+    <a href="{{ path('votation_new') }}" class="btn btn-primary">{{ "form.photo_contest_votation.btn.add"|trans }}</a>
+{% endblock %}
+
+{% block form_title_description %}
+    {{ "form.photo_contest_votation.text.description"|trans }}
+{% endblock %}
+
+{% block body -%}
+    <h1>SkPhotoContestCategoryJudgeVotation</h1>
+    <table class="table table-striped" >
+        <thead>
+            <tr>
+                <th>{{ "form.photo_contest.label.title"|trans }}</th>
+                <th>{{ "form.photo_contest.label.pontos"|trans }}</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.t }}</td>
+                    <td>{{ entity.countable }}</td>
+                    <td>
+                        <a class="btn btn-primary" href="#">edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+        
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('votation') }}">
+                list
+            </a>
+        </li>
+        {#<li>
+            <a href="{{ path('votation_edit', { 'id': entity.id }) }}">
+                Edit
+            </a>
+        </li>
+        <li>{{ form(delete_form) }}</li>#}
+    </ul>
+{% endblock %}

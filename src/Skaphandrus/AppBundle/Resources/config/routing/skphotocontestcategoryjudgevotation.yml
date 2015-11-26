@@ -1,0 +1,34 @@
+votation_category:
+    path:     /{contest_id}
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation:categories" }
+
+votation:
+    path:     /
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation:index" }
+
+votation_show:
+    path:     /{contest_id}/{category_id}/show
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation:show" }
+
+votation_new:
+    path:     /new
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation:new" }
+
+votation_create:
+    path:     /create
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation:create" }
+    methods:  POST
+
+votation_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation:edit" }
+
+votation_update:
+    path:     /{id}/update
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation:update" }
+    methods:  [POST, PUT]
+
+votation_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation:delete" }
+    methods:  [POST, DELETE]

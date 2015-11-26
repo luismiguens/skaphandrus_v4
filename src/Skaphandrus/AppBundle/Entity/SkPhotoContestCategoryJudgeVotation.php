@@ -2,18 +2,21 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use DateTime;
+use Doctrine\Common\Collections\Collection;
+
 /**
  * SkPhotoContestCategoryJudgeVotation
  */
-class SkPhotoContestCategoryJudgeVotation
-{
+class SkPhotoContestCategoryJudgeVotation {
+
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     private $createdAt;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     private $updatedAt;
 
@@ -23,25 +26,33 @@ class SkPhotoContestCategoryJudgeVotation
     private $id;
 
     /**
-     * @var \Skaphandrus\AppBundle\Entity\SkPhotoContestJudge
+     * @var SkPhotoContestJudge
      */
     private $judge;
 
     /**
-     * @var \Skaphandrus\AppBundle\Entity\SkPhotoContestCategory
+     * @var SkPhotoContestCategory
      */
     private $category;
 
+    /**
+     * @var Collection
+     */
+    private $judgeVote;
+
+    public function __construct() {
+        $this->updatedAt = new DateTime;
+        $this->createdAt = new DateTime;
+    }
 
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @param DateTime $createdAt
      *
      * @return SkPhotoContestCategoryJudgeVotation
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
 
         return $this;
@@ -50,22 +61,20 @@ class SkPhotoContestCategoryJudgeVotation
     /**
      * Get createdAt
      *
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->createdAt;
     }
 
     /**
      * Set updatedAt
      *
-     * @param \DateTime $updatedAt
+     * @param DateTime $updatedAt
      *
      * @return SkPhotoContestCategoryJudgeVotation
      */
-    public function setUpdatedAt($updatedAt)
-    {
+    public function setUpdatedAt($updatedAt) {
         $this->updatedAt = $updatedAt;
 
         return $this;
@@ -74,10 +83,9 @@ class SkPhotoContestCategoryJudgeVotation
     /**
      * Get updatedAt
      *
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getUpdatedAt()
-    {
+    public function getUpdatedAt() {
         return $this->updatedAt;
     }
 
@@ -86,20 +94,18 @@ class SkPhotoContestCategoryJudgeVotation
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
     /**
      * Set judge
      *
-     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge
+     * @param SkPhotoContestJudge $judge
      *
      * @return SkPhotoContestCategoryJudgeVotation
      */
-    public function setJudge(\Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge = null)
-    {
+    public function setJudge(SkPhotoContestJudge $judge = null) {
         $this->judge = $judge;
 
         return $this;
@@ -108,22 +114,20 @@ class SkPhotoContestCategoryJudgeVotation
     /**
      * Get judge
      *
-     * @return \Skaphandrus\AppBundle\Entity\SkPhotoContestJudge
+     * @return SkPhotoContestJudge
      */
-    public function getJudge()
-    {
+    public function getJudge() {
         return $this->judge;
     }
 
     /**
      * Set category
      *
-     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category
+     * @param SkPhotoContestCategory $category
      *
      * @return SkPhotoContestCategoryJudgeVotation
      */
-    public function setCategory(\Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category = null)
-    {
+    public function setCategory(SkPhotoContestCategory $category = null) {
         $this->category = $category;
 
         return $this;
@@ -132,11 +136,42 @@ class SkPhotoContestCategoryJudgeVotation
     /**
      * Get category
      *
-     * @return \Skaphandrus\AppBundle\Entity\SkPhotoContestCategory
+     * @return SkPhotoContestCategory
      */
-    public function getCategory()
-    {
+    public function getCategory() {
         return $this->category;
     }
-}
 
+    /**
+     * Add judgeVote
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkSkPhotoContestCategoryJudgePhotoVote $judgeVote
+     *
+     * @return 
+     */
+    public function addJudgeVote(SkPhotoContestCategoryJudgePhotoVote $judgeVote) {
+        $this->judgeVote[] = $judgeVote;
+        $judgeVote->setVotation($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove judgeVote
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkSkPhotoContestCategoryJudgePhotoVote $judgeVote
+     */
+    public function removeJudgeVote(SkPhotoContestCategoryJudgePhotoVote $judgeVote) {
+        $this->judgeVote->removeElement($judgeVote);
+    }
+
+    /**
+     * Get judgeVote
+     *
+     * @return Collection
+     */
+    public function getJudgeVote() {
+        return $this->judgeVote;
+    }
+
+}

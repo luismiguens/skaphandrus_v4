@@ -5,8 +5,8 @@ namespace Skaphandrus\AppBundle\Entity;
 /**
  * SkPhotoContestCategoryJudgePhotoVote
  */
-class SkPhotoContestCategoryJudgePhotoVote
-{
+class SkPhotoContestCategoryJudgePhotoVote {
+
     /**
      * @var integer
      */
@@ -27,7 +27,6 @@ class SkPhotoContestCategoryJudgePhotoVote
      */
     private $votation;
 
-
     /**
      * Set points
      *
@@ -35,8 +34,7 @@ class SkPhotoContestCategoryJudgePhotoVote
      *
      * @return SkPhotoContestCategoryJudgePhotoVote
      */
-    public function setPoints($points)
-    {
+    public function setPoints($points) {
         $this->points = $points;
 
         return $this;
@@ -47,8 +45,7 @@ class SkPhotoContestCategoryJudgePhotoVote
      *
      * @return integer
      */
-    public function getPoints()
-    {
+    public function getPoints() {
         return $this->points;
     }
 
@@ -57,8 +54,7 @@ class SkPhotoContestCategoryJudgePhotoVote
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -69,8 +65,7 @@ class SkPhotoContestCategoryJudgePhotoVote
      *
      * @return SkPhotoContestCategoryJudgePhotoVote
      */
-    public function setPhoto(\Skaphandrus\AppBundle\Entity\SkPhoto $photo = null)
-    {
+    public function setPhoto(\Skaphandrus\AppBundle\Entity\SkPhoto $photo = null) {
         $this->photo = $photo;
 
         return $this;
@@ -81,8 +76,7 @@ class SkPhotoContestCategoryJudgePhotoVote
      *
      * @return \Skaphandrus\AppBundle\Entity\SkPhoto
      */
-    public function getPhoto()
-    {
+    public function getPhoto() {
         return $this->photo;
     }
 
@@ -93,8 +87,7 @@ class SkPhotoContestCategoryJudgePhotoVote
      *
      * @return SkPhotoContestCategoryJudgePhotoVote
      */
-    public function setVotation(\Skaphandrus\AppBundle\Entity\SkPhotoContestCategoryJudgeVotation $votation = null)
-    {
+    public function setVotation(\Skaphandrus\AppBundle\Entity\SkPhotoContestCategoryJudgeVotation $votation = null) {
         $this->votation = $votation;
 
         return $this;
@@ -105,9 +98,8 @@ class SkPhotoContestCategoryJudgePhotoVote
      *
      * @return \Skaphandrus\AppBundle\Entity\SkPhotoContestCategoryJudgeVotation
      */
-    public function getVotation()
-    {
+    public function getVotation() {
         return $this->votation;
     }
-}
 
+}
