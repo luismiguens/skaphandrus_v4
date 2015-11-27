@@ -1,4 +1,6 @@
 
+
+
 ################################################################################  
 ### ADMIN ROUTES
 ################################################################################ 
@@ -20,10 +22,6 @@ teste:
 contests:
     path:     /contests
     defaults: { _controller: "SkaphandrusAppBundle:Testes:contests" }
-
-skaphandrus_app_votation:
-    resource: "@SkaphandrusAppBundle/Resources/config/routing/skphotocontestcategoryjudgevotation.yml"
-    prefix:   /{_locale}/votation_category
 
 skaphandrus_app_business_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skbusiness.yml"
@@ -98,6 +96,11 @@ skaphandrus_app_identification_group_admin:
 skaphandrus_app_identification_criteria_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skidentificationcriteria.yml"
     prefix:   /{_locale}/identification_criteria_admin
+
+
+skaphandrus_app_judge_votation_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skphotocontestcategoryjudgevotation.yml"
+    prefix:   /{_locale}/judge_votation_admin
 
 
 #skaphandrus_app_fos_user:

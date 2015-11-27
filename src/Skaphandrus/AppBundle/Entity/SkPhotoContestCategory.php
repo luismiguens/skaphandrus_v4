@@ -36,6 +36,13 @@ class SkPhotoContestCategory {
      * @var \Doctrine\Common\Collections\Collection
      */
     private $awards;
+    
+    
+        /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $votations;
+
 
     /**
      * var used to save winner photos in category
@@ -149,6 +156,49 @@ class SkPhotoContestCategory {
         return $this->photo;
     }
 
+    
+    
+    /**
+     * Add votation
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestCategoryJudgeVotation $votation
+     *
+     * @return SkPhotoContestCategory
+     */
+    public function addVotation(\Skaphandrus\AppBundle\Entity\SkPhotoContestCategoryJudgeVotation $votation) {
+        $this->votations[] = $votation;
+
+        return $this;
+    }
+
+    /**
+     * Remove votation
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestVotation $votation
+     */
+    public function removeVotation(\Skaphandrus\AppBundle\Entity\SkPhotoContestCategoryJudgeVotation $votation) {
+        $this->votations->removeElement($votation);
+    }
+
+    /**
+     * Get votations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVotations() {
+        return $this->votations;
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * Add award
      *

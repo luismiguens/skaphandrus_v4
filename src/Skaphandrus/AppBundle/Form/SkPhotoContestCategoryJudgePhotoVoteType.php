@@ -15,7 +15,7 @@ class SkPhotoContestCategoryJudgePhotoVoteType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('points')
-//                ->add('photo')
+                //->add('photo', 'hidden')
 //                ->add('votation')
         ;
     }

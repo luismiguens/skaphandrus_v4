@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <entity name="Skaphandrus\AppBundle\Entity\SkPhotoContestCategoryJudgeVotation" repository-class="Skaphandrus\AppBundle\Entity\Repository\SkPhotoContestCategoryJudgeVotation" table="sk_photo_contest_category_judge_votation">
+    <entity name="Skaphandrus\AppBundle\Entity\SkPhotoContestCategoryJudgeVotation" repository-class="Skaphandrus\AppBundle\Entity\Repository\SkPhotoContestCategoryJudgeVotationRepository" table="sk_photo_contest_category_judge_votation">
         <indexes>
             <index name="sk_photo_contest_category_judge_votation_FI_1" columns="category_id"/>
             <index name="sk_photo_contest_category_judge_votation_FI_2" columns="judge_id"/>

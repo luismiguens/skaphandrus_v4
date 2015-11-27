@@ -29,6 +29,8 @@
         </many-to-many>
         <one-to-many field="awards" target-entity="SkPhotoContestAward" mapped-by="category"/>
         
+        <one-to-many field="votations" target-entity="SkPhotoContestCategoryJudgeVotation" mapped-by="category"/>
+        
 <!--        <lifecycle-callbacks>
             <lifecycle-callback type="postPersist" method="doStuffOnPostPersist"/>
         </lifecycle-callbacks>-->

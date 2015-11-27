@@ -14,111 +14,114 @@ use Skaphandrus\AppBundle\Form\SkPhotoContestCategoryJudgeVotationType;
 class SkPhotoContestCategoryJudgeVotationController extends Controller {
 
     /**
-     * Lists all SkPhotoContestCategory entities.
-     *
-     */
-    public function categoriesAction($contest_id) {
-        $em = $this->getDoctrine()->getManager();
-
-        $contest = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')
-                ->findOneById($contest_id);
-
-        return $this->render('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation:indexCategory.html.twig', array(
-                    'contest' => $contest,
-                    'categories' => $contest->getCategories(),
-        ));
-    }
-    
-    /**
      * Lists all SkPhotoContestCategoryJudgeVotation entities.
      *
      */
-    public function indexAction() {
+    public function indexAction($contest_id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->findAll();
+        $fos_user = $this->get('security.token_storage')->getToken()->getUser();
+        $judge = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestJudge')->findOneBy(array('fosUser' => $fos_user));
+
+        $entities = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->getJudgeVotationsByContest($contest_id, $judge);
+
+        //se ainda não existirem votacoes do juiz criar
+        if (!$entities) {
+
+            $categories = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')->findBy(array('contest' => $contest_id));
+
+            foreach ($categories as $key => $category) {
+                $JudgeVotation = new SkPhotoContestCategoryJudgeVotation();
+                $JudgeVotation->setCategory($category);
+                $JudgeVotation->setJudge($judge);
+
+                $em->persist($JudgeVotation);
+                $em->flush();
+            }
+
+            $entities = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->getJudgeVotationsByContest($contest_id, $judge);
+        }
 
         return $this->render('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation:index.html.twig', array(
                     'entities' => $entities,
         ));
     }
 
-    /**
-     * Creates a new SkPhotoContestCategoryJudgeVotation entity.
-     *
-     */
-    public function createAction(Request $request) {
-        $entity = new SkPhotoContestCategoryJudgeVotation();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('votation_show', array('id' => $entity->getId())));
-        }
-
-        return $this->render('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation:new.html.twig', array(
-                    'entity' => $entity,
-                    'form' => $form->createView(),
-        ));
-    }
-
-    /**
-     * Creates a form to create a SkPhotoContestCategoryJudgeVotation entity.
-     *
-     * @param SkPhotoContestCategoryJudgeVotation $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(SkPhotoContestCategoryJudgeVotation $entity) {
-        $form = $this->createForm(new SkPhotoContestCategoryJudgeVotationType(), $entity, array(
-            'action' => $this->generateUrl('votation_create'),
-            'method' => 'POST',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new SkPhotoContestCategoryJudgeVotation entity.
-     *
-     */
-    public function newAction() {
-        $entity = new SkPhotoContestCategoryJudgeVotation();
-        $form = $this->createCreateForm($entity);
-
-        return $this->render('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation:new.html.twig', array(
-                    'entity' => $entity,
-                    'form' => $form->createView(),
-        ));
-    }
-
-    /**
-     * Finds and displays a SkPhotoContestCategoryJudgeVotation entity.
-     *
-     */
-    public function showAction($contest_id, $category_id) {
-        $em = $this->getDoctrine()->getManager();
-
-        $contest = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')
-                ->findOneById($contest_id);
-        
-        $category = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')
-                ->findOneById($category_id);
-        
-        $entities = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->findPhotos($category->getId());
-
-        return $this->render('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation:show.html.twig', array(
-                    'contest' => $contest,
-                    'categories' => $contest->getCategories(),
-                    'entities' => $entities,
-        ));
-    }
+//
+//    /**
+//     * Creates a new SkPhotoContestCategoryJudgeVotation entity.
+//     *
+//     */
+//    public function createAction(Request $request) {
+//        $entity = new SkPhotoContestCategoryJudgeVotation();
+//        $form = $this->createCreateForm($entity);
+//        $form->handleRequest($request);
+//
+//        if ($form->isValid()) {
+//            $em = $this->getDoctrine()->getManager();
+//            $em->persist($entity);
+//            $em->flush();
+//
+//            return $this->redirect($this->generateUrl('judge_votation_admin_show', array('id' => $entity->getId())));
+//        }
+//
+//        return $this->render('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation:new.html.twig', array(
+//                    'entity' => $entity,
+//                    'form' => $form->createView(),
+//        ));
+//    }
+//
+//    /**
+//     * Creates a form to create a SkPhotoContestCategoryJudgeVotation entity.
+//     *
+//     * @param SkPhotoContestCategoryJudgeVotation $entity The entity
+//     *
+//     * @return \Symfony\Component\Form\Form The form
+//     */
+//    private function createCreateForm(SkPhotoContestCategoryJudgeVotation $entity) {
+//        $form = $this->createForm(new SkPhotoContestCategoryJudgeVotationType(), $entity, array(
+//            'action' => $this->generateUrl('judge_votation_admin_create'),
+//            'method' => 'POST',
+//        ));
+//
+//        $form->add('submit', 'submit', array('label' => 'Create'));
+//
+//        return $form;
+//    }
+//    /**
+//     * Displays a form to create a new SkPhotoContestCategoryJudgeVotation entity.
+//     *
+//     */
+//    public function newAction() {
+//        $entity = new SkPhotoContestCategoryJudgeVotation();
+//        $form = $this->createCreateForm($entity);
+//
+//        return $this->render('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation:new.html.twig', array(
+//                    'entity' => $entity,
+//                    'form' => $form->createView(),
+//        ));
+//    }
+//
+//    /**
+//     * Finds and displays a SkPhotoContestCategoryJudgeVotation entity.
+//     *
+//     */
+//    public function showAction($id) {
+//        $em = $this->getDoctrine()->getManager();
+//
+//        $entity = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->find($id);
+//
+//        if (!$entity) {
+//            throw $this->createNotFoundException('Unable to find SkPhotoContestCategoryJudgeVotation entity.');
+//        }
+//
+//        $deleteForm = $this->createDeleteForm($id);
+//
+//        return $this->render('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation:show.html.twig', array(
+//                    'entity' => $entity,
+//                    'delete_form' => $deleteForm->createView(),
+//        ));
+//    }
 
     /**
      * Displays a form to edit an existing SkPhotoContestCategoryJudgeVotation entity.
@@ -128,15 +131,52 @@ class SkPhotoContestCategoryJudgeVotationController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->find($id);
+        $contest = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->findContestByVotation($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find SkPhotoContestCategoryJudgeVotation entity.');
         }
 
+        //$entity = new SkPhotoContestCategoryJudgeVotation(); 
+//VERIFICAR SE A VOTACAO JÁ TEM AS FOTOGRAFIAS
+//se o concurso já tiver terminado cria as votacoes para as fotografias mais votadas        
+        if (count($entity->getJudgeVote()) < 1):
+
+
+            $mostVotedPhotos = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->findMostVotedPhotosByCategory($entity->getCategory()->getId());
+
+            foreach ($mostVotedPhotos as $key => $photo) {
+
+//                echo $photo['id']." : ";
+//                echo $photo['countable']."<br/>";
+
+                $judgeVote = new \Skaphandrus\AppBundle\Entity\SkPhotoContestCategoryJudgePhotoVote();
+                $p = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($photo['id']);
+
+                $judgeVote->setPhoto($p);
+                $judgeVote->setVotation($entity);
+                $judgeVote->setPoints(0);
+
+                $entity->addJudgeVote($judgeVote);
+
+
+
+                $em->persist($entity);
+            }
+            $em->flush();
+
+
+
+
+        endif;
+
+
+
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation:edit.html.twig', array(
+                    'contest' => $contest,
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
@@ -152,7 +192,7 @@ class SkPhotoContestCategoryJudgeVotationController extends Controller {
      */
     private function createEditForm(SkPhotoContestCategoryJudgeVotation $entity) {
         $form = $this->createForm(new SkPhotoContestCategoryJudgeVotationType(), $entity, array(
-            'action' => $this->generateUrl('votation_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('judge_votation_admin_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -181,7 +221,7 @@ class SkPhotoContestCategoryJudgeVotationController extends Controller {
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('votation_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('judge_votation_admin_edit', array('id' => $id)));
         }
 
         return $this->render('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation:edit.html.twig', array(
@@ -211,7 +251,7 @@ class SkPhotoContestCategoryJudgeVotationController extends Controller {
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('votation'));
+        return $this->redirect($this->generateUrl('judge_votation_admin'));
     }
 
     /**
@@ -223,7 +263,7 @@ class SkPhotoContestCategoryJudgeVotationController extends Controller {
      */
     private function createDeleteForm($id) {
         return $this->createFormBuilder()
-                        ->setAction($this->generateUrl('votation_delete', array('id' => $id)))
+                        ->setAction($this->generateUrl('judge_votation_admin_delete', array('id' => $id)))
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete'))
                         ->getForm()

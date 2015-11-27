@@ -62,5 +62,10 @@ class SkPhotoContestJudgeRepository extends EntityRepository {
                 JOIN j.award a
          WHERE a.contest = :contest")->setParameter('contest', $contest)->getResult();
     }
+    
+    
+    
+    
+    
 
 }

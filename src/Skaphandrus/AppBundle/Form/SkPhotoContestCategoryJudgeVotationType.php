@@ -17,7 +17,7 @@ class SkPhotoContestCategoryJudgeVotationType extends AbstractType {
 //                ->add('createdAt')
 //                ->add('updatedAt')
 //                ->add('judge')
-                ->add('category')
+//                ->add('category')
                 ->add('judgeVote', 'collection', array(
                     'type' => new SkPhotoContestCategoryJudgePhotoVoteType(),
                     'allow_add' => true,

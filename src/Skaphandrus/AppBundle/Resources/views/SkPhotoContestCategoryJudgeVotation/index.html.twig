@@ -1,34 +1,4 @@
-{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('bundles/skaphandrusapp/js/skaphandrus.js') }}"></script>
-{% endblock %}
-
-
-{% block stylesheets %}
-    {{ parent() }}
-{% endblock %}
-
-{% block heading_title %}
-    {{ "form.photo_contest.h1.title"|trans }}
-{% endblock %}
-
-
-{% block heading_breadcrumbs %}
-    <ol class="breadcrumb">
-        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
-        <li class="active"><strong>{{ "breadcrumb.photo_contest"|trans }}</strong></li>
-    </ol>
-{% endblock %}
-
-{% block heading_action %}
-    <a href="{{ path('photo_contest_admin_new') }}" class="btn btn-primary">{{ "form.photo_contest.btn.add"|trans }}</a>
-{% endblock %}
-
-{% block form_title_description %}
-    {{ "form.photo_contest.text.description"|trans }}
-{% endblock %}
+{% extends '::base.html.twig' %}
 
 {% block body -%}
     <h1>SkPhotoContestCategoryJudgeVotation list</h1>
@@ -36,34 +6,38 @@
     <table class="records_list">
         <thead>
             <tr>
+                <th>Createdat</th>
+                <th>Updatedat</th>
                 <th>Id</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            {% for entity in entities %}
-                <tr>
-                    <td>{{ entity.id }}</td>
-                    <td>
-                        <ul>
-                            {#<li>
-                                <a href="{{ path('votation_show', { 'id': entity.id }) }}">show</a>
-                            </li>#}
-                            <li>
-                                <a href="{{ path('votation_edit', { 'id': entity.id }) }}">edit</a>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-            {% endfor %}
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('judge_votation_admin_show', { 'id': entity.id }) }}">{#{{ entity.createdAt }}#}</a></td>
+                <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.id }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('judge_votation_admin_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('judge_votation_admin_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 
-    <ul>
+        <ul>
         <li>
-            <a href="{{ path('votation_new') }}">
+            <a href="{{ path('judge_votation_admin_new') }}">
                 Create a new entry
             </a>
         </li>
     </ul>
-{% endblock %}
+    {% endblock %}

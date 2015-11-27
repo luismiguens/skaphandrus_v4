@@ -1,14 +1,4 @@
-{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('bundles/skaphandrusapp/js/skaphandrus.js') }}"></script>
-{% endblock %}
-
-
-{% block stylesheets %}
-    {{ parent() }}
-{% endblock %}
+{% extends '::base.html.twig' %}
 
 {% block body -%}
     <h1>SkPhotoContestCategoryJudgeVotation creation</h1>
@@ -17,7 +7,7 @@
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('votation') }}">
+        <a href="{{ path('judge_votation_admin') }}">
             Back to the list
         </a>
     </li>
