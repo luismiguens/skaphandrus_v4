@@ -190,6 +190,7 @@ class SkBusinessEducationController extends Controller {
             $em->persist($entity);
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
             // redirect back to some edit page
             return $this->redirect($this->generateUrl('business_education_admin_edit', array('id' => $id)));
         }

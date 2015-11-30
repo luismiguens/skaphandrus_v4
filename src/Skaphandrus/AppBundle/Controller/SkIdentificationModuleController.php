@@ -177,6 +177,7 @@ class SkIdentificationModuleController extends Controller
             
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
             return $this->redirect($this->generateUrl('identification_module_admin_edit', array('id' => $id)));
         }
 

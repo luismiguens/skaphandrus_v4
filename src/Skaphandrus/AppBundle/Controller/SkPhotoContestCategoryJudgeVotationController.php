@@ -213,6 +213,7 @@ class SkPhotoContestCategoryJudgeVotationController extends Controller {
         if ($editForm->isValid()) {
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
             return $this->redirect($this->generateUrl('judge_votation_admin_edit', array('id' => $id)));
         }
 
