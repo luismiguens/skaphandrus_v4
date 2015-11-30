@@ -157,11 +157,10 @@ class SkPhotoContestCategoryJudgeVotationController extends Controller {
                 $judgeVote->setVotation($entity);
                 $judgeVote->setPoints(0);
 
-//                $entity->addJudgeVote($judgeVote);
-//                
-//                $em->persist($entity);
+                $entity->addJudgeVote($judgeVote);
+                $em->persist($entity);
             }
-//            $em->flush();
+            $em->flush();
 
         endif;
 
@@ -189,7 +188,7 @@ class SkPhotoContestCategoryJudgeVotationController extends Controller {
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'form.common.btn.update', 'attr' => array('class' => 'btn btn-primary')));
+        //$form->add('submit', 'submit', array('label' => 'form.common.btn.update', 'attr' => array('class' => 'btn btn-primary')));
 
         return $form;
     }
