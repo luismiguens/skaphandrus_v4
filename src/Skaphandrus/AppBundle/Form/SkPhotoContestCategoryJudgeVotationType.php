@@ -25,7 +25,7 @@ class SkPhotoContestCategoryJudgeVotationType extends AbstractType {
                     'prototype' => true,
                     'by_reference' => false,
                     'required' => false,
-                    'label' => 'form.business.label.education_course'
+                    'label' => ' '
                 ))
         ;
     }

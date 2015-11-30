@@ -1,18 +1,51 @@
-{% extends '::base.html.twig' %}
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% form_theme edit_form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/hack/autocompleter-jqueryui.js') }}"></script>
+
+{% endblock %}
+
+
+{% block heading_title %}
+    {{ "form.judge_votation.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="{{ path('judge_votation_admin', { 'contest_id': contest.id }) }}">{{ "breadcrumb.judge_votation"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.edit_judge_votation"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+
+{#{% block heading_action %}
+    <a href="{{ path('judge_votation_admin_new') }}" class="btn btn-primary">{{ "form.judge_votation.btn.add"|trans }}</a>
+{% endblock %}#}
+
+
+{% block form_title_description %}
+    {{ "form.judge_votation.text.description"|trans }} 
+{% endblock %}
 
 {% block body -%}
-    <h1>SkPhotoContestCategoryJudgeVotation edit</h1>
 
-    {#{{ form(edit_form) }}#}
-
-
+    <div align="right">
+        <a class="btn btn-white" href="{{ path('judge_votation_admin', {'contest_id':contest.id}) }}">{{ "form.common.btn.back_to_list"|trans }}</a>
+    </div>
+    
     {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
 
-    <table>
+    <table class="table table-striped" >
         <thead>
             <tr>
-                <th>Image</th>
-                <th>Pontuation</th>
+                <th>{{ "form.judge_votation.label.image"|trans }}</th>
+                <th>{{ "form.judge_votation.label.pontuation"|trans }}</th>
             </tr>
         </thead>
 
@@ -21,7 +54,7 @@
             <tr>
                 <td> 
                     <a href="{{path('photo_no_slug', { 'id': photo.id })}}" > 
-                        <img src="{{ photo.getWebPath | imagine_filter('sk_widen_240') }}" class="feed-photo" alt="{{ photo }}">
+                        <img src="{{ photo.getWebPath | imagine_filter('sk_widen_100') }}" class="feed-photo" alt="{{ photo }}">
                     </a>
                 </td>
                 <td>
@@ -31,18 +64,9 @@
         {% endfor %}
     </table>
 
-        {{ form_end(edit_form) }}
+    {{ form_end(edit_form) }}
 
-    <ul class="record_actions">
-        <li>
-            <a href="{{ path('judge_votation_admin', {'contest_id':contest.id}) }}">
-                Back to the list
-            </a>
-        </li>
-        <li>{{ form(delete_form) }}</li>
-    </ul>
-
-    {# <button type="submit" class="btn btn-primary">{{ "form.common.btn.update"|trans }}</button>#}
+{#    {{ form(delete_form) }}#}
 
 
 {% endblock %}

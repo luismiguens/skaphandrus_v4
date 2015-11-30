@@ -138,8 +138,8 @@ class SkPhotoContestCategoryJudgeVotationController extends Controller {
         }
 
         //$entity = new SkPhotoContestCategoryJudgeVotation(); 
-//VERIFICAR SE A VOTACAO JÁ TEM AS FOTOGRAFIAS
-//se o concurso já tiver terminado cria as votacoes para as fotografias mais votadas        
+        //VERIFICAR SE A VOTACAO JÁ TEM AS FOTOGRAFIAS
+        //se o concurso já tiver terminado cria as votacoes para as fotografias mais votadas        
         if (count($entity->getJudgeVote()) < 1):
 
 
@@ -157,20 +157,13 @@ class SkPhotoContestCategoryJudgeVotationController extends Controller {
                 $judgeVote->setVotation($entity);
                 $judgeVote->setPoints(0);
 
-                $entity->addJudgeVote($judgeVote);
-
-
-
-                $em->persist($entity);
+//                $entity->addJudgeVote($judgeVote);
+//                
+//                $em->persist($entity);
             }
-            $em->flush();
-
-
-
+//            $em->flush();
 
         endif;
-
-
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
@@ -196,7 +189,7 @@ class SkPhotoContestCategoryJudgeVotationController extends Controller {
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'form.common.btn.update', 'attr' => array('class' => 'btn btn-primary')));
 
         return $form;
     }
@@ -265,7 +258,7 @@ class SkPhotoContestCategoryJudgeVotationController extends Controller {
         return $this->createFormBuilder()
                         ->setAction($this->generateUrl('judge_votation_admin_delete', array('id' => $id)))
                         ->setMethod('DELETE')
-                        ->add('submit', 'submit', array('label' => 'Delete'))
+                        ->add('submit', 'submit', array('label' => 'form.common.btn.delete', 'attr' => array('class' => 'btn btn-danger')))
                         ->getForm()
         ;
     }

@@ -45,7 +45,7 @@
         <tbody>
             {% for entity in entities %}
                 <tr>
-                    <td>{{ entity.name }}</a></td>
+                    <td>{{ entity.name }}</td>
                     <td>
                         {% if entity.image %}
                             <img alt="{{ entity.name }}" class="thumbnail" src="{{ entity.getWebPathImage | imagine_filter('sk_widen_75') }}"/>

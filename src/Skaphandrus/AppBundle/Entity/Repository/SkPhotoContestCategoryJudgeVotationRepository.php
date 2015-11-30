@@ -25,9 +25,55 @@ class SkPhotoContestCategoryJudgeVotationRepository extends EntityRepository {
 
         $statement = $connection->prepare($sql);
         $statement->execute();
-        $photos = $statement->fetchAll();
+        $allPhotos = $statement->fetchAll();
 
-        return $photos;
+//        $allPhotos = array(
+//            0 => array("id" => "26492", "countable" => "13"),
+//            1 => array("id" => "26308", "countable" => "13"),
+//            2 => array("id" => "23995", "countable" => "13"),
+//            3 => array("id" => "26798", "countable" => "13"),
+//            4 => array("id" => "26331", "countable" => "13"),
+//            5 => array("id" => "24085", "countable" => "13"),
+//            6 => array("id" => "619", "countable" => "13"),
+//            7 => array("id" => "26392", "countable" => "13"),
+//            8 => array("id" => "23576", "countable" => "13"),
+//            9 => array("id" => "23991", "countable" => "12"),
+//            10 => array("id" => "25500", "countable" => "11"),
+//            11 => array("id" => "26648", "countable" => "5"),
+//            12 => array("id" => "25575", "countable" => "7"),
+//            13 => array("id" => "23975", "countable" => "0"),
+//            14 => array("id" => "26022", "countable" => "2"),
+//            15 => array("id" => "25258", "countable" => "4"),
+//            16 => array("id" => "25279", "countable" => "4"),
+//            17 => array("id" => "23653", "countable" => "8"),
+//            18 => array("id" => "26528", "countable" => "1"),
+//        );
+
+        $photos = array();
+
+        $key = 0;
+
+        if (count($allPhotos) < 10) {
+
+//            while ($key <= count($allPhotos) - 1) {
+////                echo $allPhotos[$key]['countable'] . "<br/>";
+//                echo $key . "<br/>";
+////                $photos[] = $allPhotos[$key];
+//                $key ++;
+//            }
+            return $allPhotos;
+        } else {
+
+            while (($key <= 9) || ($key < count($allPhotos) - 1) && ($allPhotos[$key]['countable'] == $allPhotos[$key - 1]['countable'])) {
+//                echo $allPhotos[$key]['countable'] . "<br/>";
+                echo $key . "<br/>";
+                $photos[] = $allPhotos[$key];
+                $key ++;
+            }
+
+//            dump($photos);
+            return $photos;
+        }
     }
 
     public function getJudgeVotationsByContest($contest_id, $judge) {
