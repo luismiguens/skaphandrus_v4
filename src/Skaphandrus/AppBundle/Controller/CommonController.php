@@ -11,14 +11,23 @@ class CommonController extends Controller {
         //$locale = $this->get('request')->getLocale();
         $em = $this->getDoctrine()->getManager();
 
-
-        $query = $em->createQuery("SELECT c FROM SkaphandrusAppBundle:SkPhotoContest c WHERE c.beginAt < ?1 AND c.endAt > ?2");
-        $query->setParameter(1, date("Y-m-d H:i:s"));
-        $query->setParameter(2, date("Y-m-d H:i:s"));
+//        $query = $em->createQuery("SELECT c FROM SkaphandrusAppBundle:SkPhotoContest c WHERE c.beginAt < ?1 AND c.endAt > ?2");
+//        $query->setParameter(1, date("Y-m-d H:i:s"));
+//        $query->setParameter(2, date("Y-m-d H:i:s"));
+        $query = $em->createQuery("SELECT c FROM SkaphandrusAppBundle:SkPhotoContest c");
         $contests = $query->getResult();
 
+        $fos_user = $this->get('security.token_storage')->getToken()->getUser();
+
+        foreach ($contests as $contest) {
+            $category = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')->find($contest->getId());
+        }
+
+        $isJudge = $em->getRepository('SkaphandrusAppBundle:FosUser')->isJudgeInCategory($category->getId(), $fos_user->getId());
+
         return $this->render('SkaphandrusAppBundle:Common:skContestsList.html.twig', array(
-                    'contests' => $contests
+                    'contests' => $contests,
+                    'isJudge' => $isJudge
         ));
     }
 
@@ -203,7 +212,7 @@ class CommonController extends Controller {
 
             $user_from = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->findOneById($value['user_from']);
             $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneById($value['photo_id']);
-            
+
             $activity->setUserFrom($user_from);
             $activity->setSpeciesId($value['species_id']);
             $activity->setSpotId($value['spot_id']);

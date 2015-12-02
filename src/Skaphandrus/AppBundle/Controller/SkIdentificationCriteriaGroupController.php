@@ -165,6 +165,7 @@ class SkIdentificationCriteriaGroupController extends Controller {
         if ($editForm->isValid()) {
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
             return $this->redirect($this->generateUrl('sk_identification_criteria_group_edit', array('id' => $id)));
         }
 

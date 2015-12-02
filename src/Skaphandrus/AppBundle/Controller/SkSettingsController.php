@@ -170,6 +170,7 @@ class SkSettingsController extends Controller {
         if ($editForm->isValid()) {
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
             return $this->redirect($this->generateUrl('settings_admin_edit'));
         }
 

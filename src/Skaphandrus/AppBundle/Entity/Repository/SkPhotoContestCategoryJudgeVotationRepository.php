@@ -56,8 +56,8 @@ class SkPhotoContestCategoryJudgeVotationRepository extends EntityRepository {
         //devolver i == i-1 and i>10
         while ((($key <= count($allPhotos) - 1) && ($key <= 9)) ||
         ($key <= count($allPhotos) - 1) && ($allPhotos[$key]['countable'] == $allPhotos[$key - 1]['countable'])) {
-        //echo $allPhotos[$key]['countable'] . "<br/>";
-            echo $key . "<br/>";
+            //echo $allPhotos[$key]['countable'] . "<br/>";
+            //echo $key . "<br/>";
             $photos[] = $allPhotos[$key];
             $key ++;
         }

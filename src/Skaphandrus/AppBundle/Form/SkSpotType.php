@@ -36,7 +36,7 @@ class SkSpotType extends AbstractType {
                     'class' => 'SkaphandrusAppBundle:SkLocation',
                     'attr' => array('class' => 'form-control m-b'),
                     'label' => 'form.spot.label.location',
-                    'required' => false,
+                    'required' => true,
                     'help' => 'form.spot.help.location'
                 ))
                 ->add('translations', 'a2lix_translations', array(

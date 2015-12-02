@@ -174,6 +174,7 @@ class SkPhotoSpeciesSugestionController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
             return $this->redirect($this->generateUrl('photo', array('id' => $entity->getPhoto()->getId(), 'slug' => Utils::slugify($entity->getPhoto()->getTitle()))));
         }
         return $this->redirect($this->generateUrl('photo', array('id' => $entity->getPhoto()->getId(), 'slug' => Utils::slugify($entity->getPhoto()->getTitle()))));

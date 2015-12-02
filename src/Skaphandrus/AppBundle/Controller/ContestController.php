@@ -131,9 +131,9 @@ class ContestController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
 
-        if($existing_vote){
-                $em->remove($existing_vote);
-                $em->flush();
+        if ($existing_vote) {
+            $em->remove($existing_vote);
+            $em->flush();
         }
         $vote = new SkPhotoContestVote();
         $vote->setFosUser($user);
