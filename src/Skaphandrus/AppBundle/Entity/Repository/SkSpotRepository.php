@@ -178,6 +178,9 @@ class SkSpotRepository extends EntityRepository {
     }
 
     public function findSpotsInUser($user_id) {
+        
+        $result = array();
+        
         $query = $this->getEntityManager()
                         ->createQuery(
                                 'SELECT s as spot, COUNT(p.id) as photosInSpot

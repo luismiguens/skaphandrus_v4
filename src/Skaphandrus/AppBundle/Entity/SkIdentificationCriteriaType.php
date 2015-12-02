@@ -33,4 +33,3 @@ class SkIdentificationCriteriaType
         return $this->translate()->getName();
     }
 }
-

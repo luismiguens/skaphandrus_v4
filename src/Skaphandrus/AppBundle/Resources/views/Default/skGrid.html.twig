@@ -9,11 +9,11 @@
                 <meta itemprop="name" content="{{ row.personal_firstname}} {{ row.personal_middlename}} {{ row.personal_lastname}}" />
                 <meta itemprop="url" content="{{ path('user',  { 'id': row.fos_user_id }) }}" />
             </span>
-            {% if row.spot_id is not empty %}
+{#            {% if row.spot_id is not empty %}
                 <span itemprop="contentLocation" itemscope itemtype="http://schema.org/TouristAttraction">
                     <meta itemprop="name" content="{{ row.spot_name }}, {{ row.location_name }}" />
                 </span>
-            {% endif %}
+            {% endif %}#}
             <a href="{{ path('photo_no_slug',  { 'id': row.photo_id }) }}" title="{{ row.photo_title }}">
                 {#<img itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('new_sk_thumbnail_outbound_100') }}" />#}
                 <img itemprop="image" alt="{{ row.photo_title }}" src="{{ ('uploads/fotografias/'~row.photo_image) | imagine_filter('sk_thumbnail_outbound_100') }}" />

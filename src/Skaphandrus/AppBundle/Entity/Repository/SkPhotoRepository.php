@@ -178,19 +178,29 @@ class SkPhotoRepository extends EntityRepository {
 
     public function getQueryForGrid($params, $limit = 24, $order = array('id' => 'desc'), $offset = 0, $locale = "en") {
 
+//        $sql = "SELECT p.id as photo_id, p.title as photo_title, p.image as photo_image, "
+//                . "p.created_at as photo_created_at, p.taken_at as photo_taken_at, "
+//                . "f.id as fos_user_id, f.username as fos_user_username, "
+//                . "fp.id as personal_id, fp.firstname as personal_firstname, fp.middlename as personal_middlename, fp.lastname as personal_lastname, "
+//                . "s.id as spot_id, st.name as spot_name, "
+//                . "l.id as location_id, lt.name as location_name "
+//                . "FROM sk_photo as p "
+//                . "JOIN fos_user as f on f.id = p.fos_user_id "
+//                . "JOIN sk_personal as fp on f.id = fp.fos_user_id "
+//                . "LEFT JOIN sk_spot as s on p.spot_id = s.id "
+//                . "JOIN sk_spot_translation as st on s.id = st.translatable_id "
+//                . "LEFT JOIN sk_location as l on s.location_id = l.id "
+//                . "JOIN sk_location_translation as lt on l.id = lt.translatable_id ";
+
+
         $sql = "SELECT p.id as photo_id, p.title as photo_title, p.image as photo_image, "
                 . "p.created_at as photo_created_at, p.taken_at as photo_taken_at, "
                 . "f.id as fos_user_id, f.username as fos_user_username, "
-                . "fp.id as personal_id, fp.firstname as personal_firstname, fp.middlename as personal_middlename, fp.lastname as personal_lastname, "
-                . "s.id as spot_id, st.name as spot_name, "
-                . "l.id as location_id, lt.name as location_name "
+                . "fp.id as personal_id, fp.firstname as personal_firstname, fp.middlename as personal_middlename, fp.lastname as personal_lastname "
                 . "FROM sk_photo as p "
                 . "JOIN fos_user as f on f.id = p.fos_user_id "
-                . "JOIN sk_personal as fp on f.id = fp.fos_user_id "
-                . "JOIN sk_spot as s on p.spot_id = s.id "
-                . "JOIN sk_spot_translation as st on s.id = st.translatable_id "
-                . "JOIN sk_location as l on s.location_id = l.id "
-                . "JOIN sk_location_translation as lt on l.id = lt.translatable_id ";
+                . "JOIN sk_personal as fp on f.id = fp.fos_user_id ";
+
 
         //users
         if (array_key_exists('fosUser', $params)) {
@@ -203,12 +213,24 @@ class SkPhotoRepository extends EntityRepository {
         }
 
         if (array_key_exists('location', $params)) {
+            $sql = $sql . "LEFT JOIN sk_spot as s on p.spot_id = s.id "
+                    . "JOIN sk_spot_translation as st on s.id = st.translatable_id "
+                    . "LEFT JOIN sk_location as l on s.location_id = l.id "
+                    . "JOIN sk_location_translation as lt on l.id = lt.translatable_id ";
             $sql = $sql . ' where s.location_id = ' . $params['location'];
+            $sql = $sql . " and st.locale = '" . $locale . "' ";
+            $sql = $sql . " and lt.locale = '" . $locale . "' ";
         }
 
         if (array_key_exists('country', $params)) {
+            $sql = $sql . "LEFT JOIN sk_spot as s on p.spot_id = s.id "
+                    . "JOIN sk_spot_translation as st on s.id = st.translatable_id "
+                    . "LEFT JOIN sk_location as l on s.location_id = l.id "
+                    . "JOIN sk_location_translation as lt on l.id = lt.translatable_id ";
             $sql = $sql . "JOIN sk_region as r on l.region_id = r.id ";
             $sql = $sql . ' where r.country_id = ' . $params['country'];
+            $sql = $sql . " and st.locale = '" . $locale . "' ";
+            $sql = $sql . " and lt.locale = '" . $locale . "' ";
         }
 
 
@@ -262,8 +284,8 @@ class SkPhotoRepository extends EntityRepository {
             $sql = $sql . ' where sp.genus_id = ' . $params['genus'];
         }
 
-        $sql = $sql . " and st.locale = '" . $locale . "' ";
-        $sql = $sql . " and lt.locale = '" . $locale . "' ";
+//        $sql = $sql . " and st.locale = '" . $locale . "' ";
+//        $sql = $sql . " and lt.locale = '" . $locale . "' ";
 
         if ($order) {
             $sql = $sql . " order by p." . key($order) . " " . $order[key($order)];
@@ -276,7 +298,7 @@ class SkPhotoRepository extends EntityRepository {
         $sql = $sql . " limit " . $limit;
 
         //dump($sql);
-        
+
         return $sql;
     }
 

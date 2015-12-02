@@ -42,4 +42,3 @@ class SkIdentificationCriteriaTypeTranslation
         return $this->name;
     }
 }
-
