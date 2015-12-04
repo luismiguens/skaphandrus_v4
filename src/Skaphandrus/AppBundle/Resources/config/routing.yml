@@ -419,7 +419,11 @@ identification_tests:
     path:     /{_locale}/app/tests
     defaults: { _controller: SkaphandrusAppBundle:Identification:tests, _locale: en }
 
-
+identification_user_info:
+    path:     /{_locale}/app/userinfo.{_format}
+    defaults: { _controller: SkaphandrusAppBundle:Identification:userInfoJson, _locale: en }
+    requirements:
+        _format: json
 
 
 

@@ -58,8 +58,8 @@
     
         <one-to-many field="groups" target-entity="SkIdentificationGroup" mapped-by="module"/>
     
-         <many-to-many field="contributors" target-entity="FosUser" inversed-by="works" fetch="LAZY">
-            <join-table name="sk_identification_module_contributor">
+         <many-to-many field="workers" target-entity="FosUser" inversed-by="works" fetch="LAZY">
+            <join-table name="sk_identification_module_worker">
                 <join-columns>
                     <join-column name="module_id" referenced-column-name="id"/>
                 </join-columns>

@@ -11,6 +11,7 @@
         <field name="algorithm" column="algorithm" type="string" length="255" />
         <one-to-many field="spots" target-entity="SkSpot" mapped-by="fosUser"/>
         <one-to-many field="photos" target-entity="SkPhoto" mapped-by="fosUser"/>
+        <one-to-many field="points" target-entity="SkPoints" mapped-by="fosUser"/>
         
         
         <!--<many-to-many field="modules" target-entity="SkIdentificationModule" inversed-by="users" fetch="LAZY">
@@ -23,22 +24,14 @@
                 </inverse-join-columns>
             </join-table>
         </many-to-many>-->
-    
-        
 
         <one-to-many field="acquisitions" target-entity="SkIdentificationAcquisition" mapped-by="fosUser">
             <cascade>
                 <cascade-persist/>
             </cascade>
         </one-to-many>
-
-        
         
         <one-to-many field="photosValidated" target-entity="SkPhotoSpeciesValidation" mapped-by="fosUser"/>
-
-
-    
-    
 
         <one-to-one field="settings" target-entity="SkSettings" mapped-by="fosUser" >
             <cascade>

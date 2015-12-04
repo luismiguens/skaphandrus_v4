@@ -8,9 +8,9 @@
 {{ parent() }}
 <script type="text/javascript">
     $(document).ready(function(){
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        //ir buscar os grupos taxonomicos do modulo
+
+        ////////////////////////////////////////////////////////////////////////
+        //--TAXONS 
         $.ajax({
             url: '/{{ app.request.locale }}/app/taxons.json',
             type: 'post',
@@ -18,71 +18,97 @@
             success: function (data) {
                 console.log(data, 'taxon');
             },
-            data: { "module_id" : 8  }
+            data: { "module_id" : 2  }
         });
-        ///////////////////////////////////////////////////////////////////////////////////////////
-        //ir buscar os criterios das especies envidas
-        //BALEIAS - MODULO 7
-        //// chamaca antiga não incluia o mudulo
-        //http://skaphandrus.com/pt/identification/jsonCriteriasList?species=25366
+        
+        
+        ////////////////////////////////////////////////////////////////////////
+        //--CRITERIOS
+        //ir buscar riterios ds especies 863, e 864
         $.ajax({
             url: '/{{ app.request.locale }}/app/criterias.json', 
             type: 'post',
             dataType: 'json',
             success: function (data) {
-                console.log(data, 'criterias1');
+                console.log(data, 'criterias_1');
             },
-            data: { "species" : [ 863, 866 ], "module_id" : 2 }
+            data: { "species" : [ 863, 864 ], "module_id" : 2 }
          
         });    
-        //ir buscar os criterios do modulo 7
+        //ir buscar os criterios do modulo 2
         $.ajax({
             url: '/{{ app.request.locale }}/app/criterias.json', 
             type: 'post',
             dataType: 'json',
             success: function (data) {
-                console.log(data, 'criterias2');
+                console.log(data, 'criterias_2');
             },
             data: { "module_id" : 2 }
            
         });
-        //////////////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////////////
-        //GOLFINHOS
+        
+        
+        ////////////////////////////////////////////////////////////////////////
+        //--ESPECIES
         //ir buscar as especies que têm os caracteres seleccionados       
         $.ajax({
             url: '/{{ app.request.locale }}/app/species.json',
             type: 'post',
             dataType: 'json',
             success: function (data) {
-                console.log(data, 'species1');
+                console.log(data, 'species_1');
             },
             data: { "characters" : [ 352 ], "module_id" : 2 }
         });
-        //ir buscar as especies que têm os caracteres seleccionados       
+        //ir buscar as especies do modulo 2
         $.ajax({
             url: '/{{ app.request.locale }}/app/species.json',
             type: 'post',
             dataType: 'json',
             success: function (data) {
-                console.log(data, 'species2');
+                console.log(data, 'species_2');
             },
             data: { "module_id" : 2  }
         });
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////        
-        // para ir buscar os modulos, neste caso ainda apenas mammalia       
+        
+        
+        ////////////////////////////////////////////////////////////////////////
+        //--MODULES
+        //ir buscar todos os modulos
         $.ajax({
             url: '/{{ app.request.locale }}/app/modules.json',
             type: 'post',
             dataType: 'json',
             success: function (data) {
-                console.log(data, 'modules');
+                console.log(data, 'modules_1');
             },
             data: { }
         });
-        /////////////////////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////////////////////       
+        //ir buscar os modulos do user 5
+        $.ajax({
+            url: '/{{ app.request.locale }}/app/modules.json',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data, 'modules_2');
+            },
+            data: { "user_id" : 5   }
+        });
+        //ir buscar os modulos do user 5 na app 1
+        $.ajax({
+            url: '/{{ app.request.locale }}/app/modules.json',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data, 'modules_3');
+            },
+            data: { "user_id" : 5, "app_id":1   }
+        });
+        
+        
+        
+        ////////////////////////////////////////////////////////////////////////
+        //INFO ESPECIE
         // para ir buscar info da espécie       
         $.ajax({
             url: '/{{ app.request.locale }}/app/speciesinfo.json',
@@ -93,6 +119,24 @@
             },
             data: {"species_id": 866, "module_id": 2 }
         });
+        
+        
+        
+        ////////////////////////////////////////////////////////////////////////
+        //INFO USER
+        // para ir buscar info de um user       
+        $.ajax({
+            url: '/{{ app.request.locale }}/app/userinfo.json',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data, 'user_info_1');
+            },
+            data: {"user_id": 5 }
+        });
+        
+        
+        
     });
 </script>
 {% endblock %}

@@ -72,7 +72,7 @@ class SkIdentificationModule {
 //    private $file;
     private $acquisitions;
     private $points;
-    private $contributors;
+    private $workers;
 
     
     private $imageFile;
@@ -498,34 +498,34 @@ class SkIdentificationModule {
     }
 
     /**
-     * Add contributor
+     * Add worker
      *
-     * @param \Skaphandrus\AppBundle\Entity\FosUser $contributor
+     * @param \Skaphandrus\AppBundle\Entity\FosUser $worker
      *
      * @return SkIdentificationModule
      */
-    public function addContributor(\Skaphandrus\AppBundle\Entity\FosUser $contributor) {
-        $this->contributors[] = $contributor;
+    public function addWorker(\Skaphandrus\AppBundle\Entity\FosUser $worker) {
+        $this->workers[] = $worker;
 
         return $this;
     }
 
-    /*     * Remove contributor
+    /*     * Remove worker
      *
-     * @param \Skaphandrus\AppBundle\Entity\FosUser $contributor
+     * @param \Skaphandrus\AppBundle\Entity\FosUser $worker
      */
 
-    public function removeContributor(\Skaphandrus\AppBundle\Entity\FosUser $contributor) {
-        $this->contributors->removeElement($contributor);
+    public function removeWorker(\Skaphandrus\AppBundle\Entity\FosUser $worker) {
+        $this->workers->removeElement($worker);
     }
 
     /**
-     * Get contributors
+     * Get workers
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getContributors() {
-        return $this->contributors;
+    public function getWorkers() {
+        return $this->workers;
     }
 
     public function doStuffOnPostUpdate(\Doctrine\ORM\Event\LifecycleEventArgs $args) {

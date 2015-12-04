@@ -13,11 +13,38 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkIdentificationModuleRepository extends EntityRepository {
 
-   
+    
+       public function isModuleInAcquisitionsFromUser($fos_user_id, $module_id) {
 
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT fos_user_id "
+                . "FROM sk_identification_acquisition "
+                . "WHERE fos_user_id = " . $fos_user_id ." "
+                . "AND module_id = ". $module_id;
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        
+        //dump($sql);
+        
+        if($values):
+            return "1";
+        else:
+            return "0";
+        endif;
+                
+    }
+    
+    
+    
+    
+    
+    
     public function findBySlug($slug,$locale) {
         $name = Utils::unslugify($slug);
-
         
         $query = $this->getEntityManager()
                         ->createQuery(
@@ -34,12 +61,12 @@ class SkIdentificationModuleRepository extends EntityRepository {
     }
     
     
+    
      public function findByFosUser($fos_user) {
-        
 
         $query = $this->getEntityManager()
                         ->createQuery(
-                                'SELECT m
+               'SELECT m
                 FROM SkaphandrusAppBundle:SkIdentificationModule m
                 WHERE m.isActive = TRUE ');
         try {

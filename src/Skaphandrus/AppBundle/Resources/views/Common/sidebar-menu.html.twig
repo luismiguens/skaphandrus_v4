@@ -71,9 +71,11 @@
                 <a href="{{ path('points_admin') }}"><i class="fa fa-star"></i> <span class="nav-label">{{ "points_admin"|trans }} </span>{#<span class="label label-warning pull-right">16/24</span>#}</a>
             </li>
 
+            {% if is_granted("IS_AUTHENTICATED_FULLY") %}
             {#contests list#}
             {{ render(controller('SkaphandrusAppBundle:Common:skContestsList')) }}
-
+            {% endif %}
+            
             {% if is_granted("ROLE_ADMIN") %}
 
                 <li class="{{ 'TranslationController' in app.request.attributes.get("_controller")?'active' }}">

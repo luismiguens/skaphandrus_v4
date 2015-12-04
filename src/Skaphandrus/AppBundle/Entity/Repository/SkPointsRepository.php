@@ -12,9 +12,168 @@ use Doctrine\ORM\EntityRepository;
  */
 class SkPointsRepository extends EntityRepository {
 
+    public function generatePointsFromUser($fos_user) {
+
+        $em = $this->getEntityManager();
+        //$repository = $em->getRepository('SkaphandrusAppBundle:SkPoints');
+
+//submited photos
+        $photos_submited = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->findBy(array('fosUser' => $fos_user->getId()));
+
+        //first photo about species
+        $first_photo_species = $this->findFirstPhotosFromSpecies($fos_user->getId()); //(min created_at)
+        //photos with validated species
+        $validated_species = $this->findValidatedSpeciesPhotos($fos_user->getId()); //(is_validated=true)
+        //photos with associated species
+        $associated_species = $this->findAssociatedSpeciesPhotos($fos_user->getId()); //(species_id <> null)
+//photos with validated species
+
+        $distinct_validated = $this->findDistictValidatedSpeciesPhotos($fos_user->getId());
+
+
+        $ten_distinct_species_validated = 0;
+        $hundred_distinct_species_validated = 0;
+        $thousand_distinct_species_validated = 0;
+
+        if (count($distinct_validated) > 9) {
+            $ten_distinct_species_validated = 1;
+        }
+        if (count($distinct_validated) > 99) {
+            $hundred_distinct_species_validated = 1;
+        }
+
+        if (count($distinct_validated) > 999) {
+            $thousand_distinct_species_validated = 1;
+        }
+
+//sugested species by user
+        $user_sugestions = $em->getRepository('SkaphandrusAppBundle:SkPhotoSpeciesSugestion')->findBy(array('fosUser' => $fos_user->getId()));
+
+        $ten_user_species_sugestions = 0;
+        $hundred_user_species_sugestions = 0;
+        $thousand_user_species_sugestions = 0;
+
+
+        if (count($user_sugestions) > 9) {
+            $ten_user_species_sugestions = 1;
+        }
+        if (count($user_sugestions) > 99) {
+            $hundred_user_species_sugestions = 1;
+        }
+
+        if (count($user_sugestions) > 999) {
+            $thousand_user_species_sugestions = 1;
+        }
+
+//validated species by user
+        $user_validations = $em->getRepository('SkaphandrusAppBundle:SkPhotoSpeciesValidation')->findBy(array('fosUser' => $fos_user->getId()));
+        $ten_user_species_validations = 0;
+        $hundred_user_species_validations = 0;
+        $thousand_user_species_validations = 0;
+
+        if (count($user_validations) > 9) {
+            $ten_user_species_validations = 1;
+        }
+        if (count($user_validations) > 99) {
+            $hundred_user_species_validations = 1;
+        }
+
+        if (count($user_validations) > 999) {
+            $thousand_user_species_validations = 1;
+        }
+
+        //first photo in spot
+        $first_photo_spot = $this->findFirstPhotosFromSpot($fos_user->getId());
+
+        //photos associted to spot
+        $associated_spot = $this->findAssociatedSpotsPhotos($fos_user->getId());
+
+
+        $arr = array(
+            1 => array("type" => "user_register", "single" => 50, "number" => 1),
+            2 => array("type" => "(photos)_photos_submited", "single" => 1, "number" => count($photos_submited)),
+            3 => array("type" => "(photos)_first_photo_species", "single" => 5, "number" => count($first_photo_species)),
+            4 => array("type" => "(photos)_validated_species", "single" => 1, "number" => count($validated_species)),
+            5 => array("type" => "(photos)_associated_species", "single" => 1, "number" => count($associated_species)),
+            6 => array("type" => "(species)_1_distinct_species_validated", "single" => 1, "number" => count($distinct_validated)),
+            7 => array("type" => "(species)_10_distinct_species_validated", "single" => 10, "number" => $ten_distinct_species_validated),
+            8 => array("type" => "(species)_100_distinct_species_validated", "single" => 100, "number" => $hundred_distinct_species_validated),
+            9 => array("type" => "(species)_1000_distinct_species_validated", "single" => 1000, "number" => $thousand_distinct_species_validated),
+            10 => array("type" => "(photos)_first_photo_spot", "single" => 5, "number" => count($first_photo_spot)),
+            11 => array("type" => "(photos)_associated_spot", "single" => 1, "number" => count($associated_spot)),
+            12 => array("type" => "(photos)_1_user_species_sugestions", "single" => 1, "number" => count($user_sugestions)),
+            13 => array("type" => "(photos)_10_user_species_sugestions", "single" => 10, "number" => $ten_user_species_sugestions),
+            14 => array("type" => "(photos)_100_user_species_sugestions", "single" => 100, "number" => $hundred_user_species_sugestions),
+            15 => array("type" => "(photos)_1000_user_species_sugestions", "single" => 1000, "number" => $thousand_user_species_sugestions),
+            16 => array("type" => "user_expert", "single" => 50, "number" => 1),
+            17 => array("type" => "(photos)_1_user_species_validations", "single" => 1, "number" => count($user_validations)),
+            18 => array("type" => "(photos)_10_user_species_validations", "single" => 10, "number" => $ten_user_species_validations),
+            19 => array("type" => "(photos)_100_user_species_validations", "single" => 100, "number" => $hundred_user_species_validations),
+            20 => array("type" => "(photos)_1000_user_species_validations", "single" => 1000, "number" => $thousand_user_species_validations),
+        );
+
+
+        //$SkPointsTypes = $em->getRepository('SkaphandrusAppBundle:SkPointsType')->findAll();
+        $total_points = 0;
+
+        
+        //para cada posição do array:
+        //1) cria os tipos de pontos na base de dados
+        //2) calcula os pontos do utilizador para esse mesmo tipo de pontos
+        ///$arr = array();
+
+        foreach ($arr as $key => $row) {
+            
+            
+            $SkPointsType = $em->getRepository('SkaphandrusAppBundle:SkPointsType')->find($key);
+
+            //se nao existir cria o tipo de pontos
+            if (!$SkPointsType):
+//                echo "entrou";
+                $SkPointsType = new \Skaphandrus\AppBundle\Entity\SkPointsType();
+//                echo $key;
+                $SkPointsType->setId($key);
+            endif;
+
+            //actualizar tabela de tipos de pontos
+            $SkPointsType->translate('pt')->setName($row['type']);
+            $SkPointsType->translate('en')->setName($row['type']);
+            $SkPointsType->mergeNewTranslations();
+            $em->persist($SkPointsType);
+            $em->flush();
+
+
+
+            //ir buscar pontos do utilizador(para determinado tipo de pontos)
+            $skPoints = $this->findOneBy(array('fosUser' => $fos_user->getId(), 'pointsType' => $SkPointsType->getId()));
+
+            //se o utilizador ainda não tiver pontos cria o registo(para determinado tipo)
+            if (!$skPoints) {
+                $skPoints = new \Skaphandrus\AppBundle\Entity\SkPoints();
+                $skPoints->setFosUser($fos_user);
+                $skPoints->setPointsType($SkPointsType);
+            }
+
+            //actializa o numero de pontos para este o tipo de pontos
+            $skPoints->setPoints($row['single'] * $row['number']);
+            $em->persist($skPoints);
+            $em->flush();
+
+
+            $total_points = $total_points + $skPoints->getPoints();
+        }
+
+
+        //actualiza o total de pontos na tabela settings do utilizador
+        $fos_user->getSettings()->setPoints($total_points);
+        $em->persist($fos_user);
+        $em->flush();
+
+        return $arr;
+    }
+
     //primeiras fotografias associadas a uma espécie (campo  species_id + created_at)(5 PONTOS)
     public function findFirstPhotosFromSpecies($user_id) {
-
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
@@ -33,7 +192,6 @@ class SkPointsRepository extends EntityRepository {
     //fotografias de espécie(validada) (+ 3 validações)(4 PONTOS)
     public function findValidatedSpeciesPhotos($user_id) {
 
-
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
         $statement = $connection->prepare("SELECT sk_photo.* FROM sk_photo 
@@ -51,7 +209,6 @@ class SkPointsRepository extends EntityRepository {
     //fotografia de espécie (associada) (campo especie_id ) 
     public function findAssociatedSpeciesPhotos($user_id) {
 
-
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
         $statement = $connection->prepare("SELECT sk_photo.* FROM sk_photo 
@@ -62,11 +219,9 @@ class SkPointsRepository extends EntityRepository {
 
         return $results;
     }
-    
-    
-        //espécies distintas (associada) (campo especie_id ) 
-    public function findDistictValidatedSpeciesPhotos($user_id) {
 
+    //espécies distintas (associada) (campo especie_id ) 
+    public function findDistictValidatedSpeciesPhotos($user_id) {
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
@@ -77,13 +232,9 @@ class SkPointsRepository extends EntityRepository {
 
         return $results;
     }
-    
-    
-    
-    
-        //primeiras fotografias associadas a um spot (campo spot_id + created_at)(5 PONTOS)
-    public function findFirstPhotosFromSpot($user_id) {
 
+    //primeiras fotografias associadas a um spot (campo spot_id + created_at)(5 PONTOS)
+    public function findFirstPhotosFromSpot($user_id) {
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
@@ -98,10 +249,9 @@ class SkPointsRepository extends EntityRepository {
 
         return $results;
     }
-    
-        //fotografias de spot (associada) (campo spot_id ) 
-    public function findAssociatedSpotsPhotos($user_id) {
 
+    //fotografias de spot (associada) (campo spot_id ) 
+    public function findAssociatedSpotsPhotos($user_id) {
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
@@ -113,8 +263,5 @@ class SkPointsRepository extends EntityRepository {
 
         return $results;
     }
-    
- 
-    
 
 }

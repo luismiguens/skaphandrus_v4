@@ -29,6 +29,13 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
      */
     private $spots;
 
+        /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $points;
+
+    
+    
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
@@ -248,7 +255,46 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
 
     
     
-        /**
+     /**
+     * Add points
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPoints $points
+     *
+     * @return FosUser
+     */
+    public function addPoints(\Skaphandrus\AppBundle\Entity\SkPoints $points) {
+        $this->points[] = $points;
+
+        return $this;
+    }
+
+    /**
+     * Remove points
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPoints $points
+     */
+    public function removePoints(\Skaphandrus\AppBundle\Entity\SkPoints $points) {
+        $this->$points->removeElement($points);
+    }
+
+    /**
+     * Get points
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPoints() {
+        return $this->points;
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    /**
      * Add work
      *
      * @param \Skaphandrus\AppBundle\Entity\SkIdentificationModule $work
