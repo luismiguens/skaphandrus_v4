@@ -13,6 +13,16 @@ class SkBusinessDivePriceType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+
+        $entity = $builder->getData();
+
+
+
+        //$currency = $options['currency'];
+
+        dump($options);
+        //dump($builder);
+
         $builder
                 ->add('numberofdives', null, array(
                     'attr' => array('class' => 'form-control'),
@@ -23,7 +33,7 @@ class SkBusinessDivePriceType extends AbstractType {
                     'attr' => array('class' => 'form-control'),
                     'label' => 'form.dive_price.label.value_per_dives',
                     'required' => false,
-                    'help' => 'form.dive_price.help.value_per_dives'
+                    'help' => array('help' => 'form.dive_price.help.value_per_dives', 'param' => $options['my_custom_option'])
                 ))
         ;
     }
@@ -33,6 +43,7 @@ class SkBusinessDivePriceType extends AbstractType {
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
+            'my_custom_option' => false,
             'data_class' => 'Skaphandrus\AppBundle\Entity\SkBusinessDivePrice'
         ));
     }

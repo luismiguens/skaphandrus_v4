@@ -31,8 +31,8 @@ class SkUnitCapacity {
     }
 
     public function __toString() {
-//        return $this->translate()->getName();
-        return "bla";
+        return $this->translate()->getName();
+//        return "bla";
     }
 
 }
