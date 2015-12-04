@@ -14,6 +14,29 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkBusinessRepository extends EntityRepository {
 
+    public function findBySlug($slug, $location, $country, $locale) {
+        $name = Utils::unslugify($slug);
+        $location = $this->getEntityManager()->getRepository('SkaphandrusAppBundle:SkLocation')
+                ->findBySlug($location, $country, $locale);
+
+        $query = $this->getEntityManager()
+                ->createQuery(
+                        'SELECT b
+                FROM SkaphandrusAppBundle:SkBusiness b
+                JOIN b.address a
+                JOIN a.location l
+                JOIN l.region r
+                WHERE REPLACE(b.name, \'-\', \' \') = :name
+                AND IDENTITY(a.location) = :location_id')
+                ->setParameter('name', $name)
+                ->setParameter('location_id', $location->getId());
+        try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
     public function findAllJoinLanguagesAndCurrencies_Old() {
         return $this->getEntityManager()->createQuery(
                         'SELECT b, l, c

@@ -2,21 +2,21 @@
 
 namespace Skaphandrus\AppBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse as JsonResponse;
-use Symfony\Component\Intl\Intl;
-use Symfony\Component\Translation\Translator;
-use Skaphandrus\AppBundle\Utils\Utils;
+// Used Entities
+// Used Forms
+
+
+use Ivory\GoogleMap\Map;
+use Ivory\GoogleMap\MapTypeId;
 use Ivory\GoogleMap\Overlays\Animation;
 use Ivory\GoogleMap\Overlays\Marker;
-use Ivory\GoogleMap\MapTypeId;
-// Used Entities
-use Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation;
-use Skaphandrus\AppBundle\Entity\SkPhotoSpeciesSugestion;
-// Used Forms
-use Skaphandrus\AppBundle\Form\SkPhotoSpeciesValidationType;
-use Skaphandrus\AppBundle\Form\SkPhotoSpeciesSugestionType;
+use Ivory\GoogleMapBundle\Tests\Fixtures\Model\Overlays\InfoWindow;
+use Skaphandrus\AppBundle\Entity\FosUser;
+use Skaphandrus\AppBundle\Utils\Utils;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse as JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Intl\Intl;
 
 class DefaultController extends Controller {
 
@@ -105,7 +105,7 @@ class DefaultController extends Controller {
 
         $em = $this->container->get('doctrine.orm.entity_manager');
         $um = $this->container->get('fos_user.user_manager');
-        $em->getClassMetaData(get_class(new \Skaphandrus\AppBundle\Entity\FosUser()))
+        $em->getClassMetaData(get_class(new FosUser()))
                 ->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
 
         $mysqli = new \mysqli($dbHost, $dbUser, $dbPassword, $dbName, $dbPort);
@@ -268,11 +268,11 @@ class DefaultController extends Controller {
 
         $taxon_name = ucfirst($node);
 
-       
 
-            $taxon = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:Sk" . $taxon_name)
-                    ->findOneBy(array('name' => $slug));
- if ($taxon) {
+
+        $taxon = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:Sk" . $taxon_name)
+                ->findOneBy(array('name' => $slug));
+        if ($taxon) {
             $structure = Utils::taxonomyStructure();
 
             $next_taxon = "";
@@ -331,6 +331,106 @@ class DefaultController extends Controller {
         }
     }
 
+    /*
+     * Business page.
+     */
+
+    public function businessAction($country, $location, $slug) {
+
+        $locale = $this->get('request')->getLocale();
+        $business = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
+                ->findBySlug($slug, $location, $country, $locale);
+
+        if ($business) {
+
+            $map = null;
+            $latitude = 0;
+            $longitude = 0;
+            $centerLatitude = 0;
+            $centerLongitude = 0;
+
+            //$business = new \Skaphandrus\AppBundle\Entity\SkBusiness();
+
+            if (count($business->getAddress()->getLocation()) > 0) {
+
+
+                // Get markers from spots for the map
+                $markers = array();
+                $marker = new Marker();
+
+                //remove white spaces
+                $latitude = preg_replace('/\s+/', '', explode(",", $business->getAddress()->getCoordinate())[0]);
+                $longitude = preg_replace('/\s+/', '', explode(",", $business->getAddress()->getCoordinate())[1]);
+                
+                
+                $infowindow = new InfoWindow();
+                $contentString = $business->getAddress()->getStreet().', '.$business->getAddress()->getLocation()->getName();
+                $infowindow->setContent($contentString);
+                
+                // Marker options
+                $marker->setInfoWindow($infowindow);
+                $marker->setPrefixJavascriptVariable('marker_');
+                $marker->setPosition($latitude, $longitude, true);
+                $marker->setAnimation(Animation::DROP);
+                $marker->setOption('clickable', false);
+                $marker->setOption('flat', true);
+                $marker->setOptions(array(
+                    'clickable' => true,
+                    'flat' => true,
+                ));
+
+                // $totalLatitude += $latitude;
+                // $totalLongitude += $longitude;
+                $markers[] = $marker;
+            }
+
+
+            $centerLatitude = $latitude;
+            $centerLongitude = $longitude;
+
+            $map = new Map();
+            $map->setPrefixJavascriptVariable('map_');
+            $map->setHtmlContainerId('map_canvas');
+            $map->setAsync(false);
+            $map->setCenter($centerLatitude, $centerLongitude, true);
+            $map->setMapOption('zoom', 10);
+            $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
+            $map->setMapOption('disableDefaultUI', true);
+            $map->setMapOption('disableDoubleClickZoom', true);
+            $map->setMapOptions(array(
+                'disableDefaultUI' => true,
+                'disableDoubleClickZoom' => true,
+            ));
+            $map->setStylesheetOption('width', 'auto');
+            $map->setStylesheetOption('height', '300px');
+            $map->setStylesheetOptions(array(
+                'width' => 'auto',
+                'height' => '300px',
+            ));
+            $map->setLanguage('en');
+
+            // Add the spots to the map
+            foreach ($markers as $marker) {
+                $map->addMarker($marker);
+            }
+
+
+
+            return $this->render('SkaphandrusAppBundle:Default:business.html.twig', array(
+                        'business' => $business,
+                        'map' => $map,
+                        'map_center_lat' => $centerLatitude,
+                        'map_center_lon' => $centerLongitude,
+            ));
+        } else {
+            throw $this->createNotFoundException('The business "' . $slug . '" does not exist in the location ' . $location . ' or country ' . $country);
+        }
+    }
+
+    /*
+     * Spot Page 
+     */
+
     public function spotAction($country, $location, $slug) {
         $locale = $this->get('request')->getLocale();
         //spot
@@ -388,7 +488,7 @@ class DefaultController extends Controller {
 
 // Add your marker to the map
         //$map = $this->get('ivory_google_map.map');
-        $map = new \Ivory\GoogleMap\Map();
+        $map = new Map();
 
         $map->setPrefixJavascriptVariable('map_');
         $map->setHtmlContainerId('map_canvas');
@@ -535,7 +635,7 @@ class DefaultController extends Controller {
                 $centerLatitude = $latitude;
                 $centerLongitude = $longitude;
 
-                $map = new \Ivory\GoogleMap\Map();
+                $map = new Map();
                 $map->setPrefixJavascriptVariable('map_');
                 $map->setHtmlContainerId('map_canvas');
                 $map->setAsync(false);
@@ -799,7 +899,7 @@ class DefaultController extends Controller {
 //    }
 
 
-    public function photosAction(\Symfony\Component\HttpFoundation\Request $request) {
+    public function photosAction(Request $request) {
 
         $params = $request->query->all();
 

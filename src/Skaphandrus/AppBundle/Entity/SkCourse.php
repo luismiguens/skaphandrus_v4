@@ -59,12 +59,12 @@ class SkCourse {
     }
 
     /**
-     * Get nome
+     * Get name
      *
      * @return string
      */
     public function getName() {
-        return $this->name;
+        return $this->name. ', ' .$this->getAffiliation();
     }
 
     /**

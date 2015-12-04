@@ -29,6 +29,10 @@ taxon:
     locales:  { en: "/en/marine-animals/{node}/{slug}", pt: "/pt/animais-marinhos/{node}/{slug}" }
     defaults: { _controller: SkaphandrusAppBundle:Default:taxon }
 
+business: 
+    locales:  { en: "/en/scuba-diving-center/{country}/{location}/{slug}", pt: "/pt/centros-mergulho/{country}/{location}/{slug}" }
+    defaults: { _controller: SkaphandrusAppBundle:Default:business }
+
 ################################################################################
 spot:
     locales:  { en: "/en/scuba-diving-sites/spot/{country}/{location}/{slug}", pt: "/pt/spots-mergulho/spot/{country}/{location}/{slug}" }

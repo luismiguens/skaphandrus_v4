@@ -1,0 +1,113 @@
+<?php
+
+namespace Skaphandrus\AppBundle\Entity;
+
+/**
+ * SkBusinessTypeTranslation
+ */
+class SkBusinessTypeTranslation
+{
+    /**
+     * @var string
+     */
+    private $locale;
+
+    /**
+     * @var string
+     */
+    private $name;
+
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var \Skaphandrus\AppBundle\Entity\SkBusinessType
+     */
+    private $translatable;
+
+
+    /**
+     * Set locale
+     *
+     * @param string $locale
+     *
+     * @return SkBusinessTypeTranslation
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+
+        return $this;
+    }
+
+    /**
+     * Get locale
+     *
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return SkBusinessTypeTranslation
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set translatable
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBusinessType $translatable
+     *
+     * @return SkBusinessTypeTranslation
+     */
+    public function setTranslatable(\Skaphandrus\AppBundle\Entity\SkBusinessType $translatable = null)
+    {
+        $this->translatable = $translatable;
+
+        return $this;
+    }
+
+    /**
+     * Get translatable
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkBusinessType
+     */
+    public function getTranslatable()
+    {
+        return $this->translatable;
+    }
+}
+

@@ -39,7 +39,8 @@ class SkSettingsType extends AbstractType {
                 ))
                 ->add('facebookUid', 'text', array(
                     'attr' => array('class' => 'form-control'),
-                    'label' => 'form.settings.label.facebook_id'
+                    'label' => 'form.settings.label.facebook_id',
+                    'required' => false
                 ))
         //->add('points')
         //->add('fosUser')
