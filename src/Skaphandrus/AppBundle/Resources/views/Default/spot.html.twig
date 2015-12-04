@@ -163,6 +163,9 @@
                                             <h5>{{ "page.spot.h5.description"|trans }}</h5>
                                             <p itemprop="description">{{ spot.description }}</p>
                                         {% endif %}
+                                        
+                                        <div class="dvb-widget-holder" data-host="https://divebooker.com" data-widgid="297" data-pid="141"><script>(function(){if (typeof(window.dvbjs)=='undefined'){window.dvbjs = true;var dvbjs = document.createElement('script');dvbjs.type = 'text/javascript';dvbjs.src = 'https://divebooker.com/js/front/init_widgets.min.js';document.body.appendChild(dvbjs);delete dvbjs;}}())</script></div>
+                                        
                                     </div>
                                     <div id="tab-2" class="tab-pane">
                                         <h3>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h3.species{% endtrans %}</h3>

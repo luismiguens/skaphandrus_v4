@@ -72,7 +72,7 @@ class SkIdentificationModule {
 //    private $file;
     private $acquisitions;
     private $points;
-    private $users;
+    private $contributors;
 
     
     private $imageFile;
@@ -498,34 +498,34 @@ class SkIdentificationModule {
     }
 
     /**
-     * Add user
+     * Add contributor
      *
-     * @param \Skaphandrus\AppBundle\Entity\FosUser $user
+     * @param \Skaphandrus\AppBundle\Entity\FosUser $contributor
      *
      * @return SkIdentificationModule
      */
-    public function addUser(\Skaphandrus\AppBundle\Entity\FosUser $user) {
-        $this->users[] = $user;
+    public function addContributor(\Skaphandrus\AppBundle\Entity\FosUser $contributor) {
+        $this->contributors[] = $contributor;
 
         return $this;
     }
 
-    /*     * Remove user
+    /*     * Remove contributor
      *
-     * @param \Skaphandrus\AppBundle\Entity\FosUser $user
+     * @param \Skaphandrus\AppBundle\Entity\FosUser $contributor
      */
 
-    public function removeUser(\Skaphandrus\AppBundle\Entity\FosUser $user) {
-        $this->users->removeElement($user);
+    public function removeContributor(\Skaphandrus\AppBundle\Entity\FosUser $contributor) {
+        $this->contributors->removeElement($contributor);
     }
 
     /**
-     * Get users
+     * Get contributors
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getUsers() {
-        return $this->users;
+    public function getContributors() {
+        return $this->contributors;
     }
 
     public function doStuffOnPostUpdate(\Doctrine\ORM\Event\LifecycleEventArgs $args) {

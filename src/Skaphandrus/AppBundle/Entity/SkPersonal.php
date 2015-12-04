@@ -467,15 +467,20 @@ class SkPersonal {
     }
 
     public function getName() {
+        
+        $name = "";
+        
         if ($this->getMiddlename() == null && $this->getLastname() == null):
-            return $this->getFirstname();
+            $name = $this->getFirstname();
         elseif ($this->getMiddlename() != null && $this->getLastname() == null):
-            return $this->getFirstname() . " " . $this->getMiddlename();
+            $name = $this->getFirstname() . " " . $this->getMiddlename();
         elseif ($this->getMiddlename() == null and $this->getLastname() != null):
-            return $this->getFirstname() . " " . $this->getLastname();
+            $name = $this->getFirstname() . " " . $this->getLastname();
         else:
-            return $this->getFirstname() . " " . $this->getMiddlename() . " " . $this->getLastname();
+            $name = $this->getFirstname() . " " . $this->getMiddlename() . " " . $this->getLastname();
         endif;
+        
+        return ucfirst($name);
     }
 
     

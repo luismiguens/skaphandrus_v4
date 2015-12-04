@@ -26,7 +26,7 @@ class SkIdentificationModuleType extends AbstractType
             ->add('appstoreId')
             ->add('googleplayId')
             ->add('master')
-            ->add('isActive')
+            ->add('isActive')//se está concluido pelos biologos
             ->add('isEnabled')
             ->add('isFree')
             //->add('image')

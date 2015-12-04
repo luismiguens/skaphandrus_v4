@@ -39,12 +39,19 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
      */
     private $acquisitions;
     private $modules;
+    
+    
     private $personal;
     private $address;
     private $contact;
     private $settings;
+    
+    //campos de apoio para as listagens
     private $photosInContest;
     private $photosInUser;
+    
+    //modulos em que o user trabalhou (designer, biologo, programador)
+    private $works;
 
     public function getPhotosInUser() {
         return $this->photosInUser;
@@ -239,6 +246,42 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
         return $this->spots;
     }
 
+    
+    
+        /**
+     * Add work
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkIdentificationModule $work
+     *
+     * @return FosUser
+     */
+    public function addWork(\Skaphandrus\AppBundle\Entity\SkIdentificationModule $work) {
+        $this->works[] = $work;
+
+        return $this;
+    }
+
+    /**
+     * Remove work
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkWork $work
+     */
+    public function removeWork(\Skaphandrus\AppBundle\Entity\SkIdentificationModule $work) {
+        $this->works->removeElement($work);
+    }
+
+    /**
+     * Get works
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWorks() {
+        return $this->works;
+    }
+    
+    
+    
+    
     /**
      * Add photo
      *

@@ -1,6 +1,6 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block page_title %}{% trans with {'%name%': user.personal.name|title} %}page.user.meta_tag.title{% endtrans %}{% endblock %}
+{% block page_title %}{% trans with {'%name%': user.personal.name|title|capitalize } %}page.user.meta_tag.title{% endtrans %}{% endblock %}
 
 {% block page_description %}{{ user.settings.observations [0:160]}}{% endblock %}
 

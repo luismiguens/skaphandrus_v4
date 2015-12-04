@@ -23,14 +23,6 @@ class SkIdentificationCriteria
      */
     private $isCumulative = TRUE;
 
-    
-        /**
-     * @var integer
-     */
-    private $selectionType = '1';
-
-    
-    
     /**
      * @var integer
      */
@@ -112,32 +104,6 @@ class SkIdentificationCriteria
         return $this->isCumulative;
     }
 
-    
-     /**
-     * Set selectionType
-     *
-     * @param integer $selectionType
-     *
-     * @return SkIdentificationCriteria
-     */
-    public function setSelectionType($selectionType)
-    {
-        $this->selectionType = $selectionType;
-
-        return $this;
-    }
-
-    /**
-     * Get selectionType
-     *
-     * @return integer
-     */
-    public function getSelectionType()
-    {
-        return $this->selectionType;
-    }
-    
-    
     /**
      * Get id
      *
