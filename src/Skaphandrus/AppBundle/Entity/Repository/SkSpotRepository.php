@@ -49,8 +49,7 @@ class SkSpotRepository extends EntityRepository {
         }
     }
 
-    
-        public function findBySlug($slug, $location, $country, $locale) {
+    public function findBySlug($slug, $location, $country, $locale) {
         $name = Utils::unslugify($slug);
         $location = $this->getEntityManager()->getRepository('SkaphandrusAppBundle:SkLocation')->findBySlug($location, $country, $locale);
 
@@ -70,11 +69,7 @@ class SkSpotRepository extends EntityRepository {
             return null;
         }
     }
-    
-    
-    
-    
-    
+
     public function findByUserId($user_id) {
         $query = $this->getEntityManager()
                         ->createQuery(
@@ -160,7 +155,7 @@ class SkSpotRepository extends EntityRepository {
         $qb->join('s.location', 'l', 'WITH', 'l.id = :location_id');
         $qb->groupBy('spot');
         $qb->orderBy('photosInSpot', 'desc');
-        
+
         $qb->setParameter('location_id', $location_id);
 
         $result = array();

@@ -32,6 +32,14 @@ class SkBusinessType extends AbstractType {
                     'years' => range(1900, 2030),
                     'label' => 'form.business.label.founded_at'
                 ))
+                ->add('type', 'entity', array(
+                    'attr' => array('class' => 'checkbox'),
+                    'label' => 'form.business.label.type',
+                    'class' => 'SkaphandrusAppBundle:SkBusinessType',
+                    'expanded' => true,
+                    'multiple' => true,
+                    'required' => true
+                ))
                 ->add('currency', 'entity', array(
                     'attr' => array('class' => 'checkbox'),
                     'label' => 'form.business.label.currency',

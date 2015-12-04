@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 /**
- * SkCreativeCommonsTranslation
+ * SkUnitVolumeTranslation
  */
-class SkCreativeCommonsTranslation {
+class SkUnitVolumeTranslation {
 
     use ORMBehaviors\Translatable\Translation;
 
@@ -18,16 +18,11 @@ class SkCreativeCommonsTranslation {
     private $name;
 
     /**
-     * @var string
-     */
-    private $url;
-
-    /**
      * Set name
      *
      * @param string $name
      *
-     * @return SkCreativeCommonsTranslation
+     * @return SkBusinessTypeTranslation
      */
     public function setName($name) {
         $this->name = $name;
@@ -42,28 +37,6 @@ class SkCreativeCommonsTranslation {
      */
     public function getName() {
         return $this->name;
-    }
-
-    /**
-     * Set url
-     *
-     * @param string $url
-     *
-     * @return SkCreativeCommonsTranslation
-     */
-    public function setUrl($url) {
-        $this->url = $url;
-
-        return $this;
-    }
-
-    /**
-     * Get url
-     *
-     * @return string
-     */
-    public function getUrl() {
-        return $this->url;
     }
 
 }

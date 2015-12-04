@@ -1,0 +1,112 @@
+<?php
+
+namespace Skaphandrus\AppBundle\Entity;
+
+/**
+ * SkBusinessType
+ */
+class SkBusinessType
+{
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $service;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $business;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->service = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->business = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Add service
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBusinessService $service
+     *
+     * @return SkBusinessType
+     */
+    public function addService(\Skaphandrus\AppBundle\Entity\SkBusinessService $service)
+    {
+        $this->service[] = $service;
+
+        return $this;
+    }
+
+    /**
+     * Remove service
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBusinessService $service
+     */
+    public function removeService(\Skaphandrus\AppBundle\Entity\SkBusinessService $service)
+    {
+        $this->service->removeElement($service);
+    }
+
+    /**
+     * Get service
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getService()
+    {
+        return $this->service;
+    }
+
+    /**
+     * Add business
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBusiness $business
+     *
+     * @return SkBusinessType
+     */
+    public function addBusiness(\Skaphandrus\AppBundle\Entity\SkBusiness $business)
+    {
+        $this->business[] = $business;
+
+        return $this;
+    }
+
+    /**
+     * Remove business
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBusiness $business
+     */
+    public function removeBusiness(\Skaphandrus\AppBundle\Entity\SkBusiness $business)
+    {
+        $this->business->removeElement($business);
+    }
+
+    /**
+     * Get business
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBusiness()
+    {
+        return $this->business;
+    }
+}
+

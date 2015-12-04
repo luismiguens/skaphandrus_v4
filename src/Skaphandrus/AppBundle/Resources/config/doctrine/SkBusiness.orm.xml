@@ -60,7 +60,8 @@
         </field>
         <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
         <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
-    
+        <field name="premiumAt" type="datetime" column="premium_at" nullable="true"/>
+        
         <one-to-one field="address" target-entity="SkAddress" mapped-by="business" >
             <cascade>
                 <cascade-persist/>
@@ -125,6 +126,23 @@
                 </inverse-join-columns>
             </join-table>
         </many-to-many>
+
+        <many-to-many field="type" target-entity="SkBusinessType" inversed-by="business" fetch="LAZY">
+            <join-table name="sk_business_business_type">
+                <join-columns>
+                    <join-column name="business_id" referenced-column-name="id"/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="businesstype_id" referenced-column-name="id"/>
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+        
+        <one-to-one field="unit" target-entity="SkBusinessUnit" mapped-by="business">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-one>
         
         <!--        <lifecycle-callbacks>
             <lifecycle-callback type="postLoad" method="doStuffOnPostLoad"/>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Skaphandrus\AppBundle\Entity\SkBusinessUnit" table="sk_business_unit">
+        <indexes>
+            <index name="fk_sk_business2" columns="business_id"/>
+            <index name="fk_sk_length2" columns="length_id"/>
+            <index name="fk_sk_weight2" columns="weight_id"/>
+            <index name="fk_sk_volume2" columns="volume_id"/>
+            <index name="fk_sk_capacity2" columns="capacity_id"/>
+            <index name="fk_sk_currency2" columns="currency_id"/>
+            <index name="fk_sk_velocity2" columns="velocity_id"/>
+            <index name="fk_sk_temperature2" columns="temperature_id"/>
+            <index name="fk_sk_pressure_id2" columns="pressure_id"/>
+        </indexes>
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="temperature" target-entity="SkUnitTemperature" fetch="LAZY">
+            <join-columns>
+                <join-column name="temperature_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-one field="volume" target-entity="SkUnitVolume" fetch="LAZY">
+            <join-columns>
+                <join-column name="volume_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-one field="weight" target-entity="SkUnitWeight" fetch="LAZY">
+            <join-columns>
+                <join-column name="weight_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-one field="pressure" target-entity="SkUnitPressure" fetch="LAZY">
+            <join-columns>
+                <join-column name="pressure_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-one field="length" target-entity="SkUnitLength" fetch="LAZY">
+            <join-columns>
+                <join-column name="length_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-one field="capacity" target-entity="SkUnitCapacity" fetch="LAZY">
+            <join-columns>
+                <join-column name="capacity_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-one field="currency" target-entity="SkUnitCurrency" fetch="LAZY">
+            <join-columns>
+                <join-column name="currency_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-one field="velocity" target-entity="SkUnitVelocity" fetch="LAZY">
+            <join-columns>
+                <join-column name="velocity_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        
+        <one-to-one field="business" target-entity="SkBusiness" inversed-by="unit">
+            <join-column name="business_id" referenced-column-name="id" />
+        </one-to-one>
+        
+    </entity>
+</doctrine-mapping>

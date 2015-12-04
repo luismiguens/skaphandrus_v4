@@ -2,13 +2,11 @@
 
 {% trans_default_domain 'FOSUserBundle' %}
 
-{% block page_title %}Login into Skaphandrus | Skaphandrus{% endblock %}
+{% block page_title %}{{ 'security.login.intro_to_skaphandrus'|trans }}{% endblock %}
 
 {% block body %}
     <h3>{{ 'security.login.welcome_to_skaphandrus'|trans }}</h3>
-    <p>{{ 'security.login.intro_to_skaphandrus'|trans }}
-        
-    </p>
+    <p>{{ 'security.login.intro_to_skaphandrus'|trans }}</p>
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}

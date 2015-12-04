@@ -67,6 +67,11 @@ class SkBusiness {
     private $updatedAt;
 
     /**
+     * @var \DateTime
+     */
+    private $premiumAt;
+
+    /**
      * @var integer
      */
     private $id;
@@ -125,6 +130,16 @@ class SkBusiness {
      * @var \Doctrine\Common\Collections\Collection
      */
     private $spot;
+
+    /**
+     * @var Collection
+     */
+    private $type;
+
+    /**
+     * @var \Skaphandrus\AppBundle\Entity\SkBusinessUnit
+     */
+    private $unit;
 
     /*     * symfony advanced forms
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
@@ -422,6 +437,28 @@ class SkBusiness {
     }
 
     /**
+     * Set premiumAt
+     *
+     * @param \DateTime $premiumAt
+     *
+     * @return SkBusiness
+     */
+    public function setPremiumAt($premiumAt) {
+        $this->premiumAt = $premiumAt;
+
+        return $this;
+    }
+
+    /**
+     * Get premiumAt
+     *
+     * @return \DateTime
+     */
+    public function getPremiumAt() {
+        return $this->premiumAt;
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -703,6 +740,60 @@ class SkBusiness {
      */
     public function getSpot() {
         return $this->spot;
+    }
+
+    /**
+     * Add type
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBusinessType $type
+     *
+     * @return SkBusiness
+     */
+    public function addType(\Skaphandrus\AppBundle\Entity\SkBusinessType $type) {
+        $this->type[] = $type;
+
+        return $this;
+    }
+
+    /**
+     * Remove type
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBusinessType $type
+     */
+    public function removeType(\Skaphandrus\AppBundle\Entity\SkBusinessType $type) {
+        $this->type->removeElement($type);
+    }
+
+    /**
+     * Get type
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getType() {
+        return $this->type;
+    }
+
+    /**
+     * Set unit
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBusinessUnit $unit
+     *
+     * @return SkBusiness
+     */
+    public function setUnit(\Skaphandrus\AppBundle\Entity\SkBusinessUnit $unit = null) {
+        $this->unit = $unit;
+        $unit->setBusiness($this);
+
+        return $this;
+    }
+
+    /**
+     * Get unit
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkBusinessUnit
+     */
+    public function getUnit() {
+        return $this->unit;
     }
 
     public function getAbsolutePath() {
