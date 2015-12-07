@@ -27,6 +27,7 @@ security:
     # the main part of the security, where you can set up firewalls
     # for specific sections of your app
     firewalls:
+        
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
@@ -84,6 +85,28 @@ security:
             logout:
                 path: fos_user_security_logout
             anonymous:    true
+
+
+
+
+#        rest:
+#            pattern: ^rest
+#            context: app
+#            form_login:
+#                check_path: login
+#                provider: fos_userbundle
+#                failure_handler: security.authentication_rest_handler
+#                success_handler: security.authentication_rest_handler
+#                username_parameter: username
+#                password_parameter: password
+            
+            
+            
+            
+            
+            
+            
+            
     # with these settings you can restrict or allow access for different parts
     # of your application based on roles, ip, host or methods
     # http://symfony.com/doc/current/cookbook/security/access_control.html
