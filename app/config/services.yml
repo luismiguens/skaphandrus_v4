@@ -12,5 +12,8 @@ services:
         class: Skaphandrus\AppBundle\Form\Extensions\HelpMessageTypeExtension
         tags:
           - { name: "form.type_extension", alias: "form" }
-          
+
+
+#    security.authentication_rest_handler:
+#        class: Skaphandrus\AppBundle\Security\AuthenticationRestHandler    
           

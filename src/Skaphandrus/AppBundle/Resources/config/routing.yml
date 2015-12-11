@@ -427,6 +427,25 @@ identification_user_info:
     requirements:
         _format: json
 
+identification_register:
+    path:     /{_locale}/app/register.{_format}
+    defaults: { _controller: SkaphandrusAppBundle:Identification:registerJson, _locale: en }
+    requirements:
+        _format: json
+        
+identification_login:
+    path:     /{_locale}/app/login.{_format}
+    defaults: { _controller: SkaphandrusAppBundle:Identification:loginJson, _locale: en }
+    requirements:
+        _format: json
+
+
+
+#identification_register: 
+#    path:     /{_locale}/app/register.{_format}
+#    #defaults: { _controller: SkaphandrusAppBundle:Identification:register, _locale: en } 
+#    defaults: { _controller: SkaphandrusAppBundle:Identification:userInfoJson, _locale: en }
+#    requirements: _method: POST
 
 
 ##################################################################################
