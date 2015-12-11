@@ -15,48 +15,48 @@
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
         </id>
-        <many-to-one field="temperature" target-entity="SkUnitTemperature" fetch="LAZY">
+        <many-to-one field="temperature" target-entity="SkUnitTemperature" fetch="LAZY" nullable="false">
             <join-columns>
                 <join-column name="temperature_id" referenced-column-name="id"/>
             </join-columns>
         </many-to-one>
-        <many-to-one field="volume" target-entity="SkUnitVolume" fetch="LAZY">
+        <many-to-one field="volume" target-entity="SkUnitVolume" fetch="LAZY" nullable="false">
             <join-columns>
                 <join-column name="volume_id" referenced-column-name="id"/>
             </join-columns>
         </many-to-one>
-        <many-to-one field="weight" target-entity="SkUnitWeight" fetch="LAZY">
+        <many-to-one field="weight" target-entity="SkUnitWeight" fetch="LAZY" nullable="false">
             <join-columns>
                 <join-column name="weight_id" referenced-column-name="id"/>
             </join-columns>
         </many-to-one>
-        <many-to-one field="pressure" target-entity="SkUnitPressure" fetch="LAZY">
+        <many-to-one field="pressure" target-entity="SkUnitPressure" fetch="LAZY" nullable="false">
             <join-columns>
                 <join-column name="pressure_id" referenced-column-name="id"/>
             </join-columns>
         </many-to-one>
-        <many-to-one field="length" target-entity="SkUnitLength" fetch="LAZY">
+        <many-to-one field="length" target-entity="SkUnitLength" fetch="LAZY" nullable="false">
             <join-columns>
                 <join-column name="length_id" referenced-column-name="id"/>
             </join-columns>
         </many-to-one>
-        <many-to-one field="capacity" target-entity="SkUnitCapacity" fetch="LAZY">
+        <many-to-one field="capacity" target-entity="SkUnitCapacity" fetch="LAZY" nullable="false">
             <join-columns>
                 <join-column name="capacity_id" referenced-column-name="id"/>
             </join-columns>
         </many-to-one>
-        <many-to-one field="currency" target-entity="SkUnitCurrency" fetch="LAZY">
+        <many-to-one field="currency" target-entity="SkUnitCurrency" fetch="LAZY" nullable="false">
             <join-columns>
                 <join-column name="currency_id" referenced-column-name="id"/>
             </join-columns>
         </many-to-one>
-        <many-to-one field="velocity" target-entity="SkUnitVelocity" fetch="LAZY">
+        <many-to-one field="velocity" target-entity="SkUnitVelocity" fetch="LAZY" nullable="false">
             <join-columns>
                 <join-column name="velocity_id" referenced-column-name="id"/>
             </join-columns>
         </many-to-one>
         
-        <one-to-one field="business" target-entity="SkBusiness" inversed-by="unit">
+        <one-to-one field="business" target-entity="SkBusiness" inversed-by="unit" nullable="false">
             <join-column name="business_id" referenced-column-name="id" />
         </one-to-one>
         

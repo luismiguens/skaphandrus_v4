@@ -1,0 +1,54 @@
+
+<h3>{% trans with {'%business%': business.name} %}page.business.h3.info{% endtrans %}</h3>
+
+{% for type in business.type %}
+    {% if type %}
+        <h5>{{ "page.business.h5.type"|trans }}</h5>
+        {% for type in business.type %}
+            <p>{{ type }}</p>
+        {% endfor %}
+    {% endif %}
+{% endfor %}
+
+{% for currency in business.currency %}
+    {% if currency %}
+        <h5>{{ "page.business.h5.currency"|trans }}</h5>
+        {% for currency in business.currency %}
+            <p itemprop="currenciesAccepted">{{ currency }}</p>
+        {% endfor %}
+    {% endif %}
+{% endfor %}
+
+{% for language in business.language %}
+    {% if language %}
+        <h5>{{ "page.business.h5.language"|trans }}</h5>
+        {% for language in business.language %}
+            <p>{{ language }}</p>
+        {% endfor %}
+    {% endif %}
+{% endfor %}
+
+{% if business.about  %}
+    <h5>{{ "page.business.h5.about"|trans }}</h5>
+    <p>{{ business.about|raw }}</p>
+{% endif %}
+
+{% if business.description %}
+    <h5>{{ "page.business.h5.description"|trans }}</h5>
+    <p itemprop="description">{{ business.description|raw }}</p>
+{% endif %}
+
+{% if business.mission %}
+    <h5>{{ "page.business.h5.mission"|trans }}</h5>
+    <p>{{ business.mission|raw }}</p>
+{% endif %}
+
+{% if business.awards %}
+    <h5>{{ "page.business.h5.awards"|trans }}</h5>
+    <p itemprop="awards">{{ business.awards|raw }}</p>
+{% endif %}
+
+{% if map %}
+    <h5>{% trans with {'%business%': business.name} %}page.business.h5.map{% endtrans %}</h5>
+    {{ google_map(map) }}
+{% endif %}

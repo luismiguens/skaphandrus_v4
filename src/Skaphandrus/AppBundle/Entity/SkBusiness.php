@@ -827,29 +827,50 @@ class SkBusiness {
         return 'uploads/business';
     }
 
-//    public function doStuffOnPostLoad(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
-//        $entity = $args->getEntity();
-//        $originalEntity = $entity;
-//
-//        $entityManager = $args->getEntityManager();
-//
-//        if (!$entity->getContact()) {
-//            $contact = new SkContact();
-//            $contact->setBusiness($entity);
-//            $entity->setContact($contact);
-//            $entityManager->persist($contact);
-//        }
-//
-//        if (!$entity->getAddress()) {
-//            $address = new SkAddress();
-//            $address->setBusiness($entity);
-//            $entity->setAddress($address);
-//            $entityManager->persist($address);
-//        }
-//
-//        if ($originalEntity != $entity) {
-//            $entityManager->persist($entity);
-//            $entityManager->flush();
-//        }
-//    }
+    public function doStuffOnPostLoad(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+        $entity = $args->getEntity();
+        $entityManager = $args->getEntityManager();
+//        $entity = new SkBusiness();
+
+        if (!$entity->getContact()) {
+            $contact = new SkContact();
+            $contact->setBusiness($entity);
+            $entity->setContact($contact);
+            $entityManager->persist($contact);
+        }
+
+        if (!$entity->getAddress()) {
+            $address = new SkAddress();
+            $address->setBusiness($entity);
+            $entity->setAddress($address);
+            $entityManager->persist($address);
+        }
+
+        if (!$entity->getUnit()) {
+            $unit = new SkBusinessUnit();
+            $unit->setBusiness($entity);
+
+            $capacity = $entityManager->getRepository('SkaphandrusAppBundle:SkUnitCapacity')->Find(1);
+            $currency = $entityManager->getRepository('SkaphandrusAppBundle:SkUnitCurrency')->Find(1);
+            $length = $entityManager->getRepository('SkaphandrusAppBundle:SkUnitLength')->Find(1);
+            $pressure = $entityManager->getRepository('SkaphandrusAppBundle:SkUnitPressure')->Find(1);
+            $temperature = $entityManager->getRepository('SkaphandrusAppBundle:SkUnitTemperature')->Find(1);
+            $velocity = $entityManager->getRepository('SkaphandrusAppBundle:SkUnitVelocity')->Find(1);
+            $volume = $entityManager->getRepository('SkaphandrusAppBundle:SkUnitVolume')->Find(1);
+            $weight = $entityManager->getRepository('SkaphandrusAppBundle:SkUnitWeight')->Find(1);
+
+            $unit->setCapacity($capacity);
+            $unit->setCurrency($currency);
+            $unit->setLength($length);
+            $unit->setPressure($pressure);
+            $unit->setTemperature($temperature);
+            $unit->setVelocity($velocity);
+            $unit->setVolume($volume);
+            $unit->setWeight($weight);
+
+            $entity->setUnit($unit);
+            $entityManager->persist($unit);
+        }
+    }
+
 }

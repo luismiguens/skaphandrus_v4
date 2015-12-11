@@ -17,9 +17,6 @@ class SkBusinessDivePriceType extends AbstractType {
         $entity = $builder->getData();
         //$currency = $options['currency'];
 
-       // dump($options);
-        //dump($builder);
-
         $builder
                 ->add('numberofdives', null, array(
                     'attr' => array('class' => 'form-control'),

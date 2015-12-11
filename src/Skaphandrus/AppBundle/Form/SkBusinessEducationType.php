@@ -13,6 +13,10 @@ class SkBusinessEducationType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+
+        $entity = new \Skaphandrus\AppBundle\Entity\SkBusiness();
+        $entity = $builder->getData();
+
         $builder
                 ->add('educationCourse', 'collection', array(
                     'type' => new SkBusinessEducationCourseType(),
@@ -21,7 +25,8 @@ class SkBusinessEducationType extends AbstractType {
                     'prototype' => true,
                     'by_reference' => false,
                     'required' => false,
-                    'label' => 'form.business.label.education_course'
+                    'label' => 'form.business.label.education_course',
+                    'options' => array('my_custom_option' => $entity->getUnit()->getCurrency())
                 ))
                 ->add('educationConditions', new SkBusinessEducationConditionsType(), array(
                     'label' => 'form.business.label.education_conditions',

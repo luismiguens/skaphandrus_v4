@@ -14,6 +14,7 @@ class SkBusinessSpotType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
 
+
         $entity = $builder->getData();
 
         //http://stackoverflow.com/questions/7698524/how-to-work-with-entity-form-field-type-and-jui-autocomplete-in-symfony2
@@ -29,7 +30,6 @@ class SkBusinessSpotType extends AbstractType {
         }
 
 
-        //dump($spotChoices);
 
         $builder
                 ->add('spotChoices', 'choice', array(
@@ -64,7 +64,8 @@ class SkBusinessSpotType extends AbstractType {
                     'prototype' => true,
                     'by_reference' => false,
                     'required' => false,
-                    'label' => 'form.business.label.rent_equipment'
+                    'label' => 'form.business.label.rent_equipment',
+                    'options' => array('my_custom_option' => $entity->getUnit()->getCurrency())
                 ))
                 ->add('diveAccess', new SkBusinessDiveAccessType(), array(
                     'label' => 'form.business.label.dive_access',
