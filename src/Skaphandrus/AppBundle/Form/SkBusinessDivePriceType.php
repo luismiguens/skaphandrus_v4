@@ -17,7 +17,7 @@ class SkBusinessDivePriceType extends AbstractType {
         $entity = $builder->getData();
         //$currency = $options['currency'];
 
-        dump($options);
+       // dump($options);
         //dump($builder);
 
         $builder

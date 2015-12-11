@@ -131,6 +131,7 @@ class SkBusiness {
      */
     private $spot;
 
+
     /**
      * @var Collection
      */
@@ -741,6 +742,16 @@ class SkBusiness {
     public function getSpot() {
         return $this->spot;
     }
+
+    /**
+     * Clear all spots
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkSpot $spot
+     */
+    public function clearSpots() {
+        $this->spot->clear();
+    }
+
 
     /**
      * Add type

@@ -104,7 +104,9 @@ $(document).ready(function () {
     }
     
     // Formulário SkBusinessDiveSpot
-    if ($('#skaphandrus_appbundle_skbusiness_spot_0_name').length) {
-        $('#skaphandrus_appbundle_skbusiness_spot_0_name').autocompleter({url_list: '/en/ajax_search_spot/', url_get: '/en/ajax_search_spot/'});
+    if ($('#skaphandrus_appbundle_skbusiness_spotAutocomplete').length) {
+        $('#skaphandrus_appbundle_skbusiness_spotAutocomplete').autocompleterMultiple({form_name:'skaphandrus_appbundle_skbusiness', field_name:'spotChoices', url_list: '/en/ajax_search_spot/', url_get: '/en/ajax_get_spot/'});
     }
+    
+    
 });

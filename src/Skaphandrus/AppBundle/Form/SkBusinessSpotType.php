@@ -13,21 +13,40 @@ class SkBusinessSpotType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+
+        $entity = $builder->getData();
+
+        //http://stackoverflow.com/questions/7698524/how-to-work-with-entity-form-field-type-and-jui-autocomplete-in-symfony2
+        //para funcionar com multiple select choices
+        $spotChoices = array();
+        $spotChoicesChecked = array();
         
-      $entity = new \Skaphandrus\AppBundle\Entity\SkBusiness();  
-         $entity = $builder->getData();
-      
-        //dump($entity);
-        
+        if ($this->business && $this->business->getSpot()) {
+            foreach ($this->business->getSpot() as $spot) {
+                $spotChoices[$spot->getId()] = $spot->getName();
+                $spotChoicesChecked[] = $spot->getId();
+            }
+        }
+
+
+        //dump($spotChoices);
+
         $builder
-                ->add('spot','collection', array(
-                    'type' => new SkBusinessDiveSpotType(),
-                    'allow_add' => true,
-                    'allow_delete' => true,
-                    'prototype' => true,
-                    'by_reference' => false,
+                ->add('spotChoices', 'choice', array(
                     'required' => false,
-                    'label' => 'form.business.label.dive_spot'
+                    'expanded' => true,
+                    'multiple' => true,
+                    'choices' => $spotChoices,
+                    'mapped' => false,
+                    'data'=>$spotChoicesChecked
+                ))
+                ->add('spotAutocomplete', 'autocomplete', array(
+                    'class' => 'SkaphandrusAppBundle:SkSpot',
+                    'attr' => array('class' => 'form-control m-b'),
+                    'label' => 'form.photo.label.spot',
+                    'required' => false,
+                    //'help' => 'form.photo.help.spot',
+                    'mapped' => false,
                 ))
                 ->add('divePrice', 'collection', array(
                     'type' => new SkBusinessDivePriceType(),
@@ -37,7 +56,7 @@ class SkBusinessSpotType extends AbstractType {
                     'by_reference' => false,
                     'required' => false,
                     'label' => 'form.business.label.dive_price',
-                    'options' => array('my_custom_option'=> $entity->getUnit()->getCurrency())
+                    'options' => array('my_custom_option' => $entity->getUnit()->getCurrency())
                 ))
                 ->add('rentEquipment', 'collection', array(
                     'type' => new SkBusinessRentEquipmentType(),
@@ -76,6 +95,12 @@ class SkBusinessSpotType extends AbstractType {
      */
     public function getName() {
         return 'skaphandrus_appbundle_skbusiness';
+    }
+
+    //necessário adicionart para multiple checkbox select
+    public function __construct(\Skaphandrus\AppBundle\Entity\SkBusiness $business) {
+        $this->business = $business;
+        //$this->em = $em;
     }
 
 }

@@ -43,17 +43,11 @@
                 {{ form_widget(form) }}
                 {% if help is defined %}
                     <div style="margin-top:5px">
-
                         {% if help is iterable %}
-                            
                             {{ help['help']|trans({'%param%': help['param']}) }}
-                            
-                            
-                         
                         {% else %}
                             <span class="help">{{ help|trans }}</span>
                         {% endif %}
-
                     </div> 
                 {% endif %}
             </div>

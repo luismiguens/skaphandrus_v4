@@ -14,7 +14,7 @@ class SkBusinessDiveAccessType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('daydiveboat', null, array(
+                ->add('daydiveboat', 'checkbox', array(
                     'attr' => array('class' => 'checkbox'),
                     'label' => 'form.dive_access.label.day_dive_boat'
                 ))
