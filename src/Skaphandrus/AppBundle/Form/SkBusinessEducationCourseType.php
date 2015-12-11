@@ -23,6 +23,7 @@ class SkBusinessEducationCourseType extends AbstractType {
                     'attr' => array('class' => 'form-control'),
                     'label' => 'form.education_course.label.price',
                     'required' => false,
+                    'help' => array('help' => 'form.education_course.help.price', 'param' => $options['my_custom_option'])
                 ))
 //                ->add('createdAt')
 //                ->add('updatedAt')
@@ -35,6 +36,7 @@ class SkBusinessEducationCourseType extends AbstractType {
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
+            'my_custom_option' => false,
             'data_class' => 'Skaphandrus\AppBundle\Entity\SkBusinessEducationCourse'
         ));
     }

@@ -349,79 +349,88 @@ class DefaultController extends Controller {
             $centerLatitude = 0;
             $centerLongitude = 0;
 
-            //$business = new \Skaphandrus\AppBundle\Entity\SkBusiness();
+//            $business = new \Skaphandrus\AppBundle\Entity\SkBusiness();
+            if ($business->getAddress()->getCoordinate() != null) {
 
-            if (count($business->getAddress()->getLocation()) > 0) {
+                if (count($business->getAddress()->getLocation()) > 0) {
+
+                    // Get markers from spots for the map
+                    $markers = array();
+                    $marker = new Marker();
+
+                    //remove white spaces
+                    $latitude = preg_replace('/\s+/', '', explode(",", $business->getAddress()->getCoordinate())[0]);
+                    $longitude = preg_replace('/\s+/', '', explode(",", $business->getAddress()->getCoordinate())[1]);
+
+                    $infowindow = new InfoWindow();
+                    if ($business->getAddress()->getStreet()) {
+                        $contentString = $business->getName() . ', ' . $business->getAddress()->getStreet() . ', ' . $business->getAddress()->getLocation()->getName();
+                    } else {
+                        $contentString = $business->getName() . ', ' . $business->getAddress()->getLocation()->getName();
+                    }
+                    $infowindow->setContent($contentString);
+
+                    // Marker options
+                    $marker->setInfoWindow($infowindow);
+                    $marker->setPrefixJavascriptVariable('marker_');
+                    $marker->setPosition($latitude, $longitude, true);
+                    $marker->setAnimation(Animation::DROP);
+                    $marker->setOption('clickable', false);
+                    $marker->setOption('flat', true);
+                    $marker->setOptions(array(
+                        'clickable' => true,
+                        'flat' => true,
+                    ));
+
+                    // $totalLatitude += $latitude;
+                    // $totalLongitude += $longitude;
+                    $markers[] = $marker;
+                }
 
 
-                // Get markers from spots for the map
-                $markers = array();
-                $marker = new Marker();
+                $centerLatitude = $latitude;
+                $centerLongitude = $longitude;
 
-                //remove white spaces
-                $latitude = preg_replace('/\s+/', '', explode(",", $business->getAddress()->getCoordinate())[0]);
-                $longitude = preg_replace('/\s+/', '', explode(",", $business->getAddress()->getCoordinate())[1]);
-                
-                
-                $infowindow = new InfoWindow();
-                $contentString = $business->getAddress()->getStreet().', '.$business->getAddress()->getLocation()->getName();
-                $infowindow->setContent($contentString);
-                
-                // Marker options
-                $marker->setInfoWindow($infowindow);
-                $marker->setPrefixJavascriptVariable('marker_');
-                $marker->setPosition($latitude, $longitude, true);
-                $marker->setAnimation(Animation::DROP);
-                $marker->setOption('clickable', false);
-                $marker->setOption('flat', true);
-                $marker->setOptions(array(
-                    'clickable' => true,
-                    'flat' => true,
+                $map = new Map();
+                $map->setPrefixJavascriptVariable('map_');
+                $map->setHtmlContainerId('map_canvas');
+                $map->setAsync(false);
+                $map->setCenter($centerLatitude, $centerLongitude, true);
+                $map->setMapOption('zoom', 10);
+                $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
+                $map->setMapOption('disableDefaultUI', true);
+                $map->setMapOption('disableDoubleClickZoom', true);
+                $map->setMapOptions(array(
+                    'disableDefaultUI' => true,
+                    'disableDoubleClickZoom' => true,
                 ));
+                $map->setStylesheetOption('width', 'auto');
+                $map->setStylesheetOption('height', '300px');
+                $map->setStylesheetOptions(array(
+                    'width' => 'auto',
+                    'height' => '300px',
+                ));
+                $map->setLanguage('en');
 
-                // $totalLatitude += $latitude;
-                // $totalLongitude += $longitude;
-                $markers[] = $marker;
+                // Add the spots to the map
+                foreach ($markers as $marker) {
+                    $map->addMarker($marker);
+                }
+
+                return $this->render('SkaphandrusAppBundle:Default:business.html.twig', array(
+                            'business' => $business,
+                            'map' => $map,
+                            'map_center_lat' => $centerLatitude,
+                            'map_center_lon' => $centerLongitude,
+                ));
+            } else {
+                return $this->render('SkaphandrusAppBundle:Default:business.html.twig', array(
+                            'business' => $business,
+                            'map' => $map,
+                            'map_center_lat' => $centerLatitude,
+                            'map_center_lon' => $centerLongitude,
+                ));
             }
-
-
-            $centerLatitude = $latitude;
-            $centerLongitude = $longitude;
-
-            $map = new Map();
-            $map->setPrefixJavascriptVariable('map_');
-            $map->setHtmlContainerId('map_canvas');
-            $map->setAsync(false);
-            $map->setCenter($centerLatitude, $centerLongitude, true);
-            $map->setMapOption('zoom', 10);
-            $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
-            $map->setMapOption('disableDefaultUI', true);
-            $map->setMapOption('disableDoubleClickZoom', true);
-            $map->setMapOptions(array(
-                'disableDefaultUI' => true,
-                'disableDoubleClickZoom' => true,
-            ));
-            $map->setStylesheetOption('width', 'auto');
-            $map->setStylesheetOption('height', '300px');
-            $map->setStylesheetOptions(array(
-                'width' => 'auto',
-                'height' => '300px',
-            ));
-            $map->setLanguage('en');
-
-            // Add the spots to the map
-            foreach ($markers as $marker) {
-                $map->addMarker($marker);
-            }
-
-
-
-            return $this->render('SkaphandrusAppBundle:Default:business.html.twig', array(
-                        'business' => $business,
-                        'map' => $map,
-                        'map_center_lat' => $centerLatitude,
-                        'map_center_lon' => $centerLongitude,
-            ));
         } else {
             throw $this->createNotFoundException('The business "' . $slug . '" does not exist in the location ' . $location . ' or country ' . $country);
         }

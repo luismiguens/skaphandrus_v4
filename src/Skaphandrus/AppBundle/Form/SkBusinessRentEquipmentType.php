@@ -29,7 +29,7 @@ class SkBusinessRentEquipmentType extends AbstractType {
                     'attr' => array('class' => 'form-control'),
                     'label' => 'form.rent_equipment.label.rent_value',
                     'required' => false,
-                    'help' => 'form.rent_equipment.help.rent_value'
+                    'help' => array('help' => 'form.rent_equipment.help.rent_value', 'param' => $options['my_custom_option'])
                 ))
 //                ->add('businessboat')
         ;
@@ -40,6 +40,7 @@ class SkBusinessRentEquipmentType extends AbstractType {
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
+            'my_custom_option' => false,
             'data_class' => 'Skaphandrus\AppBundle\Entity\SkBusinessRentEquipment'
         ));
     }

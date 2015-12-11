@@ -13,14 +13,14 @@ class SkBusinessSpotType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        
-      $entity = new \Skaphandrus\AppBundle\Entity\SkBusiness();  
-         $entity = $builder->getData();
-      
+
+        $entity = new \Skaphandrus\AppBundle\Entity\SkBusiness();
+        $entity = $builder->getData();
+
         //dump($entity);
-        
+
         $builder
-                ->add('spot','collection', array(
+                ->add('spot', 'collection', array(
                     'type' => new SkBusinessDiveSpotType(),
                     'allow_add' => true,
                     'allow_delete' => true,
@@ -37,7 +37,7 @@ class SkBusinessSpotType extends AbstractType {
                     'by_reference' => false,
                     'required' => false,
                     'label' => 'form.business.label.dive_price',
-                    'options' => array('my_custom_option'=> $entity->getUnit()->getCurrency())
+                    'options' => array('my_custom_option' => $entity->getUnit()->getCurrency())
                 ))
                 ->add('rentEquipment', 'collection', array(
                     'type' => new SkBusinessRentEquipmentType(),
@@ -45,7 +45,8 @@ class SkBusinessSpotType extends AbstractType {
                     'prototype' => true,
                     'by_reference' => false,
                     'required' => false,
-                    'label' => 'form.business.label.rent_equipment'
+                    'label' => 'form.business.label.rent_equipment',
+                    'options' => array('my_custom_option' => $entity->getUnit()->getCurrency())
                 ))
                 ->add('diveAccess', new SkBusinessDiveAccessType(), array(
                     'label' => 'form.business.label.dive_access',

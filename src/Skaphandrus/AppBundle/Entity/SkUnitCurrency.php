@@ -2,6 +2,8 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use Symfony\Component\Intl\Intl;
+
 /**
  * SkUnitCurrency
  */
@@ -35,9 +37,9 @@ class SkUnitCurrency {
      *
      * @return string
      */
-    public function getCode() {
-        return $this->code;
-    }
+//    public function getCode() {
+//        return $this->code;
+//    }
 
     /**
      * Get id
@@ -48,8 +50,16 @@ class SkUnitCurrency {
         return $this->id;
     }
 
-    public function __toString() {
-        return $this->getCode();
+//    public function __toString() {
+//        return $this->getCode();
+//    }
+
+    public function getCode() {
+        return Intl::getCurrencyBundle()->getCurrencyName($this->code) . " (" . Intl::getCurrencyBundle()->getCurrencySymbol($this->code) . ")";
     }
-    
+
+    public function __toString() {
+        return Intl::getCurrencyBundle()->getCurrencyName($this->code) . " (" . Intl::getCurrencyBundle()->getCurrencySymbol($this->code) . ")";
+    }
+
 }

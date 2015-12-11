@@ -13,16 +13,6 @@ class SkBusinessDivePriceType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-
-        $entity = $builder->getData();
-
-
-
-        //$currency = $options['currency'];
-
-        dump($options);
-        //dump($builder);
-
         $builder
                 ->add('numberofdives', null, array(
                     'attr' => array('class' => 'form-control'),
