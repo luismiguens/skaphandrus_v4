@@ -38,7 +38,6 @@
             url_get: '',
             form_name: '',
             field_name: '',
-            
         };
         return this.each(function () {
             if (options) {
@@ -54,13 +53,12 @@
                     //alert(ui.item.id);
                     //$this.val(ui.item.id);
 
-                    var div_checkboxes = $('#' + settings.form_name + '_' + settings.field_name).find('#checkboxes');
-                    
                     var field_id = settings.form_name + '_' + settings.field_name + '_' + ui.item.id;
                     var field_name = settings.form_name + '[' + settings.field_name + '][]';
+                    var div_checkboxes = $('#' + settings.form_name + '_' + settings.field_name);
 
-                    
-                    $(div_checkboxes).append('<label for="' + field_id + '" class="checkbox">\n\<input checked id="' + field_id + '" name="' + field_name + '" value="' + ui.item.id + '" type="checkbox">' + ui.item.name + '</label>');
+                    $(div_checkboxes).append('<div class="checkbox"><label for="' + field_id + '" class="checkbox">\n\<input checked id="' + field_id + '" name="' + field_name + '" value="' + ui.item.id + '" type="checkbox">' + ui.item.name + '</label></div>');
+
                     this.value = "";
                     return false;
 
