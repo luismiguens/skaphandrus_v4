@@ -74,7 +74,7 @@
         
         ////////////////////////////////////////////////////////////////////////
         //--MODULES
-        //ir buscar todos os modulos
+        //ir buscar todos os modulos(versoes anteriores)
         $.ajax({
             url: '/{{ app.request.locale }}/app/modules.json',
             type: 'post',
@@ -146,12 +146,23 @@
             success: function (data) {
                 console.log(data, 'login_1');
             },
-            data: {"email": "luis.miguens@skaphandrus.com", "password": "portugal",  }
+            data: {"email": "luis.t.miguens@gmail.com", "password": "portugal"  }
+        });
+        
+        //lOGIN USER (VIA FACEBOOK)
+        $.ajax({
+            url: '/{{ app.request.locale }}/app/login.json',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data, 'login_2');
+            },
+            data: {"facebook_uid": "637224386"  }
         });
         
         
         
-                ////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////
         //REGISTER USER
         $.ajax({
             url: '/{{ app.request.locale }}/app/register.json',
@@ -163,7 +174,16 @@
             data: {"username": "luis.miguens", "password": "portugal", "email": "luis.miguens@skaphandrus.com"}
         });
         
-        
+         //REGISTER USER (VIA FACEBOOK)
+{#        $.ajax({
+            url: '/{{ app.request.locale }}/app/register.json',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data, 'register_2');
+            },
+            data: {"email": "luis.miguens@skaphandrus.com", "facebook_uid": "637224386"}
+        });#}
         
         
     });

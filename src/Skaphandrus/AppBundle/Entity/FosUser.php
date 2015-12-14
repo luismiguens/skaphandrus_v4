@@ -443,6 +443,10 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
         if (!$entity->getSettings()) {
             $settings = new SkSettings();
             $settings->setFosUser($entity);
+
+            $emailNotificationTime = $entityManager->getRepository("SkaphandrusAppBundle:SkEmailNotificationTime")->findOneById(1);
+            $settings->setEmailNotificationTime($emailNotificationTime);
+            
             $entity->setSettings($settings);
             $entityManager->persist($settings);
         }elseif ($entity->getSettings()->getPhoto() == "") {
