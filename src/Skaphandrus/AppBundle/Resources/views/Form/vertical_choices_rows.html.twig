@@ -16,8 +16,10 @@
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 <ul>
                     {% for error in errors %}
-                        <li>{{ error.message }}</li>
-                        {% endfor %}
+                        <li>
+                            {{ error.message }}
+                        </li>
+                    {% endfor %}
                 </ul>
             </div>
         {% endif %}
@@ -147,8 +149,8 @@
                 <input type="checkbox" {{ block('widget_attributes') }}
                        {% if value is defined %} value="{{ value }}"{% endif %}
                        {% if checked %} checked="checked"{% endif %} >
-                
-{#NOTA: sempre que não queremos a label da checkbox temos de definir a classe no form#}
+
+                {#NOTA: sempre que não queremos a label da checkbox temos de definir a classe no form#}
                 {% if attr['class'] is not defined %}
                     {{ label|trans }}
                 {% endif %}
@@ -161,9 +163,14 @@
 
 {% block radio_widget %}
     {% spaceless %}
-        <label  for="{{ id }}"><input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />{{ label|trans }}</label>
-        {% endspaceless %}
-    {% endblock radio_widget %}
+        <label  for="{{ id }}">
+            <input type="radio" {{ block('widget_attributes') }}
+                   {% if value is defined %} value="{{ value }}"{% endif %}
+                   {% if checked %} checked="checked"{% endif %} />
+            {{ label|trans }}
+        </label>
+    {% endspaceless %}
+{% endblock radio_widget %}
 
 
 {% block choice_widget_expanded %}

@@ -1,32 +1,39 @@
 
 <h3>{% trans with {'%business%': business.name} %}page.business.h3.info{% endtrans %}</h3>
 
+{% set typ = '' %}
 {% for type in business.type %}
-    {% if type %}
-        <h5>{{ "page.business.h5.type"|trans }}</h5>
-        {% for type in business.type %}
-            <p>{{ type }}</p>
-        {% endfor %}
-    {% endif %}
+    {% set typ = type %}
 {% endfor %}
+{% if typ %}
+    <h5>{{ "page.business.h5.type"|trans }}</h5>
+    {% for type in business.type %}
+        <p>{{ type }}</p>
+    {% endfor %}
+{% endif %}
 
+{% set curr = '' %}
 {% for currency in business.currency %}
-    {% if currency %}
-        <h5>{{ "page.business.h5.currency"|trans }}</h5>
-        {% for currency in business.currency %}
-            <p itemprop="currenciesAccepted">{{ currency }}</p>
-        {% endfor %}
-    {% endif %}
+    {% set curr = currency %}
 {% endfor %}
+{% if curr %}
+    <h5>{{ "page.business.h5.currency"|trans }}</h5>
+    {% for currency in business.currency %}
+        <p itemprop="currenciesAccepted">{{ currency }}</p>
+    {% endfor %}
+{% endif %}
 
+{% set lan = '' %}
 {% for language in business.language %}
-    {% if language %}
-        <h5>{{ "page.business.h5.language"|trans }}</h5>
-        {% for language in business.language %}
-            <p>{{ language }}</p>
-        {% endfor %}
-    {% endif %}
+    {% set lan = language %}
 {% endfor %}
+{% if lan %}
+    <h5>{{ "page.business.h5.language"|trans }}</h5>
+    {% for language in business.language %}
+        <p>{{ language }}</p>
+    {% endfor %}
+{% endif %}
+
 
 {% if business.about  %}
     <h5>{{ "page.business.h5.about"|trans }}</h5>

@@ -1,6 +1,6 @@
 {% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
 
-{% form_theme edit_form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
+{% form_theme edit_form 'SkaphandrusAppBundle:Form:vertical_choices_rows.html.twig' %}
 
 {% block javascripts %}
     {{ parent() }}
@@ -10,7 +10,7 @@
 
 
 {% block heading_title %}
-    {{ "form.business_unit.h1.title"|trans }}
+    {{ "form.business_settings.h1.title"|trans }}
 {% endblock %}
 
 
@@ -18,7 +18,7 @@
     <ol class="breadcrumb">
         <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
         <li><a href="{{ path('business_admin')}}">{{ "breadcrumb.business"|trans }}</a></li>
-        <li class="active"><strong>{{ "breadcrumb.edit_business_unit"|trans }}</strong></li>
+        <li class="active"><strong>{{ "breadcrumb.edit_business_settings"|trans }}</strong></li>
     </ol>
 {% endblock %}
 
@@ -29,7 +29,7 @@
 
 
 {% block form_title_description %}
-    {{ "form.business_unit.text.description"|trans }}
+    {{ "form.business_settings.text.description"|trans }}
 {% endblock %}
 
 {% block body %}

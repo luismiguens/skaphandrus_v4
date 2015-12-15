@@ -33,9 +33,9 @@ skaphandrus_app_business_education_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skbusinesseducation.yml"
     prefix:   /{_locale}/business_education_admin
 
-skaphandrus_app_business_unit_admin:
-    resource: "@SkaphandrusAppBundle/Resources/config/routing/skbusinessunit.yml"
-    prefix:   /{_locale}/business_unit_admin
+skaphandrus_app_business_settings_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skbusinesssettings.yml"
+    prefix:   /{_locale}/business_settings_admin
 
 skaphandrus_app_course_affiliation_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skcourseaffiliation.yml"

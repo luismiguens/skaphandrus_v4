@@ -120,7 +120,7 @@ class SkBusinessSettingsController extends Controller {
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('SkaphandrusAppBundle:SkBusinessUnit:edit.html.twig', array(
+        return $this->render('SkaphandrusAppBundle:SkBusinessSettings:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
@@ -135,8 +135,8 @@ class SkBusinessSettingsController extends Controller {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createEditForm(SkBusiness $entity) {
-        $form = $this->createForm(new SkBusinessSettingsType(), $entity, array(
-            'action' => $this->generateUrl('business_unit_admin_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new SkBusinessSettingsType($entity), $entity, array(
+            'action' => $this->generateUrl('business_settings_admin_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -157,6 +157,20 @@ class SkBusinessSettingsController extends Controller {
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find SkBusiness entity.');
         }
+        
+        //$entity = new SkBusiness();
+
+        //para funcionar com multiple select checkboxes
+        //necessário criar o método clear
+        $entity->clearAdmins();
+        $data = $request->get('skaphandrus_appbundle_skbusiness');
+        if (isset($data['adminChoices'])) {
+            foreach ($data['adminChoices'] as $id_admin) {
+                //$spot = $this->getRepo()->find($id);
+                $admin = $em->getRepository('SkaphandrusAppBundle:FosUser')->find($id_admin);
+                $entity->addAdmin($admin);
+            }
+        }
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
@@ -166,10 +180,10 @@ class SkBusinessSettingsController extends Controller {
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
-            return $this->redirect($this->generateUrl('business_unit_admin_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('business_settings_admin_edit', array('id' => $id)));
         }
 
-        return $this->render('SkaphandrusAppBundle:SkBusinessUnit:edit.html.twig', array(
+        return $this->render('SkaphandrusAppBundle:SkBusinessSettings:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),

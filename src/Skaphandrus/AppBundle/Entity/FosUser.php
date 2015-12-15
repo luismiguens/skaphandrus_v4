@@ -29,13 +29,11 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
      */
     private $spots;
 
-        /**
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $points;
 
-    
-    
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
@@ -46,19 +44,20 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
      */
     private $acquisitions;
     private $modules;
-    
-    
     private $personal;
     private $address;
     private $contact;
     private $settings;
-    
     //campos de apoio para as listagens
     private $photosInContest;
     private $photosInUser;
-    
     //modulos em que o user trabalhou (designer, biologo, programador)
     private $works;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $business;
 
     public function getPhotosInUser() {
         return $this->photosInUser;
@@ -253,9 +252,7 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
         return $this->spots;
     }
 
-    
-    
-     /**
+    /**
      * Add points
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPoints $points
@@ -286,14 +283,6 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
         return $this->points;
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
     /**
      * Add work
      *
@@ -324,10 +313,7 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
     public function getWorks() {
         return $this->works;
     }
-    
-    
-    
-    
+
     /**
      * Add photo
      *
@@ -434,6 +420,37 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
         return $this;
     }
 
+    /**
+     * Add business
+     *
+     * @param SkBusiness $business
+     *
+     * @return SkSpot
+     */
+    public function addBusiness(SkBusiness $business) {
+        $this->business[] = $business;
+
+        return $this;
+    }
+
+    /**
+     * Remove business
+     *
+     * @param SkBusiness $business
+     */
+    public function removeBusiness(SkBusiness $business) {
+        $this->business->removeElement($business);
+    }
+
+    /**
+     * Get business
+     *
+     * @return Collection
+     */
+    public function getBusiness() {
+        return $this->business;
+    }
+
     public function doStuffOnPostLoad(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
         $entity = $args->getEntity();
         //$entity = new FosUser();
@@ -449,7 +466,7 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
             
             $entity->setSettings($settings);
             $entityManager->persist($settings);
-        }elseif ($entity->getSettings()->getPhoto() == "") {
+        } elseif ($entity->getSettings()->getPhoto() == "") {
             $entity->getSettings()->setPhoto("user-profile.jpg");
         }
 

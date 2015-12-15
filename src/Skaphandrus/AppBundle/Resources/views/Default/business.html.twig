@@ -181,70 +181,85 @@
                                             <h3>{% trans with {'%business%': business.name} %}page.business.h3.dive{% endtrans %}</h3>
                                             <br/>
 
+                                            <!-- Dive Spots -->
+                                            {% set diveS = '' %}
+                                            {% for spot in business.spot %}
+                                                {% set diveS = spot %}
+                                            {% endfor %}
+                                            {% if diveS %}
+                                                <h4>{{ "page.business.h4.dive_spot"|trans }}</h4>
+
+                                                {% for spot in business.spot %}
+                                                    <p>{{ spot }}</p>
+                                                {% endfor %}
+                                            {% endif %}
+                                            <br/>
+
                                             <!-- Dive Price -->
+                                            {% set diveP = '' %}
                                             {% for dive in business.divePrice %}
-                                                {% if dive %}
-                                                    <h4>{{ "page.business.h4.dive_price"|trans }}</h4>
-                                                    <table class="table table-striped">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>{{ "page.dive_price.table.number_of_dives"|trans }}</th>
-                                                                <th>{{ "page.dive_price.table.value_per_dives"|trans }}</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {% for dive in business.divePrice %}
-                                                                <tr>
-                                                                    <td>{{ dive.numberofdives }} 
-                                                                        {% if dive.numberofdives < 10 %}
-                                                                            {{ "label.dive"|trans }}
-                                                                        {% else %}
-                                                                            {{ "label.dives"|trans }}
-                                                                        {% endif %}
-                                                                    </td>
-                                                                    <td>{{ dive.valueperdives }} {{ business.unit.currency }}</td>
-                                                                </tr>
-                                                            {% endfor %}
-                                                        </tbody>
-                                                    </table>
-                                                {% endif %}
+                                                {% set diveP = dive %}
                                             {% endfor %}
-
-                                            {% for equipment in business.rentEquipment %}
-                                                {% if equipment %}
-                                                    <!-- Rent Equipment -->
-                                                    <h4>{{ "page.business.h4.rent_equipment"|trans }}</h4>
-                                                    <table class="table table-striped">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>{{ "page.rent_equipment.table.equipment_type"|trans }}</th>
-                                                                <th>{{ "page.rent_equipment.table.quantity"|trans }}</th>
-                                                                <th>{{ "page.rent_equipment.table.rent_value"|trans }}</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {% for equipment in business.rentEquipment %}
-                                                                <tr>
-                                                                    <td>{{ equipment.equipmentType }}</td>
-                                                                    <td>{{ equipment.quantity }} {{ "label.unit"|trans }}</td>
-                                                                    <td>{{ equipment.rentValue }} {{ business.unit.currency }}</td>
-                                                                </tr>
-                                                            {% endfor %}
-                                                        </tbody>
-                                                    </table>
-                                                {% endif %}
-                                            {% endfor %}
-
-                                            {% if business.diveAccess %}
-                                                <!-- Dive Access -->
-                                                <h4>{{ "page.business.h4.dive_access"|trans }}</h4>
-                                                <table class="table table-hover">
+                                            {% if diveP %}
+                                                <h4>{{ "page.business.h4.dive_price"|trans }}</h4>
+                                                <table class="table table-striped">
                                                     <thead>
                                                         <tr>
-                                                            <th>{{ "page.dive_access.table.value"|trans }}</th>
-                                                            <th>{{ "page.dive_access.table.action"|trans }}</th>
+                                                            <th>{{ "page.dive_price.table.number_of_dives"|trans }}</th>
+                                                            <th>{{ "page.dive_price.table.value_per_dives"|trans }}</th>
                                                         </tr>
                                                     </thead>
+                                                    <tbody>
+                                                        {% for dive in business.divePrice %}
+                                                            <tr>
+                                                                <td>
+                                                                    {{ dive.numberofdives }} 
+                                                                    {% if dive.numberofdives < 10 %}
+                                                                        {{ "label.dive"|trans }}
+                                                                    {% else %}
+                                                                        {{ "label.dives"|trans }}
+                                                                    {% endif %}
+                                                                </td>
+                                                                <td>{{ dive.valueperdives }} {{ business.unit.currency }}</td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            {% endif %}
+                                            <br/>
+
+                                            <!-- Rent Equipment -->
+                                            {% set rentEqui = '' %}
+                                            {% for equipment in business.rentEquipment %}
+                                                {% set rentEqui = equipment %}
+                                            {% endfor %}
+                                            {% if rentEqui %}
+                                                <h4>{{ "page.business.h4.rent_equipment"|trans }}</h4>
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>{{ "page.rent_equipment.table.equipment_type"|trans }}</th>
+                                                            <th>{{ "page.rent_equipment.table.quantity"|trans }}</th>
+                                                            <th>{{ "page.rent_equipment.table.rent_value"|trans }}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for equipment in business.rentEquipment %}
+                                                            <tr>
+                                                                <td>{{ equipment.equipmentType }}</td>
+                                                                <td>{{ equipment.quantity }} {{ "label.unit"|trans }}</td>
+                                                                <td>{{ equipment.rentValue }} {{ business.unit.currency }}</td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            {% endif %}
+                                            <br/>
+
+                                            <!-- Dive Access -->
+                                            {% if business.diveAccess %}
+                                                <h4>{{ "page.business.h4.dive_access"|trans }}</h4>
+                                                <table class="table table-hover">
                                                     <tbody>
                                                         <tr>
                                                             <td>{{ "page.dive_access.table.day_dive_boat"|trans }}</td>
@@ -363,17 +378,12 @@
                                                     </tbody>
                                                 </table>
                                             {% endif %}
+                                            <br/>
 
+                                            <!-- Gas -->
                                             {% if business.gas %}
-                                                <!-- Gas -->
                                                 <h4>{{ "page.business.h4.gas"|trans }}</h4>
                                                 <table class="table table-hover">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>{{ "page.gas.table.value"|trans }}</th>
-                                                            <th>{{ "page.gas.table.action"|trans }}</th>
-                                                        </tr>
-                                                    </thead>
                                                     <tbody>
                                                         <tr>
                                                             <td>
@@ -420,17 +430,12 @@
                                                     </tbody>
                                                 </table>
                                             {% endif %}
+                                            <br/>
 
+                                            <!-- Safety -->
                                             {% if business.safety %}
-                                                <!-- Safety -->
                                                 <h4>{{ "page.business.h4.safety"|trans }}</h4>
                                                 <table class="table table-hover">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>{{ "page.safety.table.value"|trans }}</th>
-                                                            <th>{{ "page.safety.table.action"|trans }}</th>
-                                                        </tr>
-                                                    </thead>
                                                     <tbody>
                                                         <tr>
                                                             <td>
@@ -486,12 +491,6 @@
                                             {% if business.educationConditions %}
                                                 <h4>{{ "page.business.h4.education_counditions"|trans }}</h4>
                                                 <table class="table table-hover">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>{{ "page.education_counditions.table.value"|trans }}</th>
-                                                            <th>{{ "page.education_counditions.table.action"|trans }}</th>
-                                                        </tr>
-                                                    </thead>
                                                     <tbody>
                                                         <tr>
                                                             <td>
@@ -551,33 +550,30 @@
                                                     </tbody>
                                                 </table>
                                             {% endif %}
+                                            <br/>
 
+                                            <!-- Education Course -->
+                                            {% set education = '' %}
                                             {% for course in business.educationCourse %}
-                                                {% if course %}
-                                                    <!-- Education Course -->
-                                                    <h4>{{ "page.business.h4.education_course"|trans }}</h4>
-                                                    <table class="table table-striped">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>{{ "page.education_course.table.value"|trans }}</th>
-                                                                <th>{{ "page.education_course.table.action"|trans }}</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {% for course in business.educationCourse %}
-                                                                <tr>
-                                                                    <td>{{ "page.education_course.table.course"|trans }}</td>
-                                                                    <td>{{ course.course.name }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>{{ "page.education_course.table.price"|trans }}</td>
-                                                                    <td>{{ course.price }} {{ business.unit.currency }}</td>
-                                                                </tr>
-                                                            {% endfor %}
-                                                        </tbody>
-                                                    </table>
-                                                {% endif %}
+                                                {% set education = course %}
                                             {% endfor %}
+                                            {% if education %}
+                                                <h4>{{ "page.business.h4.education_course"|trans }}</h4>
+                                                <table class="table table-striped">
+                                                    <tbody>
+                                                        {% for course in business.educationCourse %}
+                                                            <tr>
+                                                                <td>{{ "page.education_course.table.course"|trans }}</td>
+                                                                <td>{{ course.course.name }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>{{ "page.education_course.table.price"|trans }}</td>
+                                                                <td>{{ course.price }} {{ business.unit.currency }}</td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            {% endif %}
 
                                         </div>
                                     </div>

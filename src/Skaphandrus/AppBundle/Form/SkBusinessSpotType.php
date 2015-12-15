@@ -14,14 +14,13 @@ class SkBusinessSpotType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
 
-
         $entity = $builder->getData();
 
         //http://stackoverflow.com/questions/7698524/how-to-work-with-entity-form-field-type-and-jui-autocomplete-in-symfony2
         //para funcionar com multiple select choices
         $spotChoices = array();
         $spotChoicesChecked = array();
-        
+
         if ($this->business && $this->business->getSpot()) {
             foreach ($this->business->getSpot() as $spot) {
                 $spotChoices[$spot->getId()] = $spot->getName();
@@ -29,23 +28,23 @@ class SkBusinessSpotType extends AbstractType {
             }
         }
 
-
-
         $builder
                 ->add('spotChoices', 'choice', array(
+                    'label' => 'form.business.label.spot_choices',
                     'required' => false,
                     'expanded' => true,
                     'multiple' => true,
                     'choices' => $spotChoices,
                     'mapped' => false,
-                    'data'=>$spotChoicesChecked
+                    'data' => $spotChoicesChecked
+                
                 ))
                 ->add('spotAutocomplete', 'autocomplete', array(
+                    'label' => 'form.business.label.spot_autocomplete',
                     'class' => 'SkaphandrusAppBundle:SkSpot',
                     'attr' => array('class' => 'form-control m-b'),
-                    'label' => 'form.photo.label.spot',
                     'required' => false,
-                    //'help' => 'form.photo.help.spot',
+                    'help' => 'form.business.help.spot',
                     'mapped' => false,
                 ))
                 ->add('divePrice', 'collection', array(

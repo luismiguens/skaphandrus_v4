@@ -5,8 +5,8 @@ namespace Skaphandrus\AppBundle\Entity;
 /**
  * SkUsername
  */
-class SkUsername
-{
+class SkUsername {
+
     /**
      * @var string
      */
@@ -107,13 +107,15 @@ class SkUsername
      */
     private $emailNotificationTime;
 
-    
-        /**
+    /**
      * @var integer
      */
     private $points;
 
-    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $business;
 
     /**
      * Set hash
@@ -122,8 +124,7 @@ class SkUsername
      *
      * @return SkUsername
      */
-    public function setHash($hash)
-    {
+    public function setHash($hash) {
         $this->hash = $hash;
 
         return $this;
@@ -134,8 +135,7 @@ class SkUsername
      *
      * @return string
      */
-    public function getHash()
-    {
+    public function getHash() {
         return $this->hash;
     }
 
@@ -146,8 +146,7 @@ class SkUsername
      *
      * @return SkUsername
      */
-    public function setNewPasswordHash($newPasswordHash)
-    {
+    public function setNewPasswordHash($newPasswordHash) {
         $this->newPasswordHash = $newPasswordHash;
 
         return $this;
@@ -158,8 +157,7 @@ class SkUsername
      *
      * @return string
      */
-    public function getNewPasswordHash()
-    {
+    public function getNewPasswordHash() {
         return $this->newPasswordHash;
     }
 
@@ -170,8 +168,7 @@ class SkUsername
      *
      * @return SkUsername
      */
-    public function setNome($nome)
-    {
+    public function setNome($nome) {
         $this->nome = $nome;
 
         return $this;
@@ -182,8 +179,7 @@ class SkUsername
      *
      * @return string
      */
-    public function getNome()
-    {
+    public function getNome() {
         return $this->nome;
     }
 
@@ -194,8 +190,7 @@ class SkUsername
      *
      * @return SkUsername
      */
-    public function setEmail($email)
-    {
+    public function setEmail($email) {
         $this->email = $email;
 
         return $this;
@@ -206,8 +201,7 @@ class SkUsername
      *
      * @return string
      */
-    public function getEmail()
-    {
+    public function getEmail() {
         return $this->email;
     }
 
@@ -218,8 +212,7 @@ class SkUsername
      *
      * @return SkUsername
      */
-    public function setPaginaWeb($paginaWeb)
-    {
+    public function setPaginaWeb($paginaWeb) {
         $this->paginaWeb = $paginaWeb;
 
         return $this;
@@ -230,8 +223,7 @@ class SkUsername
      *
      * @return string
      */
-    public function getPaginaWeb()
-    {
+    public function getPaginaWeb() {
         return $this->paginaWeb;
     }
 
@@ -242,8 +234,7 @@ class SkUsername
      *
      * @return SkUsername
      */
-    public function setSexo($sexo)
-    {
+    public function setSexo($sexo) {
         $this->sexo = $sexo;
 
         return $this;
@@ -254,8 +245,7 @@ class SkUsername
      *
      * @return string
      */
-    public function getSexo()
-    {
+    public function getSexo() {
         return $this->sexo;
     }
 
@@ -266,8 +256,7 @@ class SkUsername
      *
      * @return SkUsername
      */
-    public function setDataNascimento($dataNascimento)
-    {
+    public function setDataNascimento($dataNascimento) {
         $this->dataNascimento = $dataNascimento;
 
         return $this;
@@ -278,8 +267,7 @@ class SkUsername
      *
      * @return \DateTime
      */
-    public function getDataNascimento()
-    {
+    public function getDataNascimento() {
         return $this->dataNascimento;
     }
 
@@ -290,8 +278,7 @@ class SkUsername
      *
      * @return SkUsername
      */
-    public function setLocalidade($localidade)
-    {
+    public function setLocalidade($localidade) {
         $this->localidade = $localidade;
 
         return $this;
@@ -302,8 +289,7 @@ class SkUsername
      *
      * @return string
      */
-    public function getLocalidade()
-    {
+    public function getLocalidade() {
         return $this->localidade;
     }
 
@@ -314,8 +300,7 @@ class SkUsername
      *
      * @return SkUsername
      */
-    public function setPaisId($paisId)
-    {
+    public function setPaisId($paisId) {
         $this->paisId = $paisId;
 
         return $this;
@@ -326,8 +311,7 @@ class SkUsername
      *
      * @return integer
      */
-    public function getPaisId()
-    {
+    public function getPaisId() {
         return $this->paisId;
     }
 
@@ -338,8 +322,7 @@ class SkUsername
      *
      * @return SkUsername
      */
-    public function setIdiomaPreferido($idiomaPreferido)
-    {
+    public function setIdiomaPreferido($idiomaPreferido) {
         $this->idiomaPreferido = $idiomaPreferido;
 
         return $this;
@@ -350,8 +333,7 @@ class SkUsername
      *
      * @return string
      */
-    public function getIdiomaPreferido()
-    {
+    public function getIdiomaPreferido() {
         return $this->idiomaPreferido;
     }
 
@@ -362,8 +344,7 @@ class SkUsername
      *
      * @return SkUsername
      */
-    public function setEmailMessageAtOnce($emailMessageAtOnce)
-    {
+    public function setEmailMessageAtOnce($emailMessageAtOnce) {
         $this->emailMessageAtOnce = $emailMessageAtOnce;
 
         return $this;
@@ -374,8 +355,7 @@ class SkUsername
      *
      * @return boolean
      */
-    public function getEmailMessageAtOnce()
-    {
+    public function getEmailMessageAtOnce() {
         return $this->emailMessageAtOnce;
     }
 
@@ -386,8 +366,7 @@ class SkUsername
      *
      * @return SkUsername
      */
-    public function setEmailCommentAtOnce($emailCommentAtOnce)
-    {
+    public function setEmailCommentAtOnce($emailCommentAtOnce) {
         $this->emailCommentAtOnce = $emailCommentAtOnce;
 
         return $this;
@@ -398,8 +377,7 @@ class SkUsername
      *
      * @return boolean
      */
-    public function getEmailCommentAtOnce()
-    {
+    public function getEmailCommentAtOnce() {
         return $this->emailCommentAtOnce;
     }
 
@@ -410,8 +388,7 @@ class SkUsername
      *
      * @return SkUsername
      */
-    public function setFotografia($fotografia)
-    {
+    public function setFotografia($fotografia) {
         $this->fotografia = $fotografia;
 
         return $this;
@@ -422,10 +399,8 @@ class SkUsername
      *
      * @return string
      */
-    public function getFotografia()
-    {
+    public function getFotografia() {
         return $this->fotografia;
-
     }
 
     /**
@@ -435,8 +410,7 @@ class SkUsername
      *
      * @return SkUsername
      */
-    public function setEmailUpdate($emailUpdate)
-    {
+    public function setEmailUpdate($emailUpdate) {
         $this->emailUpdate = $emailUpdate;
 
         return $this;
@@ -447,8 +421,7 @@ class SkUsername
      *
      * @return boolean
      */
-    public function getEmailUpdate()
-    {
+    public function getEmailUpdate() {
         return $this->emailUpdate;
     }
 
@@ -459,8 +432,7 @@ class SkUsername
      *
      * @return SkUsername
      */
-    public function setFacebookUid($facebookUid)
-    {
+    public function setFacebookUid($facebookUid) {
         $this->facebookUid = $facebookUid;
 
         return $this;
@@ -471,8 +443,7 @@ class SkUsername
      *
      * @return string
      */
-    public function getFacebookUid()
-    {
+    public function getFacebookUid() {
         return $this->facebookUid;
     }
 
@@ -483,8 +454,7 @@ class SkUsername
      *
      * @return SkUsername
      */
-    public function setEmailHash($emailHash)
-    {
+    public function setEmailHash($emailHash) {
         $this->emailHash = $emailHash;
 
         return $this;
@@ -495,8 +465,7 @@ class SkUsername
      *
      * @return string
      */
-    public function getEmailHash()
-    {
+    public function getEmailHash() {
         return $this->emailHash;
     }
 
@@ -507,8 +476,7 @@ class SkUsername
      *
      * @return SkUsername
      */
-    public function setObservations($observations)
-    {
+    public function setObservations($observations) {
         $this->observations = $observations;
 
         return $this;
@@ -519,8 +487,7 @@ class SkUsername
      *
      * @return string
      */
-    public function getObservations()
-    {
+    public function getObservations() {
         return $this->observations;
     }
 
@@ -529,8 +496,7 @@ class SkUsername
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -541,8 +507,7 @@ class SkUsername
      *
      * @return SkUsername
      */
-    public function setFosUser(\Skaphandrus\AppBundle\Entity\FosUser $fosUser = null)
-    {
+    public function setFosUser(\Skaphandrus\AppBundle\Entity\FosUser $fosUser = null) {
         $this->fosUser = $fosUser;
 
         return $this;
@@ -553,8 +518,7 @@ class SkUsername
      *
      * @return \Skaphandrus\AppBundle\Entity\FosUser
      */
-    public function getFosUser()
-    {
+    public function getFosUser() {
         return $this->fosUser;
     }
 
@@ -565,8 +529,7 @@ class SkUsername
      *
      * @return SkUsername
      */
-    public function setEmailNotificationTime(\Skaphandrus\AppBundle\Entity\SkEmailNotificationTime $emailNotificationTime = null)
-    {
+    public function setEmailNotificationTime(\Skaphandrus\AppBundle\Entity\SkEmailNotificationTime $emailNotificationTime = null) {
         $this->emailNotificationTime = $emailNotificationTime;
 
         return $this;
@@ -577,21 +540,18 @@ class SkUsername
      *
      * @return \Skaphandrus\AppBundle\Entity\SkEmailNotificationTime
      */
-    public function getEmailNotificationTime()
-    {
+    public function getEmailNotificationTime() {
         return $this->emailNotificationTime;
     }
-    
-    
-        /**
+
+    /**
      * Set points
      *
      * @param integer points
      *
      * @return SkUsername
      */
-    public function setPoints($points)
-    {
+    public function setPoints($points) {
         $this->points = $points;
 
         return $this;
@@ -602,12 +562,39 @@ class SkUsername
      *
      * @return integer
      */
-    public function getPoints()
-    {
+    public function getPoints() {
         return $this->points;
     }
-    
-    
-    
-}
 
+    /**
+     * Add business
+     *
+     * @param SkBusiness $business
+     *
+     * @return SkSpot
+     */
+    public function addBusiness(SkBusiness $business) {
+        $this->business[] = $business;
+
+        return $this;
+    }
+
+    /**
+     * Remove business
+     *
+     * @param SkBusiness $business
+     */
+    public function removeBusiness(SkBusiness $business) {
+        $this->business->removeElement($business);
+    }
+
+    /**
+     * Get business
+     *
+     * @return Collection
+     */
+    public function getBusiness() {
+        return $this->business;
+    }
+
+}
