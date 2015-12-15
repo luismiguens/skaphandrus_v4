@@ -434,6 +434,9 @@ class IdentificationController extends Controller {
      * @return JsonResponse
      */
     public function userInfoJsonAction(Request $request) {
+
+        //$fos_user = new \Skaphandrus\AppBundle\Entity\FosUser();
+
         $user_id = $request->query->get('user_id');
         if (!$user_id)
             $user_id = $request->request->get('user_id');
@@ -443,9 +446,11 @@ class IdentificationController extends Controller {
                 ->getRepository("SkaphandrusAppBundle:FosUser")
                 ->findOneById($user_id);
 
+
         if ($fos_user) {
             $user['id'] = $fos_user->getId();
             $user['name'] = $fos_user->getName();
+            $user['honorific'] = $fos_user->getPersonal()->getHonorific();
             $user['image'] = $this->get('liip_imagine.cache.manager')->getBrowserPath($fos_user->getSettings()->getWebPath(), 'sk_widen_240');
             $user['profile_url'] = 'http://skaphandrus.com' . $this->generateUrl('user', array('id' => $fos_user->getId()));
 
@@ -589,14 +594,25 @@ class IdentificationController extends Controller {
         $em = $this->get('doctrine')->getEntityManager();
         $response = array();
 
+        //to use in username and password
+        $date = date_create();
+        //username = timestamp
+        $username = date_timestamp_get($date);
+        $password = date_timestamp_get($date);
+
+
         $user = new \Skaphandrus\AppBundle\Entity\FosUser();
 
         $request = $this->getRequest();
-        
-        $username = $request->query->get('username');
-        if (!$username)
-            $username = $request->request->get('username');
-                
+
+        $first_name = $request->query->get('first_name');
+        if (!$first_name)
+            $first_name = $request->request->get('first_name');
+
+        $last_name = $request->query->get('last_name');
+        if (!$last_name)
+            $last_name = $request->request->get('last_name');
+
         $email = $request->query->get('email');
         if (!$email)
             $email = $request->request->get('email');
@@ -609,19 +625,21 @@ class IdentificationController extends Controller {
         if (!$facebook_uid)
             $facebook_uid = $request->request->get('facebook_uid');
 
-
+        
+        
+        /***********************************************************************
+         * VALIDATIONS START
+         */
         //verify if username exists
-        $query = $em->createQuery("SELECT u FROM SkaphandrusAppBundle:FosUser u WHERE u.username = :username");
-        $query->setParameter('username', $username);
-        $user = $query->getOneOrNullResult();
-        //username already exists
-        if ($user) {
-            $response["result"] = "2";
-            $response["message"] = "Username already exists";
-            return new JsonResponse($response);
-        }
-
-
+//        $query = $em->createQuery("SELECT u FROM SkaphandrusAppBundle:FosUser u WHERE u.username = :username");
+//        $query->setParameter('username', $username);
+//        $user = $query->getOneOrNullResult();
+//        //username already exists
+//        if ($user) {
+//            $response["result"] = "2";
+//            $response["message"] = "Username already exists";
+//            return new JsonResponse($response);
+//        }
         //verify if email is in use
         $query = $em->createQuery("SELECT u FROM SkaphandrusAppBundle:FosUser u WHERE u.email = :email");
         $query->setParameter('email', $email);
@@ -647,29 +665,40 @@ class IdentificationController extends Controller {
             return new JsonResponse($response);
         }
 
-        $user = new \Skaphandrus\AppBundle\Entity\FosUser();
+        /**
+         * VALIDATIONS END
+         ***********************************************************************/
         
+        
+        
+        $user = new \Skaphandrus\AppBundle\Entity\FosUser();
+
         //se o registo for com os dados do facebook
         if ($facebook_uid) {
-
-            $password = "password";
-            $username = $facebook_uid;
             $settings = new \Skaphandrus\AppBundle\Entity\SkSettings();
             $settings->setFosUser($user);
-          
+
             $emailNotificationTime = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkEmailNotificationTime")->findOneById(1);
             $settings->setEmailNotificationTime($emailNotificationTime);
-            
             $settings->setFacebookUid($facebook_uid);
             $user->setSettings($settings);
             $em->persist($settings);
         }
 
+        //set encoded password
         $factory = $this->get('security.encoder_factory');
         $encoder = $factory->getEncoder($user);
         $password = $encoder->encodePassword($password, $user->getSalt());
         $user->setPassword($password);
 
+        //firstname and lastname
+        $personal = new \Skaphandrus\AppBundle\Entity\SkPersonal();
+        $personal->setFirstname($first_name);
+        $personal->setLastname($last_name);
+        $personal->setHonorific("Scuba Diver");
+        $personal->setFosUser($user);
+        $user->setPersonal($personal);
+        $em->persist($personal);
 
         $user->setUsername($username);
         $user->setUsernameCanonical($username);
