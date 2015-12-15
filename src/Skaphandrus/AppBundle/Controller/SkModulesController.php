@@ -19,6 +19,8 @@ class SkModulesController extends Controller {
      */
     public function editAction() {
 
+        $em = $this->getDoctrine()->getManager();
+
         ##@LM
         $entity = $this->get('security.token_storage')->getToken()->getUser();
 
@@ -28,6 +30,13 @@ class SkModulesController extends Controller {
 
         $editForm = $this->createEditForm($entity);
 
+        $previousCollections = $entity->getAcquisitions()->toArray();
+
+        $sum_selected_points = 0;
+
+        foreach ($previousCollections as $acquisition) {
+            $sum_selected_points = $sum_selected_points + $acquisition->getModule()->getPoints();
+        }
 
         //$options = $editForm->get('acquisitions')->getConfig()->getOptions();
         //$choices = $options['choice_list']->getChoices();
@@ -35,6 +44,7 @@ class SkModulesController extends Controller {
 
         return $this->render('SkaphandrusAppBundle:SkModules:edit.html.twig', array(
                     'entity' => $entity,
+                    'sum_selected_points' => $sum_selected_points,
                     // 'choices' => $choices,
                     'edit_form' => $editForm->createView()
         ));
@@ -101,6 +111,12 @@ class SkModulesController extends Controller {
 
         $previousCollections = $entity->getAcquisitions()->toArray();
 
+        $sum_selected_points = 0;
+
+        foreach ($previousCollections as $acquisition) {
+            $sum_selected_points = $sum_selected_points + $acquisition->getModule()->getPoints();
+        }
+
         //$request = $this->getRequest();
         //$editForm->bindRequest($request);
 
@@ -124,6 +140,7 @@ class SkModulesController extends Controller {
 
         return $this->render('SkaphandrusAppBundle:SkModules:edit.html.twig', array(
                     'entity' => $entity,
+                    'sum_selected_points' => $sum_selected_points,
                     'edit_form' => $editForm->createView()
         ));
     }

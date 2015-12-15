@@ -38,7 +38,8 @@
 
 
     <div class="alert alert-info">
-        <b>{{ entity.settings.points }}</b> {{ "form.points.text.points"|trans }} 
+        {% trans with {'%sum_points%': sum_selected_points, '%points%': entity.settings.points} %}form.points.text.points{% endtrans %}
+{#        <b>{{ sum_selected_points }} {{ entity.settings.points }}</b> {{ "form.points.text.points"|trans }} #}
         <a href="{{path("points_admin")}}" data-placement="left" data-toggle="tooltip" class="btn btn-white btn-sm" href="" data-original-title="Recalculate points">
             <i class="fa fa-refresh"></i> {{"form.modules.label.recalculate_points"|trans}}</a>
     </div>
