@@ -31,7 +31,7 @@ class SkBusinessEducationConditionsType extends AbstractType {
                     'required' => false,
                 ))
                 ->add('maxgroupsize', null, array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'form-control', 'min' => 0),
                     'label' => 'form.education_conditions.label.max_group_size',
                     'required' => false,
                 ))

@@ -7,86 +7,18 @@
     <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/hack/autocompleter-jqueryui.js') }}"></script>
     <script>
-
-
-        var collectionHolderId = '#skaphandrus_appbundle_skbusiness_divePrice';
-        var $collectionHolder = $(collectionHolderId);
-        var collectionHolderId1 = '#skaphandrus_appbundle_skbusiness_rentEquipment';
-        var $collectionHolder1 = $(collectionHolderId1);
-        // setup an "add a tag" link
-        var $addDivePriceLink = $('<a href="#" class="btn btn-primary btn-xs">{{ "form.common.btn.create"|trans }}</a>');
-        var $addRentEquipmentLink = $('<a href="#" class="btn btn-primary btn-xs">{{ "form.common.btn.create"|trans }}</a>');
-        //$(collectionHolderId).after($addCharacterLink);
-        $addDivePriceLink.insertAfter(collectionHolderId);
-        $addRentEquipmentLink.insertAfter(collectionHolderId1);
-
-        jQuery(document).ready(function () {
-            // Get the ul that holds the collection of tags
-            $collectionHolder = $(collectionHolderId);
-            $collectionHolder1 = $(collectionHolderId1);
-            // add the "add a tag" anchor and li to the tags ul
-            $collectionHolder.parent().append($addDivePriceLink);
-            $collectionHolder1.parent().append($addRentEquipmentLink);
-            // count the current form inputs we have (e.g. 2), use that as the new
-            // index when inserting a new item (e.g. 2)
-            // $collectionHolder.data('index', $collectionHolder.find('.form-group').length);
-            $collectionHolder.data('index', $(collectionHolderId + ' > .form-group').length);
-            $collectionHolder1.data('index', $(collectionHolderId1 + ' > .form-group').length);
-            $addDivePriceLink.on('click', function (e) {
-                // prevent the link from creating a "#" on the URL
-                e.preventDefault();
-                // add a new tag form (see next code block)
-                addDivePriceForm($collectionHolder);
-            });
-            $addRentEquipmentLink.on('click', function (e) {
-                // prevent the link from creating a "#" on the URL
-                e.preventDefault();
-                // add a new tag form (see next code block)
-                addRentEquipmentForm($collectionHolder1);
-            });
-        });
-
-        function addDivePriceForm($collectionHolder) {
-            // Get the data-prototype explained earlier
-            var prototype = $collectionHolder.data('prototype');
-            // get the new index
-            var index = $collectionHolder.data('index');
-            // Replace '__name__' in the prototype's HTML to
-            // instead be a number based on how many items we have
-            var newForm = prototype.replace(/__name__label__/g, index);
-            newForm = newForm.replace(/__name__/g, index);
-            // increase the index with one for the next item
-            $collectionHolder.data('index', index + 1);
-            // Display the form in the page in an li, before the "Add a tag" link li
-            $collectionHolder.append(newForm);
-            //$('#skaphandrus_appbundle_skidentificationcriteria_characters_'+ index +'_criteria').val({{ entity.id }});
-        }
-
-        function addRentEquipmentForm($collectionHolder) {
-            // Get the data-prototype explained earlier
-            var prototype = $collectionHolder.data('prototype');
-            // get the new index
-            var index = $collectionHolder.data('index');
-            // Replace '__name__' in the prototype's HTML to
-            // instead be a number based on how many items we have
-            var newForm = prototype.replace(/__name__label__/g, index);
-            newForm = newForm.replace(/__name__/g, index);
-            // increase the index with one for the next item
-            $collectionHolder.data('index', index + 1);
-            // Display the form in the page in an li, before the "Add a tag" link li
-            $collectionHolder.append(newForm);
-            //$('#skaphandrus_appbundle_skidentificationcriteria_characters_'+ index +'_criteria').val({{ entity.id }});
-        }
-
-        var $container = $('ul.diveSpot');
+        
+        //http://symfony.com/doc/current/cookbook/form/form_collections.html
+        /////////////////////  DivePrice code start  \\\\\\\\\\\\\\\\\\\\\\\
+        var $container = $('ul.divePrice');
         // button to add a new SportParam
-        var $addDiveSpotLink = $('<br/><a href="#" class="btn btn-primary btn-xs">{{ "form.common.btn.create"|trans }}</a>');
-        var $newLinkLi = $('<li></li>').append($addDiveSpotLink);
+        var $addPriceLink = $('<br/><a href="#" class="btn btn-primary btn-xs">{{ "form.common.btn.create"|trans }}</a>');
+        var $newLinkLi = $('<li></li>').append($addPriceLink);
 
         $(document).ready(function () {
             //delete button on each existing SportParam
             $container.find('li').each(function () {
-                addDiveSpotDeleteLink($(this));
+                addPriceDeleteLink($(this));
             });
 
             //add button
@@ -97,15 +29,15 @@
             $container.data('index', $container.find(':input').length);
 
             // adding a new form when cliking Add button
-            $addDiveSpotLink.on('click', function (e) {
+            $addPriceLink.on('click', function (e) {
                 e.preventDefault();
 
-                addDiveSpotForm($container, $newLinkLi);
+                addPriceForm($container, $newLinkLi);
 
             });
 
             // adding a new form SportParam
-            function addDiveSpotForm($container, $newLinkLi) {
+            function addPriceForm($container, $newLinkLi) {
 
                 var $prototype = $container.attr('data-prototype');
 
@@ -114,11 +46,11 @@
                 var $newFormLi = $("<li margin-bottom:1px';></li>").append(newForm);
                 $newLinkLi.before($newFormLi);
 
-                addDiveSpotDeleteLink($newFormLi);
+                addPriceDeleteLink($newFormLi);
             }
 
 
-            function addDiveSpotDeleteLink($paramFormLi) {
+            function addPriceDeleteLink($paramFormLi) {
 
                 var $removeFormA = $('<a href="#" class="btn btn-danger  btn-xs">{{ "form.common.btn.delete"|trans }}</a>');
 
@@ -133,6 +65,66 @@
             }
 
         });
+        /////////////////////  DivePrice code end  \\\\\\\\\\\\\\\\\\\\\\\
+        
+        //http://symfony.com/doc/current/cookbook/form/form_collections.html
+        /////////////////////  RentEquipment code start  \\\\\\\\\\\\\\\\\\\\\\\
+        var $container1 = $('ul.rentEquipment');
+        // button to add a new SportParam
+        var $addEquipLink = $('<br/><a href="#" class="btn btn-primary btn-xs">{{ "form.common.btn.create"|trans }}</a>');
+        var $newLinkLi1 = $('<li></li>').append($addEquipLink);
+
+        $(document).ready(function () {
+            //delete button on each existing SportParam
+            $container1.find('li').each(function () {
+                addEquipDeleteLink($(this));
+            });
+
+            //add button
+            $container1.append($newLinkLi1);
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $container1.data('index', $container1.find(':input').length);
+
+            // adding a new form when cliking Add button
+            $addEquipLink.on('click', function (e) {
+                e.preventDefault();
+
+                addEquipForm($container1, $newLinkLi1);
+
+            });
+
+            // adding a new form SportParam
+            function addEquipForm($container, $newLinkLi) {
+
+                var $prototype = $container.attr('data-prototype');
+
+                var newForm = $prototype.replace(/__name__/g, $container.children().length - 1);
+
+                var $newFormLi = $("<li margin-bottom:1px';></li>").append(newForm);
+                $newLinkLi.before($newFormLi);
+
+                addEquipDeleteLink($newFormLi);
+            }
+
+
+            function addEquipDeleteLink($paramFormLi) {
+
+                var $removeFormA = $('<a href="#" class="btn btn-danger  btn-xs">{{ "form.common.btn.delete"|trans }}</a>');
+
+                $paramFormLi.append($removeFormA);
+
+                $removeFormA.on('click', function (e) {
+
+                    e.preventDefault();
+
+                    $paramFormLi.remove();
+                });
+            }
+
+        });
+        /////////////////////  RentEquipment code end  \\\\\\\\\\\\\\\\\\\\\\\
 
     </script>
 
@@ -189,9 +181,33 @@
     {{ form_row(edit_form.spotChoices) }}
 
 
-    {{ form_row(edit_form.divePrice) }}
-    {{ form_row(edit_form.rentEquipment) }}
+    {#    {{ form_row(edit_form.divePrice) }}#}
 
+    <label class="col-sm-3 control-label">{{ form_label(edit_form.divePrice) }}</label>
+    <div class="col-sm-9">
+        <ul class=divePrice data-prototype="{{ form_widget(edit_form.divePrice.vars.prototype)|e }}">
+            {% for price in edit_form.divePrice %}
+                <li>
+                    {{ form_widget(price) }}
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="hr-line-dashed"></div>
+    </div>
+
+    {#    {{ form_row(edit_form.rentEquipment) }}#}
+
+    <label class="col-sm-3 control-label">{{ form_label(edit_form.rentEquipment) }}</label>
+    <div class="col-sm-9">
+        <ul class=rentEquipment data-prototype="{{ form_widget(edit_form.rentEquipment.vars.prototype)|e }}">
+            {% for equip in edit_form.rentEquipment %}
+                <li>
+                    {{ form_widget(equip) }}
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="hr-line-dashed"></div>
+    </div>
 
     {{ form_row(edit_form.diveAccess) }}
     {{ form_row(edit_form.gas) }}
@@ -200,6 +216,9 @@
     {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'business_admin', 'new_form':false} %}
 
     {% do edit_form.spotChoices.setRendered %}
+    {% do edit_form.divePrice.setRendered %}
+    {% do edit_form.rentEquipment.setRendered %}
     {{ form_end(edit_form) }}
 
 {% endblock %}
+

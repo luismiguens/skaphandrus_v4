@@ -58,19 +58,19 @@ class SkBusinessType extends AbstractType {
                 ))
                 //->add('currency')
                 ->add('about', null, array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'form-control', 'rows' => 10),
                     'label' => 'form.business.label.about'
                 ))
                 ->add('description', null, array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'form-control', 'rows' => 10),
                     'label' => 'form.business.label.description'
                 ))
                 ->add('mission', null, array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'form-control', 'rows' => 10),
                     'label' => 'form.business.label.mission'
                 ))
                 ->add('awards', null, array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'form-control', 'rows' => 10),
                     'label' => 'form.business.label.awards'
                 ))
                 ->add('imageFile', 'vich_image', array(

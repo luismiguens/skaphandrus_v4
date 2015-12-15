@@ -19,12 +19,12 @@ class SkBusinessDivePriceType extends AbstractType {
 
         $builder
                 ->add('numberofdives', null, array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'form-control', 'min' => 0),
                     'label' => 'form.dive_price.label.number_of_dives',
                     'required' => false,
                 ))
                 ->add('valueperdives', null, array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'form-control', 'min' => 0),
                     'label' => 'form.dive_price.label.value_per_dives',
                     'required' => false,
                     'help' => array('help' => 'form.dive_price.help.value_per_dives', 'param' => $options['my_custom_option'])

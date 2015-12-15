@@ -104,7 +104,63 @@
     </div>
 {% endblock %}
 
+{% block _skaphandrus_appbundle_skbusiness_spotAutocomplete_row %}
+    <div class="form-group">
+        <label class="col-sm-3 control-label">
+            {{ form_label(form) }}
+        </label>
+        {{ form_errors(form) }}
+        <div class="col-sm-9">
+            {# Show image if it's a file field and there is an image defined #}
+            {% if form.vars.type is defined and form.vars.type =='file' and (form.parent.vars.value.image is defined or form.parent.vars.value.photo is defined) %}
+                {% if form.parent.vars.value.getWebPath is not empty %}
+                    <img class="thumbnail" src="{{ form.parent.vars.value.getWebPath | imagine_filter('sk_widen_240') }}" />
+                {% endif %}
+            {% endif %}
+            {{ form_widget(form) }}
+            <div style="margin-top:5px">
+                {% if help is defined %}
+                    <div style="margin-top:5px">
+                        {% if help is iterable %}
+                            {{ help['help']|trans({'%param%': help['param']}) }}
+                        {% else %}
+                            <span class="help">{{ help|trans }}</span>
+                        {% endif %}
+                    </div> 
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
+{% block _skaphandrus_appbundle_skbusiness_adminAutocomplete_row %}
+    <div class="form-group">
+        <label class="col-sm-3 control-label">
+            {{ form_label(form) }}
+        </label>
+        {{ form_errors(form) }}
+        <div class="col-sm-9">
+            {# Show image if it's a file field and there is an image defined #}
+            {% if form.vars.type is defined and form.vars.type =='file' and (form.parent.vars.value.image is defined or form.parent.vars.value.photo is defined) %}
+                {% if form.parent.vars.value.getWebPath is not empty %}
+                    <img class="thumbnail" src="{{ form.parent.vars.value.getWebPath | imagine_filter('sk_widen_240') }}" />
+                {% endif %}
+            {% endif %}
+            {{ form_widget(form) }}
+            <div style="margin-top:5px">
+                {% if help is defined %}
+                    <div style="margin-top:5px">
+                        {% if help is iterable %}
+                            {{ help['help']|trans({'%param%': help['param']}) }}
+                        {% else %}
+                            <span class="help">{{ help|trans }}</span>
+                        {% endif %}
+                    </div> 
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
 
 {#costumização dos widgets checkbox e radio para vertical #}
@@ -184,12 +240,3 @@
 {% endblock choice_widget_expanded %}
 
 
-{% block _skaphandrus_appbundle_skbusiness_spotAutocomplete_row %}
-    <div class="form-group">
-        <label class="col-lg-3 control-label">{{ form_label(form) }}</label>
-        {{ form_errors(form) }}
-        <div class="col-lg-9">
-            {{ form_widget(form) }} 
-        </div>
-    </div>
-{% endblock %}
