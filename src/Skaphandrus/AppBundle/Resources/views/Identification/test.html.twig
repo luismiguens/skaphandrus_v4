@@ -171,19 +171,19 @@
             success: function (data) {
                 console.log(data, 'register_1');
             },
-            data: {"username": "luis.miguens", "password": "portugal", "email": "luis.miguens@skaphandrus.com"}
+            data: {"first_name": "luis", "last_name": "miguens", "email": "luis.miguens@skaphandrus.com", "password": "portugal",}
         });
         
          //REGISTER USER (VIA FACEBOOK)
-{#        $.ajax({
+        $.ajax({
             url: '/{{ app.request.locale }}/app/register.json',
             type: 'post',
             dataType: 'json',
             success: function (data) {
                 console.log(data, 'register_2');
             },
-            data: {"email": "luis.miguens@skaphandrus.com", "facebook_uid": "637224386"}
-        });#}
+            data: {"first_name": "luis", "last_name": "miguens","email": "luis.miguens@skaphandrus.com", "facebook_uid": "637224386"}
+        });
         
         
     });
