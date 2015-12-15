@@ -126,6 +126,17 @@
                 </inverse-join-columns>
             </join-table>
         </many-to-many>
+        
+        <many-to-many field="admin" target-entity="FosUser" inversed-by="business" fetch="LAZY">
+            <join-table name="sk_business_user">
+                <join-columns>
+                    <join-column name="business_id" referenced-column-name="id"/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="fos_user_id" referenced-column-name="id"/>
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
 
         <many-to-many field="type" target-entity="SkBusinessType" inversed-by="business" fetch="LAZY">
             <join-table name="sk_business_business_type">

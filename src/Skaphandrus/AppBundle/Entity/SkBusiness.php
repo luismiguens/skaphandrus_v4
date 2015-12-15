@@ -131,7 +131,6 @@ class SkBusiness {
      */
     private $spot;
 
-
     /**
      * @var Collection
      */
@@ -141,6 +140,11 @@ class SkBusiness {
      * @var \Skaphandrus\AppBundle\Entity\SkBusinessUnit
      */
     private $unit;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $admin;
 
     /*     * symfony advanced forms
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
@@ -752,6 +756,45 @@ class SkBusiness {
         $this->spot->clear();
     }
 
+    /**
+     * Add admin
+     *
+     * @param \Skaphandrus\AppBundle\Entity\FosUser $admin
+     *
+     * @return SkBusiness
+     */
+    public function addAdmin(\Skaphandrus\AppBundle\Entity\FosUser $admin) {
+        $this->admin[] = $admin;
+
+        return $this;
+    }
+
+    /**
+     * Remove admin
+     *
+     * @param \Skaphandrus\AppBundle\Entity\FosUser $admin
+     */
+    public function removeAdmin(\Skaphandrus\AppBundle\Entity\FosUser $admin) {
+        $this->admin->removeElement($admin);
+    }
+
+    /**
+     * Get admin
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAdmin() {
+        return $this->admin;
+    }
+
+    /**
+     * Clear all admins
+     *
+     * @param \Skaphandrus\AppBundle\Entity\FosUser $admin
+     */
+    public function clearAdmins() {
+        $this->admin->clear();
+    }
 
     /**
      * Add type

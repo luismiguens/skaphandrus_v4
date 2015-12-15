@@ -108,5 +108,9 @@ $(document).ready(function () {
         $('#skaphandrus_appbundle_skbusiness_spotAutocomplete').autocompleterMultiple({form_name:'skaphandrus_appbundle_skbusiness', field_name:'spotChoices', url_list: '/en/ajax_search_spot/', url_get: '/en/ajax_get_spot/'});
     }
     
+    // Formulário SkBusinessSettingsAdmins
+    if ($('#skaphandrus_appbundle_skbusiness_adminAutocomplete').length) {
+        $('#skaphandrus_appbundle_skbusiness_adminAutocomplete').autocompleterMultiple({form_name:'skaphandrus_appbundle_skbusiness', field_name:'adminChoices', url_list: '/en/ajax_search_fosUser/', url_get: '/en/ajax_get_fosUser/'});
+    }
     
 });
