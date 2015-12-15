@@ -257,6 +257,7 @@ class IdentificationController extends Controller {
                     $module['id'] = $module_object->getId();
                     $module['name'] = $module_object->translate()->getName();
                     $module['appstore_id'] = $module_object->getAppstoreId();
+                    $module['points'] = $module_object->getPoints();
                     $module['googleplay_id'] = $module_object->getGoogleplayId();
 
 
