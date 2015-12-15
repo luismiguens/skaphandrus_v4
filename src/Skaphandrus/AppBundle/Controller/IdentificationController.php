@@ -503,6 +503,10 @@ class IdentificationController extends Controller {
     //http://stackoverflow.com/questions/10422251/manual-authentication-check-symfony-2
 
     public function loginJsonAction(Request $request) {
+
+        $response = array();
+        $em = $this->get('doctrine')->getEntityManager();
+
         $email = $request->query->get('email');
         if (!$email)
             $email = $request->request->get('email');
@@ -511,39 +515,66 @@ class IdentificationController extends Controller {
         if (!$password)
             $password = $request->request->get('password');
 
-        $response = array();
-        //echo $email;
-        //$username = trim($this->getRequest()->query->get('username'));
-        //$password = trim($this->getRequest()->query->get('password'));
+        $facebook_uid = $request->query->get('facebook_uid');
+        if (!$facebook_uid)
+            $facebook_uid = $request->request->get('facebook_uid');
 
-        $em = $this->get('doctrine')->getEntityManager();
-        $query = $em->createQuery("SELECT u FROM SkaphandrusAppBundle:FosUser u WHERE u.email = :email");
-        $query->setParameter('email', $email);
-        $user = $query->getOneOrNullResult();
 
-        if ($user) {
-            // Get the encoder for the users password
-            $encoder_service = $this->get('security.encoder_factory');
-            $encoder = $encoder_service->getEncoder($user);
+        //autenticação por email
+        if ($email):
 
-            // Note the difference
-            if ($encoder->isPasswordValid($user->getPassword(), $password, $user->getSalt())) {
+            $query = $em->createQuery("SELECT u "
+                    . "FROM SkaphandrusAppBundle:FosUser u "
+                    . "WHERE u.email = :email");
+            $query->setParameter('email', $email);
+            $user = $query->getOneOrNullResult();
+
+            if ($user) {
+                // Get the encoder for the users password
+                $encoder_service = $this->get('security.encoder_factory');
+                $encoder = $encoder_service->getEncoder($user);
+
+                // Note the difference
+                if ($encoder->isPasswordValid($user->getPassword(), $password, $user->getSalt())) {
+                    // Get profile list
+                    $response["result"] = "1";
+                    $response["message"] = "Success";
+                    $response["user_id"] = $user->getId();
+                } else {
+                    // Password bad
+                    $response["result"] = "2";
+                    $response["message"] = "Incorrect Password";
+                }
+            } else {
+                // Username bad
+                $response["result"] = "3";
+                $response["message"] = "The Email does not exist";
+            }
+        //autenticação por facebook
+        else:
+
+            $query = $em->createQuery("SELECT u "
+                    . "FROM SkaphandrusAppBundle:FosUser u "
+                    . "JOIN SkaphandrusAppBundle:SkSettings s WITH s.fosUser = u.id "
+                    . "WHERE s.facebookUid = :facebook_uid");
+            $query->setParameter('facebook_uid', $facebook_uid);
+            $user = $query->getOneOrNullResult();
+
+            if ($user) {
                 // Get profile list
                 $response["result"] = "1";
                 $response["message"] = "Success";
                 $response["user_id"] = $user->getId();
             } else {
-                // Password bad
-                $response["result"] = "2";
-                $response["message"] = "Incorrect Password";
-                //$response["user_id"] = $user->getId();
+                // Username bad
+                $response["result"] = "4";
+                $response["message"] = "Facebook Account does not exist";
             }
-        } else {
-            // Username bad
-            $response["result"] = "3";
-            $response["message"] = "The Email does not exist";
-            //$response["user_id"] = $user->getId();
-        }
+
+
+        endif;
+
+
 
 
 
@@ -561,17 +592,28 @@ class IdentificationController extends Controller {
         $user = new \Skaphandrus\AppBundle\Entity\FosUser();
 
         $request = $this->getRequest();
-        $username = $request->request->get('username');
-        $password = $request->request->get('password');
-        $email = $request->request->get('email');
+        
+        $username = $request->query->get('username');
+        if (!$username)
+            $username = $request->request->get('username');
+                
+        $email = $request->query->get('email');
+        if (!$email)
+            $email = $request->request->get('email');
+
+        $password = $request->query->get('password');
+        if (!$password)
+            $password = $request->request->get('password');
+
+        $facebook_uid = $request->query->get('facebook_uid');
+        if (!$facebook_uid)
+            $facebook_uid = $request->request->get('facebook_uid');
 
 
         //verify if username exists
-
         $query = $em->createQuery("SELECT u FROM SkaphandrusAppBundle:FosUser u WHERE u.username = :username");
         $query->setParameter('username', $username);
         $user = $query->getOneOrNullResult();
-
         //username already exists
         if ($user) {
             $response["result"] = "2";
@@ -584,12 +626,43 @@ class IdentificationController extends Controller {
         $query = $em->createQuery("SELECT u FROM SkaphandrusAppBundle:FosUser u WHERE u.email = :email");
         $query->setParameter('email', $email);
         $user = $query->getOneOrNullResult();
-
         //email already exists
         if ($user) {
             $response["result"] = "3";
             $response["message"] = "Email already exists";
             return new JsonResponse($response);
+        }
+
+        //verify if facebook_uid is in use
+        $query = $em->createQuery("SELECT u "
+                . "FROM SkaphandrusAppBundle:FosUser u "
+                . "JOIN SkaphandrusAppBundle:SkSettings s WITH s.fosUser = u.id "
+                . "WHERE s.facebookUid = :facebook_uid");
+        $query->setParameter('facebook_uid', $facebook_uid);
+        $user = $query->getOneOrNullResult();
+        //facebook account already exists
+        if ($user) {
+            $response["result"] = "4";
+            $response["message"] = "Facebook account already exists";
+            return new JsonResponse($response);
+        }
+
+        $user = new \Skaphandrus\AppBundle\Entity\FosUser();
+        
+        //se o registo for com os dados do facebook
+        if ($facebook_uid) {
+
+            $password = "password";
+            $username = $facebook_uid;
+            $settings = new \Skaphandrus\AppBundle\Entity\SkSettings();
+            $settings->setFosUser($user);
+          
+            $emailNotificationTime = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkEmailNotificationTime")->findOneById(1);
+            $settings->setEmailNotificationTime($emailNotificationTime);
+            
+            $settings->setFacebookUid($facebook_uid);
+            $user->setSettings($settings);
+            $em->persist($settings);
         }
 
         $factory = $this->get('security.encoder_factory');
