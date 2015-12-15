@@ -57,7 +57,7 @@
                     var field_name = settings.form_name + '[' + settings.field_name + '][]';
                     var div_checkboxes = $('#' + settings.form_name + '_' + settings.field_name);
 
-                    $(div_checkboxes).append('<div class="checkbox"><label for="' + field_id + '" class="checkbox">\n\<input checked id="' + field_id + '" name="' + field_name + '" value="' + ui.item.id + '" type="checkbox">' + ui.item.name + '</label></div>');
+                    $(div_checkboxes).append('<div class="checkbox"><label for="' + field_id + '" >\n\<input checked id="' + field_id + '" name="' + field_name + '" value="' + ui.item.id + '" type="checkbox">' + ui.item.name + '</label></div>');
 
                     this.value = "";
                     return false;
