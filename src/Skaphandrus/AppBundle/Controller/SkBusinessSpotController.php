@@ -2,10 +2,11 @@
 
 namespace Skaphandrus\AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Doctrine\Common\Collections\ArrayCollection;
 use Skaphandrus\AppBundle\Entity\SkBusiness;
 use Skaphandrus\AppBundle\Form\SkBusinessSpotType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * SkBusiness controller.
@@ -157,6 +158,24 @@ class SkBusinessSpotController extends Controller {
             throw $this->createNotFoundException('Unable to find SkBusiness entity.');
         }
 
+        //$entity = new SkBusiness();
+        
+        
+        //http://symfony.com/doc/current/cookbook/form/form_collections.html
+        //For deleting prices 
+        $originalPrices = new ArrayCollection();
+        // Create an ArrayCollection of the current Tag objects in the database
+        foreach ($entity->getDivePrice() as $price) {
+            $originalPrices->add($price);
+        }
+
+        //For deleting equipment
+        $originalEquip = new ArrayCollection();
+        // Create an ArrayCollection of the current Tag objects in the database
+        foreach ($entity->getRentEquipment() as $equip) {
+            $originalEquip->add($equip);
+        }
+
         //para funcionar com multiple select checkboxes
         //necessário criar o método clear
         $entity->clearSpots();
@@ -169,12 +188,41 @@ class SkBusinessSpotController extends Controller {
             }
         }
 
-
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+
+            // remove the relationship between the Tag and the Task
+            foreach ($originalPrices as $price) {
+                if (false === $entity->getDivePrice()->contains($price)) {
+                    // remove the Task from the Tag
+                    $price->getBusiness()->removeDiveProuse($price);
+
+                    // if it was a many-to-one relationship, remove the relationship like this
+                    // $course->setBusiness(null);
+                    // $em->persist($course);
+                    // if you wanted to delete the Tag entirely, you can also do that
+                    $em->remove($price);
+                }
+            }
+
+            // remove the relationship between the Tag and the Task
+            foreach ($originalEquip as $equip) {
+                if (false === $entity->getRentEquipment()->contains($equip)) {
+                    // remove the Task from the Tag
+                    $equip->getBusiness()->removeRentEquipment($equip);
+
+                    // if it was a many-to-one relationship, remove the relationship like this
+                    // $course->setBusiness(null);
+                    // $em->persist($course);
+                    // if you wanted to delete the Tag entirely, you can also do that
+                    $em->remove($equip);
+                }
+            }
+
+            $em->persist($entity);
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
@@ -187,6 +235,67 @@ class SkBusinessSpotController extends Controller {
                     'delete_form' => $deleteForm->createView(),
         ));
     }
+
+//    public function updateAction(Request $request, $id) {
+//        $em = $this->getDoctrine()->getManager();
+//
+//        $entity = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->find($id);
+//
+//        if (!$entity) {
+//            throw $this->createNotFoundException('Unable to find SkBusiness entity.');
+//        }
+//
+//        $originalCourse = new \Doctrine\Common\Collections\ArrayCollection();
+//
+//        // Create an ArrayCollection of the current Tag objects in the database
+//        foreach ($entity->getEducationCourse() as $course) {
+//            $originalCourse->add($course);
+//        }
+//
+//        $editForm = $this->createEditForm($entity);
+//
+//        $editForm->handleRequest($request);
+//
+//        if ($editForm->isValid()) {
+//
+//            // remove the relationship between the course and the Task
+//            foreach ($originalCourse as $course) {
+//                if (false === $entity->getEducationCourse()->contains($course)) {
+//                    // remove the Task from the Tag
+//                    $course->getBusiness()->removeEducationCourse($course);
+//
+//                    // if it was a many-to-one relationship, remove the relationship like this
+//                    // $course->setBusiness(null);
+//                    // $em->persist($course);
+//                    // if you wanted to delete the Tag entirely, you can also do that
+//                    $em->remove($course);
+//                }
+//            }
+//
+//            $em->persist($entity);
+//            $em->flush();
+//
+//            $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
+//            // redirect back to some edit page
+//            return $this->redirect($this->generateUrl('business_education_admin_edit', array('id' => $id)));
+//        }
+//
+//////        $deleteForm = $this->createDeleteForm($id);
+////        $editForm = $this->createEditForm($entity);
+////        $editForm->handleRequest($request);
+////
+////        if ($editForm->isValid()) {
+////            $em->flush();
+////
+////            return $this->redirect($this->generateUrl('business_education_admin_edit', array('id' => $id)));
+////        }
+//
+//        return $this->render('SkaphandrusAppBundle:SkBusinessEducation:edit.html.twig', array(
+//                    'entity' => $entity,
+//                    'edit_form' => $editForm->createView(),
+////                    'delete_form' => $deleteForm->createView(),
+//        ));
+//    }
 
     /**
      * Deletes a SkBusiness entity.

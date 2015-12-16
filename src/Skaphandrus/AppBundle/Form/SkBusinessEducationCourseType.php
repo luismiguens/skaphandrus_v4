@@ -20,7 +20,7 @@ class SkBusinessEducationCourseType extends AbstractType {
                     'required' => false,
                 ))
                 ->add('price', null, array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'form-control', 'min' => 0),
                     'label' => 'form.education_course.label.price',
                     'required' => false,
                     'help' => array('help' => 'form.education_course.help.price', 'param' => $options['my_custom_option'])

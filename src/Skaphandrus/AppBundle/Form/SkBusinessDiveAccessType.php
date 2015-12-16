@@ -43,22 +43,22 @@ class SkBusinessDiveAccessType extends AbstractType {
                     'label' => 'form.dive_access.label.unguided_dives'
                 ))
                 ->add('perdaydives', null, array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'form-control', 'min' => 0),
                     'label' => 'form.dive_access.label.per_day_dives',
                     'help' => 'form.dive_access.help.per_day_dives'
                 ))
                 ->add('maxdepthdives', null, array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'form-control', 'min' => 0),
                     'label' => 'form.dive_access.label.max_depth_dives',
                     'help' => 'form.dive_access.help.max_depth_dives'
                 ))
                 ->add('maxminutesdives', null, array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'form-control', 'min' => 0),
                     'label' => 'form.dive_access.label.max_minutes_dives',
                     'help' => 'form.dive_access.help.max_minutes_dives'
                 ))
                 ->add('maxpersonsperdive', null, array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'form-control', 'min' => 0),
                     'label' => 'form.dive_access.label.max_persons_per_dive',
                     'help' => 'form.dive_access.help.max_persons_per_dive'
                 ))
