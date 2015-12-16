@@ -60,6 +60,7 @@ class SkBusinessSpotType extends AbstractType {
                 ->add('rentEquipment', 'collection', array(
                     'type' => new SkBusinessRentEquipmentType(),
                     'allow_add' => true,
+                    'allow_delete' => true,
                     'prototype' => true,
                     'by_reference' => false,
                     'required' => false,

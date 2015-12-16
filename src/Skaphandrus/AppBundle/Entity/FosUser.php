@@ -498,4 +498,20 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
         $entityManager->flush();
     }
 
+    
+    public function countPointsAppliedInModules(){
+        
+        $points = 0;
+        
+        foreach ($this->getAcquisitions() as $key => $aquisition) {
+            $points = $points + $aquisition->getModule()->getPoints();
+        }
+        
+        return $points;
+        
+    }
+    
+    
+    
+    
 }

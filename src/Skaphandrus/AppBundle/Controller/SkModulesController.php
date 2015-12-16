@@ -30,13 +30,13 @@ class SkModulesController extends Controller {
 
         $editForm = $this->createEditForm($entity);
 
-        $previousCollections = $entity->getAcquisitions()->toArray();
+        //$previousCollections = $entity->getAcquisitions()->toArray();
 
-        $sum_selected_points = 0;
+        $sum_selected_points = $entity->countPointsAppliedInModules();
 
-        foreach ($previousCollections as $acquisition) {
-            $sum_selected_points = $sum_selected_points + $acquisition->getModule()->getPoints();
-        }
+//        foreach ($previousCollections as $acquisition) {
+//            $sum_selected_points = $sum_selected_points + $acquisition->getModule()->getPoints();
+//        }
 
         //$options = $editForm->get('acquisitions')->getConfig()->getOptions();
         //$choices = $options['choice_list']->getChoices();
@@ -111,11 +111,11 @@ class SkModulesController extends Controller {
 
         $previousCollections = $entity->getAcquisitions()->toArray();
 
-        $sum_selected_points = 0;
+        $sum_selected_points = $entity->countPointsAppliedInModules();
 
-        foreach ($previousCollections as $acquisition) {
-            $sum_selected_points = $sum_selected_points + $acquisition->getModule()->getPoints();
-        }
+//        foreach ($previousCollections as $acquisition) {
+//            $sum_selected_points = $sum_selected_points + $acquisition->getModule()->getPoints();
+//        }
 
         //$request = $this->getRequest();
         //$editForm->bindRequest($request);
