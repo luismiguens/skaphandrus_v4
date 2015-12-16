@@ -269,6 +269,9 @@ class UtilsExtension extends \Twig_Extension {
      */
     function activity_message(\Skaphandrus\AppBundle\Entity\SkActivity $activity, $locale) {
 
+        
+        
+        //dump($activity->getMessageName());
 
 ### activity_001 x associou especie y na fotografia z	
 ### activity_002 x associou spot y na fotografia z	
@@ -371,13 +374,21 @@ class UtilsExtension extends \Twig_Extension {
 
             ### activity_041 x adicionou y como amigo.
             case 'activity_041':
-                $user_from = $activity->getUserFrom();
+                //$user_from = $activity->getUserFrom();
+                
+                $user_from = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:FosUser')->findOneById($activity->getUserFrom());
                 $user_to = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:FosUser')->findOneById($activity->getUserId());
 
+//                dump($user_from);
+//                dump($user_to);
+                
+                
                 return $this->translator->trans(
                                 '%1% adicionou %2% como amigo.', array('%1%' => $this->link_to_user($user_from),
                             '%2%' => $this->link_to_user($user_to)));
 
+
+                
 
             ### activity_051 x registou-se
             case 'activity_051':
@@ -505,8 +516,8 @@ class UtilsExtension extends \Twig_Extension {
         $path_function = $this->getPathFunction();
 //dump($user);
         return call_user_func($path_function, 'user', array(
-            'id' => $user->getId(),
-            'username' => $user->getUsername(),
+            'id' => $user->getId()
+//            'username' => $user->getUsername(),
         ));
     }
 
