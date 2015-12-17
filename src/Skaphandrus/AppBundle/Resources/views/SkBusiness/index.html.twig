@@ -60,8 +60,8 @@
             {% for entity in entities %}
                 <tr>
                     <td>{{ entity.name }}</td>
-                    <td>{{ entity.location_name }}</td>
-                    <td>{{ entity.country_name }}</td>
+                    <td>{{ entity.address.location }}</td>
+                    <td>{{ entity.address.location.region.country }}</td>
                     {#<td>
                         {% if entity.foundedAt %}
                             {{ entity.foundedAt|date('Y-m-d H:i:s') }}
@@ -104,6 +104,9 @@
                             </li>
                             <li>
                                 <a class="btn btn-white btn-sm" href="{{ path('business_settings_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_settings"|trans }}</a>
+                            </li>
+                            <li>
+                                <a class="btn btn-white btn-sm" href="{{ path('business', { 'country': entity.address.location.region.country, 'location': entity.address.location, 'slug': entity.name }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.visit_business"|trans }}</a>
                             </li>
                         </ul>
                     </td>

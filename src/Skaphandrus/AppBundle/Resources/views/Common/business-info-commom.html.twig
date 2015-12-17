@@ -1,61 +1,69 @@
 
 <h3>{% trans with {'%business%': business.name} %}page.business.h3.info{% endtrans %}</h3>
+<br/>
 
 {% set typ = '' %}
 {% for type in business.type %}
     {% set typ = type %}
 {% endfor %}
 {% if typ %}
-    <h5>{{ "page.business.h5.type"|trans }}</h5>
-    {% for type in business.type %}
-        <p>{{ type }}</p>
-    {% endfor %}
+    <h4>{{ "page.business.h4.type"|trans }}</h4>
+    <div class="colunas">
+        {% for type in business.type %}
+            <p>{{ type }}</p>
+        {% endfor %}
+    </div>
 {% endif %}
+<br/>
 
 {% set curr = '' %}
 {% for currency in business.currency %}
     {% set curr = currency %}
 {% endfor %}
 {% if curr %}
-    <h5>{{ "page.business.h5.currency"|trans }}</h5>
-    {% for currency in business.currency %}
-        <p itemprop="currenciesAccepted">{{ currency }}</p>
-    {% endfor %}
+    <h4>{{ "page.business.h4.currency"|trans }}</h4>
+    <div class="colunas">
+        {% for currency in business.currency %}
+            <p itemprop="currenciesAccepted">{{ currency }}</p>
+        {% endfor %}
+    </div>
 {% endif %}
+<br/>
 
 {% set lan = '' %}
 {% for language in business.language %}
     {% set lan = language %}
 {% endfor %}
 {% if lan %}
-    <h5>{{ "page.business.h5.language"|trans }}</h5>
-    {% for language in business.language %}
-        <p>{{ language }}</p>
-    {% endfor %}
+    <h4>{{ "page.business.h4.language"|trans }}</h4>
+    <div class="colunas">
+        {% for language in business.language %}
+            <p>{{ language }}</p>
+        {% endfor %}
+    </div>
 {% endif %}
-
+<br/>
 
 {% if business.about  %}
-    <h5>{{ "page.business.h5.about"|trans }}</h5>
+    <h4>{{ "page.business.h4.about"|trans }}</h4>
     <p>{{ business.about|raw }}</p>
 {% endif %}
+<br/>
 
 {% if business.description %}
-    <h5>{{ "page.business.h5.description"|trans }}</h5>
+    <h4>{{ "page.business.h4.description"|trans }}</h4>
     <p itemprop="description">{{ business.description|raw }}</p>
 {% endif %}
+<br/>
 
 {% if business.mission %}
-    <h5>{{ "page.business.h5.mission"|trans }}</h5>
+    <h4>{{ "page.business.h4.mission"|trans }}</h4>
     <p>{{ business.mission|raw }}</p>
 {% endif %}
+<br/>
 
 {% if business.awards %}
-    <h5>{{ "page.business.h5.awards"|trans }}</h5>
+    <h4>{{ "page.business.h4.awards"|trans }}</h4>
     <p itemprop="awards">{{ business.awards|raw }}</p>
 {% endif %}
 
-{% if map %}
-    <h5>{% trans with {'%business%': business.name} %}page.business.h5.map{% endtrans %}</h5>
-    {{ google_map(map) }}
-{% endif %}

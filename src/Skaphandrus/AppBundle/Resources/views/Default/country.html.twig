@@ -124,11 +124,6 @@
                                         <li><a data-toggle="tab" href="#tab-3">{{ "page.country.tab.species"|trans }}</a></li>
                                         <li><a data-toggle="tab" href="#tab-4">{{ "page.country.tab.photos"|trans }}</a></li>
                                         <li><a data-toggle="tab" href="#tab-5">{{ "page.country.tab.contributors"|trans }}</a></li>
-                                        
-                                        
-                                        
-                                        
-                                        
                                     </ul>
                                 </div>
                             </div>
@@ -137,7 +132,7 @@
                                 <div class="tab-content">
                                     <div id="tab-1" class="tab-pane active">
                                         <h3>{% trans with {'%country%': country} %}page.country.h3.info{% endtrans %}</h3>
-                                        
+
                                         <h5>{{ "page.country.h5.overview"|trans }}</h5>
                                         <p itemprop="description">{{ country.translate(app.request.locale).overview|raw  }}</p>
 
@@ -161,9 +156,18 @@
 
                                         <h5>{{ "page.country.h5.other_informations"|trans }}</h5>
                                         <p>{{ country.translate(app.request.locale).otherInformations }}</p>
-                                        
-                                        <div class="dvb-widget-holder" data-host="https://divebooker.com" data-widgid="297" data-pid="141"><script>(function(){if (typeof(window.dvbjs)=='undefined'){window.dvbjs = true;var dvbjs = document.createElement('script');dvbjs.type = 'text/javascript';dvbjs.src = 'https://divebooker.com/js/front/init_widgets.min.js';document.body.appendChild(dvbjs);delete dvbjs;}}())</script></div>
-                                        
+
+                                        <div class="dvb-widget-holder" data-host="https://divebooker.com" data-widgid="297" data-pid="141"><script>(function () {
+                                                if (typeof (window.dvbjs) == 'undefined') {
+                                                    window.dvbjs = true;
+                                                    var dvbjs = document.createElement('script');
+                                                    dvbjs.type = 'text/javascript';
+                                                    dvbjs.src = 'https://divebooker.com/js/front/init_widgets.min.js';
+                                                    document.body.appendChild(dvbjs);
+                                                    delete dvbjs;
+                                                }
+                                            }())</script></div>
+
                                     </div>
 
 
@@ -286,10 +290,10 @@
                                             </tfoot>
                                         </table>
                                     </div>
-                                            
-                                          
-                                            
-                                            
+
+
+
+
                                 </div>
                             </div>
                         </div>

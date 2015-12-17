@@ -30,12 +30,23 @@
 
     {% if map %}
         <script>
-            // Fix bug on Gmap inside tabs
-            $('.nav-tabs').on('shown.bs.tab', function () {
-                google.maps.event.trigger(window, 'resize', {});
-                setTimeout(function () {
+                    // Fix bug on Gmap inside tabs
+                    $('.nav-tabs').on('shown.bs.tab', function () {
+            google.maps.event.trigger(window, 'resize', {});
+                    setTimeout(function () {
             {{ map.javascriptVariable }}.setCenter({{ map.center.javascriptVariable }});
-                    }, 100);
+                        }, 100);
+                });</script>
+        {% endif %}
+
+    {% if mapSpot %}
+        <script>
+                    // Fix bug on Gmap inside tabs
+                    $('.nav-tabs').on('shown.bs.tab', function () {
+            google.maps.event.trigger(window, 'resize', {});
+                    setTimeout(function () {
+            {{ mapSpot.javascriptVariable }}.setCenter({{ mapSpot.center.javascriptVariable }});
+                        }, 100);
                 });
         </script>
     {% endif %}
@@ -50,7 +61,13 @@
         #map_canvas {
             margin-bottom: 25px;
         }
+        .colunas {
+            -webkit-columns: auto 2; /* Chrome, Safari, Opera */
+            -moz-columns: auto 2; /* Firefox */
+            columns: auto 2;
+        }
     </style>
+
 
 {% endblock %}
 
@@ -82,50 +99,115 @@
                             {% endif %}
                         </div>
                         <div class="ibox-content profile-content">
-                            <h4 itemprop="legalName"><strong>{{ business.name|title }}</strong></h4>
-                                    {% if business.foundedAt %}
+                            <h4 itemprop="legalName">
+                                <strong>{{ business.name|title }}</strong>
+                            </h4>
+                            {% if business.foundedAt %}
                                 <h5>{{ "page.business.h5.founded_at"|trans }}: {{ business.foundedAt|date("d-M-Y") }}</h5>
                             {% endif %}
                             <br/>
                             <h4>{{ "page.business.h4.address"|trans }}</h4>
-                            {% if business.address.postcode %}
-                                <h5>{{ "page.business.h5.address_postcode"|trans }}</h5>
-                                <p>{{ business.address.postcode }}</p>
+                            <table class="table">
+                                {% if business.address.postcode %}
+                                    <tr>
+                                        <th>
+                                            {{ "page.business.h5.address_postcode"|trans }}
+                                        </th>
+                                        <td>
+                                            {{ business.address.postcode }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% if business.address.province %}
+                                    <tr>
+                                        <th>
+                                            {{ "page.business.h5.address_province"|trans }}
+                                        </th>
+                                        <td>
+                                            {{ business.address.province }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% if business.address.street %}
+                                    <tr>
+                                        <th>
+                                            {{ "page.business.h5.address_street"|trans }}
+                                        </th>
+                                        <td>
+                                            <meta itemprop="address" content="{{ business.address.street }}" />{{ business.address.street }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% if business.address.location %}
+                                    <tr>
+                                        <th>
+                                            {{ "page.business.h5.address_location"|trans }}
+                                        </th>
+                                        <td>
+                                            <meta itemprop="address" content="{{ business.address.location }}" />{{ business.address.location }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            </table>
+
+                            {% if map %}
+                                {{ google_map(map) }}
                             {% endif %}
-                            {% if business.address.province %}
-                                <h5>{{ "page.business.h5.address_province"|trans }}</h5>
-                                <p>{{ business.address.province }}</p>
-                            {% endif %}
-                            {% if business.address.street %}
-                                <h5>{{ "page.business.h5.address_street"|trans }}</h5>
-                                <p itemprop="address">{{ business.address.street }}</p>
-                            {% endif %}
-                            {% if business.address.location %}
-                                <h5>{{ "page.business.h5.address_location"|trans }}</h5>
-                                <p itemprop="address">{{ business.address.location }}</p>
-                            {% endif %}
+
                             <br/>
                             <h4>{{ "page.business.h4.contact"|trans }}</h4>
-                            {% if business.contact.email %}
-                                <h5>{{ "page.business.h5.contact_email"|trans }}</h5>
-                                <p itemprop="email">{{ business.contact.email }}</p>
-                            {% endif %}
-                            {% if business.contact.fax %}
-                                <h5>{{ "page.business.h5.contact_fax"|trans }}</h5>
-                                <p itemprop="faxNumber">{{ business.contact.fax }}</p>
-                            {% endif %}
-                            {% if business.contact.homepage %}
-                                <h5>{{ "page.business.h5.contact_homepage"|trans }}</h5>
-                                <p>{{ business.contact.homepage }}</p>
-                            {% endif %}
-                            {% if business.contact.mobilephone %}
-                                <h5>{{ "page.business.h5.contact_mobilephone"|trans }}</h5>
-                                <p>{{ business.contact.mobilephone }}</p>
-                            {% endif %}
-                            {% if business.contact.phone %}
-                                <h5>{{ "page.business.h5.contact_phone"|trans }}</h5>
-                                <p itemprop="telephone">{{ business.contact.phone }}</p>
-                            {% endif %}
+                            <table class="table">
+                                {% if business.contact.email %}
+                                    <tr>
+                                        <th>
+                                            {{ "page.business.h5.contact_email"|trans }}
+                                        </th>
+                                        <td>
+                                            <meta itemprop="email" content="{{ business.contact.email }}" />{{ business.contact.email }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% if business.contact.fax %}
+                                    <tr>
+                                        <th>
+                                            {{ "page.business.h5.contact_fax"|trans }}
+                                        </th>
+                                        <td>
+                                            <meta itemprop="faxNumber" content="{{ business.contact.fax }}" />{{ business.contact.fax }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% if business.contact.homepage %}
+                                    <tr>
+                                        <th>
+                                            {{ "page.business.h5.contact_homepage"|trans }}
+                                        </th>
+                                        <td>
+                                            {{ business.contact.homepage }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% if business.contact.mobilephone %}
+                                    <tr>
+                                        <th>
+                                            {{ "page.business.h5.contact_mobilephone"|trans }}
+                                        </th>
+                                        <td>
+                                            {{ business.contact.mobilephone }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% if business.contact.phone %}
+                                    <tr>
+                                        <th>
+                                            {{ "page.business.h5.contact_phone"|trans }}
+                                        </th>
+                                        <td>
+                                            <meta itemprop="telephone" content="{{ business.contact.phone }}" />{{ business.contact.phone }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -181,6 +263,12 @@
                                             <h3>{% trans with {'%business%': business.name} %}page.business.h3.dive{% endtrans %}</h3>
                                             <br/>
 
+                                            {% if mapSpot %}
+                                                <h4>{{ "page.business.h4.map"|trans }}</h4>
+                                                {{ google_map(mapSpot) }}
+                                            {% endif %}
+                                            <br/>
+
                                             <!-- Dive Spots -->
                                             {% set diveS = '' %}
                                             {% for spot in business.spot %}
@@ -188,10 +276,11 @@
                                             {% endfor %}
                                             {% if diveS %}
                                                 <h4>{{ "page.business.h4.dive_spot"|trans }}</h4>
-
-                                                {% for spot in business.spot %}
-                                                    <p>{{ spot }}</p>
-                                                {% endfor %}
+                                                <div class="colunas">
+                                                    {% for spot in business.spot %}
+                                                        <p>{{ link_to_spot(spot, business.address.location, business.address.location.region.country) }}</p>
+                                                    {% endfor %}
+                                                </div>
                                             {% endif %}
                                             <br/>
 
@@ -259,11 +348,11 @@
                                             <!-- Dive Access -->
                                             {% if business.diveAccess %}
                                                 <h4>{{ "page.business.h4.dive_access"|trans }}</h4>
-                                                <table class="table table-hover">
+                                                <table class="table">
                                                     <tbody>
                                                         <tr>
-                                                            <td>{{ "page.dive_access.table.day_dive_boat"|trans }}</td>
-                                                            {% if business.diveAccess.dayDiveBoat == true %}
+                                                            <th>{{ "page.dive_access.table.day_dive_boat"|trans }}</th>
+                                                                {% if business.diveAccess.dayDiveBoat == true %}
                                                                 <td>
                                                                     <i class="fa fa-check text-navy"></i>
                                                                 </td>
@@ -274,8 +363,8 @@
                                                             {% endif %}
                                                         </tr>
                                                         <tr>
-                                                            <td>{{ "page.dive_access.table.shore_dive"|trans }}</td>
-                                                            {% if business.diveAccess.shoreDive == true %}
+                                                            <th>{{ "page.dive_access.table.shore_dive"|trans }}</th>
+                                                                {% if business.diveAccess.shoreDive == true %}
                                                                 <td>
                                                                     <i class="fa fa-check text-navy"></i>
                                                                 </td>
@@ -286,8 +375,8 @@
                                                             {% endif %}
                                                         </tr>
                                                         <tr>
-                                                            <td>{{ "page.dive_access.table.night_dive"|trans }}</td>
-                                                            {% if business.diveAccess.nightDive == true %}
+                                                            <th>{{ "page.dive_access.table.night_dive"|trans }}</th>
+                                                                {% if business.diveAccess.nightDive == true %}
                                                                 <td>
                                                                     <i class="fa fa-check text-navy"></i>
                                                                 </td>
@@ -298,8 +387,8 @@
                                                             {% endif %}
                                                         </tr>
                                                         <tr>
-                                                            <td>{{ "page.dive_access.table.house_reef"|trans }}</td>
-                                                            {% if business.diveAccess.houseReef == true %}
+                                                            <th>{{ "page.dive_access.table.house_reef"|trans }}</th>
+                                                                {% if business.diveAccess.houseReef == true %}
                                                                 <td>
                                                                     <i class="fa fa-check text-navy"></i>
                                                                 </td>
@@ -310,8 +399,8 @@
                                                             {% endif %}
                                                         </tr>
                                                         <tr>
-                                                            <td>{{ "page.dive_access.table.day_tours"|trans }}</td>
-                                                            {% if business.diveAccess.dayTours == true %}
+                                                            <th>{{ "page.dive_access.table.day_tours"|trans }}</th>
+                                                                {% if business.diveAccess.dayTours == true %}
                                                                 <td>
                                                                     <i class="fa fa-check text-navy"></i>
                                                                 </td>
@@ -322,8 +411,8 @@
                                                             {% endif %}
                                                         </tr>
                                                         <tr>
-                                                            <td>{{ "page.dive_access.table.half_day_tours"|trans }}</td>
-                                                            {% if business.diveAccess.halfDayTours == true %}
+                                                            <th>{{ "page.dive_access.table.half_day_tours"|trans }}</th>
+                                                                {% if business.diveAccess.halfDayTours == true %}
                                                                 <td>
                                                                     <i class="fa fa-check text-navy"></i>
                                                                 </td>
@@ -334,8 +423,8 @@
                                                             {% endif %}
                                                         </tr>
                                                         <tr>
-                                                            <td>{{ "page.dive_access.table.unguided_dives"|trans }}</td>
-                                                            {% if business.diveAccess.unguidedDives == true %}
+                                                            <th>{{ "page.dive_access.table.unguided_dives"|trans }}</th>
+                                                                {% if business.diveAccess.unguidedDives == true %}
                                                                 <td>
                                                                     <i class="fa fa-check text-navy"></i>
                                                                 </td>
@@ -347,31 +436,31 @@
                                                         </tr>
                                                         {% if business.diveAccess.perDayDives %}
                                                             <tr>
-                                                                <td>{{ "page.dive_access.table.per_day_dives"|trans }}</td>
+                                                                <th>{{ "page.dive_access.table.per_day_dives"|trans }}</th>
                                                                 <td>{{ business.diveAccess.perDayDives }} {{ "label.dives_per_day"|trans }}</td>
                                                             </tr>
                                                         {% endif %}
                                                         {% if business.diveAccess.maxDepthDives %}
                                                             <tr>
-                                                                <td>{{ "page.dive_access.table.max_depth_dives"|trans }}</td>
+                                                                <th>{{ "page.dive_access.table.max_depth_dives"|trans }}</th>
                                                                 <td>{{ business.diveAccess.maxDepthDives }} {{ "label.meters"|trans }}</td>
                                                             </tr>
                                                         {% endif %}
                                                         {% if business.diveAccess.maxminutesdives %}
                                                             <tr>
-                                                                <td>{{ "page.dive_access.table.max_minutes_dives"|trans }}</td>
+                                                                <th>{{ "page.dive_access.table.max_minutes_dives"|trans }}</th>
                                                                 <td>{{ business.diveAccess.maxminutesdives }} {{ "label.minutes"|trans }}</td>
                                                             </tr>
                                                         {% endif %}
                                                         {% if business.diveAccess.maxpersonsperdive %}
                                                             <tr>
-                                                                <td>{{ "page.dive_access.table.max_persons_per_dive"|trans }}</td>
+                                                                <th>{{ "page.dive_access.table.max_persons_per_dive"|trans }}</th>
                                                                 <td>{{ business.diveAccess.maxpersonsperdive }} {{ "label.persons"|trans }}</td>
                                                             </tr>
                                                         {% endif %}
                                                         {% if business.diveAccess.observations %}
                                                             <tr>
-                                                                <td>{{ "page.dive_access.table.observations"|trans }}</td>
+                                                                <th>{{ "page.dive_access.table.observations"|trans }}</th>
                                                                 <td>{{ business.diveAccess.observations|raw }}</td>
                                                             </tr>
                                                         {% endif %}
@@ -383,12 +472,12 @@
                                             <!-- Gas -->
                                             {% if business.gas %}
                                                 <h4>{{ "page.business.h4.gas"|trans }}</h4>
-                                                <table class="table table-hover">
+                                                <table class="table">
                                                     <tbody>
                                                         <tr>
-                                                            <td>
+                                                            <th>
                                                                 {{ "page.gas.table.atmospheric_air"|trans }}
-                                                            </td>
+                                                            </th>
                                                             {% if business.gas.atmosphericAir == true %}
                                                                 <td>
                                                                     <i class="fa fa-check text-navy"></i>
@@ -400,9 +489,9 @@
                                                             {% endif %}
                                                         </tr>
                                                         <tr>
-                                                            <td>
+                                                            <th>
                                                                 {{ "page.gas.table.nitrox"|trans }}
-                                                            </td>
+                                                            </th>
                                                             {% if business.gas.nitrox == true %}
                                                                 <td>
                                                                     <i class="fa fa-check text-navy"></i>
@@ -414,9 +503,9 @@
                                                             {% endif %}
                                                         </tr>
                                                         <tr>
-                                                            <td>
+                                                            <th>
                                                                 {{ "page.gas.table.trimix"|trans }}
-                                                            </td>
+                                                            </th>
                                                             {% if business.gas.trimix == true %}
                                                                 <td>
                                                                     <i class="fa fa-check text-navy"></i>
@@ -435,12 +524,12 @@
                                             <!-- Safety -->
                                             {% if business.safety %}
                                                 <h4>{{ "page.business.h4.safety"|trans }}</h4>
-                                                <table class="table table-hover">
+                                                <table class="table">
                                                     <tbody>
                                                         <tr>
-                                                            <td>
+                                                            <th>
                                                                 {{ "page.safety.table.oxigen"|trans }}
-                                                            </td>
+                                                            </th>
                                                             {% if business.safety.oxigen == true %}
                                                                 <td>
                                                                     <i class="fa fa-check text-navy"></i>
@@ -452,9 +541,9 @@
                                                             {% endif %}
                                                         </tr>
                                                         <tr>
-                                                            <td>
+                                                            <th>
                                                                 {{ "page.safety.table.first_aid_kit"|trans }}
-                                                            </td>
+                                                            </th>
                                                             {% if business.safety.firstAidKit == true %}
                                                                 <td>
                                                                     <i class="fa fa-check text-navy"></i>
@@ -467,13 +556,13 @@
                                                         </tr>
                                                         {% if business.safety.hourstohospital %}
                                                             <tr>
-                                                                <td>{{ "page.safety.table.hours_to_hospital"|trans }}</td>
-                                                                <td>{{ business.safety.hourstohospital|date('H:i') }}</td>
+                                                                <th>{{ "page.safety.table.hours_to_hospital"|trans }}</th>
+                                                                <th>{{ business.safety.hourstohospital|date('H:i') }}</th>
                                                             </tr>
                                                         {% endif %}
                                                         {% if business.safety.hourstodecochamber %}
                                                             <tr>
-                                                                <td>{{ "page.safety.table.hours_to_deco_chamber"|trans }}</td>
+                                                                <th>{{ "page.safety.table.hours_to_deco_chamber"|trans }}</th>
                                                                 <td>{{ business.safety.hourstodecochamber|date('H:i') }}</td>
                                                             </tr>
                                                         {% endif %}
@@ -490,12 +579,12 @@
                                             <!-- Education Counditions -->
                                             {% if business.educationConditions %}
                                                 <h4>{{ "page.business.h4.education_counditions"|trans }}</h4>
-                                                <table class="table table-hover">
+                                                <table class="table">
                                                     <tbody>
                                                         <tr>
-                                                            <td>
+                                                            <th>
                                                                 {{ "page.education_counditions.table.swimming_pool"|trans }}
-                                                            </td>
+                                                            </th>
 
                                                             {% if business.educationConditions.swimmingPool == true %}
                                                                 <td>
@@ -508,9 +597,9 @@
                                                             {% endif %}
                                                         </tr>
                                                         <tr>
-                                                            <td>
+                                                            <th>
                                                                 {{ "page.education_counditions.table.separate_classroom"|trans }}
-                                                            </td>
+                                                            </th>
                                                             {% if business.educationConditions.separateClassroom == true %}
                                                                 <td>
                                                                     <i class="fa fa-check text-navy"></i>
@@ -522,9 +611,9 @@
                                                             {% endif %}
                                                         </tr>
                                                         <tr>
-                                                            <td>
+                                                            <th>
                                                                 {{ "page.education_counditions.table.single_education"|trans }}
-                                                            </td>
+                                                            </th>
                                                             {% if business.educationConditions.singleEducation == true %}
                                                                 <td>
                                                                     <i class="fa fa-check text-navy"></i>
@@ -537,13 +626,13 @@
                                                         </tr>
                                                         {% if business.educationConditions.maxGroupSize %}
                                                             <tr>
-                                                                <td>{{ "page.education_counditions.table.max_group_size"|trans }}</td>
+                                                                <th>{{ "page.education_counditions.table.max_group_size"|trans }}</th>
                                                                 <td>{{ business.educationConditions.maxGroupSize }} {{ "label.persons"|trans }}</td>
                                                             </tr>
                                                         {% endif %}
                                                         {% if business.educationConditions.observations %}
                                                             <tr>
-                                                                <td>{{ "page.education_counditions.table.observations"|trans }}</td>
+                                                                <th>{{ "page.education_counditions.table.observations"|trans }}</th>
                                                                 <td>{{ business.educationConditions.observations|raw }}</td>
                                                             </tr>
                                                         {% endif %}
@@ -560,14 +649,16 @@
                                             {% if education %}
                                                 <h4>{{ "page.business.h4.education_course"|trans }}</h4>
                                                 <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>{{ "page.education_course.table.course"|trans }}</th>
+                                                            <th>{{ "page.education_course.table.price"|trans }}</th>
+                                                        </tr>
+                                                    </thead>
                                                     <tbody>
                                                         {% for course in business.educationCourse %}
                                                             <tr>
-                                                                <td>{{ "page.education_course.table.course"|trans }}</td>
                                                                 <td>{{ course.course.name }}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>{{ "page.education_course.table.price"|trans }}</td>
                                                                 <td>{{ course.price }} {{ business.unit.currency }}</td>
                                                             </tr>
                                                         {% endfor %}

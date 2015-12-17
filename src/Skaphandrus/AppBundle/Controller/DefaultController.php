@@ -336,7 +336,6 @@ class DefaultController extends Controller {
      */
 
     public function businessAction($country, $location, $slug) {
-
         $locale = $this->get('request')->getLocale();
         $business = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
                 ->findBySlug($slug, $location, $country, $locale);
@@ -349,7 +348,94 @@ class DefaultController extends Controller {
             $centerLatitude = 0;
             $centerLongitude = 0;
 
-//            $business = new \Skaphandrus\AppBundle\Entity\SkBusiness();
+            $mapSpot = null;
+            $latitudeSpot = 0;
+            $longitudeSpot = 0;
+            $centerLatitudeSpot = 0;
+            $centerLongitudeSpot = 0;
+
+            if (count($business->getSpot()) > 0) {
+
+                // Get markers from spots for the map
+                $markersSpot = array();
+                // $totalLatitude = 0;
+                // $totalLongitude = 0;
+                foreach ($business->getSpot() as $spot) {
+
+                    //dump($spot->getCoordinate());
+
+                    if ($spot->getCoordinate()) {
+                        $markerSpot = new Marker();
+
+                        //remove white spaces
+                        $latitudeSpot = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[0]);
+                        $longitudeSpot = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[1]);
+
+                        $infowindow = new InfoWindow();
+
+//                        $utils = new \Skaphandrus\AppBundle\Twig\UtilsExtension($this->container, $this->get('translator'));
+//                        $contentString = $utils->link_to_spot($spot->getName(), $spot->getLocation(), $spot->getLocation()->getRegion()->getCountry());
+
+                        $contentString = $spot->getName();
+
+                        $infowindow->setContent($contentString);
+                        $infowindow->setAutoClose(TRUE);
+
+                        // Marker options
+                        $markerSpot->setInfoWindow($infowindow);
+                        $markerSpot->setPrefixJavascriptVariable('marker_spot_');
+                        $markerSpot->setPosition($latitudeSpot, $longitudeSpot, true);
+                        $markerSpot->setAnimation(Animation::DROP);
+                        $markerSpot->setOption('clickable', true);
+                        $markerSpot->setOption('flat', true);
+                        $markerSpot->setOptions(array(
+                            'clickable' => true,
+                            'flat' => true,
+                        ));
+
+                        // $totalLatitude += $latitudeSpot;
+                        // $totalLongitude += $longitudeSpot;
+                        $markersSpot[] = $markerSpot;
+                    }
+                }
+
+                // Create the map
+                // $centerLatitudeSpot = $totalLatitude / count($markersSpot);
+                // $centerLongitudeSpot = $totalLongitude / count($markersSpot);
+                // $centerLatitudeSpot = explode(",", $location->getSpots()->toArray()[0]->getCoordinate())[0];
+                // $centerLongitudeSpot = explode(",", $location->getSpots()->toArray()[0]->getCoordinate())[1];
+
+                $centerLatitudeSpot = $latitudeSpot;
+                $centerLongitudeSpot = $longitudeSpot;
+
+                $mapSpot = new Map();
+                $mapSpot->setPrefixJavascriptVariable('map_spot_');
+                $mapSpot->setHtmlContainerId('map_canvas_spot');
+                $mapSpot->setAsync(false);
+                $mapSpot->setCenter($centerLatitudeSpot, $centerLongitudeSpot, true);
+                $mapSpot->setMapOption('zoom', 10);
+                $mapSpot->setMapOption('mapTypeId', MapTypeId::ROADMAP);
+                $mapSpot->setMapOption('disableDefaultUI', true);
+                $mapSpot->setMapOption('disableDoubleClickZoom', true);
+                $mapSpot->setMapOptions(array(
+                    'disableDefaultUI' => true,
+                    'disableDoubleClickZoom' => true,
+                ));
+                $mapSpot->setStylesheetOption('width', 'auto');
+                $mapSpot->setStylesheetOption('height', '300px');
+                $mapSpot->setStylesheetOptions(array(
+                    'width' => 'auto',
+                    'height' => '300px',
+                ));
+                $mapSpot->setLanguage('en');
+
+                // Add the spots to the map
+                foreach ($markersSpot as $markerSpot) {
+                    $mapSpot->addMarker($markerSpot);
+                }
+            }
+
+            //$business = new \Skaphandrus\AppBundle\Entity\SkBusiness();
             if ($business->getAddress()->getCoordinate() != null) {
 
                 if (count($business->getAddress()->getLocation()) > 0) {
@@ -361,6 +447,7 @@ class DefaultController extends Controller {
                     //remove white spaces
                     $latitude = preg_replace('/\s+/', '', explode(",", $business->getAddress()->getCoordinate())[0]);
                     $longitude = preg_replace('/\s+/', '', explode(",", $business->getAddress()->getCoordinate())[1]);
+                    $zoom = $business->getAddress()->getZoom();
 
                     $infowindow = new InfoWindow();
                     if ($business->getAddress()->getStreet()) {
@@ -369,13 +456,14 @@ class DefaultController extends Controller {
                         $contentString = $business->getName() . ', ' . $business->getAddress()->getLocation()->getName();
                     }
                     $infowindow->setContent($contentString);
+                    $infowindow->setOption('maxWidth', 250);
 
                     // Marker options
                     $marker->setInfoWindow($infowindow);
                     $marker->setPrefixJavascriptVariable('marker_');
                     $marker->setPosition($latitude, $longitude, true);
                     $marker->setAnimation(Animation::DROP);
-                    $marker->setOption('clickable', false);
+                    $marker->setOption('clickable', true);
                     $marker->setOption('flat', true);
                     $marker->setOptions(array(
                         'clickable' => true,
@@ -396,7 +484,7 @@ class DefaultController extends Controller {
                 $map->setHtmlContainerId('map_canvas');
                 $map->setAsync(false);
                 $map->setCenter($centerLatitude, $centerLongitude, true);
-                $map->setMapOption('zoom', 10);
+                $map->setMapOption('zoom', intval($zoom));
                 $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
                 $map->setMapOption('disableDefaultUI', true);
                 $map->setMapOption('disableDoubleClickZoom', true);
@@ -422,6 +510,9 @@ class DefaultController extends Controller {
                             'map' => $map,
                             'map_center_lat' => $centerLatitude,
                             'map_center_lon' => $centerLongitude,
+                            'mapSpot' => $mapSpot,
+                            'map_center_latSpot' => $centerLatitudeSpot,
+                            'map_center_lonSpot' => $centerLongitudeSpot,
                 ));
             } else {
                 return $this->render('SkaphandrusAppBundle:Default:business.html.twig', array(
@@ -429,6 +520,9 @@ class DefaultController extends Controller {
                             'map' => $map,
                             'map_center_lat' => $centerLatitude,
                             'map_center_lon' => $centerLongitude,
+                            'mapSpot' => $mapSpot,
+                            'map_center_latSpot' => $centerLatitudeSpot,
+                            'map_center_lonSpot' => $centerLongitudeSpot,
                 ));
             }
         } else {
@@ -480,7 +574,7 @@ class DefaultController extends Controller {
 
 
 
-// Configure your marker options
+        // Configure your marker options
         $marker->setPrefixJavascriptVariable('marker_');
         $marker->setPosition($latitude, $longitude, true);
         $marker->setAnimation(Animation::DROP);
@@ -495,7 +589,7 @@ class DefaultController extends Controller {
 
 
 
-// Add your marker to the map
+        // Add your marker to the map
         //$map = $this->get('ivory_google_map.map');
         $map = new Map();
 
@@ -503,14 +597,14 @@ class DefaultController extends Controller {
         $map->setHtmlContainerId('map_canvas');
 
         $map->setAsync(false);
-//$map->setAutoZoom(true);
+        //$map->setAutoZoom(true);
 
 
 
         $map->setCenter($latitude, $longitude, true);
         $map->setMapOption('zoom', 10);
 
-//$map->setBound(-2.1, -3.9, 2.6, 1.4, true, true);
+        //$map->setBound(-2.1, -3.9, 2.6, 1.4, true, true);
 
         $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
         $map->setMapOption('mapTypeId', 'roadmap');
@@ -618,14 +712,21 @@ class DefaultController extends Controller {
                         $latitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[0]);
                         $longitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[1]);
 
+                        $infowindow = new InfoWindow();
+                        $contentString = $spot->getName();
+
+                        $infowindow->setContent($contentString);
+                        $infowindow->setAutoClose(TRUE);
+
                         // Marker options
+                        $marker->setInfoWindow($infowindow);
                         $marker->setPrefixJavascriptVariable('marker_');
                         $marker->setPosition($latitude, $longitude, true);
                         $marker->setAnimation(Animation::DROP);
-                        $marker->setOption('clickable', false);
+                        $marker->setOption('clickable', true);
                         $marker->setOption('flat', true);
                         $marker->setOptions(array(
-                            'clickable' => false,
+                            'clickable' => true,
                             'flat' => true,
                         ));
 

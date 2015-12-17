@@ -36,6 +36,9 @@
 
     {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
 
+    <p>{{ "form.business_settings.text.admin_help"|trans }}</p>
+    <br/>
+    
     {{ form_widget(edit_form) }}
 
     {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'business_admin', 'new_form':false} %}
