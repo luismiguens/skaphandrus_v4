@@ -108,26 +108,6 @@
                             <br/>
                             <h4>{{ "page.business.h4.address"|trans }}</h4>
                             <table class="table">
-                                {% if business.address.postcode %}
-                                    <tr>
-                                        <th>
-                                            {{ "page.business.h5.address_postcode"|trans }}
-                                        </th>
-                                        <td>
-                                            {{ business.address.postcode }}
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                                {% if business.address.province %}
-                                    <tr>
-                                        <th>
-                                            {{ "page.business.h5.address_province"|trans }}
-                                        </th>
-                                        <td>
-                                            {{ business.address.province }}
-                                        </td>
-                                    </tr>
-                                {% endif %}
                                 {% if business.address.street %}
                                     <tr>
                                         <th>
@@ -145,6 +125,26 @@
                                         </th>
                                         <td>
                                             <meta itemprop="address" content="{{ business.address.location }}" />{{ business.address.location }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% if business.address.postcode %}
+                                    <tr>
+                                        <th>
+                                            {{ "page.business.h5.address_postcode"|trans }}
+                                        </th>
+                                        <td>
+                                            {{ business.address.postcode }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% if business.address.province %}
+                                    <tr>
+                                        <th>
+                                            {{ "page.business.h5.address_province"|trans }}
+                                        </th>
+                                        <td>
+                                            {{ business.address.province }}
                                         </td>
                                     </tr>
                                 {% endif %}

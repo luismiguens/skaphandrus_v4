@@ -376,20 +376,13 @@ class DefaultController extends Controller {
                         //$utils = new \Skaphandrus\AppBundle\Twig\UtilsExtension($this->container, $this->get('translator'));
                         //$contentString = $utils->link_to_spot($spot->getName(), $spot->getLocation(), $spot->getLocation()->getRegion()->getCountry());
                         //$contentString = $spot->getName();
-
-
                         $spot_url = $this->generateUrl('spot', array(
                             'slug' => $spot->getName(),
                             'location' => $spot->getLocation(),
                             'country' => $spot->getLocation()->getRegion()->getCountry()
-                                )
-                        );
-
-
+                        ));
 
                         $contentString = "<a href=" . $spot_url . ">" . $spot->getName() . "</a>";
-
-
 
                         $infowindow->setContent($contentString);
                         $infowindow->setAutoClose(TRUE);
@@ -464,9 +457,9 @@ class DefaultController extends Controller {
 
                     $infowindow = new InfoWindow();
                     if ($business->getAddress()->getStreet()) {
-                        $contentString = $business->getName() . '<br/> ' . $business->getAddress()->getStreet() . ', ' . $business->getAddress()->getLocation()->getName(). ', ' . $business->getAddress()->getLocation()->getRegion()->getCountry();
+                        $contentString = $business->getName() . '<br/> ' . $business->getAddress()->getStreet() . ', ' . $business->getAddress()->getLocation()->getName() . ', ' . $business->getAddress()->getLocation()->getRegion()->getCountry();
                     } else {
-                        $contentString = $business->getName() . '<br/> ' . $business->getAddress()->getLocation()->getName(). ', ' . $business->getAddress()->getLocation()->getRegion()->getCountry();
+                        $contentString = $business->getName() . '<br/> ' . $business->getAddress()->getLocation()->getName() . ', ' . $business->getAddress()->getLocation()->getRegion()->getCountry();
                     }
                     $infowindow->setContent($contentString);
                     $infowindow->setOption('maxWidth', 250);
@@ -726,7 +719,16 @@ class DefaultController extends Controller {
                         $longitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[1]);
 
                         $infowindow = new InfoWindow();
-                        $contentString = $spot->getName();
+                        //$utils = new \Skaphandrus\AppBundle\Twig\UtilsExtension($this->container, $this->get('translator'));
+                        //$contentString = $utils->link_to_spot($spot->getName(), $spot->getLocation(), $spot->getLocation()->getRegion()->getCountry());
+                        //$contentString = $spot->getName();
+                        $spot_url = $this->generateUrl('spot', array(
+                            'slug' => $spot->getName(),
+                            'location' => $spot->getLocation(),
+                            'country' => $spot->getLocation()->getRegion()->getCountry()
+                        ));
+
+                        $contentString = "<a href=" . $spot_url . ">" . $spot->getName() . "</a>";
 
                         $infowindow->setContent($contentString);
                         $infowindow->setAutoClose(TRUE);
