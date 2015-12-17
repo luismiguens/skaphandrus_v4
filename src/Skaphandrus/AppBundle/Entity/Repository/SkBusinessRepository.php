@@ -14,7 +14,7 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkBusinessRepository extends EntityRepository {
 
-    public function findBySlug($slug, $location, $country, $locale) {
+    public function findBySlug($country,$location, $slug, $locale) {
         $name = Utils::unslugify($slug);
         $location = $this->getEntityManager()->getRepository('SkaphandrusAppBundle:SkLocation')
                 ->findBySlug($location, $country, $locale);
@@ -26,7 +26,7 @@ class SkBusinessRepository extends EntityRepository {
                 JOIN b.address a
                 JOIN a.location l
                 JOIN l.region r
-                WHERE REPLACE(b.name, \'-\', \' \') = :name
+                WHERE REPLACE(REPLACE(b.name, \'_\', \'/\'), \'-\', \' \') = :name
                 AND IDENTITY(a.location) = :location_id')
                 ->setParameter('name', $name)
                 ->setParameter('location_id', $location->getId());
@@ -46,7 +46,21 @@ class SkBusinessRepository extends EntityRepository {
                 )->getResult();
     }
 
-    public function findAllBusiness($locale) {
+    
+     public function findAllWithAddress() {
+        return $this->getEntityManager()->createQuery(
+                        'SELECT b, a, l, r, c
+            FROM SkaphandrusAppBundle:SkBusiness b
+            JOIN b.address a
+            JOIN a.location l
+            JOIN l.region r
+            JOIN r.country c'
+                )->getResult();
+    }
+    
+    
+    
+    public function findAllBusiness3($locale) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
@@ -91,7 +105,7 @@ class SkBusinessRepository extends EntityRepository {
         return $result;
     }
 
-    public function findAllBusiness2($locale) {
+    public function findAllBusiness($locale) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 

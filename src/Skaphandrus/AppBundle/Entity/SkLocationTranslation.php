@@ -8,8 +8,7 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 /**
  * SkLocationTranslation
  */
-class SkLocationTranslation
-{
+class SkLocationTranslation {
 
     use ORMBehaviors\Translatable\Translation;
 
@@ -53,7 +52,6 @@ class SkLocationTranslation
      */
     private $extraDive;
 
-
     /**
      * Set name
      *
@@ -61,8 +59,7 @@ class SkLocationTranslation
      *
      * @return SkLocationTranslation
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -73,11 +70,8 @@ class SkLocationTranslation
      *
      * @return string
      */
-    public function getName()
-    {
-        
-        
-        
+    public function getName() {
+
         return $this->name;
     }
 
@@ -88,8 +82,7 @@ class SkLocationTranslation
      *
      * @return SkLocationTranslation
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -100,8 +93,7 @@ class SkLocationTranslation
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -112,8 +104,7 @@ class SkLocationTranslation
      *
      * @return SkLocationTranslation
      */
-    public function setWaterTemp($waterTemp)
-    {
+    public function setWaterTemp($waterTemp) {
         $this->waterTemp = $waterTemp;
 
         return $this;
@@ -124,8 +115,7 @@ class SkLocationTranslation
      *
      * @return string
      */
-    public function getWaterTemp()
-    {
+    public function getWaterTemp() {
         return $this->waterTemp;
     }
 
@@ -136,8 +126,7 @@ class SkLocationTranslation
      *
      * @return SkLocationTranslation
      */
-    public function setSuit($suit)
-    {
+    public function setSuit($suit) {
         $this->suit = $suit;
 
         return $this;
@@ -148,8 +137,7 @@ class SkLocationTranslation
      *
      * @return string
      */
-    public function getSuit()
-    {
+    public function getSuit() {
         return $this->suit;
     }
 
@@ -160,8 +148,7 @@ class SkLocationTranslation
      *
      * @return SkLocationTranslation
      */
-    public function setVisibility($visibility)
-    {
+    public function setVisibility($visibility) {
         $this->visibility = $visibility;
 
         return $this;
@@ -172,8 +159,7 @@ class SkLocationTranslation
      *
      * @return string
      */
-    public function getVisibility()
-    {
+    public function getVisibility() {
         return $this->visibility;
     }
 
@@ -184,8 +170,7 @@ class SkLocationTranslation
      *
      * @return SkLocationTranslation
      */
-    public function setClimate($climate)
-    {
+    public function setClimate($climate) {
         $this->climate = $climate;
 
         return $this;
@@ -196,8 +181,7 @@ class SkLocationTranslation
      *
      * @return string
      */
-    public function getClimate()
-    {
+    public function getClimate() {
         return $this->climate;
     }
 
@@ -208,8 +192,7 @@ class SkLocationTranslation
      *
      * @return SkLocationTranslation
      */
-    public function setHowToGo($howToGo)
-    {
+    public function setHowToGo($howToGo) {
         $this->howToGo = $howToGo;
 
         return $this;
@@ -220,8 +203,7 @@ class SkLocationTranslation
      *
      * @return string
      */
-    public function getHowToGo()
-    {
+    public function getHowToGo() {
         return $this->howToGo;
     }
 
@@ -232,8 +214,7 @@ class SkLocationTranslation
      *
      * @return SkLocationTranslation
      */
-    public function setExtraDive($extraDive)
-    {
+    public function setExtraDive($extraDive) {
         $this->extraDive = $extraDive;
 
         return $this;
@@ -244,8 +225,8 @@ class SkLocationTranslation
      *
      * @return string
      */
-    public function getExtraDive()
-    {
+    public function getExtraDive() {
         return $this->extraDive;
     }
+
 }

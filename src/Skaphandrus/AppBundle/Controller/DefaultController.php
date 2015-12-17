@@ -338,7 +338,7 @@ class DefaultController extends Controller {
     public function businessAction($country, $location, $slug) {
         $locale = $this->get('request')->getLocale();
         $business = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
-                ->findBySlug($slug, $location, $country, $locale);
+                ->findBySlug($country, $location, $slug, $locale);
 
         if ($business) {
 
@@ -373,10 +373,23 @@ class DefaultController extends Controller {
 
                         $infowindow = new InfoWindow();
 
-//                        $utils = new \Skaphandrus\AppBundle\Twig\UtilsExtension($this->container, $this->get('translator'));
-//                        $contentString = $utils->link_to_spot($spot->getName(), $spot->getLocation(), $spot->getLocation()->getRegion()->getCountry());
+                        //$utils = new \Skaphandrus\AppBundle\Twig\UtilsExtension($this->container, $this->get('translator'));
+                        //$contentString = $utils->link_to_spot($spot->getName(), $spot->getLocation(), $spot->getLocation()->getRegion()->getCountry());
+                        //$contentString = $spot->getName();
 
-                        $contentString = $spot->getName();
+
+                        $spot_url = $this->generateUrl('spot', array(
+                            'slug' => $spot->getName(),
+                            'location' => $spot->getLocation(),
+                            'country' => $spot->getLocation()->getRegion()->getCountry()
+                                )
+                        );
+
+
+
+                        $contentString = "<a href=" . $spot_url . ">" . $spot->getName() . "</a>";
+
+
 
                         $infowindow->setContent($contentString);
                         $infowindow->setAutoClose(TRUE);
@@ -451,9 +464,9 @@ class DefaultController extends Controller {
 
                     $infowindow = new InfoWindow();
                     if ($business->getAddress()->getStreet()) {
-                        $contentString = $business->getName() . ', ' . $business->getAddress()->getStreet() . ', ' . $business->getAddress()->getLocation()->getName();
+                        $contentString = $business->getName() . '<br/> ' . $business->getAddress()->getStreet() . ', ' . $business->getAddress()->getLocation()->getName(). ', ' . $business->getAddress()->getLocation()->getRegion()->getCountry();
                     } else {
-                        $contentString = $business->getName() . ', ' . $business->getAddress()->getLocation()->getName();
+                        $contentString = $business->getName() . '<br/> ' . $business->getAddress()->getLocation()->getName(). ', ' . $business->getAddress()->getLocation()->getRegion()->getCountry();
                     }
                     $infowindow->setContent($contentString);
                     $infowindow->setOption('maxWidth', 250);

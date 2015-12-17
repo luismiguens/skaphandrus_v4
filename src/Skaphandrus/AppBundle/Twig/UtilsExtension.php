@@ -76,6 +76,7 @@ class UtilsExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('url_to_contest_sponsors', array($this, 'url_to_contest_sponsors')),
             new \Twig_SimpleFunction('url_to_contest_winners', array($this, 'url_to_contest_winners')),
             new \Twig_SimpleFunction('url_to_spot', array($this, 'url_to_spot')),
+            new \Twig_SimpleFunction('url_to_business', array($this, 'url_to_business')),
             new \Twig_SimpleFunction('url_to_location', array($this, 'url_to_location')),
             new \Twig_SimpleFunction('url_to_country', array($this, 'url_to_country')),
             new \Twig_SimpleFunction('url_to_photo', array($this, 'url_to_photo')),
@@ -597,6 +598,37 @@ class UtilsExtension extends \Twig_Extension {
         ));
     }
 
+    
+    public function url_to_business($country = NULL, $location = NULL, $business) {
+        $path_function = $this->getPathFunction();
+
+        // Added Location and Country as an optional parameters
+        // for reducing queries when necessary
+        if ($location) {
+            $l = $location;
+        } else {
+            $l = $business->getAddress()->getLocation();
+        }
+
+        if ($country) {
+            $c = $country;
+        } else {
+            $c = $l->getRegion()->getCountry();
+        }
+
+        
+        
+        
+        return call_user_func($path_function, 'business', array(
+            'country' => Utils::slugify($c),
+            'location' => Utils::slugify($l->getName()),
+            'slug' => Utils::slugify($business->getName())
+           
+        ));
+    }
+    
+    
+    
     public function url_to_location($location, $country = NULL) {
         $path_function = $this->getPathFunction();
 

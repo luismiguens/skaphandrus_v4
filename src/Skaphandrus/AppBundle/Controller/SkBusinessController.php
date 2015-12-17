@@ -65,7 +65,11 @@ class SkBusinessController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $locale = $this->get('request')->getLocale();
 
+        
+        
         $entities = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findAllBusiness($locale);
+        
+        //$entities = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findAllWithAddress();
         
         return $this->render('SkaphandrusAppBundle:SkBusiness:index.html.twig', array(
                     'entities' => $entities,

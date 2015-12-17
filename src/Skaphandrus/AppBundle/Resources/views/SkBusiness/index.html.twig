@@ -60,8 +60,8 @@
             {% for entity in entities %}
                 <tr>
                     <td>{{ entity.name }}</td>
-                    <td>{{ entity.address.location }}</td>
-                    <td>{{ entity.address.location.region.country }}</td>
+                    <td>{{ entity.location_name }}</td>
+                    <td>{{ intl_country_name(entity.country_name) }}</td>
                     {#<td>
                         {% if entity.foundedAt %}
                             {{ entity.foundedAt|date('Y-m-d H:i:s') }}
@@ -106,7 +106,9 @@
                                 <a class="btn btn-white btn-sm" href="{{ path('business_settings_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_settings"|trans }}</a>
                             </li>
                             <li>
-                                <a class="btn btn-white btn-sm" href="{{ path('business', { 'country': entity.address.location.region.country, 'location': entity.address.location, 'slug': entity.name }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.visit_business"|trans }}</a>
+                                {#<a class="btn btn-white btn-sm" href="{{ path('business', { 'country': entity.address.location.region.country, 'location': entity.address.location, 'slug': entity.name }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.visit_business"|trans }}</a>#}
+                                <a class="btn btn-white btn-sm" href="{{ path('business', { 'country': slugify(intl_country_name(entity.country_name)), 'location': slugify(entity.location_name), 'slug': slugify(entity.name) }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.visit_business"|trans }}</a>
+                                {#<a class="btn btn-white btn-sm" href="{{ url_to_business(entity.country_name, entity.location_name, entity ) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.visit_business"|trans }}</a>#}
                             </li>
                         </ul>
                     </td>

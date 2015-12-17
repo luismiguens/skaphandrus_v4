@@ -200,7 +200,12 @@ class SkBusiness {
      * @return string
      */
     public function getName() {
-        return $this->name;
+
+        if ($this->name):
+            return $this->name;
+        else:
+            return "NULL";
+        endif;
     }
 
     /**

@@ -36,11 +36,8 @@ class SkLocation {
      * @var \Doctrine\Common\Collections\Collection
      */
     private $spots;
-
     private $spotsCount = 0;
-
     private $photosCount = 0;
-    
     private $photosInLocation;
 
     /**
@@ -95,7 +92,7 @@ class SkLocation {
     public function getId() {
         return $this->id;
     }
-    
+
     public function setId($id) {
         $this->id = $id;
     }
@@ -161,14 +158,19 @@ class SkLocation {
     }
 
     public function __toString() {
-        return $this->getName();
+
+        if ($this->getName()):
+            return $this->getName();
+        else:
+            return "BLA";
+        endif;
     }
 
     public function getName() {
+
         return $this->translate()->getName();
     }
 
-    
     public function getDescription() {
         return $this->translate()->getDescription();
     }
@@ -212,7 +214,7 @@ class SkLocation {
     public function setPhotosCount($photosCount) {
         $this->photosCount = $photosCount;
     }
-    
+
     public function getPhotosInLocation() {
         return $this->photosInLocation;
     }
@@ -220,8 +222,7 @@ class SkLocation {
     public function setPhotosInLocation($photosInLocation) {
         $this->photosInLocation = $photosInLocation;
     }
-    
-    
+
 //    public function getLocationName($locale){
 //        
 //        //$locale = $this->translate()->setLocale($locale);
@@ -232,7 +233,4 @@ class SkLocation {
 //      
 //        
 //    }
-    
-    
-    
 }

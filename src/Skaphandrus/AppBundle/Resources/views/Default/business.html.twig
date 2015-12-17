@@ -5,8 +5,8 @@
 {% block page_description %}{% trans with {'%business%': business.name|title, '%location%': business.address.location, '%country%': business.address.location.region.country} %}page.business.meta_tag.description{% endtrans %}{% endblock %}
 
 {% block hreflang %}
-    <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('business', {'location':business.address.location, 'country':business.address.location.region.country, 'slug':business.name, 'locale': 'pt'}) }}" />
-    <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('business', {'location':business.address.location, 'country':business.address.location.region.country, 'slug':business.name, 'locale': 'en'}) }}" />
+    <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('business', {'country':slugify(business.address.location.region.country.getCountryName('pt')), 'location':slugify(business.address.location.translate('pt').name), 'slug':slugify(business.name), 'locale': 'pt'}) }}" />
+    <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('business', {'country':slugify(business.address.location.region.country.getCountryName('en')), 'location':slugify(business.address.location.translate('en').name), 'slug':slugify(business.name), 'locale': 'en'}) }}" />
 {% endblock %}
 
 
@@ -557,7 +557,7 @@
                                                         {% if business.safety.hourstohospital %}
                                                             <tr>
                                                                 <th>{{ "page.safety.table.hours_to_hospital"|trans }}</th>
-                                                                <th>{{ business.safety.hourstohospital|date('H:i') }}</th>
+                                                                <td>{{ business.safety.hourstohospital|date('H:i') }}</td>
                                                             </tr>
                                                         {% endif %}
                                                         {% if business.safety.hourstodecochamber %}
