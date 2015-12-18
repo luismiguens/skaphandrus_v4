@@ -49,8 +49,8 @@
 {% block javascripts %}
     {{ parent() }}
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
 
     <script type="text/javascript">
 
@@ -264,7 +264,7 @@
 
 
                         <h5>{{ "page.species.h5.common_names"|trans }}</h5>
-                        <ul class="list-unstyled" ng-repeat="inf in mainCtrl.infoSpecies.common_names" class="col-md-4">
+                        <ul class="list-unstyled col-md-4" ng-repeat="inf in mainCtrl.infoSpecies.common_names" >
                             <li>{[{inf.name}]}, {[{inf.culture}]}</li>
                         </ul>
 
