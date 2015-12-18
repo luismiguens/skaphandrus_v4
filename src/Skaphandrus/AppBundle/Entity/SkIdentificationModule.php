@@ -73,9 +73,12 @@ class SkIdentificationModule {
     private $acquisitions;
     private $points;
     private $workers;
-
-    
     private $imageFile;
+
+    /**
+     * @var \DateTime
+     */
+    private $updatedAt;
 
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
@@ -88,6 +91,10 @@ class SkIdentificationModule {
      */
     public function setImageFile(File $image = null) {
         $this->imageFile = $image;
+
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
     }
 
     /**
@@ -97,7 +104,6 @@ class SkIdentificationModule {
         return $this->imageFile;
     }
 
-    
     /**
      * Constructor
      */
@@ -105,6 +111,29 @@ class SkIdentificationModule {
         $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
         $this->acquisitions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->createdAt = new \DateTime();
+        $this->updatedAt = \DateTime();
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return SkBusiness
+     */
+    public function setUpdatedAt($updatedAt) {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt() {
+        return $this->updatedAt;
     }
 
     public function getSpecies() {
@@ -262,7 +291,7 @@ class SkIdentificationModule {
         if ($this->getIsFree()) {
             return 0;
         } else {
-            return $this->points; 
+            return $this->points;
         }
 
         return $this->points;
@@ -466,7 +495,6 @@ class SkIdentificationModule {
 //        // clean up the file property as you won't need it anymore
 //        $this->file = null;
 //    }
-
 
     /**
      * Add acquisition
