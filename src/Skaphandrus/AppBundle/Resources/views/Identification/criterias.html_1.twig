@@ -1,0 +1,247 @@
+{% extends 'SkaphandrusAppBundle::angular_layout.html.twig' %}
+
+{% block page_title %}{% trans with {'%module_name%': module.name} %}page.criterias.meta_tag.title{% endtrans %}{% endblock %}
+
+{% block page_description %}{% endblock %}
+
+{% set keywords = module.name %} 
+{% set keywords = keywords~', '~("meta_tag.keyword.fish"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.animals"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.sea"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.ocean"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.marine"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.id"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.identification"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.guide"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.facts"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.criterias"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.type"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.pictures"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.images"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.photos"|trans) %}
+
+{% block page_keywords %}{{keywords}}{% endblock %}
+
+{% block hreflang %}
+    <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('criterias', {'slug': slugify(module.translate('pt').name), 'locale': 'pt'}) }}" />
+    <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('criterias', {'slug': slugify(module.translate('en').name), 'locale': 'en'}) }}" />
+{% endblock %}
+
+
+{% block heading_title %}
+    {{ module.name }}
+{% endblock %}
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+        <li itemprop="itemListElement"><a href="{{ path('index')}}">{{ "page.common.breadcrumb.homepage"|trans }}</a></li>
+        <li itemprop="itemListElement"><a href="{{ path('modules')}}">{{ "page.modules.breadcrumb.modules"|trans }}</a></li>
+        <li itemprop="itemListElement" class="active"><strong>{{ module.name }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block heading_action %}
+    <a href="{{ path('photo_admin_new') }}" class="btn btn-primary">{{ "form.photo.btn.add"|trans }}</a>
+{% endblock %}
+
+{% block angular_app %}criteriasApp{%endblock%}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{#    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>#}
+
+
+ 
+
+    <script>
+                $(function(){
+                $('.ibox-content-species').slimScroll({
+                height: '600px'
+                });
+                        $('.ibox-content-criterias').slimScroll({
+                height: '600px'
+                });
+                });
+    </script>
+
+{% endblock %}
+
+{% block body %}
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-md-3" >
+                <div  data-spy="affix" data-offset-top="156" style="width: 265px;top: 0;">
+                    <div class="ibox" >
+                        <div class="ibox-title">
+                            <h5>{{ "page.criterias.h5.species_list"|trans }}</h5>
+                        </div>
+                        <div class="ibox-content ibox-content-species">
+                            <ul class="list-group clear-list ">
+                                <li ng-repeat="specie in mainCtrl.species" class="list-group-item" style="border-top: medium none !important;">
+                                    <a src="#" ng-click="mainCtrl.clickSpecies(specie.id,'tab2')">{[{specie.name}]}</a>
+                                    <!-- <a style="max-width: 265px" class="thumbnail" src="#"><img ng-click="mainCtrl.clickSpecies(specie.id,'tab2')" src='{[{specie.image_src}]}'</img></a>-->
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--<div ng-switch="mainCtrl.currentTab">-->
+
+            <!-- TAB - lista de criterios -->
+            <div ng-show="mainCtrl.showCriterias" class="col-md-9" >
+                <div class="ibox" >
+                    <div class="ibox-title">
+                        <h5>{{ "page.criterias.h5.criterias_list"|trans }}</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <form>
+                            <ul class="list-unstyled list-group clear-list">
+                                <li class="list-group-item" ng-repeat="(key,criteria) in mainCtrl.criterias" style="border-top: medium none !important;" >
+                                    <label ng-bind="criteria.name"></label>
+                                    <ul class="list-inline customChList lstn">
+                                        <li ng-repeat="character in criteria.characters"  >
+                                            <a href="#" class="thumbnail" >
+                                                <input  type="checkbox" id="{[{character.id}]}" ng-model="selected" ng-click="mainCtrl.clickCharacter(character.id,selected)" >
+                                                <label style="background-image: url('{[{character.image_url}]}');" for="{[{character.id}]}" ng-bind="character.name" ></label>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB - info about one species -->
+            <div ng-hide="mainCtrl.showCriterias"  class="col-md-9" >
+
+                <div class="ibox" id="ibox-species.info" >
+                    <div class="ibox-title">
+                        <h5>{{ "page.criterias.h5.species_info"|trans }}</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h4><strong>{[{mainCtrl.infoSpecies.name}]}</strong></h4>
+
+
+
+                        <h5>{{ "page.species.h5.taxonomic_structure"|trans }}</h5>
+                        <ul class="list-unstyled">
+                            <li>{{ "page.species.label.species_class"|trans }}: {[{mainCtrl.infoSpecies.class}]}</li>
+                            <li>{{ "page.species.label.species_order"|trans }}: {[{mainCtrl.infoSpecies.order}]}</li>
+                            <li>{{ "page.species.label.species_family"|trans }}: {[{mainCtrl.infoSpecies.family}]}</li>
+                        </ul>
+
+
+                        <h5>{{ "page.species.h5.photos"|trans }}</h5>
+                        <div class="row" >
+                            <div ng-repeat="img in mainCtrl.infoSpecies.images | limitTo:4" class="col-xs-6 col-md-3">
+                                <div ng-switch on="img.is_illustration">
+                                    <div ng-switch-when="true">
+                                        <!-- code to render a large video block-->
+                                        <a href="#" class="thumbnail">
+                                            <img ng-src="{[{img.image_src}]}"/>
+                                        </a>
+                                    </div>
+                                    <div ng-switch-default>
+                                        <!-- code to render the regular video block -->
+                                        <a href="#" class="thumbnail">
+                                            <img ng-src="{[{img.image_src}]}"/>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <h5>{{ "page.species.h5.description"|trans }}</h5>
+                        <p>{[{mainCtrl.infoSpecies.description}]}</p>
+
+
+                        <h5>{{ "page.species.h5.common_names"|trans }}</h5>
+                        <ul class="list-unstyled col-md-4" ng-repeat="inf in mainCtrl.infoSpecies.common_names" >
+                            <li>{[{inf.name}]}, {[{inf.culture}]}</li>
+                        </ul>
+
+
+                        <!--
+                        <h5>{{ "page.species.h3.species_criteria"|trans }}</h5>
+                        
+                        <ul class="list-unstyled">
+                        <li ng-repeat="crit in mainCtrl.infoSpecies.criterias"> 
+                                    {[{crit.name}]}
+                                    <ul class="list-unstyled">
+                                        <li ng-repeat="char in crit.characters"	>
+                                            <img class="thumbnail" ng-src="http://skaphandrus.com/{[{char.image_url}]}" /> 
+                                            {[{char.name}]}
+                                        </li>
+                                    </ul>   
+                                </ul>
+                        
+                        -->
+
+
+                        <button class='btn btn-primary' ng-click="mainCtrl.clickCriterias();"><i class='fa fa-chevron-left'></i>
+                            Back to Criterias
+                        </button>
+
+                    </div>
+                </div>
+
+            </div><!-- end tab 2-->
+            <!-- </div> end main tabs -->
+        </div> <!-- end row -->
+
+        <style>
+
+            input[type=checkbox] {
+                display:none;
+            }
+
+            input[type=checkbox] + label
+            {
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: 80%;
+                background-color: white;
+                height: 140px;
+                width: 140px;
+                display:inline-block;
+                padding: 0 0 0 0px;
+                margin-bottom: 0px;
+                font-weight: normal;
+            }
+
+            input[type=checkbox]:checked + label
+            {
+                background-position: center;
+                background-repeat: no-repeat;
+                background-color: white;
+                background-size: 100%;
+                height:140px;
+                width: 140px;
+                display:inline-block;
+                padding: 0 0 0 0px;
+                box-shadow: inset 0 0 0 100px rgba(0,0,0,.2);
+                margin-bottom: 0px;
+            }
+
+
+            input[type=checkbox]:hover + label
+            {
+                cursor: pointer; 
+                cursor: hand; 
+            }
+
+
+        </style>
+
+    </div><!-- end wrapper -->
+
+{% endblock %}
