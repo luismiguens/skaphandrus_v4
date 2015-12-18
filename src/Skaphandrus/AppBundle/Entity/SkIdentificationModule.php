@@ -111,7 +111,7 @@ class SkIdentificationModule {
         $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
         $this->acquisitions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->createdAt = new \DateTime();
-        $this->updatedAt = \DateTime();
+        $this->updatedAt = new \DateTime();
     }
 
     /**
