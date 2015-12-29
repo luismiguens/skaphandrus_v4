@@ -235,6 +235,81 @@ class FosUserRepository extends EntityRepository {
         return $result;
     }
 
+    //Esta a ser uzado na pagina user home
+    public function findAllUsers() {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT * from sk_user as u
+                order by photos desc";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+
+        return $values;
+    }
+
+    public function findAllUsers_to_delete() {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT u.id as id, u.username as username, 
+                up.id as p_id, up.firstname as firstname, 
+                up.middlename as middlename, up.lastname as lastname,
+                st.photo as photo,
+                st.points as points,
+                count(distinct(ph.species_id)) as species,
+                count(ph.id) as photosInUser,
+                (select count(species_id) 
+                from sk_photo_species_validation
+                where fos_user_id = u.id
+                ) as validation,
+                (select count(species_id) 
+                from sk_photo_species_sugestion
+                where fos_user_id = u.id
+                ) as sugestion
+                FROM fos_user as u
+                JOIN sk_personal as up
+                on u.id = up.fos_user_id
+                JOIN sk_settings as st
+                on u.id = st.fos_user_id
+                left JOIN sk_photo as ph
+                on u.id = ph.fos_user_id
+                group by id
+                order by validation desc";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+
+            $user = new FosUser();
+            $user->setId($value['id']);
+            $user->setUsername($value['username']);
+            $user->setPhotosInUser($value['photosInUser']);
+            $user->setSpeciesInUser($value['species']);
+
+            $personal = new \Skaphandrus\AppBundle\Entity\SkPersonal();
+            $personal->setFirstname($value['firstname']);
+            $personal->setMiddlename($value['middlename']);
+            $personal->setLastname($value['lastname']);
+
+            $settings = new \Skaphandrus\AppBundle\Entity\SkSettings();
+            $settings->setPhoto($value['photo']);
+            $settings->setPoints($value['points']);
+
+            $user->setPersonal($personal);
+            $user->setSettings($settings);
+
+            $result[] = $user;
+        }
+
+        return $result;
+    }
+
     public function findUsersInCountry($country_id) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();

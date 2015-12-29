@@ -1,0 +1,118 @@
+{% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
+
+{% block page_title %}{{ "page.business_home.meta_tag.title"|trans }}{% endblock %}
+
+{% block page_description %}{{ "page.business_home.meta_tag.description"|trans }}{% endblock %}
+
+{#{% set keywords = business.name %}
+{% set keywords = keywords~', '~("meta_tag.keyword.scuba_diving_center"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.dive_center"|trans) %}
+{% set keywords = keywords~', '~business.address.location %}
+{% set keywords = keywords~', '~business.address.location.region.country %}
+{% set keywords = keywords~', '~("meta_tag.keyword.diving_holidays"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.online_booking"|trans) %}
+{% for type in business.type %}
+    {% set keywords = keywords~', '~type.name %}
+{% endfor %}
+
+{% block page_keywords %}{{keywords}}{% endblock %}#}
+
+{% block hreflang %}
+    <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('business-home', {'locale': 'pt'}) }}" />
+    <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('business-home', {'locale': 'en'}) }}" />
+{% endblock %}
+
+{% block heading_title %}
+    {{ "page.business_home.h1.heading_title"|trans }}
+{% endblock %}
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+        <li itemprop="itemListElement"><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
+        <li itemprop="itemListElement" class="active"><strong>{{ "page.business_home.h1.title"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Data Tables -->
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/dataTables.responsive.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/dataTables.tableTools.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/skaphandrus.js') }}"></script>
+    <!-- Data Tables -->
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.bootstrap.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.responsive.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.tableTools.min.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+    <div class="ibox-content">
+        {#<h1>{{ "page.locations_home.h1.world_map"|trans }}</h1>
+        <br>
+        <span itemscope itemtype="http://schema.org/Map">
+            <meta itemprop="name" content="World Map" />
+            <div id="world-map" style="height: 300px; margin-bottom: 25px;">
+            </div>
+        </span>#}
+        {#<h3>{{ "page.business_home.h3.world_map"|trans }}</h3>#}
+        <table id="datatable-list" class="table display table-striped table-bordered table-responsive" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>{{ "page.business_home.label.logo"|trans }}</th>
+                    <th>{{ "page.business_home.label.name"|trans }}</th>
+                    <th>{{ "page.business_home.label.country"|trans }}</th>
+                    <th>{{ "page.business_home.label.premium"|trans }}</th>
+                    <th>{{ "page.business_home.label.action"|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for business in businesses %}
+                    <tr>
+                        <td>
+                            {% if business.picture != null %}
+                                <img alt="{{ business.name }}" class="img-circle m-t-xs img-responsive" src="{{ business.getWebPath | imagine_filter('sk_thumbnail_outbound_30') }}" />
+                            {% else %}
+                                <i class="fa fa-times text-danger"></i>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ business.name }}
+                        </td>
+                        <td>
+                            {% if business.address.location %}
+                                {{ business.address.location.region.country }}
+                            {% else %}
+                                <i class="fa fa-times text-danger"></i>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if business.premiumAt == true %}
+                                <i class="fa fa-check text-navy"></i>
+                            {% else %}
+                                <i class="fa fa-times text-danger"></i>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if business.address.location %}
+                                <a href="{{ path('business', { 'country': slugify(business.address.location.region.country), 'location': slugify(business.address.location), 'slug': slugify(business.name) }) }}">
+                                    {{ "forms.common.btn.visit_business"|trans }}
+                                </a>
+                            {% else %}
+                                <i class="fa fa-times text-danger"></i>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock %}

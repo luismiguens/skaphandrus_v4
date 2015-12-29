@@ -24,7 +24,7 @@
     <h4>{{ "page.business.h4.currency"|trans }}</h4>
     <div class="colunas">
         {% for currency in business.currency %}
-            <p itemprop="currenciesAccepted"><i class="fa fa-check text-navy"></i> {{ currency }}</p>
+            <p itemprop="currenciesAccepted"><i class="fa fa-check text-navy"></i> {{ currency|title }}</p>
         {% endfor %}
     </div>
 {% endif %}
@@ -38,7 +38,7 @@
     <h4>{{ "page.business.h4.language"|trans }}</h4>
     <div class="colunas">
         {% for language in business.language %}
-            <p><i class="fa fa-check text-navy"></i> {{ language }}</p>
+            <p><i class="fa fa-check text-navy"></i> {{ language|title }}</p>
         {% endfor %}
     </div>
 {% endif %}

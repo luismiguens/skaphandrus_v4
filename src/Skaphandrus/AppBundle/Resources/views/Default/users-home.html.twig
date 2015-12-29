@@ -1,0 +1,141 @@
+{% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
+
+{% block page_title %}{{ "page.users_home.meta_tag.title"|trans }}{% endblock %}
+
+{% block page_description %}{{ "page.users_home.meta_tag.description"|trans }}{% endblock %}
+
+{#{% set keywords = users.name %}
+{% set keywords = keywords~', '~("meta_tag.keyword.scuba_diving_center"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.dive_center"|trans) %}
+{% set keywords = keywords~', '~users.address.location %}
+{% set keywords = keywords~', '~users.address.location.region.country %}
+{% set keywords = keywords~', '~("meta_tag.keyword.diving_holidays"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.online_booking"|trans) %}
+{% for type in users.type %}
+    {% set keywords = keywords~', '~type.name %}
+{% endfor %}
+
+{% block page_keywords %}{{keywords}}{% endblock %}#}
+
+{% block hreflang %}
+    <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('users-home', {'locale': 'pt'}) }}" />
+    <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('users-home', {'locale': 'en'}) }}" />
+{% endblock %}
+
+{% block heading_title %}
+    {{ "page.users_home.h1.heading_title"|trans }}
+{% endblock %}
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+        <li itemprop="itemListElement"><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
+        <li itemprop="itemListElement" class="active"><strong>{{ "page.users_home.h1.title"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Data Tables -->
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/dataTables.responsive.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/dataTables.tableTools.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- Data Tables -->
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.bootstrap.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.responsive.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.tableTools.min.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+    <div class="ibox-content">
+
+        {# total items count #}
+        <div class="count">
+            {{ pagination.getTotalItemCount }} {{ "page.users_home.label.number_users"|trans }}
+        </div>
+        <br/>
+        <table class="table display table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>{{ knp_pagination_sortable(pagination, 'Name', 'u.name') }}</th>
+                    <th{% if pagination.isSorted('u.photos') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Photos', 'u.photos') }}</th>
+                    <th{% if pagination.isSorted('u.species') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Species', 'u.species') }}</th>
+                    <th{% if pagination.isSorted('u.validation') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Validation', 'u.validation') }}</th>
+                    <th{% if pagination.isSorted('u.sugestion') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Sugestion', 'u.sugestion') }}</th>
+                    <th{% if pagination.isSorted('u.points') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Points', 'u.points') }}</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                {% for entity in pagination %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('user', {'id': entity.id }) }}">{{ entity.name }}</a>
+                        </td>
+                        <td>
+                            {{ entity.photos }}
+                        </td>
+                        <td>
+                            {{ entity.species }}
+                        </td>
+                        <td>
+                            {{ entity.validation }}
+                        </td>
+                        <td>
+                            {{ entity.sugestion }}
+                        </td>
+                        <td>
+                            {% if entity.points is not empty %}
+                                {{ entity.points }}
+                            {% else %}
+                                {{ 0 }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+        {#        <table id="datatable-list" class="table display table-striped table-bordered table-responsive" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>{{ "page.users_home.label.name"|trans }}</th>
+                            <th>{{ "page.users_home.label.number_of_photos"|trans }}</th>
+                            <th>{{ "page.users_home.label.number_of_species"|trans }}</th>
+                            <th>{{ "page.users_home.label.points"|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                                <tr>
+                                    <td>
+                                        {{ user.id }}
+                                    </td>
+                                    <td>
+                                        {{ user.photosInUser }}
+                                    </td>
+                                    <td>
+                                        {{ user.species }}
+                                    </td>
+                                    <td>
+                                        {% if user.points is not empty %}
+                                            {{ user.points }}
+                                        {% else %}
+                                            {{ 0 }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>#}
+    </div>
+
+{% endblock %}

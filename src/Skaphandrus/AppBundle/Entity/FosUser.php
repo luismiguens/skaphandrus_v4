@@ -48,16 +48,22 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
     private $address;
     private $contact;
     private $settings;
-    //campos de apoio para as listagens
-    private $photosInContest;
-    private $photosInUser;
-    //modulos em que o user trabalhou (designer, biologo, programador)
-    private $works;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $business;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $photosValidated;
+    //campos de apoio para as listagens
+    private $photosInContest;
+    private $photosInUser;
+    private $speciesInUser;
+    //modulos em que o user trabalhou (designer, biologo, programador)
+    private $works;
 
     public function getPhotosInUser() {
         return $this->photosInUser;
@@ -75,10 +81,13 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
         $this->photosInContest = $param;
     }
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $photosValidated;
+    public function getSpeciesInUser() {
+        return $this->speciesInUser;
+    }
+
+    public function setSpeciesInUser($param) {
+        $this->speciesInUser = $param;
+    }
 
     public function getEncoderName() {
         return $this->algorithm == 'sha1' ? 'legacy' : 'default';
@@ -463,7 +472,7 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
 
             $emailNotificationTime = $entityManager->getRepository("SkaphandrusAppBundle:SkEmailNotificationTime")->findOneById(1);
             $settings->setEmailNotificationTime($emailNotificationTime);
-            
+
             $entity->setSettings($settings);
             $entityManager->persist($settings);
         } elseif ($entity->getSettings()->getPhoto() == "") {
@@ -498,20 +507,15 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
         $entityManager->flush();
     }
 
-    
-    public function countPointsAppliedInModules(){
-        
+    public function countPointsAppliedInModules() {
+
         $points = 0;
-        
+
         foreach ($this->getAcquisitions() as $key => $aquisition) {
             $points = $points + $aquisition->getModule()->getPoints();
         }
-        
+
         return $points;
-        
     }
-    
-    
-    
-    
+
 }

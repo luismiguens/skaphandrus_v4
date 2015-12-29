@@ -6,6 +6,7 @@ namespace Skaphandrus\AppBundle\Controller;
 // Used Forms
 
 
+use Doctrine\ORM\Query\ResultSetMapping;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\MapTypeId;
 use Ivory\GoogleMap\Overlays\Animation;
@@ -329,6 +330,59 @@ class DefaultController extends Controller {
         } else {
             throw $this->createNotFoundException('The species ' . $name . ' does not exist.');
         }
+    }
+
+    /*
+     * business Home page
+     */
+
+    public function businessHomeAction(Request $request) {
+
+        $locale = $this->get('request')->getLocale();
+
+        $businesses = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
+                ->findAllBusinessHome($locale);
+
+
+        return $this->render('SkaphandrusAppBundle:Default:business-home.html.twig', array(
+                    'businesses' => $businesses,
+        ));
+    }
+
+    /*
+     * Users Home page
+     */
+
+    public function usersHomeAction(Request $request) {
+
+//        $em = $this->get('doctrine.orm.entity_manager');
+
+        
+//        $query = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkUserResult')
+//                ->findAll();
+
+        
+//        $em = $this->getDoctrine()->getManager();
+//        $qb = $em->createQueryBuilder();
+//        $qb->select('u')
+//                ->from('SkaphandrusAppBundle:SkUserResult', 'u')
+//                ->orderBy('u.id', 'ASC');
+//        $query = $em->createQuery($qb);
+        
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = "SELECT u FROM SkaphandrusAppBundle:SkUserResult u";
+        $query = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                $query, $this->get('request')->query->getInt('page', 1)/* page number */, 10/* limit per page */
+        );
+
+        // parameters to template
+        return $this->render('SkaphandrusAppBundle:Default:users-home.html.twig', array(
+                    'pagination' => $pagination,
+        ));
     }
 
     /*
