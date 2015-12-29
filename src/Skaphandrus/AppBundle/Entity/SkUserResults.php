@@ -5,7 +5,7 @@ namespace Skaphandrus\AppBundle\Entity;
 /**
  * SkUserResult
  */
-class SkUserResult {
+class SkUserResults {
 
     /**
      * @var integer
@@ -30,12 +30,12 @@ class SkUserResult {
     /**
      * @var integer
      */
-    private $validation;
+    private $validations;
 
     /**
      * @var integer
      */
-    private $sugestion;
+    private $sugestions;
 
     /**
      * @var integer
@@ -133,8 +133,8 @@ class SkUserResult {
      *
      * @return SkUserResult
      */
-    public function setValidation($validation) {
-        $this->validation = $validation;
+    public function setValidations($validations) {
+        $this->validations = $validations;
 
         return $this;
     }
@@ -143,8 +143,8 @@ class SkUserResult {
      *
      * @return integer
      */
-    public function getValidation() {
-        return $this->validation;
+    public function getValidations() {
+        return $this->validations;
     }
     
     /**
@@ -154,8 +154,8 @@ class SkUserResult {
      *
      * @return SkUserResult
      */
-    public function setSugestion($sugestion) {
-        $this->sugestion = $sugestion;
+    public function setSugestions($sugestions) {
+        $this->sugestions = $sugestions;
 
         return $this;
     }
@@ -164,8 +164,8 @@ class SkUserResult {
      *
      * @return integer
      */
-    public function getSugestion() {
-        return $this->sugestion;
+    public function getSugestions() {
+        return $this->sugestions;
     }
     
     /**

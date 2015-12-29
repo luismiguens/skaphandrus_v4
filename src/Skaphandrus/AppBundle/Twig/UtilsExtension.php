@@ -45,6 +45,7 @@ class UtilsExtension extends \Twig_Extension {
 // Link helper functions.
             // The "is_safe" parameter allows html, for rendering the links.
             new \Twig_SimpleFunction('link_to_user', array($this, 'link_to_user'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('link_to_user_profile', array($this, 'link_to_user_profile'), array('is_safe' => array('html'))),
             //species
             new \Twig_SimpleFunction('link_to_species', array($this, 'link_to_species'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('link_to_taxon', array($this, 'link_to_taxon'), array('is_safe' => array('html'))),
@@ -67,6 +68,7 @@ class UtilsExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('link_to_message', array($this, 'link_to_message'), array('is_safe' => array('html'))),
 // URL helper functions.
             new \Twig_SimpleFunction('url_to_user', array($this, 'url_to_user')),
+            new \Twig_SimpleFunction('url_to_user_profile', array($this, 'url_to_user_profile')),
             new \Twig_SimpleFunction('url_to_species', array($this, 'url_to_species')),
             new \Twig_SimpleFunction('url_to_taxon', array($this, 'url_to_taxon')),
             new \Twig_SimpleFunction('url_to_contests', array($this, 'url_to_contests')),
@@ -444,6 +446,17 @@ class UtilsExtension extends \Twig_Extension {
 
     public function link_to_user($user) {
         return '<a href="' . $this->url_to_user($user) . '" title="' . $user->getName() . '">' . $user->getName() . '</a>';
+    }
+    
+    public function link_to_user_profile($user_id) {
+        $container = $this->container;
+        
+        //$user = new \Skaphandrus\AppBundle\Entity\FosUser();
+        
+        
+        $user = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:FosUser')->findOneById($user_id);
+        $src = $container->get('liip_imagine.cache.manager')->getBrowserPath($user->getSettings()->getWebPath(), 'sk_widen_240');
+        return '<img alt="' . $user->getName() . '" src="'.$src.'"> <a href="' . $this->url_to_user($user) . '" title="' . $user->getName() . '">  ' . $user->getName() . '</a>';
     }
 
     public function link_to_species($species) {

@@ -1,4 +1,56 @@
 
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `skaphandrus4`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `sk_user_validations` AS
+select fos_user_id, count(fos_user_id) as count_validations from sk_photo_species_validation group by fos_user_id
+
+
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `skaphandrus4`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `sk_user_sugestions` AS
+select fos_user_id, count(fos_user_id) as count_sugestions from sk_photo_species_sugestion group by fos_user_id
+
+
+
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `skaphandrus4`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `sk_user_results` AS
+select 
+        fos_user.id as id,
+concat(ifnull(sk_personal.firstname, ''), ' ', ifnull(sk_personal.middlename, ''), ' ', ifnull(sk_personal.lastname, '')) AS `name`, 
+count(distinct sk_photo.species_id) AS species,
+        count(sk_photo.id) AS photos, 
+sk_user_validations.count_validations as validations, 
+sk_user_sugestions.count_sugestions as sugestions, 
+sk_settings.points as points
+from
+        fos_user
+    left join sk_photo on fos_user.id = sk_photo.fos_user_id
+    left join sk_settings on fos_user.id = sk_settings.fos_user_id
+    left join sk_personal on fos_user.id = sk_personal.fos_user_id
+    left join sk_user_validations on fos_user.id = sk_user_validations.fos_user_id
+    left join sk_user_sugestions on fos_user.id = sk_user_sugestions.fos_user_id
+group by fos_user.id
+order by fos_user.id
+
+
+
+
+
+
+
+
+
+
+
+
+
 -- ---- MODULE : 2 ----------
 -- 
 -- CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`skaphandrus3`@`localhost` SQL SECURITY DEFINER VIEW `skaphandrus3`.`sk_identification_criteria_matrix_2` AS (select 1 AS priority, sk_filo.reino_id AS reino_id, sk_classe.filo_id AS filo_id, sk_ordem.classe_id AS classe_id, sk_familia.ordem_id AS ordem_id, sk_genero.familia_id AS familia_id, sk_especie.genero_id AS genero_id, sk_especie.id AS especie_id, sk_identification_species_character.character_id AS character_id, sk_identification_character.criteria_id AS criteria_id from ((((((((sk_especie join sk_identification_species_character on((sk_especie.id = sk_identification_species_character.species_id))) join sk_identification_character on((sk_identification_species_character.character_id = sk_identification_character.id))) join sk_genero on((sk_genero.id = sk_especie.genero_id))) join sk_familia on((sk_familia.id = sk_genero.familia_id))) join sk_ordem on((sk_ordem.id = sk_familia.ordem_id))) join sk_classe on((sk_classe.id = sk_ordem.classe_id))) join sk_filo on((sk_filo.id = sk_classe.filo_id))) join sk_reino on((sk_reino.id = sk_filo.reino_id))) where familia_id = 225 or familia_id = 224 having especie_id in (select especie_id from sk_especie_image_ref)) union (select 2 AS priority, sk_filo.reino_id AS reino_id, sk_classe.filo_id AS filo_id, sk_ordem.classe_id AS classe_id, sk_familia.ordem_id AS ordem_id, sk_genero.familia_id AS familia_id, sk_especie.genero_id AS genero_id, sk_especie.id AS especie_id, sk_identification_genus_character.character_id AS character_id, sk_identification_character.criteria_id AS criteria_id from ((((((((sk_especie join sk_genero on((sk_genero.id = sk_especie.genero_id))) join sk_identification_genus_character on((sk_genero.id = sk_identification_genus_character.genus_id))) join sk_identification_character on((sk_identification_genus_character.character_id = sk_identification_character.id))) join sk_familia on((sk_familia.id = sk_genero.familia_id))) join sk_ordem on((sk_ordem.id = sk_familia.ordem_id))) join sk_classe on((sk_classe.id = sk_ordem.classe_id))) join sk_filo on((sk_filo.id = sk_classe.filo_id))) join sk_reino on((sk_reino.id = sk_filo.reino_id))) where familia_id = 225 or familia_id = 224 having especie_id in (select especie_id from sk_especie_image_ref))

@@ -62,11 +62,11 @@
         <table class="table display table-bordered" cellspacing="0" width="100%">
             <thead>
                 <tr>
-                    <th>{{ knp_pagination_sortable(pagination, 'Name', 'u.name') }}</th>
+                    <th style="width: 25%" {% if pagination.isSorted('u.name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Name', 'u.name') }}</th>
                     <th{% if pagination.isSorted('u.photos') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Photos', 'u.photos') }}</th>
                     <th{% if pagination.isSorted('u.species') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Species', 'u.species') }}</th>
-                    <th{% if pagination.isSorted('u.validation') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Validation', 'u.validation') }}</th>
-                    <th{% if pagination.isSorted('u.sugestion') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Sugestion', 'u.sugestion') }}</th>
+                    <th{% if pagination.isSorted('u.validations') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Validations', 'u.validations') }}</th>
+                    <th{% if pagination.isSorted('u.sugestions') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Sugestions', 'u.sugestions') }}</th>
                     <th{% if pagination.isSorted('u.points') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Points', 'u.points') }}</th>
                 </tr>
 
@@ -74,8 +74,10 @@
             <tbody>
                 {% for entity in pagination %}
                     <tr>
-                        <td>
-                            <a href="{{ path('user', {'id': entity.id }) }}">{{ entity.name }}</a>
+                        <td class="client-avatar">
+                            {#<a href="{{ path('user', {'id': entity.id }) }}">{{ entity.name }}</a>#}
+                            
+                            {{link_to_user_profile(entity.id)}}
                         </td>
                         <td>
                             {{ entity.photos }}
@@ -84,10 +86,10 @@
                             {{ entity.species }}
                         </td>
                         <td>
-                            {{ entity.validation }}
+                            {{ entity.validations }}
                         </td>
                         <td>
-                            {{ entity.sugestion }}
+                            {{ entity.sugestions }}
                         </td>
                         <td>
                             {% if entity.points is not empty %}

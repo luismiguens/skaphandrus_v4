@@ -354,24 +354,9 @@ class DefaultController extends Controller {
      */
 
     public function usersHomeAction(Request $request) {
-
-//        $em = $this->get('doctrine.orm.entity_manager');
-
         
-//        $query = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkUserResult')
-//                ->findAll();
-
-        
-//        $em = $this->getDoctrine()->getManager();
-//        $qb = $em->createQueryBuilder();
-//        $qb->select('u')
-//                ->from('SkaphandrusAppBundle:SkUserResult', 'u')
-//                ->orderBy('u.id', 'ASC');
-//        $query = $em->createQuery($qb);
-        
-
         $em = $this->get('doctrine.orm.entity_manager');
-        $dql = "SELECT u FROM SkaphandrusAppBundle:SkUserResult u";
+        $dql = "SELECT u FROM SkaphandrusAppBundle:SkUserResults u join SkaphandrusAppBundle:FosUser f WITH u.id = f.id order by u.photos desc";
         $query = $em->createQuery($dql);
 
         $paginator = $this->get('knp_paginator');
