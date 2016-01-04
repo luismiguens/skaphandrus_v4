@@ -411,6 +411,9 @@ class IdentificationController extends Controller {
                         'id' => $imageRef_obj->getId(),
                         'image_src' => $imageRef_obj->getImageSrc(),
                         'image_url' => $imageRef_obj->getImageUrl()
+                            
+                            
+                            //Milton já está a receber photographer
                     );
                 }
             }

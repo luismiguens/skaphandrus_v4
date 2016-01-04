@@ -18,7 +18,8 @@
                                 <a href="{{ url_to_contest(contest) }}">{{"form.contest.go_to_contest"|trans}}</a>
                             </li>
                         {% endif %}
-                        {% if contest.isInProgress and isJudge %}
+                       {# {% if contest.isInProgress and isJudge %}#}
+                       {% if isJudge %}
                             <li>
                                 <a href="{{ path('judge_votation_admin', { 'contest_id': contest.id }) }}">{{"form.contest.votation"|trans}}</a>
                             </li>
