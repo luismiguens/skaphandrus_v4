@@ -63,7 +63,7 @@ class IdentificationController extends Controller {
         $module = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkIdentificationModule')
                 ->findBySlug($slug, $locale);
 
-        dump($module);
+        //dump($module);
         
         return $this->render('SkaphandrusAppBundle:Identification:criterias.html.twig', array('module' => $module));
     }
