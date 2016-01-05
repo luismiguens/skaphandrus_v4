@@ -410,7 +410,10 @@ class IdentificationController extends Controller {
                     $photos[] = array(
                         'id' => $imageRef_obj->getId(),
                         'image_src' => $imageRef_obj->getImageSrc(),
-                        'image_url' => $imageRef_obj->getImageUrl()
+                        'image_url' => $imageRef_obj->getImageUrl(),
+                        'image_type' => "google",
+                        'photographer' => "Luis Miguens",
+                        'license' => "Attribution"
                             
                             
                             //Milton já está a receber photographer
