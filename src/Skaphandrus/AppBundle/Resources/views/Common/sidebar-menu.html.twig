@@ -47,39 +47,40 @@
             </li>
 
             <li class="{{ 'SkSocialNotifyController' in app.request.attributes.get("_controller")?'active' }}">
-                <a href="{{ path('notify_admin') }}"><i class="fa fa-bell"></i> <span class="nav-label">{{ "notify_admin"|trans }} </span>{#<span class="label label-warning pull-right">16/24</span>#}</a>
+                <a href="{{ path('notify_admin') }}"><i class="fa fa-bell"></i> <span class="nav-label">{{ "notify_admin"|trans }} </span></a>
             </li>
 
             <li class="{{ 'SkPhotoController' in app.request.attributes.get("_controller")?'active' }}">
-                <a href="{{ path('photo_admin') }}"><i class="fa fa-photo"></i> <span class="nav-label">{{ "photo_admin"|trans }} </span>{#<span class="label label-warning pull-right">16/24</span>#}</a>
+                <a href="{{ path('photo_admin') }}"><i class="fa fa-photo"></i> <span class="nav-label">{{ "photo_admin"|trans }} </span></a>
             </li>
             <li class="{{ 'SkSpotController' in app.request.attributes.get("_controller")?'active' }}">
-                <a href="{{ path('spot_admin') }}"><i class="fa fa-globe"></i> <span class="nav-label">{{ "spot_admin"|trans }} </span>{#<span class="label label-warning pull-right">16/24</span>#}</a>
+                <a href="{{ path('spot_admin') }}"><i class="fa fa-globe"></i> <span class="nav-label">{{ "spot_admin"|trans }} </span></a>
             </li>
 
 
             <li class="{{ 'SkPersonController' in app.request.attributes.get("_controller")?'active' }}">
-                <a href="{{ path('person_admin') }}"><i class="fa fa-group"></i> <span class="nav-label">{{ "person_admin"|trans }} </span>{#<span class="label label-warning pull-right">16/24</span>#}</a>
+                <a href="{{ path('person_admin') }}"><i class="fa fa-group"></i> <span class="nav-label">{{ "person_admin"|trans }} </span></a>
             </li>           
 
 
             <li class="{{ 'SkModulesController' in app.request.attributes.get("_controller")?'active' }}">
-                <a href="{{ path('module_admin_edit') }}"><i class="fa fa-cube"></i> <span class="nav-label">{{ "modules_admin"|trans }} </span>{#<span class="label label-warning pull-right">16/24</span>#}</a>
+                <a href="{{ path('module_admin_edit') }}"><i class="fa fa-cube"></i> <span class="nav-label">{{ "modules_admin"|trans }} </span></a>
             </li>
 
             <li class="{{ 'SkPointsController' in app.request.attributes.get("_controller")?'active' }}">
-                <a href="{{ path('points_admin') }}"><i class="fa fa-star"></i> <span class="nav-label">{{ "points_admin"|trans }} </span>{#<span class="label label-warning pull-right">16/24</span>#}</a>
+                <a href="{{ path('points_admin') }}"><i class="fa fa-star"></i> <span class="nav-label">{{ "points_admin"|trans }} </span></a>
             </li>
 
             {% if is_granted("IS_AUTHENTICATED_FULLY") %}
-            {#contests list#}
-            {{ render(controller('SkaphandrusAppBundle:Common:skContestsList')) }}
+
+                {{ render(controller('SkaphandrusAppBundle:Common:skContestsList')) }}
             {% endif %}
-            
+
             {% if is_granted("ROLE_ADMIN") %}
 
                 <li class="{{ 'TranslationController' in app.request.attributes.get("_controller")?'active' }}">
-                    <a target="_blank" href="{{ path('lexik_translation_grid') }}"><i class="fa fa-language"></i> <span class="nav-label">Translations </span>{#<span class="label label-warning pull-right">16/24</span>#}</a>
+                    <a target="_blank" href="{{ path('lexik_translation_grid') }}"><i class="fa fa-language"></i> <span class="nav-label">Translations </span>
+                    </a>
                 </li>
 
                 <li class="{{ 'SkIdentification' in app.request.attributes.get("_controller")?'active' }}">
@@ -113,19 +114,7 @@
                     </ul>
                 </li>
 
-                {#<li class="{{ 'SkCourseController' in app.request.attributes.get("_controller")?'active' }}">
-                    <a href="#"><i class="fa fa-graduation-cap"></i> <span class="nav-label">{{ "menu_course_admin"|trans }} </span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse" style="height: 0px;">
-                        <li><a href="{{ path('course_admin') }}">{{ "course_admin"|trans }}</a></li>
-                    </ul>
-                </li>
-                
-                <li class="{{ 'SkCourseAffiliationController' in app.request.attributes.get("_controller")?'active' }}">
-                    <a href="#"><i class="fa fa-book"></i> <span class="nav-label">{{ "menu_course_affiliation_admin"|trans }} </span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse" style="height: 0px;">
-                        <li><a href="{{ path('course_affiliation_admin') }}">{{ "course_affiliation_admin"|trans }}</a></li>
-                    </ul>
-                </li>#}
+
 
             {% endif %}
         </ul> 

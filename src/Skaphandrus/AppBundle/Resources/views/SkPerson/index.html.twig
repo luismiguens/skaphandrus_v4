@@ -37,7 +37,6 @@
         <thead>
             <tr>
                 <th>{{ "form.person.label.name"|trans }}</th>
-               <!-- <th>{{ "form.person.label.image"|trans }}</th>-->
                 <th>{{ "form.person.label.observations"|trans }}</th>
                 <th>{{ "form.common.label.actions"|trans }}</th>
             </tr>
@@ -46,7 +45,6 @@
             {% for entity in entities %}
                 <tr>
                     <td>{{ entity.skaphandrusId }}</td>
-                    <!-- <td>image</td>-->
                     <td>{{ entity.observations }}</td>
                     <td>
                         <a class="btn btn-white btn-sm" href="{{ path('person_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.edit"|trans }}</a>

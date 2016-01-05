@@ -22,13 +22,15 @@
     </ol>
 {% endblock %}
 
-{#{% block heading_action %}
+{% block heading_action %}
     <a href="{{ path('judge_votation_admin_new') }}" class="btn btn-primary">{{ "form.judge_votation.btn.add"|trans }}</a>
-{% endblock %}#}
+{% endblock %}
 
 {% block form_title_description %}
     {{ "form.judge_votation.text.description"|trans }}
 {% endblock %}
+
+
 
 
 {% block body -%}
