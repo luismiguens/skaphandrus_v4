@@ -2,7 +2,7 @@
 
 
 {% if contests %}
-    {#<li class="{{ 'ContestController' in app.request.attributes.get("_controller")?'active' }}">
+    <li class="{{ 'ContestController' in app.request.attributes.get("_controller")?'active' }}">
         <a href="#"><i class="fa fa-trophy"></i> <span class="nav-label">{{ "contest_admin"|trans }} </span><span class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse" style="height: 0px;">
             {% for contest in contests %} 
@@ -29,5 +29,5 @@
                 </li>
             {% endfor %}
         </ul>
-    </li>#}
+    </li>
 {% endif %}

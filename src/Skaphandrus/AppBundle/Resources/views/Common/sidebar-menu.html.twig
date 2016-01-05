@@ -72,7 +72,6 @@
             </li>
 
             {% if is_granted("IS_AUTHENTICATED_FULLY") %}
-
                 {{ render(controller('SkaphandrusAppBundle:Common:skContestsList')) }}
             {% endif %}
 

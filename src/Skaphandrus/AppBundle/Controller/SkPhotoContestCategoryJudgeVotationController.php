@@ -13,11 +13,57 @@ use Skaphandrus\AppBundle\Form\SkPhotoContestCategoryJudgeVotationType;
  */
 class SkPhotoContestCategoryJudgeVotationController extends Controller {
 
+    
     /**
      * Lists all SkPhotoContestCategoryJudgeVotation entities.
      *
      */
-    public function indexAction($contest_id) {
+    public function index2Action() {
+        
+//        $contest_id = 2;
+//        $em = $this->getDoctrine()->getManager();
+//
+//        $fos_user = $this->get('security.token_storage')->getToken()->getUser();
+//        $judge = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestJudge')->findOneBy(array('fosUser' => $fos_user));
+//
+//        $entities = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->getJudgeVotationsByContest($contest_id, $judge);
+//
+//        //se ainda não existirem votacoes do juiz criar
+//        if (!$entities) {
+//
+//            $categories = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')->findBy(array('contest' => $contest_id));
+//
+//            foreach ($categories as $key => $category) {
+//                $JudgeVotation = new SkPhotoContestCategoryJudgeVotation();
+//                $JudgeVotation->setCategory($category);
+//                $JudgeVotation->setJudge($judge);
+//
+//                $em->persist($JudgeVotation);
+//                $em->flush();
+//            }
+//
+//            $entities = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->getJudgeVotationsByContest($contest_id, $judge);
+//        }
+
+        return $this->render('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation:index2.html.twig', array(
+                    'entities' => null,
+        ));
+    }
+    
+    
+    
+    /**
+     * Lists all SkPhotoContestCategoryJudgeVotation entities.
+     *
+     */
+    public function indexAction(Request $request) {
+        
+         
+                
+                        $contest_id = $request->query->get('contest_id');
+        if (!$contest_id)
+            $contest_id = $request->request->get('contest_id');
+        
         $em = $this->getDoctrine()->getManager();
 
         $fos_user = $this->get('security.token_storage')->getToken()->getUser();
