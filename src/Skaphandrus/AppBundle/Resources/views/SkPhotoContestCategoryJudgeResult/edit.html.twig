@@ -1,0 +1,67 @@
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% form_theme edit_form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/hack/autocompleter-jqueryui.js') }}"></script>
+
+{% endblock %}
+
+
+{% block heading_title %}
+    {{ "form.judge_result.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="{{ path('judge_result_admin', { 'contest_id': contest.id }) }}">{{ "breadcrumb.judge_result"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.edit_judge_result"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+
+{#{% block heading_action %}
+    <a href="{{ path('judge_result_admin_new') }}" class="btn btn-primary">{{ "form.judge_result.btn.add"|trans }}</a>
+{% endblock %}#}
+
+
+{% block form_title_description %}
+    {{ "form.judge_result.text.description"|trans }} 
+{% endblock %}
+
+{% block body -%}
+
+    <table class="table table-striped" >
+        <thead>
+            <tr>
+                <th>{{ "form.judge_result.label.photo_contest"|trans }}</th>
+                <th>{{ "form.judge_result.label.judge_vote"|trans }}</th>
+                <th>{{ "form.judge_result.label.judge_vote_total"|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in mostVotedPhotos %}
+                <tr>
+                    <td> 
+                        <a href="{{path('photo_no_slug', { 'id': p.photo.id })}}" > 
+                            <img src="{{ p.photo.getWebPath | imagine_filter('sk_widen_100') }}" class="feed-photo" alt="{{ p.photo }}">
+                        </a>
+                    </td>
+                    <td>
+                        {#{% for j in p. %}
+                            {{ j }}
+                        {% endfor %}#}
+                    </td>
+                    <td>
+                        {{ p.points }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

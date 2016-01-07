@@ -7,7 +7,7 @@
         <ul class="nav nav-second-level collapse" style="height: 0px;">
             {% for contest in contests %} 
                 <li class="{{ 'ContestController' in app.request.attributes.get("_controller")?'active' }}">
-                
+
                     <a href="#{{contest.name}}"><i class="fa fa-trophy"></i> <span class="nav-label">{{contest.name}} </span><span class="fa arrow"></span></a>
                     <ul class="nav nav-third-level" style="height: 0px;">
                         {% if contest.isInProgress %}
@@ -19,10 +19,15 @@
                                 <a href="{{ url_to_contest(contest) }}">{{"form.contest.go_to_contest"|trans}}</a>
                             </li>
                         {% endif %}
-                       
-                       {% if isJudge %}
+
+                        {% if isJudge %}
                             <li>
                                 <a href="{{ path('judge_votation_admin', { 'contest_id': contest.id }) }}">{{"form.contest.votation"|trans}}</a>
+                            </li>
+                        {% endif %}
+                        {% if (isJudge) or (is_granted("ROLE_ADMIN")) %}
+                            <li>
+                                <a href="{{ path('judge_result_admin', { 'contest_id': contest.id }) }}">{{"form.contest.judge_result"|trans}}</a>
                             </li>
                         {% endif %}
                     </ul>

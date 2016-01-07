@@ -61,7 +61,7 @@ class SkPhotoContestCategoryJudgeVotationRepository extends EntityRepository {
             $photos[] = $allPhotos[$key];
             $key ++;
         }
-
+        
         return $photos;
     }
 
@@ -84,6 +84,41 @@ class SkPhotoContestCategoryJudgeVotationRepository extends EntityRepository {
             JOIN SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation v with cc.id = v.category
             WHERE v.id = :votation '
                 )->setParameter('votation', $votation_id)->getSingleResult();
+    }
+
+    public function getMostVotedPhotos($category_id) {
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+        $sql = "SELECT photo_id, sum(points) as points, judge_id as judge, points as pontos
+                FROM (
+                    SELECT votation.category_id, votation.judge_id, vote.photo_id as photo_id, vote.points as points, votation.id 
+                    FROM sk_photo_contest_category_judge_photo_vote as vote 
+                    JOIN sk_photo_contest_category_judge_votation as votation on vote.votation_id = votation.id 
+                    WHERE category_id = " . $category_id . ") as somatorio 
+                GROUP by photo_id 
+                HAVING points > 0
+                ORDER by points desc";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+
+            $p = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($value['photo_id']);
+
+            $photo = new \Skaphandrus\AppBundle\Entity\SkPhotoContestCategoryJudgePhotoVote();
+            $photo->setPhoto($p);
+            $photo->setPoints($value['points']);
+
+            $result[] = $photo;
+        }
+
+//        dump($values);
+
+        return $result;
     }
 
 }

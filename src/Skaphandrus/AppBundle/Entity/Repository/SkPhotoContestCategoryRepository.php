@@ -53,10 +53,10 @@ class SkPhotoContestCategoryRepository extends EntityRepository {
 
         $sql = "SELECT photo_id, sum(points) as points 
                 FROM (
-                        SELECT votation.category_id, votation.judge_id, vote.photo_id as photo_id, vote.points as points, votation.id 
-                        FROM sk_photo_contest_category_judge_photo_vote as vote 
-                        JOIN sk_photo_contest_category_judge_votation as votation on vote.votation_id = votation.id 
-                        WHERE category_id = " . $category_id . ") as somatorio 
+                    SELECT votation.category_id, votation.judge_id, vote.photo_id as photo_id, vote.points as points, votation.id 
+                    FROM sk_photo_contest_category_judge_photo_vote as vote 
+                    JOIN sk_photo_contest_category_judge_votation as votation on vote.votation_id = votation.id 
+                    WHERE category_id = " . $category_id . ") as somatorio 
                 GROUP by photo_id 
                 HAVING points > 0 
                 ORDER by points desc

@@ -1,0 +1,56 @@
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block heading_title %}
+    {{ "form.judge_result.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.judge_result"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block heading_action %}
+    <a href="{{ path('judge_result_admin_new') }}" class="btn btn-primary">{{ "form.judge_result.btn.add"|trans }}</a>
+{% endblock %}
+
+{% block form_title_description %}
+    {{ "form.judge_result.text.description"|trans }}
+{% endblock %}
+
+{% block body -%}
+    
+    <table class="table table-striped" >
+        <thead>
+            <tr>
+                <th>{{ "form.judge_result.label.photo_contest"|trans }}</th>
+                <th>{{ "form.judge_result.label.photo_contest_category"|trans }}</th>
+                <th>{{ "form.common.label.actions"|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.category.contest }}</td>
+                    <td>{{ entity.category }}</td>
+                    <td>
+                        <a class="btn btn-white btn-sm" href="{{ path('judge_result_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit"|trans }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
