@@ -93,6 +93,16 @@ class SkPhotoContestCategoryJudgeVotationRepository extends EntityRepository {
                 )->setParameter('category_id', $category_id)->setParameter('judge_id', $judge_id)->getOneOrNullResult();
     }
 
+    public function getJudgePhotoVotesByPhotoInCategory($photo_id, $category_id) {
+
+        return $this->getEntityManager()->createQuery(
+                        'SELECT pv
+            FROM SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation v
+            JOIN SkaphandrusAppBundle:SkPhotoContestCategoryJudgePhotoVote pv with pv.votation = v.id
+                       WHERE v.category = :category_id AND pv.photo = :photo_id'
+                )->setParameter('category_id', $category_id)->setParameter('photo_id', $photo_id)->getResult();
+    }
+
     public function getJudgeVotationsByContest($contest_id, $judge) {
 
         return $this->getEntityManager()->createQuery(
@@ -129,7 +139,7 @@ class SkPhotoContestCategoryJudgeVotationRepository extends EntityRepository {
 //                HAVING points > 0
 //                ORDER by points desc";
 
-        $sql = "select vote.photo_id as photo_id, sum(vote.points) as points, vote.votation_id as votation
+        $sql = "select vote.photo_id as photo_id, sum(vote.points) as points
                 from sk_photo_contest_category_judge_photo_vote as vote
                 join sk_photo_contest_category_judge_votation as votation
                 on votation.id = vote.votation_id
@@ -144,20 +154,21 @@ class SkPhotoContestCategoryJudgeVotationRepository extends EntityRepository {
         $result = array();
 
         foreach ($values as $value) {
+            $photo = array();
+            $photo['photo'] = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($value['photo_id']);
+            $photo['photo_votes'] = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->getJudgePhotoVotesByPhotoInCategory($value['photo_id'], $category_id);
+            $photo['points'] = $value['points'];
 
-            $photo = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($value['photo_id']);
+//            $photo = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($value['photo_id']);
+//            $votation = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->find($value['votation']);
+//            $photoVote = new \Skaphandrus\AppBundle\Entity\SkPhotoContestCategoryJudgePhotoVote();
+//            $photoVote->setPhoto($photo);
+//            $photoVote->setPoints($value['points']);
+//            $photo = new \Skaphandrus\AppBundle\Entity\SkPhoto();
+//            $photo->getPoints($value['points']);
 
-            $votation = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->find($value['votation']);
-            
-            $photoVote = new \Skaphandrus\AppBundle\Entity\SkPhotoContestCategoryJudgePhotoVote();
-            $photoVote->setPhoto($photo);
-            $photoVote->setPoints($value['points']);
-            $photoVote->setVotation($votation);
-
-            $result[] = $photoVote;
+            $result[] = $photo;
         }
-
-//        dump($values);
 
         return $result;
     }

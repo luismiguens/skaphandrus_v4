@@ -1,12 +1,8 @@
 {% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
 
-{% form_theme edit_form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/hack/autocompleter-jqueryui.js') }}"></script>
-
 {% endblock %}
 
 
@@ -35,7 +31,7 @@
 
 {% block body -%}
 
-    <h2>{{ contest.name }} - {{ entity.category.name }}</h2>
+    <h2>{{ contest.name }} - {{ votation.category.name }}</h2>
 
     <table class="table table-striped" >
         <thead>
@@ -46,7 +42,9 @@
             </tr>
         </thead>
         <tbody>
-            {% for p in judgePhotoVoteResults %}
+
+
+            {% for p in results %}
                 <tr>
                     <td> 
                         <a href="{{path('photo_no_slug', { 'id': p.photo.id })}}" > 
@@ -54,13 +52,10 @@
                         </a>
                     </td>
                     <td>
-                        {% for vote in p.votation.judgeVote %}
-                            {{ vote.points }}
+                        {% for vote in p.photo_votes %}
+                            Judge : {{ vote.votation.judge }}
+                            Points : {{ vote.points }}<br/>
                         {% endfor %}
-                        {#{{ p.judge }}#}
-                        {#{% for j in p.votation %}
-                            {{ j }}
-                        {% endfor %}#}
                     </td>
                     <td>
                         {{ p.points }}

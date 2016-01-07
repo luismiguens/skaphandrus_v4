@@ -310,16 +310,8 @@ class SkPhotoRepository extends EntityRepository {
                 )->setParameter('string', '%' . $string . '%')->getResult();
     }
 
-    
-    
-    
-    
-    public function countPointsFromPublicInCategory($photo_id, $category_id){
-        
-        
-        
+    public function countPointsFromPublicInCategory($photo_id, $category_id) {
 
-        
         $result = $this->getEntityManager()
                         ->createQuery(
                                 "SELECT COUNT(p.photo) as countable
@@ -327,17 +319,12 @@ class SkPhotoRepository extends EntityRepository {
             WHERE p.photo = :photo_id AND p.category = :category_id
             GROUP BY p.photo"
                         )->setParameter('photo_id', $photo_id)->setParameter('category_id', $category_id)->getOneOrNullResult();
-        
-        
+
         if ($result):
-return $result['countable'];
+            return $result['countable'];
         else:
             return 0;
         endif;
-        
     }
-    
-    
-    
-    
+
 }
