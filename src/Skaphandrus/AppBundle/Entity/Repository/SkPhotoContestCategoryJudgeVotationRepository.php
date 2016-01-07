@@ -17,11 +17,28 @@ class SkPhotoContestCategoryJudgeVotationRepository extends EntityRepository {
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
-        $sql = " SELECT v.photo_id as id, count(v.photo_id) as countable
-                FROM sk_photo_contest_vote as v
-                where v.category_id = " . $category_id . "
-                group by v.photo_id
-                order by countable desc ";
+        $sql = "select id, sum(countable) as countable from ((
+  SELECT 
+    v.photo_id as id, 
+    count(v.photo_id) as countable 
+  FROM 
+    sk_photo_contest_vote as v 
+  where 
+    v.category_id = " . $category_id . " 
+  group by 
+    v.photo_id 
+  order by 
+    countable desc
+) 
+UNION 
+  ALL (
+    SELECT 
+      photo_id, 
+      0 as countable
+    FROM 
+      sk_photo_contest_category_photo as c 
+    where 
+      c.category_id = " . $category_id . "  )) t3 group by id order by countable desc";
 
         $statement = $connection->prepare($sql);
         $statement->execute();
@@ -61,8 +78,19 @@ class SkPhotoContestCategoryJudgeVotationRepository extends EntityRepository {
             $photos[] = $allPhotos[$key];
             $key ++;
         }
-        
+
+        //dump($photos);
+
         return $photos;
+    }
+
+    public function getJudgeVotationsByCategory($judge_id, $category_id) {
+
+        return $this->getEntityManager()->createQuery(
+                        'SELECT v
+            FROM SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation v
+                       WHERE v.category = :category_id AND v.judge = :judge_id'
+                )->setParameter('category_id', $category_id)->setParameter('judge_id', $judge_id)->getOneOrNullResult();
     }
 
     public function getJudgeVotationsByContest($contest_id, $judge) {
