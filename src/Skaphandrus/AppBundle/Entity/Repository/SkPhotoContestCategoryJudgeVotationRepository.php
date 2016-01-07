@@ -17,28 +17,28 @@ class SkPhotoContestCategoryJudgeVotationRepository extends EntityRepository {
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
-        $sql = "select id, sum(countable) as countable from ((
-  SELECT 
-    v.photo_id as id, 
-    count(v.photo_id) as countable 
-  FROM 
-    sk_photo_contest_vote as v 
-  where 
-    v.category_id = " . $category_id . " 
-  group by 
-    v.photo_id 
-  order by 
-    countable desc
-) 
-UNION 
-  ALL (
-    SELECT 
-      photo_id, 
-      0 as countable
-    FROM 
-      sk_photo_contest_category_photo as c 
-    where 
-      c.category_id = " . $category_id . "  )) t3 group by id order by countable desc";
+        $sql = "SELECT id, sum(countable) as countable FROM (
+                    ( 
+                    SELECT v.photo_id as id, count(v.photo_id) as countable 
+                    FROM 
+                      sk_photo_contest_vote as v 
+                    where 
+                      v.category_id = " . $category_id . " 
+                    group by 
+                      v.photo_id 
+                    order by 
+                      countable desc
+                    ) 
+                UNION ALL 
+                    (
+                    SELECT photo_id, 0 as countable
+                    FROM 
+                        sk_photo_contest_category_photo as c 
+                        where c.category_id = " . $category_id . "  
+                    )
+                ) t3 
+                group by id 
+                order by countable desc";
 
         $statement = $connection->prepare($sql);
         $statement->execute();
@@ -114,17 +114,27 @@ UNION
                 )->setParameter('votation', $votation_id)->getSingleResult();
     }
 
-    public function getMostVotedPhotos($category_id) {
+    public function getJudgePhotoVoteResults($category_id) {
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
-        $sql = "SELECT photo_id, sum(points) as points, judge_id as judge, points as pontos
-                FROM (
-                    SELECT votation.category_id, votation.judge_id, vote.photo_id as photo_id, vote.points as points, votation.id 
-                    FROM sk_photo_contest_category_judge_photo_vote as vote 
-                    JOIN sk_photo_contest_category_judge_votation as votation on vote.votation_id = votation.id 
-                    WHERE category_id = " . $category_id . ") as somatorio 
-                GROUP by photo_id 
+
+//        $sql = "SELECT photo_id, sum(points) as points
+//                FROM (
+//                    SELECT votation.category_id, votation.judge_id, vote.photo_id as photo_id, vote.points as points, votation.id 
+//                    FROM sk_photo_contest_category_judge_photo_vote as vote 
+//                    JOIN sk_photo_contest_category_judge_votation as votation on vote.votation_id = votation.id 
+//                    WHERE category_id = ". $category_id .") as somatorio 
+//                GROUP by photo_id 
+//                HAVING points > 0
+//                ORDER by points desc";
+
+        $sql = "select vote.photo_id as photo_id, sum(vote.points) as points, vote.votation_id as votation
+                from sk_photo_contest_category_judge_photo_vote as vote
+                join sk_photo_contest_category_judge_votation as votation
+                on votation.id = vote.votation_id
+                where votation.category_id = " . $category_id . "
+                group by photo_id
                 HAVING points > 0
                 ORDER by points desc";
 
@@ -135,13 +145,16 @@ UNION
 
         foreach ($values as $value) {
 
-            $p = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($value['photo_id']);
+            $photo = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($value['photo_id']);
 
-            $photo = new \Skaphandrus\AppBundle\Entity\SkPhotoContestCategoryJudgePhotoVote();
-            $photo->setPhoto($p);
-            $photo->setPoints($value['points']);
+            $votation = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->find($value['votation']);
+            
+            $photoVote = new \Skaphandrus\AppBundle\Entity\SkPhotoContestCategoryJudgePhotoVote();
+            $photoVote->setPhoto($photo);
+            $photoVote->setPoints($value['points']);
+            $photoVote->setVotation($votation);
 
-            $result[] = $photo;
+            $result[] = $photoVote;
         }
 
 //        dump($values);

@@ -82,7 +82,7 @@
                                     </a>
                                 </li>
 
-                                {% if contest.endAt|date("m/d/Y") < "now"|date("m/d/Y") %} 
+                                {% if not contest.isInProgress %} 
                                     <li>
                                         <a href="{{ url_to_contest_winners(contest) }}">
                                             {{ "page.contest.tab.winners"|trans }}

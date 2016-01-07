@@ -28,10 +28,13 @@ class SkPhotoContestCategoryJudgeResultController extends Controller {
         $fos_user = $this->get('security.token_storage')->getToken()->getUser();
         $judge = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestJudge')->findOneBy(array('fosUser' => $fos_user));
 
+        $contest = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')->find($contest_id);
+        
         $entities = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->getJudgeVotationsByContest($contest_id, $judge);
 
         return $this->render('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeResult:index.html.twig', array(
                     'entities' => $entities,
+                    'contest' => $contest,
         ));
     }
 
@@ -125,15 +128,17 @@ class SkPhotoContestCategoryJudgeResultController extends Controller {
             throw $this->createNotFoundException('Unable to find SkPhotoContestCategoryJudgeVotation entity.');
         }
 
-        $mostVotedPhotos = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->getMostVotedPhotos($entity->getCategory()->getId());
+        $judgePhotoVoteResults = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->getJudgePhotoVoteResults($entity->getCategory()->getId());
 
+//        $judgePhotoVoteResults = $entity;
+        
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeResult:edit.html.twig', array(
                     'contest' => $contest,
                     'entity' => $entity,
-                    'mostVotedPhotos' => $mostVotedPhotos,
+                    'judgePhotoVoteResults' => $judgePhotoVoteResults,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
         ));

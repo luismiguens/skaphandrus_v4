@@ -63,7 +63,8 @@ class SkPhotoContestCategoryJudgeVotationController extends Controller {
 
         $fos_user = $this->get('security.token_storage')->getToken()->getUser();
         $judge = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestJudge')->findOneBy(array('fosUser' => $fos_user));
-
+        $contest = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')->find($contest_id);
+        
         //ir buscar as categorias do concurso
         $categories = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')->findBy(array('contest' => $contest_id));
 
@@ -88,6 +89,7 @@ class SkPhotoContestCategoryJudgeVotationController extends Controller {
 
         return $this->render('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation:index.html.twig', array(
                     'entities' => $entities,
+                    'contest' => $contest,
         ));
     }
 
@@ -188,12 +190,9 @@ class SkPhotoContestCategoryJudgeVotationController extends Controller {
 
             $mostVotedPhotos = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->findMostVotedPhotosByCategory($votation->getCategory()->getId());
 
-
-
-
             foreach ($mostVotedPhotos as $key => $photo) {
 
-                //echo $photo['id']." : ";
+//                echo $photo['id']." : ";
 //                echo $photo['countable']."<br/>";
 
                 $judgeVote = new \Skaphandrus\AppBundle\Entity\SkPhotoContestCategoryJudgePhotoVote();
@@ -223,7 +222,7 @@ class SkPhotoContestCategoryJudgeVotationController extends Controller {
 
         return $this->render('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation:edit.html.twig', array(
                     'contest' => $contest,
-//                    'entity' => $entity,
+                    'votation' => $votation,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
         ));
