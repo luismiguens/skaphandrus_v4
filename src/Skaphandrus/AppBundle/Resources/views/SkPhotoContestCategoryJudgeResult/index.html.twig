@@ -1,10 +1,12 @@
 {% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
 
+{% block page_title %}{{ "page.judge_result.meta_tag.title"|trans }}{% endblock %}
+
+{% block page_description %}{{ "page.judge_result.meta_tag.description"|trans }}{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
-
 {% endblock %}
-
 
 {% block stylesheets %}
     {{ parent() }}
@@ -14,16 +16,11 @@
     {{ "form.judge_result.h1.title"|trans }}
 {% endblock %}
 
-
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
-        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
         <li class="active"><strong>{{ "breadcrumb.judge_result"|trans }}</strong></li>
     </ol>
-{% endblock %}
-
-{% block heading_action %}
-    <a href="{{ path('judge_result_admin_new') }}" class="btn btn-primary">{{ "form.judge_result.btn.add"|trans }}</a>
 {% endblock %}
 
 {% block form_title_description %}
@@ -31,9 +28,9 @@
 {% endblock %}
 
 {% block body -%}
-    
+
     <h2>{{ contest.name }}</h2>
-    
+
     <table class="table table-striped" >
         <thead>
             <tr>

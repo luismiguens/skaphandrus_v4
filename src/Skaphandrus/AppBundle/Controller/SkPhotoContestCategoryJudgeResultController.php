@@ -121,9 +121,8 @@ class SkPhotoContestCategoryJudgeResultController extends Controller {
     public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
         
-        $votation = new SkPhotoContestCategoryJudgeVotation();
+//        $votation = new SkPhotoContestCategoryJudgeVotation();
         $votation = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->find($id);
-
 
         $contest = $votation->getCategory()->getContest();
 //        $contest = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->findContestByVotation($id);
@@ -133,8 +132,6 @@ class SkPhotoContestCategoryJudgeResultController extends Controller {
         }
 
         $results = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->getJudgePhotoVoteResults($votation->getCategory()->getId());
-
-
 
         return $this->render('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeResult:edit.html.twig', array(
                     'contest' => $contest,

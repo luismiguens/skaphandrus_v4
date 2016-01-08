@@ -2,32 +2,29 @@
 
 {% form_theme edit_form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
 
+{% block page_title %}{{ "page.judge_votation_edit.meta_tag.title"|trans }}{% endblock %}
+
+{% block page_description %}{{ "page.judge_votation_edit.meta_tag.description"|trans }}{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/hack/autocompleter-jqueryui.js') }}"></script>
-
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
 
 {% block heading_title %}
     {{ "form.judge_votation.h1.title"|trans }}
 {% endblock %}
 
-
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
-        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
         <li><a href="{{ path('judge_votation_admin', { 'contest_id': contest.id }) }}">{{ "breadcrumb.judge_votation"|trans }}</a></li>
         <li class="active"><strong>{{ "breadcrumb.edit_judge_votation"|trans }}</strong></li>
     </ol>
 {% endblock %}
-
-
-{#{% block heading_action %}
-    <a href="{{ path('judge_votation_admin_new') }}" class="btn btn-primary">{{ "form.judge_votation.btn.add"|trans }}</a>
-{% endblock %}#}
-
 
 {% block form_title_description %}
     {{ "form.judge_votation.text.description"|trans }} 
@@ -66,8 +63,6 @@
         {% endfor %}
     </table>
 
-
-
     <div class="form-group">
         <div class="col-sm-10 col-sm-offset-2">
             <a class="btn btn-white" href="{{ path('judge_votation_admin', {'contest_id':contest.id}) }}">{{ "form.common.btn.back_to_list"|trans }}</a>
@@ -77,8 +72,5 @@
     </div>
 
     {{ form_end(edit_form) }}
-
-    {#    {{ form(delete_form) }}#}
-
 
 {% endblock %}

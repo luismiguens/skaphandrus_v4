@@ -1,29 +1,28 @@
 {% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
 
+{% block page_title %}{{ "page.judge_result_edit.meta_tag.title"|trans }}{% endblock %}
+
+{% block page_description %}{{ "page.judge_result_edit.meta_tag.description"|trans }}{% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
 
 {% block heading_title %}
     {{ "form.judge_result.h1.title"|trans }}
 {% endblock %}
 
-
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
-        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
         <li><a href="{{ path('judge_result_admin', { 'contest_id': contest.id }) }}">{{ "breadcrumb.judge_result"|trans }}</a></li>
         <li class="active"><strong>{{ "breadcrumb.edit_judge_result"|trans }}</strong></li>
     </ol>
 {% endblock %}
-
-
-{#{% block heading_action %}
-    <a href="{{ path('judge_result_admin_new') }}" class="btn btn-primary">{{ "form.judge_result.btn.add"|trans }}</a>
-{% endblock %}#}
-
 
 {% block form_title_description %}
     {{ "form.judge_result.text.description"|trans }} 
@@ -43,7 +42,6 @@
         </thead>
         <tbody>
 
-
             {% for p in results %}
                 <tr>
                     <td> 
@@ -53,8 +51,12 @@
                     </td>
                     <td>
                         {% for vote in p.photo_votes %}
-                            Judge : {{ vote.votation.judge }}
-                            Points : {{ vote.points }}<br/>
+                            <img src="{{ vote.votation.judge.fosUser.settings.getWebPath|imagine_filter('sk_thumbnail_outbound_48') }}" class="img-circle" style="width:30px" alt="{{ vote.votation.judge }}">
+                            {{ vote.votation.judge|title }}: {{ vote.points }}
+                            <br/>
+                            {#{% set aux = '<img alt="'~ vote.votation.judge ~'" class="img-circle" style="width:30px" src="'~ vote.votation.judge.fosUser.settings.getWebPath|imagine_filter('sk_thumbnail_outbound_48') ~'">' %}
+                            {% trans with {'%judge%': vote.votation.judge|title, '%img%': aux, '%points%': vote.points } %}page.judge_result_edit.meta_tag.judge{% endtrans %}#}
+                            
                         {% endfor %}
                     </td>
                     <td>

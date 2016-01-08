@@ -1,10 +1,12 @@
 {% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
 
+{% block page_title %}{{ "page.judge_votation.meta_tag.title"|trans }}{% endblock %}
+
+{% block page_description %}{{ "page.judge_votation.meta_tag.description"|trans }}{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
-    
 {% endblock %}
-
 
 {% block stylesheets %}
     {{ parent() }}
@@ -14,16 +16,11 @@
     {{ "form.judge_votation.h1.title"|trans }}
 {% endblock %}
 
-
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
-        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
         <li class="active"><strong>{{ "breadcrumb.judge_votation"|trans }}</strong></li>
     </ol>
-{% endblock %}
-
-{% block heading_action %}
-    <a href="{{ path('judge_votation_admin_new') }}" class="btn btn-primary">{{ "form.judge_votation.btn.add"|trans }}</a>
 {% endblock %}
 
 {% block form_title_description %}
@@ -31,9 +28,9 @@
 {% endblock %}
 
 {% block body -%}
-    
+
     <h2>{{ contest.name }}</h2>
-    
+
     <table class="table table-striped" >
         <thead>
             <tr>
@@ -48,11 +45,18 @@
                     <td>{{ entity.category.contest }}</td>
                     <td>{{ entity.category }}</td>
                     <td>
-                        <a class="btn btn-white btn-sm" href="{{ path('judge_votation_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit"|trans }}</a>
+                        {#<ul>
+                            <li>#}
+                                <a class="btn btn-white btn-sm" href="{{ path('judge_votation_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "form.judge_votation.label.voting"|trans }}</a>
+                            {#</li>
+                            <li>#}
+                                <a class="btn btn-white btn-sm" href="{{ path('judge_result_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "form.judge_votation.label.results"|trans }}</a>
+                            {#</li>
+                        </ul>#}
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-    
+
 {% endblock %}

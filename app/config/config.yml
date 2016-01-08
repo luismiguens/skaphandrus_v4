@@ -251,12 +251,11 @@ liip_imagine:
     filter_sets:
         cache: ~
         
-        
-        
         small_thumb:
             quality: 100
             filters:
                 thumbnail: { size: [120, 90], mode: outbound }
+
         sk_widen_50:
             filters:
                 relative_resize: { widen: 50 } 
@@ -278,7 +277,6 @@ liip_imagine:
             filters:
                 relative_resize: { widen: 265 }
                 
-                
         #galeria de fotografias        
         sk_widen_400:
             filters:
@@ -296,16 +294,10 @@ liip_imagine:
             filters:
                 thumbnail: { size: [50, 50], mode: outbound }
 
-        
-        
         # skGrid e associar a categoria no concurso
         sk_thumbnail_outbound_100:
             filters:
                 thumbnail: { size: [100, 100], mode: outbound }
-
-
-
-
         sk_thumbnail_outbound_110:
             filters:
                 thumbnail: { size: [110, 110], mode: outbound }
@@ -318,11 +310,13 @@ liip_imagine:
         sk_upscale_800_600:
             filters:
                 upscale: { min: [800, 600] }
+                
         #for photo page
         sk_downscale_800_600:
             quality: 100
             filters:
                 thumbnail: { size: [800, 600], mode: inset }
+                
         #for ocean life id modules page
         sk_downscale_600_400:
             quality: 100
