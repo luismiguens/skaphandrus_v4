@@ -113,6 +113,16 @@ class SkPhotoContestCategoryJudgeVotationRepository extends EntityRepository {
                 )->setParameter('contest', $contest_id)->setParameter('judge', $judge->getId())->getResult();
     }
 
+    public function getVotationsByContest($contest_id) {
+
+        return $this->getEntityManager()->createQuery(
+                        'SELECT v
+            FROM SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation v
+            JOIN SkaphandrusAppBundle:SkPhotoContestCategory c with c.id = v.category
+            WHERE c.contest = :contest'
+                )->setParameter('contest', $contest_id)->getResult();
+    }
+
     public function findContestByVotation($votation_id) {
 
         return $this->getEntityManager()->createQuery(

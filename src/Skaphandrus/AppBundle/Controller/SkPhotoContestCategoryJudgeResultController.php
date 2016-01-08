@@ -28,9 +28,17 @@ class SkPhotoContestCategoryJudgeResultController extends Controller {
         $fos_user = $this->get('security.token_storage')->getToken()->getUser();
         $judge = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestJudge')->findOneBy(array('fosUser' => $fos_user));
 
-        $contest = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')->find($contest_id);
+        if ($judge) {
+            $contest = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')->find($contest_id);
+            $entities = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->getJudgeVotationsByContest($contest_id, $judge);
+        } else {
+            $contest = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')->find($contest_id);
+            $entities = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->getVotationsByContest($contest_id);
+        }
 
-        $entities = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->getJudgeVotationsByContest($contest_id, $judge);
+//        $contest = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')->find($contest_id);
+//
+//        $entities = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->getJudgeVotationsByContest($contest_id, $judge);
 
         return $this->render('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeResult:index.html.twig', array(
                     'entities' => $entities,
@@ -120,7 +128,7 @@ class SkPhotoContestCategoryJudgeResultController extends Controller {
      */
     public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
-        
+
 //        $votation = new SkPhotoContestCategoryJudgeVotation();
         $votation = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->find($id);
 
@@ -227,5 +235,4 @@ class SkPhotoContestCategoryJudgeResultController extends Controller {
 //                        ->getForm()
 //        ;
 //    }
-
 }

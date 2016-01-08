@@ -5,8 +5,8 @@ namespace Skaphandrus\AppBundle\Entity;
 /**
  * SkSpeciesImageRef
  */
-class SkSpeciesImageRef
-{
+class SkSpeciesImageRef {
+
     /**
      * @var boolean
      */
@@ -28,6 +28,16 @@ class SkSpeciesImageRef
     private $imageSrc;
 
     /**
+     * @var string
+     */
+    private $photographer;
+
+    /**
+     * @var string
+     */
+    private $license;
+
+    /**
      * @var integer
      */
     private $id;
@@ -37,7 +47,6 @@ class SkSpeciesImageRef
      */
     private $species;
 
-
     /**
      * Set isActive
      *
@@ -45,8 +54,7 @@ class SkSpeciesImageRef
      *
      * @return SkSpeciesImageRef
      */
-    public function setIsActive($isActive)
-    {
+    public function setIsActive($isActive) {
         $this->isActive = $isActive;
 
         return $this;
@@ -57,8 +65,7 @@ class SkSpeciesImageRef
      *
      * @return boolean
      */
-    public function getIsActive()
-    {
+    public function getIsActive() {
         return $this->isActive;
     }
 
@@ -69,8 +76,7 @@ class SkSpeciesImageRef
      *
      * @return SkSpeciesImageRef
      */
-    public function setIsPrimary($isPrimary)
-    {
+    public function setIsPrimary($isPrimary) {
         $this->isPrimary = $isPrimary;
 
         return $this;
@@ -81,8 +87,7 @@ class SkSpeciesImageRef
      *
      * @return boolean
      */
-    public function getIsPrimary()
-    {
+    public function getIsPrimary() {
         return $this->isPrimary;
     }
 
@@ -93,8 +98,7 @@ class SkSpeciesImageRef
      *
      * @return SkSpeciesImageRef
      */
-    public function setImageUrl($imageUrl)
-    {
+    public function setImageUrl($imageUrl) {
         $this->imageUrl = $imageUrl;
 
         return $this;
@@ -105,8 +109,7 @@ class SkSpeciesImageRef
      *
      * @return string
      */
-    public function getImageUrl()
-    {
+    public function getImageUrl() {
         return $this->imageUrl;
     }
 
@@ -117,8 +120,7 @@ class SkSpeciesImageRef
      *
      * @return SkSpeciesImageRef
      */
-    public function setImageSrc($imageSrc)
-    {
+    public function setImageSrc($imageSrc) {
         $this->imageSrc = $imageSrc;
 
         return $this;
@@ -129,9 +131,52 @@ class SkSpeciesImageRef
      *
      * @return string
      */
-    public function getImageSrc()
-    {
+    public function getImageSrc() {
         return $this->imageSrc;
+    }
+
+    /**
+     * Set photographer
+     *
+     * @param string $photographer
+     *
+     * @return SkSpeciesImageRef
+     */
+    public function setPhotographer($photographer) {
+        $this->photographer = $photographer;
+
+        return $this;
+    }
+
+    /**
+     * Get photographer
+     *
+     * @return string
+     */
+    public function getPhotographer() {
+        return $this->photographer;
+    }
+
+    /**
+     * Set license
+     *
+     * @param string $license
+     *
+     * @return SkSpeciesImageRef
+     */
+    public function setLicense($license) {
+        $this->license = $license;
+
+        return $this;
+    }
+
+    /**
+     * Get license
+     *
+     * @return string
+     */
+    public function getLicense() {
+        return $this->license;
     }
 
     /**
@@ -139,8 +184,7 @@ class SkSpeciesImageRef
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -151,8 +195,7 @@ class SkSpeciesImageRef
      *
      * @return SkSpeciesImageRef
      */
-    public function setSpecies(\Skaphandrus\AppBundle\Entity\SkSpecies $species = null)
-    {
+    public function setSpecies(\Skaphandrus\AppBundle\Entity\SkSpecies $species = null) {
         $this->species = $species;
 
         return $this;
@@ -163,9 +206,8 @@ class SkSpeciesImageRef
      *
      * @return \Skaphandrus\AppBundle\Entity\SkSpecies
      */
-    public function getSpecies()
-    {
+    public function getSpecies() {
         return $this->species;
     }
-}
 
+}

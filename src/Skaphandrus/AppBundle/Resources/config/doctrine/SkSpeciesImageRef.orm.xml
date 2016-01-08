@@ -1,36 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Skaphandrus\AppBundle\Entity\SkSpeciesImageRef" table="sk_species_image_ref">
-    <indexes>
-      <index name="sk_species_image_ref_FI_1" columns="species_id"/>
-    </indexes>
-    <id name="id" type="integer" column="id">
-      <generator strategy="IDENTITY"/>
-    </id>
-    <field name="isActive" type="boolean" column="is_active" nullable="false">
-      <options>
-        <option name="default">1</option>
-      </options>
-    </field>
-    <field name="isPrimary" type="boolean" column="is_primary" nullable="false">
-      <options>
-        <option name="default">0</option>
-      </options>
-    </field>
-    <field name="imageUrl" type="text" column="image_url" length="65535" nullable="true">
-      <options>
-        <option name="fixed"/>
-      </options>
-    </field>
-    <field name="imageSrc" type="text" column="image_src" length="65535" nullable="true">
-      <options>
-        <option name="fixed"/>
-      </options>
-    </field>
-    <many-to-one field="species" target-entity="SkSpecies" fetch="LAZY">
-      <join-columns>
-        <join-column name="species_id" referenced-column-name="id"/>
-      </join-columns>
-    </many-to-one>
-  </entity>
+    <entity name="Skaphandrus\AppBundle\Entity\SkSpeciesImageRef" table="sk_species_image_ref">
+        <indexes>
+            <index name="sk_species_image_ref_FI_1" columns="species_id"/>
+        </indexes>
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="isActive" type="boolean" column="is_active" nullable="false">
+            <options>
+                <option name="default">1</option>
+            </options>
+        </field>
+        <field name="isPrimary" type="boolean" column="is_primary" nullable="false">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="imageUrl" type="text" column="image_url" length="65535" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="imageSrc" type="text" column="image_src" length="65535" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="photographer" type="text" column="photographer" length="80000" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="license" type="text" column="license" length="80000" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <many-to-one field="species" target-entity="SkSpecies" fetch="LAZY">
+            <join-columns>
+                <join-column name="species_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+    </entity>
 </doctrine-mapping>
