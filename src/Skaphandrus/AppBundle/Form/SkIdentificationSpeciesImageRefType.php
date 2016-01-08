@@ -24,12 +24,12 @@ class SkIdentificationSpeciesImageRefType extends AbstractType {
                     'label' => 'image.src',
                     'required' => false
                 ))
-                ->add('photographer', 'textarea', array(
+                ->add('photographer', 'text', array(
                     'attr' => array('class' => 'form-control'),
                     'label' => 'form.identification_species.label.photographer',
                     'required' => false
                 ))
-                ->add('license', 'textarea', array(
+                ->add('license', 'text', array(
                     'attr' => array('class' => 'form-control'),
                     'label' => 'form.identification_species.label.license',
                     'required' => false
