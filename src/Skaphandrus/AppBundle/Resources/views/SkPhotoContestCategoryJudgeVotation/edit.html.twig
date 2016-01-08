@@ -41,7 +41,7 @@
             <tr>
                 <th>{{ "form.judge_votation.label.image"|trans }}</th>
                 <th>{{ "form.judge_votation.label.photo_points"|trans }}</th>
-                <th>{{ "form.judge_votation.label.pontuation"|trans }}</th>
+                {#<th>{{ "form.judge_votation.label.pontuation"|trans }}</th>#}
             </tr>
         </thead>
 
@@ -50,14 +50,12 @@
             <tr>
                 <td> 
                     <a href="{{path('photo_no_slug', { 'id': photo.id })}}" > 
-                        <img src="{{ photo.getWebPath | imagine_filter('sk_widen_100') }}" class="feed-photo" alt="{{ photo }}">
+                        <img src="{{ photo.getWebPath | imagine_filter('sk_widen_400') }}" class="img-rounded" alt="{{ photo }}">
                     </a>
                 </td>
                 <td> 
-                    {{ photo.points }}
-                </td>
-                <td>
-                    {{ form_widget(photo_points.points) }}
+                    <b>{{ "form.judge_votation.label.photo_points"|trans }}:</b> {{ photo.points }} <br/>
+                    <b>{{ form_label(photo_points.points) }}:</b> {{ form_widget(photo_points.points) }}
                 </td>
             </tr>
         {% endfor %}

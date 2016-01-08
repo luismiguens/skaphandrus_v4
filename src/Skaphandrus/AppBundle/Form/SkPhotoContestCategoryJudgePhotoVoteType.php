@@ -16,6 +16,7 @@ class SkPhotoContestCategoryJudgePhotoVoteType extends AbstractType {
         $builder
                 ->add('points', 'choice', array(
                     'attr' => array('class' => 'form-control m-b'),
+                    'label' => 'form.judge_votation.label.pontuation',
                     'choices' => array(
                         '0' => '0',
                         '1' => '1',

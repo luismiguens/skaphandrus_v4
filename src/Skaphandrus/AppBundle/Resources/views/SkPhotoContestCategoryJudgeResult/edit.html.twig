@@ -37,7 +37,7 @@
             <tr>
                 <th>{{ "form.judge_result.label.photo_contest"|trans }}</th>
                 <th>{{ "form.judge_result.label.judge_vote"|trans }}</th>
-                <th>{{ "form.judge_result.label.judge_vote_total"|trans }}</th>
+                {#<th>{{ "form.judge_result.label.judge_vote_total"|trans }}</th>#}
             </tr>
         </thead>
         <tbody>
@@ -46,7 +46,7 @@
                 <tr>
                     <td> 
                         <a href="{{path('photo_no_slug', { 'id': p.photo.id })}}" > 
-                            <img src="{{ p.photo.getWebPath | imagine_filter('sk_widen_100') }}" class="feed-photo" alt="{{ p.photo }}">
+                            <img src="{{ p.photo.getWebPath | imagine_filter('sk_widen_400') }}" class="img-rounded" alt="{{ p.photo }}">
                         </a>
                     </td>
                     <td>
@@ -56,12 +56,12 @@
                             <br/>
                             {#{% set aux = '<img alt="'~ vote.votation.judge ~'" class="img-circle" style="width:30px" src="'~ vote.votation.judge.fosUser.settings.getWebPath|imagine_filter('sk_thumbnail_outbound_48') ~'">' %}
                             {% trans with {'%judge%': vote.votation.judge|title, '%img%': aux, '%points%': vote.points } %}page.judge_result_edit.meta_tag.judge{% endtrans %}#}
-                            
                         {% endfor %}
+                        <b>{{ "form.judge_result.label.judge_vote_total"|trans }}:</b> {{ p.points }}
                     </td>
-                    <td>
+                    {#<td>
                         {{ p.points }}
-                    </td>
+                    </td>#}
                 </tr>
             {% endfor %}
         </tbody>
