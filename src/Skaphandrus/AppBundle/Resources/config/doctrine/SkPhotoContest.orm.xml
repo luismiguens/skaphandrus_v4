@@ -1,40 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Skaphandrus\AppBundle\Entity\SkPhotoContest" repository-class="Skaphandrus\AppBundle\Entity\Repository\SkPhotoContestRepository" table="sk_photo_contest">
-    <id name="id" type="integer" column="id">
-      <generator strategy="IDENTITY"/>
-    </id>
-    <field name="name" type="string" column="name" length="80" nullable="true">
-      <options>
-        <option name="fixed"/>
-      </options>
-    </field>
-    <field name="logo" type="string" column="logo" length="255" nullable="true">
-      <options>
-        <option name="fixed"/>
-      </options>
-    </field>
-    <field name="image" type="string" column="image" length="255" nullable="true">
-      <options>
-        <option name="fixed"/>
-      </options>
-    </field>
-    <field name="beginAt" type="datetime" column="begin_at" nullable="false"/>
-    <field name="endAt" type="datetime" column="end_at" nullable="false"/>
-    <field name="isJudge" type="boolean" column="is_judge" nullable="true">
-      <options>
-        <option name="default">0</option>
-      </options>
-    </field>
-    <field name="isVisible" type="boolean" column="is_visible" nullable="true">
-      <options>
-        <option name="default">0</option>
-      </options>
-    </field>
-    <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
-    <one-to-many field="categories" target-entity="SkPhotoContestCategory" mapped-by="contest"/>
-    <!--<one-to-many field="sponsors" target-entity="SkPhotoContestSponsor" mapped-by="contest"/>-->
-    <one-to-many field="awards" target-entity="SkPhotoContestAward" mapped-by="contest"/>
-    <!--<one-to-many field="judges" target-entity="SkPhotoContestJudge" mapped-by="contest"/>-->
-  </entity>
+    <entity name="Skaphandrus\AppBundle\Entity\SkPhotoContest" repository-class="Skaphandrus\AppBundle\Entity\Repository\SkPhotoContestRepository" table="sk_photo_contest">
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="name" type="string" column="name" length="80" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="logo" type="string" column="logo" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="image" type="string" column="image" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="beginAt" type="datetime" column="begin_at" nullable="false"/>
+        <field name="endAt" type="datetime" column="end_at" nullable="false"/>
+        <field name="isJudge" type="boolean" column="is_judge" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="isVisible" type="boolean" column="is_visible" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="winnerAt" type="datetime" column="winner_at" nullable="false"/>
+        <one-to-many field="categories" target-entity="SkPhotoContestCategory" mapped-by="contest"/>
+        <!--<one-to-many field="sponsors" target-entity="SkPhotoContestSponsor" mapped-by="contest"/>-->
+        <one-to-many field="awards" target-entity="SkPhotoContestAward" mapped-by="contest"/>
+        <!--<one-to-many field="judges" target-entity="SkPhotoContestJudge" mapped-by="contest"/>-->
+    </entity>
 </doctrine-mapping>

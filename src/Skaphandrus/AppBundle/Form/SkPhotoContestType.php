@@ -44,6 +44,11 @@ class SkPhotoContestType extends AbstractType {
 //                'attr' => array('class' => 'form-control'),
                     'label' => 'form.photo_contest.label.end_at'
                 ))
+                ->add('winnerAt', null, array(
+                    'years' => range(2010, 2030),
+//                'attr' => array('class' => 'form-control'),
+                    'label' => 'form.photo_contest.label.winner_at'
+                ))
                 ->add('isJudge', null, array(
 //                'attr' => array('class' => 'form-control'),
                     'label' => 'form.photo_contest.label.is_judge'

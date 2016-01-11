@@ -13,50 +13,43 @@ class SkIdentificationSpeciesType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        
-//                $builder->addEventListener(\Symfony\Component\Form\FormEvents::PRE_SET_DATA, function (\Symfony\Component\Form\FormEvent $event) {
-//            $criteria = $event->getData();
-//            dump($criteria);
+
+//        $builder->addEventListener(\Symfony\Component\Form\FormEvents::PRE_SET_DATA, function (\Symfony\Component\Form\FormEvent $event) {
+//        $criteria = $event->getData();
+//        dump($criteria);
 //
-//            $form = $event->getForm();
-        
-        //dump($options);
+//        $form = $event->getForm();
+//        dump($options);
 //        $criterias = $options[0];
-        
-       //dump($criterias);
-        
-       // $criterias = null;
-        
+//        dump($criterias);
+//        $criterias = null;
+
         $builder
                 ->add('imageRefs', 'collection', array(
                     'type' => new SkIdentificationSpeciesImageRefType(),
                     'allow_add' => TRUE,
+                    'allow_delete' => TRUE,
                     'prototype' => TRUE,
                     'by_reference' => FALSE,
-                    'label' => 'form.identification_species.label.refferences')
-                )
-                
-                
+                    'label' => 'form.identification_species.label.refferences'
+                ))
                 ->add('character', 'entity', array(
-                'class' => 'SkaphandrusAppBundle:SkIdentificationCharacter',
-                'expanded' => true,
-                'multiple' => true,
-                'query_builder' => function (\Doctrine\ORM\EntityRepository $er) use ($options) {
-                    return $er->createQueryBuilder('c')
-                                    ->select('c')
-                                    ->where('c.criteria IN(:criterias)')
-                                    ->setParameter('criterias', array_values($options['criterias']));
-                }
-            ));
-                
-                
+                    'class' => 'SkaphandrusAppBundle:SkIdentificationCharacter',
+                    'expanded' => true,
+                    'multiple' => true,
+                    'query_builder' => function (\Doctrine\ORM\EntityRepository $er) use ($options) {
+                        return $er->createQueryBuilder('c')
+                                ->select('c')
+                                ->where('c.criteria IN(:criterias)')
+                                ->setParameter('criterias', array_values($options['criterias']));
+                    }
+        ));
+
 //                ->add('criterias', 'collection', array(
 //                    'type' => new \Skaphandrus\AppBundle\Form\SkIdentificationCriteriaForSpeciesType(),
 //                    'label' => 'form.identification_species.label.refferences')
 //                        )
-
 //                });
-    
     }
 
     /**

@@ -86,17 +86,19 @@ class SkPhotoContest {
      * @var \Doctrine\Common\Collections\Collection
      */
     private $photographers;
-    
+
     /**
      * @var boolean
      */
-    private $isVisible = false;     
-
-
+    private $isVisible = false;
     protected $imageFile;
     protected $logoTipo;
-    
-    
+
+    /**
+     * @var \DateTime
+     */
+    private $winnerAt;
+
     /**
      * Set visible
      *
@@ -118,6 +120,7 @@ class SkPhotoContest {
     public function getIsVisible() {
         return $this->isVisible;
     }
+
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the  update. If this
@@ -137,8 +140,7 @@ class SkPhotoContest {
     public function getImageFile() {
         return $this->imageFile;
     }
-       
-    
+
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the  update. If this
@@ -158,7 +160,6 @@ class SkPhotoContest {
     public function getlogoTipo() {
         return $this->logoTipo;
     }
-    
 
     public function getAbsolutePath() {
         return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
@@ -167,7 +168,7 @@ class SkPhotoContest {
     public function getWebPathImage() {
         return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image;
     }
-    
+
     public function getWebPathLogo() {
         return null === $this->logo ? null : $this->getUploadDir() . '/' . $this->logo;
     }
@@ -500,9 +501,9 @@ class SkPhotoContest {
         $category = new SkPhotoContestCategory();
 
         foreach ($this->getCategories() as $category) {
-            foreach ($category->getPhoto() as $photo ) {
+            foreach ($category->getPhoto() as $photo) {
                 $photos [] = $photo;
-            } 
+            }
         }
         $this->photos = $photos;
         return $this->photos;
@@ -524,33 +525,61 @@ class SkPhotoContest {
 //                $photographers[]= $photo->getFosUser();
 //            }
 //        }
-        
 //        $this->photographers=$photographers;    
 //        $this->photographers = array_unique($photographers);
         return $this->photographers;
     }
-    
+
     public function setPhotographers($param) {
         $this->photographers = $param;
     }
-    
 
     public function __toString() {
         return $this->getName();
     }
 
-    
-    public function isInProgress() {
-        
+    /**
+     * Set winnerAt
+     *
+     * @param \DateTime $winnerAt
+     *
+     * @return SkPhotoContest
+     */
+    public function setWinnerAt($winnerAt) {
+        $this->winnerAt = $winnerAt;
+
+        return $this;
+    }
+
+    /**
+     * Get winnerAt
+     *
+     * @return \DateTime
+     */
+    public function getWinnerAt() {
+        return $this->winnerAt;
+    }
+
+    public function winnerReady() {
+
         $now = new \DateTime();
         
-        if($this->getBeginAt() < $now and $this->getEndAt() > $now){
+        if ($now > $this->getWinnerAt()) {
             return true;
         }
-        
+
         return false;
     }
-    
-    
-    
+
+    public function isInProgress() {
+
+        $now = new \DateTime();
+
+        if ($this->getBeginAt() < $now and $this->getEndAt() > $now) {
+            return true;
+        }
+
+        return false;
+    }
+
 }

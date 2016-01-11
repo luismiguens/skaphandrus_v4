@@ -2,18 +2,17 @@
 
 namespace Skaphandrus\AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Doctrine\Common\Collections\ArrayCollection;
 use Skaphandrus\AppBundle\Entity\SkSpecies;
 use Skaphandrus\AppBundle\Form\SkIdentificationSpeciesType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * SkSpecies controller.
  *
  */
 class SkIdentificationSpeciesController extends Controller {
-
-
 
     /**
      * Lists all SkSpecies entities.
@@ -131,10 +130,10 @@ class SkIdentificationSpeciesController extends Controller {
      */
     public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
-        
+
         //$entity = new SkSpecies();
         $entity = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->find($id);
-        
+
 // // Get criterias from species
 //        $criteria_ids = $em->getRepository('SkaphandrusAppBundle:SkIdentificationCriteria')->getCriteriasFromSpecies($entity->getId());
 //        
@@ -143,8 +142,6 @@ class SkIdentificationSpeciesController extends Controller {
 //            $criterias[] = $em->getRepository('SkaphandrusAppBundle:SkIdentificationCriteria')->find($id);
 //            
 //        }
-       
-        
         //$entity->setCriterias($criterias);
 
         if (!$entity) {
@@ -169,12 +166,12 @@ class SkIdentificationSpeciesController extends Controller {
      */
     private function createEditForm(SkSpecies $entity) {
         $em = $this->getDoctrine()->getManager();
-        
-         // Get criterias from species
+
+        // Get criterias from species
         $criteria_ids = $em->getRepository('SkaphandrusAppBundle:SkIdentificationCriteria')->getCriteriasFromSpecies($entity->getId());
-        
-        
-        
+
+
+
         $form = $this->createForm(new SkIdentificationSpeciesType(), $entity, array(
             'action' => $this->generateUrl('identification_species_admin_update', array('id' => $entity->getId())),
             'method' => 'PUT',
@@ -196,16 +193,42 @@ class SkIdentificationSpeciesController extends Controller {
             throw $this->createNotFoundException('Unable to find SkSpecies entity.');
         }
 
-        // Set parent ID on embedded forms
-        $embedded = $request->request->get('skaphandrus_appbundle_skspecies');
-        foreach ($embedded['imageRefs'] as &$imageRef) {
-            $imageRef['species'] = $id;
+//        // Set parent ID on embedded forms
+//        $embedded = $request->request->get('skaphandrus_appbundle_skspecies');
+//        foreach ($embedded['imageRefs'] as &$imageRef) {
+//            $imageRef['species'] = $id;
+//        }
+
+//        $entity = new \Skaphandrus\AppBundle\Entity\SkSpecies();
+
+        //http://symfony.com/doc/current/cookbook/form/form_collections.html
+        //For deleting prices 
+        $originalImagesRef = new ArrayCollection();
+        // Create an ArrayCollection of the current Tag objects in the database
+        foreach ($entity->getImageRefs() as $imageRef) {
+            $originalImagesRef->add($imageRef);
         }
 
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            // remove the relationship between the Tag and the Task
+            foreach ($originalImagesRef as $imageRef) {
+                if (false === $entity->getImageRefs()->contains($imageRef)) {
+                    // remove the Task from the Tag
+//                    $imageRef = new \Skaphandrus\AppBundle\Entity\SkSpeciesImageRef();
+                    $imageRef->getSpecies()->removeImageRef($imageRef);
+
+                    // if it was a many-to-one relationship, remove the relationship like this
+                    // $course->setBusiness(null);
+                    // $em->persist($course);
+                    // if you wanted to delete the Tag entirely, you can also do that
+                    $em->remove($imageRef);
+                }
+            }
+
+            $em->persist($entity);
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');

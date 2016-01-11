@@ -8,55 +8,117 @@
     <script src="{{ asset('bundles/pugxautocompleter/js/autocompleter-jqueryui.js') }}"></script>
 
     <script>
-        var collectionHolderId = '#skaphandrus_appbundle_skspecies_imageRefs';
-        var $collectionHolder = $(collectionHolderId);
+        //http://symfony.com/doc/current/cookbook/form/form_collections.html
+        /////////////////////  imageRefs code start  \\\\\\\\\\\\\\\\\\\\\\\
+        var $container = $('ul.imageRefs');
+        // button to add a new imageRefs
+        var $addImageRefs = $('<br/><a href="#" class="btn btn-primary btn-xs">{{ "form.common.btn.create"|trans }}</a>');
+        var $newLinkLi = $('<li></li>').append($addImageRefs);
 
-        // setup an "add a tag" link
-        var $addCharacterLink = $('<a href="#" class="add_imageref_link">Add an image ref</a>');
-        //$(collectionHolderId).after($addCharacterLink);
-        $addCharacterLink.insertAfter(collectionHolderId);
+        $(document).ready(function () {
+            //delete button on each existing SportParam
+            $container.find('li').each(function () {
+                addImageRefsDeleteLink($(this));
+            });
 
-        jQuery(document).ready(function () {
-            // Get the ul that holds the collection of tags
-            $collectionHolder = $(collectionHolderId);
-
-            // add the "add a tag" anchor and li to the tags ul
-            $collectionHolder.parent().append($addCharacterLink);
+            //add button
+            $container.append($newLinkLi);
 
             // count the current form inputs we have (e.g. 2), use that as the new
             // index when inserting a new item (e.g. 2)
-            // $collectionHolder.data('index', $collectionHolder.find('.form-group').length);
-            $collectionHolder.data('index', $(collectionHolderId + ' > .form-group').length);
+            $container.data('index', $container.find(':input').length);
 
-            $addCharacterLink.on('click', function (e) {
-                // prevent the link from creating a "#" on the URL
+            // adding a new form when cliking Add button
+            $addImageRefs.on('click', function (e) {
                 e.preventDefault();
 
-                // add a new tag form (see next code block)
-                addCharacterForm($collectionHolder);
+                addImageRefsForm($container, $newLinkLi);
+
             });
+
+            // adding a new form imageRefs
+            function addImageRefsForm($container, $newLinkLi) {
+
+                var $prototype = $container.attr('data-prototype');
+
+                var newForm = $prototype.replace(/__name__/g, $container.children().length - 1);
+
+                var $newFormLi = $("<li margin-bottom:1px';></li>").append(newForm);
+                $newLinkLi.before($newFormLi);
+
+                addImageRefsDeleteLink($newFormLi);
+            }
+
+
+            function addImageRefsDeleteLink($paramFormLi) {
+
+                var $removeFormA = $('<a href="#" class="btn btn-danger  btn-xs">{{ "form.common.btn.delete"|trans }}</a>');
+
+                $paramFormLi.append($removeFormA);
+
+                $removeFormA.on('click', function (e) {
+
+                    e.preventDefault();
+
+                    $paramFormLi.remove();
+                });
+            }
+
         });
-
-        function addCharacterForm($collectionHolder) {
-            // Get the data-prototype explained earlier
-            var prototype = $collectionHolder.data('prototype');
-
-            // get the new index
-            var index = $collectionHolder.data('index');
-
-            // Replace '__name__' in the prototype's HTML to
-            // instead be a number based on how many items we have
-            var newForm = prototype.replace(/__name__label__/g, index);
-            newForm = newForm.replace(/__name__/g, index);
-
-            // increase the index with one for the next item
-            $collectionHolder.data('index', index + 1);
-
-            // Display the form in the page in an li, before the "Add a tag" link li
-            $collectionHolder.append(newForm);
-            //$('#skaphandrus_appbundle_skidentificationcriteria_characters_'+ index +'_criteria').val({{ entity.id }});
-        }
+        /////////////////////  imageRefs code end  \\\\\\\\\\\\\\\\\\\\\\\
     </script>
+
+    {#    <script>
+            var collectionHolderId = '#skaphandrus_appbundle_skspecies_imageRefs';
+            var $collectionHolder = $(collectionHolderId);
+    
+            // setup an "add a tag" link
+            var $addCharacterLink = $('<a href="#" class="add_imageref_link">Add an image ref</a>');
+            //$(collectionHolderId).after($addCharacterLink);
+            $addCharacterLink.insertAfter(collectionHolderId);
+    
+            jQuery(document).ready(function () {
+                // Get the ul that holds the collection of tags
+                $collectionHolder = $(collectionHolderId);
+    
+                // add the "add a tag" anchor and li to the tags ul
+                $collectionHolder.parent().append($addCharacterLink);
+    
+                // count the current form inputs we have (e.g. 2), use that as the new
+                // index when inserting a new item (e.g. 2)
+                // $collectionHolder.data('index', $collectionHolder.find('.form-group').length);
+                $collectionHolder.data('index', $(collectionHolderId + ' > .form-group').length);
+    
+                $addCharacterLink.on('click', function (e) {
+                    // prevent the link from creating a "#" on the URL
+                    e.preventDefault();
+    
+                    // add a new tag form (see next code block)
+                    addCharacterForm($collectionHolder);
+                });
+            });
+    
+            function addCharacterForm($collectionHolder) {
+                // Get the data-prototype explained earlier
+                var prototype = $collectionHolder.data('prototype');
+    
+                // get the new index
+                var index = $collectionHolder.data('index');
+    
+                // Replace '__name__' in the prototype's HTML to
+                // instead be a number based on how many items we have
+                var newForm = prototype.replace(/__name__label__/g, index);
+                newForm = newForm.replace(/__name__/g, index);
+    
+                // increase the index with one for the next item
+                $collectionHolder.data('index', index + 1);
+    
+                // Display the form in the page in an li, before the "Add a tag" link li
+                $collectionHolder.append(newForm);
+                //$('#skaphandrus_appbundle_skidentificationcriteria_characters_'+ index +'_criteria').val({{ entity.id }});
+            }
+        </script>#}
+
 {% endblock %}
 
 
@@ -81,11 +143,26 @@
 {% block body %}
     {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
 
+    <style>
+        ul {
+            list-style-type: none;
+        }
+    </style>
 
+    {#    {{ form_row(edit_form.imageRefs) }}#}
 
-    {{ form_row(edit_form.imageRefs) }}
+    <label class="col-sm-3 control-label">{{ form_label(edit_form.imageRefs) }}</label>
+    <div class="col-sm-9">
+        <ul class=imageRefs data-prototype="{{ form_widget(edit_form.imageRefs.vars.prototype)|e }}">
+            {% for imageRefs in edit_form.imageRefs %}
+                <li>
+                    {{ form_widget(imageRefs) }}
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="hr-line-dashed"></div>
+    </div>
 
-   
     {% set last_criteria = "" %}
 
     {# iterate over each existing tag and render its only field: name #}
@@ -95,15 +172,12 @@
         {% set entity = edit_form.character.vars.choices[index].data %}{# get entity object #}
 
         {#{% dump(entity)%}#}
-        
-        
+
         {% if entity.criteria != last_criteria %}
             <br> <hr>
             <h3>{{entity.criteria}}</h3>
-           
+
         {% endif %}
-
-
 
         {{ form_widget(cha) }}
         {{ form_label(cha) }}
@@ -112,15 +186,8 @@
 
     {% endfor %}
 
-
-
-
-
-
-
-
-
-
+    <br/>
+    <br/>
 
     {#    {{ form_widget(edit_form) }}#}
     <div class="form-group">
@@ -131,6 +198,9 @@
 
         </div>
     </div>
+
+    {% do edit_form.imageRefs.setRendered %}
+
     {{ form_end(edit_form) }}
 
 {% endblock %}
