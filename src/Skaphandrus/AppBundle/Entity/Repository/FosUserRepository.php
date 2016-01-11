@@ -47,7 +47,7 @@ class FosUserRepository extends EntityRepository {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
-        $sql = "select u 
+        $sql = "select u.id 
                 from sk_photo_contest_judge as j
                 join fos_user as u 
                 on u.id = j.fos_user_id
