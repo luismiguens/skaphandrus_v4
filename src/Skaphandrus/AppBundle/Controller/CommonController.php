@@ -23,8 +23,10 @@ class CommonController extends Controller {
             $category = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')->find($contest->getId());
         }
 
-        $isJudge = $em->getRepository('SkaphandrusAppBundle:FosUser')->isJudgeInCategory($category->getId(), $fos_user->getId());
+//        $isJudge = $em->getRepository('SkaphandrusAppBundle:FosUser')->isJudgeInCategory($category->getId(), $fos_user->getId());
 
+        $isJudge = $em->getRepository('SkaphandrusAppBundle:FosUser')->isJudge($fos_user->getId());
+        
         return $this->render('SkaphandrusAppBundle:Common:skContestsList.html.twig', array(
                     'contests' => $contests,
                     'isJudge' => $isJudge

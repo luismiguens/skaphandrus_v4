@@ -36,13 +36,11 @@ class SkPhotoContestCategory {
      * @var \Doctrine\Common\Collections\Collection
      */
     private $awards;
-    
-    
-        /**
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $votations;
-
 
     /**
      * var used to save winner photos in category
@@ -156,8 +154,6 @@ class SkPhotoContestCategory {
         return $this->photo;
     }
 
-    
-    
     /**
      * Add votation
      *
@@ -189,16 +185,6 @@ class SkPhotoContestCategory {
         return $this->votations;
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     /**
      * Add award
      *
@@ -296,5 +282,4 @@ class SkPhotoContestCategory {
 //            }
 //        }
 //    }
-
 }

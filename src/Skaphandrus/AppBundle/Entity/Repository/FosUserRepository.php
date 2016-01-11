@@ -28,9 +28,34 @@ class FosUserRepository extends EntityRepository {
 
         $statement = $connection->prepare($sql);
         $statement->execute();
-        $result = $statement->fetchAll();
+        $values = $statement->fetchAll();
+
+//        $result = $values->getQuery()->getResult();
+
+        dump($result);
 
         if ($result):
+            return true;
+        endif;
+    }
+
+    public function isJudge($fos_user_id) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "select j.contest_id 
+                from sk_photo_contest_judge as j
+                join fos_user as u 
+                on u.id = j.fos_user_id
+                where u.id =" . $fos_user_id;
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+
+//        $result = $values->getQuery()->getResult();
+
+        if ($values):
             return true;
         endif;
     }
