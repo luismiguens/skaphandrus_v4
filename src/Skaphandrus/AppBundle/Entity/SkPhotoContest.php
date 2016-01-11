@@ -97,7 +97,7 @@ class SkPhotoContest {
     /**
      * @var \DateTime
      */
-    private $winnerAt;
+    private $winnersAt;
 
     /**
      * Set visible
@@ -539,32 +539,32 @@ class SkPhotoContest {
     }
 
     /**
-     * Set winnerAt
+     * Set winnersAt
      *
-     * @param \DateTime $winnerAt
+     * @param \DateTime $winnersAt
      *
      * @return SkPhotoContest
      */
-    public function setWinnerAt($winnerAt) {
-        $this->winnerAt = $winnerAt;
+    public function setWinnersAt($winnersAt) {
+        $this->winnersAt = $winnersAt;
 
         return $this;
     }
 
     /**
-     * Get winnerAt
+     * Get winnersAt
      *
      * @return \DateTime
      */
-    public function getWinnerAt() {
-        return $this->winnerAt;
+    public function getWinnersAt() {
+        return $this->winnersAt;
     }
 
-    public function winnerReady() {
+    public function isWinnersReady() {
 
         $now = new \DateTime();
         
-        if ($now > $this->getWinnerAt()) {
+        if ($now > $this->getWinnersAt()) {
             return true;
         }
 

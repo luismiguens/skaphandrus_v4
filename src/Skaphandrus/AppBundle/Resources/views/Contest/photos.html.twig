@@ -105,7 +105,7 @@
                                         {{ "page.contest.tab.sponsors"|trans }}
                                     </a>
                                 </li>
-                                {% if category.contest.winnerReady %} 
+                                {% if category.contest.isWinnersReady %} 
                                     <li>
                                         <a href="{{ url_to_contest_winners(category.contest) }}">
                                             {{ "page.contest.tab.winners"|trans }}

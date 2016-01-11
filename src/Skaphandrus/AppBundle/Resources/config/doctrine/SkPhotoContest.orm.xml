@@ -32,7 +32,7 @@
             </options>
         </field>
         <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
-        <field name="winnerAt" type="datetime" column="winner_at" nullable="false"/>
+        <field name="winnersAt" type="datetime" column="winners_at" nullable="false"/>
         <one-to-many field="categories" target-entity="SkPhotoContestCategory" mapped-by="contest"/>
         <!--<one-to-many field="sponsors" target-entity="SkPhotoContestSponsor" mapped-by="contest"/>-->
         <one-to-many field="awards" target-entity="SkPhotoContestAward" mapped-by="contest"/>
