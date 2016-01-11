@@ -45,7 +45,7 @@
                     <td>{{ entity.category.contest }}</td>
                     <td>{{ entity.category }}</td>
                     <td>
-                        <a class="btn btn-white btn-sm" href="{{ path('judge_result_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit"|trans }}</a>
+                        <a class="btn btn-white btn-sm" href="{{ path('judge_result_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.judge_result.btn.view_results"|trans }}</a>
                     </td>
                 </tr>
             {% endfor %}
