@@ -36,18 +36,13 @@
 {% block stylesheets %}
     {{ parent() }}
     <!-- Data Tables -->
-    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/dataTables.responsive.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/dataTables.tableTools.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/datatables.min.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <!-- Data Tables -->
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/jquery.dataTables.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.bootstrap.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.responsive.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.tableTools.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/datatables.min.js') }}"></script>
 {% endblock %}
 
 {% block body %}
@@ -59,43 +54,48 @@
             {{ pagination.getTotalItemCount }} {{ "page.users_home.label.number_users"|trans }}
         </div>
         <br/>
-        <table class="table display table-bordered" cellspacing="0" width="100%">
+        <table class="table display table-bordered text-center" cellspacing="0" width="100%">
             <thead>
                 <tr>
-                    <th style="width: 25%" {% if pagination.isSorted('u.name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Name', 'u.name') }}</th>
-                    <th{% if pagination.isSorted('u.photos') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Photos', 'u.photos') }}</th>
-                    <th{% if pagination.isSorted('u.species') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Species', 'u.species') }}</th>
-                    <th{% if pagination.isSorted('u.validations') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Validations', 'u.validations') }}</th>
-                    <th{% if pagination.isSorted('u.sugestions') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Sugestions', 'u.sugestions') }}</th>
-                    <th{% if pagination.isSorted('u.points') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Points', 'u.points') }}</th>
+                    <th style="width: 35%"{% if pagination.isSorted('u.name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'page.users_home.table.name'|trans, 'u.name') }}</th>
+                    <th {% if pagination.isSorted('u.photos') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'page.users_home.table.photos'|trans, 'u.photos') }}</th>
+                    <th {% if pagination.isSorted('u.species') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'page.users_home.table.species'|trans, 'u.species') }}</th>
+                    <th {% if pagination.isSorted('u.validations') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'page.users_home.table.validations'|trans, 'u.validations') }}</th>
+                    <th {% if pagination.isSorted('u.sugestions') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'page.users_home.table.suggestions'|trans, 'u.sugestions') }}</th>
+                    <th {% if pagination.isSorted('u.points') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'page.users_home.table.points'|trans, 'u.points') }}</th>
                 </tr>
-
             </thead>
             <tbody>
                 {% for entity in pagination %}
                     <tr>
-                        <td class="client-avatar">
-                            {#<a href="{{ path('user', {'id': entity.id }) }}">{{ entity.name }}</a>#}
-                            
+                        <td>
                             {{link_to_user_profile(entity.id)}}
                         </td>
-                        <td>
-                            {{ entity.photos }}
+                        <td style="vertical-align: middle;">
+                            <strong>{{ entity.photos }}</strong>
                         </td>
-                        <td>
-                            {{ entity.species }}
+                        <td style="vertical-align: middle;"> 
+                            <strong>{{ entity.species }}</strong>
                         </td>
-                        <td>
-                            {{ entity.validations }}
-                        </td>
-                        <td>
-                            {{ entity.sugestions }}
-                        </td>
-                        <td>
-                            {% if entity.points is not empty %}
-                                {{ entity.points }}
+                        <td style="vertical-align: middle;">
+                            {% if entity.validations is not empty %}
+                                <strong>{{ entity.validations }}</strong>
                             {% else %}
-                                {{ 0 }}
+                                <strong>{{ 0 }}</h4>
+                                {% endif %}
+                        </td>
+                        <td style="vertical-align: middle;">
+                            {% if entity.sugestions is not empty %}
+                                <strong>{{ entity.sugestions }}</strong>
+                            {% else %}
+                                <strong>{{ 0 }}</strong>
+                            {% endif %}
+                        </td>
+                        <td style="vertical-align: middle;">
+                            {% if entity.points is not empty %}
+                                <strong>{{ entity.points }}</strong>
+                            {% else %}
+                                <strong>{{ 0 }}</strong>
                             {% endif %}
                         </td>
                     </tr>

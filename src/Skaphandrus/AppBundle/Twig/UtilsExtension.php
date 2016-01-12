@@ -272,10 +272,9 @@ class UtilsExtension extends \Twig_Extension {
      */
     function activity_message(\Skaphandrus\AppBundle\Entity\SkActivity $activity, $locale) {
 
-        
-        
-        //dump($activity->getMessageName());
 
+
+        //dump($activity->getMessageName());
 ### activity_001 x associou especie y na fotografia z	
 ### activity_002 x associou spot y na fotografia z	
 ### ???????????? x adicionou fotografia y	
@@ -378,20 +377,20 @@ class UtilsExtension extends \Twig_Extension {
             ### activity_041 x adicionou y como amigo.
             case 'activity_041':
                 //$user_from = $activity->getUserFrom();
-                
+
                 $user_from = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:FosUser')->findOneById($activity->getUserFrom());
                 $user_to = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:FosUser')->findOneById($activity->getUserId());
 
 //                dump($user_from);
 //                dump($user_to);
-                
-                
+
+
                 return $this->translator->trans(
                                 '%1% adicionou %2% como amigo.', array('%1%' => $this->link_to_user($user_from),
                             '%2%' => $this->link_to_user($user_to)));
 
 
-                
+
 
             ### activity_051 x registou-se
             case 'activity_051':
@@ -447,16 +446,37 @@ class UtilsExtension extends \Twig_Extension {
     public function link_to_user($user) {
         return '<a href="' . $this->url_to_user($user) . '" title="' . $user->getName() . '">' . $user->getName() . '</a>';
     }
-    
+
     public function link_to_user_profile($user_id) {
         $container = $this->container;
-        
-        //$user = new \Skaphandrus\AppBundle\Entity\FosUser();
-        
-        
+
+//        $user = new \Skaphandrus\AppBundle\Entity\FosUser();
+
         $user = $container->get("doctrine")->getRepository('SkaphandrusAppBundle:FosUser')->findOneById($user_id);
-        $src = $container->get('liip_imagine.cache.manager')->getBrowserPath($user->getSettings()->getWebPath(), 'sk_widen_240');
-        return '<img alt="' . $user->getName() . '" src="'.$src.'"> <a href="' . $this->url_to_user($user) . '" title="' . $user->getName() . '">  ' . $user->getName() . '</a>';
+        $src = $container->get('liip_imagine.cache.manager')->getBrowserPath($user->getSettings()->getWebPath(), 'sk_thumbnail_outbound_130');
+
+        $text = '<div class="col-sm-4 text-center">
+                    <img class="img-circle m-t-xs img-responsive" style="vertical-align:middle" alt="' . $user->getName() . '" src="' . $src . '">
+                </div>
+                <div class="col-sm-8 text-center">
+                    <h4>
+                        <strong>
+                            <a href="' . $this->url_to_user($user) . '" title="' . $user->getName() . '">  ' . $user->getName() . '</a>
+                        </strong>
+                    </h4>
+                </div>';
+        
+        $text2 = '<div>
+                    <a href="' . $this->url_to_user($user) . '" title="' . $user->getName() . '"> <img class="img-circle m-t-xs img-responsive" style="display: block; margin: 0 auto;" alt="' . $user->getName() . '" src="' . $src . '">
+                    <h4>
+                        <strong>' . $user->getName() . '</strong>
+                    </h4>
+                    </a>
+                </div>';
+        
+        return $text2;
+
+//        return '<img class="img-circle m-t-xs img-responsive" alt="' . $user->getName() . '" src="'.$src.'"> <a href="' . $this->url_to_user($user) . '" title="' . $user->getName() . '">  ' . $user->getName() . '</a>';
     }
 
     public function link_to_species($species) {
@@ -611,7 +631,6 @@ class UtilsExtension extends \Twig_Extension {
         ));
     }
 
-    
     public function url_to_business($country = NULL, $location = NULL, $business) {
         $path_function = $this->getPathFunction();
 
@@ -629,19 +648,16 @@ class UtilsExtension extends \Twig_Extension {
             $c = $l->getRegion()->getCountry();
         }
 
-        
-        
-        
+
+
+
         return call_user_func($path_function, 'business', array(
             'country' => Utils::slugify($c),
             'location' => Utils::slugify($l->getName()),
             'slug' => Utils::slugify($business->getName())
-           
         ));
     }
-    
-    
-    
+
     public function url_to_location($location, $country = NULL) {
         $path_function = $this->getPathFunction();
 

@@ -1,22 +1,16 @@
 {% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>
-    <!-- Data Tables -->
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/jquery.dataTables.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.bootstrap.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.responsive.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/dataTables.tableTools.min.js') }}"></script>
-{% endblock %}
-
-
 {% block stylesheets %}
     {{ parent() }}
     <!-- Data Tables -->
-    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/dataTables.responsive.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/dataTables.tableTools.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/datatables.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{#    <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>#}
+    <!-- Data Tables -->
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/datatables.min.js') }}"></script>
 {% endblock %}
 
 {% block heading_title %}
@@ -41,7 +35,7 @@
 
 {% block body -%}
 
-    <table id="datatable-list" class="table display table-striped table-bordered table-hover " cellspacing="0" width="100%">
+    <table id="datatable-list" class="table display table-striped table-bordered table-hover" cellspacing="0" width="100%">
         <thead>
             <tr>
                 <th>{{ "form.course.label.name"|trans }}</th>
