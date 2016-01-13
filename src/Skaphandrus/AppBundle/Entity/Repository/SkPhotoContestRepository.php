@@ -133,10 +133,89 @@ class SkPhotoContestRepository extends EntityRepository {
             $photos[$category->getId()] = $this->findPhotosFromUserInCategory($user_id, $category->getId());
         }
 
-
-
         return $photos;
     }
 
+    //para determinado utilizador e concurso devolve o numero de fotografias que são estreia numa especie
+    public function findFirstPhotosFromSpeciesInContest($contest_id) {
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+        $statement = $connection->prepare(
+                "SELECT p.fos_user_id as user, count(p.id) as count_first_photo
+                FROM sk_photo as p
+                INNER JOIN (
+                        SELECT id, species_id, MIN(created_at) AS first_photo 
+                        FROM sk_photo GROUP BY species_id ) AS first_record 
+                ON p.id = first_record.id
+                JOIN sk_photo_contest_category_photo AS ca_photo 
+                ON ca_photo.photo_id = p.id
+                JOIN sk_photo_contest_category AS ca 
+                ON ca.id = ca_photo.category_id
+                WHERE ca.contest_id = :contest_id
+                group by user
+                order by count_first_photo desc"
+        );
+
+        $statement->bindValue('contest_id', $contest_id);
+        $statement->execute();
+        $results = $statement->fetchAll();
+
+        return $results;
+    }
+
+    //para determinado utilizador e concurso devolve o numero de fotografias com especie validada
+    public function findValidatedSpeciesPhotosInContest($contest_id) {
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+        $statement = $connection->prepare(
+                "SELECT p.fos_user_id as user, count(p.id) as count_photo_species_valid
+                FROM sk_photo AS p
+                INNER JOIN ( 
+                        SELECT photo_id, species_id, count(species_id) as soma 
+                        FROM sk_photo_species_validation group by photo_id, species_id) AS validated_record 
+                ON p.id = validated_record.photo_id 
+                JOIN sk_photo_contest_category_photo AS ca_photo 
+                ON ca_photo.photo_id = p.id
+                JOIN sk_photo_contest_category AS ca 
+                ON ca.id = ca_photo.category_id
+                WHERE ca.contest_id = :contest_id
+                group by user
+                order by count_photo_species_valid desc"
+        );
+
+        $statement->bindValue('contest_id', $contest_id);
+        $statement->execute();
+        $results = $statement->fetchAll();
+
+        return $results;
+    }
+
+    //para determinado utilizador e concurso devolve o numero de especies com validação
+    public function findValidatedSpeciesInContest($contest_id) {
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+        $statement = $connection->prepare(
+                "SELECT p.fos_user_id as user, count(sv.species_id) AS count_species_validated
+                FROM sk_photo_species_validation AS sv
+                JOIN sk_photo AS p 
+                ON p.id = sv.photo_id
+                JOIN sk_photo_contest_category_photo AS ca_p
+                ON p.id = ca_p.photo_id 
+                JOIN sk_photo_contest_category AS ca 
+                ON ca_p.category_id = ca.id
+                WHERE ca.contest_id = :contest_id
+                group by user
+                order by count_species_validated desc"
+        );
+
+        $statement->bindValue('contest_id', $contest_id);
+        $statement->execute();
+        $results = $statement->fetchAll();
+
+        return $results;
+    }
 
 }

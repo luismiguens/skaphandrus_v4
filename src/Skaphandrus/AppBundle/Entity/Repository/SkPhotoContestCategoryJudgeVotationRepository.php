@@ -119,7 +119,9 @@ class SkPhotoContestCategoryJudgeVotationRepository extends EntityRepository {
                         'SELECT v
             FROM SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation v
             JOIN SkaphandrusAppBundle:SkPhotoContestCategory c with c.id = v.category
-            WHERE c.contest = :contest'
+            WHERE c.contest = :contest
+            GROUP BY c
+            ORDER BY c.id asc'
                 )->setParameter('contest', $contest_id)->getResult();
     }
 
