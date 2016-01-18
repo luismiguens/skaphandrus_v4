@@ -74,12 +74,12 @@
                     <div class="hr-line-dashed"></div>
 
                     {#  Species  #}
-                    <h5>{{ "form.photo.label.species"|trans }}</h5>
+                    <h5>{{ "form.photo.label.species_plural"|trans }}</h5>
                     <div class="full-height-scroll" style="overflow: hidden">
                         <ul class="list-unstyled" style="padding: 0; height: 250px">
                             {% for sn in species %}
                                 <li>
-                                    <a class="file-control" href="{{ path('photo_admin', { 'species': sn.species }) }}">
+                                    <a class="file-control" href="{{ path('photo_admin', { 'species': sn.species.id }) }}">
                                         {{ sn.name }}
                                     </a>
                                 </li>
