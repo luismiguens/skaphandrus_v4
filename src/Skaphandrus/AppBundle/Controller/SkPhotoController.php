@@ -27,9 +27,9 @@ class SkPhotoController extends Controller {
 
         $contests = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')->findBy(array('isVisible' => true), array('beginAt' => 'DESC'));
 
-        $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getUserPhotosSpecies($fos_user->getId());
+        $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getUserSpeciesFromPhotos($fos_user->getId());
 
-        $tags = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getUserPhotosTags($fos_user->getId());
+        $tags = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getUserTagsFromPhotos($fos_user->getId());
 
 //        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder4($params, 20);
         $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getUserPhotos($fos_user->getId(), $params, 21);

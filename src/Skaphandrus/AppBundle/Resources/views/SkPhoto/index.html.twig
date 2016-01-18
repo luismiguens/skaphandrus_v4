@@ -56,8 +56,8 @@
                                     <a href="{{ path('photo_admin', { 'contest': contest.id }) }}" class="file-control">
                                         {{ contest }}
                                     </a>
-                                    {% if contest.isInProgress %}
-                                        <a href="{{ path('contest_participate', { 'contest_id': contest.id }) }}">
+                                    {% if contest.inProgress %}
+                                        <a class="btn btn-primary btn-xs" href="{{ path('contest_participate', { 'contest_id': contest.id }) }}">
                                             {{"form.contest.participate"|trans }}
                                         </a>
                                     {% endif %}
@@ -69,7 +69,7 @@
 
                     {#  Add Photo  #}
                     <a class="btn btn-primary btn-block" href="{{ path('photo_admin_new') }}">
-                        <i class="fa fa-pencil"></i>  {{ "form.photo.btn.add"|trans }}
+                        {{ "form.photo.upload_photos"|trans }}
                     </a>
                     <div class="hr-line-dashed"></div>
 
@@ -77,14 +77,12 @@
                     <h5>{{ "form.photo.label.species"|trans }}</h5>
                     <div class="full-height-scroll" style="overflow: hidden">
                         <ul class="list-unstyled" style="padding: 0; height: 250px">
-                            {% for photo in species %}
-                                {% if photo.species %}
-                                    <li>
-                                        <a class="file-control" href="{{ path('photo_admin', { 'species': photo.species.id }) }}">
-                                            {{ photo.species }}
-                                        </a>
-                                    </li>
-                                {% endif %}
+                            {% for sn in species %}
+                                <li>
+                                    <a class="file-control" href="{{ path('photo_admin', { 'species': sn.species }) }}">
+                                        {{ sn.name }}
+                                    </a>
+                                </li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -95,15 +93,11 @@
                     <div class="full-height-scroll" style="overflow: hidden">
                         <ul class="list-unstyled{# tag-list #}" style="padding: 0; height: 250px">
                             {% for tag in tags %}
-                                {% for key in tag.keyword %}
-                                    {% if key.keyword %}
-                                        <li>
-                                            <a href="{{ path('photo_admin', { 'tag': key.id }) }}" class="file-control">
-                                                <span class="glyphicon glyphicon-tag"></span> {{ key.keyword }} 
-                                            </a>
-                                        </li>
-                                    {% endif %}
-                                {% endfor %}
+                                <li>
+                                    <a href="{{ path('photo_admin', { 'tag': tag.id }) }}" class="file-control">
+                                        <span class="glyphicon glyphicon-tag"></span> {{ tag.keyword }} 
+                                    </a>
+                                </li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -116,7 +110,7 @@
 
     <div class="col-lg-9 animated fadeInRight">
         <div class="row">
-            <div class="col-lg-12 text-center">
+            <div class="col-lg-12">
                 {% for photo in pagination %}
                     <div class="file-box">
                         <div class="file">
@@ -126,14 +120,14 @@
                                     <img alt="{{ photo.title }}" class="img-responsive"  src="{{ photo.getWebPath | imagine_filter('sk_thumbnail_outbound_198_100') }}">
                                 </div>
                                 <div class="file-name">
-                                    <strong>{{ "form.photo.label.title"|trans }}:</strong> <i>"{{ photo.title |title }}"</i>
+                                    {{ photo.title|title|slice(0, 24)}}{% if photo.title|title|length > 23 %}...{%endif%}
                                     <br/>
                                     <small>
-                                        {% if photo.takenAt %}
-                                            <strong>{{ "form.photo.label.taken_at"|trans }}:</strong> {{ photo.takenAt|date('Y-m-d H:i:s') }}
+                                        {% if photo.createdAt %}
+                                            {{ "form.photo.label.uploaded_at"|trans }}: {{ photo.createdAt|date('Y-m-d H:i:s') }}
                                         {% endif %}
                                     </small>
-                                    <br/><br/>
+
                                     {#<a class="btn btn-white btn-sm" href="{{ path('photo_admin_edit', { 'id': photo.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.edit"|trans }}</a>#}
                                     {#<a class="btn btn-white btn-sm" href="{{ url_to_photo(photo) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.view"|trans }}</a>#}
                                 </div>

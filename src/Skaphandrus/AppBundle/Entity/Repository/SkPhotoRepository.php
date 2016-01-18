@@ -328,7 +328,7 @@ class SkPhotoRepository extends EntityRepository {
     }
 
     //utilizado na pagina de admin de fotografias
-    public function getUserPhotos($fos_user, $params, $limit = 21, $order = array('takenAt' => 'desc'), $offset = 0) {
+    public function getUserPhotos($fos_user, $params, $limit = 21, $order = array('createdAt' => 'desc'), $offset = 0) {
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('p')->from('SkaphandrusAppBundle:SkPhoto', 'p');
@@ -371,27 +371,29 @@ class SkPhotoRepository extends EntityRepository {
     }
 
     //utilizado na pagina de admin de fotografias
-    public function getUserPhotosSpecies($fos_user) {
+    public function getUserSpeciesFromPhotos($fos_user) {
 
         return $this->getEntityManager()->createQuery(
-                        "SELECT p
-                FROM SkaphandrusAppBundle:SkPhoto p
+                        "SELECT sn
+                FROM SkaphandrusAppBundle:SkSpeciesScientificName sn
+                JOIN SkaphandrusAppBundle:SkSpecies s WITH sn.species = s.id
+                JOIN SkaphandrusAppBundle:SkPhoto p WITH p.species = s.id
                 WHERE p.fosUser = ?1
-                GROUP BY p.species
-                ORDER BY p.takenAt desc"
+                GROUP BY p.id
+                ORDER BY sn.name ASC"
                 )->setParameter(1, $fos_user)->getResult();
     }
 
     //utilizado na pagina de admin de fotografias
-    public function getUserPhotosTags($fos_user) {
+    public function getUserTagsFromPhotos($fos_user) {
 
         return $this->getEntityManager()->createQuery(
-                        "SELECT p, k 
-                FROM SkaphandrusAppBundle:SkPhoto p 
-                JOIN p.keyword k 
+                        "SELECT k
+                FROM SkaphandrusAppBundle:SkKeyword k 
+                JOIN k.photo p
                 WHERE p.fosUser = ?1 
                 GROUP BY k.id
-                ORDER BY p.takenAt desc"
+                ORDER BY k.keyword ASC"
                 )->setParameter(1, $fos_user)->getResult();
     }
 
