@@ -62,11 +62,12 @@
 
 {% block heading_action %}
     <a href="{{ path('photo_admin_new') }}" class="btn btn-primary">{{ "form.photo.btn.add"|trans }}</a>
+    <a href="{{ url_to_photo(entity) }}" class="btn btn-success"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.view"|trans }}</a>
 {% endblock %}
 
 
 {% block form_title_description %}
-    {{ "form.photo.text.description"|trans }}
+    {{ "form.photo.text.description"|trans }} 
 {% endblock %}
 
 
@@ -78,7 +79,7 @@
         </div>#}
 
     {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
-{#    {{ form_errors(edit_form) }}#}
+    {#    {{ form_errors(edit_form) }}#}
 
     {{ form_widget(edit_form) }}
     <div class="form-group">

@@ -27,6 +27,7 @@ class SkPhotoRepository extends EntityRepository {
     }
 
     public function findAllAsPaginator($page, $per_page = 10, $params = array()) {
+
         $first = ($page - 1) * $per_page;
 
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -46,7 +47,6 @@ class SkPhotoRepository extends EntityRepository {
 
     //utilizado na galeria de fotografias
     public function getQueryBuilder4($params, $limit = 20, $order = array('id' => 'desc'), $offset = 0) {
-
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('p')->from('SkaphandrusAppBundle:SkPhoto', 'p');
@@ -140,8 +140,8 @@ class SkPhotoRepository extends EntityRepository {
         if (array_key_exists('genus', $params)) {
             $qb->join('p.species', 's', 'WITH', 'p.species = s.id');
             $qb->join('s.genus', 'g', 'WITH', 's.genus = ?13');
-//            $qb->join('p.species', 's');
-//            $qb->join('s.genus', 'g');
+            //$qb->join('p.species', 's');
+            //$qb->join('s.genus', 'g');
             //$qb->andWhere('g.genus = ?13');
             $qb->setParameter(13, $params['genus']);
         }
@@ -171,7 +171,7 @@ class SkPhotoRepository extends EntityRepository {
                 )->setMaxResults($limit)->setParameter('id', 26)
                 ->getResult();
 
-        //dump($photos);
+//        dump($photos);
 
         return $photos;
     }
@@ -297,7 +297,7 @@ class SkPhotoRepository extends EntityRepository {
 
         $sql = $sql . " limit " . $limit;
 
-        //dump($sql);
+//        dump($sql);
 
         return $sql;
     }
@@ -325,6 +325,74 @@ class SkPhotoRepository extends EntityRepository {
         else:
             return 0;
         endif;
+    }
+
+    //utilizado na pagina de admin de fotografias
+    public function getUserPhotos($fos_user, $params, $limit = 21, $order = array('takenAt' => 'desc'), $offset = 0) {
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('p')->from('SkaphandrusAppBundle:SkPhoto', 'p');
+        $qb->where('p.fosUser = ?1');
+        $qb->setParameter(1, $fos_user);
+
+        //contest
+        if (array_key_exists('contest', $params)) {
+            $qb->join('p.category', 'ca');
+            $qb->andWhere('ca.contest = ?2');
+            $qb->setParameter(2, $params['contest']);
+        }
+
+        //species
+        if (array_key_exists('species', $params)) {
+            $qb->andWhere('p.species = ?3');
+            $qb->setParameter(3, $params['species']);
+        }
+
+        //tags
+        if (array_key_exists('tag', $params)) {
+            $qb->join('p.keyword', 'k');
+            $qb->andWhere('k.id = ?4');
+            $qb->setParameter(4, $params['tag']);
+        }
+
+        if ($order) {
+            $qb->orderBy('p.' . key($order), $order[key($order)]);
+        }
+
+        if ($offset) {
+            $qb->setFirstResult($offset);
+        }
+
+        $qb->setMaxResults($limit);
+
+//        dump($qb);
+
+        return $qb;
+    }
+
+    //utilizado na pagina de admin de fotografias
+    public function getUserPhotosSpecies($fos_user) {
+
+        return $this->getEntityManager()->createQuery(
+                        "SELECT p
+                FROM SkaphandrusAppBundle:SkPhoto p
+                WHERE p.fosUser = ?1
+                GROUP BY p.species
+                ORDER BY p.takenAt desc"
+                )->setParameter(1, $fos_user)->getResult();
+    }
+
+    //utilizado na pagina de admin de fotografias
+    public function getUserPhotosTags($fos_user) {
+
+        return $this->getEntityManager()->createQuery(
+                        "SELECT p, k 
+                FROM SkaphandrusAppBundle:SkPhoto p 
+                JOIN p.keyword k 
+                WHERE p.fosUser = ?1 
+                GROUP BY k.id
+                ORDER BY p.takenAt desc"
+                )->setParameter(1, $fos_user)->getResult();
     }
 
 }

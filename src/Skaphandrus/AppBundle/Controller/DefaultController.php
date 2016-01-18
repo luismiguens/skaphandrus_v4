@@ -37,9 +37,6 @@ class DefaultController extends Controller {
     }
 
     public function index2Action() {
-
-
-
         $location = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
                 ->findOneWithTranslations(21);
 

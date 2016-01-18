@@ -9,7 +9,6 @@ use Skaphandrus\AppBundle\Utils\Utils;
 use Skaphandrus\AppBundle\Entity\SkKeyword;
 use Skaphandrus\AppBundle\Form\SkPhotoType;
 
-
 /**
  * SkPhoto controller.
  *
@@ -20,30 +19,38 @@ class SkPhotoController extends Controller {
      * Lists all SkPhoto entities.
      *
      */
-    public function indexAction() {
-        
-        $fos_user = $this->get('security.token_storage')->getToken()->getUser();
-                $params = array('fosUser'=>$fos_user->getId());
+    public function indexAction(Request $request) {
 
-        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder4($params, 20);
+        $fos_user = $this->get('security.token_storage')->getToken()->getUser();
+//        $params = array($fos_user->getId());
+        $params = $request->query->all();
+
+        $contests = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')->findBy(array('isVisible' => true), array('beginAt' => 'DESC'));
+
+        $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getUserPhotosSpecies($fos_user->getId());
+
+        $tags = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getUserPhotosTags($fos_user->getId());
+
+//        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder4($params, 20);
+        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getUserPhotos($fos_user->getId(), $params, 21);
         $query = $qb->getQuery();
 
-        //var_dump($params);
-
+//        dump($tags);
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-                $query, $this->get('request')->query->getInt('page', 1)/* page number */, 20/* limit per page */
+                $query, $this->get('request')->query->getInt('page', 1)/* page number */, 21/* limit per page */
         );
 
         // parameters to template
-        return $this->render('SkaphandrusAppBundle:SkPhoto:index.html.twig', array('pagination' => $pagination, 'params' => $params));
-        
-        
-//        
-//        
-//        
-//        
+        return $this->render('SkaphandrusAppBundle:SkPhoto:index.html.twig', array(
+                    'species' => $species,
+                    'tags' => $tags,
+                    'contests' => $contests,
+                    'pagination' => $pagination,
+                    'params' => $params
+        ));
+
 //        $em = $this->getDoctrine()->getManager();
 //
 //        ##@LM
@@ -61,11 +68,11 @@ class SkPhotoController extends Controller {
      */
     public function createAction(Request $request) {
         $entity = new SkPhoto();
-        
+
         ##@LM
         $fos_user = $this->get('security.token_storage')->getToken()->getUser();
         $entity->setFosUser($fos_user);
-        
+
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -73,12 +80,11 @@ class SkPhotoController extends Controller {
             $em = $this->getDoctrine()->getManager();
 
 //            $entity->upload();
-
             // Add tags from custom field
             $tags = explode(',', $request->request->get('tags'));
             foreach ($tags as $tag) {
                 $keyword = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkKeyword')
-                    ->findLikeKeyword($tag);
+                        ->findLikeKeyword($tag);
 
                 if (!$keyword) {
                     $keyword = new SkKeyword();
@@ -87,12 +93,12 @@ class SkPhotoController extends Controller {
                     $em->persist($keyword);
                     $em->flush();
                 }
-                $entity->addKeyword($keyword); 
+                $entity->addKeyword($keyword);
             }
 
             $em->persist($entity);
             $em->flush();
-            
+
             ##@LM
             $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
 
@@ -132,7 +138,7 @@ class SkPhotoController extends Controller {
     public function newAction() {
         $entity = new SkPhoto();
         $form = $this->createCreateForm($entity);
-       
+
         return $this->render('SkaphandrusAppBundle:SkPhoto:new.html.twig', array(
                     'entity' => $entity,
                     'keywords' => array(),
@@ -167,13 +173,13 @@ class SkPhotoController extends Controller {
      */
     public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
-        
+
         $entity = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($id);
 
         $loggedUser = $this->get('security.token_storage')->getToken()->getUser();
-        $owner = $entity->getFosUser();         
+        $owner = $entity->getFosUser();
 
-        if (Utils::isOwner($loggedUser, $owner)){
+        if (Utils::isOwner($loggedUser, $owner)) {
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find SkPhoto entity.');
             }
@@ -198,7 +204,6 @@ class SkPhotoController extends Controller {
         } else {
             throw $this->createNotFoundException("The content isn't yours.");
         }
-        
     }
 
     /**
@@ -213,7 +218,7 @@ class SkPhotoController extends Controller {
             'action' => $this->generateUrl('photo_admin_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
-        
+
         ##@LM
         //$form->add('submit', 'submit', array('label' => 'Update'));
 
@@ -239,9 +244,8 @@ class SkPhotoController extends Controller {
 
         if ($editForm->isValid()) {
             $em->flush();
-            
-//            $entity->upload();
 
+//            $entity->upload();
             // Add tags from custom field
             $entity = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($id);
             $tags = explode(',', $request->request->get('tags'));
@@ -252,7 +256,7 @@ class SkPhotoController extends Controller {
 
             foreach ($tags as $tag) {
                 $keyword = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkKeyword')
-                    ->findLikeKeyword($tag);
+                        ->findLikeKeyword($tag);
 
                 if (!$keyword) {
                     $keyword = new SkKeyword();
@@ -261,7 +265,7 @@ class SkPhotoController extends Controller {
                     $em->persist($keyword);
                     $em->flush();
                 }
-                $entity->addKeyword($keyword); 
+                $entity->addKeyword($keyword);
             }
 
             $em->persist($entity);
@@ -320,11 +324,9 @@ class SkPhotoController extends Controller {
         return $this->createFormBuilder()
                         ->setAction($this->generateUrl('photo_admin_delete', array('id' => $id)))
                         ->setMethod('DELETE')
-                        ->add('submit', 'submit', array('label' => 'form.common.btn.delete','attr' => array('class' => 'btn btn-danger')))
+                        ->add('submit', 'submit', array('label' => 'form.common.btn.delete', 'attr' => array('class' => 'btn btn-danger')))
                         ->getForm()
         ;
     }
-
-
 
 }
