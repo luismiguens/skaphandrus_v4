@@ -20,7 +20,7 @@
                             </li>
                         {% endif %}
 
-                        {% if isJudge %}
+                        {% if isJudge and not contest.isInProgress %}
                             <li>
                                 <a href="{{ path('judge_votation_admin', { 'contest_id': contest.id }) }}">{{"form.contest.votation"|trans}}</a>
                             </li>
