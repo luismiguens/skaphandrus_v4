@@ -351,7 +351,7 @@ class DefaultController extends Controller {
      */
 
     public function usersHomeAction(Request $request) {
-        
+
         $em = $this->get('doctrine.orm.entity_manager');
         $dql = "SELECT u FROM SkaphandrusAppBundle:SkUserResults u join SkaphandrusAppBundle:FosUser f WITH u.id = f.id order by u.photos desc";
         $query = $em->createQuery($dql);
@@ -1095,11 +1095,19 @@ class DefaultController extends Controller {
         $spots = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')
                 ->findSpotsInUser($user->getId(), $locale);
 
+        $validations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
+                ->getUsersValidation($user->getId());
+        
+        $sugestions = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
+                ->getUsersSugestions($user->getId());
+
         if ($user) {
             return $this->render('SkaphandrusAppBundle:Default:user.html.twig', array(
                         'user' => $user,
                         'species' => $species,
                         'spots' => $spots,
+                        'validations' => $validations,
+                        'sugestions' => $sugestions,
             ));
         } else {
             throw $this->createNotFoundException('The user with id "' . $id . '" does not exist.');

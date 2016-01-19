@@ -32,6 +32,8 @@
 
             $('.footable-species').footable();
             $('.footable-spots').footable();
+            $('.footable-validations').footable();
+            $('.footable-sugestions').footable();
         });
     </script>
 {% endblock %}
@@ -181,7 +183,7 @@
                                                 </a>
                                             </li>
                                         {% endif %}
-                                        {% if user.photosValidated|first is not empty %}
+                                        {% if user.photosValidated|first is not empty or sugestions is not empty %}
                                             {% set tab_id = tab_id + 1 %}
                                             {% set tab_photosv_id = tab_id %}
 
@@ -281,14 +283,78 @@
                                     {% endif %}
                                     <!-- End Spots Tab -->
                                     <!-- Start Photos Validated Tab -->
-                                    {% if user.photosValidated|first is not empty %}
+                                    {% if user.photosValidated|first is not empty or sugestions is not empty %}
                                         <div id="tab-{{tab_photosv_id}}" class="tab-pane {{tab_photosv_id==1?'active'}}">
                                             <h3>{% trans with {'%name%': user.personal.name|title} %}page.user.h3.photos_validated{% endtrans %}</h3>
-                                            {% set pva = [] %}
+
+                                            {% if validations is not empty %}
+                                                <input type="text" class="form-control input-sm m-b-xs" id="filter-validations" placeholder="Search in table">
+                                                <table class="footable footable-validations table" data-page-size="50" data-filter=#filter-validations>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>{{ "page.user.table.species_name"|trans }}</th>
+                                                            <th>{{ "page.user.table.num_validations"|trans }}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for v in validations %}
+                                                            <tr>
+                                                                <td>
+                                                                    <a href="{{ path('species', { 'slug': v.species_name }) }}">{{ v.species_name }}, {{ v.species_author }}</a>
+                                                                </td>
+                                                                <td>
+                                                                    {{ v.count }}
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                <ul class="pagination pull-right"></ul>
+                                                            </td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            {% endif %}
+
+                                            {% if sugestions is not empty %}
+                                                <input type="text" class="form-control input-sm m-b-xs" id="filter-sugestions" placeholder="Search in table">
+                                                <table class="footable footable-sugestions table" data-page-size="50" data-filter=#filter-sugestions>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>{{ "page.user.table.species_name"|trans }}</th>
+                                                            <th>{{ "page.user.table.num_sugestions"|trans }}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for sn in sugestions %}
+                                                            <tr>
+                                                                <td>
+                                                                    {{ sn.species_name }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ sn.count }}
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                <ul class="pagination pull-right"></ul>
+                                                            </td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            {% endif %}
+
+                                            {#{% set pva = [] %}
                                             {% for pv in user.photosValidated[:35] %}
                                                 {% set pva = pva|merge([pv.photo]) %}
-                                            {% endfor %}
+                                            {% endfor %}#}
                                             {#{{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'photos': pva } })) }}#}
+
                                         </div>
                                     {% endif %}
                                     <!-- End Photos Validated Tab -->

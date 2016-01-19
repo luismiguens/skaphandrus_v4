@@ -31,18 +31,14 @@ class FosUserRepository extends EntityRepository {
         $values = $statement->fetchAll();
 
 //        $result = $values->getQuery()->getResult();
-
-       // dump($result);
+        // dump($result);
 
         if ($result):
             return true;
         endif;
     }
 
-    
-    
-    
-    /** WORKAROUND - ARENÇÃO ESTE METODO TEM DE SER ALTERADO **/
+    /** WORKAROUND - ARENÇÃO ESTE METODO TEM DE SER ALTERADO * */
     public function isJudge($fos_user_id) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
@@ -264,13 +260,52 @@ class FosUserRepository extends EntityRepository {
         return $result;
     }
 
-    //Esta a ser uzado na pagina user home
+    //Esta a ser usado na pagina user home
     public function findAllUsers() {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
         $sql = "SELECT * from sk_user as u
                 order by photos desc";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+
+        return $values;
+    }
+
+    public function getUsersValidation($fos_user_id) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT v.species_id AS species, count(v.photo_id) AS count, 
+                sn.name as species_name, sn.author as species_author
+                FROM sk_photo_species_validation AS v
+                JOIN sk_species as s ON s.id = v.species_id
+                JOIN sk_species_scientific_name AS sn ON s.id = sn.species_id
+                WHERE v.fos_user_id = " . $fos_user_id . "
+                GROUP BY v.species_id
+                ORDER BY count desc";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+
+        return $values;
+    }
+
+    public function getUsersSugestions($fos_user_id) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT su.species_id AS species, count(su.photo_id) AS count, sn.name AS species_name
+                FROM sk_photo_species_sugestion as su
+                Join sk_species as s on s.id = su.species_id
+                Join sk_species_scientific_name as sn on s.id = sn.species_id
+                WHERE su.fos_user_id = " . $fos_user_id . "
+                GROUP BY su.species_id
+                ORDER BY count desc";
 
         $statement = $connection->prepare($sql);
         $statement->execute();
