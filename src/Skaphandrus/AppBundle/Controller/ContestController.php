@@ -73,14 +73,18 @@ class ContestController extends Controller {
         $categoryPhotos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
                 ->findPhotosFromUserInContest($user->getId(), $contest->getId());
 
-
-
-        return $this->render('SkaphandrusAppBundle:Contest:participate.html.twig', array(
-                    'contest' => $contest,
-                    'categories' => $contest->getCategories(),
-                    'userPhotos' => $userPhotos,
-                    'categoryPhotos' => $categoryPhotos,
-        ));
+        if (!$contest->IsInProgress()) {
+            return $this->redirect($this->generateUrl('contests_contest', array(
+                                'slug' => $contest->getName(),
+            )));
+        } else {
+            return $this->render('SkaphandrusAppBundle:Contest:participate.html.twig', array(
+                        'contest' => $contest,
+                        'categories' => $contest->getCategories(),
+                        'userPhotos' => $userPhotos,
+                        'categoryPhotos' => $categoryPhotos,
+            ));
+        }
     }
 
     public function addPhotoAction($category_id, $photo_id) {

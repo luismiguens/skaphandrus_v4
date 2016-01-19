@@ -299,7 +299,8 @@ class FosUserRepository extends EntityRepository {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
-        $sql = "SELECT su.species_id AS species, count(su.photo_id) AS count, sn.name AS species_name
+        $sql = "SELECT su.species_id AS species, count(su.photo_id) AS count,
+                sn.name as species_name, sn.author as species_author
                 FROM sk_photo_species_sugestion as su
                 Join sk_species as s on s.id = su.species_id
                 Join sk_species_scientific_name as sn on s.id = sn.species_id

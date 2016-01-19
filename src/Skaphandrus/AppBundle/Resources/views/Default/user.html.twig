@@ -331,7 +331,7 @@
                                                         {% for sn in sugestions %}
                                                             <tr>
                                                                 <td>
-                                                                    {{ sn.species_name }}
+                                                                    <a href="{{ path('species', { 'slug': sn.species_name }) }}">{{ sn.species_name }}, {{ sn.species_author }}</a>
                                                                 </td>
                                                                 <td>
                                                                     {{ sn.count }}
