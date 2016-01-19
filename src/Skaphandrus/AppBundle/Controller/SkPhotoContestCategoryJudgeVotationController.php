@@ -64,16 +64,16 @@ class SkPhotoContestCategoryJudgeVotationController extends Controller {
         $fos_user = $this->get('security.token_storage')->getToken()->getUser();
         $judge = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestJudge')->findOneBy(array('fosUser' => $fos_user));
         $contest = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')->find($contest_id);
-        
-        //ir buscar as categorias do concurso
+
+//ir buscar as categorias do concurso
         $categories = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')->findBy(array('contest' => $contest_id));
 
         foreach ($categories as $key => $category) {
 
-            //para cada categoria verificar se o juiz já votou
+//para cada categoria verificar se o juiz já votou
             $votation = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->getJudgeVotationsByCategory($judge, $category);
 
-            //se não votou criar o registo de votacao da categoria respectiva
+//se não votou criar o registo de votacao da categoria respectiva
             if (!$votation) {
 
                 $JudgeVotation = new SkPhotoContestCategoryJudgeVotation();
@@ -84,7 +84,7 @@ class SkPhotoContestCategoryJudgeVotationController extends Controller {
             }
         }
 
-        //ir buscar todas as votações do juiz nas categorias
+//ir buscar todas as votações do juiz nas categorias
         $entities = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->getJudgeVotationsByContest($contest_id, $judge);
 
         return $this->render('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation:index.html.twig', array(
@@ -183,18 +183,23 @@ class SkPhotoContestCategoryJudgeVotationController extends Controller {
             throw $this->createNotFoundException('Unable to find SkPhotoContestCategoryJudgeVotation entity.');
         }
 
-        //$entity = new SkPhotoContestCategoryJudgeVotation(); 
-        //VERIFICAR SE A VOTACAO JÁ TEM AS FOTOGRAFIAS
+
         //se o concurso já tiver terminado cria as votacoes para as fotografias mais votadas        
-        if (count($votation->getJudgeVote()) < 1):
+        $mostVotedPhotos = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->findMostVotedPhotosByCategory($votation->getCategory()->getId());
 
-            $mostVotedPhotos = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgeVotation')->findMostVotedPhotosByCategory($votation->getCategory()->getId());
+        foreach ($mostVotedPhotos as $key => $photo) {
+            //ir buscar vote do juiz na fotografia
+            $judgeVote = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestCategoryJudgePhotoVote')->findOneBy(
+                    array(
+                        'votation' => $votation->getId(), 
+                        'photo' => $photo['id']));
 
-            foreach ($mostVotedPhotos as $key => $photo) {
-
-//                echo $photo['id']." : ";
-//                echo $photo['countable']."<br/>";
-
+            //se tem votação
+            if ($judgeVote):
+                //$points = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->countPointsFromPublicInCategory($judgeVote->getPhoto()->getId(), $votation->getCategory()->getId());
+                $judgeVote->getPhoto()->setPoints($photo['countable']);
+                
+            else:
                 $judgeVote = new \Skaphandrus\AppBundle\Entity\SkPhotoContestCategoryJudgePhotoVote();
                 $p = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($photo['id']);
                 $p->setPoints($photo['countable']);
@@ -205,18 +210,10 @@ class SkPhotoContestCategoryJudgeVotationController extends Controller {
 
                 $votation->addJudgeVote($judgeVote);
                 $em->persist($votation);
-            }
-            $em->flush();
 
-        else:
-
-            foreach ($votation->getJudgeVote() as $key => $judgeVote) {
-                $points = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->countPointsFromPublicInCategory($judgeVote->getPhoto()->getId(), $votation->getCategory()->getId());
-                $judgeVote->getPhoto()->setPoints($points);
-            }
-
-        endif;
-
+            endif;
+        }
+        
         $editForm = $this->createEditForm($votation);
         $deleteForm = $this->createDeleteForm($id);
 
@@ -241,7 +238,7 @@ class SkPhotoContestCategoryJudgeVotationController extends Controller {
             'method' => 'PUT',
         ));
 
-        //$form->add('submit', 'submit', array('label' => 'form.common.btn.update', 'attr' => array('class' => 'btn btn-primary')));
+//$form->add('submit', 'submit', array('label' => 'form.common.btn.update', 'attr' => array('class' => 'btn btn-primary')));
 
         return $form;
     }
