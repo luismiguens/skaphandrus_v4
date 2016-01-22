@@ -16,7 +16,8 @@ class SkPhotoContestType extends AbstractType {
         $builder
                 ->add('name', null, array(
                     'attr' => array('class' => 'form-control'),
-                    'label' => 'form.photo_contest.label.name'
+                    'label' => 'form.photo_contest.label.name',
+                    'required' => true
                 ))
 
 //            ->add('logo')
@@ -34,20 +35,33 @@ class SkPhotoContestType extends AbstractType {
                     'allow_delete' => false, // not mandatory, default is true
                     'download_link' => false, // not mandatory, default is true
                 ))
+                ->add('promoAt', null, array(
+                    'years' => range(2010, 2030),
+                    'label' => 'form.photo_contest.label.promo_at'
+                ))
                 ->add('beginAt', null, array(
                     'years' => range(2010, 2030),
-//                'attr' => array('class' => 'form-control'),
                     'label' => 'form.photo_contest.label.begin_at'
+                ))
+                ->add('publicVotationAt', null, array(
+                    'years' => range(2010, 2030),
+                    'label' => 'form.photo_contest.label.public_votation_at'
                 ))
                 ->add('endAt', null, array(
                     'years' => range(2010, 2030),
-//                'attr' => array('class' => 'form-control'),
                     'label' => 'form.photo_contest.label.end_at'
                 ))
                 ->add('winnersAt', null, array(
                     'years' => range(2010, 2030),
-//                'attr' => array('class' => 'form-control'),
                     'label' => 'form.photo_contest.label.winner_at'
+                ))
+                ->add('type', 'choice', array(
+                    'attr' => array('class' => 'form-control m-b'),
+                    'label' => 'form.photo_contest.label.type',
+                    'choices' => array(
+                        '0' => 'form.photo_contest.label.type_geografic',
+                        '1' => 'form.photo_contest.label.type_taxonomic',
+                    )
                 ))
                 ->add('isJudge', null, array(
 //                'attr' => array('class' => 'form-control'),

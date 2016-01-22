@@ -43,78 +43,80 @@
                 <div class="project-list">
                     <table class="table">
                         <tbody>
-                            {% for contest in contests %}   
-                                {# Calculate the project completeness #}
-                                {% if "now"|date("U") < contest.beginAt|date("U") %}
-                                    {% set percentage = 0 %}
-                                    {% set contest_status = 'not-started' %}
-                                    {% set button_class = 'default' %}
-                                {% elseif "now"|date("U") < contest.endAt|date("U") %}
-                                    {% set time_length = contest.endAt|date("U") - contest.beginAt|date("U") %}
-                                    {% set current_time_length = "now"|date("U") - contest.beginAt|date("U") %}
-                                    {% set percentage = ( (current_time_length * 100) / time_length )|number_format %}
-                                    {% set contest_status = 'active' %}
-                                    {% set button_class = 'warning' %}
-                                {% else %}
-                                    {% set percentage = 100 %}
-                                    {% set contest_status = 'completed' %}
-                                    {% set button_class = 'primary' %}
-                                {% endif %}
-                                <tr>
-                                    <td class="project-logo">
-                                        <a href="{{ url_to_contest(contest) }}">
-                                            {% if contest.image %}    
-                                                <img alt="{{ contest.name }}" class="img-rounded" src="{{ contest.getWebPathLogo | imagine_filter('sk_widen_160') }} ">
-                                            {% endif %}
-                                        </a>
-                                    </td>
-                                    <td class="project-title">
-                                        <a href="{{ url_to_contest(contest) }}">{{ contest.name }}</a>
-                                        <br/>
-                                        <small>{{ "page.contests.label.created"|trans }} {{ contest.createdAt|date('d-m-Y') }}</small>
-                                    </td>
-                                    <td class="project-status">
-                                        <span class="label label-{{ button_class }}">{{ ("page.contests.label.status_" ~ contest_status)|trans }}</span><br />
-                                        <span>{{ "page.contests.label.starts_at"|trans }}: {{ contest.beginAt|date('Y-m-d') }}</span><br />
-                                        <span>{{ "page.contests.label.ends_at"|trans }}: {{ contest.endAt|date('Y-m-d') }}</span><br />
-                                    </td>
-                                    <td class="project-photos">
-                                        <span>{{ "page.contests.label.photos"|trans }}:&nbsp;
-                                            {% if contest.photos|length != 0 %}
-                                                <a href="{{ url_to_contest_photos(contest.categories|first) }}">
+                            {% for contest in contests %}
+                                {% if contest.isInPromotion %}
+                                    {# Calculate the project completeness #}
+                                    {% if "now"|date("U") < contest.beginAt|date("U") %}
+                                        {% set percentage = 0 %}
+                                        {% set contest_status = 'not-started' %}
+                                        {% set button_class = 'default' %}
+                                    {% elseif "now"|date("U") < contest.endAt|date("U") %}
+                                        {% set time_length = contest.endAt|date("U") - contest.beginAt|date("U") %}
+                                        {% set current_time_length = "now"|date("U") - contest.beginAt|date("U") %}
+                                        {% set percentage = ( (current_time_length * 100) / time_length )|number_format %}
+                                        {% set contest_status = 'active' %}
+                                        {% set button_class = 'warning' %}
+                                    {% else %}
+                                        {% set percentage = 100 %}
+                                        {% set contest_status = 'completed' %}
+                                        {% set button_class = 'primary' %}
+                                    {% endif %}
+                                    <tr>
+                                        <td class="project-logo">
+                                            <a href="{{ url_to_contest(contest) }}">
+                                                {% if contest.image %}    
+                                                    <img alt="{{ contest.name }}" class="img-rounded" src="{{ contest.getWebPathLogo | imagine_filter('sk_widen_160') }} ">
+                                                {% endif %}
+                                            </a>
+                                        </td>
+                                        <td class="project-title">
+                                            <a href="{{ url_to_contest(contest) }}">{{ contest.name }}</a>
+                                            <br/>
+                                            <small>{{ "page.contests.label.created"|trans }} {{ contest.createdAt|date('d-m-Y') }}</small>
+                                        </td>
+                                        <td class="project-status">
+                                            <span class="label label-{{ button_class }}">{{ ("page.contests.label.status_" ~ contest_status)|trans }}</span><br />
+                                            <span>{{ "page.contests.label.starts_at"|trans }}: {{ contest.beginAt|date('Y-m-d') }}</span><br />
+                                            <span>{{ "page.contests.label.ends_at"|trans }}: {{ contest.endAt|date('Y-m-d') }}</span><br />
+                                        </td>
+                                        <td class="project-photos">
+                                            <span>{{ "page.contests.label.photos"|trans }}:&nbsp;
+                                                {% if contest.photos|length != 0 %}
+                                                    <a href="{{ url_to_contest_photos(contest.categories|first) }}">
+                                                        {{contest.photos|length}}
+                                                    </a>
+                                                {% else %}
                                                     {{contest.photos|length}}
-                                                </a>
-                                            {% else %}
-                                                {{contest.photos|length}}
+                                                {% endif %}
+                                            </span>
+                                        </td>
+                                        <td class="project-people">
+                                            {#{% if photographers[contest.id]|length %}
+                                                {% for photographer in photographers[contest.id][:5] %}#}
+                                            {#{% for photographer in photographers %}#}
+
+                                            {{ "page.contests.label.photographers"|trans }}:&nbsp;
+
+                                            {#<a href="{{ url_to_user(photographer) }}">
+                                                <img alt="image" class="img-circle" src="{{ photographer.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
+                                            </a>   #}
+
+
+                                            {#                                            {% endfor %}#}
+                                            <a href="{{ path("contests_photographers", {'contest_slug': slugify(contest.name) }) }}">
+                                                {{contest.photographers|length}} {#{{ "page.contests.link.see_more"|trans }}#}
+                                            </a>
+                                            {#                                        {% endif %}#}
+                                        </td>
+
+                                        <td class="project-actions">
+                                            {% if contest.isInProgress %}
+                                                <a href="{{ path('contest_participate', { 'contest_id': contest.id }) }}" class="btn btn-primary btn-sm"><i class="fa fa-upload"></i> {{ "page.contests.link.join"|trans }}</a>
                                             {% endif %}
-                                        </span>
-                                    </td>
-                                    <td class="project-people">
-                                        {#{% if photographers[contest.id]|length %}
-                                            {% for photographer in photographers[contest.id][:5] %}#}
-                                        {#{% for photographer in photographers %}#}
-
-                                        {{ "page.contests.label.photographers"|trans }}:&nbsp;
-
-                                        {#<a href="{{ url_to_user(photographer) }}">
-                                            <img alt="image" class="img-circle" src="{{ photographer.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
-                                        </a>   #}
-
-
-                                        {#                                            {% endfor %}#}
-                                        <a href="{{ path("contests_photographers", {'contest_slug': slugify(contest.name) }) }}">
-                                            {{contest.photographers|length}} {#{{ "page.contests.link.see_more"|trans }}#}
-                                        </a>
-                                        {#                                        {% endif %}#}
-                                    </td>
-
-                                    <td class="project-actions">
-                                        {% if contest.isInProgress %}
-                                            <a href="{{ path('contest_participate', { 'contest_id': contest.id }) }}" class="btn btn-primary btn-sm"><i class="fa fa-upload"></i> {{ "page.contests.link.join"|trans }}</a>
-                                        {% endif %}
-                                        <a href="{{ url_to_contest(contest) }}" class="btn btn-default btn-sm"><i class="fa fa-folder"></i> {{ "page.contests.link.view"|trans }} </a>
-                                    </td>
-                                </tr>                        
+                                            <a href="{{ url_to_contest(contest) }}" class="btn btn-default btn-sm"><i class="fa fa-folder"></i> {{ "page.contests.link.view"|trans }} </a>
+                                        </td>
+                                    </tr>  
+                                {% endif %}
                             {% endfor %}
                         </tbody>
                     </table>

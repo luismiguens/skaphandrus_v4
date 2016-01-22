@@ -33,9 +33,19 @@
         </field>
         <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
         <field name="winnersAt" type="datetime" column="winners_at" nullable="false"/>
+        <field name="promoAt" type="datetime" column="promo_at" nullable="false"/>
+        <field name="publicVotationAt" type="datetime" column="public_votation_at" nullable="false"/>
+        <field name="type" type="integer" column="type" nullable="false">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        
         <one-to-many field="categories" target-entity="SkPhotoContestCategory" mapped-by="contest"/>
         <!--<one-to-many field="sponsors" target-entity="SkPhotoContestSponsor" mapped-by="contest"/>-->
         <one-to-many field="awards" target-entity="SkPhotoContestAward" mapped-by="contest"/>
-        <!--<one-to-many field="judges" target-entity="SkPhotoContestJudge" mapped-by="contest"/>-->
+        
+        <many-to-many field="judge" target-entity="SkPhotoContestJudge" mapped-by="contest" fetch="LAZY"/>
+        
     </entity>
 </doctrine-mapping>

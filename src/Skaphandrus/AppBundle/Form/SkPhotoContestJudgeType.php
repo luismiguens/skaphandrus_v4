@@ -14,22 +14,24 @@ class SkPhotoContestJudgeType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-//            ->add('contest', null, array(
-//                'required'=> true,
-//                'attr' => array('class' => 'form-control'),
-//                'label'=>'form.photo_contest_judge.label.contest'
-//                ))
                 ->add('fosUser', 'autocomplete', array(
                     'class' => 'SkaphandrusAppBundle:FosUser',
                     'attr' => array('class' => 'form-control m-b'),
                     'label' => 'form.photo_contest_judge.label.fosUser'
                 ))
-                ->add('award', 'entity', array(
-                    'attr' => array('class' => 'checkbox'),
-                    'label' => 'form.photo_contest_judge.label.award',
-                    'class' => 'SkaphandrusAppBundle:SkPhotoContestAward',
+//                ->add('award', 'entity', array(
+//                    'attr' => array('class' => 'checkbox'),
+//                    'label' => 'form.photo_contest_judge.label.award',
+//                    'class' => 'SkaphandrusAppBundle:SkPhotoContestAward',
+//                    'expanded' => true,
+//                    'multiple' => true
+//                ))
+                ->add('contest', null, array(
+                    'required' => true,
                     'expanded' => true,
-                    'multiple' => true
+                    'multiple' => true,
+                    'attr' => array('class' => 'checkbox'),
+                    'label' => 'form.photo_contest_judge.label.contest'
                 ))
                 ->add('translations', 'a2lix_translations', array(
                     'fields' => array(

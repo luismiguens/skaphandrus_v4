@@ -15,46 +15,42 @@ use Skaphandrus\AppBundle\Entity\FosUser;
  */
 class FosUserRepository extends EntityRepository {
 
-    public function isJudgeInCategory($category_id, $fos_user_id) {
-        $em = $this->getEntityManager();
-        $connection = $em->getConnection();
-
-        $sql = "select u.id as user 
-                from fos_user as u
-                join sk_photo_contest_judge as j on u.id = j.fos_user_id
-                join sk_photo_contest_judge_award as ja on j.id = ja.judge_id
-                join sk_photo_contest_award as a on a.id = ja.award_id
-                where a.category_id = " . $category_id . " and u.id =" . $fos_user_id;
-
-        $statement = $connection->prepare($sql);
-        $statement->execute();
-        $values = $statement->fetchAll();
-
-//        $result = $values->getQuery()->getResult();
-        // dump($result);
-
-        if ($result):
-            return true;
-        endif;
-    }
+//    public function isJudgeInCategory($category_id, $fos_user_id) {
+//        $em = $this->getEntityManager();
+//        $connection = $em->getConnection();
+//
+//        $sql = "select u.id as user 
+//                from fos_user as u
+//                join sk_photo_contest_judge as j on u.id = j.fos_user_id
+//                join sk_photo_contest_judge_award as ja on j.id = ja.judge_id
+//                join sk_photo_contest_award as a on a.id = ja.award_id
+//                where a.category_id = " . $category_id . " and u.id =" . $fos_user_id;
+//
+//        $statement = $connection->prepare($sql);
+//        $statement->execute();
+//        $values = $statement->fetchAll();
+//
+////        $result = $values->getQuery()->getResult();
+//        // dump($result);
+//
+//        if ($values):
+//            return true;
+//        endif;
+//    }
 
     /** WORKAROUND - ARENÇÃO ESTE METODO TEM DE SER ALTERADO * */
     public function isJudge($fos_user_id) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
-
         $sql = "select u.id 
                 from sk_photo_contest_judge as j
                 join fos_user as u 
                 on u.id = j.fos_user_id
                 where u.id =" . $fos_user_id;
-
         $statement = $connection->prepare($sql);
         $statement->execute();
         $values = $statement->fetchAll();
-
 //        $result = $values->getQuery()->getResult();
-
         if ($values):
             return true;
         endif;

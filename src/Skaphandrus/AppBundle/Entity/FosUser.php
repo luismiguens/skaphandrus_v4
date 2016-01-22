@@ -62,6 +62,9 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
     private $photosInContest;
     private $photosInUser;
     private $speciesInUser;
+    private $firstPhoto;
+    private $validSpeciesPhoto;
+    private $validSpecies;
     //modulos em que o user trabalhou (designer, biologo, programador)
     private $works;
 
@@ -87,6 +90,30 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
 
     public function setSpeciesInUser($param) {
         $this->speciesInUser = $param;
+    }
+
+    public function getFirstPhoto() {
+        return $this->firstPhoto;
+    }
+
+    public function setFirstPhoto($param) {
+        $this->firstPhoto = $param;
+    }
+
+    public function getValidSpeciesPhoto() {
+        return $this->validSpeciesPhoto;
+    }
+
+    public function setValidSpeciesPhoto($param) {
+        $this->validSpeciesPhoto = $param;
+    }
+
+    public function getValidSpecies() {
+        return $this->validSpecies;
+    }
+
+    public function setValidSpecies($param) {
+        $this->validSpecies = $param;
     }
 
     public function getEncoderName() {

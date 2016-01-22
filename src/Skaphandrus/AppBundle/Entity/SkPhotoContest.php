@@ -75,7 +75,7 @@ class SkPhotoContest {
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $judges;
+    private $judge;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -98,6 +98,34 @@ class SkPhotoContest {
      * @var \DateTime
      */
     private $winnersAt;
+
+    /**
+     * @var \DateTime
+     */
+    private $promoAt;
+
+    /**
+     * @var \DateTime
+     */
+    private $publicVotationAt;
+
+    /**
+     * @var integer
+     */
+    private $type;
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->beginAt = new \DateTime();
+        $this->endAt = new \DateTime();
+        $this->createdAt = new \DateTime();
+        $this->publicVotationAt = new \DateTime();
+        $this->promoAt = new \DateTime();
+        $this->winnersAt = new \DateTime();
+        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Set visible
@@ -183,13 +211,6 @@ class SkPhotoContest {
 // get rid of the __DIR__ so it doesn't screw up
 // when displaying uploaded doc/image in the view.
         return 'uploads/contests';
-    }
-
-    /**
-     * Constructor
-     */
-    public function __construct() {
-        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -347,6 +368,28 @@ class SkPhotoContest {
     }
 
     /**
+     * Set type
+     *
+     * @param integer $type
+     *
+     * @return SkPhotoContest
+     */
+    public function setType($type) {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer
+     */
+    public function getType() {
+        return $this->type;
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -455,15 +498,50 @@ class SkPhotoContest {
         return $this->awards;
     }
 
+//    /**
+//     * Add judge
+//     *
+//     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge
+//     *
+//     * @return SkPhotoContest
+//     */
+//    public function addJudge(\Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge) {
+//        $this->judges[] = $judge;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Remove judge
+//     *
+//     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge
+//     */
+//    public function removeJudge(\Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge) {
+//        $this->judges->removeElement($judge);
+//    }
+//
+//    /**
+//     * Get judges
+//     *
+//     * @return \Doctrine\Common\Collections\Collection
+//     */
+//    public function getJudges() {
+//        foreach ($this->categories as $category) {
+//            foreach ($category->getAwards() as $award) {
+//                return $award->getJudge();
+//            }
+//        }
+//    }
+
     /**
      * Add judge
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge
      *
-     * @return SkPhotoContest
+     * @return SkPhotoContestAward
      */
     public function addJudge(\Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge) {
-        $this->judges[] = $judge;
+        $this->judge[] = $judge;
 
         return $this;
     }
@@ -474,20 +552,16 @@ class SkPhotoContest {
      * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge
      */
     public function removeJudge(\Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge) {
-        $this->judges->removeElement($judge);
+        $this->judge->removeElement($judge);
     }
 
     /**
-     * Get judges
+     * Get judge
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getJudges() {
-        foreach ($this->categories as $category) {
-            foreach ($category->getAwards() as $award) {
-                return $award->getJudge();
-            }
-        }
+    public function getJudge() {
+        return $this->judge;
     }
 
     /**
@@ -560,11 +634,55 @@ class SkPhotoContest {
         return $this->winnersAt;
     }
 
-    public function isWinnersReady() {
+    /**
+     * Set promoAt
+     *
+     * @param \DateTime $promoAt
+     *
+     * @return SkPhotoContest
+     */
+    public function setPromoAt($promoAt) {
+        $this->promoAt = $promoAt;
+
+        return $this;
+    }
+
+    /**
+     * Get promoAt
+     *
+     * @return \DateTime
+     */
+    public function getPromoAt() {
+        return $this->promoAt;
+    }
+
+    /**
+     * Set publicVotationAt
+     *
+     * @param \DateTime $publicVotationAt
+     *
+     * @return SkPhotoContest
+     */
+    public function setPublicVotationAt($publicVotationAt) {
+        $this->publicVotationAt = $publicVotationAt;
+
+        return $this;
+    }
+
+    /**
+     * Get publicVotationAt
+     *
+     * @return \DateTime
+     */
+    public function getPublicVotationAt() {
+        return $this->publicVotationAt;
+    }
+
+    public function isInPromotion() {
 
         $now = new \DateTime();
-        
-        if ($now > $this->getWinnersAt()) {
+
+        if ($this->getPromoAt() < $now) {
             return true;
         }
 
@@ -576,6 +694,39 @@ class SkPhotoContest {
         $now = new \DateTime();
 
         if ($this->getBeginAt() < $now and $this->getEndAt() > $now) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isInPublicVotation() {
+
+        $now = new \DateTime();
+
+        if ($this->getPublicVotationAt() < $now and $this->getEndAt() > $now) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isInJudgeVotation() {
+
+        $now = new \DateTime();
+
+        if ($this->getEndAt() < $now and $this->getWinnersAt() > $now) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isWinnersReady() {
+
+        $now = new \DateTime();
+
+        if ($now > $this->getWinnersAt()) {
             return true;
         }
 

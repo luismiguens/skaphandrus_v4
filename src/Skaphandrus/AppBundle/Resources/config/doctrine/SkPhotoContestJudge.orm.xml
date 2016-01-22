@@ -1,32 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Skaphandrus\AppBundle\Entity\SkPhotoContestJudge" repository-class="Skaphandrus\AppBundle\Entity\Repository\SkPhotoContestJudgeRepository" table="sk_photo_contest_judge">
-    <indexes>
-      <index name="sk_photo_contest_judge_FI_1" columns="contest_id"/>
-      <index name="sk_photo_contest_judge_FI_2" columns="fos_user_id"/>
-    </indexes>
-    <id name="id" type="integer" column="id">
-      <generator strategy="IDENTITY"/>
-    </id>
-<!--    <many-to-one field="contest" target-entity="SkPhotoContest" fetch="LAZY">
-      <join-columns>
-        <join-column name="contest_id" referenced-column-name="id"/>
-      </join-columns>
-    </many-to-one>-->
-    <many-to-one field="fosUser" target-entity="FosUser" fetch="LAZY">
-      <join-columns>
-        <join-column name="fos_user_id" referenced-column-name="id"/>
-      </join-columns>
-    </many-to-one>
-    <many-to-many field="award" target-entity="SkPhotoContestAward" inversed-by="judge" fetch="LAZY">
-      <join-table name="sk_photo_contest_judge_award">
-        <join-columns>
-          <join-column name="judge_id" referenced-column-name="id"/>
-        </join-columns>
-        <inverse-join-columns>
-          <join-column name="award_id" referenced-column-name="id"/>
-        </inverse-join-columns>
-      </join-table>
-    </many-to-many>
-  </entity>
+    <entity name="Skaphandrus\AppBundle\Entity\SkPhotoContestJudge" repository-class="Skaphandrus\AppBundle\Entity\Repository\SkPhotoContestJudgeRepository" table="sk_photo_contest_judge">
+        <indexes>
+            <index name="sk_photo_contest_judge_FI_1" columns="contest_id"/>
+            <index name="sk_photo_contest_judge_FI_2" columns="fos_user_id"/>
+        </indexes>
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        
+        <many-to-many field="contest" target-entity="SkPhotoContest" inversed-by="judge" fetch="LAZY">
+            <join-table name="sk_photo_contest_judge_contest">
+                <join-columns>
+                    <join-column name="judge_id" referenced-column-name="id"/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="contest_id" referenced-column-name="id"/>
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+    
+        <many-to-one field="fosUser" target-entity="FosUser" fetch="LAZY">
+            <join-columns>
+                <join-column name="fos_user_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        
+        <!--    <many-to-many field="award" target-entity="SkPhotoContestAward" inversed-by="judge" fetch="LAZY">
+          <join-table name="sk_photo_contest_judge_award">
+            <join-columns>
+              <join-column name="judge_id" referenced-column-name="id"/>
+            </join-columns>
+            <inverse-join-columns>
+              <join-column name="award_id" referenced-column-name="id"/>
+            </inverse-join-columns>
+          </join-table>
+        </many-to-many>-->
+        
+    </entity>
 </doctrine-mapping>

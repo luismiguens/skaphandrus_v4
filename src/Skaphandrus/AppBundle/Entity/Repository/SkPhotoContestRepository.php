@@ -159,9 +159,17 @@ class SkPhotoContestRepository extends EntityRepository {
 
         $statement->bindValue('contest_id', $contest_id);
         $statement->execute();
-        $results = $statement->fetchAll();
+        $values = $statement->fetchAll();
+        $result = array();
 
-        return $results;
+        foreach ($values as $value) {
+//            $user = new \Skaphandrus\AppBundle\Entity\FosUser();
+            $user = $em->getRepository('SkaphandrusAppBundle:FosUser')->find($value['user']);
+            $user->setFirstPhoto($value['count_first_photo']);
+            $result[] = $user;
+        }
+
+        return $result;
     }
 
     //para determinado utilizador e concurso devolve o numero de fotografias com especie validada
@@ -187,9 +195,17 @@ class SkPhotoContestRepository extends EntityRepository {
 
         $statement->bindValue('contest_id', $contest_id);
         $statement->execute();
-        $results = $statement->fetchAll();
+        $values = $statement->fetchAll();
+        $result = array();
 
-        return $results;
+        foreach ($values as $value) {
+//            $user = new \Skaphandrus\AppBundle\Entity\FosUser();
+            $user = $em->getRepository('SkaphandrusAppBundle:FosUser')->find($value['user']);
+            $user->setValidSpeciesPhoto($value['count_photo_species_valid']);
+            $result[] = $user;
+        }
+
+        return $result;
     }
 
     //para determinado utilizador e concurso devolve o numero de especies com validação
@@ -213,9 +229,17 @@ class SkPhotoContestRepository extends EntityRepository {
 
         $statement->bindValue('contest_id', $contest_id);
         $statement->execute();
-        $results = $statement->fetchAll();
+        $values = $statement->fetchAll();
+        $result = array();
 
-        return $results;
+        foreach ($values as $value) {
+//            $user = new \Skaphandrus\AppBundle\Entity\FosUser();
+            $user = $em->getRepository('SkaphandrusAppBundle:FosUser')->find($value['user']);
+            $user->setValidSpecies($value['count_species_validated']);
+            $result[] = $user;
+        }
+
+        return $result;
     }
 
 }

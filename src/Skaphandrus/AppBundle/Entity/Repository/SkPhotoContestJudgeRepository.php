@@ -13,8 +13,16 @@ use Doctrine\ORM\Query\ResultSetMapping;
  */
 class SkPhotoContestJudgeRepository extends EntityRepository {
 
-    public function findJudgesByContest_old($contest) {
+    public function findJudgesByContest($contest) {
+        return $this->getEntityManager()->createQuery(
+                        "SELECT j
+                FROM SkaphandrusAppBundle:SkPhotoContestJudge j
+                JOIN j.contest c
+         WHERE c.id = :contest")->setParameter('contest', $contest)->getResult();
+    }
 
+//    public function findJudgesByContest_old($contest) {
+//
 //        $rsm = new ResultSetMapping();
 //        $rsm->addEntityResult('SkaphandrusAppBundle:SkPersonal', 'p');
 //        $rsm->addFieldResult('p', 'id', 'id');
@@ -32,40 +40,26 @@ class SkPhotoContestJudgeRepository extends EntityRepository {
 //                    INNER JOIN sk_photo_contest_award a 
 //                    ON a.id = judgeAwd.award_id
 //                    WHERE a.contest_id = ?', $rsm);
-
-        $rsm = new ResultSetMapping();
-        $rsm->addEntityResult('SkaphandrusAppBundle:SkPhotoContestJudge', 'j');
-        $rsm->addEntityResult('SkaphandrusAppBundle:FosUser', 'f');
-        $rsm->addFieldResult('j', 'id', 'id');
-        $rsm->addFieldResult('f', 'id', 'id');
-
-
-        $query = $this->getEntityManager()->createNativeQuery(
-                'SELECT j.id, f.id 
-                    FROM fos_user f
-                    INNER JOIN sk_photo_contest_judge j ON f.id = j.fos_user_id
-                    INNER JOIN sk_photo_contest_judge_award judgeAwd ON j.id = judgeAwd.judge_id
-                    INNER JOIN sk_photo_contest_award a ON a.id = judgeAwd.award_id
-                    WHERE a.contest_id = ?', $rsm);
-
-        $query->setParameter(1, $contest);
-
-        $judges = $query->getResult();
-
-        return $judges;
-    }
-
-    public function findJudgesByContest($contest) {
-        return $this->getEntityManager()->createQuery(
-                        "SELECT j
-                FROM SkaphandrusAppBundle:SkPhotoContestJudge j
-                JOIN j.award a
-         WHERE a.contest = :contest")->setParameter('contest', $contest)->getResult();
-    }
-    
-    
-    
-    
-    
-
+//
+//        $rsm = new ResultSetMapping();
+//        $rsm->addEntityResult('SkaphandrusAppBundle:SkPhotoContestJudge', 'j');
+//        $rsm->addEntityResult('SkaphandrusAppBundle:FosUser', 'f');
+//        $rsm->addFieldResult('j', 'id', 'id');
+//        $rsm->addFieldResult('f', 'id', 'id');
+//
+//
+//        $query = $this->getEntityManager()->createNativeQuery(
+//                'SELECT j.id, f.id 
+//                    FROM fos_user f
+//                    INNER JOIN sk_photo_contest_judge j ON f.id = j.fos_user_id
+//                    INNER JOIN sk_photo_contest_judge_award judgeAwd ON j.id = judgeAwd.judge_id
+//                    INNER JOIN sk_photo_contest_award a ON a.id = judgeAwd.award_id
+//                    WHERE a.contest_id = ?', $rsm);
+//
+//        $query->setParameter(1, $contest);
+//
+//        $judges = $query->getResult();
+//
+//        return $judges;
+//    }
 }
