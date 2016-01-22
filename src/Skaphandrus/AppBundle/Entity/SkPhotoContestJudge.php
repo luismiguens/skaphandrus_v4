@@ -8,8 +8,7 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 /**
  * SkPhotoContestJudge
  */
-class SkPhotoContestJudge
-{
+class SkPhotoContestJudge {
 
     use ORMBehaviors\Translatable\Translatable;
 
@@ -28,50 +27,77 @@ class SkPhotoContestJudge
      */
     private $fosUser;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $award;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->award = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+//    /**
+//     * @var \Doctrine\Common\Collections\Collection
+//     */
+//    private $award;
+//
+//    /**
+//     * Constructor
+//     */
+//    public function __construct() {
+//        $this->award = new \Doctrine\Common\Collections\ArrayCollection();
+//    }
 
     /**
      * Get id
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
+//    /**
+//     * Set contest
+//     *
+//     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContest $contest
+//     *
+//     * @return SkPhotoContestJudge
+//     */
+//    public function setContest(\Skaphandrus\AppBundle\Entity\SkPhotoContest $contest = null) {
+//        $this->contest = $contest;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get contest
+//     *
+//     * @return \Skaphandrus\AppBundle\Entity\SkPhotoContest
+//     */
+//    public function getContest() {
+//        return $this->contest;
+//    }
+
     /**
-     * Set contest
+     * Add contest
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPhotoContest $contest
      *
      * @return SkPhotoContestJudge
      */
-    public function setContest(\Skaphandrus\AppBundle\Entity\SkPhotoContest $contest = null)
-    {
-        $this->contest = $contest;
+    public function addContest(\Skaphandrus\AppBundle\Entity\SkPhotoContest $contest) {
+        $this->contest[] = $contest;
 
         return $this;
     }
 
     /**
+     * Remove contest
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContest $contest
+     */
+    public function removeContest(\Skaphandrus\AppBundle\Entity\SkPhotoContest $contest) {
+        $this->contest->removeElement($contest);
+    }
+
+    /**
      * Get contest
      *
-     * @return \Skaphandrus\AppBundle\Entity\SkPhotoContest
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function getContest()
-    {
+    public function getContest() {
         return $this->contest;
     }
 
@@ -82,8 +108,7 @@ class SkPhotoContestJudge
      *
      * @return SkPhotoContestJudge
      */
-    public function setFosUser(\Skaphandrus\AppBundle\Entity\FosUser $fosUser = null)
-    {
+    public function setFosUser(\Skaphandrus\AppBundle\Entity\FosUser $fosUser = null) {
         $this->fosUser = $fosUser;
 
         return $this;
@@ -94,58 +119,52 @@ class SkPhotoContestJudge
      *
      * @return \Skaphandrus\AppBundle\Entity\FosUser
      */
-    public function getFosUser()
-    {
+    public function getFosUser() {
         return $this->fosUser;
     }
 
-    /**
-     * Add award
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award
-     *
-     * @return SkPhotoContestJudge
-     */
-    public function addAward(\Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award)
-    {
-        $this->award[] = $award;
+//    /**
+//     * Add award
+//     *
+//     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award
+//     *
+//     * @return SkPhotoContestJudge
+//     */
+//    public function addAward(\Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award) {
+//        $this->award[] = $award;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Remove award
+//     *
+//     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award
+//     */
+//    public function removeAward(\Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award) {
+//        $this->award->removeElement($award);
+//    }
+//
+//    /**
+//     * Get award
+//     *
+//     * @return \Doctrine\Common\Collections\Collection
+//     */
+//    public function getAward() {
+//        return $this->award;
+//    }
 
-        return $this;
-    }
-
-    /**
-     * Remove award
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award
-     */
-    public function removeAward(\Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award)
-    {
-        $this->award->removeElement($award);
-    }
-
-    /**
-     * Get award
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getAward()
-    {
-        return $this->award;
-    }    
-    
     public function __toString() {
         return $this->getFosUser()->getName();
     }
-    
-    
-       /**
+
+    /**
      * Get description
      *
      * @return string
      */
-     public function getDescription() {
+    public function getDescription() {
         return $this->translate()->getDescription();
     }
-    
-}
 
+}

@@ -99,11 +99,6 @@ skaphandrus_app_identification_criteria_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skidentificationcriteria.yml"
     prefix:   /{_locale}/identification_criteria_admin
 
-
-
-
-
-
 skaphandrus_app_judge_votation_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skphotocontestcategoryjudgevotation.yml"
     prefix:   /{_locale}/judge_votation_admin
@@ -111,6 +106,10 @@ skaphandrus_app_judge_votation_admin:
 skaphandrus_app_judge_result_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skphotocontestcategoryjudgeresult.yml"
     prefix:   /{_locale}/judge_result_admin
+    
+skaphandrus_app_taxonomic_result_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skphotocontestcategorytaxonomicresult.yml"
+    prefix:   /{_locale}/taxonomic_result_admin
 
 #skaphandrus_app_fos_user:
 #    resource: "@SkaphandrusAppBundle/Resources/config/routing/fosuser.yml"

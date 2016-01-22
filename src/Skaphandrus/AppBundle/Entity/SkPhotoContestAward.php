@@ -9,8 +9,7 @@ use Symfony\Component\HttpFoundation\File\File;
 /**
  * SkPhotoContestAward
  */
-class SkPhotoContestAward
-{
+class SkPhotoContestAward {
 
     use ORMBehaviors\Translatable\Translatable;
 
@@ -44,10 +43,10 @@ class SkPhotoContestAward
      */
     private $category;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $judge;
+//    /**
+//     * @var \Doctrine\Common\Collections\Collection
+//     */
+//    private $judge;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -57,9 +56,8 @@ class SkPhotoContestAward
     /**
      * Constructor
      */
-    public function __construct()
-    {
-        $this->judge = new \Doctrine\Common\Collections\ArrayCollection();
+    public function __construct() {
+//        $this->judge = new \Doctrine\Common\Collections\ArrayCollection();
         $this->sponsor = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -70,8 +68,7 @@ class SkPhotoContestAward
      *
      * @return SkPhotoContestAward
      */
-    public function setImage($image)
-    {
+    public function setImage($image) {
         $this->image = $image;
 
         return $this;
@@ -82,8 +79,7 @@ class SkPhotoContestAward
      *
      * @return string
      */
-    public function getImage()
-    {
+    public function getImage() {
         return $this->image;
     }
 
@@ -92,8 +88,7 @@ class SkPhotoContestAward
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -104,8 +99,7 @@ class SkPhotoContestAward
      *
      * @return SkPhotoContestAward
      */
-    public function setWinnerPhoto(\Skaphandrus\AppBundle\Entity\SkPhoto $winnerPhoto = null)
-    {
+    public function setWinnerPhoto(\Skaphandrus\AppBundle\Entity\SkPhoto $winnerPhoto = null) {
         $this->winnerPhoto = $winnerPhoto;
 
         return $this;
@@ -116,8 +110,7 @@ class SkPhotoContestAward
      *
      * @return \Skaphandrus\AppBundle\Entity\SkPhoto
      */
-    public function getWinnerPhoto()
-    {
+    public function getWinnerPhoto() {
         return $this->winnerPhoto;
     }
 
@@ -128,8 +121,7 @@ class SkPhotoContestAward
      *
      * @return SkPhotoContestAward
      */
-    public function setContest(\Skaphandrus\AppBundle\Entity\SkPhotoContest $contest = null)
-    {
+    public function setContest(\Skaphandrus\AppBundle\Entity\SkPhotoContest $contest = null) {
         $this->contest = $contest;
 
         return $this;
@@ -140,8 +132,7 @@ class SkPhotoContestAward
      *
      * @return \Skaphandrus\AppBundle\Entity\SkPhotoContest
      */
-    public function getContest()
-    {
+    public function getContest() {
         return $this->contest;
     }
 
@@ -152,8 +143,7 @@ class SkPhotoContestAward
      *
      * @return SkPhotoContestAward
      */
-    public function setWinnerFosUser(\Skaphandrus\AppBundle\Entity\FosUser $winnerFosUser = null)
-    {
+    public function setWinnerFosUser(\Skaphandrus\AppBundle\Entity\FosUser $winnerFosUser = null) {
         $this->winnerFosUser = $winnerFosUser;
 
         return $this;
@@ -164,8 +154,7 @@ class SkPhotoContestAward
      *
      * @return \Skaphandrus\AppBundle\Entity\FosUser
      */
-    public function getWinnerFosUser()
-    {
+    public function getWinnerFosUser() {
         return $this->winnerFosUser;
     }
 
@@ -176,8 +165,7 @@ class SkPhotoContestAward
      *
      * @return SkPhotoContestAward
      */
-    public function setCategory(\Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category = null)
-    {
+    public function setCategory(\Skaphandrus\AppBundle\Entity\SkPhotoContestCategory $category = null) {
         $this->category = $category;
 
         return $this;
@@ -188,44 +176,40 @@ class SkPhotoContestAward
      *
      * @return \Skaphandrus\AppBundle\Entity\SkPhotoContestCategory
      */
-    public function getCategory()
-    {
+    public function getCategory() {
         return $this->category;
     }
 
-    /**
-     * Add judge
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge
-     *
-     * @return SkPhotoContestAward
-     */
-    public function addJudge(\Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge)
-    {
-        $this->judge[] = $judge;
-
-        return $this;
-    }
-
-    /**
-     * Remove judge
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge
-     */
-    public function removeJudge(\Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge)
-    {
-        $this->judge->removeElement($judge);
-    }
-
-    /**
-     * Get judge
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getJudge()
-    {
-        return $this->judge;
-    }
+//    /**
+//     * Add judge
+//     *
+//     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge
+//     *
+//     * @return SkPhotoContestAward
+//     */
+//    public function addJudge(\Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge) {
+//        $this->judge[] = $judge;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Remove judge
+//     *
+//     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge
+//     */
+//    public function removeJudge(\Skaphandrus\AppBundle\Entity\SkPhotoContestJudge $judge) {
+//        $this->judge->removeElement($judge);
+//    }
+//
+//    /**
+//     * Get judge
+//     *
+//     * @return \Doctrine\Common\Collections\Collection
+//     */
+//    public function getJudge() {
+//        return $this->judge;
+//    }
 
     /**
      * Add sponsor
@@ -234,8 +218,7 @@ class SkPhotoContestAward
      *
      * @return SkPhotoContestAward
      */
-    public function addSponsor(\Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor $sponsor)
-    {
+    public function addSponsor(\Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor $sponsor) {
         $this->sponsor[] = $sponsor;
 
         return $this;
@@ -246,8 +229,7 @@ class SkPhotoContestAward
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor $sponsor
      */
-    public function removeSponsor(\Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor $sponsor)
-    {
+    public function removeSponsor(\Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor $sponsor) {
         $this->sponsor->removeElement($sponsor);
     }
 
@@ -256,14 +238,10 @@ class SkPhotoContestAward
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getSponsor()
-    {
+    public function getSponsor() {
         return $this->sponsor;
     }
-    
-    
-    
-    
+
     public function getAbsolutePath() {
         return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
     }
@@ -283,13 +261,12 @@ class SkPhotoContestAward
 // when displaying uploaded doc/image in the view.
         return 'uploads/contests';
     }
-    
-    public function __toString() {
-        return $this->getName();    
-    }
-    
-    protected $imageFile;
 
+    public function __toString() {
+        return $this->getName();
+    }
+
+    protected $imageFile;
 
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
@@ -300,23 +277,19 @@ class SkPhotoContestAward
      *
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
      */
-    public function setImageFile(File $image = null)
-    {
+    public function setImageFile(File $image = null) {
         $this->imageFile = $image;
     }
 
     /**
      * @return File
      */
-    public function getImageFile()
-    {
+    public function getImageFile() {
         return $this->imageFile;
     }
-    
+
     public function getName() {
         return $this->translate()->getName();
-        
     }
-    
-}
 
+}
