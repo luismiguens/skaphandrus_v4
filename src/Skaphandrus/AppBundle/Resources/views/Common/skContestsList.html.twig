@@ -24,7 +24,12 @@
                                 </li>
                             {% endif %}
 
-                            {% if (isJudge) and contest.isInJudgeVotation %}
+                            {#{% if (isJudge) and contest.isInJudgeVotation %}#}
+                            
+                            
+                            {#{% dump(contest)%}#}
+                            
+                            {% if app.user.id in contest.judge|keys %}
                                 <li>
                                     <a href="{{ path('judge_votation_admin', { 'contest_id': contest.id }) }}">{{"form.contest.votation"|trans}}</a>
                                 </li>

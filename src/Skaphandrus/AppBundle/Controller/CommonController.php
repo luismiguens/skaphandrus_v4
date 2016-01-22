@@ -14,9 +14,15 @@ class CommonController extends Controller {
 //        $query = $em->createQuery("SELECT c FROM SkaphandrusAppBundle:SkPhotoContest c WHERE c.beginAt < ?1 AND c.endAt > ?2");
 //        $query->setParameter(1, date("Y-m-d H:i:s"));
 //        $query->setParameter(2, date("Y-m-d H:i:s"));
-        $query = $em->createQuery("SELECT c FROM SkaphandrusAppBundle:SkPhotoContest c");
-        $contests = $query->getResult();
+//        $query = $em->createQuery("SELECT c FROM SkaphandrusAppBundle:SkPhotoContest c");
+//        $contests = $query->getResult();
 
+        
+        $contests = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')->findAll();
+   
+        dump($contests);
+        
+        
         $fos_user = $this->get('security.token_storage')->getToken()->getUser();
 
 //        foreach ($contests as $contest) {
