@@ -36,8 +36,7 @@ class SkPhotoType extends AbstractType {
 //                        'mimeTypes' => array("image/jpeg")
 //                            )),
 //                    'required' => false
-//                        )
-//                )
+//                ))
                 ->add('imageFile', 'vich_image', array(
                     'label' => 'form.photo.label.file',
                     'help' => 'form.photo.help.imageFile',

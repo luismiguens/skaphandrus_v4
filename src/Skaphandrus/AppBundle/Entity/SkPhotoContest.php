@@ -90,7 +90,7 @@ class SkPhotoContest {
     /**
      * @var boolean
      */
-    private $isVisible = false;
+    private $isVisible = true;
     protected $imageFile;
     protected $logoTipo;
 
@@ -110,6 +110,11 @@ class SkPhotoContest {
     private $publicVotationAt;
 
     /**
+     * @var \DateTime
+     */
+    private $updatedAt;
+
+    /**
      * @var integer
      */
     private $type;
@@ -118,6 +123,8 @@ class SkPhotoContest {
      * Constructor
      */
     public function __construct() {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
         $this->beginAt = new \DateTime();
         $this->endAt = new \DateTime();
         $this->createdAt = new \DateTime();
@@ -160,6 +167,10 @@ class SkPhotoContest {
      */
     public function setImageFile(File $image = null) {
         $this->imageFile = $image;
+
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
     }
 
     /**
@@ -180,6 +191,10 @@ class SkPhotoContest {
      */
     public function setlogoTipo(File $image = null) {
         $this->logoTipo = $image;
+
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
     }
 
     /**

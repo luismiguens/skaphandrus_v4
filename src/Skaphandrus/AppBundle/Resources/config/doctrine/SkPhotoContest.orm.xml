@@ -28,13 +28,14 @@
         </field>
         <field name="isVisible" type="boolean" column="is_visible" nullable="true">
             <options>
-                <option name="default">0</option>
+                <option name="default">1</option>
             </options>
         </field>
         <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
         <field name="winnersAt" type="datetime" column="winners_at" nullable="false"/>
         <field name="promoAt" type="datetime" column="promo_at" nullable="false"/>
         <field name="publicVotationAt" type="datetime" column="public_votation_at" nullable="false"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
         <field name="type" type="integer" column="type" nullable="false">
             <options>
                 <option name="default">0</option>

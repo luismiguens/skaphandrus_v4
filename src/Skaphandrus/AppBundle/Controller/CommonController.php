@@ -18,10 +18,9 @@ class CommonController extends Controller {
 //        $contests = $query->getResult();
 
         
-        $contests = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')->findAll();
-   
+        $contests = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')->findBy(array('isVisible' => true));
+  
         dump($contests);
-        
         
         $fos_user = $this->get('security.token_storage')->getToken()->getUser();
 

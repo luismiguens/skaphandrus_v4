@@ -13,47 +13,59 @@ class SkPhotoContestType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+
+        $entity = $builder->getData();
+        $required = true;
+
+        //se estiver no edit, imagem nao é obrigatoria
+        if ($entity->getId()):
+            $required = false;
+        endif;
+
         $builder
                 ->add('name', null, array(
                     'attr' => array('class' => 'form-control'),
                     'label' => 'form.photo_contest.label.name',
                     'required' => true
                 ))
-
-//            ->add('logo')
                 ->add('logoTipo', 'vich_image', array(
                     'label' => 'form.photo_contest.label.logo',
-                    'required' => false,
+                    'help' => 'form.photo_contest.help.logoTipo',
+                    'required' => $required,
                     'allow_delete' => false, // not mandatory, default is true
                     'download_link' => false, // not mandatory, default is true
                 ))
-
-//            ->add('image')
                 ->add('imageFile', 'vich_image', array(
                     'label' => 'form.photo_contest.label.image_file',
-                    'required' => false,
+                    'help' => 'form.photo_contest.help.imageFile',
+                    'required' => $required,
                     'allow_delete' => false, // not mandatory, default is true
                     'download_link' => false, // not mandatory, default is true
                 ))
                 ->add('promoAt', null, array(
                     'years' => range(2010, 2030),
-                    'label' => 'form.photo_contest.label.promo_at'
+                    'label' => 'form.photo_contest.label.promo_at',
+                    'help' => 'form.photo_contest.help.promoAt'
                 ))
                 ->add('beginAt', null, array(
                     'years' => range(2010, 2030),
-                    'label' => 'form.photo_contest.label.begin_at'
+                    'label' => 'form.photo_contest.label.begin_at',
+                    'help' => 'form.photo_contest.help.beginAt'
                 ))
                 ->add('publicVotationAt', null, array(
                     'years' => range(2010, 2030),
-                    'label' => 'form.photo_contest.label.public_votation_at'
+                    'label' => 'form.photo_contest.label.public_votation_at',
+                    'help' => 'form.photo_contest.help.publicVotationAt'
                 ))
                 ->add('endAt', null, array(
                     'years' => range(2010, 2030),
-                    'label' => 'form.photo_contest.label.end_at'
+                    'label' => 'form.photo_contest.label.end_at',
+                    'help' => 'form.photo_contest.help.endAt'
                 ))
                 ->add('winnersAt', null, array(
                     'years' => range(2010, 2030),
-                    'label' => 'form.photo_contest.label.winner_at'
+                    'label' => 'form.photo_contest.label.winner_at',
+                    'help' => 'form.photo_contest.help.winnersAt'
                 ))
                 ->add('type', 'choice', array(
                     'attr' => array('class' => 'form-control m-b'),
@@ -64,19 +76,16 @@ class SkPhotoContestType extends AbstractType {
                     )
                 ))
                 ->add('isJudge', null, array(
-//                'attr' => array('class' => 'form-control'),
                     'label' => 'form.photo_contest.label.is_judge'
                 ))
-                ->add('isVisible', 'checkbox', array(
-//                'attr' => array('class' => 'form-control'),
-                    'label' => 'form.photo_contest.label.is_visible',
-                    'required' => false,
-                ))
-                ->add('createdAt', null, array(
-                    'years' => range(2010, 2030),
-//                'attr' => array('class' => 'form-control'),
-                    'label' => 'form.photo_contest.label.created_at'
-                ))
+//                ->add('isVisible', 'checkbox', array(
+//                    'label' => 'form.photo_contest.label.is_visible',
+//                    'required' => false,
+//                ))
+//                ->add('createdAt', null, array(
+//                    'years' => range(2010, 2030),
+//                    'label' => 'form.photo_contest.label.created_at'
+//                ))
                 ->add('translations', 'a2lix_translations', array(
                     'fields' => array(
                         'description' => array(
