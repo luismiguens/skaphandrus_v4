@@ -1096,10 +1096,10 @@ class DefaultController extends Controller {
                 ->findSpotsInUser($user->getId(), $locale);
 
         $validations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-                ->getUsersValidation($user->getId());
+                ->getUserValidations($user->getId());
         
         $sugestions = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-                ->getUsersSugestions($user->getId());
+                ->getUserSugestions($user->getId());
 
         if ($user) {
             return $this->render('SkaphandrusAppBundle:Default:user.html.twig', array(

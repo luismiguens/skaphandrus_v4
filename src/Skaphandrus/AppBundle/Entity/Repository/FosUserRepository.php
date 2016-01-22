@@ -275,7 +275,7 @@ class FosUserRepository extends EntityRepository {
         return $values;
     }
 
-    public function getUsersValidation($fos_user_id) {
+    public function getUserValidations($fos_user_id) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
@@ -295,7 +295,7 @@ class FosUserRepository extends EntityRepository {
         return $values;
     }
 
-    public function getUsersSugestions($fos_user_id) {
+    public function getUserSugestions($fos_user_id) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
