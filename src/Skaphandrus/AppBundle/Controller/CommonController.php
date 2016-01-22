@@ -14,27 +14,30 @@ class CommonController extends Controller {
 //        $query = $em->createQuery("SELECT c FROM SkaphandrusAppBundle:SkPhotoContest c WHERE c.beginAt < ?1 AND c.endAt > ?2");
 //        $query->setParameter(1, date("Y-m-d H:i:s"));
 //        $query->setParameter(2, date("Y-m-d H:i:s"));
-//        $query = $em->createQuery("SELECT c FROM SkaphandrusAppBundle:SkPhotoContest c");
+//        $query = $em->createQuery("SELECT c FROM SkaphandrusAppBundle:SkPhotoContest "
+//                . "LEFT JOIN c.judge j");
 //        $contests = $query->getResult();
 
         
         $contests = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')->findBy(array('isVisible' => true));
   
-        dump($contests);
+
+        
+        //$contest = new \Skaphandrus\AppBundle\Entity\SkPhotoContest();
+        //dump($contests);
         
         $fos_user = $this->get('security.token_storage')->getToken()->getUser();
 
-//        foreach ($contests as $contest) {
-//            $category = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')->find($contest->getId());
-//        }
+        foreach ($contests as $contest) {
+            $contest->setIsJudge($this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->isFosUserJudgeInContest($fos_user->getId(), $contest->getId()));
+        }
 //
 //        $isJudge = $em->getRepository('SkaphandrusAppBundle:FosUser')->isJudgeInCategory($category->getId(), $fos_user->getId());
 
-        $isJudge = $em->getRepository('SkaphandrusAppBundle:FosUser')->isJudge($fos_user->getId());
+        //$isJudge = $em->getRepository('SkaphandrusAppBundle:FosUser')->isJudge($fos_user->getId());
 
         return $this->render('SkaphandrusAppBundle:Common:skContestsList.html.twig', array(
-                    'contests' => $contests,
-                    'isJudge' => $isJudge
+                    'contests' => $contests
         ));
     }
 

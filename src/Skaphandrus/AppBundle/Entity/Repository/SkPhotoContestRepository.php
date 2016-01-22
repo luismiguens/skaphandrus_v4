@@ -137,7 +137,7 @@ class SkPhotoContestRepository extends EntityRepository {
     }
 
     //para determinado utilizador e concurso devolve o numero de fotografias que são estreia numa especie
-    public function findFirstPhotosFromSpeciesInContest($contest_id) {
+    public function findFirstPhotosFromSpeciesInContest($contest_id, $limit=10) {
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
@@ -154,8 +154,12 @@ class SkPhotoContestRepository extends EntityRepository {
                 ON ca.id = ca_photo.category_id
                 WHERE ca.contest_id = :contest_id
                 group by user
-                order by count_first_photo desc"
+                order by count_first_photo desc 
+                limit ".$limit.""
         );
+        
+        
+        
 
         $statement->bindValue('contest_id', $contest_id);
         $statement->execute();
@@ -173,7 +177,7 @@ class SkPhotoContestRepository extends EntityRepository {
     }
 
     //para determinado utilizador e concurso devolve o numero de fotografias com especie validada
-    public function findValidatedSpeciesPhotosInContest($contest_id) {
+    public function findValidatedSpeciesPhotosInContest($contest_id, $limit=10) {
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
@@ -190,7 +194,8 @@ class SkPhotoContestRepository extends EntityRepository {
                 ON ca.id = ca_photo.category_id
                 WHERE ca.contest_id = :contest_id
                 group by user
-                order by count_photo_species_valid desc"
+                order by count_photo_species_valid desc
+                limit ".$limit.""
         );
 
         $statement->bindValue('contest_id', $contest_id);
@@ -209,7 +214,7 @@ class SkPhotoContestRepository extends EntityRepository {
     }
 
     //para determinado utilizador e concurso devolve o numero de especies com validação
-    public function findValidatedSpeciesInContest($contest_id) {
+    public function findValidatedSpeciesInContest($contest_id, $limit=10) {
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
@@ -224,7 +229,8 @@ class SkPhotoContestRepository extends EntityRepository {
                 ON ca_p.category_id = ca.id
                 WHERE ca.contest_id = :contest_id
                 group by user
-                order by count_species_validated desc"
+                order by count_species_validated desc
+                limit ".$limit.""
         );
 
         $statement->bindValue('contest_id', $contest_id);

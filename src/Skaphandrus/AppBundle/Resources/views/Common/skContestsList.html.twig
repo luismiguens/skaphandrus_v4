@@ -24,23 +24,20 @@
                                 </li>
                             {% endif %}
 
-                            {#{% if (isJudge) and contest.isInJudgeVotation %}#}
-                            
-                            
-                            {#{% dump(contest)%}#}
-                            
-                            {% if app.user.id in contest.judge|keys %}
-                                <li>
-                                    <a href="{{ path('judge_votation_admin', { 'contest_id': contest.id }) }}">{{"form.contest.votation"|trans}}</a>
-                                </li>
-                            {% endif %}
-                            {% if (isJudge) or (is_granted("ROLE_ADMIN")) %}
+                            {% if (contest.isJudge) or (is_granted("ROLE_ADMIN")) %}
+                                {% if contest.isInJudgeVotation %}
+                                    <li>
+                                        <a href="{{ path('judge_votation_admin', { 'contest_id': contest.id }) }}">{{"form.contest.votation"|trans}}</a>
+                                    </li>
+                                {% endif %}
                                 <li>
                                     <a href="{{ path('judge_result_admin', { 'contest_id': contest.id }) }}">{{"form.contest.judge_result"|trans}}</a>
                                 </li>
-                                <li>
-                                    <a href="{{ path('taxonomic_result_admin', { 'contest_id': contest.id }) }}">{{"form.contest.taxonomic_result"|trans}}</a>
-                                </li>
+                                {% if contest.type == 1 %}
+                                    <li>
+                                        <a href="{{ path('taxonomic_result_admin', { 'contest_id': contest.id }) }}">{{"form.contest.taxonomic_result"|trans}}</a>
+                                    </li>
+                                {% endif %}
                             {% endif %}
                         </ul>
                     </li>

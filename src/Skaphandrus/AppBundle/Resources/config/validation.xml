@@ -60,6 +60,7 @@
                 <option name="mimeTypes">
                     <value>image/jpeg</value>
                     <value>image/jpg</value>
+                    <value>image/png</value>
                 </option>
             </constraint>
             <constraint name="Image">
@@ -73,6 +74,7 @@
                 <option name="mimeTypes">
                     <value>image/jpeg</value>
                     <value>image/jpg</value>
+                    <value>image/png</value>
                 </option>
             </constraint>
             <constraint name="Image">

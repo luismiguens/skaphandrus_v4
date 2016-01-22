@@ -14,7 +14,6 @@ use Skaphandrus\AppBundle\Entity\FosUser;
  * repository methods below.
  */
 class FosUserRepository extends EntityRepository {
-
 //    public function isJudgeInCategory($category_id, $fos_user_id) {
 //        $em = $this->getEntityManager();
 //        $connection = $em->getConnection();
@@ -704,8 +703,7 @@ class FosUserRepository extends EntityRepository {
 
         $values = $query->getResult();
 
-        dump($values);
-
+//        dump($values);
 //         foreach ($values as $user) {
 //            //$user = $em->getRepository('SkaphandrusAppBundle:FosUser')->find($value['user']);
 //            $user->setPhotosInUser($value['photosInUser']);
@@ -713,6 +711,30 @@ class FosUserRepository extends EntityRepository {
 //        }
 
         return $query->getResult();
+    }
+
+    public function isFosUserJudgeInContest($fos_user_id, $contest_id) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "select u.id as user 
+                from fos_user as u
+                join sk_photo_contest_judge as j on u.id = j.fos_user_id
+                join sk_photo_contest_judge_contest as jc on j.id = jc.judge_id
+                where jc.contest_id = " . $contest_id . " and u.id =" . $fos_user_id;
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+
+//        $result = $values->getQuery()->getResult();
+        // dump($result);
+
+        if ($values):
+            return true;
+        else:
+            return false;
+        endif;
     }
 
 }
