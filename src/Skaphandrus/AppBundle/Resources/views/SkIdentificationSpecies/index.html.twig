@@ -66,6 +66,7 @@
             <tr>
                 <th>{{ knp_pagination_sortable(pagination, 'Id', 'sn.species.id') }}</th>
                 <th{% if pagination.isSorted('sn.name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Name', 'sn.name') }}</th>
+                <th>Photos</th>
                 <th>{{ "form.common.label.actions"|trans }}</th>
             </tr>
 
@@ -77,12 +78,15 @@
                         {{ entity.id }}
                     </td>
                     <td>{{ entity.name }}</td>
-                    {# <td></td>
-                    <td></td> #}
+                    {# <td></td>#}
+                    <td>{{ entity.species.photos|length }}</td> 
                     <td>
                         <a class="btn btn-white btn-sm" href="{{ path('identification_species_admin_edit', { 'id': entity.species.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.edit"|trans }}</a>
                     </td>
                 </tr>
+                
+                {% dump(entity.species.photos|length )%}
+                
             {% endfor %}
         </tbody>
     </table>

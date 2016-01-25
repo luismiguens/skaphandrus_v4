@@ -25,7 +25,8 @@ class ProfilePersonalType extends AbstractType {
                 ))
                 ->add('middlename', 'text', array(
                     'attr' => array('class' => 'form-control'),
-                    'label' => 'form.personal.label.middlename'
+                    'label' => 'form.personal.label.middlename', 
+                    'required'=>false
                 ))
                 ->add('lastname', 'text', array(
                     'attr' => array('class' => 'form-control'),

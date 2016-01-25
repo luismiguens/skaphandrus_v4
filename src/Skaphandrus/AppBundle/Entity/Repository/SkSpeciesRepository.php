@@ -146,16 +146,14 @@ class SkSpeciesRepository extends EntityRepository {
 
     public function getQueryBuilderForSpeciesList($params, $limit = 20, $order = array('id' => 'desc'), $offset = 0) {
 
-
         $qb = $this->getEntityManager()->createQueryBuilder();
-
-        $qb->select('sn')->from('SkaphandrusAppBundle:SkSpeciesScientificName', 'sn');
-        //$qb->select('s')->from('SkaphandrusAppBundle:SkSpecies', 's');
-
-
+        $qb->select('sn', 's', 'p' )->from('SkaphandrusAppBundle:SkSpeciesScientificName', 'sn');
 
         if (array_key_exists('kingdom', $params)) {
             $qb->join('sn.species', 's', 'WITH', 'sn.species = s.id');
+            
+            $qb->join('s.photos', 'p', 'WITH', 's.id = p.species');
+            
             $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
             $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
             $qb->join('f.order', 'o', 'WITH', 'f.order = o.id');
@@ -168,6 +166,9 @@ class SkSpeciesRepository extends EntityRepository {
 
         if (array_key_exists('phylum', $params)) {
             $qb->join('sn.species', 's', 'WITH', 'sn.species = s.id');
+            
+            $qb->join('s.photos', 'p', 'WITH', 's.id = p.species');
+            
             $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
             $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
             $qb->join('f.order', 'o', 'WITH', 'f.order = o.id');
@@ -178,6 +179,9 @@ class SkSpeciesRepository extends EntityRepository {
 
         if (array_key_exists('class', $params)) {
             $qb->join('sn.species', 's', 'WITH', 'sn.species = s.id');
+            
+             $qb->join('s.photos', 'p', 'WITH', 's.id = p.species');
+            
             $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
             $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
             $qb->join('f.order', 'o', 'WITH', 'f.order = o.id');
@@ -187,6 +191,9 @@ class SkSpeciesRepository extends EntityRepository {
 
         if (array_key_exists('order', $params)) {
             $qb->join('sn.species', 's', 'WITH', 'sn.species = s.id');
+            
+             $qb->join('s.photos', 'p', 'WITH', 's.id = p.species');
+            
             $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
             $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
             $qb->join('f.order', 'o', 'WITH', 'f.order = ?11');
@@ -195,6 +202,9 @@ class SkSpeciesRepository extends EntityRepository {
 
         if (array_key_exists('family', $params)) {
             $qb->join('sn.species', 's', 'WITH', 'sn.species = s.id');
+            
+             $qb->join('s.photos', 'p', 'WITH', 's.id = p.species');
+            
             $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
             $qb->join('g.family', 'f', 'WITH', 'g.family = ?12');
             $qb->setParameter(12, $params['family']);
@@ -202,21 +212,14 @@ class SkSpeciesRepository extends EntityRepository {
 
         if (array_key_exists('genus', $params)) {
             $qb->join('sn.species', 's', 'WITH', 'sn.species = s.id');
+            
+             $qb->join('s.photos', 'p', 'WITH', 's.id = p.species');
+            
             $qb->join('s.genus', 'g', 'WITH', 's.genus = ?13');
             $qb->setParameter(13, $params['genus']);
         }
 
-//        if ($order) {
-//            $qb->orderBy('sn.'.key($order), $order[key($order)]);
-//        }
-//
-//        if ($offset) {
-//            $qb->setFirstResult($offset);
-//        }
-//        
-//       
-//            $qb->setMaxResults($limit);
-//echo $qb;
+
 
         return $qb;
     }
