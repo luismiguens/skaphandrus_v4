@@ -152,7 +152,7 @@ class SkSpeciesRepository extends EntityRepository {
         if (array_key_exists('kingdom', $params)) {
             $qb->join('sn.species', 's', 'WITH', 'sn.species = s.id');
             
-            $qb->join('s.photos', 'p', 'WITH', 's.id = p.species');
+            $qb->leftJoin('s.photos', 'p', 'WITH', 's.id = p.species');
             
             $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
             $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
@@ -167,7 +167,7 @@ class SkSpeciesRepository extends EntityRepository {
         if (array_key_exists('phylum', $params)) {
             $qb->join('sn.species', 's', 'WITH', 'sn.species = s.id');
             
-            $qb->join('s.photos', 'p', 'WITH', 's.id = p.species');
+            $qb->leftJoin('s.photos', 'p', 'WITH', 's.id = p.species');
             
             $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
             $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
@@ -180,7 +180,7 @@ class SkSpeciesRepository extends EntityRepository {
         if (array_key_exists('class', $params)) {
             $qb->join('sn.species', 's', 'WITH', 'sn.species = s.id');
             
-             $qb->join('s.photos', 'p', 'WITH', 's.id = p.species');
+             $qb->leftJoin('s.photos', 'p', 'WITH', 's.id = p.species');
             
             $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
             $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
@@ -192,7 +192,7 @@ class SkSpeciesRepository extends EntityRepository {
         if (array_key_exists('order', $params)) {
             $qb->join('sn.species', 's', 'WITH', 'sn.species = s.id');
             
-             $qb->join('s.photos', 'p', 'WITH', 's.id = p.species');
+             $qb->leftJoin('s.photos', 'p', 'WITH', 's.id = p.species');
             
             $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
             $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
@@ -203,7 +203,7 @@ class SkSpeciesRepository extends EntityRepository {
         if (array_key_exists('family', $params)) {
             $qb->join('sn.species', 's', 'WITH', 'sn.species = s.id');
             
-             $qb->join('s.photos', 'p', 'WITH', 's.id = p.species');
+             $qb->leftJoin('s.photos', 'p', 'WITH', 's.id = p.species');
             
             $qb->join('s.genus', 'g', 'WITH', 's.genus = g.id');
             $qb->join('g.family', 'f', 'WITH', 'g.family = ?12');
@@ -213,7 +213,7 @@ class SkSpeciesRepository extends EntityRepository {
         if (array_key_exists('genus', $params)) {
             $qb->join('sn.species', 's', 'WITH', 'sn.species = s.id');
             
-             $qb->join('s.photos', 'p', 'WITH', 's.id = p.species');
+             $qb->leftJoin('s.photos', 'p', 'WITH', 's.id = p.species');
             
             $qb->join('s.genus', 'g', 'WITH', 's.genus = ?13');
             $qb->setParameter(13, $params['genus']);
