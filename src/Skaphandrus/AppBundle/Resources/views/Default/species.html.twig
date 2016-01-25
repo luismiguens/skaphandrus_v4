@@ -67,6 +67,44 @@
     <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
     <!-- FooTable -->
     <link href="{{ asset('bundles/skaphandrusapp/css/plugins/footable/footable.core.css') }}" rel="stylesheet">
+
+    <style>
+        .list-inline > li {
+            display: inline-block;
+            padding-right: 5px;
+            padding-left: 5px;
+        }
+        input[type="checkbox"] {
+            display: none;
+        }
+        input[type="checkbox"], input[type="radio"] {
+            margin: 4px 0px 0px;
+            line-height: normal;
+        }
+        input[type="checkbox"], input[type="radio"] {
+            box-sizing: border-box;
+            padding: 0px;
+        }
+        input[type="checkbox"] + label {
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: 80% auto;
+            background-color: #FFF;
+            height: 140px;
+            width: 140px;
+            display: inline-block;
+            padding: 0px;
+            margin-bottom: 0px;
+            font-weight: normal;
+        }
+        label {
+            display: inline-block;
+            max-width: 100%;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+    </style>
+
 {% endblock %}
 
 {% block javascripts %}
@@ -266,8 +304,40 @@
                                     {% if species.character is not empty %}
                                         <div id="tab-{{tab_chars_id}}" class="tab-pane {{tab_chars_id==1?'active'}}">
                                             <h3>{% trans with {'%specie%': species.name } %} page.species.h3.species_criteria {% endtrans %}</h3>
+
+                                            {% set aux = [] %}
                                             {% for c in species.character %}
-                                                <p>{{ c.criteria.translate(app.request.locale).name }} -> {{ c.image }}</p>
+                                                <ul class="list-unstyled list-group clear-list">
+                                                    <li class="list-group-item" style="border-top: medium none !important;">
+                                                        <label>
+                                                            {% if c.criteria.translate(app.request.locale).name not in aux %}
+                                                                <strong>{{ c.criteria.translate(app.request.locale).name }}</strong>
+                                                                {% set aux = aux|merge([c.criteria.translate(app.request.locale).name]) %}
+                                                            {% endif %}
+                                                        </label>
+                                                        <ul class="list-inline customChList lstn">
+                                                            <li>
+                                                                <a class="thumbnail" >
+                                                                    <input type="checkbox">
+                                                                    <label style="width:140px;background-image: url('{{ c.getWebPath|imagine_filter('sk_widen_240') }}');">
+                                                                        {{ c }}
+                                                                    </label>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                                {#<ul class ="unstyled">
+                                                    {% if c.criteria.translate(app.request.locale).name not in aux %}
+                                                        <strong>{{ c.criteria.translate(app.request.locale).name }}</strong>
+                                                        {% set aux = aux|merge([c.criteria.translate(app.request.locale).name]) %}
+                                                    {% endif %}
+                                                    <ul class ="unstyled">
+                                                        <li>
+                                                            {{ c }} <img style="width:140px" alt="{{ c.image }}" src="{{ c.getWebPath|imagine_filter('sk_widen_240') }}" />
+                                                        </li>
+                                                    </ul>
+                                                </ul>#}
                                             {% endfor %}
                                         </div>
                                     {% endif %}
