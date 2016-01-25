@@ -84,9 +84,7 @@
                         <a class="btn btn-white btn-sm" href="{{ path('identification_species_admin_edit', { 'id': entity.species.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.edit"|trans }}</a>
                     </td>
                 </tr>
-                
-                {% dump(entity.species.photos|length )%}
-                
+
             {% endfor %}
         </tbody>
     </table>
