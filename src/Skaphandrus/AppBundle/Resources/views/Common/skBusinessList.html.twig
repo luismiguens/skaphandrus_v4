@@ -1,0 +1,17 @@
+{# empty Twig template #}
+
+{% if business_list %}
+    <li class="{{ 'SkBusinessController' in app.request.attributes.get("_controller")?'active' }}">
+        <a href="#"><i class="fa fa-briefcase"></i> <span class="nav-label">{{ "business_admin"|trans }} </span><span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level collapse" style="height: 0px;">
+
+            {% for business in business_list %} 
+                <li>
+                    <a href="{{ path('business_admin_edit', { 'id': business.id }) }}">
+                        {{ business.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </li>
+{% endif %}
+

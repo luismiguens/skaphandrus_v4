@@ -6,6 +6,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class CommonController extends Controller {
 
+    public function skBusinessListAction() {
+
+        $em = $this->getDoctrine()->getManager();
+        $fos_user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $query = $em->createQuery("SELECT b FROM SkaphandrusAppBundle:SkBusiness b JOIN b.admin u WHERE u.id = ?1");
+        $query->setParameter(1, $fos_user->getId());
+        $business_list = $query->getResult();
+
+        return $this->render('SkaphandrusAppBundle:Common:skBusinessList.html.twig', array(
+                    'business_list' => $business_list
+        ));
+    }
+
     public function skContestsListAction() {
 
         //$locale = $this->get('request')->getLocale();
@@ -18,14 +32,14 @@ class CommonController extends Controller {
 //                . "LEFT JOIN c.judge j");
 //        $contests = $query->getResult();
 
-        
-        $contests = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')->findBy(array('isVisible' => true));
-  
 
-        
+        $contests = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')->findBy(array('isVisible' => true));
+
+
+
         //$contest = new \Skaphandrus\AppBundle\Entity\SkPhotoContest();
         //dump($contests);
-        
+
         $fos_user = $this->get('security.token_storage')->getToken()->getUser();
 
         foreach ($contests as $contest) {
@@ -33,7 +47,6 @@ class CommonController extends Controller {
         }
 //
 //        $isJudge = $em->getRepository('SkaphandrusAppBundle:FosUser')->isJudgeInCategory($category->getId(), $fos_user->getId());
-
         //$isJudge = $em->getRepository('SkaphandrusAppBundle:FosUser')->isJudge($fos_user->getId());
 
         return $this->render('SkaphandrusAppBundle:Common:skContestsList.html.twig', array(

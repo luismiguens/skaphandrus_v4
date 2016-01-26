@@ -9,6 +9,30 @@
     <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('contests_contest', {'slug': slugify(contest.name), 'locale': 'en'}) }}" />
 {% endblock %}
 
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        .contest-dates dt {
+            width: 200px;
+        }
+        .contest-dates dd {
+            margin-left: 220px;
+        }
+    </style>
+{% endblock %}
+
+
 {% set keywords = contest.name %}
 {% set keywords = keywords~', '~("meta_tag.keyword.pictures"|trans) %}
 {% set keywords = keywords~', '~("meta_tag.keyword.images"|trans) %}
@@ -71,17 +95,21 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-5">
+                            <div class="col-lg-5 contest-dates">
+
+                                <a href="#" data-toggle="tooltip" title="Some tooltip text!">Hover over me</a>
+
+
                                 <dl class="dl-horizontal">
                                     {#<dt>{{ "page.contest.dt.created_by"|trans }}:</dt> <dd>Alex Smith</dd>#}
                                     <dt>{{ "page.contest.dt.client"|trans }}:</dt> <dd><a href="#" class="text-navy"> Skaphandrus</a> </dd>
                                     {#<dt>{{ "page.contest.dt.created"|trans }}:</dt> <dd>  {{ contest.createdAt|date("m/d/Y") }} </dd>#}
-                                    <dt>{{ "page.contest.dt.starts_at"|trans }}:</dt> <dd>{{ contest.beginAt|date("d-m-Y") }}</dd>
-                                    <dt>{{ "page.contest.dt.public_votation_at"|trans }}:</dt> <dd>{{ contest.publicVotationAt|date("d-m-Y") }}</dd>
-                                    <dt>{{ "page.contest.dt.ends_at"|trans }}:</dt> <dd>{{ contest.endAt|date("d-m-Y") }}</dd>
-                                    <dt>{{ "page.contest.dt.jury_votation_at"|trans }}:</dt> <dd>{{ contest.endAt|date("d-m-Y") }}</dd>
-                                    <dt>{{ "page.contest.dt.to"|trans }}:</dt> <dd>{{ contest.winnersAt|date("d-m-Y") }}</dd>
-                                    <dt>{{ "page.contest.dt.winners_at"|trans }}:</dt> <dd>{{ contest.winnersAt|date("d-m-Y") }}</dd>
+                                    <dt>{{ "form.photo_contest.label.begin_at"|trans }}:</dt> <dd> {{ contest.beginAt|date("d-m-Y") }}</dd>
+                                    <dt>{{ "form.photo_contest.label.public_votation_at"|trans }}:</dt> <dd>{{ contest.publicVotationAt|date("d-m-Y") }}</dd>
+                                    <dt>{{ "form.photo_contest.label.end_at"|trans }}:</dt> <dd>{{ contest.endAt|date("d-m-Y") }}</dd>
+                                    {#<dt>{{ "page.contest.dt.jury_votation_at"|trans }}:</dt> <dd>{{ contest.endAt|date("d-m-Y") }}</dd>#}
+                                    {# <dt>{{ "page.contest.dt.to"|trans }}:</dt> <dd>{{ contest.winnersAt|date("d-m-Y") }}</dd>#}
+                                    <dt>{{ "form.photo_contest.label.winner_at"|trans }}:</dt> <dd>{{ contest.winnersAt|date("d-m-Y") }}</dd>
                                 </dl>
                                 <dl class="dl-horizontal">
                                     <dt>{{ "page.contest.dt.numero_photos"|trans }}:</dt> <dd>{{ contest.photos|length }}</dd>

@@ -104,6 +104,17 @@
     
     
         <many-to-many field="business" target-entity="SkBusiness" mapped-by="admin" fetch="LAZY"/>
+
+<!-- <many-to-many field="business" target-entity="SkBusiness" inversed-by="admin" fetch="LAZY">
+            <join-table name="sk_identification_module_username">
+                <join-columns>
+                    <join-column name="fos_user_id" referenced-column-name="id"/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="module_id" referenced-column-name="id"/>
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>-->
     
     
     </entity>
