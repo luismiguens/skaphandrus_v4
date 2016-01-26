@@ -69,40 +69,28 @@
     <link href="{{ asset('bundles/skaphandrusapp/css/plugins/footable/footable.core.css') }}" rel="stylesheet">
 
     <style>
-        .list-inline > li {
-            display: inline-block;
-            padding-right: 5px;
-            padding-left: 5px;
+
+
+        input[type=checkbox] {
+            display:none;
         }
-        input[type="checkbox"] {
-            display: none;
-        }
-        input[type="checkbox"], input[type="radio"] {
-            margin: 4px 0px 0px;
-            line-height: normal;
-        }
-        input[type="checkbox"], input[type="radio"] {
-            box-sizing: border-box;
-            padding: 0px;
-        }
-        input[type="checkbox"] + label {
-            background-position: center center;
+
+        input[type=checkbox] + label
+        {
+            background-position: center;
             background-repeat: no-repeat;
-            background-size: 80% auto;
-            background-color: #FFF;
-            height: 140px;
-            width: 140px;
-            display: inline-block;
-            padding: 0px;
+            background-size: 80%;
+            background-color: white;
+            height: 104px;
+            width: 104px;
+            display:inline-block;
+            padding: 0 0 0 0px;
             margin-bottom: 0px;
             font-weight: normal;
         }
-        label {
-            display: inline-block;
-            max-width: 100%;
-            margin-bottom: 5px;
-            font-weight: 700;
-        }
+    
+
+
     </style>
 
 {% endblock %}
@@ -301,67 +289,37 @@
                                         </div>
                                     {% endif %}
 
-                                    {% dump(species)%}
+                                    {#{% dump(criterias)%}#}
 
 
 
-                                    {% if species.character is not empty %}
+                                    {% if criterias is not empty %}
                                         <div id="tab-{{tab_chars_id}}" class="tab-pane {{tab_chars_id==1?'active'}}">
                                             <h3>{% trans with {'%specie%': species.name } %} page.species.h3.species_criteria {% endtrans %}</h3>
-
-                                            {% set aux = [] %}
-
-                                            {% for c in species.character %}
-
-                               {#                 <ul class="list-unstyled list-group clear-list">
-                                                    <li class="list-group-item" style="border-top: medium none !important;">#}
-
-                                                        {% if c.criteria.translate(app.request.locale).name not in aux %}
-                                                            <ul class="list-inline customChList lstn">
-                                                                <label>
-                                                                <strong>{{ c.criteria.translate(app.request.locale).name }}</strong>
-                                                                
-                                                            </label>
-                                                            
-                                                            
-                                                        {% endif %}
-
-                                                        
-                                                            <li>
-                                                                <a class="thumbnail" >
-                                                                    <input type="checkbox">
-                                                                    <label style="width:140px;background-image: url('{{ c.getWebPath|imagine_filter('sk_widen_240') }}');">
-                                                                        {{ c }}
-                                                                    </label>
-                                                                </a>
-                                                            </li>
-                                                            
-                                                            
-                                                            {% if c.criteria.translate(app.request.locale).name not in aux %}
-                                                                {% set aux = aux|merge([c.criteria.translate(app.request.locale).name]) %}
-                                                          
-                                                            
-                                                            </ul>
-                                                        {% endif %}
-                                {#                        </ul>
-                                                    </li>#}
-                                                
-
-
-
-
-                                                {#<ul class ="unstyled">
-                            {% if c.criteria.translate(app.request.locale).name not in aux %}
-                                <strong>{{ c.criteria.translate(app.request.locale).name }}</strong>
-                                {% set aux = aux|merge([c.criteria.translate(app.request.locale).name]) %}
-                            {% endif %}
-                            <ul class ="unstyled">
-                                <li>
-                                    {{ c }} <img style="width:140px" alt="{{ c.image }}" src="{{ c.getWebPath|imagine_filter('sk_widen_240') }}" />
-                                </li>
-                            </ul>
-                        </ul>#}
-                                            {% endfor %}
+                                            <table>
+                                                <thead></thead>
+                                                <tbody>
+                                                    {% for criteria in criterias %}
+                                                        <tr>
+                                                            <td><strong>{{ criteria }}</strong></td>
+                                                            <td>
+                                                                <ul class="list-inline customChList lstn">
+                                                                    {% for character in criteria.characters %}
+                                                                        <li>
+                                                                            <a href="#" class="thumbnail" >
+                                                                                <input  type="checkbox"  >
+                                                                                <label style="background-image: url('{{ character.getWebPath|imagine_filter('sk_widen_240') }}');">
+                                                                                    {{ character }}
+                                                                                </label>
+                                                                            </a>
+                                                                        </li>
+                                                                    {% endfor %} 
+                                                                </ul>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
                                         </div>
                                     {% endif %}
 

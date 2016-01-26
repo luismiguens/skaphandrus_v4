@@ -18,6 +18,10 @@
       </join-columns>
     </many-to-one>
     
+    
+    <many-to-many field="species" target-entity="SkSpecies" mapped-by="character" fetch="LAZY"/>
+    
+    
     <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
     
   </entity>

@@ -308,19 +308,22 @@ class DefaultController extends Controller {
         $locale = $this->get('request')->getLocale();
         $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findBySlug($slug);
 
+        
+        
         if ($species) {
 
             $photo = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkPhoto")
                     ->getPrimaryPhotoForSpecies($species->getId());
 
-//            $users = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkPhoto")
-//                    ->findPhotosCountByUserForModel($species->getId());
+            $criterias = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkSpecies")
+                    ->findCriteriasWithCharacters($species->getId());
 
             $users = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
                     ->findUsersInSpecies($species->getId());
 
             return $this->render('SkaphandrusAppBundle:Default:species.html.twig', array(
                         "species" => $species,
+                "criterias" => $criterias,
                         "photo" => $photo,
                         "users" => $users
             ));
