@@ -97,19 +97,18 @@
                         <div class="row">
                             <div class="col-lg-5 contest-dates">
 
-                                <a href="#" data-toggle="tooltip" title="Some tooltip text!">Hover over me</a>
-
+                                {#<a href="#" data-toggle="tooltip" title="Some tooltip text!">Hover over me</a>#}
 
                                 <dl class="dl-horizontal">
                                     {#<dt>{{ "page.contest.dt.created_by"|trans }}:</dt> <dd>Alex Smith</dd>#}
                                     <dt>{{ "page.contest.dt.client"|trans }}:</dt> <dd><a href="#" class="text-navy"> Skaphandrus</a> </dd>
                                     {#<dt>{{ "page.contest.dt.created"|trans }}:</dt> <dd>  {{ contest.createdAt|date("m/d/Y") }} </dd>#}
-                                    <dt>{{ "form.photo_contest.label.begin_at"|trans }}:</dt> <dd> {{ contest.beginAt|date("d-m-Y") }}</dd>
-                                    <dt>{{ "form.photo_contest.label.public_votation_at"|trans }}:</dt> <dd>{{ contest.publicVotationAt|date("d-m-Y") }}</dd>
-                                    <dt>{{ "form.photo_contest.label.end_at"|trans }}:</dt> <dd>{{ contest.endAt|date("d-m-Y") }}</dd>
+                                    <dt>{{ "form.photo_contest.label.begin_at"|trans }}:</dt> <dd><a href="#" data-toggle="tooltip" title="{{"form.photo_contest.help.beginAt"|trans}}">{{ contest.beginAt|date("d-m-Y") }}</a></dd>
+                                    <dt>{{ "form.photo_contest.label.public_votation_at"|trans }}:</dt> <dd><a href="#" data-toggle="tooltip" title="{{"form.photo_contest.help.publicVotationAt"|trans}}">{{ contest.publicVotationAt|date("d-m-Y") }}</a></dd>
+                                    <dt>{{ "form.photo_contest.label.end_at"|trans }}:</dt> <dd><a href="#" data-toggle="tooltip" title="{{"form.photo_contest.help.endAt"|trans}}">{{ contest.endAt|date("d-m-Y") }}</a></dd>
                                     {#<dt>{{ "page.contest.dt.jury_votation_at"|trans }}:</dt> <dd>{{ contest.endAt|date("d-m-Y") }}</dd>#}
-                                    {# <dt>{{ "page.contest.dt.to"|trans }}:</dt> <dd>{{ contest.winnersAt|date("d-m-Y") }}</dd>#}
-                                    <dt>{{ "form.photo_contest.label.winner_at"|trans }}:</dt> <dd>{{ contest.winnersAt|date("d-m-Y") }}</dd>
+                                    {#<dt>{{ "page.contest.dt.to"|trans }}:</dt> <dd>{{ contest.winnersAt|date("d-m-Y") }}</dd>#}
+                                    <dt>{{ "form.photo_contest.label.winner_at"|trans }}:</dt> <dd><a href="#" data-toggle="tooltip" title="{{"form.photo_contest.help.winnersAt"|trans}}">{{ contest.winnersAt|date("d-m-Y") }}</a></dd>
                                 </dl>
                                 <dl class="dl-horizontal">
                                     <dt>{{ "page.contest.dt.numero_photos"|trans }}:</dt> <dd>{{ contest.photos|length }}</dd>

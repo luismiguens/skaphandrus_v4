@@ -23,8 +23,8 @@
         {#<p><strong>{{ "page.contest.label.created_by"|trans }}:</strong> Alex Smith</p>#}
     <p><strong>{{ "page.contest.label.client"|trans }}:</strong> <a href="#" class="text-navy"> Skaphandrus</a></p>
     <p><strong>{{ "page.contest.label.created"|trans }}:</strong> {{ contest.createdAt|date }}</p>
-    <p><strong>{{ "page.contest.label.starts_at"|trans }}:</strong> {{ contest.beginAt|date }}</p>
-    <p><strong>{{ "page.contest.label.ends_at"|trans }}:</strong> {{ contest.endAt|date }}</p>
+    <p><strong>{{ "form.photo_contest.label.begin_at"|trans }}:</strong> {{ contest.beginAt|date }}</p>
+    <p><strong>{{ "form.photo_contest.label.end_at"|trans }}:</strong> {{ contest.endAt|date }}</p>
 
     {% if contest.isInProgress %}
         <a href="{{ path('contest_participate', { 'contest_id': contest.id }) }}" class="btn btn-primary btn-block"><i class="fa fa-upload"></i> {{ "page.contests.link.join"|trans }}</a>
