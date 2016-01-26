@@ -34,6 +34,7 @@ class SkPhotoContestJudgeType extends AbstractType {
                     'label' => 'form.photo_contest_judge.label.contest'
                 ))
                 ->add('translations', 'a2lix_translations', array(
+                    'required' => false,
                     'fields' => array(
                         'description' => array(
                             'field_type' => 'textarea',
