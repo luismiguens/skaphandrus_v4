@@ -3,15 +3,15 @@
 <!--[if IE 8]> <html lang="{{ app.request.locale }}" class="ie8"> <![endif]-->  
 <!--[if IE 9]> <html lang="{{ app.request.locale }}" class="ie9"> <![endif]-->  
 <!--[if !IE]><!--> <html ng-app="{% block angular_app %}{% endblock %}" lang="{{ app.request.locale }}" xmlns:fb="http://www.facebook.com/2008/fbml"  itemscope itemtype="http://schema.org/WebPage"> <!--<![endif]--> 
-    
+
 
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# skaphandrus: http://ogp.me/ns/fb/skaphandrus#">
-        
+
         <title>{% block page_title %}{% endblock %}</title>
-              <link rel="icon" href="{{ app.request.getSchemeAndHttpHost() ~ "/favicon.ico"}}"/>
-       <link rel="shortcut icon" href="{{ app.request.getSchemeAndHttpHost() ~ "/favicon.ico"}}"  />
-        
-        
+        <link rel="icon" href="{{ app.request.getSchemeAndHttpHost() ~ "/favicon.ico"}}"/>
+        <link rel="shortcut icon" href="{{ app.request.getSchemeAndHttpHost() ~ "/favicon.ico"}}"  />
+
+
         <!-- Meta -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,57 +21,57 @@
         <meta name="robots" content="noodp">
         <meta name="keywords" content="{% block page_keywords %}{% endblock %}" />
         <meta name="description" content="{% block page_description %}{% endblock %}" />
-       
-        
+
+
         <!-- smart app link -->        
         <meta name="apple-itunes-app" content="app-id=894101166"/>
         <meta name="google-play-app" content="app-id=com.skaphandrus.oceanlifeid">
-        
+
         <!-- hreflang for language -->
-        {% block hreflang %}{% endblock %}
-        <meta itemprop="inLanguage" content="{{app.request.locale}}" />
+    {% block hreflang %}{% endblock %}
+    <meta itemprop="inLanguage" content="{{app.request.locale}}" />
 
-        {% block stylesheets %}
+    {% block stylesheets %}
 
-            <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">
-            <link href="{{ asset('bundles/skaphandrusapp/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+        <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('bundles/skaphandrusapp/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
-            <link href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}" rel="stylesheet">
-            <link href="{{ asset('bundles/skaphandrusapp/css/style.css') }}" rel="stylesheet">
-            <link href="{{ asset('bundles/skaphandrusapp/css/app.css') }}" rel="stylesheet">
-        {% endblock %}
+        <link href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}" rel="stylesheet">
+        <link href="{{ asset('bundles/skaphandrusapp/css/style.css') }}" rel="stylesheet">
+        <link href="{{ asset('bundles/skaphandrusapp/css/app.css') }}" rel="stylesheet">
+    {% endblock %}
 
-        
 
-        
-         </head>
-        
 
-    <body class="boxed-layout canvas-menu" ng-controller="MainCtrl as mainCtrl">
 
-     <div id="wrapper">
+</head>
 
-            {% include 'SkaphandrusAppBundle:Common:sidebar-menu.html.twig' with {'layout': 'content'} %}
 
-            <div id="page-wrapper" class="gray-bg">
-                <div class="row border-bottom">
-                    {% include 'SkaphandrusAppBundle:Common:navbar-menu.html.twig' with {'bg': 'white-bg'} %}
-                </div>
-                <!-- page-heading begin -->
-                <div class="row wrapper border-bottom white-bg page-heading">
-                    <div class="col-sm-8">
-                        <h2>{% block heading_title %}{% endblock %}</h2>
-                    {% block heading_breadcrumbs %}{% endblock %}
-                </div>
-                <div class="col-sm-4">
-                    <div class="title-action">
-                    {% block heading_action %}{% endblock %}
-                </div>
+<body class="boxed-layout canvas-menu" ng-controller="MainCtrl as mainCtrl">
+
+    <div id="wrapper">
+
+        {% include 'SkaphandrusAppBundle:Common:sidebar-menu.html.twig' with {'layout': 'content'} %}
+
+        <div id="page-wrapper" class="gray-bg">
+            <div class="row border-bottom">
+                {% include 'SkaphandrusAppBundle:Common:navbar-menu.html.twig' with {'bg': 'white-bg'} %}
+            </div>
+            <!-- page-heading begin -->
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-sm-8">
+                    <h2>{% block heading_title %}{% endblock %}</h2>
+                {% block heading_breadcrumbs %}{% endblock %}
+            </div>
+            <div class="col-sm-4">
+                <div class="title-action">
+                {% block heading_action %}{% endblock %}
             </div>
         </div>
-        <!-- page-heading end -->
+    </div>
+    <!-- page-heading end -->
 
-    {% block body %}{% endblock %}
+{% block body %}{% endblock %}
 
 {% include 'SkaphandrusAppBundle:Common:footer.html.twig'%}
 
@@ -90,19 +90,19 @@
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
 
-    
-    
+
+
     <!-- Custom and plugin javascript -->
     {#<script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>#}
     {#<script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>#}
     {#<script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>#}
-    
-<script src="{{ asset('bundles/skaphandrusapp/js/angular.min.js') }}"></script>
-    
- {#    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>#}
-    
-   
+
+    <script src="{{ asset('bundles/skaphandrusapp/js/angular.min.js') }}"></script>
+
+    {#    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+       <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>#}
+
+
 
 
 {% endblock %}

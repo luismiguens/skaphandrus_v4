@@ -228,6 +228,8 @@ class SkIdentificationSpeciesController extends Controller {
                 }
             }
 
+            $entity->setUpdatedAt(new \DateTime('now'));
+            
             $em->persist($entity);
             $em->flush();
 
