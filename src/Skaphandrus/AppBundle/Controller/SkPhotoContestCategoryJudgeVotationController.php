@@ -201,15 +201,29 @@ class SkPhotoContestCategoryJudgeVotationController extends Controller {
                 
             else:
                 $judgeVote = new \Skaphandrus\AppBundle\Entity\SkPhotoContestCategoryJudgePhotoVote();
+            
+            
+            
+            
+            
                 $p = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($photo['id']);
                 $p->setPoints($photo['countable']);
 
+                
+                
+                
                 $judgeVote->setPhoto($p);
                 $judgeVote->setVotation($votation);
                 $judgeVote->setPoints(0);
 
+                //$judgeVote->setVotation($votation);
+                
+                $em->persist($judgeVote);
+                //dump($judgeVote);
+                
                 $votation->addJudgeVote($judgeVote);
                 $em->persist($votation);
+                $em->flush();
 
             endif;
         }
