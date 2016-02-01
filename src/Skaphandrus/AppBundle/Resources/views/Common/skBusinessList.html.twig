@@ -4,11 +4,28 @@
     <li class="{{ 'SkBusinessController' in app.request.attributes.get("_controller")?'active' }}">
         <a href="#"><i class="fa fa-briefcase"></i> <span class="nav-label">{{ "business_admin"|trans }} </span><span class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse" style="height: 0px;">
-
-            {% for business in business_list %} 
+            {% for business in business_list %}
                 <li>
-                    <a href="{{ path('business_admin_edit', { 'id': business.id }) }}">
-                        {{ business.name }}</a>
+                    <a href="#{{ business.name }}">
+                        <span class="nav-label">{{ business.name }}</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-third-level" style="height: 0px;">
+                        <li>
+                            <a href="{{ path('business_admin_edit', { 'id': business.id }) }}">{{ "forms.common.btn.edit_base"|trans }}</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('business_settings_admin_edit', { 'id': business.id }) }}">{{ "forms.common.btn.edit_settings"|trans }}</a>
+                        </li>
+                        {% if business.isPremium or business.isPlus %}
+                            <li>
+                                <a href="{{ path('business_spot_admin_edit', { 'id': business.id }) }}">{{ "forms.common.btn.edit_dive"|trans }}</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('business_education_admin_edit', { 'id': business.id }) }}">{{ "forms.common.btn.edit_education"|trans }}</a>
+                            </li>
+                        {% endif %}
+                    </ul>
                 </li>
             {% endfor %}
         </ul>

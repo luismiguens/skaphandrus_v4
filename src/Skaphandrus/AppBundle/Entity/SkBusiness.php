@@ -72,6 +72,11 @@ class SkBusiness {
     private $premiumAt;
 
     /**
+     * @var \DateTime
+     */
+    private $plusAt;
+
+    /**
      * @var integer
      */
     private $id;
@@ -466,6 +471,28 @@ class SkBusiness {
      */
     public function getPremiumAt() {
         return $this->premiumAt;
+    }
+
+    /**
+     * Set plusAt
+     *
+     * @param \DateTime $plusAt
+     *
+     * @return SkBusiness
+     */
+    public function setPlusAt($plusAt) {
+        $this->plusAt = $plusAt;
+
+        return $this;
+    }
+
+    /**
+     * Get plusAt
+     *
+     * @return \DateTime
+     */
+    public function getPlusAt() {
+        return $this->plusAt;
     }
 
     /**
@@ -873,6 +900,40 @@ class SkBusiness {
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
         return 'uploads/business';
+    }
+
+    public function isPremium() {
+
+        $now = new \DateTime();
+
+        if ($this->getPremiumAt() != null) {
+
+            $diff = date_diff($now, $this->getPremiumAt());
+//        dump($diff->y > 1); // « shows some properties.
+
+            if ($diff->y < 1) {
+                return true;
+            }
+
+            return false;
+        }
+    }
+
+    public function isPlus() {
+
+        $now = new \DateTime();
+
+        if ($this->getPlusAt() != null) {
+
+            $diff = date_diff($now, $this->getPlusAt());
+//        dump($diff->y > 1); // « shows some properties.
+
+            if ($diff->y < 1) {
+                return true;
+            }
+
+            return false;
+        }
     }
 
     public function doStuffOnPostLoad(\Doctrine\ORM\Event\LifecycleEventArgs $args) {

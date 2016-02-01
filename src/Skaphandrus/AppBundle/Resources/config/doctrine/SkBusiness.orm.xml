@@ -61,6 +61,7 @@
         <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
         <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
         <field name="premiumAt" type="datetime" column="premium_at" nullable="true"/>
+        <field name="plusAt" type="datetime" column="plus_at" nullable="true"/>
         
         <one-to-one field="address" target-entity="SkAddress" mapped-by="business" >
             <cascade>

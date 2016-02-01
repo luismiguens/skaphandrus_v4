@@ -16,6 +16,7 @@ class ProfileSettingsType extends AbstractType {
         $builder
                 ->add('observations', 'textarea', array(
                     'attr' => array('class' => 'form-control', 'rows' => '10'),
+                    'required' => false,
                     'label' => 'form.settings.label.about_you'
                 ))
 //                ->add('file', 'file', 

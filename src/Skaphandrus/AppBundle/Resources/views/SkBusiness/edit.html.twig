@@ -28,7 +28,11 @@
 
 
 {% block heading_action %}
-    <a href="{{ path('business_admin_new') }}" class="btn btn-primary">{{ "form.business.btn.add"|trans }}</a>
+    {% if is_granted("ROLE_ADMIN") %}
+        <a href="{{ path('business_admin_new') }}" class="btn btn-primary">{{ "form.business.btn.add"|trans }}</a>
+    {% endif %}
+    <a class="btn btn-success" href="{{ path('business', { 'country': slugify(intl_country_name(entity.address.location.region.country.name)), 'location': slugify(entity.address.location), 'slug': slugify(entity.name) }) }}">{{ "forms.common.btn.visit_business"|trans }}</a>
+
 {% endblock %}
 
 
@@ -41,7 +45,7 @@
     {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
 
     {{ form_errors(edit_form) }}
-    
+
     {{ form_row(edit_form.name) }}
     {{ form_row(edit_form.imageFile) }}
     {{ form_row(edit_form.type) }}

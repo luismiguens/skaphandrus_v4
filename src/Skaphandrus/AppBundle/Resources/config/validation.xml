@@ -30,11 +30,12 @@
                 <option name="mimeTypes">
                     <value>image/jpeg</value>
                     <value>image/jpg</value>
+                    <value>image/png</value>
                 </option>
             </constraint>
             <constraint name="Image">
-                <option name="minWidth">640</option>
-                <option name="minHeight">640</option>
+                <option name="minWidth">300</option>
+                <option name="minHeight">300</option>
             </constraint>
         </property>
     </class>

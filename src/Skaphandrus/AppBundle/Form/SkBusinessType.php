@@ -76,7 +76,7 @@ class SkBusinessType extends AbstractType {
                 ->add('imageFile', 'vich_image', array(
                     'label' => 'form.business.label.picture',
                     'help' => 'form.business.help.picture',
-                    'required' => $required,
+                    'required' => false,
                     'allow_delete' => false, // not mandatory, default is true
                     'download_link' => false, // not mandatory, default is true
                 ))

@@ -14,10 +14,16 @@ class FosUserProfileType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('settings', new ProfileSettingsType())
+                ->add('settings', new ProfileSettingsType(), array(
+                    'required' => false,
+                ))
                 ->add('personal', new ProfilePersonalType())
-                ->add('address', new ProfileAddressType())
-                ->add('contact', new ProfileContactType())
+                ->add('address', new ProfileAddressType(), array(
+                    'required' => false,
+                ))
+                ->add('contact', new ProfileContactType(), array(
+                    'required' => false,
+                ))
 
         ;
     }

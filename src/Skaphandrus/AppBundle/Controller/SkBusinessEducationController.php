@@ -12,119 +12,150 @@ use Skaphandrus\AppBundle\Form\SkBusinessEducationType;
  *
  */
 class SkBusinessEducationController extends Controller {
-
-    /**
-     * Lists all SkBusiness entities.
-     *
-     */
-    public function indexAction() {
-        $em = $this->getDoctrine()->getManager();
-        $locale = $this->get('request')->getLocale();
-
-        $entities = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findAllBusiness($locale);
-
-        return $this->render('SkaphandrusAppBundle:SkBusiness:index.html.twig', array(
-                    'entities' => $entities,
-        ));
-    }
-
-    /**
-     * Creates a new SkBusiness entity.
-     *
-     */
-    public function createAction(Request $request) {
-        $entity = new SkBusiness();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('business_admin_edit', array('id' => $entity->getId())));
-        }
-
-        return $this->render('SkaphandrusAppBundle:SkBusiness:new.html.twig', array(
-                    'entity' => $entity,
-                    'form' => $form->createView(),
-        ));
-    }
-
-    /**
-     * Creates a form to create a SkBusiness entity.
-     *
-     * @param SkBusiness $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(SkBusiness $entity) {
-        $form = $this->createForm(new SkBusinessType(), $entity, array(
-            'action' => $this->generateUrl('business_admin_create'),
-            'method' => 'POST',
-        ));
-
-//        $form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new SkBusiness entity.
-     *
-     */
-    public function newAction() {
-        $entity = new SkBusiness();
-        $form = $this->createCreateForm($entity);
-
-        return $this->render('SkaphandrusAppBundle:SkBusiness:new.html.twig', array(
-                    'entity' => $entity,
-                    'form' => $form->createView(),
-        ));
-    }
-
-    /**
-     * Finds and displays a SkBusiness entity.
-     *
-     */
-    public function showAction($id) {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find SkBusiness entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('SkaphandrusAppBundle:SkBusiness:show.html.twig', array(
-                    'entity' => $entity,
-                    'delete_form' => $deleteForm->createView(),
-        ));
-    }
+//    /**
+//     * Lists all SkBusiness entities.
+//     *
+//     */
+//    public function indexAction() {
+//        $em = $this->getDoctrine()->getManager();
+//        $locale = $this->get('request')->getLocale();
+//
+//        $entities = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findAllBusiness($locale);
+//
+//        return $this->render('SkaphandrusAppBundle:SkBusiness:index.html.twig', array(
+//                    'entities' => $entities,
+//        ));
+//    }
+//
+//    /**
+//     * Creates a new SkBusiness entity.
+//     *
+//     */
+//    public function createAction(Request $request) {
+//        $entity = new SkBusiness();
+//        $form = $this->createCreateForm($entity);
+//        $form->handleRequest($request);
+//
+//        if ($form->isValid()) {
+//            $em = $this->getDoctrine()->getManager();
+//            $em->persist($entity);
+//            $em->flush();
+//
+//            return $this->redirect($this->generateUrl('business_admin_edit', array('id' => $entity->getId())));
+//        }
+//
+//        return $this->render('SkaphandrusAppBundle:SkBusiness:new.html.twig', array(
+//                    'entity' => $entity,
+//                    'form' => $form->createView(),
+//        ));
+//    }
+//
+//    /**
+//     * Creates a form to create a SkBusiness entity.
+//     *
+//     * @param SkBusiness $entity The entity
+//     *
+//     * @return \Symfony\Component\Form\Form The form
+//     */
+//    private function createCreateForm(SkBusiness $entity) {
+//        $form = $this->createForm(new SkBusinessType(), $entity, array(
+//            'action' => $this->generateUrl('business_admin_create'),
+//            'method' => 'POST',
+//        ));
+//
+////        $form->add('submit', 'submit', array('label' => 'Create'));
+//
+//        return $form;
+//    }
+//
+//    /**
+//     * Displays a form to create a new SkBusiness entity.
+//     *
+//     */
+//    public function newAction() {
+//        $entity = new SkBusiness();
+//        $form = $this->createCreateForm($entity);
+//
+//        return $this->render('SkaphandrusAppBundle:SkBusiness:new.html.twig', array(
+//                    'entity' => $entity,
+//                    'form' => $form->createView(),
+//        ));
+//    }
+//
+//    /**
+//     * Finds and displays a SkBusiness entity.
+//     *
+//     */
+//    public function showAction($id) {
+//        $em = $this->getDoctrine()->getManager();
+//
+//        $entity = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->find($id);
+//
+//        if (!$entity) {
+//            throw $this->createNotFoundException('Unable to find SkBusiness entity.');
+//        }
+//
+//        $deleteForm = $this->createDeleteForm($id);
+//
+//        return $this->render('SkaphandrusAppBundle:SkBusiness:show.html.twig', array(
+//                    'entity' => $entity,
+//                    'delete_form' => $deleteForm->createView(),
+//        ));
+//    }
 
     /**
      * Displays a form to edit an existing SkBusiness entity.
      *
      */
     public function editAction($id) {
-        $em = $this->getDoctrine()->getManager();
 
+        $loggedUser = $this->get('security.token_storage')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find SkBusiness entity.');
+        //se o user esta logado
+        if (false === $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY', $loggedUser)) {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        } else {
+
+            foreach ($entity->getAdmin() as $value) {
+                $admin = $value->getId();
+            }
+
+            // verifica se o user é admin
+            if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN', $loggedUser)) {
+
+                if (!$entity) {
+                    throw $this->createNotFoundException('Unable to find SkBusiness entity.');
+                }
+
+                $editForm = $this->createEditForm($entity);
+                $deleteForm = $this->createDeleteForm($id);
+
+                return $this->render('SkaphandrusAppBundle:SkBusinessEducation:edit.html.twig', array(
+                            'entity' => $entity,
+                            'edit_form' => $editForm->createView(),
+                            'delete_form' => $deleteForm->createView(),
+                ));
+                // verifica se o user é admin do business e se ainda é premium ou plus
+            } elseif ($admin == $loggedUser->getId() and ( ($entity->isPremium() == true) or ( $entity->isPlus() == true))) {
+
+                if (!$entity) {
+                    throw $this->createNotFoundException('Unable to find SkBusiness entity.');
+                }
+
+                $editForm = $this->createEditForm($entity);
+                $deleteForm = $this->createDeleteForm($id);
+
+                return $this->render('SkaphandrusAppBundle:SkBusinessEducation:edit.html.twig', array(
+                            'entity' => $entity,
+                            'edit_form' => $editForm->createView(),
+                            'delete_form' => $deleteForm->createView(),
+                ));
+            } else {
+                throw new \PHPCR\AccessDeniedException('Unauthorised access or your business is no longer Premium/Plus!');
+            }
         }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('SkaphandrusAppBundle:SkBusinessEducation:edit.html.twig', array(
-                    'entity' => $entity,
-                    'edit_form' => $editForm->createView(),
-                    'delete_form' => $deleteForm->createView(),
-        ));
     }
 
     /**
@@ -159,7 +190,7 @@ class SkBusinessEducationController extends Controller {
         }
 
         $originalCourse = new \Doctrine\Common\Collections\ArrayCollection();
-        
+
         // Create an ArrayCollection of the current Tag objects in the database
         foreach ($entity->getEducationCourse() as $course) {
             $originalCourse->add($course);
@@ -179,9 +210,7 @@ class SkBusinessEducationController extends Controller {
 
                     // if it was a many-to-one relationship, remove the relationship like this
                     // $course->setBusiness(null);
-
                     // $em->persist($course);
-
                     // if you wanted to delete the Tag entirely, you can also do that
                     $em->remove($course);
                 }

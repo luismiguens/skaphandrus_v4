@@ -146,9 +146,10 @@
 {% endblock %}
 
 
-{#{% block heading_action %}
-    <a href="{{ path('business_admin_new') }}" class="btn btn-primary">{{ "form.business_dive.btn.add"|trans }}</a>
-{% endblock %}#}
+{% block heading_action %}
+    {#<a href="{{ path('business_admin_new') }}" class="btn btn-primary">{{ "form.business_education.btn.add"|trans }}</a>#}
+    <a class="btn btn-success" href="{{ path('business', { 'country': slugify(intl_country_name(entity.address.location.region.country.name)), 'location': slugify(entity.address.location), 'slug': slugify(entity.name) }) }}">{{ "forms.common.btn.visit_business"|trans }}</a>
+{% endblock %}
 
 
 {% block form_title_description %}

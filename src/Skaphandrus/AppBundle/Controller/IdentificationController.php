@@ -45,9 +45,9 @@ class IdentificationController extends Controller {
 
         $modules = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkIdentificationModule')->findBy(array('isActive' => true));
 
-        //dump($modules);
-
-        return $this->render('SkaphandrusAppBundle:Identification:modules.html.twig', array('modules' => $modules));
+        return $this->render('SkaphandrusAppBundle:Identification:modules.html.twig', array(
+                    'modules' => $modules
+        ));
     }
 
     /**
@@ -58,14 +58,48 @@ class IdentificationController extends Controller {
     public function criteriasAction($slug) {
 
         $locale = $this->get('request')->getLocale();
+        $loggedUser = $this->getUser();
 
         //module
         $module = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkIdentificationModule')
                 ->findBySlug($slug, $locale);
 
-        //dump($module);
-        
-        return $this->render('SkaphandrusAppBundle:Identification:criterias.html.twig', array('module' => $module));
+        $acq = $module->getAcquisitions();
+        foreach ($acq as $value) {
+            $user = $value->getFosUser();
+        }
+
+        $now = new \DateTime();
+        $diff = date_diff($now, $module->getCreatedAt());
+//        dump($diff);
+
+        //se o user esta logado
+        if (true === $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY', $loggedUser)) {
+            //se o modulo nao é free
+            if ($module->getIsFree() == false) {
+                //tem menos de 30 dias
+                if ($diff->days > 30) {
+                    //se o modulo lhe pertence
+                    if ($user->getId() == $loggedUser->getId()) {
+                        return $this->render('SkaphandrusAppBundle:Identification:criterias.html.twig', array(
+                                    'module' => $module
+                        ));
+                    } else {
+                        return $this->redirect($this->generateUrl('module_admin_edit'));
+                    }
+                } else {
+                    return $this->render('SkaphandrusAppBundle:Identification:criterias.html.twig', array(
+                                'module' => $module
+                    ));
+                }
+            } else {
+                return $this->render('SkaphandrusAppBundle:Identification:criterias.html.twig', array(
+                            'module' => $module
+                ));
+            }
+        } else {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
     }
 
     /**
@@ -416,8 +450,8 @@ class IdentificationController extends Controller {
                         'image_type' => "google",
                         'photographer' => "Luis Miguens",
                         'license' => "Attribution"
-                            
-                            
+
+
                             //Milton já está a receber photographer
                     );
                 }
@@ -634,9 +668,9 @@ class IdentificationController extends Controller {
         if (!$facebook_uid)
             $facebook_uid = $request->request->get('facebook_uid');
 
-        
-        
-        /***********************************************************************
+
+
+        /*         * *********************************************************************
          * VALIDATIONS START
          */
         //verify if username exists
@@ -676,10 +710,7 @@ class IdentificationController extends Controller {
 
         /**
          * VALIDATIONS END
-         ***********************************************************************/
-        
-        
-        
+         * ********************************************************************* */
         $user = new \Skaphandrus\AppBundle\Entity\FosUser();
 
         //se o registo for com os dados do facebook
