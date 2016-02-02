@@ -1,14 +1,15 @@
- <div class="footer">
-        <div class="pull-right">
-            {#10GB of <strong>250GB</strong> Free.#}
-{#            <ul class="footer-links pull-right list-unstyled list-inline">
+<div class="footer">
+    <div class="pull-right">
+        {#10GB of <strong>250GB</strong> Free.#}
+        {#<ul class="footer-links pull-right list-unstyled list-inline">
             <li><a href="http://skaphandrus.com/pt">Português</a></li>
             <li><a href="http://skaphandrus.com/en">English</a></li>
-    </ul>#}
-        </div>
-        <div>
-            <meta itemprop="copyrightHolder" content="Skaphandrus" />
-            <meta itemprop="copyrightYear" content="2012-2015" />
-            <strong>Copyright</strong> Skaphandrus Company &copy; 2012-2015
-        </div>
+        </ul>#}
+        <a href="{{ path('terms-and-conditions') }}">{{ "footer.view.terms_and_conditions"|trans }}</a>
     </div>
+    <div>
+        <meta itemprop="copyrightHolder" content="Skaphandrus" />
+        <meta itemprop="copyrightYear" content="2012-2015" />
+        <strong>Copyright</strong> Skaphandrus Company &copy; 2012-2015
+    </div>
+</div>

@@ -18,7 +18,8 @@
         <div class="form-group">
             {{ form_row(form.plainPassword) }}
         </div>
-
+        
+        <p class="text-muted text-center"><small>{{ 'registration.terms_and_conditions'|trans }}</small></p>
         <input type="submit" class="btn btn-primary block full-width m-b" value="{{ 'registration.submit'|trans }}" />
 
         <p class="text-muted text-center"><small>{{ 'registration.already_have_an_account'|trans }}?</small></p>

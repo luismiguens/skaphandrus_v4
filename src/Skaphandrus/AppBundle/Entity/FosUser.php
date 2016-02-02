@@ -57,6 +57,11 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
+    private $terms;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
     private $photosValidated;
     //campos de apoio para as listagens
     private $photosInContest;
@@ -485,6 +490,37 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
      */
     public function getBusiness() {
         return $this->business;
+    }
+
+    /**
+     * Add terms
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkTermsConditions $terms
+     *
+     * @return FosUSer
+     */
+    public function addTerms(\Skaphandrus\AppBundle\Entity\SkTermsConditions $terms) {
+        $this->terms[] = $terms;
+
+        return $this;
+    }
+
+    /**
+     * Remove terms
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkTermsConditions $terms
+     */
+    public function removeTerms(\Skaphandrus\AppBundle\Entity\SkTermsConditions $terms) {
+        $this->terms->removeElement($terms);
+    }
+
+    /**
+     * Get terms
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTerms() {
+        return $this->terms;
     }
 
     public function doStuffOnPostLoad(\Doctrine\ORM\Event\LifecycleEventArgs $args) {

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Skaphandrus\AppBundle\Entity\SkTermsConditions" table="sk_terms_conditions">
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="applyAt" type="datetime" column="apply_at" nullable="false"/>
+        
+        <!--<many-to-many field="user" target-entity="FosUser" mapped-by="terms" fetch="LAZY"/>-->
+        
+        <many-to-many field="user" target-entity="FosUser" inversed-by="terms" fetch="LAZY">
+            <join-table name="sk_user_terms_conditions">
+                <join-columns>
+                    <join-column name="user_id" referenced-column-name="id"/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="terms_id" referenced-column-name="id"/>
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+        
+        
+    </entity>
+</doctrine-mapping>

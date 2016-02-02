@@ -41,6 +41,10 @@ users-home:
     locales:  { en: "/en/users", pt: "/pt/utilizadores" }
     defaults: { _controller: SkaphandrusAppBundle:Default:usersHome }
 
+terms-and-conditions:
+    locales:  { en: "/en/terms-and-conditions", pt: "/pt/termos-e-condicoes" }
+    defaults: { _controller: SkaphandrusAppBundle:SkTermsConditions:index }
+
 ################################################################################
 spot:
     locales:  { en: "/en/scuba-diving-sites/spot/{country}/{location}/{slug}", pt: "/pt/spots-mergulho/spot/{country}/{location}/{slug}" }

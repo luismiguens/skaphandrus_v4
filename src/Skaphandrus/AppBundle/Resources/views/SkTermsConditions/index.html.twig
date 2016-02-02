@@ -1,0 +1,9 @@
+{% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
+
+{% block body -%}
+
+    <h2>Text</h2>
+    {% for entity in entities %}
+        <p>{{ entity.text }}</p>
+    {% endfor %}
+{% endblock %}
