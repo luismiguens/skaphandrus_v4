@@ -72,11 +72,10 @@ class IdentificationController extends Controller {
         $now = new \DateTime();
         $diff = date_diff($now, $module->getCreatedAt());
 //        dump($diff);
-
-        //se o user esta logado
-        if (true === $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY', $loggedUser)) {
-            //se o modulo nao é free
-            if ($module->getIsFree() == false) {
+        //se o modulo nao é free
+        if ($module->getIsFree() == false) {
+            //se o user esta logado
+            if (true === $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY', $loggedUser)) {
                 //tem menos de 30 dias
                 if ($diff->days > 30) {
                     //se o modulo lhe pertence
@@ -93,12 +92,12 @@ class IdentificationController extends Controller {
                     ));
                 }
             } else {
-                return $this->render('SkaphandrusAppBundle:Identification:criterias.html.twig', array(
-                            'module' => $module
-                ));
+                return $this->redirect($this->generateUrl('fos_user_security_login'));
             }
         } else {
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
+            return $this->render('SkaphandrusAppBundle:Identification:criterias.html.twig', array(
+                        'module' => $module
+            ));
         }
     }
 
@@ -441,19 +440,34 @@ class IdentificationController extends Controller {
             //     $fotografias[] = $fotografia;
             // }
             //REFERENCIAS GOOGLE
-            foreach ($species_obj->getImageRefs() as $imageRef_obj) {
-                if ($imageRef_obj->getIsActive()) {
+
+            $species_sk_photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
+                    ->getSpeciesSkImages($species_id);
+//            dump($species_sk_photos);
+
+            if ($species_sk_photos) {
+                foreach ($species_obj->getImageRefs() as $imageRef_obj) {
                     $photos[] = array(
                         'id' => $imageRef_obj->getId(),
                         'image_src' => $imageRef_obj->getImageSrc(),
-                        'image_url' => $imageRef_obj->getImageUrl(),
-                        'image_type' => "google",
+                        'image_type' => "skaphandrus",
                         'photographer' => "Luis Miguens",
                         'license' => "Attribution"
-
-
-                            //Milton já está a receber photographer
                     );
+                }
+            } else {
+                foreach ($species_obj->getImageRefs() as $imageRef_obj) {
+                    if ($imageRef_obj->getIsActive()) {
+                        $photos[] = array(
+                            'id' => $imageRef_obj->getId(),
+                            'image_src' => $imageRef_obj->getImageSrc(),
+                            'image_url' => $imageRef_obj->getImageUrl(),
+                            'image_type' => "google",
+                            'photographer' => "Luis Miguens",
+                            'license' => "Attribution"
+                                //Milton já está a receber photographer
+                        );
+                    }
                 }
             }
             $species['images'] = $photos;
