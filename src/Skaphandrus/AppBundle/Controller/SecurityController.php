@@ -1,18 +1,21 @@
 <?php
 
-namespace UserBundle\Controller;
+namespace Skaphandrus\AppBundle\Controller;
 
 use FOS\UserBundle\Controller\SecurityController as BaseController;
 
+use Symfony\Component\HttpFoundation\Request;
+
+
 class SecurityController extends BaseController {
 
-    public function loginAction() {
-
+    public function loginAction(Request $request){
+        dump("asd");
         echo "asd";
 
-//        $response = parent::loginAction();
+        $response = parent::loginAction($request);
         // ... do custom stuff
-//        return $response;
+        return $response;
     }
 
     /**
@@ -25,8 +28,9 @@ class SecurityController extends BaseController {
      */
     protected function renderLogin(array $data) {
 
-        dump("asd");
-//        return $this->render('FOSUserBundle:Security:login.html.twig', $data);
+    //    dump("asd");
+     //   echo "asd";
+        return $this->render('FOSUserBundle:Security:login.html.twig', $data);
     }
 
 }

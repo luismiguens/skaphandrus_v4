@@ -27,6 +27,8 @@ class AppKernel extends Kernel {
             // Then add SonataAdminBundle
             new Sonata\AdminBundle\SonataAdminBundle(),
             new Skaphandrus\AppBundle\SkaphandrusAppBundle(),
+            
+            
             new A2lix\TranslationFormBundle\A2lixTranslationFormBundle(),
             new Lexik\Bundle\TranslationBundle\LexikTranslationBundle(),
             // new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
@@ -35,6 +37,12 @@ class AppKernel extends Kernel {
             // Most of the cases, you'll want to extend FOSUserBundle though ;)
             // extend the ``FOSUserBundle``
             new FOS\UserBundle\FOSUserBundle(),
+            
+            new Skaphandrus\AppBundle\UserBundle(),
+            //new FOS\UserBundle\UserBundle(),
+            //
+            //
+            //new UserBundle\UserBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
             new PUGX\AutocompleterBundle\PUGXAutocompleterBundle(),
             // FosCommentBundle, and dependencies

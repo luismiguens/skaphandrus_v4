@@ -2,7 +2,7 @@
 
 // src/UserBundle/UserBundle.php
 
-namespace UserBundle;
+namespace Skaphandrus\AppBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
