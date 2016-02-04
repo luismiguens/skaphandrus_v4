@@ -65,6 +65,12 @@ class SkTermsConditions {
         return $this->id;
     }
 
+    public function setId($id) {
+        $this->id = $id;
+
+        return $this;
+    }
+
     /**
      * Add user
      *

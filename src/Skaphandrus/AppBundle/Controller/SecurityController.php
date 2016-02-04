@@ -3,18 +3,14 @@
 namespace Skaphandrus\AppBundle\Controller;
 
 use FOS\UserBundle\Controller\SecurityController as BaseController;
-
 use Symfony\Component\HttpFoundation\Request;
-
 
 class SecurityController extends BaseController {
 
-    public function loginAction(Request $request){
-        dump("asd");
-        echo "asd";
+    public function loginAction(Request $request) {
 
         $response = parent::loginAction($request);
-        // ... do custom stuff
+
         return $response;
     }
 
@@ -28,8 +24,16 @@ class SecurityController extends BaseController {
      */
     protected function renderLogin(array $data) {
 
-    //    dump("asd");
-     //   echo "asd";
+//        dump($data);
+
+//        $message = $this->render('SkaphandrusAppBundle:Common:flash-message.html.twig');
+//
+//        if ($data) {
+//            $this->addFlash(
+//                    'notice', $message
+//            );
+//        }
+
         return $this->render('FOSUserBundle:Security:login.html.twig', $data);
     }
 

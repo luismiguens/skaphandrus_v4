@@ -6,6 +6,30 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class CommonController extends Controller {
 
+    public function termsAction() {
+
+        $em = $this->getDoctrine()->getManager();
+
+        if (($fos_user = $this->get('security.token_storage')->getToken()->getUser()) == null) {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        } else {
+
+            $fos_user = $this->get('security.token_storage')->getToken()->getUser();
+
+            $query = $em->createQuery("SELECT t FROM SkaphandrusAppBundle:SkTermsConditions t JOIN t.user u WHERE u.id = ?1");
+            $query->setParameter(1, $fos_user->getId());
+            $user_terms = $query->getResult();
+
+            dump($user_terms);
+
+            $entities = $em->getRepository('SkaphandrusAppBundle:SkTermsConditions')->findAll();
+
+            return $this->render('SkaphandrusAppBundle:Common:flash-message.html.twig', array(
+                        'entities' => $entities
+            ));
+        }
+    }
+
     public function skBusinessListAction() {
 
         $em = $this->getDoctrine()->getManager();

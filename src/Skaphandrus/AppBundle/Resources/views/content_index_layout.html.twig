@@ -8,8 +8,8 @@
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# skaphandrus: http://ogp.me/ns/fb/skaphandrus#">
 
         <title>{% block page_title %}{% endblock %}</title>
-       <link rel="icon" href="{{ app.request.getSchemeAndHttpHost() ~ "/favicon.ico"}}"/>
-       <link rel="shortcut icon" href="{{ app.request.getSchemeAndHttpHost() ~ "/favicon.ico"}}"  />
+        <link rel="icon" href="{{ app.request.getSchemeAndHttpHost() ~ "/favicon.ico"}}"/>
+        <link rel="shortcut icon" href="{{ app.request.getSchemeAndHttpHost() ~ "/favicon.ico"}}"  />
 
 
         <!-- Meta -->
@@ -28,66 +28,66 @@
         <meta name="google-play-app" content="app-id=com.skaphandrus.oceanlifeid">
 
         <!-- hreflang for language -->
-        {% block hreflang %}{% endblock %}
-        <meta itemprop="inLanguage" content="{{app.request.locale}}" />
+    {% block hreflang %}{% endblock %}
+    <meta itemprop="inLanguage" content="{{app.request.locale}}" />
 
 
-        {% block stylesheets %}
+    {% block stylesheets %}
 
-            <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">
-            <link href="{{ asset('bundles/skaphandrusapp/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+        <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('bundles/skaphandrusapp/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
-            <link href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}" rel="stylesheet">
-            <link href="{{ asset('bundles/skaphandrusapp/css/style.css') }}" rel="stylesheet">
-            <link href="{{ asset('bundles/skaphandrusapp/css/app.css') }}" rel="stylesheet">
-        {% endblock %}
- </head>
-
-    <body class="boxed-layout canvas-menu" {% block body_data_attributes %}{% endblock %} >
-
-        <div id="wrapper">
-
-            {% include 'SkaphandrusAppBundle:Common:sidebar-menu.html.twig' with {'layout': 'content'} %}
-
-            <div id="page-wrapper" class="gray-bg">
-                <div class="row border-bottom">
-                    {% include 'SkaphandrusAppBundle:Common:navbar-menu.html.twig' with {'color': 'white-bg'} %}
-                </div>
-                {#<!-- page-heading begin -->
-                <div class="row wrapper border-bottom white-bg page-heading">
-                    <div class="col-sm-8">
-                        <h2>{% block heading_title %}{% endblock %}</h2>
-                    {% block heading_breadcrumbs %}{% endblock %}
-                    </div>
-                    <div class="col-sm-4">
-                       <div class="title-action">
-                    {% block heading_action %}{% endblock %}
-                       </div>
-                    </div>
-                </div>#}
-                <!-- page-heading end -->
-
-            {% block body %}{% endblock %}
-
-            {% include 'SkaphandrusAppBundle:Common:footer.html.twig'%}
-
-        </div>
-    </div>
-
-    {% block javascripts %}
-        <!-- Mainly scripts -->
-        <script src="{{ asset('bundles/skaphandrusapp/js/jquery-2.1.1.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
-
-        <!-- Custom and plugin javascript -->
-        <script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>
+        <link href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}" rel="stylesheet">
+        <link href="{{ asset('bundles/skaphandrusapp/css/style.css') }}" rel="stylesheet">
+        <link href="{{ asset('bundles/skaphandrusapp/css/app.css') }}" rel="stylesheet">
     {% endblock %}
+</head>
 
-    {% include 'SkaphandrusAppBundle:Common:analytics.html.twig'%}
+<body class="boxed-layout canvas-menu" {% block body_data_attributes %}{% endblock %} >
+    
+    <div id="wrapper">
+
+        {% include 'SkaphandrusAppBundle:Common:sidebar-menu.html.twig' with {'layout': 'content'} %}
+
+        <div id="page-wrapper" class="gray-bg">
+            <div class="row border-bottom">
+                {% include 'SkaphandrusAppBundle:Common:navbar-menu.html.twig' with {'color': 'white-bg'} %}
+            </div>
+            {#<!-- page-heading begin -->
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-sm-8">
+                    <h2>{% block heading_title %}{% endblock %}</h2>
+                {% block heading_breadcrumbs %}{% endblock %}
+                </div>
+                <div class="col-sm-4">
+                   <div class="title-action">
+                {% block heading_action %}{% endblock %}
+                   </div>
+                </div>
+            </div>#}
+            <!-- page-heading end -->
+
+        {% block body %}{% endblock %}
+
+        {% include 'SkaphandrusAppBundle:Common:footer.html.twig'%}
+
+    </div>
+</div>
+
+{% block javascripts %}
+    <!-- Mainly scripts -->
+    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-2.1.1.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>
+{% endblock %}
+
+{% include 'SkaphandrusAppBundle:Common:analytics.html.twig'%}
 
 </body>
 

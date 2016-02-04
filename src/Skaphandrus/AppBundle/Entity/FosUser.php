@@ -127,7 +127,7 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
 
     public function __construct() {
         parent::__construct();
-
+        $this->terms = new ArrayCollection();
         $this->acquisitions = new ArrayCollection();
         $this->modules = new ArrayCollection();
 
