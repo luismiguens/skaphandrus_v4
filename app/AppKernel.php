@@ -38,7 +38,7 @@ class AppKernel extends Kernel {
             // extend the ``FOSUserBundle``
             new FOS\UserBundle\FOSUserBundle(),
             
-            new Skaphandrus\AppBundle\UserBundle(),
+            //new Skaphandrus\AppBundle\UserBundle(),
             //new FOS\UserBundle\UserBundle(),
             //
             //

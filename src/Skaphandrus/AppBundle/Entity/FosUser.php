@@ -73,6 +73,13 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
     //modulos em que o user trabalhou (designer, biologo, programador)
     private $works;
 
+    
+    
+    
+    
+    
+    
+    
     public function getPhotosInUser() {
         return $this->photosInUser;
     }
@@ -500,6 +507,9 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
      * @return FosUSer
      */
     public function addTerms(\Skaphandrus\AppBundle\Entity\SkTermsConditions $terms) {
+        
+        $terms->addUser($this);
+        
         $this->terms[] = $terms;
 
         return $this;

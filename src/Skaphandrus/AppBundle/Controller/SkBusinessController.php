@@ -63,30 +63,36 @@ class SkBusinessController extends Controller {
      */
     public function indexAction() {
 
+        
+        //$loggedUser = new \Skaphandrus\AppBundle\Entity\FosUser();
+        
         $loggedUser = $this->getUser();
-
-        //se o user esta logado
-        if (false === $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY', $loggedUser)) {
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        } else {
+$em = $this->getDoctrine()->getManager();
 
             // verifica se o user é admin
             if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN', $loggedUser)) {
-                throw new \PHPCR\AccessDeniedException('Unauthorised access!');
+                
+                $entities = $loggedUser->getBusiness();
+                
+                
             } else {
 
-                $em = $this->getDoctrine()->getManager();
+                
                 $locale = $this->get('request')->getLocale();
 
-                $entities = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findAllBusiness($locale);
+                //$entities = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findAllBusiness($locale);
+                $entities = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findAll();
 
-//                $entities = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findAllWithAddress();
-
-                return $this->render('SkaphandrusAppBundle:SkBusiness:index.html.twig', array(
+                
+                
+                
+            }
+            
+            return $this->render('SkaphandrusAppBundle:SkBusiness:index.html.twig', array(
                             'entities' => $entities,
                 ));
-            }
-        }
+            
+        
     }
 
     /**
@@ -162,26 +168,7 @@ class SkBusinessController extends Controller {
         }
     }
 
-    /**
-     * Finds and displays a SkBusiness entity.
-     *
-     */
-    public function showAction($id) {
-        $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find SkBusiness entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('SkaphandrusAppBundle:SkBusiness:show.html.twig', array(
-                    'entity' => $entity,
-                    'delete_form' => $deleteForm->createView(),
-        ));
-    }
 
     /**
      * Displays a form to edit an existing SkBusiness entity.
@@ -193,52 +180,28 @@ class SkBusinessController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->find($id);
 
-        //se o user esta logado
-        if (false === $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY', $loggedUser)) {
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        } else {
-
-            /*
-             * metedo de saber se e admin da pagina      
-             */
-            foreach ($entity->getAdmin() as $value) {
-                $admin = $value->getId();
-            }
-
-            // verifica se o user é admin
-            if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN', $loggedUser)) {
-
-                if (!$entity) {
-                    throw $this->createNotFoundException('Unable to find SkBusiness entity.');
-                }
-
-                $editForm = $this->createEditForm($entity);
-                $deleteForm = $this->createDeleteForm($id);
-
-                return $this->render('SkaphandrusAppBundle:SkBusiness:edit.html.twig', array(
-                            'entity' => $entity,
-                            'edit_form' => $editForm->createView(),
-                            'delete_form' => $deleteForm->createView(),
-                ));
-                // verifica se o user é admin do business
-            } elseif ($admin == $loggedUser->getId()) {
-
-                if (!$entity) {
-                    throw $this->createNotFoundException('Unable to find SkBusiness entity.');
-                }
-
-                $editForm = $this->createEditForm($entity);
-                $deleteForm = $this->createDeleteForm($id);
-
-                return $this->render('SkaphandrusAppBundle:SkBusiness:edit.html.twig', array(
-                            'entity' => $entity,
-                            'edit_form' => $editForm->createView(),
-                            'delete_form' => $deleteForm->createView(),
-                ));
-            } else {
-                throw new \PHPCR\AccessDeniedException('Unauthorised access!');
-            }
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find SkBusiness entity.');
         }
+
+        // verifica se o user é admin e se o user é admin do business
+        if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN', $loggedUser) 
+                || $entity->isUserAdminFromBusiness($loggedUser)) {
+
+            $editForm = $this->createEditForm($entity);
+            $deleteForm = $this->createDeleteForm($id);
+
+            return $this->render('SkaphandrusAppBundle:SkBusiness:edit.html.twig', array(
+                        'entity' => $entity,
+                        'edit_form' => $editForm->createView(),
+                        'delete_form' => $deleteForm->createView(),
+            ));
+            
+        
+        } else {
+            throw new \PHPCR\AccessDeniedException('Unauthorised access!');
+        }
+      
     }
 
     /**
@@ -279,7 +242,6 @@ class SkBusinessController extends Controller {
         if ($editForm->isValid()) {
             $em->flush();
 
-##@LM
             $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
 
             return $this->redirect($this->generateUrl('business_admin_edit', array('id' => $id)));

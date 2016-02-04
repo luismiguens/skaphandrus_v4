@@ -41,9 +41,9 @@ users-home:
     locales:  { en: "/en/users", pt: "/pt/utilizadores" }
     defaults: { _controller: SkaphandrusAppBundle:Default:usersHome }
 
-terms-and-conditions:
+terms_and_conditions:
     locales:  { en: "/en/terms-and-conditions", pt: "/pt/termos-e-condicoes" }
-    defaults: { _controller: SkaphandrusAppBundle:SkTermsConditions:index }
+    defaults: { _controller: SkaphandrusAppBundle:Default:terms }
 
 ################################################################################
 spot:

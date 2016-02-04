@@ -43,15 +43,10 @@
     </head>
 
     <body class="boxed-layout">
-        
-        {% for flash_message in app.session.flashbag.get('notice') %}
-            <div class="flash-notice">
-                {#{% include 'SkaphandrusAppBundle:Common:flash-message.html.twig' %}#}
-            </div>
-        {% endfor %}
 
-        {{ render(controller('SkaphandrusAppBundle:Common:terms')) }}
-
+        {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+            {{ render(controller('SkaphandrusAppBundle:Common:terms')) }}
+        {% endif %}
 
         <div id="wrapper">
             {% include 'SkaphandrusAppBundle:Common:sidebar-menu.html.twig' with {'layout': 'form'} %}

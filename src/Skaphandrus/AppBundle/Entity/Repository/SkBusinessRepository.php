@@ -102,7 +102,7 @@ class SkBusinessRepository extends EntityRepository {
         return $result;
     }
 
-    public function findAllBusiness($locale) {
+    public function findAllBusiness($locale, $user=null) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
@@ -113,8 +113,13 @@ class SkBusinessRepository extends EntityRepository {
                 JOIN sk_location_translation as lt on l.id = lt.translatable_id
                 JOIN sk_region as r on r.id = l.region_id
                 JOIN sk_country as c on c.id = r.country_id
-                where lt.locale = '" . $locale . "'
-                order by name asc";
+                where lt.locale = '" . $locale . "' ";
+        
+        if($user):
+            $sql = $sql . " and ";
+            
+        endif;
+                $sql = $sql . "   order by name asc";
 
         $statement = $connection->prepare($sql);
         $statement->execute();
