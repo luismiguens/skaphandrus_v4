@@ -8,7 +8,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-{#    <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>#}
+    {#    <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>#}
     <!-- Data Tables -->
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/datatables.min.js') }}"></script>
 {% endblock %}
@@ -25,7 +25,9 @@
 {% endblock %}
 
 {% block heading_action %}
-    <a href="{{ path('business_admin_new') }}" class="btn btn-primary">{{ "form.business.btn.add"|trans }}</a>
+    {% if is_granted("ROLE_ADMIN") %}
+        <a href="{{ path('business_admin_new') }}" class="btn btn-primary">{{ "form.business.btn.add"|trans }}</a>
+    {% endif %}
 {% endblock %}
 
 {% block form_title_description %}
@@ -40,14 +42,6 @@
                 <th>{{ "form.business.label.name"|trans }}</th>
                 <th>{{ "form.business.label.laocation"|trans }}</th>
                 <th>{{ "form.business.label.country"|trans }}</th>
-                    {#<th>{{ "form.business.label.founded_at"|trans }}</th>
-                    <th>{{ "form.business.label.currency"|trans }}</th>
-                    <th>{{ "form.business.label.language"|trans }}</th>
-                    <th>{{ "form.business.label.description"|trans }}</th>
-                    <th>{{ "form.business.label.mission"|trans }}</th>
-                    <th>{{ "form.business.label.awards"|trans }}</th>
-                    <th>{{ "form.business.label.picture"|trans }}</th>
-                    <th>{{ "form.business.label.created_at"|trans }}</th>#}
                 <th>{{ "form.common.label.actions"|trans }}</th>
             </tr>
         </thead>
@@ -57,53 +51,44 @@
                     <td>{{ entity.name }}</td>
                     <td>{{ entity.location_name }}</td>
                     <td>{{ intl_country_name(entity.country_name) }}</td>
-                    {#<td>
-                        {% if entity.foundedAt %}
-                            {{ entity.foundedAt|date('Y-m-d H:i:s') }}
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% for currency in entity.currency %}
-                            <li>{{ currency.name }}</li>
-                        {% endfor %}
-                    </td>
-                    <td>
-                        {% for language in entity.language %}
-                            <li>{{ language.name }}</li>
-                        {% endfor %}
-                    </td>
-                    <td>{{ entity.about }}</td>
-                    <td>{{ entity.description }}</td>
-                    <td>{{ entity.mission }}</td>
-                    <td>{{ entity.awards }}</td>
-                    <td>
-                        {% if entity.picture %}
-                            <img alt="picture" class="thumbnail" src="{{ entity.getWebPath | imagine_filter('sk_widen_75') }}"/>
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if entity.createdAt %}
-                            {{ entity.createdAt|date('Y-m-d H:i:s') }}
-                        {% endif %}
-                    </td>#}
                     <td>
                         <ul>
                             <li>
                                 <a class="btn btn-white btn-sm" href="{{ path('business_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_base"|trans }}</a>
                             </li>
                             <li>
-                                <a class="btn btn-white btn-sm" href="{{ path('business_spot_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_dive"|trans }}</a>
-                            </li>
-                            <li>
-                                <a class="btn btn-white btn-sm" href="{{ path('business_education_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_education"|trans }}</a>
-                            </li>
-                            <li>
                                 <a class="btn btn-white btn-sm" href="{{ path('business_settings_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_settings"|trans }}</a>
                             </li>
+                            {% if is_granted("ROLE_ADMIN") %}
+                                <li>
+                                    <a class="btn btn-white btn-sm" href="{{ path('business_spot_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_dive"|trans }}</a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-white btn-sm" href="{{ path('business_education_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_education"|trans }}</a>
+                                </li>
+                            {% endif %}
+                            {% if entity.plus %}
+                                {% if entity.plus|date("U") > "-1 Year"|date("U") %}
+                                    <li>
+                                        <a class="btn btn-white btn-sm" href="{{ path('business_spot_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_dive"|trans }}</a>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-white btn-sm" href="{{ path('business_education_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_education"|trans }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                            {% if entity.premium %}
+                                {% if entity.premium|date("U") > "-1 Year"|date("U") %}
+                                    <li>
+                                        <a class="btn btn-white btn-sm" href="{{ path('business_spot_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_dive"|trans }}</a>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-white btn-sm" href="{{ path('business_education_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_education"|trans }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
                             <li>
-                                {#<a class="btn btn-white btn-sm" href="{{ path('business', { 'country': entity.address.location.region.country, 'location': entity.address.location, 'slug': entity.name }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.visit_business"|trans }}</a>#}
                                 <a class="btn btn-white btn-sm" href="{{ path('business', { 'country': slugify(intl_country_name(entity.country_name)), 'location': slugify(entity.location_name), 'slug': slugify(entity.name) }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.visit_business"|trans }}</a>
-                                {#<a class="btn btn-white btn-sm" href="{{ url_to_business(entity.country_name, entity.location_name, entity ) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.visit_business"|trans }}</a>#}
                             </li>
                         </ul>
                     </td>
@@ -112,8 +97,10 @@
         </tbody>
     </table>
 
-    <a class="btn btn-primary" href="{{ path('business_admin_new') }}">
-        <i class="fa fa-pencil"></i>  {{ "form.business.btn.add"|trans }}
-    </a>
+    {% if is_granted("ROLE_ADMIN") %}
+        <a class="btn btn-primary" href="{{ path('business_admin_new') }}">
+            <i class="fa fa-pencil"></i>  {{ "form.business.btn.add"|trans }}
+        </a>
+    {% endif %}
 
 {% endblock %}

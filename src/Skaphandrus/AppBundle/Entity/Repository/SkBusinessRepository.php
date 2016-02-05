@@ -102,24 +102,26 @@ class SkBusinessRepository extends EntityRepository {
         return $result;
     }
 
-    public function findAllBusiness($locale, $user=null) {
+    public function findAllBusiness($locale, $user) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
-        $sql = "SELECT b.id as id, b.name as name, lt.name as location_name, c.name as country_name
+        $sql = "SELECT b.id as id, b.name as name, b.premium_at as premium,b.plus_at as plus, lt.name as location_name, c.name as country_name
                 FROM sk_business as b
                 LEFT JOIN sk_address as a on b.id = a.business_id
                 JOIN sk_location as l on a.location_id = l.id
                 JOIN sk_location_translation as lt on l.id = lt.translatable_id
                 JOIN sk_region as r on r.id = l.region_id
                 JOIN sk_country as c on c.id = r.country_id
-                where lt.locale = '" . $locale . "' ";
-        
-        if($user):
-            $sql = $sql . " and ";
-            
+                ";
+
+        if ($user):
+            $sql = $sql . " JOIN sk_business_user as bu on bu.business_id = b.id "
+                    . "JOIN fos_user as u on bu.fos_user_id = u.id"
+                    . " where u.id = " . $user;
         endif;
-                $sql = $sql . "   order by name asc";
+        $sql = $sql . " and lt.locale = '" . $locale . "'    "
+                . "order by name asc";
 
         $statement = $connection->prepare($sql);
         $statement->execute();
@@ -169,7 +171,7 @@ class SkBusinessRepository extends EntityRepository {
 
             $address = new \Skaphandrus\AppBundle\Entity\SkAddress();
             $address->setLocation($location);
-            
+
             $business->setAddress($address);
 
             $result[] = $business;

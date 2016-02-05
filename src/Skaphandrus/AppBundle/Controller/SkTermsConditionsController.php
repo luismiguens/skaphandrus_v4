@@ -5,7 +5,6 @@ namespace Skaphandrus\AppBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Skaphandrus\AppBundle\Entity\SkTermsConditions;
-use Skaphandrus\AppBundle\Form\SkTermsConditionsType;
 
 /**
  * SkTermsConditions controller.

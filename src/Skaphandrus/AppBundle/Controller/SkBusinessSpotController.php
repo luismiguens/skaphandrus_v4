@@ -114,51 +114,29 @@ class SkBusinessSpotController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->find($id);
 
-        //se o user esta logado
-        if (false === $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY', $loggedUser)) {
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        } else {
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find SkBusiness entity.');
+        }
 
-            foreach ($entity->getAdmin() as $value) {
-                $admin = $value->getId();
-            }
+        // verifica se o user é admin ou se o user é admin do business e se ainda é premium ou plus
+        if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN', $loggedUser) 
+                || ($entity->isUserAdminFromBusiness($loggedUser) and ( ($entity->isPremium() == true) or ( $entity->isPlus() == true)))) {
 
-            // verifica se o user é admin
-            if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN', $loggedUser)) {
+            $editForm = $this->createEditForm($entity);
+            $deleteForm = $this->createDeleteForm($id);
 
-                if (!$entity) {
-                    throw $this->createNotFoundException('Unable to find SkBusiness entity.');
-                }
-
-                $editForm = $this->createEditForm($entity);
-                $deleteForm = $this->createDeleteForm($id);
-
-                return $this->render('SkaphandrusAppBundle:SkBusinessSpot:edit.html.twig', array(
-                            'entity' => $entity,
-                            'edit_form' => $editForm->createView(),
-                            'delete_form' => $deleteForm->createView(),
-                ));
+            return $this->render('SkaphandrusAppBundle:SkBusinessSpot:edit.html.twig', array(
+                        'entity' => $entity,
+                        'edit_form' => $editForm->createView(),
+                        'delete_form' => $deleteForm->createView(),
+            ));
             // verifica se o user é admin do business e se ainda é premium ou plus
-            } elseif ($admin == $loggedUser->getId() and ( ($entity->isPremium() == true) or ( $entity->isPlus() == true))) {
-
-                if (!$entity) {
-                    throw $this->createNotFoundException('Unable to find SkBusiness entity.');
-                }
-
-                $editForm = $this->createEditForm($entity);
-                $deleteForm = $this->createDeleteForm($id);
-
-                return $this->render('SkaphandrusAppBundle:SkBusinessSpot:edit.html.twig', array(
-                            'entity' => $entity,
-                            'edit_form' => $editForm->createView(),
-                            'delete_form' => $deleteForm->createView(),
-                ));
-            } else {
-                throw new \PHPCR\AccessDeniedException('Unauthorised access or your business is no longer Premium/Plus!');
-            }
+        } else {
+//            throw new \PHPCR\AccessDeniedException('Unauthorised access or your business is no longer Premium/Plus!');
+//            return $this->redirect($this->generateUrl('error403'));
+            return $this->render('SkaphandrusAppBundle:Common:error403.html.twig');
         }
     }
-
 
     /**
      * Creates a form to edit a SkBusiness entity.
@@ -192,8 +170,6 @@ class SkBusinessSpotController extends Controller {
         }
 
         //$entity = new SkBusiness();
-        
-        
         //http://symfony.com/doc/current/cookbook/form/form_collections.html
         //For deleting prices 
         $originalPrices = new ArrayCollection();

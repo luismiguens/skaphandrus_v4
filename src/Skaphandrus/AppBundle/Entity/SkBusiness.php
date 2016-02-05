@@ -936,24 +936,18 @@ class SkBusiness {
         }
     }
 
-    
-    
     public function isUserAdminFromBusiness(FosUser $user) {
-        
+
         foreach ($this->getAdmin() as $admin) {
-            
+
             if ($admin->getId() == $user->getId()):
                 return true;
             endif;
         }
-        
+
         return false;
-        
     }
 
-    
-    
-    
     public function doStuffOnPostLoad(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
         $entity = $args->getEntity();
         $entityManager = $args->getEntityManager();

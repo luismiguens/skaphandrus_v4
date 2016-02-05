@@ -112,49 +112,26 @@ class SkBusinessSettingsController extends Controller {
         $loggedUser = $this->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->find($id);
-        
-        //se o user esta logado
-        if (false === $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY', $loggedUser)) {
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find SkBusiness entity.');
+        }
+
+        // verifica se o user é admin e se o user é admin do business
+        if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN', $loggedUser) || $entity->isUserAdminFromBusiness($loggedUser)) {
+
+            $editForm = $this->createEditForm($entity);
+            $deleteForm = $this->createDeleteForm($id);
+
+            return $this->render('SkaphandrusAppBundle:SkBusinessSettings:edit.html.twig', array(
+                        'entity' => $entity,
+                        'edit_form' => $editForm->createView(),
+                        'delete_form' => $deleteForm->createView(),
+            ));
         } else {
-
-            foreach ($entity->getAdmin() as $value) {
-                $admin = $value->getId();
-            }
-
-            // verifica se o user é admin
-            if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN', $loggedUser)) {
-
-                if (!$entity) {
-                    throw $this->createNotFoundException('Unable to find SkBusiness entity.');
-                }
-
-                $editForm = $this->createEditForm($entity);
-                $deleteForm = $this->createDeleteForm($id);
-
-                return $this->render('SkaphandrusAppBundle:SkBusinessSettings:edit.html.twig', array(
-                            'entity' => $entity,
-                            'edit_form' => $editForm->createView(),
-                            'delete_form' => $deleteForm->createView(),
-                ));
-            // verifica se o user é admin do business
-            } elseif ($admin == $loggedUser->getId()) {
-
-                if (!$entity) {
-                    throw $this->createNotFoundException('Unable to find SkBusiness entity.');
-                }
-
-                $editForm = $this->createEditForm($entity);
-                $deleteForm = $this->createDeleteForm($id);
-
-                return $this->render('SkaphandrusAppBundle:SkBusinessSettings:edit.html.twig', array(
-                            'entity' => $entity,
-                            'edit_form' => $editForm->createView(),
-                            'delete_form' => $deleteForm->createView(),
-                ));
-            } else {
-                throw new \PHPCR\AccessDeniedException('Unauthorised access!');
-            }
+//            throw new \PHPCR\AccessDeniedException('Unauthorised access!');
+//            return $this->redirect($this->generateUrl('error403'));
+            return $this->render('SkaphandrusAppBundle:Common:error403.html.twig');
         }
     }
 

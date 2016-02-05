@@ -64,10 +64,7 @@ class IdentificationController extends Controller {
         $module = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkIdentificationModule')
                 ->findBySlug($slug, $locale);
 
-        $acq = $module->getAcquisitions();
-        foreach ($acq as $value) {
-            $user = $value->getFosUser();
-        }
+//        dump($module->isOwnerModule($loggedUser));
 
         $now = new \DateTime();
         $diff = date_diff($now, $module->getCreatedAt());
@@ -76,24 +73,28 @@ class IdentificationController extends Controller {
         if ($module->getIsFree() == false) {
             //se o user esta logado
             if (true === $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY', $loggedUser)) {
-                //tem menos de 30 dias
+                //tem mais de 30 dias
                 if ($diff->days > 30) {
                     //se o modulo lhe pertence
-                    if ($user->getId() == $loggedUser->getId()) {
+                    if ($module->isOwnerModule($loggedUser) == $loggedUser->getId()) {
                         return $this->render('SkaphandrusAppBundle:Identification:criterias.html.twig', array(
                                     'module' => $module
                         ));
+                        //se modulo nao pertence ao user
                     } else {
                         return $this->redirect($this->generateUrl('module_admin_edit'));
                     }
+                    //tem menos de 30 dias
                 } else {
                     return $this->render('SkaphandrusAppBundle:Identification:criterias.html.twig', array(
                                 'module' => $module
                     ));
                 }
+                //se nao tiver logado
             } else {
                 return $this->redirect($this->generateUrl('fos_user_security_login'));
             }
+            //se for free
         } else {
             return $this->render('SkaphandrusAppBundle:Identification:criterias.html.twig', array(
                         'module' => $module

@@ -63,36 +63,22 @@ class SkBusinessController extends Controller {
      */
     public function indexAction() {
 
-        
         //$loggedUser = new \Skaphandrus\AppBundle\Entity\FosUser();
-        
+
         $loggedUser = $this->getUser();
-$em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
+        $locale = $this->get('request')->getLocale();
 
-            // verifica se o user é admin
-            if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN', $loggedUser)) {
-                
-                $entities = $loggedUser->getBusiness();
-                
-                
-            } else {
+        // verifica se o user é admin
+        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN', $loggedUser)) {
+            $entities = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findAllBusiness($locale, $loggedUser->getId());
+        } else {
+            $entities = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findAllBusiness($locale, null);
+        }
 
-                
-                $locale = $this->get('request')->getLocale();
-
-                //$entities = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findAllBusiness($locale);
-                $entities = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findAll();
-
-                
-                
-                
-            }
-            
-            return $this->render('SkaphandrusAppBundle:SkBusiness:index.html.twig', array(
-                            'entities' => $entities,
-                ));
-            
-        
+        return $this->render('SkaphandrusAppBundle:SkBusiness:index.html.twig', array(
+                    'entities' => $entities,
+        ));
     }
 
     /**
@@ -109,9 +95,7 @@ $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
-##@LM
             $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
-
             return $this->redirect($this->generateUrl('business_admin_edit', array('id' => $entity->getId())));
         }
 
@@ -147,28 +131,22 @@ $em = $this->getDoctrine()->getManager();
 
         $loggedUser = $this->getUser();
 
-        //se o user esta logado
-        if (false === $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY', $loggedUser)) {
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        // verifica se o user é admin
+        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN', $loggedUser)) {
+//            throw new \PHPCR\AccessDeniedException('Unauthorised access!');
+//            return $this->redirect($this->generateUrl('error403'));
+            return $this->render('SkaphandrusAppBundle:Common:error403.html.twig');
         } else {
 
-            // verifica se o user é admin
-            if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN', $loggedUser)) {
-                throw new \PHPCR\AccessDeniedException('Unauthorised access!');
-            } else {
+            $entity = new SkBusiness();
+            $form = $this->createCreateForm($entity);
 
-                $entity = new SkBusiness();
-                $form = $this->createCreateForm($entity);
-
-                return $this->render('SkaphandrusAppBundle:SkBusiness:new.html.twig', array(
-                            'entity' => $entity,
-                            'form' => $form->createView(),
-                ));
-            }
+            return $this->render('SkaphandrusAppBundle:SkBusiness:new.html.twig', array(
+                        'entity' => $entity,
+                        'form' => $form->createView(),
+            ));
         }
     }
-
-
 
     /**
      * Displays a form to edit an existing SkBusiness entity.
@@ -185,8 +163,7 @@ $em = $this->getDoctrine()->getManager();
         }
 
         // verifica se o user é admin e se o user é admin do business
-        if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN', $loggedUser) 
-                || $entity->isUserAdminFromBusiness($loggedUser)) {
+        if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN', $loggedUser) || $entity->isUserAdminFromBusiness($loggedUser)) {
 
             $editForm = $this->createEditForm($entity);
             $deleteForm = $this->createDeleteForm($id);
@@ -196,12 +173,11 @@ $em = $this->getDoctrine()->getManager();
                         'edit_form' => $editForm->createView(),
                         'delete_form' => $deleteForm->createView(),
             ));
-            
-        
         } else {
-            throw new \PHPCR\AccessDeniedException('Unauthorised access!');
+//            throw new \PHPCR\AccessDeniedException('Unauthorised access!');
+//            return $this->redirect($this->generateUrl('error403'));
+            return $this->render('SkaphandrusAppBundle:Common:error403.html.twig');
         }
-      
     }
 
     /**

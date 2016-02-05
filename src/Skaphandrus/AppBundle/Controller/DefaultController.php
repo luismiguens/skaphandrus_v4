@@ -21,8 +21,7 @@ use Symfony\Component\Intl\Intl;
 
 class DefaultController extends Controller {
 
-    
-        public function termsAction() {
+    public function termsAction() {
         $em = $this->getDoctrine()->getManager();
 
         $terms = $em->createQuery("SELECT t FROM SkaphandrusAppBundle:SkTermsConditions t ORDER by t.id DESC")->setMaxResults(1)->getOneOrNullResult();
@@ -31,9 +30,7 @@ class DefaultController extends Controller {
                     'terms' => $terms,
         ));
     }
-    
-    
-    
+
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
         $modules = $em->getRepository('SkaphandrusAppBundle:SkIdentificationModule')->findBy(array('isEnabled' => '1'), array('updatedAt' => 'DESC'), 8);

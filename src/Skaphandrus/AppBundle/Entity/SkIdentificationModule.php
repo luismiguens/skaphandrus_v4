@@ -555,6 +555,23 @@ class SkIdentificationModule {
     public function getWorkers() {
         return $this->workers;
     }
+    
+    public function isOwnerModule(FosUser $user) {
+        
+        foreach ($this->getAcquisitions() as $acq) {
+            
+            if ($acq->getFosUser()->getId() == $user->getId()):
+                return true;
+            endif;
+        }
+        
+        return false;
+        
+//        $acq = $module->getAcquisitions();
+//        foreach ($acq as $value) {
+//            $user = $value->getFosUser();
+//        }
+    }
 
     public function doStuffOnPostUpdate(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
 

@@ -10,7 +10,7 @@ class CommonController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $fos_user = $this->get('security.token_storage')->getToken()->getUser();
-        
+
         //ir buscar ultimos termos de utilização
         $last_terms = $em->createQuery("SELECT t FROM SkaphandrusAppBundle:SkTermsConditions t ORDER by t.id DESC")->setMaxResults(1)->getOneOrNullResult();
 
@@ -18,14 +18,12 @@ class CommonController extends Controller {
         $query = $em->createQuery("SELECT t FROM SkaphandrusAppBundle:SkTermsConditions t JOIN t.user u WHERE t.id = ?1");
         $query->setParameter(1, $last_terms->getId());
 
-
-        
         //se já aceitou a ultima versão dos termos não faz nada
         if ($query->getOneOrNullResult()):
             return $this->render('SkaphandrusAppBundle:Common:terms.html.twig', array(
                         'terms' => null
             ));
-        
+
         //se ainda não aceitou a ultima versão dos termos, adiciona e apresenta ao utilizador.
         else:
             $fos_user->addTerms($last_terms);
@@ -36,7 +34,6 @@ class CommonController extends Controller {
                         'terms' => $last_terms
             ));
         endif;
-
     }
 
     public function skBusinessListAction() {
