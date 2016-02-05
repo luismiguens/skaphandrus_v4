@@ -118,7 +118,7 @@ class SkBusinessSettingsController extends Controller {
         }
 
         // verifica se o user é admin e se o user é admin do business
-        if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN', $loggedUser) || $entity->isUserAdminFromBusiness($loggedUser)) {
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN', $loggedUser) || $entity->isUserAdminFromBusiness($loggedUser)) {
 
             $editForm = $this->createEditForm($entity);
             $deleteForm = $this->createDeleteForm($id);

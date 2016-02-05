@@ -70,10 +70,10 @@ class SkBusinessController extends Controller {
         $locale = $this->get('request')->getLocale();
 
         // verifica se o user é admin
-        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN', $loggedUser)) {
-            $entities = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findAllBusiness($locale, $loggedUser->getId());
-        } else {
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN', $loggedUser)) {
             $entities = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findAllBusiness($locale, null);
+        } else {
+             $entities = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->    findAllBusiness($locale, $loggedUser->getId());
         }
 
         return $this->render('SkaphandrusAppBundle:SkBusiness:index.html.twig', array(

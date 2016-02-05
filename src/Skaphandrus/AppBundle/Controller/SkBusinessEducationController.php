@@ -118,7 +118,7 @@ class SkBusinessEducationController extends Controller {
         }
 
         // verifica se o user é admin ou se o user é admin do business e se ainda é premium ou plus
-        if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN', $loggedUser) 
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN', $loggedUser) 
                 || ($entity->isUserAdminFromBusiness($loggedUser) and ( ($entity->isPremium() == true) or ( $entity->isPlus() == true)))) {
 
             $editForm = $this->createEditForm($entity);

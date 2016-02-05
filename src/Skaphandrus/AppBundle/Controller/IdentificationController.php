@@ -76,7 +76,7 @@ class IdentificationController extends Controller {
                 //tem mais de 30 dias
                 if ($diff->days > 30) {
                     //se o modulo lhe pertence
-                    if ($module->isOwnerModule($loggedUser) == $loggedUser->getId()) {
+                    if ($module->isOwnerModule($loggedUser)) {
                         return $this->render('SkaphandrusAppBundle:Identification:criterias.html.twig', array(
                                     'module' => $module
                         ));
@@ -440,35 +440,65 @@ class IdentificationController extends Controller {
             //     $fotografia['is_illustration'] = "true";
             //     $fotografias[] = $fotografia;
             // }
-            //REFERENCIAS GOOGLE
 
-            $species_sk_photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
-                    ->getSpeciesSkImages($species_id);
-//            dump($species_sk_photos);
+            $limit = 3;
 
-            if ($species_sk_photos) {
-                foreach ($species_obj->getImageRefs() as $imageRef_obj) {
-                    $photos[] = array(
-                        'id' => $imageRef_obj->getId(),
-                        'image_src' => $imageRef_obj->getImageSrc(),
-                        'image_type' => "skaphandrus",
-                        'photographer' => "Luis Miguens",
-                        'license' => "Attribution"
-                    );
-                }
-            } else {
+            $sk_photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
+                    ->getSkPhotosForIdentification($species_id, $limit);
+
+            //IMAGENS SKAPHANDRUS
+            foreach ($sk_photos as $photo) {
+                $skPhoto = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->find($photo['id']);
+                $image_src = $this->get('liip_imagine.cache.manager')->getBrowserPath($skPhoto->getWebPath(), 'sk_downscale_600_400');
+
+                
+                $licence = $skPhoto->getCreative();
+                if ($licence==null):
+                    $licence = "© All rights reserved";
+                else:
+                    $licence = $skPhoto->getCreative()->getName();
+                endif;
+                
+                
+                $photos[] = array(
+                    'id' => $skPhoto->getId(),
+                    'image_src' => $image_src,
+                    'image_type' => "skaphandrus",
+                    'photographer' => $skPhoto->getFosUser()->getName(),
+                    'license' => $licence
+                );
+            }
+
+
+
+
+            //IMAGENS GOOGLE
+            if (count($sk_photos) < $limit){
+                
+                $i = 1;
                 foreach ($species_obj->getImageRefs() as $imageRef_obj) {
                     if ($imageRef_obj->getIsActive()) {
+                        
+                        
+                        $licence = $imageRef_obj->getLicense();
+                if ($licence=="" || $licence==NULL):
+                    $licence = "Images may be subject to copyright.";
+                else:
+                    $licence = $imageRef_obj->getLicense();
+                endif;
+                        
+                        
                         $photos[] = array(
                             'id' => $imageRef_obj->getId(),
                             'image_src' => $imageRef_obj->getImageSrc(),
                             'image_url' => $imageRef_obj->getImageUrl(),
                             'image_type' => "google",
-                            'photographer' => "Luis Miguens",
-                            'license' => "Attribution"
+                            'photographer' => $imageRef_obj->getPhotographer(),
+                            'license' => $licence
                                 //Milton já está a receber photographer
                         );
                     }
+                    if ($i++ == $limit) break;
                 }
             }
             $species['images'] = $photos;

@@ -640,22 +640,26 @@ class SkSpeciesRepository extends EntityRepository {
         return $result;
     }
 
-    public function getSpeciesSkImages($species_id) {
+    public function getSkPhotosForIdentification($species_id, $limit = 3) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
-        $sql = "SELECT sk_photo.id as photo, best_rate.* FROM sk_photo
+        $sql = "SELECT sk_photo.id as id, best_rate.rating as rating FROM sk_photo
                 LEFT JOIN ( 
                         SELECT id, photo_id, species_id, max(rating) as rating
                         FROM sk_photo_species_validation GROUP BY photo_id
                         order by rating desc ) as best_rate
                 ON sk_photo.id = best_rate.photo_id
                 WHERE sk_photo.species_id = " . $species_id . "
-                order by best_rate.rating desc";
+                order by best_rate.rating desc lIMIT ".$limit;
 
         $statement = $connection->prepare($sql);
         $statement->execute();
         $values = $statement->fetchAll();
+        
+       // echo $sql;
+        
+        
 //        $result = array();
 //
 //        foreach ($values as $value) {
