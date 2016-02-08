@@ -14,12 +14,16 @@ class CommonController extends Controller {
         //ir buscar ultimos termos de utilização
         $last_terms = $em->createQuery("SELECT t FROM SkaphandrusAppBundle:SkTermsConditions t ORDER by t.id DESC")->setMaxResults(1)->getOneOrNullResult();
 
+       
         //verificar se o utilizador já aceitou os ultimos termos
-        $query = $em->createQuery("SELECT t FROM SkaphandrusAppBundle:SkTermsConditions t JOIN t.user u WHERE t.id = ?1");
+        $query = $em->createQuery("SELECT t FROM SkaphandrusAppBundle:SkTermsConditions t JOIN t.user u WHERE t.id = ?1 and u.id = ?2");
         $query->setParameter(1, $last_terms->getId());
+        $query->setParameter(2, $fos_user->getId());
 
+        
         //se já aceitou a ultima versão dos termos não faz nada
         if ($query->getOneOrNullResult()):
+           
             return $this->render('SkaphandrusAppBundle:Common:terms.html.twig', array(
                         'terms' => null
             ));
