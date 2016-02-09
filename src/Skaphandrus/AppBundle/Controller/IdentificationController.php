@@ -728,7 +728,26 @@ class IdentificationController extends Controller {
 //            $response["message"] = "Username already exists";
 //            return new JsonResponse($response);
 //        }
+//        
 
+        
+        
+        
+        //NOTA IMPORTANTE, A ALTERAR NA RELEASE 2.0.1 
+        //A ORDEM DESTA VALIDACAO TEM DE SER TROCADA PARA SE IDENTIFICAR QUANDO O FACEBOOK ID JA EXISTE.
+        
+        
+        
+        //verify if email is in use
+        $query = $em->createQuery("SELECT u FROM SkaphandrusAppBundle:FosUser u WHERE u.email = :email");
+        $query->setParameter('email', $email);
+        $user = $query->getOneOrNullResult();
+        //email already exists
+        if ($user) {
+            $response["result"] = "3";
+            $response["message"] = "Email already exists";
+            return new JsonResponse($response);
+        }
 
         //verify if facebook_uid is in use
         $query = $em->createQuery("SELECT u "
@@ -744,20 +763,6 @@ class IdentificationController extends Controller {
             return new JsonResponse($response);
         }
 
-        
-                //verify if email is in use
-        $query = $em->createQuery("SELECT u FROM SkaphandrusAppBundle:FosUser u WHERE u.email = :email");
-        $query->setParameter('email', $email);
-        $user = $query->getOneOrNullResult();
-        //email already exists
-        if ($user) {
-            $response["result"] = "3";
-            $response["message"] = "Email already exists";
-            return new JsonResponse($response);
-        }
-        
-        
-        
         /**
          * VALIDATIONS END
          * ********************************************************************* */
