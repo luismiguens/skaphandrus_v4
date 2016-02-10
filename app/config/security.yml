@@ -116,5 +116,6 @@ security:
         - { path: ^/[a-z]+/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: '^/[a-z]+/identification_[a-z]+_admin/', role: ROLE_ADMIN }
+        - { path: '^/[a-z]+/[a-z]+_admin/', role: IS_AUTHENTICATED_FULLY }
         - { path: '^/[a-z]+/[a-z]+_[a-z]+_admin/', role: IS_AUTHENTICATED_FULLY }
         - { path: '/[a-z]+/underwater-photo-contest/participate/.', role: IS_AUTHENTICATED_FULLY }
