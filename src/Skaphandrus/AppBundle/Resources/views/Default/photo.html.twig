@@ -9,7 +9,6 @@
     <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('photo_no_slug', {'id':photo.id, 'locale': 'en'}) }}" />
 {% endblock %}
 
-
 {% set keywords = photo.title %}
 {% for key in photo.keyword %}
     {% set keywords = keywords~', '~key.keyword %}
@@ -23,6 +22,20 @@
 
 {% block page_keywords %}{{keywords}}{% endblock %}
 
+{% block facebook_tags %}
+
+    <meta property="fb:app_id"      content="158974667453267" />
+    <meta property="og:site_name"   content="Skaphandrus"/>
+    <meta property="og:locale"      content="{{ app.request.locale }}"/>
+    <meta property="og:url"         content="www.skaphandrus.com{{ url_to_photo(photo) }}" />
+    <meta property="og:title"       content="{{ photo.title }}" />
+    <meta property="og:image"       content="www.skaphandrus.com{{ "/" ~ photo.getWebPath }}" />
+    <meta property="og:description" content="{{ photo.description [0:160]}}" />
+    {#    <meta property="og:type"        content="skaphandrus:photo" />#}
+
+{% endblock %}
+
+
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
@@ -35,13 +48,10 @@
         #skaphandrus_appbundle_skphotovalidation_rating label {
             margin: 0 10px 0 2px;
         }
-
-
         .child {
             display:block;
             margin:auto;
         }
-
     </style>
 {% endblock %}
 

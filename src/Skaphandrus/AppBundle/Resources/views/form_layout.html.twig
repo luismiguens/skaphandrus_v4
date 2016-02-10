@@ -45,8 +45,6 @@
     <body class="boxed-layout">
 
         {% if is_granted("IS_AUTHENTICATED_FULLY") %}
-            
-            aaa
             {{ render(controller('SkaphandrusAppBundle:Common:terms')) }}
         {% endif %}
 

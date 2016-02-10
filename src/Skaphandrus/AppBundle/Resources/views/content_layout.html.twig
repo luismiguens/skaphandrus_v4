@@ -21,6 +21,8 @@
         <meta name="keywords" content="{% block page_keywords %}{% endblock %}" />
         <meta name="description" content="{% block page_description %}{% endblock %}" />
 
+        {% block facebook_tags %}
+        {% endblock %}
 
         <!-- smart app link -->        
         <meta name="apple-itunes-app" content="app-id=894101166"/>
@@ -28,7 +30,7 @@
 
         <!-- hreflang for language -->
     {% block hreflang %}{% endblock %}
-        <meta itemprop="inLanguage" content="{{app.request.locale}}" />
+    <meta itemprop="inLanguage" content="{{app.request.locale}}" />
 
     {% block stylesheets %}
         <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">
