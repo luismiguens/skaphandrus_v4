@@ -29,7 +29,7 @@
     <meta property="og:locale"      content="{{ app.request.locale }}"/>
     <meta property="og:url"         content="{{ app.request.getSchemeAndHttpHost() ~ url_to_photo(photo) }}" />
     <meta property="og:title"       content="{{ photo.title }}" />
-    <meta property="og:image"       content="{{ app.request.getSchemeAndHttpHost() ~ photo.getWebPath }}" />
+    <meta property="og:image"       content="{{ app.request.getSchemeAndHttpHost() ~ "/" ~ photo.getWebPath }}" />
     <meta property="og:description" content="{{ photo.description [0:160]}}" />
     {#    <meta property="og:type"        content="skaphandrus:photo" />#}
 
