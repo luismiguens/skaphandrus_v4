@@ -130,9 +130,9 @@ class SkBusinessEducationController extends Controller {
                         'delete_form' => $deleteForm->createView(),
             ));
         } else {
-//            throw new \PHPCR\AccessDeniedException('Unauthorised access or your business is no longer Premium/Plus!');
+            throw new \PHPCR\AccessDeniedException('Unauthorised access!');
 //            return $this->redirect($this->generateUrl('error403'));
-            return $this->render('SkaphandrusAppBundle:Common:error403.html.twig');
+//            return $this->render('SkaphandrusAppBundle:Common:error403.html.twig');
         }
     }
 
