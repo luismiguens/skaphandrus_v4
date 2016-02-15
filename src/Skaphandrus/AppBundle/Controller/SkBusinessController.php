@@ -133,7 +133,7 @@ class SkBusinessController extends Controller {
 
         // verifica se o user é admin
         if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN', $loggedUser)) {
-            throw new \PHPCR\AccessDeniedException('Unauthorised access!');
+            throw $this->createAccessDeniedException('Unauthorised access!');
 //            return $this->redirect($this->generateUrl('error403'));
 //            return $this->render('SkaphandrusAppBundle:Common:error403.html.twig');
         } else {
@@ -174,7 +174,7 @@ class SkBusinessController extends Controller {
                         'delete_form' => $deleteForm->createView(),
             ));
         } else {
-            throw new \PHPCR\AccessDeniedException('Unauthorised access!');
+            throw $this->createAccessDeniedException('Unauthorised access!');
 //            return $this->redirect($this->generateUrl('error403'));
 //            return $this->render('SkaphandrusAppBundle:Common:error403.html.twig');
         }

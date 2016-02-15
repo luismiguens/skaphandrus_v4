@@ -1,0 +1,48 @@
+{#<h1>
+    {{ exception.message|nl2br|format_file_from_text }}
+</h1>
+
+<div>
+    <strong>{{ status_code }}</strong> {{ status_text }}
+</div>#}
+
+{% block body %}
+
+
+    <div class="middle-box text-center animated fadeInDown">
+        <h1>{{ status_code }}</h1>
+        {#        {{ app.request.locale }}#}
+
+        {% if status_code == 404 %}
+
+            <h2 class="font-bold">Page Not Found</h2>
+
+            <div class="error-desc">
+                Sorry, but the page you are looking for has note been found.<br/>
+                Try checking the URL for error, then hit the refresh button on your browser or try found something else in our app.<br/>
+                You can go back to main page: <br/><a href="{{ path('index') }}" class="btn btn-primary m-t">{{ "page.error.label.home"|trans }}</a>
+            </div>
+
+        {% endif %}
+        {% if status_code == 403 %}
+
+            <h2 class="font-bold">{{ "page.error.403.tilte"|trans }}</h2>
+            <div class="error-desc">
+                {{ "page.error.403.message"|trans|raw }}
+                <a href="{{ path('index') }}" class="btn btn-primary m-t">{{ "page.error.label.home"|trans }}</a>
+            </div>
+
+        {% endif %}
+        {% if status_code == 500 %}
+
+            <h2 class="font-bold">{{ "page.error.500.tilte"|trans }}</h2>
+            <div class="error-desc">
+                {{ "page.error.500.message"|trans|raw }}
+                <a href="{{ path('index') }}" class="btn btn-primary m-t">{{ "page.error.label.home"|trans }}</a>
+            </div>
+
+        {% endif %}
+    </div>
+
+{% endblock %}
+

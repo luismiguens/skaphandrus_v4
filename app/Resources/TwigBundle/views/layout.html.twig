@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="{{ app.request.locale }}" class="ie8"> <![endif]-->  
+<!--[if IE 9]> <html lang="{{ app.request.locale }}" class="ie9"> <![endif]-->  
+<!--[if !IE]><!--> <html lang="{{ app.request.locale }}" xmlns:fb="http://www.facebook.com/2008/fbml" itemscope itemtype="http://schema.org/WebPage"> <!--<![endif]--> 
+    <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# skaphandrus: http://ogp.me/ns/fb/skaphandrus#">
+
+        <title>{% block page_title %}{% endblock %}</title>
+        <link rel="icon" href="{{ app.request.getSchemeAndHttpHost() ~ "/favicon.ico"}}"/>
+        <link rel="shortcut icon" href="{{ app.request.getSchemeAndHttpHost() ~ "/favicon.ico"}}"  />
+
+        <!-- Meta -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="google-site-verification" content="4Tm2ZPRBKI8g1uSYzNSLcRPniZr0ZB-PJAOnU-Glshc" />
+        <meta name="msvalidate.01" content="A46E7B6BA16D68E9F871752AAB51389E" />
+        <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
+        <meta name="keywords" content="{% block page_keywords %}{% endblock %}" />
+        <meta name="description" content="{% block page_description %}{% endblock %}" />
+
+        {% block facebook_tags %}
+        {% endblock %}
+
+        <!-- smart app link -->        
+        <meta name="apple-itunes-app" content="app-id=894101166"/>
+        <meta name="google-play-app" content="app-id=com.skaphandrus.oceanlifeid">
+
+        <!-- hreflang for language -->
+        {% block hreflang %}
+        {% endblock %}
+        <meta itemprop="inLanguage" content="{{app.request.locale}}" />
+
+        {% block stylesheets %}
+            <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/skaphandrusapp/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/skaphandrusapp/css/style.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/skaphandrusapp/css/app.css') }}" rel="stylesheet">
+        {% endblock %}
+    </head>
+
+    <body class="boxed-layout canvas-menu" {% block body_data_attributes %}{% endblock %}>
+
+        <div id="wrapper">
+
+            <div id="page-wrapper" class="gray-bg">
+
+                {% block body %}
+                {% endblock %}
+                
+                {% include 'SkaphandrusAppBundle:Common:footer.html.twig'%}
+
+            </div>
+        </div>
+
+        {% block javascripts %}
+            <!-- Mainly scripts -->
+            <script src="{{ asset('bundles/skaphandrusapp/js/jquery-2.1.1.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+
+            <!-- Custom and plugin javascript -->
+            <script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>
+        {% endblock %}
+
+        {% include 'SkaphandrusAppBundle:Common:analytics.html.twig'%}
+
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51cb05087500d7e6" async="async"></script>
+
+
+    </body>
+
+</html>

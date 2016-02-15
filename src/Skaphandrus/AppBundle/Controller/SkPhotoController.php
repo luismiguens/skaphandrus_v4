@@ -202,7 +202,8 @@ class SkPhotoController extends Controller {
                         'delete_form' => $deleteForm->createView(),
             ));
         } else {
-            throw $this->createNotFoundException("The content isn't yours.");
+            throw $this->createAccessDeniedException('Unauthorised access!');
+//            throw $this->createNotFoundException("The content isn't yours.");
         }
     }
 

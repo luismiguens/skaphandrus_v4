@@ -2,7 +2,7 @@
 
 {% block page_title %}{% trans with {'%title%': photo.title|capitalize, '%taken_by%': photo.fosuser } %}page.photo.meta_tag.title{% endtrans %}{% endblock %}
 
-{% block page_description %}{{ photo.description [0:160]}}{% endblock %}
+{% block page_description %}{{ photo.description [0:160] }}{% endblock %}
 
 {% block hreflang %}
     <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('photo_no_slug', {'id':photo.id, 'locale': 'pt'}) }}" />
@@ -29,15 +29,31 @@
     {% elseif app.request.locale == 'pt' %}
         {% set aux = '_PT' %}
     {% endif %}
-    
+
+    {% if photo.description is not null %}
+        {% set aux_description = photo.description [0:160] %}
+    {% else %}
+        {% if photo.species is not empty and photo.species is not null %}
+            {% set aux_description = photo.title ~ ', ' ~ ("page.photo.h3.species"|trans) ~ ' ' ~ photo.species  %}
+        {% else %}
+            {% set aux_description = photo.title %}
+        {% endif %}
+        {% if photo.spot is not empty and photo.spot is not null %}
+            {% set aux_description = aux_description  ~ ', ' ~  ("page.photo.h3.spot"|trans) ~ ' ' ~ photo.spot ~ ', ' ~ photo.spot.location ~ ', ' ~ photo.spot.location.region.country %}
+        {% endif %}
+        {% if photo.species is empty and photo.species is null and photo.spot is empty and photo.spot is not null %}
+            {% set aux_description = photo.title  %}
+        {% endif %}
+    {% endif %}
+
     <meta property="fb:app_id"      content="158974667453267"/>
     <meta property="og:type"        content="skaphandrus:photo"/>
     <meta property="og:site_name"   content="Skaphandrus"/>
     <meta property="og:locale"      content="{{ app.request.locale ~ aux }}"/>
     <meta property="og:url"         content="{{ app.request.getSchemeAndHttpHost() ~ url_to_photo(photo) }}" />
-    <meta property="og:title"       content="{{ photo.title }}" />
+    <meta property="og:title"       content="{% trans with {'%title%': photo.title|capitalize, '%taken_by%': photo.fosuser } %}page.photo.meta_tag.title{% endtrans %}" />
     <meta property="og:image"       content="{{ app.request.getSchemeAndHttpHost() ~ "/" ~ photo.getWebPath }}" />
-    <meta property="og:description" content="{{ photo.description [0:160]}}" />
+    <meta property="og:description" content="{{ aux_description }}" />
 
 {% endblock %}
 
