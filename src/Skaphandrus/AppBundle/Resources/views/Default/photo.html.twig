@@ -51,7 +51,14 @@
     <meta property="og:site_name"   content="Skaphandrus"/>
     <meta property="og:locale"      content="{{ app.request.locale ~ aux }}"/>
     <meta property="og:url"         content="{{ app.request.getSchemeAndHttpHost() ~ url_to_photo(photo) }}" />
-    <meta property="og:title"       content="{% trans with {'%title%': photo.title|capitalize, '%taken_by%': photo.fosuser } %}page.photo.meta_tag.title{% endtrans %}" />
+    
+    {% set title = "page.photo.meta_tag.title"|trans({'%title%': photo.title|capitalize, '%taken_by%': photo.fosuser}) %}
+    
+    {#{% set title =  trans with {'%title%': photo.title|capitalize, '%taken_by%': photo.fosuser } %}page.photo.meta_tag.title{% endtrans %}#}
+    {% set title = title|split(',') %}
+    {% set title = title[0] %}
+    
+    <meta property="og:title"       content="{{ title }}" />
     <meta property="og:image"       content="{{ app.request.getSchemeAndHttpHost() ~ "/" ~ photo.getWebPath }}" />
     <meta property="og:description" content="{{ aux_description }}" />
 
