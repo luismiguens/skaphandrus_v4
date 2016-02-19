@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Skaphandrus\AppBundle\Entity\SkBookingOtherActivity" table="sk_booking_other_activity">
+        <indexes>
+            <index name="fk_sk_booking_other_activity_1_idx" columns="booking_id"/>
+            <index name="fk_sk_booking_other_activity_2_idx" columns="other_activity_id"/>
+        </indexes>
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="pax" type="integer" column="pax" nullable="false">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="dateAt" type="date" column="date_at" nullable="false"/>
+        <field name="schedule" type="integer" column="schedule" nullable="false">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        
+        <many-to-one field="otherActivity" target-entity="SkOtherActivity" fetch="LAZY">
+            <join-columns>
+                <join-column name="other_activity_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        
+        <many-to-one field="booking" target-entity="SkBooking" fetch="LAZY">
+            <join-columns>
+                <join-column name="booking_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        
+    </entity>
+</doctrine-mapping>

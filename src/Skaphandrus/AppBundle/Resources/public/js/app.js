@@ -63,8 +63,8 @@ $(document).ready(function () {
     if ($('#skaphandrus_appbundle_skperson_skaphandrusId').length) {
         $('#skaphandrus_appbundle_skperson_skaphandrusId').autocompleter({url_list: '/en/ajax_search_fosUser/', url_get: '/en/ajax_get_fosUser/'});
     }
-       
-    
+
+
     // Formulário FOSMessage new message
     if ($('#message_recipient').length) {
         $('#message_recipient').autocompleter({url_list: '/en/ajax_search_fosUser/', url_get: '/en/ajax_get_fosUser/'});
@@ -82,35 +82,40 @@ $(document).ready(function () {
     if ($('#skaphandrus_appbundle_skphotosugestion_species').length) {
         $('#skaphandrus_appbundle_skphotosugestion_species').autocompleter({url_list: '/en/ajax_search_species/', url_get: '/en/ajax_get_species/', appendTo: '#validationForm'});
     }
-    
+
     // Formulário SkPhotoContestJudge
     if ($('#skaphandrus_appbundle_skphotocontestjudge_fosUser').length) {
         $('#skaphandrus_appbundle_skphotocontestjudge_fosUser').autocompleter({url_list: '/en/ajax_search_fosUser/', url_get: '/en/ajax_get_fosUser/'});
     }
-    
+
     // Formulário skPhotoContestAward
     if ($('#skaphandrus_appbundle_skphotocontestaward_winnerFosUser').length) {
         $('#skaphandrus_appbundle_skphotocontestaward_winnerFosUser').autocompleter({url_list: '/en/ajax_search_fosUser/', url_get: '/en/ajax_get_fosUser/'});
     }
-    
+
     // Formulário SkBusiness
     if ($('#skaphandrus_appbundle_skbusiness_address_location').length) {
         $('#skaphandrus_appbundle_skbusiness_address_location').autocompleter({url_list: '/en/ajax_search_location/', url_get: '/en/ajax_get_location/'});
     }
-    
+
     // Formulário SkProfile
     if ($('#skaphandrus_appbundle_fosuser_address_location').length) {
         $('#skaphandrus_appbundle_fosuser_address_location').autocompleter({url_list: '/en/ajax_search_location/', url_get: '/en/ajax_get_location/'});
     }
-    
+
     // Formulário SkBusinessDiveSpot
     if ($('#skaphandrus_appbundle_skbusiness_spotAutocomplete').length) {
-        $('#skaphandrus_appbundle_skbusiness_spotAutocomplete').autocompleterMultiple({form_name:'skaphandrus_appbundle_skbusiness', field_name:'spotChoices', url_list: '/en/ajax_search_spot/', url_get: '/en/ajax_get_spot/'});
+        $('#skaphandrus_appbundle_skbusiness_spotAutocomplete').autocompleterMultiple({form_name: 'skaphandrus_appbundle_skbusiness', field_name: 'spotChoices', url_list: '/en/ajax_search_spot/', url_get: '/en/ajax_get_spot/'});
     }
-    
+
     // Formulário SkBusinessSettingsAdmins
     if ($('#skaphandrus_appbundle_skbusiness_adminAutocomplete').length) {
-        $('#skaphandrus_appbundle_skbusiness_adminAutocomplete').autocompleterMultiple({form_name:'skaphandrus_appbundle_skbusiness', field_name:'adminChoices', url_list: '/en/ajax_search_fosUser/', url_get: '/en/ajax_get_fosUser/'});
+        $('#skaphandrus_appbundle_skbusiness_adminAutocomplete').autocompleterMultiple({form_name: 'skaphandrus_appbundle_skbusiness', field_name: 'adminChoices', url_list: '/en/ajax_search_fosUser/', url_get: '/en/ajax_get_fosUser/'});
     }
-    
+
+    // Formulário SkBooking
+    if ($('#skaphandrus_appbundle_skbooking_business').length) {
+        $('#skaphandrus_appbundle_skbooking_business').autocompleter({url_list: '/en/ajax_search_business/', url_get: '/en/ajax_get_business/'});
+    }
+
 });

@@ -1,0 +1,84 @@
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block heading_title %}
+    {{ "page.booking.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li>{{ "breadcrumb.booking"|trans }}</li>
+        <li class="active"><strong>{{ "breadcrumb.show_booking"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block heading_action %}
+    <a href="{{ path('booking_admin_new') }}" class="btn btn-primary">{{ "form.booking.btn.add"|trans }}</a>
+{% endblock %}
+
+{% block form_title_description %}
+    {{ "page.booking.text.description"|trans }}
+{% endblock %}
+
+{% block body -%}
+
+    <table class="table table-striped" >
+        <tbody>
+            <tr>
+                <th>{{ "form.booking.label.business"|trans }}</th>
+                <td>{{ entity.business }}</td>
+            </tr>
+            <tr>
+                <th>{{ "form.booking.label.begin_at"|trans }}</th>
+                <td>{{ entity.beginAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>{{ "form.booking.label.end_at"|trans }}</th>
+                <td>{{ entity.endAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>{{ "form.booking.label.certification_level"|trans }}</th>
+                <td>
+                    {% if entity.certificationLevel == 0 %}
+                        {{ "form.booking.label.certification_level_basic"|trans }}
+                    {% elseif entity.certificationLevel == 1 %}
+                        {{ "form.booking.label.certification_level_intermediate"|trans }}
+                    {% else %}
+                        {{ "form.booking.label.certification_level_advanced"|trans }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>{{ "form.booking.label.observations"|trans }}</th>
+                <td>{{ entity.observations }}</td>
+            </tr>
+            <tr>
+                <th>{{ "form.booking.label.phonenumber"|trans }}</th>
+                <td>{{ entity.phoneNumber }}</td>
+            </tr>
+            <tr>
+                <th>{{ "form.booking.label.email"|trans }}</th>
+                <td>{{ entity.email }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="col-sm-10 col-sm-offset-2">
+        <a class="btn btn-white" href="{{ path('booking_admin') }}">{{ "form.common.btn.back_to_list"|trans }}</a>
+        <a class="btn btn-success" href="{{ path('booking_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit"|trans }}</a>
+    </div>
+    {{ form(delete_form) }}
+
+
+{% endblock %}

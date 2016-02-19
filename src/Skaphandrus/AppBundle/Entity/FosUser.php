@@ -60,6 +60,11 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
     private $terms;
 
     /**
+     * @var \Skaphandrus\AppBundle\Entity\SkBooking
+     */
+    private $booking;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $photosValidated;
@@ -73,13 +78,6 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
     //modulos em que o user trabalhou (designer, biologo, programador)
     private $works;
 
-    
-    
-    
-    
-    
-    
-    
     public function getPhotosInUser() {
         return $this->photosInUser;
     }
@@ -507,9 +505,9 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
      * @return FosUSer
      */
     public function addTerms(\Skaphandrus\AppBundle\Entity\SkTermsConditions $terms) {
-        
+
         $terms->addUser($this);
-        
+
         $this->terms[] = $terms;
 
         return $this;
@@ -531,6 +529,37 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
      */
     public function getTerms() {
         return $this->terms;
+    }
+
+    /**
+     * Add booking
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBooking $booking
+     *
+     * @return FosUser
+     */
+    public function addBooking(\Skaphandrus\AppBundle\Entity\SkBooking $booking) {
+        $this->booking[] = $booking;
+
+        return $this;
+    }
+
+    /**
+     * Remove booking
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBooking $booking
+     */
+    public function removeBooking(\Skaphandrus\AppBundle\Entity\SkBooking $booking) {
+        $this->booking->removeElement($booking);
+    }
+
+    /**
+     * Get booking
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBooking() {
+        return $this->booking;
     }
 
     public function doStuffOnPostLoad(\Doctrine\ORM\Event\LifecycleEventArgs $args) {

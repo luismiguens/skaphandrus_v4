@@ -19,6 +19,9 @@
                         </li>
                         {% if business.isPremium or business.isPlus %}
                             <li>
+                                <a href="{{ path('business_booking_admin', { 'id': business.id }) }}">{{ "forms.common.btn.business_booking"|trans }}</a>
+                            </li>
+                            <li>
                                 <a href="{{ path('business_spot_admin_edit', { 'id': business.id }) }}">{{ "forms.common.btn.edit_dive"|trans }}</a>
                             </li>
                             <li>

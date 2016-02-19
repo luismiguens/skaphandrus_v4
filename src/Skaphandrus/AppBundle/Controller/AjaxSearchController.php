@@ -19,19 +19,17 @@ use Symfony\Component\HttpFoundation\Request as Request;
 use Symfony\Component\HttpFoundation\JsonResponse as JsonResponse;
 use Symfony\Component\HttpFoundation\Response as Response;
 
-
-
 class AjaxSearchController extends Controller {
 
     //put your code here
 
-    
-    
+
+
 
     public function ajaxSearchSpotAction(Request $request) {
-        
-         $locale = $this->get('request')->getLocale();
-         
+
+        $locale = $this->get('request')->getLocale();
+
         $q = $request->get('term');
         $em = $this->getDoctrine()->getManager();
         $spots = $em->getRepository('SkaphandrusAppBundle:SkSpot')->findLikeName($q, $locale);
@@ -49,21 +47,17 @@ class AjaxSearchController extends Controller {
         return new JsonResponse($results);
     }
 
-    
-    
-    
     public function ajaxGetSpotAction($id) {
         $em = $this->getDoctrine()->getManager();
         $SkSpot = $em->getRepository('SkaphandrusAppBundle:SkSpot')->find($id);
 
-        return new Response($SkSpot->getName().", ".$SkSpot->getLocation()->getName().", ".$SkSpot->getLocation()->getRegion()->getCountry());
+        return new Response($SkSpot->getName() . ", " . $SkSpot->getLocation()->getName() . ", " . $SkSpot->getLocation()->getRegion()->getCountry());
     }
-    
-    
-        public function ajaxSearchLocationAction(Request $request) {
-        
-         $locale = $this->get('request')->getLocale();
-         
+
+    public function ajaxSearchLocationAction(Request $request) {
+
+        $locale = $this->get('request')->getLocale();
+
         $q = $request->get('term');
         $em = $this->getDoctrine()->getManager();
         $locations = $em->getRepository('SkaphandrusAppBundle:SkLocation')->findLikeName($q, $locale);
@@ -81,21 +75,13 @@ class AjaxSearchController extends Controller {
         return new JsonResponse($results);
     }
 
-    
-    
-    
     public function ajaxGetLocationAction($id) {
         $em = $this->getDoctrine()->getManager();
         $SkLocation = $em->getRepository('SkaphandrusAppBundle:SkLocation')->find($id);
 
         //return new Response($SkLocation->getName().", ".$SkLocation()->getRegion()->getCountry());
-        return new Response($SkLocation->getName().", ".$SkLocation->getRegion());
-        
+        return new Response($SkLocation->getName() . ", " . $SkLocation->getRegion());
     }
-    
-    
-    
-    
 
     public function ajaxSearchSpeciesAction(Request $request) {
         $q = $request->get('term');
@@ -125,7 +111,6 @@ class AjaxSearchController extends Controller {
 
         return new Response($SkSpecies->getScientificNames()[0]);
     }
-    
 
     public function ajaxSearchGenusAction(Request $request) {
         $q = $request->get('term');
@@ -151,7 +136,6 @@ class AjaxSearchController extends Controller {
 
         return new Response($SkGenus->getName());
     }
-    
 
     public function ajaxSearchFamilyAction(Request $request) {
         $q = $request->get('term');
@@ -177,7 +161,6 @@ class AjaxSearchController extends Controller {
 
         return new Response($SkFamily->getName());
     }
-    
 
     public function ajaxSearchOrderAction(Request $request) {
         $q = $request->get('term');
@@ -203,7 +186,6 @@ class AjaxSearchController extends Controller {
 
         return new Response($SkOrder->getName());
     }
-    
 
     public function ajaxSearchClassAction(Request $request) {
         $q = $request->get('term');
@@ -229,7 +211,6 @@ class AjaxSearchController extends Controller {
 
         return new Response($SkClass->getName());
     }
-    
 
     public function ajaxSearchPhylumAction(Request $request) {
         $q = $request->get('term');
@@ -255,8 +236,6 @@ class AjaxSearchController extends Controller {
 
         return new Response($SkPhylum->getName());
     }
-    
-    
 
     public function ajaxSearchPhotoMachineModelAction(Request $request) {
         $q = $request->get('term');
@@ -286,8 +265,6 @@ class AjaxSearchController extends Controller {
         return new Response($SkPhotoMachineModel->getName());
     }
 
-    
-    
     public function ajaxSearchFosUserAction(Request $request) {
         $q = $request->get('term');
         $em = $this->getDoctrine()->getManager();
@@ -312,11 +289,29 @@ class AjaxSearchController extends Controller {
 
         return new Response($fosUser->getName());
     }
-    
-    
-    
-    
-    
-    
-    
+
+    public function ajaxSearchBusinessAction(Request $request) {
+        $q = $request->get('term');
+        $em = $this->getDoctrine()->getManager();
+        $skBusiness = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findLikeName($q);
+
+        $results = array();
+        foreach ($skBusiness as $business) {
+            $results[] = array(
+                'id' => $business->getId(),
+                'name' => $business->getName(),
+                'label' => sprintf("%s", $business->getName())
+            );
+        }
+
+        return new JsonResponse($results);
+    }
+
+    public function ajaxGetBusinessAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->find($id);
+
+        return new Response($business->getName());
+    }
+
 }

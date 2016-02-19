@@ -56,6 +56,14 @@ class SkBusinessType extends AbstractType {
                     'multiple' => true,
                     'required' => false
                 ))
+                ->add('otherActivity', 'entity', array(
+                    'attr' => array('class' => 'checkbox'),
+                    'label' => 'form.business.label.other_activity',
+                    'class' => 'SkaphandrusAppBundle:SkOtherActivity',
+                    'expanded' => true,
+                    'multiple' => true,
+                    'required' => false
+                ))
                 //->add('currency')
                 ->add('about', null, array(
                     'attr' => array('class' => 'form-control', 'rows' => 8),

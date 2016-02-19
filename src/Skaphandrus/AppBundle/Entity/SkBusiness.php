@@ -151,6 +151,16 @@ class SkBusiness {
      */
     private $admin;
 
+    /**
+     * @var \Skaphandrus\AppBundle\Entity\SkBooking
+     */
+    private $booking;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $otherActivity;
+
     /*     * symfony advanced forms
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the  update. If this
@@ -183,7 +193,6 @@ class SkBusiness {
         $this->currency = new ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
-        //$this->divePrice = new ArrayCollection();
     }
 
     /**
@@ -880,6 +889,69 @@ class SkBusiness {
      */
     public function getUnit() {
         return $this->unit;
+    }
+
+    /**
+     * Add booking
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBooking $booking
+     *
+     * @return SkIdentificationCriteria
+     */
+    public function addBooking(\Skaphandrus\AppBundle\Entity\SkBooking $booking) {
+        $this->booking[] = $booking;
+        $booking->setBusiness($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove booking
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBooking $booking
+     */
+    public function removeBooking(\Skaphandrus\AppBundle\Entity\SkBooking $booking) {
+        $this->booking->removeElement($booking);
+    }
+
+    /**
+     * Get booking
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBooking() {
+        return $this->booking;
+    }
+
+    /**
+     * Add otherActivity
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkOtherActivity $otherActivity
+     *
+     * @return SkPhotoContestAward
+     */
+    public function addOtherActivity(\Skaphandrus\AppBundle\Entity\SkOtherActivity $otherActivity) {
+        $this->otherActivity[] = $otherActivity;
+
+        return $this;
+    }
+
+    /**
+     * Remove otherActivity
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkOtherActivity $otherActivity
+     */
+    public function removeOtherActivity(\Skaphandrus\AppBundle\Entity\SkOtherActivity $otherActivity) {
+        $this->otherActivity->removeElement($otherActivity);
+    }
+
+    /**
+     * Get otherActivity
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOtherActivity() {
+        return $this->otherActivity;
     }
 
     public function getAbsolutePath() {

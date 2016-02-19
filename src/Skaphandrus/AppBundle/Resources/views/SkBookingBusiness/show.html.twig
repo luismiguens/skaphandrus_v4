@@ -1,0 +1,83 @@
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block heading_title %}
+    {{ "page.business_booking.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li>{{ "breadcrumb.business_booking"|trans }}</li>
+        <li class="active"><strong>{{ "breadcrumb.show_business_booking"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block heading_action %}
+    <a class="btn btn-success" href="{{ path('business_booking_admin', { 'id': entity.business.id }) }}">{{ "form.common.btn.back_to_list"|trans }}</a>
+{% endblock %}
+
+{% block form_title_description %}
+    {{ "page.business_booking.text.description"|trans }}
+{% endblock %}
+
+{% block body -%}
+
+    <h3>{{ entity.business }}</h3>
+    
+    <table class="table table-striped" >
+        <tbody>
+            <tr>
+                <th>{{ "form.business_booking.label.user"|trans }}</th>
+                <td>{{ entity.fosUser }}</td>
+            </tr>
+            <tr>
+                <th>{{ "form.business_booking.label.begin_at"|trans }}</th>
+                <td>{{ entity.beginAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>{{ "form.business_booking.label.end_at"|trans }}</th>
+                <td>{{ entity.endAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>{{ "form.business_booking.label.number_of_dives"|trans }}</th>
+                <td>{{ entity.numberOfDives }}</td>
+            </tr>
+            <tr>
+                <th>{{ "form.business_booking.label.certification_level"|trans }}</th>
+                <td>
+                    {% if entity.certificationLevel == 0 %}
+                        {{ "form.booking.label.certification_level_basic"|trans }}
+                    {% elseif entity.certificationLevel == 1 %}
+                        {{ "form.booking.label.certification_level_intermediate"|trans }}
+                    {% else %}
+                        {{ "form.booking.label.certification_level_advanced"|trans }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>{{ "form.business_booking.label.observation"|trans }}</th>
+                <td>{{ entity.observation }}</td>
+            </tr>
+            <tr>
+                <th>{{ "form.business_booking.label.phonenumber"|trans }}</th>
+                <td>{{ entity.phoneNumber }}</td>
+            </tr>
+            <tr>
+                <th>{{ "form.business_booking.label.email"|trans }}</th>
+                <td>{{ entity.email }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock %}

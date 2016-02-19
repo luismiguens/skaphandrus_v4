@@ -20,7 +20,15 @@ teste:
 contests:
     path:     /contests
     defaults: { _controller: "SkaphandrusAppBundle:Testes:contests" }
-
+    
+skaphandrus_app_booking_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skbooking.yml"
+    prefix:   /{_locale}/booking_admin
+    
+skaphandrus_app_business_booking_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skbookingbusiness.yml"
+    prefix:   /{_locale}/business_booking_admin
+    
 skaphandrus_app_business_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skbusiness.yml"
     prefix:   /{_locale}/business_admin
@@ -499,6 +507,9 @@ ajax_search_fosUser:
     path:     /{_locale}/ajax_search_fosUser/
     defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxSearchFosUser }
 
+ajax_search_business:
+    path:     /{_locale}/ajax_search_business/
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxSearchBusiness }
 
 ## gets
 ajax_get_photo_machine_model:
@@ -541,7 +552,10 @@ ajax_get_fosUser:
     path:     /{_locale}/ajax_get_fosUser/{id}
     defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetFosUser }
 
-
+ajax_get_business:
+    path:     /{_locale}/ajax_get_business/{id}
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetBusiness }
+    
 
 #identification_array:
 #  url:   /:sf_culture/app/array.:sf_format

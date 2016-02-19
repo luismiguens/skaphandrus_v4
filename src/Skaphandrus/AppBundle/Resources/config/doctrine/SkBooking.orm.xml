@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Skaphandrus\AppBundle\Entity\SkBooking" table="sk_booking">
+        <indexes>
+            <index name="fk_sk_booking_1_idx" columns="fos_user_id"/>
+            <index name="fk_sk_booking_2_idx" columns="business_id"/>
+        </indexes>
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="beginAt" type="datetime" column="begin_at" nullable="false"/>
+        <field name="endAt" type="datetime" column="end_at" nullable="false"/>
+        <field name="certificationLevel" type="integer" column="certification_level" nullable="false">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="observations" type="string" column="observations" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="phoneNumber" type="integer" column="phone_number" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="email" type="string" column="email" length="45" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        
+        <one-to-many field="bookingOtherActivity" target-entity="SkBookingOtherActivity" mapped-by="booking"/>
+        
+        <many-to-one field="bookingDive" target-entity="SkBookingDive" fetch="LAZY">
+            <join-columns>
+                <join-column name="id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        
+        <many-to-one field="business" target-entity="SkBusiness" fetch="LAZY">
+            <join-columns>
+                <join-column name="business_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        
+        <many-to-one field="fosUser" target-entity="FosUser" fetch="LAZY">
+            <join-columns>
+                <join-column name="fos_user_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        
+    </entity>
+</doctrine-mapping>

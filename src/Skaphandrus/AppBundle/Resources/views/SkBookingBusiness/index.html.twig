@@ -1,0 +1,69 @@
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block heading_title %}
+    {{ "page.business_booking.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.business_booking"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block form_title_description %}
+    {{ "page.business_booking.text.description"|trans }}
+{% endblock %}
+
+{% block body -%}
+
+    {% if entities %}
+        <table class="table table-striped" >
+            <thead>
+                <tr>
+{#                    <th>{{ "form.business_booking.label.business"|trans }}</th>
+                    <th>{{ "form.business_booking.label.user"|trans }}</th>
+                    <th>{{ "form.business_booking.label.begin_at"|trans }}</th>
+                    <th>{{ "form.business_booking.label.end_at"|trans }}</th>#}
+                        {#<th>Number of dives</th>
+                        <th>Certification level</th>
+                        <th>observation</th>
+                        <th>Phonenumber</th>
+                        <th>Email</th>#}
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entity in entities %}
+                    <tr>
+                        <td>{{ entity.business }}</td>
+                        <td>{{ entity.fosUser }}</td>
+                        <td>{{ entity.beginAt|date('Y-m-d H:i:s') }}</td>
+                        <td>{{ entity.endAt|date('Y-m-d H:i:s') }}</td>
+                        {#<td>{{ entity.numberOfDives }}</td>
+                        <td>{{ entity.certificationLevel }}</td>
+                        <td>{{ entity.observation }}</td>
+                        <td>{{ entity.phoneNumber }}</td>
+                        <td>{{ entity.email }}</td>#}
+                        <td>
+                            <a class="btn btn-white btn-sm" href="{{ path('business_booking_admin_show', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.show"|trans }}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {{ "page.business_booking.text.no_booking_found"|trans }}
+    {% endif %}
+{% endblock %}

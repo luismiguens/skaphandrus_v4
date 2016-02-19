@@ -44,6 +44,20 @@
 {% endif %}
 <br/>
 
+{% set act = '' %}
+{% for activity in business.otherActivity %}
+    {% set act = activity %}
+{% endfor %}
+{% if act %}
+    <h4>{{ "page.business.h4.activity"|trans }}</h4>
+    <div class="colunas">
+        {% for activity in business.otherActivity %}
+            <p><i class="fa fa-check text-navy"></i> {{ activity|title }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+<br/>
+
 {% if business.about  %}
     <h4>{{ "page.business.h4.about"|trans }}</h4>
     <p>{{ business.about|raw }}</p>

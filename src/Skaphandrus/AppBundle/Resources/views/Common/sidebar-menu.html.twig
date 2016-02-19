@@ -57,11 +57,13 @@
                 <a href="{{ path('spot_admin') }}"><i class="fa fa-globe"></i> <span class="nav-label">{{ "spot_admin"|trans }} </span></a>
             </li>
 
+            <li class="{{ 'SkBookingController' in app.request.attributes.get("_controller")?'active' }}">
+                <a href="{{ path('booking_admin') }}"><i class="fa fa-star"></i> <span class="nav-label">{{ "booking_admin"|trans }} </span></a>
+            </li>
 
             <li class="{{ 'SkPersonController' in app.request.attributes.get("_controller")?'active' }}">
                 <a href="{{ path('person_admin') }}"><i class="fa fa-group"></i> <span class="nav-label">{{ "person_admin"|trans }} </span></a>
             </li>           
-
 
             <li class="{{ 'SkModulesController' in app.request.attributes.get("_controller")?'active' }}">
                 <a href="{{ path('module_admin_edit') }}"><i class="fa fa-cube"></i> <span class="nav-label">{{ "modules_admin"|trans }} </span></a>
@@ -112,12 +114,9 @@
                         <li><a href="{{ path('course_affiliation_admin') }}">{{ "course_affiliation_admin"|trans }}</a></li>
                     </ul>
                 </li>
-                
 
-    
             {% elseif is_granted("IS_AUTHENTICATED_FULLY") %}
                 {{ render(controller('SkaphandrusAppBundle:Common:skBusinessList')) }}
-            
 
             {% endif %}
         </ul> 

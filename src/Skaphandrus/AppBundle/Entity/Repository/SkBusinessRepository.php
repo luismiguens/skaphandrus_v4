@@ -14,6 +14,15 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkBusinessRepository extends EntityRepository {
 
+    public function findLikeName($term) {
+
+        return $this->getEntityManager()->createQuery(
+                        "SELECT b
+        FROM SkaphandrusAppBundle:SkBusiness b
+        WHERE b.name LIKE :term "
+                )->setParameter('term', '%' . $term . '%')->getResult();
+    }
+
     public function findBySlug($country, $location, $slug, $locale) {
         $name = Utils::unslugify($slug);
         $location = $this->getEntityManager()->getRepository('SkaphandrusAppBundle:SkLocation')
@@ -57,18 +66,12 @@ class SkBusinessRepository extends EntityRepository {
                 )->getResult();
     }
 
-    public function findAllBusiness3($locale) {
+    public function findAllBusinessLite() {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
-        $sql = "SELECT b.id as id, b.name as name, lt.name as location_name, c.name as country_name
+        $sql = "SELECT b.id as id, b.name as name
                 FROM sk_business as b
-                LEFT JOIN sk_address as a on b.id = a.business_id
-                JOIN sk_location as l on a.location_id = l.id
-                JOIN sk_location_translation as lt on l.id = lt.translatable_id
-                JOIN sk_region as r on r.id = l.region_id
-                JOIN sk_country as c on c.id = r.country_id
-                where lt.locale = '" . $locale . "'
                 order by name asc";
 
         $statement = $connection->prepare($sql);
@@ -80,21 +83,6 @@ class SkBusinessRepository extends EntityRepository {
             $business = new \Skaphandrus\AppBundle\Entity\SkBusiness();
             $business->setId($value['id']);
             $business->setName($value['name']);
-
-            $country = new \Skaphandrus\AppBundle\Entity\SkCountry();
-            $country->setName($value['country_name']);
-
-            $region = new \Skaphandrus\AppBundle\Entity\SkRegion();
-            $region->setCountry($country);
-
-            $location = new \Skaphandrus\AppBundle\Entity\SkLocation();
-            $location->translate($locale)->setName($value['location_name']);
-            $location->setRegion($region);
-
-            $address = new \Skaphandrus\AppBundle\Entity\SkAddress();
-            $address->setLocation($location);
-
-            $business->setAddress($address);
 
             $result[] = $business;
         }
