@@ -15,11 +15,15 @@ sitemap:
 
 teste:
     path:     /teste
-    defaults: { _controller: "SkaphandrusAppBundle:Testes:testes" }
+    defaults: { _controller: "SkaphandrusAppBundle:Testes:teste" }
 
-contests:
-    path:     /contests
-    defaults: { _controller: "SkaphandrusAppBundle:Testes:contests" }
+contest:
+    path:     /teste/contest
+    defaults: { _controller: "SkaphandrusAppBundle:Testes:contest" }
+    
+spot:
+    path:     /teste/spot
+    defaults: { _controller: "SkaphandrusAppBundle:Testes:spot" }
     
 skaphandrus_app_booking_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skbooking.yml"

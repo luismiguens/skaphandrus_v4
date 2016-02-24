@@ -13,6 +13,45 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkSpotRepository extends EntityRepository {
 
+    public function getTenSpots($limit = 10, $offset = 0, $locale = 'en') {
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT s.id as spot, st.name as st_name
+                FROM sk_spot as s
+                JOIN sk_spot_translation as st
+                on s.id = st.translatable_id
+                where st.locale = '" . $locale . "'
+                order by st.name asc
+                limit " . $limit . "
+                offset " . $offset;
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+//            $spot = $em->getRepository('SkaphandrusAppBundle:SkSpot')->find($value['spot']);
+
+            $spot = new \Skaphandrus\AppBundle\Entity\SkSpot();
+            $spot->setId($value['spot']);
+            $spot->translate($locale)->setName($value['st_name']);
+
+            $result[] = $spot;
+        }
+
+        return $result;
+    }
+
+//        return $this->getEntityManager()->createQuery(
+//                        "SELECT s
+//                FROM SkaphandrusAppBundle:SkSpot s
+//                ORDER BY s.name asc"
+//                )->setFirstResult($offset)->setMaxResults($limit);
+//    }
+
     public function findLikeName($term, $locale) {
 
         return $this->getEntityManager()->createQuery(
@@ -173,9 +212,9 @@ class SkSpotRepository extends EntityRepository {
     }
 
     public function findSpotsInUser($user_id) {
-        
+
         $result = array();
-        
+
         $query = $this->getEntityManager()
                         ->createQuery(
                                 'SELECT s as spot, COUNT(p.id) as photosInSpot
