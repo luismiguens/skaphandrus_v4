@@ -2,15 +2,15 @@
 
 namespace Skaphandrus\AppBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-//use Symfony\Component\HttpFoundation\Response;
-use Skaphandrus\AppBundle\Entity\SkPhotoContest;
-use Skaphandrus\AppBundle\Entity\SkPhotoContestCategory;
-use Skaphandrus\AppBundle\Entity\SkPhotoContestAward;
-use Skaphandrus\AppBundle\Entity\SkPhotoContestJudge;
-use Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor;
 use Skaphandrus\AppBundle\Entity\FosUser;
 use Skaphandrus\AppBundle\Entity\SkPersonal;
+use Skaphandrus\AppBundle\Entity\SkPhotoContest;
+use Skaphandrus\AppBundle\Entity\SkPhotoContestAward;
+use Skaphandrus\AppBundle\Entity\SkPhotoContestCategory;
+use Skaphandrus\AppBundle\Entity\SkPhotoContestJudge;
+use Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Testes controller.
@@ -18,7 +18,7 @@ use Skaphandrus\AppBundle\Entity\SkPersonal;
  */
 class TestesController extends Controller {
 
-    public function TestesAction() {
+    public function TesteAction() {
 
         for ($i = 1; $i <= 10; $i++) {
             echo $i . ', ';
@@ -53,10 +53,10 @@ class TestesController extends Controller {
             echo $i . '.' . $i * $i . ", ";
         }
 
-        return $this->render('SkaphandrusAppBundle:Testes:index.html.twig');
+        return $this->render('SkaphandrusAppBundle:Testes:teste.html.twig');
     }
 
-    public function ContestsAction() {
+    public function ContestAction() {
 
         $name1 = new SkPersonal;
         $name1->setFirstname('ruben');
@@ -82,8 +82,6 @@ class TestesController extends Controller {
         $award = new SkPhotoContestAward;
         $award->translate('en')->setName('dive');
         $award->addSponsor($sponsor);
-        $award->addJudge($judge1);
-        $award->addJudge($judge2);
 
         $category1 = new SkPhotoContestCategory();
         $category1->translate('en')->setName('peixes');
@@ -101,12 +99,34 @@ class TestesController extends Controller {
         $contest->setName('UW Azores');
         $contest->setBeginAt('2015.05.03');
         $contest->setEndAt('2015.05.10');
+        $contest->addJudge($judge1);
+        $contest->addJudge($judge2);
         $contest->addCategory($category1);
         $contest->addCategory($category2);
         $contest->addCategory($category3);
 
+        return $this->render('SkaphandrusAppBundle:Testes:contest.html.twig', array(
+                    'contest' => $contest,
+        ));
+    }
 
-        return $this->render('SkaphandrusAppBundle:Testes:index.html.twig', array('contest' => $contest));
+    public function spotAction(Request $request) {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $limit = $request->query->get('limit');
+        $offset = $request->query->get('offset');
+
+        if ($limit == null and $offset == null) {
+            $limit = 10;
+            $offset = 0;
+        }
+
+        $spots = $em->getRepository('SkaphandrusAppBundle:SkSpot')->getTenSpots($limit = $limit, $offset = $offset);
+
+        return $this->render('SkaphandrusAppBundle:Testes:spot.html.twig', array(
+                    'spots' => $spots,
+        ));
     }
 
 }
