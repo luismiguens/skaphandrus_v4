@@ -35,9 +35,20 @@ class SkBookingController extends Controller {
      */
     public function createAction(Request $request) {
         $entity = new SkBooking();
-
+        $em = $this->getDoctrine()->getManager();
+        
+//$business_id = $request->get('business_id');
+        
+        
+        
+        $business_id = 1977;
+        
+        $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->find($business_id);
+        
+        
         $fos_user = $this->get('security.token_storage')->getToken()->getUser();
         $entity->setFosUser($fos_user);
+        $entity->setBusiness($business);
 
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -79,17 +90,28 @@ class SkBookingController extends Controller {
      * Displays a form to create a new SkBooking entity.
      *
      */
-    public function newAction() {
+    public function newAction($business_id, Request $request) {
+        $em = $this->getDoctrine()->getManager();
+       
         $entity = new SkBooking();
+        
+        
+        //$business_id = $request->query->get('business_id');
+        
         
         $fos_user = $this->get('security.token_storage')->getToken()->getUser();
         $entity->setFosUser($fos_user);
         $entity->setEmail($fos_user->getEmail());
         $entity->setPhoneNumber($fos_user->getContact()->getMobilePhone());
         
+        
+        $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->find($business_id); 
+        $entity->setBusiness($business);
+        
         $form = $this->createCreateForm($entity);
 
         return $this->render('SkaphandrusAppBundle:SkBooking:new.html.twig', array(
+            'business_id' => $business_id,
                     'entity' => $entity,
                     'form' => $form->createView(),
         ));

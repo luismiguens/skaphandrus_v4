@@ -51,6 +51,165 @@
         </script>
     {% endif %}
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+{#    
+    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/hack/autocompleter-jqueryui.js') }}"></script>#}
+    <script>
+        //http://symfony.com/doc/current/cookbook/form/form_collections.html
+        /////////////////////  bookingOtherActivity code start  \\\\\\\\\\\\\\\\\\\\\\\
+        var $container = $('ul.bookingOtherActivity');
+        // button to add a new SportParam
+        var $addOtherActivityLink = $('<br/><a href="#" class="btn btn-primary btn-xs">{{ "form.common.btn.create"|trans }}</a>');
+        var $newLinkLi = $('<li></li>').append($addOtherActivityLink);
+
+        $(document).ready(function () {
+            //delete button on each existing SportParam
+            $container.find('li').each(function () {
+                addOtherActivityDeleteLink($(this));
+            });
+
+            //add button
+            $container.append($newLinkLi);
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $container.data('index', $container.find(':input').length);
+
+            // adding a new form when cliking Add button
+            $addOtherActivityLink.on('click', function (e) {
+                e.preventDefault();
+
+                addOtherActivityForm($container, $newLinkLi);
+
+            });
+
+            // adding a new form SportParam
+            function addOtherActivityForm($container, $newLinkLi) {
+
+                var $prototype = $container.attr('data-prototype');
+
+                var newForm = $prototype.replace(/__name__/g, $container.children().length - 1);
+
+                var $newFormLi = $("<li margin-bottom:1px';></li>").append(newForm);
+                $newLinkLi.before($newFormLi);
+
+                addOtherActivityDeleteLink($newFormLi);
+            }
+
+
+            function addOtherActivityDeleteLink($paramFormLi) {
+
+                var $removeFormA = $('<a href="#" class="btn btn-danger  btn-xs">{{ "form.common.btn.delete"|trans }}</a>');
+
+                $paramFormLi.append($removeFormA);
+
+                $removeFormA.on('click', function (e) {
+
+                    e.preventDefault();
+
+                    $paramFormLi.remove();
+                });
+            }
+
+        });
+        /////////////////////  bookingOtherActivity code end  \\\\\\\\\\\\\\\\\\\\\\\
+
+
+        //http://symfony.com/doc/current/cookbook/form/form_collections.html
+        /////////////////////  BookingDive code start  \\\\\\\\\\\\\\\\\\\\\\\
+        var $container1 = $('ul.bookingDive');
+        // button to add a new SportParam
+        var $addBookingDiveLink = $('<br/><a href="#" class="btn btn-primary btn-xs">{{ "form.common.btn.create"|trans }}</a>');
+        var $newLinkLi1 = $('<li></li>').append($addBookingDiveLink);
+
+        $(document).ready(function () {
+            //delete button on each existing SportParam
+            $container1.find('li').each(function () {
+                addBookingDiveDeleteLink($(this));
+            });
+
+            //add button
+            $container1.append($newLinkLi1);
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $container1.data('index', $container1.find(':input').length);
+
+            // adding a new form when cliking Add button
+            $addBookingDiveLink.on('click', function (e) {
+                e.preventDefault();
+
+                addBookingDiveForm($container1, $newLinkLi1);
+
+            });
+
+            // adding a new form SportParam
+            function addBookingDiveForm($container, $newLinkLi) {
+
+                var $prototype = $container.attr('data-prototype');
+
+                var newForm = $prototype.replace(/__name__/g, $container.children().length - 1);
+
+                var $newFormLi = $("<li margin-bottom:1px';></li>").append(newForm);
+                $newLinkLi.before($newFormLi);
+
+                addBookingDiveDeleteLink($newFormLi);
+            }
+
+
+            function addBookingDiveDeleteLink($paramFormLi) {
+
+                var $removeFormA = $('<a href="#" class="btn btn-danger  btn-xs">{{ "form.common.btn.delete"|trans }}</a>');
+
+                $paramFormLi.append($removeFormA);
+
+                $removeFormA.on('click', function (e) {
+
+                    e.preventDefault();
+
+                    $paramFormLi.remove();
+                });
+            }
+
+        });
+        /////////////////////  BookingDive code end  \\\\\\\\\\\\\\\\\\\\\\\
+
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 {% endblock %}
 
 {% block stylesheets %}
@@ -672,6 +831,10 @@
                                             <h3>{% trans with {'%business%': business.name} %}page.business.h3.book_now{% endtrans %}</h3>
                                             <br/>
 
+                                            
+                                                     {# {% if is_granted("IS_AUTHENTICATED_FULLY") %}#}
+                {{ render(controller('SkaphandrusAppBundle:SkBooking:new', {'business_id': business.id})) }}
+            {#{% endif %}#}
 
                                             {#{{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
                                             {{ form_widget(form) }}

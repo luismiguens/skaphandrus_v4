@@ -156,4 +156,11 @@ class SkBookingOtherActivity {
         return $this->booking;
     }
 
+    
+    
+//    public function __toString() {
+//        return $this->get;
+//    }
+    
+    
 }

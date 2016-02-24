@@ -247,27 +247,27 @@ class SkBooking {
         return $this->fosUser;
     }
 
-    /**
-     * Set bookingDive
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkBookingDive $bookingDive
-     *
-     * @return SkBooking
-     */
-    public function setBookingDive(\Skaphandrus\AppBundle\Entity\SkBookingDive $bookingDive = null) {
-        $this->bookingDive = $bookingDive;
-
-        return $this;
-    }
-
-    /**
-     * Get bookingDive
-     *
-     * @return \Skaphandrus\AppBundle\Entity\SkBookingDive
-     */
-    public function getBookingDive() {
-        return $this->bookingDive;
-    }
+//    /**
+//     * Set bookingDive
+//     *
+//     * @param \Skaphandrus\AppBundle\Entity\SkBookingDive $bookingDive
+//     *
+//     * @return SkBooking
+//     */
+//    public function setBookingDive(\Skaphandrus\AppBundle\Entity\SkBookingDive $bookingDive = null) {
+//        $this->bookingDive = $bookingDive;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get bookingDive
+//     *
+//     * @return \Skaphandrus\AppBundle\Entity\SkBookingDive
+//     */
+//    public function getBookingDive() {
+//        return $this->bookingDive;
+//    }
 
     /**
      * Add bookingOtherActivity
@@ -301,4 +301,67 @@ class SkBooking {
         return $this->bookingOtherActivity;
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        /**
+     * Add bookingDive
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBookingDive $bookingDive
+     *
+     * @return SkBookingDive
+     */
+    public function addBookingDive(\Skaphandrus\AppBundle\Entity\SkBookingDive $bookingDive) {
+        $this->bookingDive[] = $bookingDive;
+        $bookingDive->setBooking($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove bookingDive
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBookingDive $bookingDive
+     */
+    public function removeBookingDive(\Skaphandrus\AppBundle\Entity\SkBookingDive $bookingDive) {
+        $this->bookingDive->removeElement($bookingDive);
+    }
+
+    /**
+     * Get bookingDive
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBookingDive() {
+        return $this->bookingDive;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
