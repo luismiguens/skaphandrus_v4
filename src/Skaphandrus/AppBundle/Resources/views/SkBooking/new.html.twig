@@ -1,9 +1,10 @@
-
-
 {% form_theme form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
 
-
-
+<style>
+    ul {
+        list-style-type: none;
+    }
+</style>
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -15,28 +16,25 @@
             </div>
             <div class="modal-body">
 
-
                 <!-- FORM START -->
                 <div class="form_error">
-
                 </div>
 
                 {{ form_start(form, { 'attr': {'class': 'ajaxForm form-horizontal'} }) }}
                 <input type="hidden" name="business_id" value="{{business_id}}"/>
                 <div id="form_body">
-
                     {% include 'SkaphandrusAppBundle:SkBooking:form.html.twig' with {'form': form} %}
                 </div>
                 {{ form_end(form) }}
-
                 <!-- FORM END -->
 
-
             </div>
-            <div class="modal-footer">
+            {#<div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+            </div>#}
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+

@@ -32,10 +32,9 @@
         <table class="table table-striped" >
             <thead>
                 <tr>
-{#                    <th>{{ "form.business_booking.label.business"|trans }}</th>
                     <th>{{ "form.business_booking.label.user"|trans }}</th>
                     <th>{{ "form.business_booking.label.begin_at"|trans }}</th>
-                    <th>{{ "form.business_booking.label.end_at"|trans }}</th>#}
+                    <th>{{ "form.business_booking.label.end_at"|trans }}</th>
                         {#<th>Number of dives</th>
                         <th>Certification level</th>
                         <th>observation</th>
@@ -47,10 +46,9 @@
             <tbody>
                 {% for entity in entities %}
                     <tr>
-                        <td>{{ entity.business }}</td>
                         <td>{{ entity.fosUser }}</td>
-                        <td>{{ entity.beginAt|date('Y-m-d H:i:s') }}</td>
-                        <td>{{ entity.endAt|date('Y-m-d H:i:s') }}</td>
+                        <td>{{ entity.beginAt|date('Y-m-d') }}</td>
+                        <td>{{ entity.endAt|date('Y-m-d') }}</td>
                         {#<td>{{ entity.numberOfDives }}</td>
                         <td>{{ entity.certificationLevel }}</td>
                         <td>{{ entity.observation }}</td>
@@ -66,4 +64,5 @@
     {% else %}
         {{ "page.business_booking.text.no_booking_found"|trans }}
     {% endif %}
+    
 {% endblock %}

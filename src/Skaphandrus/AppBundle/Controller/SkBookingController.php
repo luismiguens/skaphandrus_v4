@@ -2,9 +2,13 @@
 
 namespace Skaphandrus\AppBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Skaphandrus\AppBundle\Entity\SkBooking;
 use Skaphandrus\AppBundle\Form\SkBookingType;
+use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,40 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  *
  */
 class SkBookingController extends Controller {
-    /*
-     * Business page.
-     */
-
-    /**
-     * Displays a form to create a new SkBooking entity.
-     *
-     */
-    public function newAction($business_id) {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = new SkBooking();
-
-
-        //$business_id = $request->query->get('business_id');
-
-
-        $fos_user = $this->get('security.token_storage')->getToken()->getUser();
-        $entity->setFosUser($fos_user);
-        $entity->setEmail($fos_user->getEmail());
-        $entity->setPhoneNumber($fos_user->getContact()->getMobilePhone());
-
-
-        $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->find($business_id);
-        $entity->setBusiness($business);
-
-        $form = $this->createCreateForm($entity);
-
-        return $this->render('SkaphandrusAppBundle:SkBooking:new.html.twig', array(
-                    'business_id' => $business_id,
-                    'entity' => $entity,
-                    'form' => $form->createView(),
-        ));
-    }
 
     /**
      * Lists all SkBooking entities.
@@ -69,29 +39,22 @@ class SkBookingController extends Controller {
      * Creates a new SkBooking entity.
      *
      */
-    public function createAction(Request $request) {
-
-
+    public function createAction(Request $request, InputInterface $input, OutputInterface $output) {
 
         //This is optional. Do not do this check if you want to call the same action using a regular request.
         if (!$request->isXmlHttpRequest()) {
             return new JsonResponse(array('message' => 'You can access this only using Ajax!'), 400);
         }
 
-
         $entity = new SkBooking();
         $em = $this->getDoctrine()->getManager();
 
-
-
         $business_id = $request->query->get('business_id');
-        if (!$business_id)
+        if (!$business_id):
             $business_id = $request->request->get('business_id');
-
-        //$business_id = 1977;
+        endif;
 
         $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->find($business_id);
-
 
         $fos_user = $this->get('security.token_storage')->getToken()->getUser();
         $entity->setFosUser($fos_user);
@@ -105,48 +68,42 @@ class SkBookingController extends Controller {
             $em->persist($entity);
             $em->flush();
 
-            return new JsonResponse(array('message' => 'Success!'), 200);
-            
-//            
-//            $response = new JsonResponse(
-//            array(
-//        'message' => 'Error',
-//        'form' => $this->renderView('AcmeDemoBundle:Demo:form.html.twig',
-//                array(
-//            'entity' => $entity,
-//            'form' => $form->createView(),
-//        ))), 400);
-            
-            
-            
-            
+            $successMessage = $this->get('translator')->trans('message.booking.success');
 
+///////////////////////////////////////////////
+
+            $message = \Swift_Message::newInstance()
+                    ->setSubject('Contact enquiry from symblog')
+                    ->setFrom('support-noreply@skaphandrus.com', 'Skaphandrus')
+                    ->setTo($fos_user->getEmail())
+                    ->setBody($this->renderView('SkaphandrusAppBundle:Teste:email.txt.twig'));
+            $this->get('mailer')->send($message);
+
+/////////////////////////////////////////////
+
+
+            return new JsonResponse(array('message' => $successMessage), 200);
+
+
+//            $response = new JsonResponse(
+//                    array(
+//                    'message' => 'Error',
+//                    'form' => $this->renderView('AcmeDemoBundle:Demo:form.html.twig', array(
+//                    'entity' => $entity,
+//                    'form' => $form->createView(),
+//                ))), 400);
 //            $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
 //            return $this->redirect($this->generateUrl('booking_admin_edit', array('id' => $entity->getId())));
         }
 
-        
-        
-
         $message = (string) $form->getErrors(true, false);
         $message = str_replace('.', '.<br/>', $message);
-        
-        $response = new JsonResponse(
-                array(
-            'message' => $message
-            ), 400);
 
-        
+        $response = new JsonResponse(array('message' => $message), 400);
 
-        
         return $response;
-
-
     }
 
-
-    
-    
     /**
      * Creates a form to create a SkBooking entity.
      *
@@ -163,6 +120,34 @@ class SkBookingController extends Controller {
 //        $form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
+    }
+
+    /**
+     * Displays a form to create a new SkBooking entity.
+     *
+     */
+    public function newAction($business_id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = new SkBooking();
+
+        //$business_id = $request->query->get('business_id');
+
+        $fos_user = $this->get('security.token_storage')->getToken()->getUser();
+        $entity->setFosUser($fos_user);
+        $entity->setEmail($fos_user->getEmail());
+        $entity->setPhoneNumber($fos_user->getContact()->getMobilePhone());
+
+        $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->find($business_id);
+        $entity->setBusiness($business);
+
+        $form = $this->createCreateForm($entity);
+
+        return $this->render('SkaphandrusAppBundle:SkBooking:new.html.twig', array(
+                    'business_id' => $business_id,
+                    'entity' => $entity,
+                    'form' => $form->createView(),
+        ));
     }
 
     /**
@@ -240,11 +225,58 @@ class SkBookingController extends Controller {
             throw $this->createNotFoundException('Unable to find SkBooking entity.');
         }
 
+        //$entity = new SkBooking();
+        //http://symfony.com/doc/current/cookbook/form/form_collections.html
+        //For deleting dives 
+        $originalDives = new ArrayCollection();
+        // Create an ArrayCollection of the current Tag objects in the database
+        foreach ($entity->getBookingDive() as $dive) {
+            $originalDives->add($dive);
+        }
+
+        //http://symfony.com/doc/current/cookbook/form/form_collections.html
+        //For deleting dives 
+        $originalOtherActivity = new ArrayCollection();
+        // Create an ArrayCollection of the current Tag objects in the database
+        foreach ($entity->getBookingOtherActivity() as $other) {
+            $originalOtherActivity->add($other);
+        }
+
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+
+            // remove the relationship between the Tag and the Task
+            foreach ($originalDives as $dive) {
+                if (false === $entity->getBookingDive()->contains($dive)) {
+                    // remove the Task from the Tag
+                    $dive->getBooking()->removeBookingDive($dive);
+
+                    // if it was a many-to-one relationship, remove the relationship like this
+                    // $course->setBusiness(null);
+                    // $em->persist($course);
+                    // if you wanted to delete the Tag entirely, you can also do that
+                    $em->remove($dive);
+                }
+            }
+
+            // remove the relationship between the Tag and the Task
+            foreach ($originalOtherActivity as $other) {
+                if (false === $entity->getBookingOtherActivity()->contains($other)) {
+                    // remove the Task from the Tag
+                    $other->getBooking()->removeBookingOtherActivity($other);
+
+                    // if it was a many-to-one relationship, remove the relationship like this
+                    // $course->setBusiness(null);
+                    // $em->persist($course);
+                    // if you wanted to delete the Tag entirely, you can also do that
+                    $em->remove($other);
+                }
+            }
+
+            $em->persist($entity);
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');

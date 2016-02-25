@@ -29,6 +29,13 @@ index_teste:
     path:     /teste/index
     defaults: { _controller: "SkaphandrusAppBundle:Testes:index" }
     
+ajax_spot:
+    path:     /{_locale}/ajax/spot
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:spot" }
+    
+ajax_index:
+    path:     /{_locale}/ajax/index
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:index" }
     
 skaphandrus_app_booking_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skbooking.yml"

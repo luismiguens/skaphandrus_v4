@@ -18,7 +18,7 @@
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
         <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
-        <li>{{ "breadcrumb.business_booking"|trans }}</li>
+        <li><a href = "{{ path('booking_admin')}}" >{{ "breadcrumb.booking"|trans }} </a></li>
         <li class="active"><strong>{{ "breadcrumb.show_business_booking"|trans }}</strong></li>
     </ol>
 {% endblock %}
@@ -33,28 +33,23 @@
 
 {% block body -%}
 
-    <h3>{{ entity.business }}</h3>
-    
-    <table class="table table-striped" >
+    <h4>{{ "page.booking.h4.booking_information"|trans }}</h4>
+    <table class="table" >
         <tbody>
             <tr>
-                <th>{{ "form.business_booking.label.user"|trans }}</th>
-                <td>{{ entity.fosUser }}</td>
+                <th style="width: 50%">{{ "form.booking.label.user"|trans }}</th>
+                <td>{{ link_to_user(entity.fosuser) }}</td>
             </tr>
             <tr>
-                <th>{{ "form.business_booking.label.begin_at"|trans }}</th>
-                <td>{{ entity.beginAt|date('Y-m-d H:i:s') }}</td>
+                <th style="width: 50%">{{ "form.booking.label.begin_at"|trans }}</th>
+                <td>{{ entity.beginAt|date('Y-m-d') }}</td>
             </tr>
             <tr>
-                <th>{{ "form.business_booking.label.end_at"|trans }}</th>
-                <td>{{ entity.endAt|date('Y-m-d H:i:s') }}</td>
+                <th style="width: 50%">{{ "form.booking.label.end_at"|trans }}</th>
+                <td>{{ entity.endAt|date('Y-m-d') }}</td>
             </tr>
             <tr>
-                <th>{{ "form.business_booking.label.number_of_dives"|trans }}</th>
-                <td>{{ entity.numberOfDives }}</td>
-            </tr>
-            <tr>
-                <th>{{ "form.business_booking.label.certification_level"|trans }}</th>
+                <th style="width: 50%">{{ "form.booking.label.certification_level"|trans }}</th>
                 <td>
                     {% if entity.certificationLevel == 0 %}
                         {{ "form.booking.label.certification_level_basic"|trans }}
@@ -65,19 +60,76 @@
                     {% endif %}
                 </td>
             </tr>
+            {% if entity.observations %}
+                <tr>
+                    <th style="width: 50%">{{ "form.business_booking.label.observations"|trans }}</th>
+                    <td>{{ entity.observations }}</td>
+                </tr>
+            {% endif %}
+            {% if entity.phoneNumber %}
+                <tr>
+                    <th style="width: 50%">{{ "form.business_booking.label.phonenumber"|trans }}</th>
+                    <td>{{ entity.phoneNumber }}</td>
+                </tr>
+            {% endif %}
             <tr>
-                <th>{{ "form.business_booking.label.observation"|trans }}</th>
-                <td>{{ entity.observation }}</td>
-            </tr>
-            <tr>
-                <th>{{ "form.business_booking.label.phonenumber"|trans }}</th>
-                <td>{{ entity.phoneNumber }}</td>
-            </tr>
-            <tr>
-                <th>{{ "form.business_booking.label.email"|trans }}</th>
+                <th style="width: 50%">{{ "form.booking.label.email"|trans }}</th>
                 <td>{{ entity.email }}</td>
             </tr>
         </tbody>
     </table>
+
+    <h4>{{ "page.booking.h4.booking_dive_information"|trans }}</h4>
+    <table class="table table-striped">
+        <tbody>
+            {% for dive in entity.bookingDive %}
+                <tr>
+                    <th style="width: 50%">{{ "form.booking_dive.label.pax"|trans }}</th>
+                    <td>{{ dive.pax }}</td>
+                </tr>
+                <tr>
+                    <th style="width: 50%">{{ "form.booking_dive.label.number_dives"|trans }}</th>
+                    <td>{{ dive.numberDives }}</td>
+                </tr>
+                <tr>
+                    <th style="width: 50%">{{ "form.booking_dive.label.date_at"|trans }}</th>
+                    <td>{{ dive.dateAt|date('Y-m-d') }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h4>{{ "page.booking.h4.booking_other_information"|trans }}</h4>
+    <table class="table table-striped">
+        <tbody>
+            {% for other in entity.bookingOtherActivity %}
+                <tr>
+                    <th style="width: 50%">{{ "form.booking_other_activity.label.other_activity"|trans }}</th>
+                    <td>{{ other.otherActivity }}</td>
+                </tr>
+                <tr>
+                    <th style="width: 50%">{{ "form.booking_other_activity.label.pax"|trans }}</th>
+                    <td>{{ other.pax }}</td>
+                </tr>
+                <tr>
+                    <th style="width: 50%">{{ "form.booking_other_activity.label.date_at"|trans }}</th>
+                    <td>{{ other.dateAt|date('Y-m-d') }}</td>
+                </tr>
+                <tr>
+                    <th style="width: 50%">{{ "form.booking_other_activity.label.schedule"|trans }}</th>
+                    <td>
+                        {% if other.schedule == 0 %}
+                            {{ "form.booking_other_activity.label.schedule_morning"|trans }}
+                        {% elseif other.schedule == 1 %}
+                            {{ "form.booking_other_activity.label.schedule_afternoon"|trans }}
+                        {% else %}
+                            {{ "form.booking_other_activity.label.schedule_night"|trans }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
 
 {% endblock %}

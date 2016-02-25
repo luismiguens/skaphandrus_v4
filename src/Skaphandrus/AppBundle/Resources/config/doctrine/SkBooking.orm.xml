@@ -8,8 +8,9 @@
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
         </id>
-        <field name="beginAt" type="datetime" column="begin_at" nullable="false"/>
-        <field name="endAt" type="datetime" column="end_at" nullable="false"/>
+        <field name="beginAt" type="date" column="begin_at" nullable="false"/>
+        <field name="endAt" type="date" column="end_at" nullable="false"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="false"/>
         <field name="certificationLevel" type="integer" column="certification_level" nullable="false">
             <options>
                 <option name="default">0</option>

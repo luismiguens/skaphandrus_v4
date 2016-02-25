@@ -22,9 +22,9 @@
     </ol>
 {% endblock %}
 
-{% block heading_action %}
+{#{% block heading_action %}
     <a href="{{ path('booking_admin_new') }}" class="btn btn-primary">{{ "form.booking.btn.add"|trans }}</a>
-{% endblock %}
+{% endblock %}#}
 
 {% block form_title_description %}
     {{ "page.booking.text.description"|trans }}
@@ -32,46 +32,50 @@
 
 {% block body -%}
 
-    <table class="table table-striped" >
-        <thead>
-            <tr>
-                <th>{{ "form.booking.label.business"|trans }}</th>
-                <th>{{ "form.booking.label.begin_at"|trans }}</th>
-                <th>{{ "form.booking.label.end_at"|trans }}</th>
-                {#<th>Certification level</th>
-                <th>observations</th>
-                <th>Phonenumber</th>
-                <th>Email</th>#}
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for entity in entities %}
+    {% if entities %}
+        <table class="table table-striped" >
+            <thead>
                 <tr>
-                    <td>{{ entity.business }}</td>
-                    <td>{{ entity.beginAt|date('Y-m-d H:i:s') }}</td>
-                    <td>{{ entity.endAt|date('Y-m-d H:i:s') }}</td>
-                    {#<td>{{ entity.certificationLevel }}</td>
-                    <td>{{ entity.observations }}</td>
-                    <td>{{ entity.phoneNumber }}</td>
-                    <td>{{ entity.email }}</td>#}
-                    <td>
-                        <ul>
-                            <li>
-                                <a class="btn btn-white btn-sm" href="{{ path('booking_admin_show', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.show"|trans }}</a>
-                            </li>
-                            <li>
-                                <a class="btn btn-white btn-sm" href="{{ path('booking_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit"|trans }}</a>
-                            </li>
-                        </ul>
-                    </td>
+                    <th>{{ "form.booking.label.business"|trans }}</th>
+                    <th>{{ "form.booking.label.begin_at"|trans }}</th>
+                    <th>{{ "form.booking.label.end_at"|trans }}</th>
+                        {#<th>Certification level</th>
+                        <th>observations</th>
+                        <th>Phonenumber</th>
+                        <th>Email</th>#}
+                    <th>Actions</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for entity in entities %}
+                    <tr>
+                        <td>{{ entity.business }}</td>
+                        <td>{{ entity.beginAt|date('Y-m-d') }}</td>
+                        <td>{{ entity.endAt|date('Y-m-d') }}</td>
+                        {#<td>{{ entity.certificationLevel }}</td>
+                        <td>{{ entity.observations }}</td>
+                        <td>{{ entity.phoneNumber }}</td>
+                        <td>{{ entity.email }}</td>#}
+                        <td>
+                            <ul>
+                                <li>
+                                    <a class="btn btn-white btn-sm" href="{{ path('booking_admin_show', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.show"|trans }}</a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-white btn-sm" href="{{ path('booking_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit"|trans }}</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-    <a class="btn btn-primary" href="{{ path('booking_admin_new') }}">
-        <i class="fa fa-pencil"></i>  {{ "form.booking.btn.add"|trans }}
-    </a>
+        {#<a class="btn btn-primary" href="{{ path('booking_admin_new') }}">
+            <i class="fa fa-pencil"></i>  {{ "form.booking.btn.add"|trans }}
+        </a>#}
+    {% else %}
+        {{ "page.business_booking.text.no_booking_found"|trans }}
+    {% endif %}
 
 {% endblock %}

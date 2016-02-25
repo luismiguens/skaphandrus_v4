@@ -2,6 +2,8 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
+
 /**
  * SkBooking
  */
@@ -16,6 +18,11 @@ class SkBooking {
      * @var \DateTime
      */
     private $endAt;
+
+    /**
+     * @var \DateTime
+     */
+    private $createdAt;
 
     /**
      * @var integer
@@ -43,29 +50,33 @@ class SkBooking {
     private $id;
 
     /**
-     * @var \Skaphandrus\AppBundle\Entity\SkBusiness
+     * @var SkBusiness
      */
     private $business;
 
     /**
-     * @var \Skaphandrus\AppBundle\Entity\FosUser
+     * @var FosUser
      */
     private $fosUser;
 
     /**
-     * @var \Skaphandrus\AppBundle\Entity\SkBookingDive
+     * @var SkBookingDive
      */
     private $bookingDive;
 
     /**
-     * @var \Skaphandrus\AppBundle\Entity\SkBookingOtherActivity
+     * @var SkBookingOtherActivity
      */
     private $bookingOtherActivity;
+
+    public function __construct() {
+        $this->createdAt = new \DateTime();
+    }
 
     /**
      * Set beginAt
      *
-     * @param \DateTime $beginAt
+     * @param \Date $beginAt
      *
      * @return SkBooking
      */
@@ -78,7 +89,7 @@ class SkBooking {
     /**
      * Get beginAt
      *
-     * @return \DateTime
+     * @return \Date
      */
     public function getBeginAt() {
         return $this->beginAt;
@@ -87,7 +98,7 @@ class SkBooking {
     /**
      * Set endAt
      *
-     * @param \DateTime $endAt
+     * @param \Date $endAt
      *
      * @return SkBooking
      */
@@ -100,10 +111,32 @@ class SkBooking {
     /**
      * Get endAt
      *
-     * @return \DateTime
+     * @return \Date
      */
     public function getEndAt() {
         return $this->endAt;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \Date $createdAt
+     *
+     * @return SkBooking
+     */
+    public function setCreatedAt($createdAt) {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \Date
+     */
+    public function getCreatedAt() {
+        return $this->createdAt;
     }
 
     /**
@@ -206,11 +239,11 @@ class SkBooking {
     /**
      * Set business
      *
-     * @param \Skaphandrus\AppBundle\Entity\SkBusiness $business
+     * @param SkBusiness $business
      *
      * @return SkBooking
      */
-    public function setBusiness(\Skaphandrus\AppBundle\Entity\SkBusiness $business = null) {
+    public function setBusiness(SkBusiness $business = null) {
         $this->business = $business;
 
         return $this;
@@ -219,7 +252,7 @@ class SkBooking {
     /**
      * Get business
      *
-     * @return \Skaphandrus\AppBundle\Entity\SkBusiness
+     * @return SkBusiness
      */
     public function getBusiness() {
         return $this->business;
@@ -228,11 +261,11 @@ class SkBooking {
     /**
      * Set fosUser
      *
-     * @param \Skaphandrus\AppBundle\Entity\FosUser $fosUser
+     * @param FosUser $fosUser
      *
      * @return SkBooking
      */
-    public function setFosUser(\Skaphandrus\AppBundle\Entity\FosUser $fosUser = null) {
+    public function setFosUser(FosUser $fosUser = null) {
         $this->fosUser = $fosUser;
 
         return $this;
@@ -241,7 +274,7 @@ class SkBooking {
     /**
      * Get fosUser
      *
-     * @return \Skaphandrus\AppBundle\Entity\FosUser
+     * @return FosUser
      */
     public function getFosUser() {
         return $this->fosUser;
@@ -272,11 +305,11 @@ class SkBooking {
     /**
      * Add bookingOtherActivity
      *
-     * @param \Skaphandrus\AppBundle\Entity\SkBookingOtherActivity $bookingOtherActivity
+     * @param SkBookingOtherActivity $bookingOtherActivity
      *
      * @return SkBookingOtherActivity
      */
-    public function addBookingOtherActivity(\Skaphandrus\AppBundle\Entity\SkBookingOtherActivity $bookingOtherActivity) {
+    public function addBookingOtherActivity(SkBookingOtherActivity $bookingOtherActivity) {
         $this->bookingOtherActivity[] = $bookingOtherActivity;
         $bookingOtherActivity->setBooking($this);
 
@@ -286,39 +319,29 @@ class SkBooking {
     /**
      * Remove bookingOtherActivity
      *
-     * @param \Skaphandrus\AppBundle\Entity\SkBookingOtherActivity $bookingOtherActivity
+     * @param SkBookingOtherActivity $bookingOtherActivity
      */
-    public function removeBookingOtherActivity(\Skaphandrus\AppBundle\Entity\SkBookingOtherActivity $bookingOtherActivity) {
+    public function removeBookingOtherActivity(SkBookingOtherActivity $bookingOtherActivity) {
         $this->bookingOtherActivity->removeElement($bookingOtherActivity);
     }
 
     /**
      * Get bookingOtherActivity
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getBookingOtherActivity() {
         return $this->bookingOtherActivity;
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        /**
+    /**
      * Add bookingDive
      *
-     * @param \Skaphandrus\AppBundle\Entity\SkBookingDive $bookingDive
+     * @param SkBookingDive $bookingDive
      *
      * @return SkBookingDive
      */
-    public function addBookingDive(\Skaphandrus\AppBundle\Entity\SkBookingDive $bookingDive) {
+    public function addBookingDive(SkBookingDive $bookingDive) {
         $this->bookingDive[] = $bookingDive;
         $bookingDive->setBooking($this);
 
@@ -328,40 +351,19 @@ class SkBooking {
     /**
      * Remove bookingDive
      *
-     * @param \Skaphandrus\AppBundle\Entity\SkBookingDive $bookingDive
+     * @param SkBookingDive $bookingDive
      */
-    public function removeBookingDive(\Skaphandrus\AppBundle\Entity\SkBookingDive $bookingDive) {
+    public function removeBookingDive(SkBookingDive $bookingDive) {
         $this->bookingDive->removeElement($bookingDive);
     }
 
     /**
      * Get bookingDive
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getBookingDive() {
         return $this->bookingDive;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
 }

@@ -6,14 +6,11 @@ namespace Skaphandrus\AppBundle\Controller;
 // Used Forms
 
 use Ivory\GoogleMap\Overlays\InfoWindow;
-
-
 use Doctrine\ORM\Query\ResultSetMapping;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\MapTypeId;
 use Ivory\GoogleMap\Overlays\Animation;
 use Ivory\GoogleMap\Overlays\Marker;
-
 use Skaphandrus\AppBundle\Entity\FosUser;
 use Skaphandrus\AppBundle\Utils\Utils;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -23,250 +20,6 @@ use Symfony\Component\Intl\Intl;
 
 class DefaultController extends Controller {
 
-    
-    
-     public function getMapAddress($business){
-        
-          $map = null;
-            $latitude = 0;
-            $longitude = 0;
-            $centerLatitude = 0;
-            $centerLongitude = 0;
-            
-            //$business = new \Skaphandrus\AppBundle\Entity\SkBusiness();
-            if ($business->getAddress()->getCoordinate() != null) {
-
-                if (count($business->getAddress()->getLocation()) > 0) {
-
-                    // Get markers from spots for the map
-                    $markers = array();
-                    $marker = new Marker();
-
-                    //remove white spaces
-                    $latitude = preg_replace('/\s+/', '', explode(",", $business->getAddress()->getCoordinate())[0]);
-                    $longitude = preg_replace('/\s+/', '', explode(",", $business->getAddress()->getCoordinate())[1]);
-                    $zoom = $business->getAddress()->getZoom();
-
-                    $infowindow = new InfoWindow();
-                    if ($business->getAddress()->getStreet()) {
-                        $contentString = $business->getName() . '<br/> ' . $business->getAddress()->getStreet() . ', ' . $business->getAddress()->getLocation()->getName() . ', ' . $business->getAddress()->getLocation()->getRegion()->getCountry();
-                    } else {
-                        $contentString = $business->getName() . '<br/> ' . $business->getAddress()->getLocation()->getName() . ', ' . $business->getAddress()->getLocation()->getRegion()->getCountry();
-                    }
-                    $infowindow->setContent($contentString);
-                    $infowindow->setOption('maxWidth', 250);
-
-                    // Marker options
-                    $marker->setInfoWindow($infowindow);
-                    $marker->setPrefixJavascriptVariable('marker_');
-                    $marker->setPosition($latitude, $longitude, true);
-                    $marker->setAnimation(Animation::DROP);
-                    $marker->setOption('clickable', true);
-                    $marker->setOption('flat', true);
-                    $marker->setOptions(array(
-                        'clickable' => true,
-                        'flat' => true,
-                    ));
-
-                    // $totalLatitude += $latitude;
-                    // $totalLongitude += $longitude;
-                    $markers[] = $marker;
-                }
-
-
-                $centerLatitude = $latitude;
-                $centerLongitude = $longitude;
-
-                $map = new Map();
-                $map->setPrefixJavascriptVariable('map_');
-                $map->setHtmlContainerId('map_canvas');
-                $map->setAsync(false);
-                $map->setCenter($centerLatitude, $centerLongitude, true);
-                $map->setMapOption('zoom', intval($zoom));
-                $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
-                $map->setMapOption('disableDefaultUI', true);
-                $map->setMapOption('disableDoubleClickZoom', true);
-                $map->setMapOptions(array(
-                    'disableDefaultUI' => true,
-                    'disableDoubleClickZoom' => true,
-                ));
-                $map->setStylesheetOption('width', 'auto');
-                $map->setStylesheetOption('height', '300px');
-                $map->setStylesheetOptions(array(
-                    'width' => 'auto',
-                    'height' => '300px',
-                ));
-                $map->setLanguage('en');
-
-                // Add the spots to the map
-                foreach ($markers as $marker) {
-                    $map->addMarker($marker);
-                }
-            }
-    }
-    
-    
-    public function getMapSpots($business){
-         
-
-  
-
-            $mapSpot = null;
-            $latitudeSpot = 0;
-            $longitudeSpot = 0;
-            $centerLatitudeSpot = 0;
-            $centerLongitudeSpot = 0;
-
-            if (count($business->getSpot()) > 0) {
-
-                // Get markers from spots for the map
-                $markersSpot = array();
-                // $totalLatitude = 0;
-                // $totalLongitude = 0;
-                foreach ($business->getSpot() as $spot) {
-
-                    //dump($spot->getCoordinate());
-
-                    if ($spot->getCoordinate()) {
-                        $markerSpot = new Marker();
-
-                        //remove white spaces
-                        $latitudeSpot = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[0]);
-                        $longitudeSpot = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[1]);
-
-                        $infowindow = new InfoWindow();
-
-                        //$utils = new \Skaphandrus\AppBundle\Twig\UtilsExtension($this->container, $this->get('translator'));
-                        //$contentString = $utils->link_to_spot($spot->getName(), $spot->getLocation(), $spot->getLocation()->getRegion()->getCountry());
-                        //$contentString = $spot->getName();
-                        $spot_url = $this->generateUrl('spot', array(
-                            'slug' => $spot->getName(),
-                            'location' => $spot->getLocation(),
-                            'country' => $spot->getLocation()->getRegion()->getCountry()
-                        ));
-
-                        $contentString = "<a href=" . $spot_url . ">" . $spot->getName() . "</a>";
-
-                        $infowindow->setContent($contentString);
-                        $infowindow->setAutoClose(TRUE);
-
-                        // Marker options
-                        $markerSpot->setInfoWindow($infowindow);
-                        $markerSpot->setPrefixJavascriptVariable('marker_spot_');
-                        $markerSpot->setPosition($latitudeSpot, $longitudeSpot, true);
-                        $markerSpot->setAnimation(Animation::DROP);
-                        $markerSpot->setOption('clickable', true);
-                        $markerSpot->setOption('flat', true);
-                        $markerSpot->setOptions(array(
-                            'clickable' => true,
-                            'flat' => true,
-                        ));
-
-                        // $totalLatitude += $latitudeSpot;
-                        // $totalLongitude += $longitudeSpot;
-                        $markersSpot[] = $markerSpot;
-                    }
-                }
-
-                // Create the map
-                // $centerLatitudeSpot = $totalLatitude / count($markersSpot);
-                // $centerLongitudeSpot = $totalLongitude / count($markersSpot);
-                // $centerLatitudeSpot = explode(",", $location->getSpots()->toArray()[0]->getCoordinate())[0];
-                // $centerLongitudeSpot = explode(",", $location->getSpots()->toArray()[0]->getCoordinate())[1];
-
-                $centerLatitudeSpot = $latitudeSpot;
-                $centerLongitudeSpot = $longitudeSpot;
-
-                $mapSpot = new Map();
-                $mapSpot->setPrefixJavascriptVariable('map_spot_');
-                $mapSpot->setHtmlContainerId('map_canvas_spot');
-                $mapSpot->setAsync(false);
-                $mapSpot->setCenter($centerLatitudeSpot, $centerLongitudeSpot, true);
-                $mapSpot->setMapOption('zoom', 10);
-                $mapSpot->setMapOption('mapTypeId', MapTypeId::ROADMAP);
-                $mapSpot->setMapOption('disableDefaultUI', true);
-                $mapSpot->setMapOption('disableDoubleClickZoom', true);
-                $mapSpot->setMapOptions(array(
-                    'disableDefaultUI' => true,
-                    'disableDoubleClickZoom' => true,
-                ));
-                $mapSpot->setStylesheetOption('width', 'auto');
-                $mapSpot->setStylesheetOption('height', '300px');
-                $mapSpot->setStylesheetOptions(array(
-                    'width' => 'auto',
-                    'height' => '300px',
-                ));
-                $mapSpot->setLanguage('en');
-
-                // Add the spots to the map
-                foreach ($markersSpot as $markerSpot) {
-                    $mapSpot->addMarker($markerSpot);
-                }
-            }
-        
-    }
-    
-    
-    
-    
-    
-    
-    
-        public function businessAction($country, $location, $slug) {
-        $locale = $this->get('request')->getLocale();
-        $business = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
-                ->findBySlug($country, $location, $slug, $locale);
-
-        if($business){
-        
-        $map = $this->getMapAddress($business);
-        $mapSpot = $this->getMapSpots($business);
-        
-        
-            
-//       
-//        $booking = new SkBooking();
-//        
-//        
-//        //$business_id = $request->query->get('business_id');
-//        
-//        
-//        $fos_user = $this->get('security.token_storage')->getToken()->getUser();
-//        $booking->setFosUser($fos_user);
-//        $booking->setEmail($fos_user->getEmail());
-//        $booking->setPhoneNumber($fos_user->getContact()->getMobilePhone());
-//        
-//        
-//        
-//        $booking->setBusiness($business);
-//        
-//        
-//        
-//        $form = $this->createCreateForm($booking, $locale, $country, $location, $slug);
-       
-                return $this->render('SkaphandrusAppBundle:Default:business.html.twig', array(
-//                       'entity' => $booking,
-//                    'form' => $form->createView(),
-                            'business' => $business,
-                            'map' => $map,
-//                            'map_center_lat' => $centerLatitude,
-//                            'map_center_lon' => $centerLongitude,
-                            'mapSpot' => $mapSpot,
-//                            'map_center_latSpot' => $centerLatitudeSpot,
-//                            'map_center_lonSpot' => $centerLongitudeSpot,
-                ));
-            
-        } else {
-            throw $this->createNotFoundException('The business "' . $slug . '" does not exist in the location ' . $location . ' or country ' . $country);
-        }
-    }
-    
-    
-    
-    
-    
-    
-    
     public function termsAction() {
         $em = $this->getDoctrine()->getManager();
 
@@ -277,12 +30,6 @@ class DefaultController extends Controller {
         ));
     }
 
-    
-    
-    
-    
-    
-    
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
         $modules = $em->getRepository('SkaphandrusAppBundle:SkIdentificationModule')->findBy(array('isEnabled' => '1'), array('updatedAt' => 'DESC'), 8);
@@ -305,7 +52,7 @@ class DefaultController extends Controller {
         return $this->render('SkaphandrusAppBundle:Default:index2.html.twig');
     }
 
-    public function homepageAction($_locale) {
+    public function homepageAction() {
         return $this->render('SkaphandrusAppBundle:Default:homepage.html.twig');
     }
 
@@ -632,6 +379,203 @@ class DefaultController extends Controller {
         ));
     }
 
+    /*
+     * Business Page 
+     */
+
+    public function businessAction($country, $location, $slug) {
+        $locale = $this->get('request')->getLocale();
+        $business = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
+                ->findBySlug($country, $location, $slug, $locale);
+
+        if ($business) {
+
+            $map = null;
+            $latitude = 0;
+            $longitude = 0;
+            $centerLatitude = 0;
+            $centerLongitude = 0;
+
+            //$business = new \Skaphandrus\AppBundle\Entity\SkBusiness();
+            if ($business->getAddress()->getCoordinate() != null) {
+
+                if (count($business->getAddress()->getLocation()) > 0) {
+
+                    // Get markers from spots for the map
+                    $markers = array();
+                    $marker = new Marker();
+
+                    //remove white spaces
+                    $latitude = preg_replace('/\s+/', '', explode(",", $business->getAddress()->getCoordinate())[0]);
+                    $longitude = preg_replace('/\s+/', '', explode(",", $business->getAddress()->getCoordinate())[1]);
+                    $zoom = $business->getAddress()->getZoom();
+
+                    $infowindow = new InfoWindow();
+                    if ($business->getAddress()->getStreet()) {
+                        $contentString = $business->getName() . '<br/> ' . $business->getAddress()->getStreet() . ', ' . $business->getAddress()->getLocation()->getName() . ', ' . $business->getAddress()->getLocation()->getRegion()->getCountry();
+                    } else {
+                        $contentString = $business->getName() . '<br/> ' . $business->getAddress()->getLocation()->getName() . ', ' . $business->getAddress()->getLocation()->getRegion()->getCountry();
+                    }
+                    $infowindow->setContent($contentString);
+                    $infowindow->setOption('maxWidth', 250);
+
+                    // Marker options
+                    $marker->setInfoWindow($infowindow);
+                    $marker->setPrefixJavascriptVariable('marker_');
+                    $marker->setPosition($latitude, $longitude, true);
+                    $marker->setAnimation(Animation::DROP);
+                    $marker->setOption('clickable', true);
+                    $marker->setOption('flat', true);
+                    $marker->setOptions(array(
+                        'clickable' => true,
+                        'flat' => true,
+                    ));
+
+                    // $totalLatitude += $latitude;
+                    // $totalLongitude += $longitude;
+                    $markers[] = $marker;
+                }
+
+
+                $centerLatitude = $latitude;
+                $centerLongitude = $longitude;
+
+                $map = new Map();
+                $map->setPrefixJavascriptVariable('map_');
+                $map->setHtmlContainerId('map_canvas');
+                $map->setAsync(false);
+                $map->setCenter($centerLatitude, $centerLongitude, true);
+                $map->setMapOption('zoom', intval($zoom));
+                $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
+                $map->setMapOption('disableDefaultUI', true);
+                $map->setMapOption('disableDoubleClickZoom', true);
+                $map->setMapOptions(array(
+                    'disableDefaultUI' => true,
+                    'disableDoubleClickZoom' => true,
+                ));
+                $map->setStylesheetOption('width', 'auto');
+                $map->setStylesheetOption('height', '300px');
+                $map->setStylesheetOptions(array(
+                    'width' => 'auto',
+                    'height' => '300px',
+                ));
+                $map->setLanguage('en');
+
+                // Add the spots to the map
+                foreach ($markers as $marker) {
+                    $map->addMarker($marker);
+                }
+            }
+
+            $mapSpot = null;
+            $latitudeSpot = 0;
+            $longitudeSpot = 0;
+            $centerLatitudeSpot = 0;
+            $centerLongitudeSpot = 0;
+
+            if (count($business->getSpot()) > 0) {
+
+                // Get markers from spots for the map
+                $markersSpot = array();
+                // $totalLatitude = 0;
+                // $totalLongitude = 0;
+                foreach ($business->getSpot() as $spot) {
+
+                    //dump($spot->getCoordinate());
+
+                    if ($spot->getCoordinate()) {
+                        $markerSpot = new Marker();
+
+                        //remove white spaces
+                        $latitudeSpot = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[0]);
+                        $longitudeSpot = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[1]);
+
+                        $infowindow = new InfoWindow();
+
+                        //$utils = new \Skaphandrus\AppBundle\Twig\UtilsExtension($this->container, $this->get('translator'));
+                        //$contentString = $utils->link_to_spot($spot->getName(), $spot->getLocation(), $spot->getLocation()->getRegion()->getCountry());
+                        //$contentString = $spot->getName();
+                        $spot_url = $this->generateUrl('spot', array(
+                            'slug' => $spot->getName(),
+                            'location' => $spot->getLocation(),
+                            'country' => $spot->getLocation()->getRegion()->getCountry()
+                        ));
+
+                        $contentString = "<a href=" . $spot_url . ">" . $spot->getName() . "</a>";
+
+                        $infowindow->setContent($contentString);
+                        $infowindow->setAutoClose(TRUE);
+
+                        // Marker options
+                        $markerSpot->setInfoWindow($infowindow);
+                        $markerSpot->setPrefixJavascriptVariable('marker_spot_');
+                        $markerSpot->setPosition($latitudeSpot, $longitudeSpot, true);
+                        $markerSpot->setAnimation(Animation::DROP);
+                        $markerSpot->setOption('clickable', true);
+                        $markerSpot->setOption('flat', true);
+                        $markerSpot->setOptions(array(
+                            'clickable' => true,
+                            'flat' => true,
+                        ));
+
+                        // $totalLatitude += $latitudeSpot;
+                        // $totalLongitude += $longitudeSpot;
+                        $markersSpot[] = $markerSpot;
+                    }
+                }
+
+                // Create the map
+                // $centerLatitudeSpot = $totalLatitude / count($markersSpot);
+                // $centerLongitudeSpot = $totalLongitude / count($markersSpot);
+                // $centerLatitudeSpot = explode(",", $location->getSpots()->toArray()[0]->getCoordinate())[0];
+                // $centerLongitudeSpot = explode(",", $location->getSpots()->toArray()[0]->getCoordinate())[1];
+
+                $centerLatitudeSpot = $latitudeSpot;
+                $centerLongitudeSpot = $longitudeSpot;
+
+                $mapSpot = new Map();
+                $mapSpot->setPrefixJavascriptVariable('map_spot_');
+                $mapSpot->setHtmlContainerId('map_canvas_spot');
+                $mapSpot->setAsync(false);
+                $mapSpot->setCenter($centerLatitudeSpot, $centerLongitudeSpot, true);
+                $mapSpot->setMapOption('zoom', 10);
+                $mapSpot->setMapOption('mapTypeId', MapTypeId::ROADMAP);
+                $mapSpot->setMapOption('disableDefaultUI', true);
+                $mapSpot->setMapOption('disableDoubleClickZoom', true);
+                $mapSpot->setMapOptions(array(
+                    'disableDefaultUI' => true,
+                    'disableDoubleClickZoom' => true,
+                ));
+                $mapSpot->setStylesheetOption('width', 'auto');
+                $mapSpot->setStylesheetOption('height', '300px');
+                $mapSpot->setStylesheetOptions(array(
+                    'width' => 'auto',
+                    'height' => '300px',
+                ));
+                $mapSpot->setLanguage('en');
+
+                // Add the spots to the map
+                foreach ($markersSpot as $markerSpot) {
+                    $mapSpot->addMarker($markerSpot);
+                }
+            }
+
+//            $map = $this->getMapAddress($business);
+//            $mapSpot = $this->getMapSpots($business);
+
+            return $this->render('SkaphandrusAppBundle:Default:business.html.twig', array(
+                        'business' => $business,
+                        'map' => $map,
+                        'map_center_lat' => $centerLatitude,
+                        'map_center_lon' => $centerLongitude,
+                        'mapSpot' => $mapSpot,
+                        'map_center_latSpot' => $centerLatitudeSpot,
+                        'map_center_lonSpot' => $centerLongitudeSpot,
+            ));
+        } else {
+            throw $this->createNotFoundException('The business "' . $slug . '" does not exist in the location ' . $location . ' or country ' . $country);
+        }
+    }
 
     /*
      * Spot Page 
