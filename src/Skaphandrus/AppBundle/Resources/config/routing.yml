@@ -25,6 +25,11 @@ spot:
     path:     /teste/spot
     defaults: { _controller: "SkaphandrusAppBundle:Testes:spot" }
     
+index_teste:
+    path:     /teste/index
+    defaults: { _controller: "SkaphandrusAppBundle:Testes:index" }
+    
+    
 skaphandrus_app_booking_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skbooking.yml"
     prefix:   /{_locale}/booking_admin

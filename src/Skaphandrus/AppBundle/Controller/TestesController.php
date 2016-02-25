@@ -110,6 +110,14 @@ class TestesController extends Controller {
         ));
     }
 
+    
+     public function indexAction(Request $request) {
+
+
+        return $this->render('SkaphandrusAppBundle:Testes:index.html.twig');
+    }
+    
+    
     public function spotAction(Request $request) {
 
         $em = $this->getDoctrine()->getManager();
@@ -117,12 +125,12 @@ class TestesController extends Controller {
         $limit = $request->query->get('limit');
         $offset = $request->query->get('offset');
 
-        if ($limit == null and $offset == null) {
-            $limit = 10;
-            $offset = 0;
-        }
+//        if ($limit == null and $offset == null) {
+//            $limit = 10;
+//            $offset = 0;
+//        }
 
-        $spots = $em->getRepository('SkaphandrusAppBundle:SkSpot')->getTenSpots($limit = $limit, $offset = $offset);
+        $spots = $em->getRepository('SkaphandrusAppBundle:SkSpot')->getTenSpots($limit, $offset);
 
         return $this->render('SkaphandrusAppBundle:Testes:spot.html.twig', array(
                     'spots' => $spots,

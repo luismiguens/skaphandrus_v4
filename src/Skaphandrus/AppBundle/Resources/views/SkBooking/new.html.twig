@@ -1,87 +1,42 @@
-{#{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}#}
+
 
 {% form_theme form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
 
-{#{% block javascripts %}
-    {{ parent() }}#}
-    
-{#{% endblock %}#}
 
 
-{#{% block styleshets %}
-    {{ parent() }}
-{% endblock %}
 
-{% block heading_title %}
-    {{ "page.booking.h1.title"|trans }}
-{% endblock %}#}
-
-
-{#{% block heading_breadcrumbs %}
-    <ol class="breadcrumb">
-        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
-        <li><a href="{{ path('booking_admin')}}">{{ "breadcrumb.booking"|trans }}</a></li>
-        <li class="active"><strong>{{ "breadcrumb.add_booking"|trans }}</strong></li>
-    </ol>
-{% endblock %}#}
-
-{#{% block heading_action %}
-    <a href="{{ path('booking_admin_new') }}" class="btn btn-primary">{{ "form.booking.btn.add"|trans }}</a>
-{% endblock %}#}
-
-{#{% block form_title_description %}
-    {{ "page.booking.text.description"|trans }}
-{% endblock %}#}
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
 
 
-{#{% block body -%}
-    <style>
-        .ui-autocomplete-loading {
-            background: white url("http://jqueryui.com/resources/demos/autocomplete/images/ui-anim_basic_16x16.gif") right center no-repeat;
-        }
-        ul {
-            list-style-type: none;
-        }
-    </style>#}
+                <!-- FORM START -->
+                <div class="form_error">
 
-    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'business_id': business_id} }) }}
+                </div>
 
-    {#{{ form_row(form.business_id) }}#}
-    {{ form_row(form.beginAt) }}
-    {{ form_row(form.endAt) }}
-    {{ form_row(form.certificationLevel) }}
-    {{ form_row(form.observations) }}
-    {{ form_row(form.phoneNumber) }}
-    {{ form_row(form.email) }}
+                {{ form_start(form, { 'attr': {'class': 'ajaxForm form-horizontal'} }) }}
+                <input type="hidden" name="business_id" value="{{business_id}}"/>
+                <div id="form_body">
 
-    <label class="col-sm-3 control-label">{{ form_label(form.bookingDive) }}</label>
-    <div class="col-sm-9">
-        <ul class=bookingDive data-prototype="{{ form_widget(form.bookingDive.vars.prototype)|e }}">
-            {% for dive in form.bookingDive %}
-                <li>
-                    {{ form_widget(dive) }}
-                </li>
-            {% endfor %}
-        </ul>
-        <div class="hr-line-dashed"></div>
-    </div>
+                    {% include 'SkaphandrusAppBundle:SkBooking:form.html.twig' with {'form': form} %}
+                </div>
+                {{ form_end(form) }}
 
-    <label class="col-sm-3 control-label">{{ form_label(form.bookingOtherActivity) }}</label>
-    <div class="col-sm-9">
-        <ul class=bookingOtherActivity data-prototype="{{ form_widget(form.bookingOtherActivity.vars.prototype)|e }}">
-            {% for activity in form.bookingOtherActivity %}
-                <li>
-                    {{ form_widget(activity) }}
-                </li>
-            {% endfor %}
-        </ul>
-        <div class="hr-line-dashed"></div>
-    </div>
+                <!-- FORM END -->
 
-    {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'booking_admin', 'new_form':false} %}
 
-    {% do form.bookingDive.setRendered %}
-    {% do form.bookingOtherActivity.setRendered %}
-    {{ form_end(form) }}
-
-{#{% endblock %}#}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

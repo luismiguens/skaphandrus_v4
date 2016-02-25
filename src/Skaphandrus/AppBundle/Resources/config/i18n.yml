@@ -32,6 +32,18 @@ taxon:
 business: 
     locales:  { en: "/en/scuba-diving-center/{country}/{location}/{slug}", pt: "/pt/centros-mergulho/{country}/{location}/{slug}" }
     defaults: { _controller: SkaphandrusAppBundle:Default:business }
+ 
+    
+
+    
+
+
+
+
+
+    
+    
+    
     
 business-home: 
     locales:  { en: "/en/scuba-diving-center", pt: "/pt/centros-mergulho" }
