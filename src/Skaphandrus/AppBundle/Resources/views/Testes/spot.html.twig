@@ -1,45 +1,6 @@
-{#{% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}#}
 
-{#{% block javascripts %}#}
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script type="text/javascript">
-    $(function () {
-        var limit = 10;
-        var offset = 0;
-        var loadMore = function () {
-            $('#results_ajax').fadeIn("slow");
-            offset = offset + 10;
-            setTimeout(function () {
-                $.ajax({
-                    type: "get",
-                    url: "{{path("spot")}}",
-                    data: 'limit=' + limit + '&offset=' + offset,
-                    dataType: "text",
-                    success: function (response) {
-                        $("#box").append(response);
-                        $("#more").remove(); // removing old button
-                    }
-                });
-            }, 100);
-        };
-        $('#more').click(loadMore);
-    });
-</script>
-
-{#{% endblock %}
-
-{% block body %}#}
-
-<ul>
     {% for spot in spots %}
         <li>
             {{spot}}
         </li>
     {% endfor %}
-</ul>
-
-<div id="box"></div>
-<button id="more" > Show More </button>
-
-{#{% endblock %}#}

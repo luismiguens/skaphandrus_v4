@@ -107,33 +107,23 @@ class SkBookingDive {
         return $this->id;
     }
 
-    /**
-     * Add booking
+
+    
+        /**
+     * Get booking
      *
-     * @param \Skaphandrus\AppBundle\Entity\SkBooking $booking
-     *
-     * @return SkBookingDive
+     * @return \DateTime
      */
-    public function addBooking(\Skaphandrus\AppBundle\Entity\SkBooking $booking) {
-        $this->booking[] = $booking;
-        $booking->setBookingDive($this);
+    public function setBooking(\Skaphandrus\AppBundle\Entity\SkBooking $booking) {
+       $this->booking = $booking;
 
         return $this;
     }
 
     /**
-     * Remove booking
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkBooking $booking
-     */
-    public function removeBooking(\Skaphandrus\AppBundle\Entity\SkBooking $booking) {
-        $this->booking->removeElement($booking);
-    }
-
-    /**
      * Get booking
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return 
      */
     public function getBooking() {
         return $this->booking;

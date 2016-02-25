@@ -1,0 +1,78 @@
+{#{% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
+
+{% block javascripts %}#}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var limit_spots = 10;
+        var offset_spots = -10;
+        
+        var limit_species = 10;
+        var offset_species = -10;
+        
+        
+        var loadSpots = function () {
+            $('#box_spots').fadeIn("slow");
+            offset_spots = offset_spots + 10;
+            setTimeout(function () {
+                $.ajax({
+                    type: "get",
+                    url: "{{path("spot")}}",
+                    data: 'limit=' + limit_spots + '&offset=' + offset_spots,
+                    dataType: "text",
+                    success: function (response) {
+                        $("#box_spots").append(response);
+                        
+                    }
+                });
+            }, 100);
+        };
+        $(this).ready(loadSpots);
+        $('#show_more_spots').click(loadSpots);
+   
+
+
+        var loadSpecies = function () {
+            $('#box_species').fadeIn("slow");
+            offset_species = offset_species + 10;
+            setTimeout(function () {
+                $.ajax({
+                    type: "get",
+                    url: "{{path("spot")}}",
+                    data: 'limit=' + limit_species + '&offset=' + offset_species,
+                    dataType: "text",
+                    success: function (response) {
+                        $("#box_species").append(response);
+                        
+                    }
+                });
+            }, 100);
+        };
+        $(this).ready(loadSpecies);
+        $('#show_more_species').click(loadSpecies);
+
+});
+    
+    
+   
+</script>
+
+{#{% endblock %}
+
+{% block body %}#}
+
+
+
+<ul id="box_spots"></ul>
+<button id="show_more_spots" > Show More Spots </button>
+
+
+
+
+<ul id="box_species"></ul>
+<button id="show_more_species" > Show More Species </button>
+
+
+
+{#{% endblock %}#}

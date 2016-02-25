@@ -137,66 +137,66 @@
 
 
 {% block heading_breadcrumbs %}
-    < ol class = "breadcrumb" >
-    < li > < a href = "{{ url_to_dashboard() }}" >{{ "breadcrumb.dashboard"|trans }} < /a></li >
-< li > < a href = "{{ path('booking_admin')}}" >{{ "breadcrumb.booking"|trans }} < /a></li >
-< li class = "active" > < strong >{{ "breadcrumb.edit_booking"|trans }} < /strong></li >
-< /ol>
+    <ol class = "breadcrumb" >
+    <li> <a href = "{{ url_to_dashboard() }}" >{{ "breadcrumb.dashboard"|trans }} </a></li>
+<li> <a href = "{{ path('booking_admin')}}" >{{ "breadcrumb.booking"|trans }} </a></li>
+<li class = "active" > <strong>{{ "breadcrumb.edit_booking"|trans }} </strong></li>
+</ol>
 {% endblock %}
 
 
 {% block heading_action %}
-    < a href = "{{ path('booking_admin_new') }}" class = "btn btn-primary" >{{ "form.booking.btn.add"|trans }} < /a>
-{% endblock %}
+    <a href = "{{ path('booking_admin_new') }}" class = "btn btn-primary" >{{ "form.booking.btn.add"|trans }} </a>
+    {% endblock %}
 
 
-{% block form_title_description %}
-    {{ "page.booking.text.description"|trans }}
-{% endblock %}
+    {% block form_title_description %}
+        {{ "page.booking.text.description"|trans }}
+    {% endblock %}
 
 
-{% block body -%}
+    {% block body -%}
 
-    {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
+        {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
 
-    {{ form_row(edit_form.business) }}
-    {{ form_row(edit_form.beginAt) }}
-    {{ form_row(edit_form.endAt) }}
-    {{ form_row(edit_form.certificationLevel) }}
-    {{ form_row(edit_form.observations) }}
-    {{ form_row(edit_form.phoneNumber) }}
-    {{ form_row(edit_form.email) }}
+        {#   {{ form_row(edit_form.business) }}#}
+        {{ form_row(edit_form.beginAt) }}
+        {{ form_row(edit_form.endAt) }}
+        {{ form_row(edit_form.certificationLevel) }}
+        {{ form_row(edit_form.observations) }}
+        {{ form_row(edit_form.phoneNumber) }}
+        {{ form_row(edit_form.email) }}
 
-    <label class="col-sm-3 control-label">{{ form_label(edit_form.bookingDive) }}</label>
-    <div class="col-sm-9">
-        <ul class=bookingDive data-prototype="{{ form_widget(edit_form.bookingDive.vars.prototype)|e }}">
-            {% for dive in edit_form.bookingDive %}
-                <li>
-                    {{ form_widget(dive) }}
-                </li>
-            {% endfor %}
-        </ul>
-        <div class="hr-line-dashed"></div>
-    </div>
+        <label class="col-sm-3 control-label">{{ form_label(edit_form.bookingDive) }}</label>
+        <div class="col-sm-9">
+            <ul class=bookingDive data-prototype="{{ form_widget(edit_form.bookingDive.vars.prototype)|e }}">
+                {% for dive in edit_form.bookingDive %}
+                    <li>
+                        {{ form_widget(dive) }}
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="hr-line-dashed"></div>
+        </div>
 
-    <label class="col-sm-3 control-label">{{ form_label(edit_form.bookingOtherActivity) }}</label>
-    <div class="col-sm-9">
-        <ul class=bookingOtherActivity data-prototype="{{ form_widget(edit_form.bookingOtherActivity.vars.prototype)|e }}">
-            {% for activity in edit_form.bookingOtherActivity %}
-                <li>
-                    {{ form_widget(activity) }}
-                </li>
-            {% endfor %}
-        </ul>
-        <div class="hr-line-dashed"></div>
-    </div>
+        <label class="col-sm-3 control-label">{{ form_label(edit_form.bookingOtherActivity) }}</label>
+        <div class="col-sm-9">
+            <ul class=bookingOtherActivity data-prototype="{{ form_widget(edit_form.bookingOtherActivity.vars.prototype)|e }}">
+                {% for activity in edit_form.bookingOtherActivity %}
+                    <li>
+                        {{ form_widget(activity) }}
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="hr-line-dashed"></div>
+        </div>
 
-    {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'booking_admin', 'new_form':false} %}
+        {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'booking_admin', 'new_form':false} %}
 
-    {% do edit_form.bookingDive.setRendered %}
-    {% do edit_form.bookingOtherActivity.setRendered %}
-    {{ form_end(edit_form) }}
+        {% do edit_form.bookingDive.setRendered %}
+        {% do edit_form.bookingOtherActivity.setRendered %}
+        {{ form_end(edit_form) }}
 
-    {{ form(delete_form) }}
+        {{ form(delete_form) }}
 
-{% endblock %}
+    {% endblock %}
