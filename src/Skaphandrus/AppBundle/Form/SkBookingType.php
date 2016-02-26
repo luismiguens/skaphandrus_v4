@@ -20,8 +20,7 @@ class SkBookingType extends AbstractType {
 //                    'label' => 'form.booking.label.business',
 //                    'help' => 'form.booking.help.business'
 //                ))
-//                  ->add('business_id', 'hidden') 
-                
+//                ->add('business_id', 'hidden')
                 ->add('beginAt', null, array(
                     'years' => range(2016, 2030),
                     'label' => 'form.booking.label.begin_at'
@@ -32,7 +31,7 @@ class SkBookingType extends AbstractType {
                 ))
                 ->add('certificationLevel', 'choice', array(
                     'attr' => array('class' => 'form-control m-b'),
-                    'label' => 'form.booking.label.certificationLevel',
+                    'label' => 'form.booking.label.certification_level',
                     'choices' => array(
                         '0' => 'form.booking.label.certification_level_basic',
                         '1' => 'form.booking.label.certification_level_intermediate',
@@ -41,10 +40,12 @@ class SkBookingType extends AbstractType {
                 ))
                 //(Hour of arrival, extra services, activities...)
                 ->add('observations', 'textarea', array(
+                    'label' => 'form.booking.label.observations',
                     'attr' => array('class' => 'form-control',
                         'rows' => 8,
-                        'placeholder' => 'form.booking.label.observations_placeholder'),
-                    'label' => 'form.booking.label.observations',
+                        'placeholder' => 'form.booking.label.observations_placeholder'
+                    ),
+                    'required' => false
                 ))
                 ->add('phoneNumber', 'text', array(
                     'attr' => array('class' => 'form-control'),
@@ -61,7 +62,7 @@ class SkBookingType extends AbstractType {
                 ->add('bookingDive', 'collection', array(
                     'type' => new SkBookingDiveType(),
                     'allow_add' => true,
-                    'allow_delete' => false,
+                    'allow_delete' => true,
                     'prototype' => true,
                     'by_reference' => false,
                     'required' => false,
@@ -70,7 +71,7 @@ class SkBookingType extends AbstractType {
                 ->add('bookingOtherActivity', 'collection', array(
                     'type' => new SkBookingOtherActivityType(),
                     'allow_add' => true,
-                    'allow_delete' => false,
+                    'allow_delete' => true,
                     'prototype' => true,
                     'by_reference' => false,
                     'required' => false,

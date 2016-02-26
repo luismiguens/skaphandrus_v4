@@ -13,7 +13,7 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkSpotRepository extends EntityRepository {
 
-    public function getTenSpots($limit = 10, $offset = 0, $locale = 'en') {
+    public function getTenSpots($limit = 10, $offset = 0, $locale) {
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
