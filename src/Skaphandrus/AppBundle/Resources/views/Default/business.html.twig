@@ -28,146 +28,6 @@
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/peity/jquery.peity.min.js') }}"></script>
 
-    <script>
-                function initAjaxForm() {
-
-                $('body').on('submit', '.ajaxForm', function (e) {
-
-
-                e.preventDefault();
-                        $.ajax({
-                        type: $(this).attr('method'),
-                                url: $(this).attr('action'),
-                                data: $(this).serialize()
-                        })
-                        .done(function (data) {
-                        if (typeof data.message !== 'undefined') {
-                        alert(data.message);
-                                $(':input', '.ajaxForm')
-                                .not(':button, :submit, :reset, :hidden')
-                                .val('')
-                                .removeAttr('checked')
-                                .removeAttr('selected');
-                                $('#myModal').modal('toggle');
-                                //$('#form_body').html(data.message);
-                        }
-                        })
-                        .fail(function (jqXHR, textStatus, errorThrown) {
-                        if (typeof jqXHR.responseJSON !== 'undefined') {
-        {#if (jqXHR.responseJSON.hasOwnProperty('form')) {
-            $('#form_body').html(jqXHR.responseJSON.form);
-        }#}
-
-                            $('.form_error').html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>" + jqXHR.responseJSON.message + "</div>");
-                            } else {
-                            alert(errorThrown);
-                            }
-
-                            });
-                    });
-                    }
-
-
-
-
-            initAjaxForm();</script>
-
-    <script>
-                //http://symfony.com/doc/current/cookbook/form/form_collections.html
-                /////////////////////  bookingOtherActivity code start  \\\\\\\\\\\\\\\\\\\\\\\
-                var $container = $('ul.bookingOtherActivity');
-                // button to add a new SportParam
-                var $addOtherActivityLink = $('<br/><a href="#" class="btn btn-primary btn-xs">{{ "form.common.btn.create"|trans }}</a>');
-                var $newLinkLi = $('<li></li>').append($addOtherActivityLink);
-                $(document).ready(function () {
-        //delete button on each existing SportParam
-        $container.find('li').each(function () {
-        addOtherActivityDeleteLink($(this));
-        });
-                //add button
-                $container.append($newLinkLi);
-                // count the current form inputs we have (e.g. 2), use that as the new
-                // index when inserting a new item (e.g. 2)
-                $container.data('index', $container.find(':input').length);
-                // adding a new form when cliking Add button
-                $addOtherActivityLink.on('click', function (e) {
-                e.preventDefault();
-                        addOtherActivityForm($container, $newLinkLi);
-                });
-                // adding a new form SportParam
-                        function addOtherActivityForm($container, $newLinkLi) {
-
-                        var $prototype = $container.attr('data-prototype');
-                                var newForm = $prototype.replace(/__name__/g, $container.children().length - 1);
-                                var $newFormLi = $("<li margin-bottom:1px';></li>").append(newForm);
-                                $newLinkLi.before($newFormLi);
-                                addOtherActivityDeleteLink($newFormLi);
-                        }
-
-
-                function addOtherActivityDeleteLink($paramFormLi) {
-
-                var $removeFormA = $('<a href="#" class="btn btn-danger  btn-xs">{{ "form.common.btn.delete"|trans }}</a>');
-                        $paramFormLi.append($removeFormA);
-                        $removeFormA.on('click', function (e) {
-
-                        e.preventDefault();
-                                $paramFormLi.remove();
-                        });
-                }
-
-                });
-                /////////////////////  bookingOtherActivity code end  \\\\\\\\\\\\\\\\\\\\\\\
-
-
-                //http://symfony.com/doc/current/cookbook/form/form_collections.html
-                /////////////////////  BookingDive code start  \\\\\\\\\\\\\\\\\\\\\\\
-                var $container1 = $('ul.bookingDive');
-                // button to add a new SportParam
-                var $addBookingDiveLink = $('<br/><a href="#" class="btn btn-primary btn-xs">{{ "form.common.btn.create"|trans }}</a>');
-                var $newLinkLi1 = $('<li></li>').append($addBookingDiveLink);
-                $(document).ready(function () {
-        //delete button on each existing SportParam
-        $container1.find('li').each(function () {
-        addBookingDiveDeleteLink($(this));
-        });
-                //add button
-                $container1.append($newLinkLi1);
-                // count the current form inputs we have (e.g. 2), use that as the new
-                // index when inserting a new item (e.g. 2)
-                $container1.data('index', $container1.find(':input').length);
-                // adding a new form when cliking Add button
-                $addBookingDiveLink.on('click', function (e) {
-                e.preventDefault();
-                        addBookingDiveForm($container1, $newLinkLi1);
-                });
-                // adding a new form SportParam
-                        function addBookingDiveForm($container, $newLinkLi) {
-
-                        var $prototype = $container.attr('data-prototype');
-                                var newForm = $prototype.replace(/__name__/g, $container.children().length - 1);
-                                var $newFormLi = $("<li margin-bottom:1px';></li>").append(newForm);
-                                $newLinkLi.before($newFormLi);
-                                addBookingDiveDeleteLink($newFormLi);
-                        }
-
-
-                function addBookingDiveDeleteLink($paramFormLi) {
-
-                var $removeFormA = $('<a href="#" class="btn btn-danger  btn-xs">{{ "form.common.btn.delete"|trans }}</a>');
-                        $paramFormLi.append($removeFormA);
-                        $removeFormA.on('click', function (e) {
-
-                        e.preventDefault();
-                                $paramFormLi.remove();
-                        });
-                }
-
-                });
-                /////////////////////  BookingDive code end  \\\\\\\\\\\\\\\\\\\\\\\
-
-    </script>
-
     {% if map %}
         <script>
                     // Fix bug on Gmap inside tabs
@@ -810,12 +670,13 @@
                                         <div id="tab-4" class="tab-pane">
                                             <h3>{% trans with {'%business%': business.name} %}page.business.h3.book_now{% endtrans %}</h3>
                                             <br/>
-                                            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                                            <a class="btn btn-primary btn-lg" href="{{ path('booking_admin_new', {'business_id': business.id}) }}" class="btn btn-primary">{{ "page.business.button.book_now"|trans }}</a>
+
+                                            {#<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
                                                 {{ "page.business.button.book_now"|trans }}
-                                            </button>
-                                            
+                                            </button>#}
                                             {# {% if is_granted("IS_AUTHENTICATED_FULLY") %}#}
-                                            {{ render(controller('SkaphandrusAppBundle:SkBooking:new', {'business_id': business.id})) }}
+                                            {# {{ render(controller('SkaphandrusAppBundle:SkBooking:new', {'business_id': business.id})) }}#}
                                             {#{% endif %}#}
 
                                             {#{{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
@@ -824,6 +685,7 @@
                                             {{ form_end(form) }}
 
                                             {{ form(form) }}#}
+
                                         </div>
                                     </div>
                                 </div>

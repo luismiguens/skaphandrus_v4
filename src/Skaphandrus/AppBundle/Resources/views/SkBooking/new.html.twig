@@ -1,40 +1,210 @@
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
 {% form_theme form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
 
-<style>
-    ul {
-        list-style-type: none;
-    }
-</style>
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/hack/autocompleter-jqueryui.js') }}"></script>
+    <script>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-lg " role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-            </div>
-            <div class="modal-body">
+        //http://symfony.com/doc/current/cookbook/form/form_collections.html
+        /////////////////////  bookingOtherActivity code start  \\\\\\\\\\\\\\\\\\\\\\\
+        var $container = $('ul.bookingOtherActivity');
+        // button to add a new SportParam
+        var $addOtherActivityLink = $('<br/><a href="#" class="btn btn-primary btn-xs">{{ "form.common.btn.create"|trans }}</a>');
+        var $newLinkLi = $('<li></li>').append($addOtherActivityLink);
 
-                <!-- FORM START -->
-                <div class="form_error">
-                </div>
+        $(document).ready(function () {
+            //delete button on each existing SportParam
+            $container.find('li').each(function () {
+                addOtherActivityDeleteLink($(this));
+            });
 
-                {{ form_start(form, { 'attr': {'class': 'ajaxForm form-horizontal'} }) }}
-                <input type="hidden" name="business_id" value="{{business_id}}"/>
-                <div id="form_body">
-                    {% include 'SkaphandrusAppBundle:SkBooking:form.html.twig' with {'form': form} %}
-                </div>
-                {{ form_end(form) }}
-                <!-- FORM END -->
+            //add button
+            $container.append($newLinkLi);
 
-            </div>
-            {#<div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>#}
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $container.data('index', $container.find(':input').length);
+
+            // adding a new form when cliking Add button
+            $addOtherActivityLink.on('click', function (e) {
+                e.preventDefault();
+
+                addOtherActivityForm($container, $newLinkLi);
+
+            });
+
+            // adding a new form SportParam
+            function addOtherActivityForm($container, $newLinkLi) {
+
+                var $prototype = $container.attr('data-prototype');
+
+                var newForm = $prototype.replace(/__name__/g, $container.children().length - 1);
+
+                var $newFormLi = $("<li margin-bottom:1px';></li>").append(newForm);
+                $newLinkLi.before($newFormLi);
+
+                addOtherActivityDeleteLink($newFormLi);
+            }
 
 
+            function addOtherActivityDeleteLink($paramFormLi) {
+
+                var $removeFormA = $('<a href="#" class="btn btn-danger  btn-xs">{{ "form.common.btn.delete"|trans }}</a>');
+
+                $paramFormLi.append($removeFormA);
+
+                $removeFormA.on('click', function (e) {
+
+                    e.preventDefault();
+
+                    $paramFormLi.remove();
+                });
+            }
+
+        });
+        /////////////////////  bookingOtherActivity code end  \\\\\\\\\\\\\\\\\\\\\\\
+
+
+        //http://symfony.com/doc/current/cookbook/form/form_collections.html
+        /////////////////////  BookingDive code start  \\\\\\\\\\\\\\\\\\\\\\\
+        var $container1 = $('ul.bookingDive');
+        // button to add a new SportParam
+        var $addBookingDiveLink = $('<br/><a href="#" class="btn btn-primary btn-xs">{{ "form.common.btn.create"|trans }}</a>');
+        var $newLinkLi1 = $('<li></li>').append($addBookingDiveLink);
+
+        $(document).ready(function () {
+            //delete button on each existing SportParam
+            $container1.find('li').each(function () {
+                addBookingDiveDeleteLink($(this));
+            });
+
+            //add button
+            $container1.append($newLinkLi1);
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $container1.data('index', $container1.find(':input').length);
+
+            // adding a new form when cliking Add button
+            $addBookingDiveLink.on('click', function (e) {
+                e.preventDefault();
+
+                addBookingDiveForm($container1, $newLinkLi1);
+
+            });
+
+            // adding a new form SportParam
+            function addBookingDiveForm($container, $newLinkLi) {
+
+                var $prototype = $container.attr('data-prototype');
+
+                var newForm = $prototype.replace(/__name__/g, $container.children().length - 1);
+
+                var $newFormLi = $("<li margin-bottom:1px';></li>").append(newForm);
+                $newLinkLi.before($newFormLi);
+
+                addBookingDiveDeleteLink($newFormLi);
+            }
+
+
+            function addBookingDiveDeleteLink($paramFormLi) {
+
+                var $removeFormA = $('<a href="#" class="btn btn-danger  btn-xs">{{ "form.common.btn.delete"|trans }}</a>');
+
+                $paramFormLi.append($removeFormA);
+
+                $removeFormA.on('click', function (e) {
+
+                    e.preventDefault();
+
+                    $paramFormLi.remove();
+                });
+            }
+
+        });
+        /////////////////////  BookingDive code end  \\\\\\\\\\\\\\\\\\\\\\\
+    </script>
+
+{% endblock %}
+
+
+{% block heading_title %}
+    {{ "page.booking.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class = "breadcrumb" >
+        <li><a href = "{{ url_to_dashboard() }}" >{{ "breadcrumb.dashboard"|trans }} </a></li>
+        <li><a href = "{{ path('booking_admin')}}" >{{ "breadcrumb.booking"|trans }} </a></li>
+        <li class = "active" > <strong>{{ "breadcrumb.new_booking"|trans }} </strong></li>
+    </ol>
+{% endblock %}
+
+
+{#{% block heading_action %}
+    <a href = "{{ path('booking_admin_new') }}" class = "btn btn-primary" >{{ "form.booking.btn.add"|trans }} </a>
+{% endblock %}#}
+
+
+{% block form_title_description %}
+    {{ "page.booking.text.description"|trans }}
+{% endblock %}
+
+
+{% block body -%}
+
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+
+    {{ form_errors(form) }}
+
+    <style>
+        ul {
+            list-style-type: none;
+        }
+    </style>
+
+    {#    {{ form_row(form.business) }}#}
+    {{ form_row(form.beginAt) }}
+    {{ form_row(form.endAt) }}
+    {{ form_row(form.certificationLevel) }}
+    {{ form_row(form.observations) }}
+    {{ form_row(form.phoneNumber) }}
+    {{ form_row(form.email) }}
+
+    <label class="col-sm-3 control-label">{{ form_label(form.bookingDive) }}</label>
+    <div class="col-sm-9">
+        <ul class=bookingDive data-prototype="{{ form_widget(form.bookingDive.vars.prototype)|e }}">
+            {% for dive in form.bookingDive %}
+                <li>
+                    {{ form_widget(dive) }}
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="hr-line-dashed"></div>
+    </div>
+
+    <label class="col-sm-3 control-label">{{ form_label(form.bookingOtherActivity) }}</label>
+    <div class="col-sm-9">
+        <ul class=bookingOtherActivity data-prototype="{{ form_widget(form.bookingOtherActivity.vars.prototype)|e }}">
+            {% for activity in form.bookingOtherActivity %}
+                <li>
+                    {{ form_widget(activity) }}
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="hr-line-dashed"></div>
+    </div>
+
+    {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'booking_admin', 'new_form':false} %}
+
+    {% do form.bookingDive.setRendered %}
+    {% do form.bookingOtherActivity.setRendered %}
+    {{ form_end(form) }}
+
+    {#    {{ form(delete_form) }}#}
+
+{% endblock %}
