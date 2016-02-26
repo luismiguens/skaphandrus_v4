@@ -236,7 +236,7 @@
                             <h3>{{ "page.photo.h3.species_validations"|trans }}</h3>
                             <ul>
                                 {% for sv in photo.speciesValidations %}
-                                    {% if sv.species is not empty %}
+                                    {% if sv.species is not empty   %}
                                         <li>{{ link_to_user(sv.fosUser) }} {{ "page.photo.label.validated"|trans }} {{ link_to_species(sv.species) }}</li>
                                         {% endif %}
                                     {% endfor %}

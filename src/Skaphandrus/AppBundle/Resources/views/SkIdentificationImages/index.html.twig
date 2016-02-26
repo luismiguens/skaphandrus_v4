@@ -2,8 +2,8 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>
-    <script>
+    <script type="text/javascript" src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>
+    <script type="text/javascript">
         $(function () {
             // bind change event to select
             $('#group_id').on('change', function () {
@@ -12,6 +12,24 @@
                     window.location = url; // redirect
                 }
                 return false;
+            });
+        });
+        $(document).ready(function () {
+
+            var options = $('select.whatever option');
+            var arr = options.map(function (_, o) {
+                return {
+                    t: $(o).text(),
+                    v: o.value
+                };
+            }).get();
+            arr.sort(function (o1, o2) {
+                return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0;
+            });
+            options.each(function (i, o) {
+                //console.log(i);
+                o.value = arr[i].v;
+                $(o).text(arr[i].t);
             });
         });
     </script>
@@ -33,13 +51,14 @@
 {% endblock %}
 
 {% block form_title_description %}
-    {{ "form.identification_images.text.description"|trans }}
+    {{ "form.identification_images.text.description"|trans }} from {{ group }}
 {% endblock %}
 
 {% block heading_action %}
-    <select name="group_id" id="group_id" >
+    <select class='whatever' name="group_id" id="group_id" >
+        <option value="0" > == Select the group ==</option>
         {% for group in groups %}
-            <option value="{{ group.id }}" {% if group.id == group_id %} selected="selected"{% endif %}>{{ group.name }}</option>
+            <option value="{{ group.id }}" >{{ group.name }}</option>
         {% endfor %}
     </select> 
 {% endblock %}

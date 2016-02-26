@@ -28,11 +28,15 @@ class SkIdentificationImagesController extends Controller
 
         // Get all groups for filter
         $groups = $em->getRepository('SkaphandrusAppBundle:SkIdentificationGroup')->findBy(array('isParentModule' => true));
+        
+        
+        //dump($groups);
+        
 
-        $params = array();
-
-        $params[$group->getTaxonName()] = $group->getTaxonValue()->getId();
-        $params['group_id'] = $group_id;
+//        $params = array();
+//
+//        $params[$group->getTaxonName()] = $group->getTaxonValue()->getId();
+//        $params['group_id'] = $group_id;
 
     
         $criterias = $group->getCriterias();
@@ -46,7 +50,7 @@ class SkIdentificationImagesController extends Controller
                    
                    'criterias' => $criterias,
                     'groups' => $groups,
-                    'group_id' => $group_id
+                    'group' => $group, 
         ));
     }
 }
