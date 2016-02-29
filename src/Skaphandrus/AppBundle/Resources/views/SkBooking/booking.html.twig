@@ -1,12 +1,11 @@
 {% extends 'SkaphandrusAppBundle:SkBooking:_base_booking_template.html.twig' %}
 
 {% block title %}
-    Hi {{booking.fosUser}},
+    Hi {{ booking.business }},
 {% endblock %}
 
 {% block intro %}
-    <p>Thanks for your message and interest to know Azores.</p>
-    <p>The summary of reserves is as follows:</p>
+    {% trans with {'%business%': booking.business.name} %}email.booking.intro{% endtrans %}
 {% endblock %}
 
 {% block content %}
@@ -32,22 +31,23 @@
             </div>
         </div>#}
 
-    <table class="table" >
+    <h4>{{ "page.booking.h4.booking_information"|trans }}</h4>
+    <table>
         <tbody>
             <tr>
-                <th style="width: 50%">{{ "form.booking.label.business"|trans }}</th>
-                <td><a href="{{ path('business', { 'country': booking.business.address.location.region.country, 'location': booking.business.address.location, 'slug': booking.business.name }) }}" >{{ booking.business }}</a></td>
+                <th align="left">{{ "form.booking.label.user"|trans }}</th>
+                <td>{{ link_to_user(booking.fosuser) }}</td>
             </tr>
             <tr>
-                <th style="width: 50%">{{ "form.booking.label.begin_at"|trans }}</th>
+                <th align="left">{{ "form.booking.label.begin_at"|trans }}</th>
                 <td>{{ booking.beginAt|date('Y-m-d') }}</td>
             </tr>
             <tr>
-                <th style="width: 50%">{{ "form.booking.label.end_at"|trans }}</th>
+                <th align="left">{{ "form.booking.label.end_at"|trans }}</th>
                 <td>{{ booking.endAt|date('Y-m-d') }}</td>
             </tr>
             <tr>
-                <th style="width: 50%">{{ "form.booking.label.certification_level"|trans }}</th>
+                <th align="left">{{ "form.booking.label.certification_level"|trans }}</th>
                 <td>
                     {% if booking.certificationLevel == 0 %}
                         {{ "form.booking.label.certification_level_basic"|trans }}
@@ -60,75 +60,102 @@
             </tr>
             {% if booking.observations %}
                 <tr>
-                    <th style="width: 50%">{{ "form.business_booking.label.observations"|trans }}</th>
+                    <th align="left">{{ "form.booking.label.observations"|trans }}</th>
                     <td>{{ booking.observations }}</td>
                 </tr>
             {% endif %}
             {% if booking.phoneNumber %}
                 <tr>
-                    <th style="width: 50%">{{ "form.business_booking.label.phonenumber"|trans }}</th>
+                    <th align="left">{{ "form.booking.label.phonenumber"|trans }}</th>
                     <td>{{ booking.phoneNumber }}</td>
                 </tr>
             {% endif %}
             <tr>
-                <th style="width: 50%">{{ "form.booking.label.email"|trans }}</th>
+                <th align="left">{{ "form.booking.label.email"|trans }}</th>
                 <td>{{ booking.email }}</td>
             </tr>
         </tbody>
     </table>
 
-    <h4>{{ "page.booking.h4.booking_dive_information"|trans }}</h4>
-    <table class="table table-striped">
-        <tbody>
-            {% for dive in booking.bookingDive %}
+    {% set dive = '' %}
+    {% for bookingDive in booking.bookingDive %}
+        {% set dive = bookingDive %}
+    {% endfor %}
+    {% if dive %}
+        <h4>{{ "page.booking.h4.booking_dive_information"|trans }}</h4>
+        <table>
+            <thead>
                 <tr>
-                    <th style="width: 50%">{{ "form.booking_dive.label.pax"|trans }}</th>
-                    <td>{{ dive.pax }}</td>
+                    <th>{{ "form.booking_dive.label.pax"|trans }}</th>
+                    <th>{{ "form.booking_dive.label.number_dives"|trans }}</th>
+                    <th style="width: 25%">{{ "form.booking_dive.label.date_at"|trans }}</th>
                 </tr>
-                <tr>
-                    <th style="width: 50%">{{ "form.booking_dive.label.number_dives"|trans }}</th>
-                    <td>{{ dive.numberDives }}</td>
-                </tr>
-                <tr>
-                    <th style="width: 50%">{{ "form.booking_dive.label.date_at"|trans }}</th>
-                    <td>{{ dive.dateAt|date('Y-m-d') }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for dive in booking.bookingDive %}
+                    <tr>
+                        <td>
+                            {% if dive.pax < 2 %}
+                                {{ dive.pax }} {{ "label.person"|trans }}
+                            {% else %}
+                                {{ dive.pax }} {{ "label.persons"|trans }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if dive.numberDives < 2 %}
+                                {{ dive.numberDives }} {{ "label.dive"|trans }}
+                            {% else %}
+                                {{ dive.numberDives }} {{ "label.dives"|trans }}
+                            {% endif %}
+                        </td>
+                        <td style="width: 25%">{{ dive.dateAt|date('Y-m-d') }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 
-    <h4>{{ "page.booking.h4.booking_other_information"|trans }}</h4>
-    <table class="table table-striped">
-        <tbody>
-            {% for other in booking.bookingOtherActivity %}
+    {% set other = '' %}
+    {% for otherActivity in booking.bookingOtherActivity %}
+        {% set other = otherActivity %}
+    {% endfor %}
+    {% if other %}
+        <h4>{{ "page.booking.h4.booking_other_information"|trans }}</h4>
+        <table>
+            <thead>
                 <tr>
-                    <th style="width: 50%">{{ "form.booking_other_activity.label.other_activity"|trans }}</th>
-                    <td>{{ other.otherActivity }}</td>
+                    <th style="width: 25%">{{ "form.booking_other_activity.label.other_activity"|trans }}</th>
+                    <th style="width: 25%">{{ "form.booking_other_activity.label.schedule"|trans }}</th>
+                    <th style="width: 25%">{{ "form.booking_other_activity.label.pax"|trans }}</th>
+                    <th style="width: 25%">{{ "form.booking_other_activity.label.date_at"|trans }}</th>
                 </tr>
-                <tr>
-                    <th style="width: 50%">{{ "form.booking_other_activity.label.pax"|trans }}</th>
-                    <td>{{ other.pax }}</td>
-                </tr>
-                <tr>
-                    <th style="width: 50%">{{ "form.booking_other_activity.label.date_at"|trans }}</th>
-                    <td>{{ other.dateAt|date('Y-m-d') }}</td>
-                </tr>
-                <tr>
-                    <th style="width: 50%">{{ "form.booking_other_activity.label.schedule"|trans }}</th>
-                    <td>
-                        {% if other.schedule == 0 %}
-                            {{ "form.booking_other_activity.label.schedule_morning"|trans }}
-                        {% elseif other.schedule == 1 %}
-                            {{ "form.booking_other_activity.label.schedule_afternoon"|trans }}
-                        {% else %}
-                            {{ "form.booking_other_activity.label.schedule_night"|trans }}
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
+            </thead>
+            <tbody>
+                {% for other in booking.bookingOtherActivity %}
+                    <tr>
+                        <td style="width: 25%">{{ other.otherActivity }}</td>
+                        <td style="width: 25%">
+                            {% if other.schedule == 0 %}
+                                {{ "form.booking_other_activity.label.schedule_morning"|trans }}
+                            {% elseif other.schedule == 1 %}
+                                {{ "form.booking_other_activity.label.schedule_afternoon"|trans }}
+                            {% else %}
+                                {{ "form.booking_other_activity.label.schedule_night"|trans }}
+                            {% endif %}
+                        </td>
+                        <td style="width: 25%">
+                            {% if other.pax < 2 %}
+                                {{ other.pax }} {{ "label.person"|trans }}
+                            {% else %}
+                                {{ other.pax }} {{ "label.persons"|trans }}
+                            {% endif %}
+                        </td>
+                        <td style="width: 25%">{{ other.dateAt|date('Y-m-d') }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 
 {% endblock %}
 

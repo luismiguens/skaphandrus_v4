@@ -8,15 +8,6 @@
     <script src="{{ asset('bundles/skaphandrusapp/js/hack/autocompleter-jqueryui.js') }}"></script>
     <script>
 
-$('input[name="fakeskaphandrus_appbundle_skbooking[business]"]').prop('disabled', true); // disable
-
-
-
-{#$('#inputId').prop('readonly', true);
-fakeskaphandrus_appbundle_skbooking[business]
-#}
-
-
         //http://symfony.com/doc/current/cookbook/form/form_collections.html
         /////////////////////  bookingOtherActivity code start  \\\\\\\\\\\\\\\\\\\\\\\
         var $container = $('ul.bookingOtherActivity');
@@ -76,7 +67,6 @@ fakeskaphandrus_appbundle_skbooking[business]
         });
         /////////////////////  bookingOtherActivity code end  \\\\\\\\\\\\\\\\\\\\\\\
 
-
         //http://symfony.com/doc/current/cookbook/form/form_collections.html
         /////////////////////  BookingDive code start  \\\\\\\\\\\\\\\\\\\\\\\
         var $container1 = $('ul.bookingDive');
@@ -135,6 +125,9 @@ fakeskaphandrus_appbundle_skbooking[business]
 
         });
         /////////////////////  BookingDive code end  \\\\\\\\\\\\\\\\\\\\\\\
+
+        $("input[fakeskaphandrus_appbundle_skbooking]").prop('disabled', true);
+
     </script>
 
 {% endblock %}
@@ -149,7 +142,7 @@ fakeskaphandrus_appbundle_skbooking[business]
     <ol class = "breadcrumb" >
         <li><a href = "{{ url_to_dashboard() }}" >{{ "breadcrumb.dashboard"|trans }} </a></li>
         <li><a href = "{{ path('booking_admin')}}" >{{ "breadcrumb.booking"|trans }} </a></li>
-        <li class = "active" > <strong>{{ "breadcrumb.new_booking"|trans }} </strong></li>
+        <li class = "active" ><strong>{{ "breadcrumb.new_booking"|trans }} </strong></li>
     </ol>
 {% endblock %}
 
@@ -180,9 +173,6 @@ fakeskaphandrus_appbundle_skbooking[business]
     {{ form_row(form.beginAt) }}
     {{ form_row(form.endAt) }}
     {{ form_row(form.certificationLevel) }}
-    {{ form_row(form.observations) }}
-    {{ form_row(form.phoneNumber) }}
-    {{ form_row(form.email) }}
 
     <label class="col-sm-3 control-label">{{ form_label(form.bookingDive) }}</label>
     <div class="col-sm-9">
@@ -207,6 +197,10 @@ fakeskaphandrus_appbundle_skbooking[business]
         </ul>
         <div class="hr-line-dashed"></div>
     </div>
+
+    {{ form_row(form.observations) }}
+    {{ form_row(form.phoneNumber) }}
+    {{ form_row(form.email) }}
 
     {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'booking_admin', 'new_form':false} %}
 

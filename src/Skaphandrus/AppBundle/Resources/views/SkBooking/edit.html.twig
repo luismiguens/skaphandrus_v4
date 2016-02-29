@@ -172,9 +172,6 @@
     {{ form_row(edit_form.beginAt) }}
     {{ form_row(edit_form.endAt) }}
     {{ form_row(edit_form.certificationLevel) }}
-    {{ form_row(edit_form.observations) }}
-    {{ form_row(edit_form.phoneNumber) }}
-    {{ form_row(edit_form.email) }}
 
     <label class="col-sm-3 control-label">{{ form_label(edit_form.bookingDive) }}</label>
     <div class="col-sm-9">
@@ -199,6 +196,10 @@
         </ul>
         <div class="hr-line-dashed"></div>
     </div>
+
+    {{ form_row(edit_form.observations) }}
+    {{ form_row(edit_form.phoneNumber) }}
+    {{ form_row(edit_form.email) }}
 
     {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'booking_admin', 'new_form':false} %}
 

@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SkBookingController extends Controller {
 
-    public function sendEmailBooking(SkBooking $booking, $subject = "new booking submited") {
+    public function sendEmailBooking(SkBooking $booking, $subject = "New Booking Submited") {
 
         //subject = mensagem de novo booking ou actualização de booking
 
@@ -93,7 +93,7 @@ class SkBookingController extends Controller {
 
             //enviar email com indicação de nova reserva
 
-            $subject = "new booking submited";
+            $subject = "New Booking Submited";
 
             $this->sendEmailBooking($entity, $subject);
 
@@ -290,7 +290,12 @@ class SkBookingController extends Controller {
             $em->flush();
 
             //enviar email com indicação de actualização da reserva
+            
+            $subject = "Update Booking Submited";
 
+            $this->sendEmailBooking($entity, $subject);
+
+            
             $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
 
             return $this->redirect($this->generateUrl('booking_admin_show', array('id' => $id)));

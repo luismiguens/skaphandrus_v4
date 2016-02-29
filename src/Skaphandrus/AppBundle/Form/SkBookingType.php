@@ -18,7 +18,6 @@ class SkBookingType extends AbstractType {
                     'class' => 'SkaphandrusAppBundle:SkBusiness',
                     'attr' => array('class' => 'form-control'),
                     'label' => 'form.booking.label.business',
-                    'help' => 'form.booking.help.business'
                 ))
 //                ->add('business_id', 'hidden')
                 ->add('beginAt', null, array(
