@@ -15,6 +15,39 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SkBookingController extends Controller {
 
+    public function sendEmailBooking(SkBooking $booking, $subject = "new booking submited") {
+
+        //subject = mensagem de novo booking ou actualização de booking
+
+        $addresses = $booking->getBusiness()->getAdminsEmails();
+
+        $message = \Swift_Message::newInstance()
+                ->setSubject($subject)
+                ->setFrom('support-noreply@skaphandrus.com', 'Skaphandrus')
+                ->setTo($booking->getBusiness()->getContact()->getEmail())
+                ->setCc($addresses)
+                ->setBcc('luis.miguens@skaphandrus.com')
+                ->setBody(
+                $this->renderView(
+                        'SkaphandrusAppBundle:SkBooking:booking.html.twig', array(
+                    'booking' => $booking)
+                ), 'text/html'
+                )
+        /*
+         * If you also want to include a plaintext version of the message
+          ->addPart(
+          $this->renderView(
+          'Emails/registration.txt.twig',
+          array('name' => $name)
+          ),
+          'text/plain'
+          )
+         */
+        ;
+
+        $this->get('mailer')->send($message);
+    }
+
     /**
      * Lists all SkBooking entities.
      *
@@ -39,18 +72,16 @@ class SkBookingController extends Controller {
         $entity = new SkBooking();
         $em = $this->getDoctrine()->getManager();
 
-        $business_id = $request->query->get('business_id');
-        if (!$business_id):
-            $business_id = $request->request->get('business_id');
-        endif;
-        
+//        $business_id = $request->query->get('business_id');
+//        if (!$business_id):
+//            $business_id = $request->request->get('business_id');
+//        endif;
 //        $business_id = 1977;
-
-        $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->find($business_id);
+//        $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->find($business_id);
 
         $fos_user = $this->get('security.token_storage')->getToken()->getUser();
         $entity->setFosUser($fos_user);
-        $entity->setBusiness($business);
+        //$entity->setBusiness($business);
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -59,8 +90,16 @@ class SkBookingController extends Controller {
             $em->persist($entity);
             $em->flush();
 
+
+            //enviar email com indicação de nova reserva
+
+            $subject = "new booking submited";
+
+            $this->sendEmailBooking($entity, $subject);
+
+
             $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
-            return $this->redirect($this->generateUrl('booking_admin_edit', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('booking_admin_show', array('id' => $entity->getId())));
         }
 
         return $this->render('SkaphandrusAppBundle:SkBooking:new.html.twig', array(
@@ -107,7 +146,7 @@ class SkBookingController extends Controller {
         if (!$business_id):
             $business_id = $request->request->get('business_id');
         endif;
-        
+
 //        $business_id = 1977;
 
         $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->find($business_id);
@@ -250,9 +289,11 @@ class SkBookingController extends Controller {
             $em->persist($entity);
             $em->flush();
 
+            //enviar email com indicação de actualização da reserva
+
             $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
 
-            return $this->redirect($this->generateUrl('booking_admin_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('booking_admin_show', array('id' => $id)));
         }
 
         return $this->render('SkaphandrusAppBundle:SkBooking:edit.html.twig', array(

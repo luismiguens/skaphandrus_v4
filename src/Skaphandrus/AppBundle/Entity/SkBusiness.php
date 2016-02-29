@@ -195,6 +195,18 @@ class SkBusiness {
         $this->updatedAt = new \DateTime();
     }
 
+    public function getAdminsEmails() {
+
+        $emails = array();
+        $fos_user = new FosUser();
+
+        foreach ($this->getAdmin() as $key => $fos_user) {
+            $emails[] = $fos_user->getEmail();
+        }
+
+        return $emails;
+    }
+
     /**
      * Set name
      *

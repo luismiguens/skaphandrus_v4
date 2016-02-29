@@ -46,6 +46,6 @@ assetic:
 
 swiftmailer:
 #    delivery_address: me@example.com
-    transport: gmail
-    username:  antonio.pedro.couto@gmail.com
-    password:  negativity123
+#    transport: gmail
+#    username:  mergulho.pt@gmail.com
+#    password:  skaphandrus

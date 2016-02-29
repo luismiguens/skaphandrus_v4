@@ -8,6 +8,11 @@
     <script src="{{ asset('bundles/skaphandrusapp/js/hack/autocompleter-jqueryui.js') }}"></script>
     <script>
 
+{#$('#inputId').prop('readonly', true);
+fakeskaphandrus_appbundle_skbooking[business]
+#}
+
+
         //http://symfony.com/doc/current/cookbook/form/form_collections.html
         /////////////////////  bookingOtherActivity code start  \\\\\\\\\\\\\\\\\\\\\\\
         var $container = $('ul.bookingOtherActivity');
@@ -167,7 +172,7 @@
         }
     </style>
 
-    {#    {{ form_row(form.business) }}#}
+    {{ form_row(form.business) }}
     {{ form_row(form.beginAt) }}
     {{ form_row(form.endAt) }}
     {{ form_row(form.certificationLevel) }}

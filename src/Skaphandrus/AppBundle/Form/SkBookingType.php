@@ -14,12 +14,12 @@ class SkBookingType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-//                ->add('business', 'autocomplete', array(
-//                    'class' => 'SkaphandrusAppBundle:SkBusiness',
-//                    'attr' => array('class' => 'form-control'),
-//                    'label' => 'form.booking.label.business',
-//                    'help' => 'form.booking.help.business'
-//                ))
+                ->add('business', 'autocomplete', array(
+                    'class' => 'SkaphandrusAppBundle:SkBusiness',
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.booking.label.business',
+                    'help' => 'form.booking.help.business'
+                ))
 //                ->add('business_id', 'hidden')
                 ->add('beginAt', null, array(
                     'years' => range(2016, 2030),
