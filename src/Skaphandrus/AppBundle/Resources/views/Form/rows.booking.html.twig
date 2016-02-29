@@ -1,0 +1,62 @@
+{% extends 'form_div_layout.html.twig' %}
+
+{#{% block form_widget_simple %}
+    {{ parent() }}
+
+    {% if help is defined %}
+        <span class="help">{{ help|trans }}</span>
+    {% endif %}
+{% endblock %}#}
+
+
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <ul>
+                    {% for error in errors %}
+                        <li>{{ error.message }}</li>
+                        {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}
+
+
+{% block form_row %}
+    {% spaceless %}
+        <div class="form-group">
+            <label class="col-sm-3 control-label">
+                {{ form_label(form) }}
+            </label>
+
+            {{ form_errors(form) }}
+            <div class="col-sm-9">
+                {# Show image if it's a file field and there is an image defined #}
+                {% if form.vars.type is defined and form.vars.type =='file' and (form.parent.vars.value.image is defined or form.parent.vars.value.photo is defined) %}
+                    {% if form.parent.vars.value.getWebPath is not empty %}
+                        <img class="thumbnail" src="{{ form.parent.vars.value.getWebPath | imagine_filter('sk_widen_240') }}" />
+                    {% endif %}
+                {% endif %}
+                {{ form_widget(form) }}
+                {% if help is defined %}
+                    <div style="margin-top:5px">
+                        {% if help is iterable %}
+                            {{ help['help']|trans({'%param%': help['param']}) }}
+                        {% else %}
+                            <span class="help">{{ help|trans }}</span>
+                        {% endif %}
+                    </div> 
+                {% endif %}
+            </div>
+        </div>
+        {#<div class="hr-line-dashed"></div>#}
+    {% endspaceless %}
+{% endblock form_row %}
+
+
+
+
+

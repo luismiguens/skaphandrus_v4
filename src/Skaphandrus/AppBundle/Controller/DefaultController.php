@@ -930,8 +930,23 @@ class DefaultController extends Controller {
      * Photo page.
      */
 
-    public function photoAction($id, $slug = null) {
+    public function photoAction($id, $slug = null, Request $request) {
         $title = Utils::unslugify($slug);
+
+        $next_photo_id = $id;
+        $previous_photo_id = $id;
+
+        $next_photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
+                ->findNextPhoto($id);
+        if ($next_photo)
+            $next_photo_id = $next_photo->getId();
+
+
+        $previous_photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
+                ->findPreviousPhoto($id);
+        if ($previous_photo)
+            $previous_photo_id = $previous_photo->getId();
+
 
         $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
                 ->findOneById($id);
@@ -1009,6 +1024,8 @@ class DefaultController extends Controller {
 
             return $this->render('SkaphandrusAppBundle:Default:photo.html.twig', array(
                         'photo' => $photo,
+                        'previous_photo' => $previous_photo_id,
+                        'next_photo' => $next_photo_id,
                         'showValidation' => $showValidation,
                         'showSugestion' => $showSugestion,
                         'validationAction' => $validationAction,

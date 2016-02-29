@@ -13,6 +13,24 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class SkPhotoRepository extends EntityRepository {
 
+    
+        public function findNextPhoto($id) {
+        return $this->getEntityManager()->createQuery(
+                        "SELECT p FROM SkaphandrusAppBundle:SkPhoto p
+            WHERE p.id > :id ORDER BY p.id ASC "
+                )->setParameter('id', $id )->setMaxResults(1)->getOneOrNullResult();
+    }
+    
+            public function findPreviousPhoto($id) {
+        return $this->getEntityManager()->createQuery(
+                        "SELECT p FROM SkaphandrusAppBundle:SkPhoto p
+            WHERE p.id < :id ORDER BY p.id DESC "
+                )->setParameter('id', $id )->setMaxResults(1)->getOneOrNullResult();
+    }
+
+    
+    
+    
     public function findPhotosCountByUserForModel($id, $model = 'species') {
         return $this->getEntityManager()
                         ->createQuery(

@@ -36,7 +36,7 @@
         <tbody>
             <tr>
                 <th align="left">{{ "form.booking.label.user"|trans }}</th>
-                <td>{{ link_to_user(booking.fosuser) }}</td>
+                <td>{{ booking.fosuser }}</td>
             </tr>
             <tr>
                 <th align="left">{{ "form.booking.label.begin_at"|trans }}</th>
@@ -83,7 +83,7 @@
     {% endfor %}
     {% if dive %}
         <h4>{{ "page.booking.h4.booking_dive_information"|trans }}</h4>
-        <table>
+        <table style="width: 100%">
             <thead>
                 <tr>
                     <th>{{ "form.booking_dive.label.pax"|trans }}</th>
@@ -121,7 +121,7 @@
     {% endfor %}
     {% if other %}
         <h4>{{ "page.booking.h4.booking_other_information"|trans }}</h4>
-        <table>
+        <table style="width: 100%">
             <thead>
                 <tr>
                     <th style="width: 25%">{{ "form.booking_other_activity.label.other_activity"|trans }}</th>

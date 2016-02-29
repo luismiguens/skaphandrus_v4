@@ -75,6 +75,7 @@ locations_home:
     defaults: { _controller: SkaphandrusAppBundle:Default:locationsHome }
 
 ################################################################################
+
 photo:
     locales:  { en: "/en/underwater-photography/photo/{id}-{slug}", pt: "/pt/fotografia-subaquatica/fotografia/{id}-{slug}" }
     defaults: { _controller: SkaphandrusAppBundle:Default:photo }

@@ -1,6 +1,6 @@
 {% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
 
-{% form_theme edit_form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
+{% form_theme edit_form 'SkaphandrusAppBundle:Form:rows.booking.html.twig' %}
 
 {% block javascripts %}
     {{ parent() }}
@@ -52,7 +52,7 @@
 
             function addOtherActivityDeleteLink($paramFormLi) {
 
-                var $removeFormA = $('<a href="#" class="btn btn-danger  btn-xs">{{ "form.common.btn.delete"|trans }}</a>');
+                var $removeFormA = $('<a href="#" class="btn btn-danger  btn-xs">{{ "form.common.btn.delete"|trans }}</a><div class="hr-line-dashed"></div>');
 
                 $paramFormLi.append($removeFormA);
 
@@ -112,7 +112,7 @@
 
             function addBookingDiveDeleteLink($paramFormLi) {
 
-                var $removeFormA = $('<a href="#" class="btn btn-danger  btn-xs">{{ "form.common.btn.delete"|trans }}</a>');
+                var $removeFormA = $('<a href="#" class="btn btn-danger  btn-xs">{{ "form.common.btn.delete"|trans }}</a> <div class="hr-line-dashed"></div>');
 
                 $paramFormLi.append($removeFormA);
 
@@ -175,38 +175,55 @@
         }
     </style>
 
-    {{ form_row(edit_form.business) }}
+        {{ form_row(edit_form.business) }}
+    <div class="hr-line-dashed"></div>
     {{ form_row(edit_form.beginAt) }}
+    <div class="hr-line-dashed"></div>
     {{ form_row(edit_form.endAt) }}
+    <div class="hr-line-dashed"></div>
     {{ form_row(edit_form.certificationLevel) }}
+    <div class="hr-line-dashed"></div>
 
-    <label class="col-sm-3 control-label">{{ form_label(edit_form.bookingDive) }}</label>
-    <div class="col-sm-9">
-        <ul class=bookingDive data-prototype="{{ form_widget(edit_form.bookingDive.vars.prototype)|e }}">
-            {% for dive in edit_form.bookingDive %}
-                <li>
-                    {{ form_widget(dive) }}
-                </li>
-            {% endfor %}
-        </ul>
-        <div class="hr-line-dashed"></div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">{{ form_label(edit_form.bookingDive) }}</label>
+        <div class="col-sm-9">
+            <ul class=bookingDive data-prototype="{{ form_widget(edit_form.bookingDive.vars.prototype)|e }}">
+                {% for dive in edit_form.bookingDive %}
+                    <li>
+                        {{ form_widget(dive) }}
+                    </li>
+                {% endfor %}
+            </ul>
+            {#<div class="hr-line-dashed"></div>#}
+        </div>
     </div>
-
-    <label class="col-sm-3 control-label">{{ form_label(edit_form.bookingOtherActivity) }}</label>
-    <div class="col-sm-9">
-        <ul class=bookingOtherActivity data-prototype="{{ form_widget(edit_form.bookingOtherActivity.vars.prototype)|e }}">
-            {% for activity in edit_form.bookingOtherActivity %}
-                <li>
-                    {{ form_widget(activity) }}
-                </li>
-            {% endfor %}
-        </ul>
-        <div class="hr-line-dashed"></div>
+    <div class="hr-line-dashed"></div>
+    
+    
+    
+    <div class="form-group">
+        <label class="col-sm-3 control-label">{{ form_label(edit_form.bookingOtherActivity) }}</label>
+        <div class="col-sm-9">
+            <ul class=bookingOtherActivity data-prototype="{{ form_widget(edit_form.bookingOtherActivity.vars.prototype)|e }}">
+                {% for activity in edit_form.bookingOtherActivity %}
+                    <li>
+                        {{ form_widget(activity) }}
+                    </li>
+                {% endfor %}
+            </ul>
+            {# <div class="hr-line-dashed"></div>#}
+        </div>
     </div>
+    <div class="hr-line-dashed"></div>
+         
+         
 
     {{ form_row(edit_form.observations) }}
+    <div class="hr-line-dashed"></div>
     {{ form_row(edit_form.phoneNumber) }}
+    <div class="hr-line-dashed"></div>
     {{ form_row(edit_form.email) }}
+    <div class="hr-line-dashed"></div>
 
     {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'booking_admin', 'new_form':false} %}
 
