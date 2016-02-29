@@ -126,6 +126,13 @@
 
         });
         /////////////////////  BookingDive code end  \\\\\\\\\\\\\\\\\\\\\\\
+
+        $(document).ready(function () {
+            var allfield7s = document.getElementsByName("fakeskaphandrus_appbundle_skbooking[business]");
+            for (var i = 0; i < allfield7s.length; i++)
+                allfield7s[i].setAttribute("readonly", true);
+        });
+        
     </script>
 
 {% endblock %}
