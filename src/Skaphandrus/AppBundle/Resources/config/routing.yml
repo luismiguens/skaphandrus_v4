@@ -13,21 +13,21 @@ sitemap:
     path:     /sitemap/{model}
     defaults: { _controller: "SkaphandrusAppBundle:Sitemap:sitemap" }
 
-teste:
-    path:     /teste
-    defaults: { _controller: "SkaphandrusAppBundle:Testes:teste" }
+#teste:
+#    path:     /teste
+#    defaults: { _controller: "SkaphandrusAppBundle:Testes:teste" }
 
-contest:
-    path:     /teste/contest
-    defaults: { _controller: "SkaphandrusAppBundle:Testes:contest" }
-    
-spot:
-    path:     /teste/spot
-    defaults: { _controller: "SkaphandrusAppBundle:Testes:spot" }
-    
-index_teste:
-    path:     /teste/index
-    defaults: { _controller: "SkaphandrusAppBundle:Testes:index" }
+#contest:
+#    path:     /teste/contest
+#    defaults: { _controller: "SkaphandrusAppBundle:Testes:contest" }
+#    
+#spot:
+#    path:     /teste/spot
+#    defaults: { _controller: "SkaphandrusAppBundle:Testes:spot" }
+#    
+#index_teste:
+#    path:     /teste/index
+#    defaults: { _controller: "SkaphandrusAppBundle:Testes:index" }
     
 ajax_spot:
     path:     /{_locale}/ajax/spot
