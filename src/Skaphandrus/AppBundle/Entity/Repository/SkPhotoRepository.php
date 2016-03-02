@@ -13,24 +13,100 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class SkPhotoRepository extends EntityRepository {
 
-    
-        public function findNextPhoto($id) {
+    public function findNextPhoto($id) {
         return $this->getEntityManager()->createQuery(
                         "SELECT p FROM SkaphandrusAppBundle:SkPhoto p
             WHERE p.id > :id ORDER BY p.id ASC "
-                )->setParameter('id', $id )->setMaxResults(1)->getOneOrNullResult();
+                )->setParameter('id', $id)->setMaxResults(1)->getOneOrNullResult();
     }
-    
-            public function findPreviousPhoto($id) {
+
+    public function findPreviousPhoto($id) {
         return $this->getEntityManager()->createQuery(
                         "SELECT p FROM SkaphandrusAppBundle:SkPhoto p
             WHERE p.id < :id ORDER BY p.id DESC "
-                )->setParameter('id', $id )->setMaxResults(1)->getOneOrNullResult();
+                )->setParameter('id', $id)->setMaxResults(1)->getOneOrNullResult();
     }
 
-    
-    
-    
+    public function getPhotosFromUser($fosUser) {
+        return $this->getEntityManager()->createQuery(
+                        "SELECT p FROM SkaphandrusAppBundle:SkPhoto p
+            WHERE p.fosUser = :fosUser"
+                )->setParameter('fosUser', $fosUser)->setMaxResults(6)->getResult();
+    }
+
+    public function getPhotoInContest($photo_id, $locale) {
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT contest, category, photo_id, sum(points) as points 
+                FROM (
+                    SELECT c.name as contest, cct.name as category, votation.category_id, votation.judge_id, vote.photo_id as photo_id, vote.points as points, votation.id 
+                    FROM sk_photo_contest_category_judge_photo_vote as vote 
+                    JOIN sk_photo_contest_category_judge_votation as votation on vote.votation_id = votation.id 
+                    JOIN sk_photo_contest_category as cc on votation.category_id = cc.id
+                    JOIN sk_photo_contest_category_translation cct on cct.translatable_id  = cc.id
+                    JOIN sk_photo_contest c on cc.contest_id = c.id
+                    WHERE photo_id = " . $photo_id . " and cct.locale = '" . $locale . "') as somatorio 
+                GROUP by photo_id 
+                HAVING points > 0 
+                ORDER by points desc" ;
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+//        $result = array();
+//
+//        foreach ($values as $value) {
+//
+//            $contest = new \Skaphandrus\AppBundle\Entity\SkPhotoContest();
+//            $contest->setName($value['c']);
+//
+//            $category = new \Skaphandrus\AppBundle\Entity\SkPhotoContestCategory();
+//            $category->translate($locale)->setName($value['category']);
+//            $category->setContest($contest);
+//
+//            $photo = new \Skaphandrus\AppBundle\Entity\SkPhoto();
+//            $photo = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($value['photo_id']);
+//            $photo->setPoints($value['points']);
+//            $photo->addCategory($category);
+//            $result[] = $photo;
+//        }
+
+        return $values;
+    }
+
+//    public function getPhotoInContest($photo, $locale) {
+//        $em = $this->getEntityManager();
+//        $connection = $em->getConnection();
+//
+//        $sql = "select c.name as c_name, cct.name as cct_name
+//                from sk_photo p
+//                join sk_photo_contest_category_photo ccp on ccp.photo_id = p.id
+//                join sk_photo_contest_category cc on ccp.category_id = cc.id
+//                join sk_photo_contest_category_translation cct on cct.translatable_id  = cc.id
+//                join sk_photo_contest c on cc.contest_id = c.id
+//                where p.id = " . $photo . " and cct.locale = '" . $locale . "'";
+//
+//        $statement = $connection->prepare($sql);
+//        $statement->execute();
+//        $values = $statement->fetchAll();
+//        $result = array();
+//
+//        foreach ($values as $value) {
+//            $contest = new \Skaphandrus\AppBundle\Entity\SkPhotoContest();
+//            $contest->setName($value['c_name']);
+//            
+//            $category = new \Skaphandrus\AppBundle\Entity\SkPhotoContestCategory();
+//            $category->translate($locale)->setName($value['cct_name']);
+//            $category->setContest($contest);
+//            
+//            $result[] = $category;
+//        }
+//
+//        return $result;
+//    }
+
     public function findPhotosCountByUserForModel($id, $model = 'species') {
         return $this->getEntityManager()
                         ->createQuery(
@@ -194,7 +270,7 @@ class SkPhotoRepository extends EntityRepository {
         return $photos;
     }
 
-    public function getQueryForGrid($params, $limit = 24, $order = array('id' => 'desc'), $offset = 0, $locale = "en") {
+    public function getQueryForGrid($params, $limit = 25, $order = array('id' => 'desc'), $offset = 0, $locale = "en") {
 
 //        $sql = "SELECT p.id as photo_id, p.title as photo_title, p.image as photo_image, "
 //                . "p.created_at as photo_created_at, p.taken_at as photo_taken_at, "

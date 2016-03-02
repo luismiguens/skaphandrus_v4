@@ -1,4 +1,4 @@
-<div class="lightBoxGallery">
+{#<div class="lightBoxGallery">#}
     <!-- resultset rows --> 
     {% for row in photos %}
         <span itemscope itemtype="http://schema.org/Photograph">
@@ -16,11 +16,11 @@
             {% endif %}#}
             <a href="{{ path('photo_no_slug',  { 'id': row.photo_id }) }}" title="{{ row.photo_title }}">
                 {#<img itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('new_sk_thumbnail_outbound_100') }}" />#}
-                <img itemprop="image" alt="{{ row.photo_title }}" src="{{ ('uploads/fotografias/'~row.photo_image) | imagine_filter('sk_thumbnail_outbound_100') }}" />
+                <img style="width: 100px; margin:1% 2px 0px 2px;" itemprop="image" alt="{{ row.photo_title }}" src="{{ ('uploads/fotografias/'~row.photo_image) | imagine_filter('sk_thumbnail_outbound_100') }}" />
             </a>
         </span>
     {% endfor %}
-    <a href="{{ path('photos', parameters) }}">See More</a>
+    <a style="margin-top: 2%;" class="btn btn-block btn-outline btn-primary" href="{{ path('photos', parameters) }}">Show More</a>
     <!-- The Gallery as lightbox dialog, should be a child element of the document body -->
     {#    <div id="blueimp-gallery" class="blueimp-gallery">
             <div class="slides"></div>
@@ -31,7 +31,8 @@
             <a class="play-pause"></a>
             <ol class="indicator"></ol>
         </div>
-    #}</div>
+    #}
+{#</div>#}
 <style>
     /* Local style for demo purpose */
 

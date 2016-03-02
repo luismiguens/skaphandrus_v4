@@ -53,8 +53,6 @@
     <meta property="og:url"         content="{{ app.request.getSchemeAndHttpHost() ~ url_to_photo(photo) }}" />
 
     {% set title = "page.photo.meta_tag.title"|trans({'%title%': photo.title|capitalize, '%taken_by%': photo.fosuser}) %}
-
-    {#{% set title =  trans with {'%title%': photo.title|capitalize, '%taken_by%': photo.fosuser } %}page.photo.meta_tag.title{% endtrans %}#}
     {% set title = title|split(',') %}
     {% set title = title[0] %}
 
@@ -112,202 +110,313 @@
     <div class="wrapper wrapper-content animated fadeInRight" itemscope itemtype="http://schema.org/Photograph">
         <div class="row">
             <div class="col col-lg-12" >
-                
-                previous = {{previous_photo}}<br/>
-                next = {{next_photo}}<br/>
-                                
-                
-                
-                {#<img style="margin-bottom: 4px" itemprop="image" alt="{{photo.title}}" class="img-responsive child" src="{{ photo.getWebPath | imagine_filter('sk_downscale_800_600') }}" />#}
-                <img style="margin-bottom: 4px; max-width: 800px; max-height: 600px" itemprop="image" alt="{{photo.title}}" class="img-responsive child" src="{{ "/" ~ photo.getWebPath }}" />
-                <div style="text-align: center">{% include 'SkaphandrusAppBundle:Common:addThis.html.twig' with {'photography': photo} %}</div>
+                <div class="carousel slide" id="carousel1">
+                    <div class="carousel-inner">
+                        <img style="max-width: 800px; max-height: 600px" itemprop="image" alt="{{photo.title}}" class="img-responsive child" src="{{ "/" ~ photo.getWebPath }}" />
+                    </div>
+                    <a style="margin-left: 15% " data-slide="prev" class="left carousel-control" href="{{path('photo_no_slug', {'id':previous_photo}) }}">
+                        <span class="icon-prev"></span>
+                    </a>
+                    <a style="margin-right: 15% " data-slide="next" class="right carousel-control" href="{{path('photo_no_slug', {'id':next_photo}) }}">
+                        <span class="icon-next"></span>
+                    </a>
+                </div>
+                <div style="text-align: center">
+                    {% include 'SkaphandrusAppBundle:Common:addThis.html.twig' with {'photography': photo} %}
+                </div>  
             </div>
+            {#<div class="col col-lg-1">
+                <a href="{{path('photo_no_slug', {'id':previous_photo}) }}"><i class="fa fa-chevron-circle-left fa-3x"></i></a>
+            </div>
+            <div class="col col-lg-10" >
+                <img style="max-width: 800px; max-height: 600px" itemprop="image" alt="{{photo.title}}" class="img-responsive child" src="{{ "/" ~ photo.getWebPath }}" />
+                <div style="text-align: center">
+                    {% include 'SkaphandrusAppBundle:Common:addThis.html.twig' with {'photography': photo} %}
+                </div>
+            </div>
+            <div class="col col-lg-1" >
+                <a href="{{path('photo_no_slug', {'id':next_photo}) }}"><i class="fa fa-chevron-circle-right fa-3x"></i></a>
+            </div>#}
         </div>
 
         <div class="row">
-            <div class="col-lg-6">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>{{ "page.photo.h5.photo_detail"|trans }}</h5>
+            <div class="col col-lg-12">
+                <p style=" margin: 2% 0% 2% 0%; text-align: center;"> {{"page.photo.p.more_photos"}} </p>
+            </div>
+
+            <div class="row" style="padding: 0% 15% 0% 15%;" >
+                <div class="col col-md-12">
+                    <div class="slider variable-width ">
+                        {% for p in photosUser %}
+                            <div> 
+                                <img style=" margin: 0% 5% 0% 5%; width: auto; background-color: black; height: 100px; " alt="{{ p.title }}" src="{{ "/" ~ p.getWebPath }}" />
+                            </div>
+                        {% endfor %}
                     </div>
-                    <div class="ibox-content ">
-                        <h4 itemprop="name"><strong>{{photo.title}}</strong></h4>
-
-                        <dl class="dl-horizontal">
-                            <dt>{{ "page.photo.h3.photographer"|trans }}: </dt>
-                            <dd>
-                                <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-                                    <meta itemprop="name" content="{{ photo.fosuser }}" />
-                                    <meta itemprop="url" content="{{ url_to_user(photo.fosuser) }}" />
-                                </span>
-                                {{ link_to_user(photo.fosuser) }}
-                            </dd>
-                            <dt>{{ "page.photo.label.taken_at"|trans }}:</dt> 
-                            <dd>
-                                <meta itemprop="datePublished" content="{{ photo.takenAt|date("Y-m-d") }}" />
-                                {{ photo.takenAt|date('Y-m-d H:i:s') }}
-                            </dd>
-                            <dt>{{ "page.photo.label.uploaded_at"|trans }}:</dt> 
-                            <dd>
-                                <meta itemprop="dateCreated" content="{{ photo.createdAt|date("Y-m-d") }}" />
-                                {{ photo.createdAt|date('Y-m-d H:i:s') }}
-                            </dd>
-                            {% if photo.creative is not empty %}
-                                <dt>{{ "page.photo.label.licensed_under"|trans }}:</dt> 
-                                <dd>
-                                    <meta itemprop="license" content="{{ photo.creative.name }}" />
-                                    <a class="text-navy" href="#">{{ photo.creative.name }}</a> 
-                                </dd>
-                            {% endif %}
-                            {% if photo.model is not empty %}
-                                <dt>{{ "page.photo.label.camera"|trans }}:</dt> 
-                                <dd>{{ photo.model.name }}</dd> 
-                            {% endif %}
-                        </dl>
-
-                        {% if photo.description is not empty %}
-                            <h5>{{ "page.photo.h5.description"|trans }}</h5>
-                            <p itemprop="description">{{ photo.description }}</p>
-                        {% endif %}
-
-                        {#{% if is_granted("IS_AUTHENTICATED_FULLY") %}#}
-                        {% include 'SkaphandrusAppBundle:Comments:async.html.twig' with {'id': 'SkPhoto-' ~ photo.id } %}
-                        {# {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': 'SkPhoto-' ~ photo.id} %}#}
-                        {#{% endif %}#}
-
-                    </div>  
                 </div>
             </div>
 
-            <div class="col-lg-6">
-                <div class="ibox">
-                    <div class="ibox-title">
-                        <h5>{{ "page.photo.h5.related_contents"|trans }}</h5>
-                        {#<div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="#">Config option 1</a>
-                                </li>
-                                <li><a href="#">Config option 2</a>
-                                </li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>#}
+            <div style="margin-top: 1%;" class="row">
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>{{ "page.photo.h5.photo_detail"|trans }}</h5>
+                        </div>
+
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-lg-6" >
+                                    <ul style="margin-left: 3%;" class="list-unstyled">
+                                        <li style="margin-bottom: 2%;" >
+                                            <strong>{{ "page.photo.h3.title"|trans }}: </strong>
+                                            <meta itemprop="name" /> {{photo.title}} 
+                                        </li>
+                                        <li style="margin-bottom: 2%;" > 
+                                            <strong> {{ "page.photo.h3.photographer"|trans }}: </strong>
+                                            <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                                                <meta itemprop="name" content="{{ photo.fosuser }}" />
+                                                <meta itemprop="url" content="{{ url_to_user(photo.fosuser) }}" />
+                                            </span>
+                                            {{ link_to_user(photo.fosuser) }}
+                                        </li>
+                                        <li style="margin-bottom: 2%;" > 
+                                            <strong> {{ "page.photo.label.taken_at"|trans }}:  </strong>
+                                            <meta itemprop="datePublished" content="{{ photo.takenAt|date("Y-m-d") }}" />
+                                            {{ photo.takenAt|date('Y-m-d H:i:s') }}
+                                        </li>
+                                        <li style="margin-bottom: 2%;" > 
+                                            <strong> {{ "page.photo.label.uploaded_at"|trans }}: </strong>
+                                            <meta itemprop="dateCreated" content="{{ photo.createdAt|date("Y-m-d") }}" />
+                                            {{ photo.createdAt|date('Y-m-d H:i:s') }}
+                                        </li>
+                                        <li style="margin-bottom: 2%;">
+                                            <strong> {{ "page.photo.label.camera"|trans }}: </strong>
+                                            {% if photo.model is not empty %}
+                                                {{ photo.model.name }}
+                                            {% else %}
+                                                {{ "page.photo.label.no_camera"|trans }}
+                                            {% endif %}
+                                        </li>
+                                        <li style="margin-bottom: 2%;">
+                                            <strong> {{ "page.photo.label.licensed_under"|trans }}: </strong>
+                                            {% if photo.creative is not empty %}
+                                                <meta itemprop="license" content="{{ photo.creative.name }}" />
+                                                <a class="text-navy" href="#">{{ photo.creative.name }}</a>
+                                            {% endif %}
+                                        </li>
+                                        <li style="margin-bottom: 2%;">
+                                            <strong>{{ "page.photo.h3.species"|trans }}: </strong>
+                                            {% if photo.species is not empty and photo.species is not null  %}
+                                                {{ link_to_species(photo.species) }}
+                                            {% else %}
+                                                {{ "page.photo.h3.no_species"|trans }}
+                                            {% endif %}
+                                        </li>
+                                        <li style="margin-bottom: 2%;">
+                                            <strong>{{ "page.photo.h3.spot"|trans }}</strong>
+                                            {% if photo.spot is not empty %}
+                                                <span itemscope itemtype="http://schema.org/TouristAttraction ">
+                                                    <meta itemprop="name" content="{{ photo.spot }}" />
+                                                </span>
+                                                <span itemscope itemtype="http://schema.org/City ">
+                                                    <meta itemprop="name" content="{{ photo.spot.location }}" />
+                                                </span>
+                                                <span itemscope itemtype="http://schema.org/Country ">
+                                                    <meta itemprop="name" content="{{  photo.spot.location.region.country }}" />
+                                                </span>
+                                                {{ link_to_spot(photo.spot)}}, {{ link_to_location(photo.spot.location)}}, {{ link_to_country(photo.spot.location.region.country)}}
+                                            {% else %}
+                                                {{ "page.photo.h3.no_spot"|trans }}
+                                            {% endif %}
+                                        </li>
+                                        <li style="margin-bottom: 2%;">
+                                            <strong>{{ "page.photo.h5.description"|trans }}</strong>
+                                            {% if photo.description is not empty %}
+                                                <p itemprop="description">{{ photo.description }}</p>
+                                            {% else %}
+                                                {{ "page.photo.h3.no_description"|trans }}
+                                            {% endif %}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-6" >
+                                    {% if photo.keyword|length > 0 %}
+                                        <h3 class="tag-title">{{ "page.photo.h3.tags"|trans }}</h3>
+                                        <ul class="tag-list" style="padding: 0;">
+                                            {% for keyword in photo.keyword %}
+                                                <li itemprop="keywords">
+                                                    <a href="">{{ keyword.keyword }}</a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ibox-content">
+                            <div class="row" style="text-align: right; margin-right: 2%; ">
+                                <div class="addthis_toolbox addthis_default_style addthis_20x20_style">
+                                    <a class="addthis_counter_facebook"></a>
+                                    <a class="addthis_counter_pinterest_share"></a>
+                                    <a class="addthis_counter_reddit"></a>
+                                    <a class="addthis_counter_linkedin"></a>   
+                                </div>
+                                {#<strong>Nº of Likes: </strong> 1000 
+                                <strong>Views: </strong> 77687 #}
+                            </div>  
+                        </div>
+
+                        <div style="margin-top: 1%;" class="row">
+                            <div class="col-lg-12">
+                                <div class="ibox float-e-margins">
+                                    <div class="ibox-title" style="margin-top: 3.5%;">
+                                        <h5>{{ "page.photo.h5.contest"|trans }}</h5>
+                                    </div>
+                                    <div  style="display: block;" class="ibox-content">
+                                        {% if photoInContest %}
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{{ "page.photo.th.contest_name"|trans }}</th>
+                                                        <th>{{ "page.photo.th.contest_category"|trans }}</th>
+                                                        <th>{{ "page.photo.th.contest_score"|trans }}</th>
+                                                    </tr>
+                                                </thead>
+                                                {% for photo in photoInContest %}
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>{{photo.contest}}</td>
+                                                            <td>{{photo.category}}</td>
+                                                            {% if photo.points > 0 %}
+                                                                <td>
+                                                                    <i class="fa fa-trophy"></i><strong class="font-bold"> {{photo.points}}</strong>
+                                                                </td>
+                                                            {% else %}
+                                                                <td>
+                                                                    <button type="button" class="btn btn-sm btn-primary">  {{ "page.photo.button.contest_vote"|trans }} </button>
+                                                                </td>
+                                                            {% endif %}
+                                                        </tr>
+                                                    </tbody>
+                                                {% endfor %}
+                                            </table>
+                                        {% else %}
+                                            {{ "page.photo.contest.no_results"|trans }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="ibox float-e-margins">
+                                    <div class="ibox-title">
+                                        <h5>Comments</h5>
+                                    </div>
+                                    <div  style="display: block;" class="ibox-content">
+                                        {% include 'SkaphandrusAppBundle:Comments:async.html.twig' with {'id': 'SkPhoto-' ~ photo.id } %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </div>
 
-                    <div class="ibox-content ">
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>{{ "page.photo.h5.species_identification"|trans }}</h5>
+                        </div>
 
-                        {#<div class="row m-t-md">
-                            <div class="col-md-4">
-                                <h5><strong>{{photo.views}}</strong> {{ "page.photo.h5.views"|trans }}</h5>
+                        <div class="ibox-content">
+                            <div  style=" margin: 0% 4% 4% 4%;" class="row">
+
+                                {% for flashMessage in app.session.flashbag.get('notice') %}
+                                    <div class="alert alert-success alert-dismissable">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        {{ flashMessage|trans }}
+                                    </div>
+                                {% endfor %}
+
+                                {% if photo.speciesValidations|length %}
+                                    <strong> {{ "page.photo.h3.species_validations"|trans }} </strong>
+                                    <div style="margin-top: 2%;"  class="feed-activity-list" >
+                                        {% for sv in photo.speciesValidations %}
+                                            <div class="feed-element" >
+                                                <a class="pull-left" href="{{path('user', {'id':sv.fosUser.id}) }}">
+                                                    <img class="img-circle" src="{{ "/" ~ sv.fosUser.settings.getWebPath }}"/>
+                                                </a>
+                                                <div class="media-body">
+                                                    <strong> {{ "page.photo.label.validated"|trans }}: </strong> 
+                                                    {{ link_to_species(sv.species) }}
+                                                </div>
+                                                <small style="float: right;" class="text-muted">{{ sv.createdAt|date("H:m - d/m/Y") }}</small>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+
+                                {% if photo.speciesSugestions|length %}
+                                    <strong> {{ "page.photo.h3.species_sugestions"|trans }} </strong>
+                                    <div style="margin-top: 2%;"  class="feed-activity-list" >
+                                        {% for ss in photo.speciesSugestions %}
+                                            <div class="feed-element" >
+                                                <a class="pull-left" href="{{path('user', {'id':ss.fosUser.id}) }}">
+                                                    <img class="img-circle" src="{{ "/" ~ ss.fosUser.settings.getWebPath }}"/>
+                                                </a>
+                                                <div class="media-body">
+                                                    <strong> {{ "page.photo.label.validated"|trans }}: </strong> 
+                                                    {{ link_to_species(ss.species) }}
+                                                </div>
+                                                <small style="float: right;" class="text-muted">{{ ss.createdAt|date("H:m - d/m/Y") }}</small>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
                             </div>
-                            <div class="col-md-4">
-                                <h5><strong>{{photo.countLikes}}</strong> {{ "page.photo.h5.likes"|trans }}</h5>
-                            </div>
-                            <div class="col-md-4">
-                                <h5><strong>{{photo.countComments}}</strong> {{ "page.photo.h5.comments"|trans }}</h5>
-                            </div>
-                        </div>#}
 
-                        {% if photo.keyword|length > 0 %}
-                            <h3 class="tag-title">{{ "page.photo.h3.tags"|trans }}</h3>
-                            <ul class="tag-list" style="padding: 0;">
-                                {% for keyword in photo.keyword %}
-                                    <li itemprop="keywords"><a href="">{{ keyword.keyword }}</a></li>
-                                    {% endfor %}
-                            </ul>
-                            <div class="clearfix"></div>
-                        {% endif %}
+                            {% if showValidation %}
+                                <a data-toggle="modal" data-target="#modal-validation" class="btn btn-block btn-outline btn-primary">{{ ("page.photo.btn.validation_" ~ validationAction)|trans }}</a>
+                                <div class="modal inmodal" id="modal-validation" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content animated bounceInRight">
+                                            {% if validationAction == 'new' %}
+                                                {{ render(controller('SkaphandrusAppBundle:SkPhotoSpeciesValidation:new', { 'photo_id': photo.id } )) }}
+                                            {% else %}
+                                                {{ render(controller('SkaphandrusAppBundle:SkPhotoSpeciesValidation:edit', { 'id': userValidation.id } )) }}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
 
-                        {% if photo.species is not empty and photo.species is not null  %}
-                            <h3>{{ "page.photo.h3.species"|trans }}</h3>
-                            <p>{{ link_to_species(photo.species) }}</p>
-                        {% endif %}
-
-                        {% for flashMessage in app.session.flashbag.get('notice') %}
-                            <div class="alert alert-success alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                {{ flashMessage|trans }}
-                            </div>
-                        {% endfor %}
-
-                        {% if photo.speciesValidations|length %}
-                            <h3>{{ "page.photo.h3.species_validations"|trans }}</h3>
-                            <ul>
-                                {% for sv in photo.speciesValidations %}
-                                    {% if sv.species is not empty   %}
-                                        <li>{{ link_to_user(sv.fosUser) }} {{ "page.photo.label.validated"|trans }} {{ link_to_species(sv.species) }}</li>
-                                        {% endif %}
-                                    {% endfor %}
-                            </ul>
-                        {% endif %}
-
-                        {% if showValidation %}
-                            <a href="#" data-toggle="modal" data-target="#modal-validation" class="btn btn-primary">{{ ("page.photo.btn.validation_" ~ validationAction)|trans }}</a>
-                            <div class="modal inmodal" id="modal-validation" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog"><div class="modal-content animated bounceInRight">
-                                        {% if validationAction == 'new' %}
-                                            {{ render(controller('SkaphandrusAppBundle:SkPhotoSpeciesValidation:new', { 'photo_id': photo.id } )) }}
-                                        {% else %}
-                                            {{ render(controller('SkaphandrusAppBundle:SkPhotoSpeciesValidation:edit', { 'id': userValidation.id } )) }}
-                                        {% endif %}
-                                    </div></div>
-                            </div>
-                        {% endif %}
-
-                        {% if photo.speciesSugestions|length %}
-                            <h3>{{ "page.photo.h3.species_sugestions"|trans }}</h3>
-                            <ul>
-                                {% for ss in photo.speciesSugestions %}
-                                    <li>{{ link_to_user(ss.fosUser) }} {{ "page.photo.label.sugested"|trans }} {{ link_to_species(ss.species) }}</li>
-                                    {% endfor %}
-                            </ul>
-                        {% endif %}
-
-                        {% if showSugestion %}
-                            <a href="#" data-toggle="modal" data-target="#modal-sugestion" class="btn btn-primary">{{ ("page.photo.btn.sugestion_" ~ sugestionAction)|trans }}</a>
-                            <div class="modal inmodal" id="modal-sugestion" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog"><div class="modal-content animated bounceInRight">
-                                        {% if sugestionAction == 'new' %}
-                                            {{ render(controller('SkaphandrusAppBundle:SkPhotoSpeciesSugestion:new', { 'photo_id': photo.id } )) }}
-                                        {% else %}
-                                            {{ render(controller('SkaphandrusAppBundle:SkPhotoSpeciesSugestion:edit', { 'id': userSugestion.id } )) }}
-                                        {% endif %}
-                                    </div></div>
-                            </div>
-                        {% endif %}
-
-                        {% if photo.spot is not empty %}
-                            <h3>{{ "page.photo.h3.spot"|trans }}</h3>
-                            <span itemscope itemtype="http://schema.org/TouristAttraction ">
-                                <meta itemprop="name" content="{{ photo.spot }}" />
-                            </span>
-                            <span itemscope itemtype="http://schema.org/City ">
-                                <meta itemprop="name" content="{{ photo.spot.location }}" />
-                            </span>
-                            <span itemscope itemtype="http://schema.org/Country ">
-                                <meta itemprop="name" content="{{  photo.spot.location.region.country }}" />
-                            </span>
-                            <p>{{ link_to_spot(photo.spot)}}, {{ link_to_location(photo.spot.location)}}, {{ link_to_country(photo.spot.location.region.country)}}</p>
-                        {% endif %}
+                            {% if showSugestion %}
+                                <a data-toggle="modal" data-target="#modal-sugestion" class="btn btn-block btn-outline btn-primary">{{ ("page.photo.btn.sugestion_" ~ sugestionAction)|trans }}</a>
+                                <div class="modal inmodal" id="modal-sugestion" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content animated bounceInRight">
+                                            {% if sugestionAction == 'new' %}
+                                                {{ render(controller('SkaphandrusAppBundle:SkPhotoSpeciesSugestion:new', { 'photo_id': photo.id } )) }}
+                                            {% else %}
+                                                {{ render(controller('SkaphandrusAppBundle:SkPhotoSpeciesSugestion:edit', { 'id': userSugestion.id } )) }}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
 
                         {% if photo.species is not empty %}
-                            <h3>{{ "page.photo.h3.species_photos"|trans }}</h3>
-                            {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': photo.species.id },'limit':24  } )) }}
+                            <div class="ibox-content">
+                                {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': photo.species.id },'limit':25  } )) }}
+                            </div>
                         {% endif %}
                     </div>
                 </div>
 
             </div>
         </div>
-    </div><!-- end wrapper-->
 
-{% endblock %}
-
+    {% endblock %}

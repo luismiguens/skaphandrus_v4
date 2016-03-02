@@ -32,15 +32,7 @@
 {% endblock %}
 
 {% block body -%}
-    
-{#    <p>
-        
-        You have created the folow reservation.
-        
-    </p>#}
-        
-    
-    
+
     <h4>{{ "page.booking.h4.booking_information"|trans }}</h4>
     <table class="table table-bordered"  >
         <tbody>
@@ -93,7 +85,7 @@
     {% endfor %}
     {% if dive %}
         <h4>{{ "page.booking.h4.booking_dive_information"|trans }}</h4>
-        <table class="table table-striped table-bordered tab">
+        <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>{{ "form.booking_dive.label.date_at"|trans }}</th>
@@ -133,7 +125,7 @@
     {% endfor %}
     {% if other %}
         <h4>{{ "page.booking.h4.booking_other_information"|trans }}</h4>
-        <table class="table table-striped">
+        <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th style="width: 25%">{{ "form.booking_other_activity.label.other_activity"|trans }}</th>

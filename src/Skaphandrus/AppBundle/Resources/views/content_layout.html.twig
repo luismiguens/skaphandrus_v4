@@ -4,9 +4,6 @@
 <!--[if IE 9]> <html lang="{{ app.request.locale }}" class="ie9"> <![endif]-->  
 <!--[if !IE]><!--> <html lang="{{ app.request.locale }}" itemscope itemtype="http://schema.org/WebPage"> <!--<![endif]--> 
 
-
-    
-    
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# skaphandrus: http://ogp.me/ns/skaphandrus#">
 
         <title>{% block page_title %}{% endblock %}</title>
@@ -35,6 +32,9 @@
     <meta itemprop="inLanguage" content="{{app.request.locale}}" />
 
     {% block stylesheets %}
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/skaphandrusapp/js/slick/slick.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/skaphandrusapp/js/slick/slick-theme.css') }}"/>
+
         <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{ asset('bundles/skaphandrusapp/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
@@ -58,48 +58,75 @@
             <!-- page-heading begin -->
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-sm-8">
-                    <h2>{% block heading_title %}{% endblock %}</h2>
-                {% block heading_breadcrumbs %}{% endblock %}
+                    <h2>
+                        {% block heading_title %}
+                        {% endblock %}
+                    </h2>
+                    {% block heading_breadcrumbs %}
+                    {% endblock %}
+                </div>
+                <div class="col-sm-4">
+                    <div class="title-action">
+                        {% block heading_action %}
+                        {% endblock %}
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-4">
-                <div class="title-action">
-                {% block heading_action %}{% endblock %}
-            </div>
+            <!-- page-heading end -->
+
+            {% block body %}
+            {% endblock %}
+
+            {% include 'SkaphandrusAppBundle:Common:footer.html.twig'%}
+
+
         </div>
     </div>
-    <!-- page-heading end -->
 
-{% block body %}{% endblock %}
+    {% block javascripts %}
+        <!-- Mainly scripts -->
+        <script src="{{ asset('bundles/skaphandrusapp/js/jquery-2.1.1.js') }}"></script>
+        <script src="{{ asset('bundles/skaphandrusapp/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-{% include 'SkaphandrusAppBundle:Common:footer.html.twig'%}
+        <!-- Custom and plugin javascript -->
+        <script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>
+        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
+        <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>
+
+        <!-- Slick JQuery -->
+        <script type="text/javascript" src="{{ asset('bundles/skaphandrusapp/js/slick/slick.min.js') }}"></script>
+
+        <!-- COLOCAR NUM FICHEIRO JS EXTERNO!!!!!! -->
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.variable-width').slick({
+                    dots: true,
+                    infinite: true,
+                    speed: 300,
+                    slidesToShow: 2,
+                    centerMode: true,
+                    variableWidth: true
+                });
+                $('.single-item').slick();
+            });
+        </script>
+
+        <!-- EndOff: Slick JQuery -->
+
+    {% endblock %}
+
+    {% include 'SkaphandrusAppBundle:Common:analytics.html.twig'%}
 
 
-</div>
-</div>
-
-{% block javascripts %}
-    <!-- Mainly scripts -->
-    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-2.1.1.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
-
-    <!-- Custom and plugin javascript -->
-    <script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>
-{% endblock %}
-
-{% include 'SkaphandrusAppBundle:Common:analytics.html.twig'%}
+    {#<a href="{{ path('taxonomy', { 'locale': 'en' }) }}">English </a>
+    
+    <a href="{{ path('taxonomy', { 'locale': 'pt' }) }}">Português </a>#}
 
 
-{#<a href="{{ path('taxonomy', { 'locale': 'en' }) }}">English </a>
-
-<a href="{{ path('taxonomy', { 'locale': 'pt' }) }}">Português </a>#}
-
-
-<!-- Go to www.addthis.com/dashboard to customize your tools -->
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51cb05087500d7e6" async="async"></script>
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51cb05087500d7e6" async="async"></script>
 
 
 </body>

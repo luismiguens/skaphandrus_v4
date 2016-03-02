@@ -930,9 +930,10 @@ class DefaultController extends Controller {
      * Photo page.
      */
 
-    public function photoAction($id, $slug = null, Request $request) {
+    public function photoAction($id, $slug = null) {
         $title = Utils::unslugify($slug);
-
+        $locale = $this->get('request')->getLocale();
+        
         $next_photo_id = $id;
         $previous_photo_id = $id;
 
@@ -947,12 +948,19 @@ class DefaultController extends Controller {
         if ($previous_photo)
             $previous_photo_id = $previous_photo->getId();
 
-
         $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
                 ->findOneById($id);
-
+        
         $em = $this->getDoctrine()->getManager();
 
+        $photosUser = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
+                ->getPhotosFromUser($photo->getFosUser());
+
+        $photoInContest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
+                ->getPhotoInContest($photo->getId(), $locale);
+
+//        dump($photo);
+        
         if ($photo) {
             $request = $this->get('request');
             $securityContext = $this->container->get('security.context');
@@ -969,8 +977,6 @@ class DefaultController extends Controller {
                     $em->flush();
                 }
             }
-
-
 
             // Check for validations
             $validations = $this->getDoctrine()->getManager()->createQuery(
@@ -1026,6 +1032,8 @@ class DefaultController extends Controller {
                         'photo' => $photo,
                         'previous_photo' => $previous_photo_id,
                         'next_photo' => $next_photo_id,
+                        'photosUser' => $photosUser,
+                        'photoInContest' => $photoInContest,
                         'showValidation' => $showValidation,
                         'showSugestion' => $showSugestion,
                         'validationAction' => $validationAction,
@@ -1166,7 +1174,7 @@ class DefaultController extends Controller {
      * <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
      */
 
-    public function skGridAction($parameters, $limit = 24, $order = array('id' => 'desc')) {
+    public function skGridAction($parameters, $limit = 25, $order = array('id' => 'desc')) {
 
         // ini_set('memory_limit', '64M');
 
