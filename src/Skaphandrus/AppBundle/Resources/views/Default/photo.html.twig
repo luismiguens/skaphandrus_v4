@@ -114,11 +114,11 @@
                     <div class="carousel-inner">
                         <img style="width: 600px; max-height: 800px;" itemprop="image" alt="{{photo.title}}" class="img-responsive child" src="{{ "/" ~ photo.getWebPath }}" />
                     </div>
-                    <a style="margin-left: 24% " data-slide="prev" class="left carousel-control" href="{{path('photo_no_slug', {'id':previous_photo}) }}">
-                        <span class="icon-prev"></span>
+                    <a style="margin-left: 20%; background: none" data-slide="prev" class="left carousel-control" href="{{path('photo_no_slug', {'id':previous_photo}) }}">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
                     </a>
-                    <a style="margin-right: 24% " data-slide="next" class="right carousel-control" href="{{path('photo_no_slug', {'id':next_photo}) }}">
-                        <span class="icon-next"></span>
+                    <a style="margin-right: 20%; background: none" data-slide="next" class="right carousel-control" href="{{path('photo_no_slug', {'id':next_photo}) }}">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
                     </a>
                 </div>
                 <div style="text-align: center">
