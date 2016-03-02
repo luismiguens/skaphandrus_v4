@@ -112,12 +112,12 @@
             <div class="col col-lg-12" >
                 <div class="carousel slide" id="carousel1">
                     <div class="carousel-inner">
-                        <img style="max-width: 800px; max-height: 600px" itemprop="image" alt="{{photo.title}}" class="img-responsive child" src="{{ "/" ~ photo.getWebPath }}" />
+                        <img style="width: 600px; max-height: 800px;" itemprop="image" alt="{{photo.title}}" class="img-responsive child" src="{{ "/" ~ photo.getWebPath }}" />
                     </div>
-                    <a style="margin-left: 15% " data-slide="prev" class="left carousel-control" href="{{path('photo_no_slug', {'id':previous_photo}) }}">
+                    <a style="margin-left: 24% " data-slide="prev" class="left carousel-control" href="{{path('photo_no_slug', {'id':previous_photo}) }}">
                         <span class="icon-prev"></span>
                     </a>
-                    <a style="margin-right: 15% " data-slide="next" class="right carousel-control" href="{{path('photo_no_slug', {'id':next_photo}) }}">
+                    <a style="margin-right: 24% " data-slide="next" class="right carousel-control" href="{{path('photo_no_slug', {'id':next_photo}) }}">
                         <span class="icon-next"></span>
                     </a>
                 </div>
