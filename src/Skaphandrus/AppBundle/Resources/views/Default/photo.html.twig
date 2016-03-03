@@ -390,6 +390,7 @@
                                 {% endif %}
 
                                 {% if photo.speciesSugestions|length %}
+                                    <br/>
                                     <strong> {{ "page.photo.h3.species_sugestions"|trans }} </strong>
                                     <div style="margin-top: 2%;"  class="feed-activity-list" >
                                         {% for ss in photo.speciesSugestions %}
@@ -410,7 +411,8 @@
                             </div>
 
                             {% if showValidation %}
-                                <a data-toggle="modal" data-target="#modal-validation" class="btn btn-block btn-primary">{{ ("page.photo.btn.validation_" ~ validationAction)|trans|upper }}</a>
+                                <button data-toggle="modal" data-target="#modal-validation" class="btn btn-primary dim" style="width:100%" type="button">{{ ("page.photo.btn.validation_" ~ validationAction)|trans|upper }}</button>
+                                {#<a data-toggle="modal" data-target="#modal-validation" class="btn btn-primary dim">{{ ("page.photo.btn.validation_" ~ validationAction)|trans|upper }}</a>#}
                                 <div class="modal inmodal" id="modal-validation" tabindex="-1" role="dialog" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content animated bounceInRight">
@@ -425,7 +427,8 @@
                             {% endif %}
 
                             {% if showSugestion %}
-                                <a data-toggle="modal" data-target="#modal-sugestion" class="btn btn-block btn-primary">{{ ("page.photo.btn.sugestion_" ~ sugestionAction)|trans }}</a>
+                                <button data-toggle="modal" data-target="#modal-sugestion" class="btn btn-primary dim" style="width:100%" type="button">{{ ("page.photo.btn.sugestion_" ~ sugestionAction)|trans }}</button>
+                                {#<a data-toggle="modal" data-target="#modal-sugestion" class="btn btn-block btn-primary">{{ ("page.photo.btn.sugestion_" ~ sugestionAction)|trans }}</a>#}
                                 <div class="modal inmodal" id="modal-sugestion" tabindex="-1" role="dialog" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content animated bounceInRight">
