@@ -48,7 +48,8 @@ class SkPhotoRepository extends EntityRepository {
 
         
         //ir buscar apenas 6 depois de baralhar
-        for ($i = 0; $i <= 5 && $i < count($photo_ids); $i++):
+        for ($i = 0; $i <= 9
+                && $i < count($photo_ids); $i++):
             $photos[] = $photo_ids[$i];
         endfor;
 
