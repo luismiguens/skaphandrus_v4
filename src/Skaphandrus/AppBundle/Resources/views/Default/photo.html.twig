@@ -144,7 +144,7 @@
             <div class="col col-lg-12" >
                 <div class="carousel slide" id="carousel1">
                     <div class="carousel-inner">
-                        <img style="width: 600px; max-height: 800px;" itemprop="image" alt="{{photo.title}}" class="img-responsive child" src="{{ "/" ~ photo.getWebPath }}" />
+                        <img style="width: 600px;" itemprop="image" alt="{{photo.title}}" class="img-responsive child" src="{{ photo.getWebPath | imagine_filter('sk_downscale_800_600') }}" />
                     </div>
                     <a style="margin-left: 20%; background: none" data-slide="prev" class="left carousel-control" href="{{path('photo_no_slug', {'id':previous_photo}) }}">
                         <span class="glyphicon glyphicon-chevron-left"></span>
@@ -166,8 +166,9 @@
                     <div class="slider variable-width ">
                         {% for p in photosUser %}
                             <div>
+                                
                                 <a href="{{ path('photo_no_slug',  { 'id': p.id }) }}" title="{{ p.title }}">
-                                    <img style=" margin: 0% 5% 0% 5%; width: auto; background-color: black; height: 100px; " alt="{{ p.title }}" src="{{ "/" ~ p.getWebPath }}" />
+                                    <img style=" margin: 0% 5% 0% 5%; width: auto; background-color: black; height: 100px; " alt="{{ p.title }}" src="{{ p.getWebPath | imagine_filter('sk_widen_400') }}" />
                                 </a>
                             </div>
                         {% endfor %}
@@ -376,7 +377,10 @@
                                         {% for sv in photo.speciesValidations %}
                                             <div class="feed-element" >
                                                 <a class="pull-left" href="{{path('user', {'id':sv.fosUser.id}) }}">
-                                                    <img class="img-circle" src="{{ "/" ~ sv.fosUser.settings.getWebPath }}"/>
+                                                    
+                                                    
+                                                    
+                                                    <img class="img-circle" src="{{ sv.fosUser.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}"/>
                                                 </a>
                                                 <div class="media-body">
                                                     {{ link_to_user(sv.fosUser) }}
@@ -396,7 +400,7 @@
                                         {% for ss in photo.speciesSugestions %}
                                             <div class="feed-element" >
                                                 <a class="pull-left" href="{{path('user', {'id':ss.fosUser.id}) }}">
-                                                    <img class="img-circle" src="{{ "/" ~ ss.fosUser.settings.getWebPath }}"/>
+                                                    <img class="img-circle" src="{{ ss.fosUser.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}"/>
                                                 </a>
                                                 <div class="media-body">
                                                     {{ link_to_user(ss.fosUser) }} 
