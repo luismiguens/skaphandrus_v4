@@ -94,25 +94,7 @@
         <script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
         <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>
 
-        <!-- Slick JQuery -->
-        <script type="text/javascript" src="{{ asset('bundles/skaphandrusapp/js/slick/slick.min.js') }}"></script>
 
-        <!-- COLOCAR NUM FICHEIRO JS EXTERNO!!!!!! -->
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('.variable-width').slick({
-                    dots: true,
-                    infinite: true,
-                    speed: 300,
-                    slidesToShow: 2,
-                    centerMode: true,
-                    variableWidth: true
-                });
-                $('.single-item').slick();
-            });
-        </script>
-
-        <!-- EndOff: Slick JQuery -->
 
     {% endblock %}
 
