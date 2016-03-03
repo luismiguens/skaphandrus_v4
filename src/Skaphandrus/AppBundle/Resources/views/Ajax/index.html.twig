@@ -2,17 +2,19 @@
 
 {% block javascripts %}
 
+    
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script type="text/javascript">
         $(function () {
-            var limit_spots = 10;
-            var offset_spots = -10;
-            var limit_species = 10;
-            var offset_species = -10;
+            var limit_spots = 5;
+            var offset_spots = -5;
+            var limit_species = 5;
+            var offset_species = -5;
 
             var loadSpots = function () {
                 $('#box_spots').fadeIn("slow");
-                offset_spots = offset_spots + 10;
+                offset_spots = offset_spots + 5;
                 setTimeout(function () {
                     $.ajax({
                         type: "get",
@@ -30,11 +32,11 @@
 
             var loadSpecies = function () {
                 $('#box_species').fadeIn("slow");
-                offset_species = offset_species + 10;
+                offset_species = offset_species + 5;
                 setTimeout(function () {
                     $.ajax({
                         type: "get",
-                        url: "{{path("spot")}}",
+                        url: "{{path("ajax_spot")}}",
                         data: 'limit=' + limit_species + '&offset=' + offset_species,
                         dataType: "text",
                         success: function (response) {

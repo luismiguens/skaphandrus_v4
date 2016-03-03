@@ -13,7 +13,7 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkSpotRepository extends EntityRepository {
 
-    public function getTenSpots($limit = 10, $offset = 0, $locale) {
+    public function getMoreSpots($limit = 5, $offset = 0, $locale) {
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
@@ -33,7 +33,6 @@ class SkSpotRepository extends EntityRepository {
         $result = array();
 
         foreach ($values as $value) {
-//            $spot = $em->getRepository('SkaphandrusAppBundle:SkSpot')->find($value['spot']);
 
             $spot = new \Skaphandrus\AppBundle\Entity\SkSpot();
             $spot->setId($value['spot']);
@@ -44,13 +43,6 @@ class SkSpotRepository extends EntityRepository {
 
         return $result;
     }
-
-//        return $this->getEntityManager()->createQuery(
-//                        "SELECT s
-//                FROM SkaphandrusAppBundle:SkSpot s
-//                ORDER BY s.name asc"
-//                )->setFirstResult($offset)->setMaxResults($limit);
-//    }
 
     public function findLikeName($term, $locale) {
 

@@ -24,12 +24,7 @@ class AjaxController extends Controller {
         $limit = $request->query->get('limit');
         $offset = $request->query->get('offset');
 
-//        if ($limit == null and $offset == null) {
-//            $limit = 10;
-//            $offset = 0;
-//        }
-
-        $spots = $em->getRepository('SkaphandrusAppBundle:SkSpot')->getTenSpots($limit, $offset, $locale);
+        $spots = $em->getRepository('SkaphandrusAppBundle:SkSpot')->getMoreSpots($limit, $offset, $locale);
 
         return $this->render('SkaphandrusAppBundle:Ajax:spot.html.twig', array(
                     'spots' => $spots,

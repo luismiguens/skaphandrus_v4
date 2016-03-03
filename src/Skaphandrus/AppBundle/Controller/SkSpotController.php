@@ -8,46 +8,40 @@ use Skaphandrus\AppBundle\Utils\Utils;
 use Skaphandrus\AppBundle\Entity\SkSpot;
 use Skaphandrus\AppBundle\Form\SkSpotType;
 
-
-
-
-
 /**
  * SkSpot controller.
  *
  */
-class SkSpotController extends Controller
-{
+class SkSpotController extends Controller {
 
     /**
      * Lists all SkSpot entities.
      *
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-        
+
         ##@LM
         $fos_user = $this->get('security.token_storage')->getToken()->getUser();
 
-        $entities = $em->getRepository('SkaphandrusAppBundle:SkSpot')->findByFosUser($fos_user );
+        $entities = $em->getRepository('SkaphandrusAppBundle:SkSpot')->findByFosUser($fos_user);
 
         return $this->render('SkaphandrusAppBundle:SkSpot:index.html.twig', array(
-            'entities' => $entities,
+                    'entities' => $entities,
         ));
     }
+
     /**
      * Creates a new SkSpot entity.
      *
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         $entity = new SkSpot();
-        
+
         ##@LM
         $fos_user = $this->get('security.token_storage')->getToken()->getUser();
         $entity->setFosUser($fos_user);
-        
+
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -58,13 +52,13 @@ class SkSpotController extends Controller
 
             ##@LM
             $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
-            
+
             return $this->redirect($this->generateUrl('spot_admin_edit', array('id' => $entity->getId())));
         }
 
         return $this->render('SkaphandrusAppBundle:SkSpot:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -75,13 +69,12 @@ class SkSpotController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(SkSpot $entity)
-    {
+    private function createCreateForm(SkSpot $entity) {
         $form = $this->createForm(new SkSpotType(), $entity, array(
             'action' => $this->generateUrl('spot_admin_create'),
             'method' => 'POST',
         ));
-         
+
         ##@LM
         //$form->add('submit', 'submit', array('label' => 'Create'));
 
@@ -92,14 +85,20 @@ class SkSpotController extends Controller
      * Displays a form to create a new SkSpot entity.
      *
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new SkSpot();
-        $form   = $this->createCreateForm($entity); 
+        
+        $coordinate = '35.10912477734334,-32.6953125';
+        $zoom = '3';
+                
+        $entity->setCoordinate($coordinate);
+        $entity->setZoom($zoom);
+        
+        $form = $this->createCreateForm($entity);
 
         return $this->render('SkaphandrusAppBundle:SkSpot:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView()
+                    'entity' => $entity,
+                    'form' => $form->createView()
         ));
     }
 
@@ -129,43 +128,41 @@ class SkSpotController extends Controller
      * Displays a form to edit an existing SkSpot entity.
      *
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('SkaphandrusAppBundle:SkSpot')->find($id);
-        
+
         $loggedUser = $this->get('security.token_storage')->getToken()->getUser();
-        $owner = $entity->getFosUser();         
+        $owner = $entity->getFosUser();
 
-        if (Utils::isOwner($loggedUser, $owner)){
-  
-                if (!$entity) {
-                    throw $this->createNotFoundException('Unable to find SkSpot entity.');
-                }
+        if (Utils::isOwner($loggedUser, $owner)) {
 
-                $editForm = $this->createEditForm($entity);
-                $deleteForm = $this->createDeleteForm($id);
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find SkSpot entity.');
+            }
 
-                return $this->render('SkaphandrusAppBundle:SkSpot:edit.html.twig', array(
-                    'entity'      => $entity,
-                    'edit_form'   => $editForm->createView(),
-                    'delete_form' => $deleteForm->createView(),
-                ));
+            $editForm = $this->createEditForm($entity);
+            $deleteForm = $this->createDeleteForm($id);
+
+            return $this->render('SkaphandrusAppBundle:SkSpot:edit.html.twig', array(
+                        'entity' => $entity,
+                        'edit_form' => $editForm->createView(),
+                        'delete_form' => $deleteForm->createView(),
+            ));
         } else {
             throw $this->createNotFoundException("The content isn't yours.");
         }
     }
 
     /**
-    * Creates a form to edit a SkSpot entity.
-    *
-    * @param SkSpot $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(SkSpot $entity)
-    {
+     * Creates a form to edit a SkSpot entity.
+     *
+     * @param SkSpot $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(SkSpot $entity) {
         $form = $this->createForm(new SkSpotType(), $entity, array(
             'action' => $this->generateUrl('spot_admin_update', array('id' => $entity->getId())),
             'method' => 'PUT',
@@ -176,12 +173,12 @@ class SkSpotController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing SkSpot entity.
      *
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('SkaphandrusAppBundle:SkSpot')->find($id);
@@ -203,17 +200,17 @@ class SkSpotController extends Controller
         }
 
         return $this->render('SkaphandrusAppBundle:SkSpot:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
+
     /**
      * Deletes a SkSpot entity.
      *
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -239,13 +236,13 @@ class SkSpotController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('spot_admin_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'form.common.btn.delete','attr' => array('class' => 'btn btn-danger')))
-            ->getForm()
+                        ->setAction($this->generateUrl('spot_admin_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => 'form.common.btn.delete', 'attr' => array('class' => 'btn btn-danger')))
+                        ->getForm()
         ;
     }
+
 }

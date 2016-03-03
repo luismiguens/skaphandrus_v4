@@ -933,7 +933,7 @@ class DefaultController extends Controller {
     public function photoAction($id, $slug = null) {
         $title = Utils::unslugify($slug);
         $locale = $this->get('request')->getLocale();
-        
+
         $next_photo_id = $id;
         $previous_photo_id = $id;
 
@@ -950,17 +950,20 @@ class DefaultController extends Controller {
 
         $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
                 ->findOneById($id);
-        
+
         $em = $this->getDoctrine()->getManager();
 
         $photosUser = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
                 ->getPhotosFromUser($photo->getFosUser());
 
         $photoInContest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
-                ->getPhotoInContest($photo->getId(), $locale);
-
-//        dump($photo);
+                ->getPhotoInContest($photo->getId()/*24078*/, $locale);
         
+        $votedPhoto = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestVote')
+                ->findOneBy(array('fosUser' => $photo->getFosUser(), 'category' => "behaviour"));
+
+//        dump($photoInContest);
+
         if ($photo) {
             $request = $this->get('request');
             $securityContext = $this->container->get('security.context');
@@ -1034,6 +1037,7 @@ class DefaultController extends Controller {
                         'next_photo' => $next_photo_id,
                         'photosUser' => $photosUser,
                         'photoInContest' => $photoInContest,
+                        'votedPhoto' => $votedPhoto,
                         'showValidation' => $showValidation,
                         'showSugestion' => $showSugestion,
                         'validationAction' => $validationAction,
@@ -1174,7 +1178,7 @@ class DefaultController extends Controller {
      * <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
      */
 
-    public function skGridAction($parameters, $limit = 25, $order = array('id' => 'desc')) {
+    public function skGridAction($parameters, $limit, $order = array('id' => 'desc')) {
 
         // ini_set('memory_limit', '64M');
 

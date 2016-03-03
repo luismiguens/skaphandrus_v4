@@ -87,6 +87,38 @@
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/hack/autocompleter-jqueryui.js') }}"></script>
+
+    <script src="{{ asset('bundles/skaphandrusapp/js/isotope.pkgd.min.js') }}"></script>
+
+    <script src="{{ asset('bundles/skaphandrusapp/js/imagesloaded.pkgd.min.js') }}"></script>
+    {#    <script type="text/javascript">
+            $(function () {
+                var $grid = $('.grid').imagesLoaded(function () {
+    // init Isotope after all images have loaded
+                    $grid.isotope({
+    // options
+                        itemSelector: '.grid-item',
+                        layoutMode: 'masonry'
+                    });
+                });
+    
+    
+                $('.vote-button').click(function () {
+                    photo_id = $(this).attr('id');
+    
+                    if ($(this).hasClass('btn-primary')) {
+                        $.ajax({
+                            url: "/{{ app.request.locale }}/category/{{ category.id }}/vote-photo/" + $(this).attr('id'),
+                            success: function (data) {
+                                $('.vote-button.btn-success').removeClass('btn-success').addClass('btn-primary').html('<i class="fa fa-check"></i> {{ "page.contest.btn.vote"|trans }}');
+                                $('.vote-button#' + photo_id).removeClass('btn-primary').addClass('btn-success').html('<i class="fa fa-check"></i> {{ "page.contest.btn.voted"|trans }}');
+                            },
+                        });
+                    }
+                });
+            });
+        </script>#}
+
 {% endblock %}
 
 {% block heading_title %}
@@ -107,7 +139,7 @@
 
 {% block body %}
 
-    <div class="wrapper wrapper-content animated fadeInRight" itemscope itemtype="http://schema.org/Photograph">
+    <div class="wrapper wrapper-content animated" itemscope itemtype="http://schema.org/Photograph">
         <div class="row">
             <div class="col col-lg-12" >
                 <div class="carousel slide" id="carousel1">
@@ -121,22 +153,7 @@
                         <span class="glyphicon glyphicon-chevron-right"></span>
                     </a>
                 </div>
-                <div style="text-align: center">
-                    {% include 'SkaphandrusAppBundle:Common:addThis.html.twig' with {'photography': photo} %}
-                </div>  
             </div>
-            {#<div class="col col-lg-1">
-                <a href="{{path('photo_no_slug', {'id':previous_photo}) }}"><i class="fa fa-chevron-circle-left fa-3x"></i></a>
-            </div>
-            <div class="col col-lg-10" >
-                <img style="max-width: 800px; max-height: 600px" itemprop="image" alt="{{photo.title}}" class="img-responsive child" src="{{ "/" ~ photo.getWebPath }}" />
-                <div style="text-align: center">
-                    {% include 'SkaphandrusAppBundle:Common:addThis.html.twig' with {'photography': photo} %}
-                </div>
-            </div>
-            <div class="col col-lg-1" >
-                <a href="{{path('photo_no_slug', {'id':next_photo}) }}"><i class="fa fa-chevron-circle-right fa-3x"></i></a>
-            </div>#}
         </div>
 
         <div class="row">
@@ -148,8 +165,10 @@
                 <div class="col col-md-12">
                     <div class="slider variable-width ">
                         {% for p in photosUser %}
-                            <div> 
-                                <img style=" margin: 0% 5% 0% 5%; width: auto; background-color: black; height: 100px; " alt="{{ p.title }}" src="{{ "/" ~ p.getWebPath }}" />
+                            <div>
+                                <a href="{{ path('photo_no_slug',  { 'id': p.id }) }}" title="{{ p.title }}">
+                                    <img style=" margin: 0% 5% 0% 5%; width: auto; background-color: black; height: 100px; " alt="{{ p.title }}" src="{{ "/" ~ p.getWebPath }}" />
+                                </a>
                             </div>
                         {% endfor %}
                     </div>
@@ -234,7 +253,7 @@
                                             {% if photo.description is not empty %}
                                                 <p itemprop="description">{{ photo.description }}</p>
                                             {% else %}
-                                                {{ "page.photo.h3.no_description"|trans }}
+                                                {{ "page.photo.h5.no_description"|trans }}
                                             {% endif %}
                                         </li>
                                     </ul>
@@ -256,18 +275,11 @@
 
                         <div class="ibox-content">
                             <div class="row" style="text-align: right; margin-right: 2%; ">
-                                <div class="addthis_toolbox addthis_default_style addthis_20x20_style">
-                                    <a class="addthis_counter_facebook"></a>
-                                    <a class="addthis_counter_pinterest_share"></a>
-                                    <a class="addthis_counter_reddit"></a>
-                                    <a class="addthis_counter_linkedin"></a>   
-                                </div>
-                                {#<strong>Nº of Likes: </strong> 1000 
-                                <strong>Views: </strong> 77687 #}
-                            </div>  
+                                {% include 'SkaphandrusAppBundle:Common:addThis.html.twig' with {'photography': photo} %}
+                            </div>
                         </div>
 
-                        <div style="margin-top: 1%;" class="row">
+                        {#<div style="margin-top: 1%;" class="row">
                             <div class="col-lg-12">
                                 <div class="ibox float-e-margins">
                                     <div class="ibox-title" style="margin-top: 3.5%;">
@@ -283,18 +295,36 @@
                                                         <th>{{ "page.photo.th.contest_score"|trans }}</th>
                                                     </tr>
                                                 </thead>
-                                                {% for photo in photoInContest %}
+                                                {% for category in photoInContest %}
                                                     <tbody>
                                                         <tr>
-                                                            <td>{{photo.contest}}</td>
-                                                            <td>{{photo.category}}</td>
+                                                            <td>{{category.contest}}</td>
+                                                            <td>{{category}}</td>
                                                             {% if photo.points > 0 %}
                                                                 <td>
                                                                     <i class="fa fa-trophy"></i><strong class="font-bold"> {{photo.points}}</strong>
                                                                 </td>
                                                             {% else %}
                                                                 <td>
-                                                                    <button type="button" class="btn btn-sm btn-primary">  {{ "page.photo.button.contest_vote"|trans }} </button>
+                                                                    {% set class = 'btn-primary' %}
+                                                                    {% set text = "page.contest.btn.vote"|trans %}
+
+                                                                    {% if votedPhoto is not empty and photo.id == votedPhoto.photo.id %}
+                                                                        {% set class = 'btn-success' %}
+                                                                        {% set text = "page.contest.btn.voted"|trans %}
+                                                                    {% endif %}
+
+                                                                    {% if category.contest.isInPublicVotation %}
+                                                                    {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+                                                                        <button type="button" class="vote-button btn-block btn {{ class }}" id="{{ photo.id }}">
+                                                                            <i class="fa fa-check"></i> {{ text }}
+                                                                        </button>
+                                                                    {% else %}
+                                                                        <a class="btn btn-success btn-outline btn-block" href="{{ path('fos_user_security_login') }}">
+                                                                            Login to vote <i class="fa fa-long-arrow-right"></i>
+                                                                        </a>
+                                                                    {% endif %}
+                                                                    {% endif %}
                                                                 </td>
                                                             {% endif %}
                                                         </tr>
@@ -307,9 +337,9 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>#}
 
-                        <div class="row">
+                        <div style="margin-top: 5%;" class="row">
                             <div class="col-lg-12">
                                 <div class="ibox float-e-margins">
                                     <div class="ibox-title">
@@ -349,7 +379,8 @@
                                                     <img class="img-circle" src="{{ "/" ~ sv.fosUser.settings.getWebPath }}"/>
                                                 </a>
                                                 <div class="media-body">
-                                                    <strong> {{ "page.photo.label.validated"|trans }}: </strong> 
+                                                    {{ link_to_user(sv.fosUser) }}
+                                                    {{ "page.photo.label.validated"|trans }}
                                                     {{ link_to_species(sv.species) }}
                                                 </div>
                                                 <small style="float: right;" class="text-muted">{{ sv.createdAt|date("H:m - d/m/Y") }}</small>
@@ -367,7 +398,8 @@
                                                     <img class="img-circle" src="{{ "/" ~ ss.fosUser.settings.getWebPath }}"/>
                                                 </a>
                                                 <div class="media-body">
-                                                    <strong> {{ "page.photo.label.validated"|trans }}: </strong> 
+                                                    {{ link_to_user(ss.fosUser) }} 
+                                                    {{ "page.photo.label.validated"|trans }} 
                                                     {{ link_to_species(ss.species) }}
                                                 </div>
                                                 <small style="float: right;" class="text-muted">{{ ss.createdAt|date("H:m - d/m/Y") }}</small>
@@ -378,7 +410,7 @@
                             </div>
 
                             {% if showValidation %}
-                                <a data-toggle="modal" data-target="#modal-validation" class="btn btn-block btn-outline btn-primary">{{ ("page.photo.btn.validation_" ~ validationAction)|trans }}</a>
+                                <a data-toggle="modal" data-target="#modal-validation" class="btn btn-block btn-primary">{{ ("page.photo.btn.validation_" ~ validationAction)|trans|upper }}</a>
                                 <div class="modal inmodal" id="modal-validation" tabindex="-1" role="dialog" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content animated bounceInRight">
@@ -393,7 +425,7 @@
                             {% endif %}
 
                             {% if showSugestion %}
-                                <a data-toggle="modal" data-target="#modal-sugestion" class="btn btn-block btn-outline btn-primary">{{ ("page.photo.btn.sugestion_" ~ sugestionAction)|trans }}</a>
+                                <a data-toggle="modal" data-target="#modal-sugestion" class="btn btn-block btn-primary">{{ ("page.photo.btn.sugestion_" ~ sugestionAction)|trans }}</a>
                                 <div class="modal inmodal" id="modal-sugestion" tabindex="-1" role="dialog" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content animated bounceInRight">
@@ -418,5 +450,6 @@
 
             </div>
         </div>
+    </div>
 
-    {% endblock %}
+{% endblock %}
