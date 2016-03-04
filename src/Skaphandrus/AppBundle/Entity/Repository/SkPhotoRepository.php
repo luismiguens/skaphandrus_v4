@@ -28,10 +28,39 @@ class SkPhotoRepository extends EntityRepository {
     }
 
     public function getPhotosFromUser($fosUser) {
-        return $this->getEntityManager()->createQuery(
-                        "SELECT p FROM SkaphandrusAppBundle:SkPhoto p
-            WHERE p.fosUser = :fosUser"
-                )->setParameter('fosUser', $fosUser)->setMaxResults(6)->getResult();
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT id from sk_photo where fos_user_id = " . $fosUser->getId();
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $array = $statement->fetchAll();
+        
+        //ir buscar os ids das fotografias dos utilizadores
+        foreach ($array as $key => $value) {
+            $photo_ids[] = $value['id'];
+        }
+
+        //baralhar os id's
+        shuffle($photo_ids);
+
+        
+        //ir buscar apenas 6 depois de baralhar
+        for ($i = 0; $i <= 9
+                && $i < count($photo_ids); $i++):
+            $photos[] = $photo_ids[$i];
+        endfor;
+
+        $qb = $em->createQueryBuilder('p');
+
+        //ir buscar os objectos photos
+        $photos = $em->createQuery('SELECT p FROM SkaphandrusAppBundle:SkPhoto p '
+                . 'WHERE ' . $qb->expr()->in('p.id', $photos))->getResult();
+
+
+        return $photos;
     }
 
 //    public function getPhotoInContest($photo_id, $locale) {
@@ -75,8 +104,8 @@ class SkPhotoRepository extends EntityRepository {
 //
 //        return $values;
 //    }
-    
-        public function getPhotoInContest($photo_id, $locale) {
+
+    public function getPhotoInContest($photo_id, $locale) {
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
