@@ -98,6 +98,8 @@
 
     <script src="{{ asset('bundles/skaphandrusapp/js/imagesloaded.pkgd.min.js') }}"></script>
 
+
+    
     <!-- Slick JQuery -->
     <script type="text/javascript" src="{{ asset('bundles/skaphandrusapp/js/slick/slick.min.js') }}"></script>
 
@@ -118,10 +120,14 @@
             $('.variable-width').show();
         });
 
+
+
     </script>
 
     <!-- EndOff: Slick JQuery -->
 
+
+    
     {#    <script type="text/javascript">
             $(function () {
                 var $grid = $('.grid').imagesLoaded(function () {
@@ -197,6 +203,7 @@
                     <div class="slider variable-width ">
                         {% for p in photosUser %}
                             <div>
+
                                 <a href="{{ path('photo_no_slug',  { 'id': p.id }) }}" title="{{ p.title }}">
                                     <img style=" margin: 0% 5% 0% 5%; width: auto; background-color: black; height: 100px; " alt="{{ p.title }}" src="{{ p.getWebPath | imagine_filter('sk_widen_400') }}" />
                                 </a>
@@ -407,6 +414,12 @@
                                         {% for sv in photo.speciesValidations %}
                                             <div class="feed-element" >
                                                 <a class="pull-left" href="{{path('user', {'id':sv.fosUser.id}) }}">
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> d12a28b48f0cefa759ade6995a1f55ebbd2cde5f
                                                     <img class="img-circle" src="{{ sv.fosUser.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}"/>
                                                 </a>
                                                 <div class="media-body">
