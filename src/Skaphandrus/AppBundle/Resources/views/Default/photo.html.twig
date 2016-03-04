@@ -475,6 +475,9 @@
                         </div>
 
                         {% if photo.species is not empty %}
+                            <div class="ibox-title">
+                                <h5>{{ "page.photo.h5.photo_grid"|trans }}</h5>
+                            </div>
                             <div class="ibox-content">
                                 {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': photo.species.id },'limit':25  } )) }}
                             </div>
