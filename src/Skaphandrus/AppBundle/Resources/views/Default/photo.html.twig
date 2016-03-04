@@ -270,7 +270,7 @@
                                             {% endif %}
                                         </li>
                                         <li style="margin-bottom: 2%;">
-                                            <strong>{{ "page.photo.h3.spot"|trans }}</strong>
+                                            <strong>{{ "page.photo.h3.spot"|trans }}: </strong>
                                             {% if photo.spot is not empty %}
                                                 <span itemscope itemtype="http://schema.org/TouristAttraction ">
                                                     <meta itemprop="name" content="{{ photo.spot }}" />
@@ -287,7 +287,7 @@
                                             {% endif %}
                                         </li>
                                         <li style="margin-bottom: 2%;">
-                                            <strong>{{ "page.photo.h5.description"|trans }}</strong>
+                                            <strong>{{ "page.photo.h5.description"|trans }}: </strong>
                                             {% if photo.description is not empty %}
                                                 <p itemprop="description">{{ photo.description }}</p>
                                             {% else %}
