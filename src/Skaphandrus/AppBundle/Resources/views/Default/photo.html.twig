@@ -99,7 +99,7 @@
     <script src="{{ asset('bundles/skaphandrusapp/js/imagesloaded.pkgd.min.js') }}"></script>
 
 
-
+    
     <!-- Slick JQuery -->
     <script type="text/javascript" src="{{ asset('bundles/skaphandrusapp/js/slick/slick.min.js') }}"></script>
 
@@ -122,15 +122,12 @@
 
 
 
-
-
     </script>
 
     <!-- EndOff: Slick JQuery -->
 
 
-
-
+    
     {#    <script type="text/javascript">
             $(function () {
                 var $grid = $('.grid').imagesLoaded(function () {
@@ -198,7 +195,7 @@
 
         <div class="row">
             <div class="col col-lg-12">
-                <p style=" margin: 2% 0% 2% 0%; text-align: center;"> {{"page.photo.p.more_photos"}} </p>
+                <p style=" margin: 2% 0% 2% 0%; text-align: center;"> {{"page.photo.p.more_photos"|trans}} </p>
             </div>
 
             <div class="row" style="padding: 0% 15% 0% 15%;" >
@@ -273,7 +270,7 @@
                                             {% endif %}
                                         </li>
                                         <li style="margin-bottom: 2%;">
-                                            <strong>{{ "page.photo.h3.spot"|trans }}</strong>
+                                            <strong>{{ "page.photo.h3.spot"|trans }}: </strong>
                                             {% if photo.spot is not empty %}
                                                 <span itemscope itemtype="http://schema.org/TouristAttraction ">
                                                     <meta itemprop="name" content="{{ photo.spot }}" />
@@ -290,7 +287,7 @@
                                             {% endif %}
                                         </li>
                                         <li style="margin-bottom: 2%;">
-                                            <strong>{{ "page.photo.h5.description"|trans }}</strong>
+                                            <strong>{{ "page.photo.h5.description"|trans }}: </strong>
                                             {% if photo.description is not empty %}
                                                 <p itemprop="description">{{ photo.description }}</p>
                                             {% else %}
@@ -510,6 +507,9 @@
                         </div>
 
                         {% if photo.species is not empty %}
+                            <div class="ibox-title">
+                                <h5>{{ "page.photo.h5.photo_grid"|trans }}</h5>
+                            </div>
                             <div class="ibox-content">
                                 {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': photo.species.id },'limit':25  } )) }}
                             </div>
