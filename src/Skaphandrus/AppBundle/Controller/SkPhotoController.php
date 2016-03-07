@@ -79,23 +79,29 @@ class SkPhotoController extends Controller {
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
+
+
+            if ($request->request->get('tags') != NULL and $request->request->get('tags') != ""):
+
+
+
 //            $entity->upload();
-            // Add tags from custom field
-            $tags = explode(',', $request->request->get('tags'));
-            foreach ($tags as $tag) {
-                $keyword = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkKeyword')
-                        ->findLikeKeyword($tag);
+                // Add tags from custom field
+                $tags = explode(',', $request->request->get('tags'));
+                foreach ($tags as $tag) {
+                    $keyword = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkKeyword')
+                            ->findLikeKeyword($tag);
 
-                if (!$keyword) {
-                    $keyword = new SkKeyword();
-                    $keyword->setKeyword($tag);
+                    if (!$keyword) {
+                        $keyword = new SkKeyword();
+                        $keyword->setKeyword($tag);
 
-                    $em->persist($keyword);
-                    $em->flush();
+                        $em->persist($keyword);
+                        $em->flush();
+                    }
+                    $entity->addKeyword($keyword);
                 }
-                $entity->addKeyword($keyword);
-            }
-
+            endif;
             $em->persist($entity);
             $em->flush();
 
