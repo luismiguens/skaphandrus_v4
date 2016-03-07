@@ -105,6 +105,22 @@ class SkPhotoRepository extends EntityRepository {
 //        return $values;
 //    }
 
+    
+    public function getCategories($photo_id){
+        
+        
+                return $this->getEntityManager()->createQuery(
+                        "SELECT c FROM SkaphandrusAppBundle:SkPhotoContestCategory c
+                            LEFT JOIN SkaphandrusAppBundle:SkPhoto p
+                            WHERE p.id > :id ORDER BY p.id ASC "
+                )->setParameter('id', $photo_id)->getResult();
+        
+    }
+    
+    
+    
+    
+    
     public function getPhotoInContest($photo_id, $locale) {
 
         $em = $this->getEntityManager();

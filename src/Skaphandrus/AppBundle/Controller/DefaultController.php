@@ -962,6 +962,15 @@ class DefaultController extends Controller {
         $votedPhoto = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestVote')
                 ->findOneBy(array('fosUser' => $photo->getFosUser(), 'category' => "behaviour"));
 
+        
+//$categories =         $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
+//                ->getCategories($photo->getId()/*24078*/);
+        
+        
+        
+        
+        
+        
 //        dump($photoInContest);
 
         if ($photo) {
@@ -1043,7 +1052,8 @@ class DefaultController extends Controller {
                         'validationAction' => $validationAction,
                         'userValidation' => $userValidation,
                         'sugestionAction' => $sugestionAction,
-                        'userSugestion' => $userSugestion,
+                        'userSugestion' => $userSugestion
+//                'categories' => $categories 
             ));
         } else {
             throw $this->createNotFoundException('The photo "' . $title . '" with id "' . $id . '" does not exist.');
