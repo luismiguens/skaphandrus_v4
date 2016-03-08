@@ -1,20 +1,109 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style type="text/css">
+        #map_canvas {
+            margin-bottom: 25px;
+        }
+        .ibox-title {
+            margin-top: 1.7%;
+        }
+        .ibox-title p {
+            margin-left: 1%;
+        }
+        .ibox-content p {
+            text-align: justify;
+            text-indent: 25px;
+        }
+        .in.collapse+a.btn.showdetails:before {
+            content: "HIDE";
+        }
+        .collapse+a.btn.showdetails:before {
+            content:"SHOW MORE";
+        }
+        .roller {
+            width: 85%;
+            margin-left:3%;
+        }
+        .roller img {
+            min-width: 100px;
+            min-height: 100px;
+        }
+        .roller button {
+            width: 100px;
+            height: 100px;
+            margin-top: 5%;
+        }
+        .label {
+            border-radius: 10px;
+        }
+        .thumbnail {
+            border: 1px solid #FFF;
+            margin-bottom: 0%;
+        }
+        a.thumbnail.active, a.thumbnail:focus, a.thumbnail:hover{
+            border-color: #1AB394;
+        }
+        .slick-slider {
+            margin-bottom: 0px;
+        }
+        .img-circle{
+            width: 38px;
+            height: 38px;
+        }
+        .tabs-container{
+            margin-bottom: 2%;
+        }
+        .logo{
+            width: 100px;
+            min-height: 100px;
+            max-height: 300px;
+            padding-top: 10%;
+        }
+        .logo2{
+            width: 100px;
+            min-height: 100px;
+            max-height: 300px;
+        }
+        .col-lg-6 h6 {
+            margin-top: 0px;
+            padding-left: 10%;
+        }
+        .col-lg-6 p {
+            margin-bottom: 0px;
+            padding-left: 0%;
+        }
+        .tab-content h6 {
+            text-indent: 10px;
+        }
+
+    </style>
+{% endblock %}
+
+
 {% block javascripts %}
 
-    
-    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script type="text/javascript">
+
+        $('.row .btn').on('click', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $collapse = $this.closest('.collapse-group').find('.collapse');
+            $collapse.collapse('toggle');
+        });
+
         $(function () {
-            var limit_spots = 5;
-            var offset_spots = -5;
-            var limit_species = 5;
-            var offset_species = -5;
+            var limit_spots = 3;
+            var offset_spots = -3;
+            var limit_species = 3;
+            var offset_species = -3;
 
             var loadSpots = function () {
                 $('#box_spots').fadeIn("slow");
-                offset_spots = offset_spots + 5;
+                offset_spots = offset_spots + 3;
                 setTimeout(function () {
                     $.ajax({
                         type: "get",
@@ -32,11 +121,11 @@
 
             var loadSpecies = function () {
                 $('#box_species').fadeIn("slow");
-                offset_species = offset_species + 5;
+                offset_species = offset_species + 3;
                 setTimeout(function () {
                     $.ajax({
                         type: "get",
-                        url: "{{path("ajax_spot")}}",
+                        url: "{{path("ajax_species")}}",
                         data: 'limit=' + limit_species + '&offset=' + offset_species,
                         dataType: "text",
                         success: function (response) {
@@ -51,17 +140,46 @@
 
         });
 
+
     </script>
 
 {% endblock %}
 
 {% block body %}
 
-    <ul id="box_spots"></ul>
-    <button id="show_more_spots" > Show More Spots </button>
+    {#    <div class="row" >
+            <div class="col col-lg-12" >
+                <div class="ibox" >
+    
+                    <div id="box_spots"></div>
+    
+                    <div class="ibox-content" >
+                        <div class="row" >
+                            <div class="col col-lg-12" >
+                                <button id="show_more_spots" type="button" class="btn btn-block btn-outline btn-primary">Show More Spots </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>#}
 
-    {#<ul id="box_species"></ul>
-    <button id="show_more_species" > Show More Species </button>#}
+    <div class="row" >
+        <div class="col col-lg-12" >
+            <div class="ibox" >
+
+                <div id="box_species"></div>
+
+                <div class="ibox-content" >
+                    <div class="row" >
+                        <div class="col col-lg-12" >
+                            <button id="show_more_species" type="button" class="btn btn-block btn-outline btn-primary">Show More Spots </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 {% endblock %}

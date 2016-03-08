@@ -37,19 +37,180 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
+
     <!-- FooTable -->
-    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/footable/footable.core.css') }}" rel="stylesheet">
+    {#    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/footable/footable.core.css') }}" rel="stylesheet">#}
+
     <style type="text/css">
-        #map_canvas {
-            margin-bottom: 25px;
+        .ibox-title {
+            margin-top: 1.7%;
         }
+        .ibox-title p {
+            margin-left: 1%;
+        }
+        .ibox-content p {
+            text-align: justify;
+            text-indent: 25px;
+        }
+        .in.collapse+a.btn.showdetails:before {
+            content: "{{"common.hide"|trans}}";
+        }
+        .collapse+a.btn.showdetails:before {
+            content:"{{"common.show_more"|trans}}";
+        }
+        .roller {
+            width: 85%;
+            margin-left:3%;
+        }
+        .roller img {
+            min-width: 100px;
+            min-height: 100px;
+        }
+        .roller button {
+            width: 100px;
+            height: 100px;
+            margin-top: 5%;
+        }
+        .label {
+            border-radius: 10px;
+        }
+        .thumbnail {
+            border: 1px solid #FFF;
+            margin-bottom: 0%;
+        }
+        a.thumbnail.active, a.thumbnail:focus, a.thumbnail:hover{
+            border-color: #1AB394;
+        }
+        .slick-slider {
+            margin-bottom: 0px;
+        }
+        .img-circle{
+            width: 38px;
+            height: 38px;
+        }
+        .tabs-container{
+            margin-bottom: 2%;
+        }
+        .logo{
+            width: 100px;
+            min-height: 100px;
+            max-height: 300px;
+            padding-top: 10%;
+        }
+        .logo2{
+            width: 100px;
+            min-height: 100px;
+            max-height: 300px;
+        }
+        .col-lg-6 h6 {
+            margin-top: 0px;
+            padding-left: 10%;
+        }
+        .col-lg-6 p {
+            margin-bottom: 0px;
+            padding-left: 0%;
+        }
+        .tab-content h6 {
+            text-indent: 10px;
+        }
+
     </style>
+
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+    {#    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>#}
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
 
+    <!-- FooTable -->
+    {#    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>#}
+
+    {#    <!-- Slick JQuery -->#}
+    {#    <script type="text/javascript" src="{{ asset('bundles/skaphandrusapp/js/slick/slick.min.js') }}"></script>#}
+
+    <script type="text/javascript">
+
+        $('.row .btn').on('click', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $collapse = $this.closest('.collapse-group').find('.collapse');
+            $collapse.collapse('toggle');
+        });
+
+        $(function () {
+            var limit_spots = 3;
+            var offset_spots = -3;
+            var limit_species = 3;
+            var offset_species = -3;
+            var limit_photographers = 3;
+            var offset_photographers = -3;
+
+            var loadSpots = function () {
+                $('#box_spots').fadeIn("slow");
+                offset_spots = offset_spots + 3;
+                setTimeout(function () {
+                    $.ajax({
+                        type: "get",
+                        url: "{{path("ajax_spot")}}",
+                        data: 'location_id=' + {{ location.id }} +'&limit=' + limit_spots + '&offset=' + offset_spots,
+                        dataType: "text",
+                        success: function (response) {
+                            $("#box_spots").append(response);
+                        }
+                    });
+                }, 100);
+            };
+            $(this).ready(loadSpots);
+            $('#show_more_spots').click(loadSpots);
+
+            var loadSpecies = function () {
+                $('#box_species').fadeIn("slow");
+                offset_species = offset_species + 3;
+                setTimeout(function () {
+                    $.ajax({
+                        type: "get",
+                        url: "{{path("ajax_species")}}",
+                        data: 'location_id=' + {{ location.id }} +'&limit=' + limit_species + '&offset=' + offset_species,
+                        dataType: "text",
+                        success: function (response) {
+                            $("#box_species").append(response);
+
+                        }
+                    });
+                }, 100);
+            };
+            $(this).ready(loadSpecies);
+            $('#show_more_species').click(loadSpecies);
+
+            var loadPhotographers = function () {
+                $('#box_photographers').fadeIn("slow");
+                offset_photographers = offset_photographers + 3;
+                setTimeout(function () {
+                    $.ajax({
+                        type: "get",
+                        url: "{{path("ajax_photographers")}}",
+                        data: 'location_id=' + {{ location.id }} +'&limit=' + limit_photographers + '&offset=' + offset_photographers,
+                        dataType: "text",
+                        success: function (response) {
+                            $("#box_photographers").append(response);
+
+                        }
+                    });
+                }, 100);
+            };
+            $(this).ready(loadPhotographers);
+            $('#show_more_photographers').click(loadPhotographers);
+
+        });
+
+        {#        $(document).ready(function () {
+                    $('.footable-spots').footable();
+                    $('.footable-species').footable();
+                    $('.footable-photographers').footable();
+                });#}
+
+    </script>
 
     {% if map %}
         <script>
@@ -62,17 +223,6 @@
                 });
         </script>
     {% endif %}
-
-
-    <!-- FooTable -->
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
-    <script>
-                $(document).ready(function () {
-                    $('.footable-spots').footable();
-                    $('.footable-species').footable();
-                    $('.footable-photographers').footable();
-                });
-    </script>
 
 {% endblock %}
 
@@ -96,244 +246,255 @@
 {% endblock %}
 
 
-
 {% block body %}
-    <div class="wrapper wrapper-content">
-        <div class="row animated fadeInRight">
-            <!-- left column -->
 
-            <!-- location activity -->              
-            <div class="col-lg-4">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>{{ "page.location.h5.location_activity"|trans }}</h5>
+    <div class="wrapper wrapper-content animated" itemscope itemtype="http://schema.org/City">
+
+        <div class="row" >
+            <div class="col col-lg-12" >
+                <div class="ibox-title" >
+                    <meta itemprop="isicV4" content="96590" />
+                    <h1 itemprop="name">{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h1.title{% endtrans %}</h1>
+                </div>
+                <div class="ibox-content" >
+                    <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.info{% endtrans %}</h3>
+                    {{ location.description|raw }}
+
+                    <div class="span4 collapse-group">
+                        {% if location.waterTemp is not empty %}
+                            <h5 class="collapse">{{ "page.location.h5.water_temp"|trans }}</h5>
+                            <p class="collapse">{{ location.waterTemp }}</p>
+                        {% endif %}
+
+                        {% if location.suit is not empty %}
+                            <h5 class="collapse">{{ "page.location.h5.suit"|trans }}</h5>
+                            <p class="collapse">{{ location.suit }}</p>
+                        {% endif %}
+
+                        {% if location.visibility is not empty %}
+                            <h5 class="collapse">{{ "page.location.h5.visibility"|trans }}</h5>
+                            <p class="collapse">{{ location.visibility }}</p>
+                        {% endif %}
+
+                        {% if location.climate is not empty %}
+                            <h5 class="collapse">{{ "page.location.h5.climate"|trans }}</h5>
+                            <p class="collapse">{{ location.climate }}</p>
+                        {% endif %}
+
+                        {% if location.howToGo is not empty %}
+                            <h5 class="collapse">{{ "page.location.h5.how_to_go"|trans }}</h5>
+                            <p class="collapse">{{ location.howToGo }}</p>
+                        {% endif %}
+
+                        {% if location.extraDive is not empty %}
+                            <h5 class="collapse">{{ "page.location.h5.extra_dive"|trans }}</h5>
+                            <p class="collapse">{{ location.extraDive|raw }}</p>
+                        {% endif %}
+
+                        <a style="margin: 2% 0% 0% 25%; width: 50%; " class="btn btn-block btn-outline btn-primary showdetails" data-toggle="collapse" data-target="#viewdetails"></a>
                     </div>
-                    <div class="ibox-content">
-                        <div>
+                </div>
+            </div>
+        </div>
+
+        <!--  Mapa de spots start -->
+        <div class="row" >
+            <div class="col col-lg-12">
+                <div class="ibox-title" >
+                    <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.spots_map{% endtrans %}</h3>
+                </div>
+                <div class="row" >
+                    <div class="col col-lg-12" >
+                        <div class="ibox" >
                             {% if map %}
-                                {{ render(controller('SkaphandrusAppBundle:Common:skActivity', { 'parameters': { 'location_id': location.id },'limit':20 } )) }}
-                            {% endif%}
-                            {#<button class="btn btn-primary btn-block m-t"><i class="fa fa-arrow-down"></i> Show More</button>#}
+                                {{ google_map(map) }}
+                            {% endif %}
+
+                            <div id="box_spots"></div>
+
+                            <div class="ibox-content" >
+                                <div class="row" >
+                                    <div class="col col-lg-12" >
+                                        <button id="show_more_spots" type="button" class="btn btn-block btn-outline btn-primary">{{ "page.location.button.show_more_spots"|trans }}</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- end activity -->
-            <!-- end left column -->
+        </div>
+        <!--  Mapa de spots end -->
 
-            <!-- right column -->
-            <div class="col-md-8">
-                <div class="ibox">
-                    <div class="ibox-title">
-                        <h5>{{ "page.location.h5.location_related_contents"|trans }}</h5>
-                        {#<div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="#">Config option 1</a></li>
-                                <li><a href="#">Config option 2</a></li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>#}
-                    </div>
+        <!--  Species start -->
+        <div class="row" >
+            <div class="col col-lg-12">
+                <div class="ibox-title" >
+                    <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.species{% endtrans %}</h3>
+                </div>
+                <div class="row" >
+                    <div class="col col-lg-12" >
+                        <div class="ibox" >
 
-                    <div class="ibox-content" itemscope itemtype="http://schema.org/City">
-                        <meta itemprop="isicV4" content="96590" />
-                        <h1 itemprop="name">{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h1.title{% endtrans %}</h1>
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <!--<div class="panel-title m-b-md"><h4>Blank Panel with text tabs</h4></div>-->
-                                <div class="panel-options">
-                                    <ul class="nav nav-tabs">
-                                        <li class="active"><a data-toggle="tab" href="#tab-1">{{ "page.location.tab.info"|trans }}</a></li>
-                                        <li><a data-toggle="tab" href="#tab-2">{{ "page.location.tab.spots"|trans }}</a></li>
-                                        <li><a data-toggle="tab" href="#tab-3">{{ "page.location.tab.species"|trans }}</a></li>
-                                        <li><a data-toggle="tab" href="#tab-4">{{ "page.location.tab.photos"|trans }}</a></li>
-                                        <li><a data-toggle="tab" href="#tab-5">{{ "page.location.tab.contributors"|trans }}</a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <div id="box_species"></div>
 
-                            <div class="panel-body">
-                                <div class="tab-content">
-                                    <div id="tab-1" class="tab-pane active">
-                                        <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.info{% endtrans %}</h3>
-                                        {% if location.description is not empty %}
-                                            <h5>{{ "page.location.h5.description"|trans }}</h5>
-                                            <p itemprop="description">{{ location.description|raw }}</p>
-                                        {% endif %}
-
-                                        {% if location.waterTemp is not empty %}
-                                            <h5>{{ "page.location.h5.water_temp"|trans }}</h5>
-                                            <p>{{ location.waterTemp }}</p>
-                                        {% endif %}
-
-                                        {% if location.suit is not empty %}
-                                            <h5>{{ "page.location.h5.suit"|trans }}</h5>
-                                            <p>{{ location.suit }}</p>
-                                        {% endif %}
-
-                                        {% if location.visibility is not empty %}
-                                            <h5>{{ "page.location.h5.visibility"|trans }}</h5>
-                                            <p>{{ location.visibility }}</p>
-                                        {% endif %}
-
-                                        {% if location.climate is not empty %}
-                                            <h5>{{ "page.location.h5.climate"|trans }}</h5>
-                                            <p>{{ location.climate }}</p>
-                                        {% endif %}
-
-                                        {% if location.howToGo is not empty %}
-                                            <h5>{{ "page.location.h5.how_to_go"|trans }}</h5>
-                                            <p>{{ location.howToGo }}</p>
-                                        {% endif %}
-
-                                        {% if location.extraDive is not empty %}
-                                            <h5>{{ "page.location.h5.extra_dive"|trans }}</h5>
-                                            <p>{{ location.extraDive|raw }}</p>
-                                        {% endif %}
-                                        
-                                        <div class="dvb-widget-holder" data-host="https://divebooker.com" data-widgid="297" data-pid="141"><script>(function(){if (typeof(window.dvbjs)=='undefined'){window.dvbjs = true;var dvbjs = document.createElement('script');dvbjs.type = 'text/javascript';dvbjs.src = 'https://divebooker.com/js/front/init_widgets.min.js';document.body.appendChild(dvbjs);delete dvbjs;}}())</script></div>
-                                        
-                                    </div>
-
-                                    <div id="tab-2" class="tab-pane">
-                                        <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.spots_map{% endtrans %}</h3>
-                                        {% if map %}
-                                            {{ google_map(map) }}
-
-                                            <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.spots{% endtrans %}</h3>
-                                            <input type="text" class="form-control input-sm m-b-xs" id="filter-spots" placeholder="Search in table">
-                                            <table class="footable footable-spots table" data-page-size="50" data-filter=#filter-spots>
-                                                <thead>
-                                                    <tr>
-                                                        <th>{{ "page.location.table.name"|trans }}</th>
-                                                        <th>{{ "page.location.table.num_photos"|trans }}</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {% set c = location.region.country %}
-                                                    {% for spot in spots %}
-                                                        <tr>
-                                                            <td>
-                                                                {{ link_to_spot(spot, location, c) }}
-                                                                <span itemscope itemtype="http://schema.org/TouristAttraction ">
-                                                                    <meta itemprop="name" content="{{ spot }}" />
-                                                                </span>
-                                                            </td>
-                                                            <td>
-                                                                <a href="{{ path('photos', {'spot': spot.id}) }}">
-                                                                    {{ spot.photosInSpot }}
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    {% endfor %}
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <td colspan="2">
-                                                            <ul class="pagination pull-right"></ul>
-                                                        </td>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                        {% endif %}
-                                    </div>
-
-                                    <div id="tab-3" class="tab-pane">
-                                        <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.species{% endtrans %}</h3>
-                                        <input type="text" class="form-control input-sm m-b-xs" id="filter-species" placeholder="Search in table">
-                                        <table class="footable footable-species table" data-page-size="50" data-filter=#filter-species>
-                                            <thead>
-                                                <tr>
-                                                    <th>{{ "page.location.table.name"|trans }}</th>
-                                                    <th>{{ "page.location.table.num_photos"|trans }}</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for sp in species %}
-                                                    <tr>
-                                                        <td>
-                                                            {{ link_to_species(sp) }}
-                                                            <span itemprop="additionalProperty" itemscope itemtype="http://schema.org/PropertyValue">
-                                                                <meta itemprop="name" content="sea animal" />
-                                                                <meta itemprop="value" content="{{ sp }}" />
-                                                            </span>
-                                                        </td>
-                                                        <td>
-                                                            <a href="{{ path('photos', {'species': sp.id, 'location': location.id}) }}">
-                                                                {{ sp.photosInSpecies }}
-                                                            </a>
-                                                        </td>
-
-                                                    </tr>
-                                                {% endfor%}
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <td colspan="2">
-                                                        <ul class="pagination pull-right"></ul>
-                                                    </td>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-
-                                    <div id="tab-4" class="tab-pane">
-                                        <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.photos{% endtrans %}</h3>
-                                        {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'location': location.id },'limit':24 } )) }}
-                                    </div>
-
-                                    <div id="tab-5" class="tab-pane">
-                                        <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.contributors{% endtrans %}</h3>
-                                        <input type="text" class="form-control input-sm m-b-xs" id="filter-photographers" placeholder="Search in table">
-                                        <table class="footable footable-photographers table" data-page-size="50" data-filter=#filter-photographers>
-                                            <thead>
-                                                <tr>
-                                                    <th>{{ "page.location.table.name"|trans }}</th>
-                                                    <th>{{ "page.location.table.num_photos"|trans }}</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for p in photographers %}
-                                                    <tr>
-                                                        <td>
-                                                            {{ link_to_user(p.fosUser) }}
-                                                            <span itemscope itemtype="http://schema.org/Person">
-                                                                <meta itemprop="name" content="{{ p.fosUser }}" />
-                                                            </span>
-                                                        </td>
-                                                        <td>
-                                                            <a href="{{ path('photos', {'fosUser': p.fosUser.id, 'location': location.id}) }}">
-                                                                {{ p.photosInUser }}
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                {% endfor%}
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <td colspan="2">
-                                                        <ul class="pagination pull-right"></ul>
-                                                    </td>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
+                            <div class="ibox-content" >
+                                <div class="row" >
+                                    <div class="col col-lg-12" >
+                                        <button id="show_more_species" type="button" class="btn btn-block btn-outline btn-primary">{{ "page.location.button.show_more_species"|trans }}</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div><!--end right column -->
-        </div><!-- end row-->
-    </div><!-- end wrapper-->
+            </div>
+        </div>
+        <!--  Species end -->
+
+        <!--  Photographers start -->
+        <div class="row" >
+            <div class="col col-lg-12">
+                <div class="ibox-title" >
+                    <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.contributors{% endtrans %}</h3>
+                </div>
+                <div class="row" >
+                    <div class="col col-lg-12" >
+                        <div class="ibox" >
+
+                            <div id="box_photographers"></div>
+
+                            <div class="ibox-content" >
+                                <div class="row" >
+                                    <div class="col col-lg-12" >
+                                        <button id="show_more_photographers" type="button" class="btn btn-block btn-outline btn-primary">{{ "page.location.button.show_more_photographers"|trans }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  Photographers end -->
+
+        <!--  Dive Centers start -->
+        <div class="tabs-container">
+            <ul class="nav nav-tabs">
+                <li class="active"><a aria-expanded="true" data-toggle="tab" href="#tab-1">{{ "page.location.tab1.dive_centers"|trans }}</a></li>
+                <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-2">{{ "page.location.tab2.liveaboard"|trans }}</a></li>
+                <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-3">{{ "page.location.tab3.resorts"|trans }}</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+                    <div class="panel-body">
+                        <div class="row" >
+                            {% for b in business %}
+                                {% for t in b.type %}
+                                    {% if t == 'Dive Center' or t == 'Centro de Mergulho' %}
+                                        <div class="col col-lg-4" style="margin-bottom: 1%" >
+                                            <div class="ibox" >
+                                                <div class="col col-lg-5" >
+                                                    {% if b.getWebPath %}
+                                                        <a href="{{ path('business', { 'country': slugify((b.address.location.region.country)), 'location': slugify(b.address.location), 'slug': slugify(b.name) }) }}">
+                                                            <img class="logo" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                                        </a>
+                                                    {% else %}
+                                                        <a href="">
+                                                            <img class="logo" src="{{ asset('/uploads/business/blank-logo.png') }}"/>
+                                                        </a>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="col col-lg-7" >
+                                                    <a href="{{ path('business', { 'country': slugify((b.address.location.region.country)), 'location': slugify(b.address.location), 'slug': slugify(b.name) }) }}">
+                                                        <h4>{{b|slice(0, 22)}}</h4>
+                                                    </a>
+                                                    <h5>{{ b.address.location.region.country }}, {{ b.address.location }}</h5>
+
+                                                    <button class="btn btn-primary dim" type="button" onclick="location.href = '{{ path('booking_admin_new', {'business_id': b.id}) }}'">{{ "page.business.button.book_now"|trans }}</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div id="tab-2" class="tab-pane">
+                    <div class="panel-body">
+                        <div class="row" >
+                            {% for b in business %}
+                                {% for t in b.type %}
+                                    {% if t == 'Liveaboard' %}
+                                        <div class="col col-lg-4" style="margin-bottom: 1%" >
+                                            <div class="ibox" >
+                                                <div class="col col-lg-5" >
+                                                    {% if b.getWebPath %}
+                                                        <a href="{{ path('business', { 'country': slugify((b.address.location.region.country)), 'location': slugify(b.address.location), 'slug': slugify(b.name) }) }}">
+                                                            <img class="logo" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                                        </a>
+                                                    {% else %}
+                                                        <a href="">
+                                                            <img class="logo" src="{{ asset('/uploads/business/blank-logo.png') }}"/>
+                                                        </a>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="col col-lg-7" >
+                                                    <a href="{{ path('business', { 'country': slugify((b.address.location.region.country)), 'location': slugify(b.address.location), 'slug': slugify(b.name) }) }}">
+                                                        <h4>{{b|slice(0, 22)}}</h4>
+                                                    </a>
+                                                    <h5>{{ b.address.location.region.country }}, {{ b.address.location }}</h5>
+
+                                                    <button class="btn btn-primary dim" type="button" onclick="location.href = '{{ path('booking_admin_new', {'business_id': b.id}) }}'">{{ "page.business.button.book_now"|trans }}</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div id="tab-3" class="tab-pane">
+                    <div class="panel-body">
+                        <div class="row" >
+                            {% for b in business %}
+                                {% for t in b.type %}
+                                    {% if t == 'Accommodation' or t == 'Alojamento' %}
+                                        <div class="col col-lg-4" style="margin-bottom: 1%" >
+                                            <div class="ibox" >
+                                                <div class="col col-lg-5" >
+                                                    {% if b.getWebPath %}
+                                                        <a href="{{ path('business', { 'country': slugify((b.address.location.region.country)), 'location': slugify(b.address.location), 'slug': slugify(b.name) }) }}">
+                                                            <img class="logo" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                                        </a>
+                                                    {% else %}
+                                                        <a href="">
+                                                            <img class="logo" src="{{ asset('/uploads/business/blank-logo.png') }}"/>
+                                                        </a>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="col col-lg-7" >
+                                                    <a href="{{ path('business', { 'country': slugify((b.address.location.region.country)), 'location': slugify(b.address.location), 'slug': slugify(b.name) }) }}">
+                                                        <h4>{{b|slice(0, 22)}}</h4>
+                                                    </a>
+                                                    <h5>{{ b.address.location.region.country }}, {{ b.address.location }}</h5>
+
+                                                    <button class="btn btn-primary dim" type="button" onclick="location.href = '{{ path('booking_admin_new', {'business_id': b.id}) }}'">{{ "page.business.button.book_now"|trans }}</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  Dive Centers end -->
+    </div>
 
 {% endblock %}
 

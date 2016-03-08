@@ -1,46 +1,47 @@
 
-{% for spot in spots %}
+{% for s in species %}
 
     <div class="ibox-content" >
         <div class="row" >
-            <div class="col col-lg-3  col-xs-2 col-md-4 ">
-                <strong> <h3>{{spot}}</h3> </strong>
-                <p>{{"common.spot.number_photos"|trans}}: <span class="label label-info">{{spot.photosInSpot}}</span>  </p>
+            <div class="col col-lg-3" >
+                <strong> <h3>{{"common.species.title"|trans}}</h3> </strong>
+                <p>{{"common.species.name"|trans}}: {{ link_to_species(s) }}</p>
+                <p>{{"common.species.number_photos"|trans}}: <span class="label label-info">{{s.photosInSpecies}}</span>  </p>
             </div>
-            <div class="col col-lg-9" style="padding-right:0px; max-width: 82%; margin-left: -2.5%; " >
+            <div class="col col-lg-9" >
                 <div class="roller" >
                     <div>
                         <a class="thumbnail" href="">
-                            <img class="photo" src="img/2s.jpg"/>
+                            <img src="img/2s.jpg"/>
                         </a>
                     </div>
                     <div>
                         <a class="thumbnail" href="">
-                            <img class="photo" src="img/4s.jpg"/>
+                            <img src="img/4s.jpg"/>
                         </a>
                     </div>
                     <div>
                         <a class="thumbnail" href="">
-                            <img class="photo" src="img/6s.jpg"/>
+                            <img src="img/6s.jpg"/>
                         </a>
                     </div>
                     <div>
                         <a class="thumbnail" href="">
-                            <img class="photo" src="img/8s.jpg"/>
+                            <img src="img/8s.jpg"/>
                         </a>
                     </div>
                     <div>
                         <a class="thumbnail" href="">
-                            <img class="photo" src="img/10s.jpg"/>
+                            <img src="img/10s.jpg"/>
                         </a>
                     </div>
                     <div>
                         <a class="thumbnail" href="">
-                            <img class="photo" src="img/7s.jpg"/>
+                            <img src="img/7s.jpg"/>
                         </a>
                     </div>
                     <div>
-                        <a style="color: inherit;" href="{{ path('photos', { 'spot': spot.id }) }}">
+                        <a style="color: inherit;" href="{{ path('photos', { 'species': s.id }) }}">
                             <button style="margin-left: 3%;" type="button" class="btn btn-block btn-outline btn-primary">
                                 {{ "common.grid.see_all" }}
                             </button>

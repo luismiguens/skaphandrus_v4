@@ -13,16 +13,18 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkSpotRepository extends EntityRepository {
 
-    public function getMoreSpots($limit = 5, $offset = 0, $locale) {
+    public function getMoreSpots($locale, $location_id, $limit = 3, $offset = 0) {
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
-        $sql = "SELECT s.id as spot, st.name as st_name
-                FROM sk_spot as s
-                JOIN sk_spot_translation as st
-                on s.id = st.translatable_id
-                where st.locale = '" . $locale . "'
+        $sql = "SELECT s.id as spot, st.id as st_id, st.name as st_name, count(p.id) as num_photos
+                FROM sk_photo as p
+                RIGHT JOIN sk_spot as s on s.id = p.spot_id
+                JOIN sk_spot_translation as st on s.id = st.translatable_id
+                join sk_location as l on l.id = s.location_id
+                where l.id = " . $location_id . " and st.locale = '" . $locale . "'
+                group by spot
                 order by st.name asc
                 limit " . $limit . "
                 offset " . $offset;
@@ -33,15 +35,38 @@ class SkSpotRepository extends EntityRepository {
         $result = array();
 
         foreach ($values as $value) {
-
-            $spot = new \Skaphandrus\AppBundle\Entity\SkSpot();
-            $spot->setId($value['spot']);
-            $spot->translate($locale)->setName($value['st_name']);
-
+            $spot = $em->getRepository('SkaphandrusAppBundle:SkSpot')->find($value['spot']);
+            $spot->setPhotosInSpot($value['num_photos']);
             $result[] = $spot;
         }
 
         return $result;
+
+//        $qb = $this->getEntityManager()->createQueryBuilder();
+//
+//        $qb->select('s as spot')->addSelect('count(p.id) as photosInSpot');
+//        $qb->from('SkaphandrusAppBundle:SkSpot', 's');
+//        $qb->leftjoin('SkaphandrusAppBundle:SkPhoto', 'p', 'WITH', 's.id = p.spot');
+//        $qb->join('s.location', 'l', 'WITH', 'l.id = :location_id');
+//        $qb->groupBy('spot');
+//        $qb->orderBy('photosInSpot', 'desc');
+//
+//        $qb->setMaxResults($limit);
+//        $qb->setFirstResult($offset);
+//        $qb->setParameter('location_id', $location_id);
+//
+//        $result = array();
+//
+//        foreach ($qb->getQuery()->getResult() as $value) {
+//            $value['spot']->setPhotosInSpot($value['photosInSpot']);
+//            $result[] = $value['spot'];
+//        }
+//
+//        try {
+//            return $result;
+//        } catch (\Doctrine\ORM\NoResultException $e) {
+//            return null;
+//        }
     }
 
     public function findLikeName($term, $locale) {

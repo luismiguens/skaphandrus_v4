@@ -14,6 +14,18 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkBusinessRepository extends EntityRepository {
 
+    public function findBusienssInLocation($location_id) {
+
+        return $this->getEntityManager()->createQuery(
+                        'SELECT b
+                FROM SkaphandrusAppBundle:SkBusiness b
+                JOIN b.type t
+                JOIN b.address a
+                JOIN a.location l
+                WHERE a.location = :location_id')
+                ->setParameter('location_id', $location_id)->getResult();
+    }
+
     public function findLikeName($term) {
 
         return $this->getEntityManager()->createQuery(

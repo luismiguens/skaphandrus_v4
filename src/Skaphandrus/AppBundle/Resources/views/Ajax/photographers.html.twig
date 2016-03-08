@@ -1,17 +1,21 @@
 
-{% for spot in spots %}
+{% for p in photographers %}
 
     <div class="ibox-content" >
+        <a href="#" class="pull-left">
+            <img class="img-circle" src="{{ p.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}"/>
+        </a>
         <div class="row" >
-            <div class="col col-lg-3  col-xs-2 col-md-4 ">
-                <strong> <h3>{{spot}}</h3> </strong>
-                <p>{{"common.spot.number_photos"|trans}}: <span class="label label-info">{{spot.photosInSpot}}</span>  </p>
+            <div class="col col-lg-3" style="margin-left: -3%;" >
+                <p>{{"common.photographers.name"|trans}}: {{ link_to_user(p) }} </p>
+                <p>{{"common.photographers.number_photos"|trans}}: <span class="label label-info">{{ p.photosInUser }}</span>  </p>
             </div>
-            <div class="col col-lg-9" style="padding-right:0px; max-width: 82%; margin-left: -2.5%; " >
+            <div class="col col-lg-9" style="padding-right:0px; max-width: 82%; margin-left: -3.5%; " >
                 <div class="roller" >
                     <div>
                         <a class="thumbnail" href="">
-                            <img class="photo" src="img/2s.jpg"/>
+                            {#{{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'fosUser': p.id },'limit':6  } )) }}#}
+                            <img class="photo"  src="img/2s.jpg"/>
                         </a>
                     </div>
                     <div>
@@ -40,7 +44,7 @@
                         </a>
                     </div>
                     <div>
-                        <a style="color: inherit;" href="{{ path('photos', { 'spot': spot.id }) }}">
+                        <a style="color: inherit;" href="{{ path('photos', { 'fosUser': p.id }) }}">
                             <button style="margin-left: 3%;" type="button" class="btn btn-block btn-outline btn-primary">
                                 {{ "common.grid.see_all" }}
                             </button>
@@ -50,5 +54,7 @@
             </div>
         </div>
     </div>
+
+
 
 {% endfor %}

@@ -33,6 +33,14 @@ ajax_spot:
     path:     /{_locale}/ajax/spot
     defaults: { _controller: "SkaphandrusAppBundle:Ajax:spot" }
     
+ajax_species:
+    path:     /{_locale}/ajax/species
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:species" }
+
+ajax_photographers:
+    path:     /{_locale}/ajax/photographers
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:photographers" }   
+   
 ajax_index:
     path:     /{_locale}/ajax/index
     defaults: { _controller: "SkaphandrusAppBundle:Ajax:index" }

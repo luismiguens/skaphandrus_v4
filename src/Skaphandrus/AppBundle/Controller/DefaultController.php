@@ -713,14 +713,17 @@ class DefaultController extends Controller {
             // $query_photographers = $qb_photographers->getQuery();
             // $photographers = $query_photographers->getResult();
 
-            $spots = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')
-                    ->findSpotsInLocation($location->getId(), $locale);
-
-            $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
-                    ->findSpeciesInLocation($location->getId());
-
-            $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-                    ->findUsersInLocation($location->getId());
+//            $spots = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')
+//                    ->findSpotsInLocation($location->getId(), $locale);
+//
+//            $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
+//                    ->findSpeciesInLocation($location->getId());
+//
+//            $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
+//                    ->findUsersInLocation($location->getId());
+            
+            $business = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
+                    ->findBusienssInLocation($location->getId());
 
 //            //species
 //            $qb_species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->getQueryBuilder(['location' => $location], 20);
@@ -827,11 +830,13 @@ class DefaultController extends Controller {
                     $map->addMarker($marker);
                 }
             }
+            
             return $this->render('SkaphandrusAppBundle:Default:location.html.twig', array(
                         'location' => $location,
-                        'spots' => $spots,
-                        'photographers' => $photographers,
-                        'species' => $species,
+//                        'spots' => $spots,
+//                        'photographers' => $photographers,
+//                        'species' => $species,
+                        'business' => $business,
                         'map' => $map,
                         'map_center_lat' => $centerLatitude,
                         'map_center_lon' => $centerLongitude,

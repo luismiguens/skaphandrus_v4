@@ -13,7 +13,6 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkLocationRepository extends EntityRepository {
 
-    
 //    public function findOneWithTranslations($id)
 //    {
 //        $qb = $this->createQueryBuilder('l')
@@ -26,9 +25,9 @@ class SkLocationRepository extends EntityRepository {
 //        
 //        return $qb->getQuery()->getSingleResult();
 //    }
-    
-    
-    
+
+
+
     public function findBySlug_old($slug, $country, $locale) {
         $name = Utils::unslugify($slug);
 
@@ -49,9 +48,7 @@ class SkLocationRepository extends EntityRepository {
         }
     }
 
-    
-    
-        public function findBySlug($slug, $country, $locale) {
+    public function findBySlug($slug, $country, $locale) {
         $name = Utils::unslugify($slug);
 
         $query = $this->getEntityManager()
@@ -69,9 +66,7 @@ class SkLocationRepository extends EntityRepository {
             return null;
         }
     }
-    
-    
-    
+
     public function findLikeName($term, $locale) {
 
         return $this->getEntityManager()->createQuery(
@@ -85,17 +80,14 @@ class SkLocationRepository extends EntityRepository {
     }
 
     public function findAllLocationsWithSpots() {
-        
+
         return $this->getEntityManager()->createQuery(
                         "SELECT l
                     FROM SkaphandrusAppBundle:SkLocation l
                     JOIN SkaphandrusAppBundle:SkSpot s WITH s.location = l.id"
                 )->getResult();
-        
-        
     }
-    
-    
+
     public function findLocationsInCountry($country_id) {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -108,7 +100,7 @@ class SkLocationRepository extends EntityRepository {
         $qb->leftJoin('SkaphandrusAppBundle:SkPhoto', 'p', 'WITH', 'p.spot = s.id');
         $qb->groupBy('location');
         $qb->orderBy('photosInLocation', 'desc');
-        
+
         $qb->setParameter('coutry_id', $country_id);
 
         $result = array();
@@ -246,4 +238,5 @@ class SkLocationRepository extends EntityRepository {
 
         return $result;
     }
+
 }
