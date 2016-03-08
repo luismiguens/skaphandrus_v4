@@ -391,6 +391,10 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
         return $this->photos;
     }
 
+    public function setPhotos($photos) {
+        return $this->photos = $photos;
+    }
+
     /**
      * Add photosValidated
      *

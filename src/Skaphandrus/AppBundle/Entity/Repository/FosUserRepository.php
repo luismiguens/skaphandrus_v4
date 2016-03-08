@@ -36,7 +36,7 @@ class FosUserRepository extends EntityRepository {
                 ON l.id = s.location_id
                 where l.id = " . $location_id . "
                 group by id
-                order by firstname asc
+                order by photosInUser desc
                 limit " . $limit . "
                 offset " . $offset;
 
@@ -46,7 +46,7 @@ class FosUserRepository extends EntityRepository {
         $result = array();
 
         foreach ($values as $value) {
-//            $user = $em->getRepository('SkaphandrusAppBundle:FosUser')->find($value['fosUser']);
+//            $user = $em->getRepository('SkaphandrusAppBundle:FosUser')->find($value['id']);
 
             $user = new FosUser();
             $user->setId($value['id']);
@@ -68,6 +68,16 @@ class FosUserRepository extends EntityRepository {
         }
 
         return $result;
+    }
+
+    public function findPhotos($fos_user_id) {
+        $query = $this->getEntityManager()->createQuery(
+                        'SELECT p
+            FROM SkaphandrusAppBundle:SkPhoto p
+            WHERE p.fosUser = :fos_user_id'
+                )->setParameter('fos_user_id', $fos_user_id)->setMaxResults(6);
+
+        return $query->getResult();
     }
 
 //    public function isJudgeInCategory($category_id, $fos_user_id) {

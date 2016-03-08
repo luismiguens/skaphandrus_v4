@@ -14,7 +14,7 @@ use Skaphandrus\AppBundle\Utils\Utils;
 class SkSpeciesRepository extends EntityRepository {
 
     public function getMoreSpecies($location_id, $limit = 3, $offset = 0) {
-        
+
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
@@ -26,7 +26,7 @@ class SkSpeciesRepository extends EntityRepository {
                 join sk_location as l on l.id = s.location_id
                 where l.id = " . $location_id . "
                 group by species_id 
-                order by ssn.name asc
+                order by num_photos desc
                 limit " . $limit . "
                 offset " . $offset;
 
@@ -45,14 +45,23 @@ class SkSpeciesRepository extends EntityRepository {
             $species->setPhotosInSpecies($value['num_photos']);
             $result[] = $species;
         }
-        
-        return $result;
 
+        return $result;
+    }
+
+    public function findPhotos($species_id) {
+        $query = $this->getEntityManager()->createQuery(
+                        'SELECT p
+            FROM SkaphandrusAppBundle:SkPhoto p
+            WHERE p.species = :species_id'
+                )->setParameter('species_id', $species_id)->setMaxResults(6);
+
+        return $query->getResult();
     }
 
     public function findBySlug($slug) {
         $name = Utils::unslugify($slug);
-        
+
         $query = $this->getEntityManager()
                         ->createQuery(
                                 'SELECT s

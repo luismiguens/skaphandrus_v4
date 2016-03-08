@@ -57,12 +57,9 @@ class SkSpecies {
      */
     private $image_refs;
     private $photosCount = 0;
-
     private $photosInSpecies;
-    
     private $criterias;
-    
-    
+
     /**
      * Constructor
      */
@@ -70,7 +67,7 @@ class SkSpecies {
         $this->character = new \Doctrine\Common\Collections\ArrayCollection();
         $this->image_refs = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     public function setId($param) {
         $this->id = $param;
     }
@@ -181,10 +178,7 @@ class SkSpecies {
         return $this->character;
     }
 
-    
-    
-    
-       /**
+    /**
      * Add criterias
      *
      * @param \Skaphandrus\AppBundle\Entity\SkIdentificationCriterias $criterias
@@ -205,30 +199,23 @@ class SkSpecies {
     public function removeCriteria(\Skaphandrus\AppBundle\Entity\SkIdentificationCriteria $criteria) {
         $this->criterias->removeElement($criteria);
     }
-    
-    
-    
+
     public function setCriterias($criterias) {
         $this->criterias = $criterias;
     }
-    
-    
+
     public function getCriterias() {
-               
+
 //        $character = new SkIdentificationCharacter();
 //        
 //        foreach ($this->getCharacter() as $key => $character) {
 //            $criteria[]=$character->getCriteria();
 //        }
-        
         //$this->criterias = $criteria;
-        
+
         return $this->criterias;
     }
-    
-    
-    
-    
+
     /**
      * Add speciesVernacular
      *
@@ -289,6 +276,10 @@ class SkSpecies {
      */
     public function getPhotos() {
         return $this->photos;
+    }
+
+    public function setPhotos($photos) {
+        return $this->photos = $photos;
     }
 
     /**
@@ -414,7 +405,5 @@ class SkSpecies {
     public function setPhotosInSpecies($photosInSpecies) {
         $this->photosInSpecies = $photosInSpecies;
     }
-    
-    
-    
+
 }

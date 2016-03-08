@@ -70,7 +70,7 @@
             width: 100px;
             height: 100px;
             margin-top: 5%;
-           
+
         }
         .label {
             border-radius: 10px;
@@ -121,14 +121,14 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {#    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>#}
+        <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
 
     <!-- FooTable -->
     {#    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>#}
 
     {#    <!-- Slick JQuery -->#}
-    {#    <script type="text/javascript" src="{{ asset('bundles/skaphandrusapp/js/slick/slick.min.js') }}"></script>#}
+        <script type="text/javascript" src="{{ asset('bundles/skaphandrusapp/js/slick/slick.min.js') }}"></script>
 
     <script type="text/javascript">
 
@@ -306,25 +306,12 @@
                 </div>
                 <div class="row" >
                     <div class="col col-lg-12" >
-                        
-                        
-                        
-                     
-	        				
-                        
-                        
-                        
-                        
-                        
-                        
                         <div class="ibox" >
                             {% if map %}
                                 {{ google_map(map) }}
                             {% endif %}
 
-                            <div class="row" id="box_spots">
-                                
-                            </div>
+                            <div id="box_spots"></div>
 
                             <div class="ibox-content" >
                                 <div class="row" >

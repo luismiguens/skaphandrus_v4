@@ -25,7 +25,7 @@ class SkSpotRepository extends EntityRepository {
                 join sk_location as l on l.id = s.location_id
                 where l.id = " . $location_id . " and st.locale = '" . $locale . "'
                 group by spot
-                order by st.name asc
+                order by num_photos desc
                 limit " . $limit . "
                 offset " . $offset;
 
@@ -160,15 +160,11 @@ class SkSpotRepository extends EntityRepository {
 //    }
 
     public function findPhotos($spot_id) {
-        
-        
-        
-        
         $query = $this->getEntityManager()->createQuery(
                         'SELECT p
             FROM SkaphandrusAppBundle:SkPhoto p
             WHERE p.spot = :spot_id'
-                )->setParameter('spot_id', $spot_id);
+                )->setParameter('spot_id', $spot_id)->setMaxResults(6);
 
         return $query->getResult();
     }
