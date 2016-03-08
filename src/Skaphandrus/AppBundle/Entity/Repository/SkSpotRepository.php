@@ -160,10 +160,14 @@ class SkSpotRepository extends EntityRepository {
 //    }
 
     public function findPhotos($spot_id) {
-        $query = $entityManager->createQuery(
+        
+        
+        
+        
+        $query = $this->getEntityManager()->createQuery(
                         'SELECT p
             FROM SkaphandrusAppBundle:SkPhoto p
-            WHERE spot_id > :spot_id'
+            WHERE p.spot = :spot_id'
                 )->setParameter('spot_id', $spot_id);
 
         return $query->getResult();

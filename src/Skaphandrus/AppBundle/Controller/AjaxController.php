@@ -25,7 +25,14 @@ class AjaxController extends Controller {
         $location_id = $request->query->get('location_id');
 
         $spots = $em->getRepository('SkaphandrusAppBundle:SkSpot')->getMoreSpots($locale, $location_id, $limit, $offset);
-
+        
+        
+        foreach ($spots as $spot):
+            $spot->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpot')->findPhotos($spot->getId()));
+        endforeach;
+        
+        dump($spots);
+        
         return $this->render('SkaphandrusAppBundle:Ajax:spot.html.twig', array(
                     'spots' => $spots,
         ));

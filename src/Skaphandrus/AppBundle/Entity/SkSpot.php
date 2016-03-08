@@ -315,6 +315,12 @@ class SkSpot {
         return $this->photos;
     }
 
+    
+    public function setPhotos($photos) {
+        return $this->photos = $photos;
+    }
+    
+    
     public function doStuffOnPreUpdate() {
         $this->updatedAt = new \DateTime();
     }
