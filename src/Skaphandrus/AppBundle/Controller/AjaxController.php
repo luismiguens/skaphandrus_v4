@@ -27,7 +27,7 @@ class AjaxController extends Controller {
         $spots = $em->getRepository('SkaphandrusAppBundle:SkSpot')->getMoreSpots($locale, $location_id, $limit, $offset);
 
         foreach ($spots as $spot):
-            $spot->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpot')->findPhotos($spot->getId()));
+            $spot->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpot')->findPhotos($spot->getId(), $location_id));
         endforeach;
 
         return $this->render('SkaphandrusAppBundle:Ajax:spot.html.twig', array(
@@ -46,10 +46,8 @@ class AjaxController extends Controller {
         $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->getMoreSpecies($location_id, $limit, $offset);
 
         foreach ($species as $s):
-            $s->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpecies')->findPhotos($s->getId()));
+            $s->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpecies')->findPhotos($s->getId(), $location_id));
         endforeach;
-
-        dump($species);
         
         return $this->render('SkaphandrusAppBundle:Ajax:species.html.twig', array(
                     'species' => $species,
@@ -67,7 +65,7 @@ class AjaxController extends Controller {
         $photographers = $em->getRepository('SkaphandrusAppBundle:FosUser')->getMorePhotographers($location_id, $limit, $offset);
 
         foreach ($photographers as $p):
-            $p->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpecies')->findPhotos($p->getId()));
+            $p->setPhotos($em->getRepository('SkaphandrusAppBundle:FosUser')->findPhotos($p->getId(), $location_id));
         endforeach;
 
         dump($photographers);

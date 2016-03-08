@@ -11,18 +11,23 @@
                 <div class="roller slick-initialized slick-slider">
                     <div class="slick-list draggable">
                         <div style="opacity: 1; width: 800px; left: 0px;" class="slick-track">
-                            {% for photo in spot.photos %}
-                                <div style="width: 112px;" class="slick-slide slick-current slick-active">
-                                    <a class="thumbnail" href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
-                                        <img style="width: 100px; margin:1% 2px 0px 2px;" itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('sk_thumbnail_outbound_100') }}" />
-                                    </a>
+                            {% if spot.photos %}
+                                {% for photo in spot.photos %}
+                                    <div style="width: 112px;" class="slick-slide slick-current slick-active">
+                                        <a class="thumbnail" href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
+                                            <img style="width: 100px; margin:1% 2px 0px 2px;" itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('sk_thumbnail_outbound_100') }}" />
+                                        </a>
+                                    </div>
+                                {% endfor %}
+
+                                <div style="width: 112px;" class="slick-slide slick-active">
+                                    <button onclick="location.href = '{{ path('photos', { 'spot': spot.id }) }}'" style="margin-left: 3%;" type="button" class="btn btn-block btn-outline btn-primary">
+                                        {{ "common.grid.see_all" }}
+                                    </button>
                                 </div>
-                            {% endfor %}
-                            <div style="width: 112px;" class="slick-slide slick-active">
-                                <button onclick="location.href = '{{ path('photos', { 'spot': spot.id }) }}'" style="margin-left: 3%;" type="button" class="btn btn-block btn-outline btn-primary">
-                                    {{ "common.grid.see_all" }}
-                                </button>
-                            </div>
+                            {% else %}
+                                {{"common.spot.no_photos"|trans}}
+                            {% endif %}
                         </div>
                     </div>
                 </div>

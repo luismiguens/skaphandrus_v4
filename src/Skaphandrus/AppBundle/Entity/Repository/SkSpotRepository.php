@@ -159,12 +159,14 @@ class SkSpotRepository extends EntityRepository {
 //        }
 //    }
 
-    public function findPhotos($spot_id) {
+    public function findPhotos($spot_id, $location_id) {
         $query = $this->getEntityManager()->createQuery(
                         'SELECT p
             FROM SkaphandrusAppBundle:SkPhoto p
-            WHERE p.spot = :spot_id'
-                )->setParameter('spot_id', $spot_id)->setMaxResults(6);
+            JOIN p.spot s
+            JOIN s.location l
+            WHERE p.spot = :spot_id and l.id = :location_id'
+                )->setParameter('spot_id', $spot_id)->setParameter('location_id', $location_id)->setMaxResults(6);
 
         return $query->getResult();
     }

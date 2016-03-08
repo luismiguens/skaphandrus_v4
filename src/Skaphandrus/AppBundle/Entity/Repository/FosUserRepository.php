@@ -70,12 +70,14 @@ class FosUserRepository extends EntityRepository {
         return $result;
     }
 
-    public function findPhotos($fos_user_id) {
+    public function findPhotos($fosUser_id, $location_id) {
         $query = $this->getEntityManager()->createQuery(
                         'SELECT p
             FROM SkaphandrusAppBundle:SkPhoto p
-            WHERE p.fosUser = :fos_user_id'
-                )->setParameter('fos_user_id', $fos_user_id)->setMaxResults(6);
+            JOIN p.spot s
+            JOIN s.location l
+            WHERE p.fosUser = :fosUser_id and l.id = :location_id'
+                )->setParameter('fosUser_id', $fosUser_id)->setParameter('location_id', $location_id)->setMaxResults(6);
 
         return $query->getResult();
     }
