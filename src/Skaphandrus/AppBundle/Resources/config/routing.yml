@@ -28,6 +28,14 @@ sitemap:
 #index_teste:
 #    path:     /teste/index
 #    defaults: { _controller: "SkaphandrusAppBundle:Testes:index" }
+
+ajax_species_spot:
+    path:     /{_locale}/ajax/spot/species
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:speciesSpot" }
+
+ajax_photographers_spot:
+    path:     /{_locale}/ajax/spot/photographers
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:photographersSpot" }    
     
 ajax_spot_location:
     path:     /{_locale}/ajax/location/spot
@@ -52,8 +60,7 @@ ajax_species_country:
 ajax_photographers_country:
     path:     /{_locale}/ajax/country/photographers
     defaults: { _controller: "SkaphandrusAppBundle:Ajax:photographersCountry" }    
-   
-   
+
 ajax_index:
     path:     /{_locale}/ajax/index
     defaults: { _controller: "SkaphandrusAppBundle:Ajax:index" }

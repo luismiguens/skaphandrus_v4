@@ -183,7 +183,6 @@
                         dataType: "text",
                         success: function (response) {
                             $("#box_species").append(response);
-
                         }
                     });
                 }, 100);
@@ -202,7 +201,6 @@
                         dataType: "text",
                         success: function (response) {
                             $("#box_photographers").append(response);
-
                         }
                     });
                 }, 100);
@@ -224,7 +222,7 @@
 
 {% block body %}
 
-    <div class="wrapper wrapper-content animated" itemscope itemtype="http://schema.org/City">
+    <div class="wrapper wrapper-content animated" itemscope itemtype="http://schema.org/Country">
 
         <div class="row" >
             <div class="col col-lg-12" >
@@ -234,7 +232,11 @@
                 </div>
                 <div class="ibox-content" >
                     <h3>{% trans with {'%country%': country} %}page.country.h3.info{% endtrans %}</h3>
-                    <p itemprop="description">{{ country.translate(app.request.locale).overview|raw  }}</p>
+                    {% if country.translate(app.request.locale).overview is not empty %}
+                        <p itemprop="description">{{ country.translate(app.request.locale).overview|raw  }}</p>
+                    {% else %}
+                        {{ "page.country.p.no_description"|trans }}
+                    {% endif %}
 
                     <div class="span4 collapse-group">
                         {% if country.translate(app.request.locale).geographyAndClimate is not empty %}
@@ -279,7 +281,7 @@
         </div>
 
         <!--  Mapa de spots start -->
-        <div class="row" >
+        <div class="row" style ="margin-top: 2%" >
             <div class="col col-lg-12">
                 <div class="ibox-title" >
                     <h3>{% trans with {'%country%': country} %}page.country.h3.locations{% endtrans %}</h3>

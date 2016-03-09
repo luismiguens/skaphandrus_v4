@@ -14,6 +14,19 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkBusinessRepository extends EntityRepository {
 
+    public function findBusienssInSpot($spot_id) {
+
+        return $this->getEntityManager()->createQuery(
+                                'SELECT b
+                FROM SkaphandrusAppBundle:SkBusiness b
+                JOIN b.type t
+                JOIN b.address a
+                JOIN a.location l
+                JOIN l.spots s
+                WHERE s.id = :spot_id')
+                        ->setParameter('spot_id', $spot_id)->getResult();
+    }
+
     public function findBusienssInLocation($location_id) {
 
         return $this->getEntityManager()->createQuery(

@@ -177,7 +177,6 @@
                         dataType: "text",
                         success: function (response) {
                             $("#box_species").append(response);
-
                         }
                     });
                 }, 100);
@@ -196,7 +195,6 @@
                         dataType: "text",
                         success: function (response) {
                             $("#box_photographers").append(response);
-
                         }
                     });
                 }, 100);
@@ -260,7 +258,11 @@
                 </div>
                 <div class="ibox-content" >
                     <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.info{% endtrans %}</h3>
-                    {{ location.description|raw }}
+                    {% if location.description is not empty %}
+                        <p itemprop="description">{{ location.description|raw }}</p>
+                    {% else %}
+                        {{ "page.location.p.no_description"|trans }}
+                    {% endif %}
 
                     <div class="span4 collapse-group">
                         {% if location.waterTemp is not empty %}
@@ -300,7 +302,7 @@
         </div>
 
         <!--  Mapa de spots start -->
-        <div class="row" >
+        <div class="row" style ="margin-top: 2%" >
             <div class="col col-lg-12">
                 <div class="ibox-title" >
                     <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.spots_map{% endtrans %}</h3>

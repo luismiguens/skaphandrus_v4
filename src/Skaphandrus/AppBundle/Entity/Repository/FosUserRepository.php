@@ -15,6 +15,59 @@ use Skaphandrus\AppBundle\Entity\FosUser;
  */
 class FosUserRepository extends EntityRepository {
 
+    public function getMorePhotographersSpot($spot_id, $limit = 3, $offset = 0) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT u.id as id, u.username as username, 
+                up.id as p_id, up.firstname as firstname, up.middlename as middlename, up.lastname as lastname,
+                st.photo as photo,
+                count(p.id) as photosInUser 
+                FROM fos_user as u
+                JOIN sk_personal as up
+                on u.id = up.fos_user_id
+                JOIN sk_settings as st
+                on u.id = st.fos_user_id
+                JOIN sk_photo as p
+                on u.id = p.fos_user_id
+                JOIN sk_spot as s
+                on s.id = p.spot_id
+                where s.id = " . $spot_id . "
+                group by id
+                order by photosInUser desc
+                limit " . $limit . "
+                offset " . $offset;
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+//            $user = $em->getRepository('SkaphandrusAppBundle:FosUser')->find($value['fosUser']);
+
+            $user = new FosUser();
+            $user->setId($value['id']);
+            $user->setUsername($value['username']);
+            $user->setPhotosInUser($value['photosInUser']);
+
+            $personal = new \Skaphandrus\AppBundle\Entity\SkPersonal();
+            $personal->setFirstname($value['firstname']);
+            $personal->setMiddlename($value['middlename']);
+            $personal->setLastname($value['lastname']);
+
+            $settings = new \Skaphandrus\AppBundle\Entity\SkSettings();
+            $settings->setPhoto($value['photo']);
+
+            $user->setPersonal($personal);
+            $user->setSettings($settings);
+
+            $result[] = $user;
+        }
+
+        return $result;
+    }
+
     public function getMorePhotographersLocation($location_id, $limit = 3, $offset = 0) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
@@ -129,16 +182,14 @@ class FosUserRepository extends EntityRepository {
         return $result;
     }
 
-    public function findPhotosCountry($fosUser_id, $country_id) {
+    public function findPhotosSpot($fosUser_id, $spot_id) {
         $query = $this->getEntityManager()->createQuery(
                         'SELECT p
             FROM SkaphandrusAppBundle:SkPhoto p
             JOIN p.spot s
-            JOIN s.location l
-            JOIN l.region r
-            WHERE p.fosUser = :fosUser_id and r.country = :country_id
+            WHERE p.fosUser = :fosUser_id and s.id = :spot_id
             ORDER BY p.id desc'
-                )->setParameter('fosUser_id', $fosUser_id)->setParameter('country_id', $country_id)->setMaxResults(6);
+                )->setParameter('fosUser_id', $fosUser_id)->setParameter('spot_id', $spot_id)->setMaxResults(6);
 
         return $query->getResult();
     }
@@ -152,6 +203,20 @@ class FosUserRepository extends EntityRepository {
             WHERE p.fosUser = :fosUser_id and l.id = :location_id
             ORDER BY p.id desc'
                 )->setParameter('fosUser_id', $fosUser_id)->setParameter('location_id', $location_id)->setMaxResults(6);
+
+        return $query->getResult();
+    }
+
+    public function findPhotosCountry($fosUser_id, $country_id) {
+        $query = $this->getEntityManager()->createQuery(
+                        'SELECT p
+            FROM SkaphandrusAppBundle:SkPhoto p
+            JOIN p.spot s
+            JOIN s.location l
+            JOIN l.region r
+            WHERE p.fosUser = :fosUser_id and r.country = :country_id
+            ORDER BY p.id desc'
+                )->setParameter('fosUser_id', $fosUser_id)->setParameter('country_id', $country_id)->setMaxResults(6);
 
         return $query->getResult();
     }

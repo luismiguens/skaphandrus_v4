@@ -20,7 +20,7 @@ class SkSpotRepository extends EntityRepository {
 
         $sql = "SELECT s.id as spot, st.id as st_id, st.name as st_name, count(p.id) as num_photos
                 FROM sk_photo as p
-                LEFT JOIN sk_spot as s on s.id = p.spot_id
+                right JOIN sk_spot as s on s.id = p.spot_id
                 JOIN sk_spot_translation as st on s.id = st.translatable_id
                 join sk_location as l on l.id = s.location_id
                 where l.id = " . $location_id . " and st.locale = '" . $locale . "'
@@ -67,6 +67,18 @@ class SkSpotRepository extends EntityRepository {
 //        } catch (\Doctrine\ORM\NoResultException $e) {
 //            return null;
 //        }
+    }
+
+    public function findPhotosSpot($spot_id) {
+        $query = $this->getEntityManager()->createQuery(
+                        'SELECT p
+            FROM SkaphandrusAppBundle:SkPhoto p
+            JOIN p.spot s
+            WHERE p.spot = :spot_id 
+            ORDER BY p.id desc'
+                )->setParameter('spot_id', $spot_id)->setMaxResults(6);
+
+        return $query->getResult();
     }
 
     public function findPhotosLocation($spot_id, $location_id) {
