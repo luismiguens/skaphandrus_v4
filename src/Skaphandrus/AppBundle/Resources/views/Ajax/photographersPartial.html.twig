@@ -1,0 +1,40 @@
+
+{% for p in photographers %}
+
+    <div class="ibox-content">
+        <a href="#" class="pull-left">
+            <img class="img-circle" src="{{ p.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}"/>
+        </a>
+        <div class="row">
+            <div class="col col-lg-2" style="margin-left: -2%;">
+                <p>{{"common.photographers.name"|trans}}: {{ link_to_user(p) }} </p>
+                <p>{{"common.photographers.number_photos"|trans}}: <span class="label label-info">{{ p.photosInUser }}</span>  </p>
+            </div>
+            <div class="col col-lg-10 col-xs-10 col-md-8">
+                <div class="roller slick-initialized slick-slider">
+                    <div class="slick-list draggable">
+                        <div style="opacity: 1; width: 800px; left: 0px;" class="slick-track">
+                            {% if p.photos %}
+                                {% for photo in p.photos %}
+                                    <div style="width: 112px;" class="slick-slide slick-current slick-active">
+                                        <a class="thumbnail" href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
+                                            <img style="width: 100px; margin:1% 2px 0px 2px;" itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('sk_thumbnail_outbound_100') }}" />
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                                <div style="width: 112px;" class="slick-slide slick-active">
+                                    <button onclick="location.href = '{{ path('photos', { 'fosUser': p.id }) }}'" style="margin-left: 3%;" type="button" class="btn btn-block btn-outline btn-primary">
+                                        {{ "common.grid.see_all" }}
+                                    </button>
+                                </div>
+                            {% else %}
+                                {{"common.photographers.no_photos"|trans}}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endfor %}

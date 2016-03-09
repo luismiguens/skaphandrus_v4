@@ -157,6 +157,10 @@ class SkLocation {
         return $this->spots;
     }
 
+    public function setSpots($spots) {
+        $this->spots = $spots;
+    }
+
     public function __toString() {
 
         if ($this->getName()):

@@ -712,7 +712,7 @@ class DefaultController extends Controller {
             // $qb_photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->getQueryBuilder(['location' => $location], 20);
             // $query_photographers = $qb_photographers->getQuery();
             // $photographers = $query_photographers->getResult();
-
+// 
 //            $spots = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')
 //                    ->findSpotsInLocation($location->getId(), $locale);
 //
@@ -721,7 +721,7 @@ class DefaultController extends Controller {
 //
 //            $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
 //                    ->findUsersInLocation($location->getId());
-            
+
             $business = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
                     ->findBusienssInLocation($location->getId());
 
@@ -830,7 +830,7 @@ class DefaultController extends Controller {
                     $map->addMarker($marker);
                 }
             }
-            
+
             return $this->render('SkaphandrusAppBundle:Default:location.html.twig', array(
                         'location' => $location,
 //                        'spots' => $spots,
@@ -857,12 +857,19 @@ class DefaultController extends Controller {
                 ->findBySlug($slug, $locale);
 
         if ($country) {
-            $locations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
-                    ->findLocationsInCountry($country->getId(), $locale);
 
-            $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
-                    ->findSpeciesInCountry($country->getId());
+            $business = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
+                    ->findBusienssInCountry($country->getId());
 
+//            $locations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
+//                    ->findLocationsInCountry($country->getId(), $locale);
+//
+//            $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
+//                    ->findSpeciesInCountry($country->getId());
+//                    
+//            $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
+//                    ->findUsersInCountry($country->getId());
+//                    
 //            $spots_count = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
 //                ->countSpotsArray();
 //            $photos_count = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
@@ -889,15 +896,13 @@ class DefaultController extends Controller {
 //                }
 //            }
 
-            $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-                    ->findUsersInCountry($country->getId());
-
             return $this->render('SkaphandrusAppBundle:Default:country.html.twig', array(
                         'country' => $country,
                         'country_name' => $name,
-                        'locations' => $locations,
-                        'species' => $species,
-                        'photographers' => $photographers,
+                        'business' => $business,
+//                        'locations' => $locations,
+//                        'species' => $species,
+//                        'photographers' => $photographers,
             ));
         } else {
             throw $this->createNotFoundException('The country ' . $name . ' does not exist.');
@@ -962,20 +967,14 @@ class DefaultController extends Controller {
                 ->getPhotosFromUser($photo->getFosUser());
 
         $photoInContest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
-                ->getPhotoInContest($photo->getId()/*24078*/, $locale);
-        
+                ->getPhotoInContest($photo->getId()/* 24078 */, $locale);
+
         $votedPhoto = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestVote')
                 ->findOneBy(array('fosUser' => $photo->getFosUser(), 'category' => "behaviour"));
 
-        
+
 //$categories =         $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
 //                ->getCategories($photo->getId()/*24078*/);
-        
-        
-        
-        
-        
-        
 //        dump($photoInContest);
 
         if ($photo) {

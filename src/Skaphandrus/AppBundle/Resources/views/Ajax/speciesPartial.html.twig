@@ -1,0 +1,38 @@
+
+{% for s in species %}
+
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col col-lg-2  col-xs-2 col-md-4 ">
+                <strong> <h3>{{"common.species.title"|trans}}</h3> </strong>
+                <p>{{"common.species.name"|trans}}: {{ link_to_species(s) }}</p>
+                <p>{{"common.species.number_photos"|trans}}: <span class="label label-info">{{s.photosInSpecies}}</span>  </p>
+            </div>
+            <div class="col col-lg-10 col-xs-10 col-md-8">
+                <div class="roller slick-initialized slick-slider">
+                    <div class="slick-list draggable">
+                        <div style="opacity: 1; width: 800px; left: 0px;" class="slick-track">
+                            {% if s.photos %}
+                                {% for photo in s.photos %}
+                                    <div style="width: 112px;" class="slick-slide slick-current slick-active">
+                                        <a class="thumbnail" href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
+                                            <img style="width: 100px; margin:1% 2px 0px 2px;" itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('sk_thumbnail_outbound_100') }}" />
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                                <div style="width: 112px;" class="slick-slide slick-active">
+                                    <button onclick="location.href = '{{ path('photos', { 'species': s.id }) }}'" style="margin-left: 3%;" type="button" class="btn btn-block btn-outline btn-primary">
+                                        {{ "common.grid.see_all" }}
+                                    </button>
+                                </div>
+                            {% else %}
+                                {{"common.species.no_photos"|trans}}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endfor %}

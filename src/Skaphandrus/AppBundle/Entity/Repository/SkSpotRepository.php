@@ -13,14 +13,14 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkSpotRepository extends EntityRepository {
 
-    public function getMoreSpots($locale, $location_id, $limit = 3, $offset = 0) {
+    public function getMoreSpotsLocation($locale, $location_id, $limit = 3, $offset = 0) {
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
         $sql = "SELECT s.id as spot, st.id as st_id, st.name as st_name, count(p.id) as num_photos
                 FROM sk_photo as p
-                RIGHT JOIN sk_spot as s on s.id = p.spot_id
+                LEFT JOIN sk_spot as s on s.id = p.spot_id
                 JOIN sk_spot_translation as st on s.id = st.translatable_id
                 join sk_location as l on l.id = s.location_id
                 where l.id = " . $location_id . " and st.locale = '" . $locale . "'
@@ -67,6 +67,19 @@ class SkSpotRepository extends EntityRepository {
 //        } catch (\Doctrine\ORM\NoResultException $e) {
 //            return null;
 //        }
+    }
+
+    public function findPhotosLocation($spot_id, $location_id) {
+        $query = $this->getEntityManager()->createQuery(
+                        'SELECT p
+            FROM SkaphandrusAppBundle:SkPhoto p
+            JOIN p.spot s
+            JOIN s.location l
+            WHERE p.spot = :spot_id and l.id = :location_id
+            ORDER BY p.id desc'
+                )->setParameter('spot_id', $spot_id)->setParameter('location_id', $location_id)->setMaxResults(6);
+
+        return $query->getResult();
     }
 
     public function findLikeName($term, $locale) {
@@ -158,19 +171,6 @@ class SkSpotRepository extends EntityRepository {
 //            return null;
 //        }
 //    }
-
-    public function findPhotos($spot_id, $location_id) {
-        $query = $this->getEntityManager()->createQuery(
-                        'SELECT p
-            FROM SkaphandrusAppBundle:SkPhoto p
-            JOIN p.spot s
-            JOIN s.location l
-            WHERE p.spot = :spot_id and l.id = :location_id'
-                )->setParameter('spot_id', $spot_id)->setParameter('location_id', $location_id)->setMaxResults(6);
-
-        return $query->getResult();
-    }
-
 //    public function getPhotographers($spot_id) {
 //        return $this->getEntityManager()
 //            ->createQuery(

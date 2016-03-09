@@ -29,17 +29,30 @@ sitemap:
 #    path:     /teste/index
 #    defaults: { _controller: "SkaphandrusAppBundle:Testes:index" }
     
-ajax_spot:
-    path:     /{_locale}/ajax/spot
-    defaults: { _controller: "SkaphandrusAppBundle:Ajax:spot" }
+ajax_spot_location:
+    path:     /{_locale}/ajax/location/spot
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:spotLocation" }
     
-ajax_species:
-    path:     /{_locale}/ajax/species
-    defaults: { _controller: "SkaphandrusAppBundle:Ajax:species" }
+ajax_species_location:
+    path:     /{_locale}/ajax/location/species
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:speciesLocation" }
 
-ajax_photographers:
-    path:     /{_locale}/ajax/photographers
-    defaults: { _controller: "SkaphandrusAppBundle:Ajax:photographers" }   
+ajax_photographers_location:
+    path:     /{_locale}/ajax/location/photographers
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:photographersLocation" }   
+   
+ajax_location_country:
+    path:     /{_locale}/ajax/country/location
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:locationCountry" }
+    
+ajax_species_country:
+    path:     /{_locale}/ajax/country/species
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:speciesCountry" }
+
+ajax_photographers_country:
+    path:     /{_locale}/ajax/country/photographers
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:photographersCountry" }    
+   
    
 ajax_index:
     path:     /{_locale}/ajax/index

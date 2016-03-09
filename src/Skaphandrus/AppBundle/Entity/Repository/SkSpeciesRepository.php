@@ -13,7 +13,7 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkSpeciesRepository extends EntityRepository {
 
-    public function getMoreSpecies($location_id, $limit = 3, $offset = 0) {
+    public function getMoreSpeciesLocation($location_id, $limit = 3, $offset = 0) {
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
@@ -49,14 +49,75 @@ class SkSpeciesRepository extends EntityRepository {
         return $result;
     }
 
-    public function findPhotos($species_id, $location_id) {
+    public function getMoreSpeciesCountry($country_id, $limit = 3, $offset = 0) {
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT sp.id as species_id, ssn.name as ssn_name, ssn.author as sss_author, count(p.id) as num_photos
+                FROM sk_species_scientific_name as ssn
+                join sk_species as sp
+                on sp.id = ssn.species_id
+                join sk_photo as p
+                on sp.id = p.species_id
+                join sk_spot as s
+                on s.id = p.spot_id
+                join sk_location as l
+                on l.id = s.location_id
+                join sk_region as r
+                on r.id = l.region_id
+                join sk_country as c
+                on c.id = r.country_id
+                where c.id = " . $country_id . "
+                group by species_id 
+                order by num_photos desc
+                limit " . $limit . "
+                offset " . $offset;
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+//            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->find($value['species']);
+
+            $species = new \Skaphandrus\AppBundle\Entity\SkSpecies();
+            $species->setId($value['species_id']);
+            $scientific_name = new \Skaphandrus\AppBundle\Entity\SkSpeciesScientificName();
+            $scientific_name->setName($value['ssn_name']);
+            $scientific_name->setAuthor($value['sss_author']);
+            $species->addScientificName($scientific_name);
+            $species->setPhotosInSpecies($value['num_photos']);
+            $result[] = $species;
+        }
+
+        return $result;
+    }
+
+    public function findPhotosLocation($species_id, $location_id) {
         $query = $this->getEntityManager()->createQuery(
                         'SELECT p
             FROM SkaphandrusAppBundle:SkPhoto p
             JOIN p.spot s
             JOIN s.location l
-            WHERE p.species = :species_id and l.id = :location_id'
+            WHERE p.species = :species_id and l.id = :location_id
+            ORDER BY p.id desc'
                 )->setParameter('species_id', $species_id)->setParameter('location_id', $location_id)->setMaxResults(6);
+
+        return $query->getResult();
+    }
+
+    public function findPhotosCountry($species_id, $country_id) {
+        $query = $this->getEntityManager()->createQuery(
+                        'SELECT p
+            FROM SkaphandrusAppBundle:SkPhoto p
+            JOIN p.spot s
+            JOIN s.location l
+            JOIN l.region r
+            WHERE p.species = :species_id and r.country = :country_id
+            ORDER BY p.id desc'
+                )->setParameter('species_id', $species_id)->setParameter('country_id', $country_id)->setMaxResults(6);
 
         return $query->getResult();
     }

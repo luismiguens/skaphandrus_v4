@@ -13,6 +13,74 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkLocationRepository extends EntityRepository {
 
+    public function getMoreLocationCountry($country_id, $limit = 3, $offset = 0) {
+
+//        $query = $this->getEntityManager()
+//                ->createQuery(
+//                        'SELECT l as location, count(p.id) as photosInLocation
+//                        FROM SkaphandrusAppBundle:SkLocation l
+//                        JOIN l.region r
+//                        JOIN r.country c
+//                        JOIN SkaphandrusAppBundle:SkSpot s WITH s.location = l.id
+//                        LEFT JOIN SkaphandrusAppBundle:SkPhoto p WITH p.spot = s.id
+//                        WHERE r.country = :country_id
+//                        GROUP BY l.id
+//                        ORDER BY photosInLocation desc')
+//                ->setParameter('country_id', $country_id)
+//                ->setMaxResults($limit)
+//                ->setFirstResult($offset)
+//                ->getResult();
+//
+//        try {
+//            return $query;
+//        } catch (\Doctrine\ORM\NoResultException $e) {
+//            return null;
+//        }
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('l as location')
+                ->addSelect('Count(p.id) as photosInLocation');
+        $qb->from('SkaphandrusAppBundle:SkLocation', 'l');
+        $qb->join('l.region', 'r', 'WITH', 'l.region = r.id');
+        $qb->join('r.country', 'c', 'WITH', 'r.country = :coutry_id');
+        $qb->join('SkaphandrusAppBundle:SkSpot', 's', 'WITH', 's.location = l.id');
+        $qb->leftJoin('SkaphandrusAppBundle:SkPhoto', 'p', 'WITH', 'p.spot = s.id');
+        $qb->groupBy('location');
+        $qb->orderBy('photosInLocation', 'desc');
+
+        $qb->setParameter('coutry_id', $country_id);
+        $qb->setMaxResults($limit);
+        $qb->setFirstResult($offset);
+
+        $result = array();
+
+        foreach ($qb->getQuery()->getResult() as $value) {
+            $value['location']->setPhotosInLocation($value['photosInLocation']);
+            $result[] = $value['location'];
+        }
+
+        try {
+            return $result;
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function findPhotosCountry($location_id, $country_id) {
+        $query = $this->getEntityManager()->createQuery(
+                        'SELECT p
+            FROM SkaphandrusAppBundle:SkPhoto p
+            JOIN p.spot s
+            JOIN s.location l
+            JOIN l.region r
+            WHERE l.id = :location_id and r.country = :country_id
+            ORDER BY p.id desc'
+                )->setParameter('location_id', $location_id)->setParameter('country_id', $country_id)->setMaxResults(6);
+
+        return $query->getResult();
+    }
+
 //    public function findOneWithTranslations($id)
 //    {
 //        $qb = $this->createQueryBuilder('l')
@@ -25,8 +93,6 @@ class SkLocationRepository extends EntityRepository {
 //        
 //        return $qb->getQuery()->getSingleResult();
 //    }
-
-
 
     public function findBySlug_old($slug, $country, $locale) {
         $name = Utils::unslugify($slug);

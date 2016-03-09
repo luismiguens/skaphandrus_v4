@@ -42,9 +42,9 @@
     {#    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/footable/footable.core.css') }}" rel="stylesheet">#}
 
     <style type="text/css">
-        .ibox-title {
+        {#.ibox-title {
             margin-top: 1.7%;
-        }
+        }#}
         .ibox-title p {
             margin-left: 1%;
         }
@@ -96,7 +96,8 @@
             width: 100px;
             min-height: 100px;
             max-height: 300px;
-            padding-top: 10%;
+            padding-top: 5%;
+            padding-bottom: 5%;
         }
         .logo2{
             width: 100px;
@@ -121,14 +122,14 @@
 
 {% block javascripts %}
     {{ parent() }}
-        <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
 
     <!-- FooTable -->
     {#    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>#}
 
     {#    <!-- Slick JQuery -->#}
-        <script type="text/javascript" src="{{ asset('bundles/skaphandrusapp/js/slick/slick.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/skaphandrusapp/js/slick/slick.min.js') }}"></script>
 
     <script type="text/javascript">
 
@@ -153,7 +154,7 @@
                 setTimeout(function () {
                     $.ajax({
                         type: "get",
-                        url: "{{path("ajax_spot")}}",
+                        url: "{{path("ajax_spot_location")}}",
                         data: 'location_id=' + {{ location.id }} +'&limit=' + limit_spots + '&offset=' + offset_spots,
                         dataType: "text",
                         success: function (response) {
@@ -171,7 +172,7 @@
                 setTimeout(function () {
                     $.ajax({
                         type: "get",
-                        url: "{{path("ajax_species")}}",
+                        url: "{{path("ajax_species_location")}}",
                         data: 'location_id=' + {{ location.id }} +'&limit=' + limit_species + '&offset=' + offset_species,
                         dataType: "text",
                         success: function (response) {
@@ -190,7 +191,7 @@
                 setTimeout(function () {
                     $.ajax({
                         type: "get",
-                        url: "{{path("ajax_photographers")}}",
+                        url: "{{path("ajax_photographers_location")}}",
                         data: 'location_id=' + {{ location.id }} +'&limit=' + limit_photographers + '&offset=' + offset_photographers,
                         dataType: "text",
                         success: function (response) {

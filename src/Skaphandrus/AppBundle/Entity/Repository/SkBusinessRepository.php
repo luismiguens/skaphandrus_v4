@@ -17,13 +17,27 @@ class SkBusinessRepository extends EntityRepository {
     public function findBusienssInLocation($location_id) {
 
         return $this->getEntityManager()->createQuery(
-                        'SELECT b
+                                'SELECT b
                 FROM SkaphandrusAppBundle:SkBusiness b
                 JOIN b.type t
                 JOIN b.address a
                 JOIN a.location l
                 WHERE a.location = :location_id')
-                ->setParameter('location_id', $location_id)->getResult();
+                        ->setParameter('location_id', $location_id)->getResult();
+    }
+
+    public function findBusienssInCountry($country_id) {
+        $query = $this->getEntityManager()->createQuery(
+                                'SELECT b
+                FROM SkaphandrusAppBundle:SkBusiness b
+                JOIN b.type t
+                JOIN b.address a
+                JOIN a.location l
+                JOIN l.region r
+                WHERE r.country = :country_id')
+                        ->setParameter('country_id', $country_id)->getResult();
+
+        return $query;
     }
 
     public function findLikeName($term) {

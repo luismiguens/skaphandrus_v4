@@ -15,7 +15,7 @@ use Skaphandrus\AppBundle\Entity\FosUser;
  */
 class FosUserRepository extends EntityRepository {
 
-    public function getMorePhotographers($location_id, $limit = 3, $offset = 0) {
+    public function getMorePhotographersLocation($location_id, $limit = 3, $offset = 0) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
@@ -70,13 +70,87 @@ class FosUserRepository extends EntityRepository {
         return $result;
     }
 
-    public function findPhotos($fosUser_id, $location_id) {
+    public function getMorePhotographersCountry($country_id, $limit = 3, $offset = 0) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT u.id as id, u.username as username, 
+                up.id as p_id, up.firstname as firstname, up.middlename as middlename, up.lastname as lastname,
+                st.photo as photo,
+                count(p.id) as photosInUser 
+                FROM fos_user as u
+                JOIN sk_personal as up
+                on u.id = up.fos_user_id
+                JOIN sk_settings as st
+                on u.id = st.fos_user_id
+                JOIN sk_photo as p
+                on u.id = p.fos_user_id
+                JOIN sk_spot as s
+                on s.id = p.spot_id
+                JOIN sk_location as l
+                ON l.id = s.location_id
+                JOIN sk_region as r
+                ON l.region_id = r.id
+                JOIN sk_country as c
+                ON r.country_id = c.id
+                where c.id = " . $country_id . "
+                group by id
+                order by photosInUser desc
+                limit " . $limit . "
+                offset " . $offset;
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+//            $user = $em->getRepository('SkaphandrusAppBundle:FosUser')->find($value['fosUser']);
+
+            $user = new FosUser();
+            $user->setId($value['id']);
+            $user->setUsername($value['username']);
+            $user->setPhotosInUser($value['photosInUser']);
+
+            $personal = new \Skaphandrus\AppBundle\Entity\SkPersonal();
+            $personal->setFirstname($value['firstname']);
+            $personal->setMiddlename($value['middlename']);
+            $personal->setLastname($value['lastname']);
+
+            $settings = new \Skaphandrus\AppBundle\Entity\SkSettings();
+            $settings->setPhoto($value['photo']);
+
+            $user->setPersonal($personal);
+            $user->setSettings($settings);
+
+            $result[] = $user;
+        }
+
+        return $result;
+    }
+
+    public function findPhotosCountry($fosUser_id, $country_id) {
         $query = $this->getEntityManager()->createQuery(
                         'SELECT p
             FROM SkaphandrusAppBundle:SkPhoto p
             JOIN p.spot s
             JOIN s.location l
-            WHERE p.fosUser = :fosUser_id and l.id = :location_id'
+            JOIN l.region r
+            WHERE p.fosUser = :fosUser_id and r.country = :country_id
+            ORDER BY p.id desc'
+                )->setParameter('fosUser_id', $fosUser_id)->setParameter('country_id', $country_id)->setMaxResults(6);
+
+        return $query->getResult();
+    }
+
+    public function findPhotosLocation($fosUser_id, $location_id) {
+        $query = $this->getEntityManager()->createQuery(
+                        'SELECT p
+            FROM SkaphandrusAppBundle:SkPhoto p
+            JOIN p.spot s
+            JOIN s.location l
+            WHERE p.fosUser = :fosUser_id and l.id = :location_id
+            ORDER BY p.id desc'
                 )->setParameter('fosUser_id', $fosUser_id)->setParameter('location_id', $location_id)->setMaxResults(6);
 
         return $query->getResult();
