@@ -203,7 +203,7 @@
                     <div class="slider variable-width ">
                         {% for p in photosUser %}
                             <div>
-                                
+
                                 <a href="{{ path('photo_no_slug',  { 'id': p.id }) }}" title="{{ p.title }}">
                                     <img style=" margin: 0% 5% 0% 5%; width: auto; background-color: black; height: 100px; " alt="{{ p.title }}" src="{{ p.getWebPath | imagine_filter('sk_widen_400') }}" />
                                 </a>
@@ -318,21 +318,21 @@
                         </div>
 
 
-                                {#{% dump(categories)%}
-                            
-                            {% for category in categories %}
-                                
-                               
-                                 {{category}}
-                                
-                                
-                                
-                                {% endfor %}#}
-                                
-                                
-                            
-                            
-                            
+                        {#{% dump(categories)%}
+                    
+                    {% for category in categories %}
+                        
+                       
+                         {{category}}
+                        
+                        
+                        
+                        {% endfor %}#}
+
+
+
+
+
 
                         <!-- contests area begin-->
                         {#<div style="margin-top: 1%;" class="row">
@@ -429,7 +429,6 @@
                                     </div>
                                 {% endfor %}
 
-
                                 <!-- exists validations experts start -->
                                 {% if photo.speciesValidations|length %}
                                     <strong> {{ "page.photo.h3.species_validations"|trans }} </strong>
@@ -448,8 +447,9 @@
                                             </div>
                                         {% endfor %}
                                     </div>
+                                {% else %}
+                                    {{ "page.photo.validations.no_validations"|trans }}
                                 {% endif %}
-
 
                                 <!-- exists suggestions users start -->
                                 {% if photo.speciesSugestions|length %}
@@ -463,13 +463,16 @@
                                                 </a>
                                                 <div class="media-body">
                                                     {{ link_to_user(ss.fosUser) }} 
-                                                    {{ "page.photo.label.validated"|trans }} 
+                                                    {{ "page.photo.label.sugested"|trans }} 
                                                     {{ link_to_species(ss.species) }}
                                                 </div>
                                                 <small style="float: right;" class="text-muted">{{ ss.createdAt|date("H:m - d/m/Y") }}</small>
                                             </div>
                                         {% endfor %}
                                     </div>
+                                {% else %}
+                                    
+                                    {{ "page.photo.sugestions.no_sugestions"|trans }}
                                 {% endif %}
                             </div>
 
@@ -506,19 +509,23 @@
                             {% endif %}
                         </div>
 
-                        {% if photo.species is not empty %}
-                            <div class="ibox-title">
-                                <h5>{{ "page.photo.h5.photo_grid"|trans }}</h5>
-                            </div>
-                            <div class="ibox-content">
-                                {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': photo.species.id },'limit':25  } )) }}
-                            </div>
-                        {% endif %}
                     </div>
+                </div>
+
+                <div class="col-lg-6">
+                    {% if photo.species is not empty %}
+                        <div class="ibox-title">
+                            <h5>{{ "page.photo.h5.photo_grid"|trans }}</h5>
+                        </div>
+                        <div class="ibox-content">
+                            {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': photo.species.id },'limit':25  } )) }}
+                        </div>
+                    {% endif %}
                 </div>
 
             </div>
         </div>
     </div>
+
 
 {% endblock %}
