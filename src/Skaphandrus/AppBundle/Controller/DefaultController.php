@@ -655,6 +655,13 @@ class DefaultController extends Controller {
                     $infowindow->setAutoClose(TRUE);
 
                     // Marker options
+
+                    if ($spot == $s):
+                        $marker->setIcon('http://maps.google.com/mapfiles/marker_green.png');
+                    else:
+                        $marker->setIcon('http://maps.google.com/mapfiles/marker.png');
+                    endif;
+
                     $marker->setInfoWindow($infowindow);
                     $marker->setPrefixJavascriptVariable('marker_');
                     $marker->setPosition($latitude, $longitude, true);
@@ -769,8 +776,8 @@ class DefaultController extends Controller {
             return $this->render('SkaphandrusAppBundle:Default:spot.html.twig', array(
                         'spot' => $spot,
                         'map' => $map,
-                        'map_center_lat' => $centerLatitude,
-                        'map_center_lon' => $centerLongitude,
+//                        'map_center_lat' => $centerLatitude,
+//                        'map_center_lon' => $centerLongitude,
                         'business' => $business
 //                        'photographers' => $photographers,
 //                        'species' => $species,

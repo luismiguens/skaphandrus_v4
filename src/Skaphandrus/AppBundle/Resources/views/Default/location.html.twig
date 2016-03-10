@@ -129,7 +129,7 @@
     {#    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>#}
 
     {#    <!-- Slick JQuery -->#}
-    <script type="text/javascript" src="{{ asset('bundles/skaphandrusapp/js/slick/slick.min.js') }}"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
 
     <script type="text/javascript">
 
@@ -260,43 +260,43 @@
                     <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.info{% endtrans %}</h3>
                     {% if location.description is not empty %}
                         <p itemprop="description">{{ location.description|raw }}</p>
+
+                        <div class="span4 collapse-group">
+                            {% if location.waterTemp is not empty %}
+                                <h5 class="collapse">{{ "page.location.h5.water_temp"|trans }}</h5>
+                                <p class="collapse">{{ location.waterTemp }}</p>
+                            {% endif %}
+
+                            {% if location.suit is not empty %}
+                                <h5 class="collapse">{{ "page.location.h5.suit"|trans }}</h5>
+                                <p class="collapse">{{ location.suit }}</p>
+                            {% endif %}
+
+                            {% if location.visibility is not empty %}
+                                <h5 class="collapse">{{ "page.location.h5.visibility"|trans }}</h5>
+                                <p class="collapse">{{ location.visibility }}</p>
+                            {% endif %}
+
+                            {% if location.climate is not empty %}
+                                <h5 class="collapse">{{ "page.location.h5.climate"|trans }}</h5>
+                                <p class="collapse">{{ location.climate }}</p>
+                            {% endif %}
+
+                            {% if location.howToGo is not empty %}
+                                <h5 class="collapse">{{ "page.location.h5.how_to_go"|trans }}</h5>
+                                <p class="collapse">{{ location.howToGo }}</p>
+                            {% endif %}
+
+                            {% if location.extraDive is not empty %}
+                                <h5 class="collapse">{{ "page.location.h5.extra_dive"|trans }}</h5>
+                                <p class="collapse">{{ location.extraDive|raw }}</p>
+                            {% endif %}
+
+                            <a style="margin: 2% 0% 0% 25%; width: 50%; " class="btn btn-block btn-outline btn-primary showdetails" data-toggle="collapse" data-target="#viewdetails"></a>
+                        </div>
                     {% else %}
                         {{ "page.location.p.no_description"|trans }}
                     {% endif %}
-
-                    <div class="span4 collapse-group">
-                        {% if location.waterTemp is not empty %}
-                            <h5 class="collapse">{{ "page.location.h5.water_temp"|trans }}</h5>
-                            <p class="collapse">{{ location.waterTemp }}</p>
-                        {% endif %}
-
-                        {% if location.suit is not empty %}
-                            <h5 class="collapse">{{ "page.location.h5.suit"|trans }}</h5>
-                            <p class="collapse">{{ location.suit }}</p>
-                        {% endif %}
-
-                        {% if location.visibility is not empty %}
-                            <h5 class="collapse">{{ "page.location.h5.visibility"|trans }}</h5>
-                            <p class="collapse">{{ location.visibility }}</p>
-                        {% endif %}
-
-                        {% if location.climate is not empty %}
-                            <h5 class="collapse">{{ "page.location.h5.climate"|trans }}</h5>
-                            <p class="collapse">{{ location.climate }}</p>
-                        {% endif %}
-
-                        {% if location.howToGo is not empty %}
-                            <h5 class="collapse">{{ "page.location.h5.how_to_go"|trans }}</h5>
-                            <p class="collapse">{{ location.howToGo }}</p>
-                        {% endif %}
-
-                        {% if location.extraDive is not empty %}
-                            <h5 class="collapse">{{ "page.location.h5.extra_dive"|trans }}</h5>
-                            <p class="collapse">{{ location.extraDive|raw }}</p>
-                        {% endif %}
-
-                        <a style="margin: 2% 0% 0% 25%; width: 50%; " class="btn btn-block btn-outline btn-primary showdetails" data-toggle="collapse" data-target="#viewdetails"></a>
-                    </div>
                 </div>
             </div>
         </div>

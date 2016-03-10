@@ -132,11 +132,12 @@
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
 
     {#    <!-- Slick JQuery -->#}
-    <script type="text/javascript" src="{{ asset('bundles/skaphandrusapp/js/slick/slick.min.js') }}"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
 
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
     {#<!-- FooTable -->
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>#}
+    
     <script type="text/javascript">
 
         $('.row .btn').on('click', function (e) {
@@ -234,48 +235,48 @@
                     <h3>{% trans with {'%country%': country} %}page.country.h3.info{% endtrans %}</h3>
                     {% if country.translate(app.request.locale).overview is not empty %}
                         <p itemprop="description">{{ country.translate(app.request.locale).overview|raw  }}</p>
+
+                        <div class="span4 collapse-group">
+                            {% if country.translate(app.request.locale).geographyAndClimate is not empty %}
+                                <h5 class="collapse">{{ "page.country.h5.geography_and_climate"|trans }}</h5>
+                                <p class="collapse">{{ country.translate(app.request.locale).geographyAndClimate }}</p>
+                            {% endif %}
+
+                            {% if country.translate(app.request.locale).entryRequirements is not empty %}
+                                <h5 class="collapse">{{ "page.country.h5.entry_requirements"|trans }}</h5>
+                                <p class="collapse">{{ country.translate(app.request.locale).entryRequirements }}</p>
+                            {% endif %}
+
+                            {% if country.translate(app.request.locale).healthAndSafety is not empty %}
+                                <h5 class="collapse">{{ "page.country.h5.health_and_safety"|trans }}</h5>
+                                <p class="collapse">{{ country.translate(app.request.locale).healthAndSafety }}</p>
+                            {% endif %}
+
+                            {% if country.translate(app.request.locale).timeZone is not empty %}
+                                <h5 class="collapse">{{ "page.country.h5.time_zone"|trans }}</h5>
+                                <p class="collapse">{{ country.translate(app.request.locale).timeZone }}</p>
+                            {% endif %}
+
+                            {% if country.translate(app.request.locale).communications is not empty %}
+                                <h5 class="collapse">{{ "page.country.h5.communications"|trans }}</h5>
+                                <p class="collapse">{{ country.translate(app.request.locale).communications }}</p>
+                            {% endif %}
+
+                            {% if country.translate(app.request.locale).powerAndElectricity is not empty %}
+                                <h5 class="collapse">{{ "page.country.h5.power_and_electricity"|trans }}</h5>
+                                <p class="collapse">{{ country.translate(app.request.locale).powerAndElectricity }}</p>
+                            {% endif %}
+
+                            {% if country.translate(app.request.locale).otherInformations is not empty %}
+                                <h5 class="collapse">{{ "page.country.h5.other_informations"|trans }}</h5>
+                                <p class="collapse">{{ country.translate(app.request.locale).otherInformations }}</p>
+                            {% endif %}
+
+                            <a style="margin: 2% 0% 0% 25%; width: 50%; " class="btn btn-block btn-outline btn-primary showdetails" data-toggle="collapse" data-target="#viewdetails"></a>
+                        </div>
                     {% else %}
                         {{ "page.country.p.no_description"|trans }}
                     {% endif %}
-
-                    <div class="span4 collapse-group">
-                        {% if country.translate(app.request.locale).geographyAndClimate is not empty %}
-                            <h5 class="collapse">{{ "page.country.h5.geography_and_climate"|trans }}</h5>
-                            <p class="collapse">{{ country.translate(app.request.locale).geographyAndClimate }}</p>
-                        {% endif %}
-
-                        {% if country.translate(app.request.locale).entryRequirements is not empty %}
-                            <h5 class="collapse">{{ "page.country.h5.entry_requirements"|trans }}</h5>
-                            <p class="collapse">{{ country.translate(app.request.locale).entryRequirements }}</p>
-                        {% endif %}
-
-                        {% if country.translate(app.request.locale).healthAndSafety is not empty %}
-                            <h5 class="collapse">{{ "page.country.h5.health_and_safety"|trans }}</h5>
-                            <p class="collapse">{{ country.translate(app.request.locale).healthAndSafety }}</p>
-                        {% endif %}
-
-                        {% if country.translate(app.request.locale).timeZone is not empty %}
-                            <h5 class="collapse">{{ "page.country.h5.time_zone"|trans }}</h5>
-                            <p class="collapse">{{ country.translate(app.request.locale).timeZone }}</p>
-                        {% endif %}
-
-                        {% if country.translate(app.request.locale).communications is not empty %}
-                            <h5 class="collapse">{{ "page.country.h5.communications"|trans }}</h5>
-                            <p class="collapse">{{ country.translate(app.request.locale).communications }}</p>
-                        {% endif %}
-
-                        {% if country.translate(app.request.locale).powerAndElectricity is not empty %}
-                            <h5 class="collapse">{{ "page.country.h5.power_and_electricity"|trans }}</h5>
-                            <p class="collapse">{{ country.translate(app.request.locale).powerAndElectricity }}</p>
-                        {% endif %}
-
-                        {% if country.translate(app.request.locale).otherInformations is not empty %}
-                            <h5 class="collapse">{{ "page.country.h5.other_informations"|trans }}</h5>
-                            <p class="collapse">{{ country.translate(app.request.locale).otherInformations }}</p>
-                        {% endif %}
-
-                        <a style="margin: 2% 0% 0% 25%; width: 50%; " class="btn btn-block btn-outline btn-primary showdetails" data-toggle="collapse" data-target="#viewdetails"></a>
-                    </div>
                 </div>
             </div>
         </div>
