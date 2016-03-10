@@ -16,7 +16,7 @@
             {% endif %}#}
             <a href="{{ path('photo_no_slug',  { 'id': row.photo_id }) }}" title="{{ row.photo_title }}">
                 {#<img itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('new_sk_thumbnail_outbound_100') }}" />#}
-                <img style="width: 98px;" itemprop="image" alt="{{ row.photo_title }}" src="{{ ('uploads/fotografias/'~row.photo_image) | imagine_filter('sk_thumbnail_outbound_100') }}" />
+                <img style="width: 100px; margin-right: 1px!important;margin-bottom: 1px!important;" itemprop="image" alt="{{ row.photo_title }}" src="{{ ('uploads/fotografias/'~row.photo_image) | imagine_filter('sk_thumbnail_outbound_100') }}" />
             </a>
         </span>
     {% endfor %}
