@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col col-lg-2  col-xs-2 col-md-4 ">
                     <strong> <h3>{{ link_to_location(location) }}</h3> </strong>
-                    <p>{{"common.spot.number_photos"|trans}}: <span class="label label-info">{{ location.photosInLocation }}</span>  </p>
+                    <p>{{"common.location.number_photos"|trans}}: <span class="label label-info">{{ location.photosInLocation }}</span>  </p>
                 </div>
                 <div class="col col-lg-10 col-xs-10 col-md-8">
                     <div class="roller slick-initialized slick-slider">
@@ -24,7 +24,7 @@
 
                                     <div style="width: 112px;" class="slick-slide slick-active">
                                         <button onclick="location.href = '{{ path('photos', { 'location': location.id }) }}'" style="margin-left: 3%;" type="button" class="btn btn-block btn-outline btn-primary">
-                                            {{ "common.grid.see_all" }}
+                                            {{ "common.grid.see_all"|trans }}
                                         </button>
                                     </div>
                                 {% else %}
