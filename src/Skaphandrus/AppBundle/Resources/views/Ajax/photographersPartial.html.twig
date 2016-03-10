@@ -4,11 +4,12 @@
     {% for p in photographers %}
 
         <div class="ibox-content">
-            <a href="#" class="pull-left">
-                <img class="img-circle" src="{{ p.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}"/>
-            </a>
+
             <div class="row">
-                <div class="col col-lg-2" style="margin-left: -2%;">
+                <div class="col col-lg-2 col-xs-2 col-md-4" >
+                    <a href="#" class="pull-left">
+                        <img class="img-circle" src="{{ p.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}"/>
+                    </a>
                     <p>{{ link_to_user(p) }}</p>
                     <p>{{"common.photographers.number_photos"|trans}}: <span class="label label-info">{{ p.photosInUser }}</span>  </p>
                 </div>

@@ -1,14 +1,13 @@
 
 {% if species %}
-
+    
     {% for s in species %}
 
         <div class="ibox-content">
             <div class="row">
                 <div class="col col-lg-2  col-xs-2 col-md-4 ">
-
-                    <strong> <h4>{{"common.species.title"|trans}}</h4> </strong>
-                    <p>{{"common.species.name"|trans}}: {{ link_to_species(s) }}</p>
+                    <strong> <h4>{{ link_to_species(s) }}</h4> </strong>
+                    <p>{{"common.species.number_photos"|trans}}: <span class="label label-info">{{s.photosInSpecies}}</span>  </p>
                 </div>
                 <div class="col col-lg-10 col-xs-10 col-md-8">
                     <div class="roller slick-initialized slick-slider">
