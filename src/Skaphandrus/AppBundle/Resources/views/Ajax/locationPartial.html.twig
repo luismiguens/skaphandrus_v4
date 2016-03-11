@@ -1,6 +1,6 @@
 
 {% if locations %}
-    
+
     {% for location in locations %}
 
         <div class="ibox-content">
@@ -13,7 +13,7 @@
                     <div class="roller slick-initialized slick-slider">
                         <div class="slick-list draggable">
                             <div style="opacity: 1; width: 800px; left: 0px;" class="slick-track">
-                                {% if location.spots.photos %}
+                                {% if location.photosInLocation > 6 %}
                                     {% for photo in location.spots.photos %}
                                         <div style="width: 112px;" class="slick-slide slick-current slick-active">
                                             <a class="thumbnail" href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
@@ -27,8 +27,26 @@
                                             {{ "common.grid.see_all"|trans }}
                                         </button>
                                     </div>
+                                {% elseif location.photosInLocation > 0 and location.photosInLocation <= 6  %}
+                                    {% for photo in location.spots.photos %}
+                                        <div style="width: 112px;" class="slick-slide slick-current slick-active">
+                                            <a class="thumbnail" href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
+                                                <img style="width: 100px; margin:1% 2px 0px 2px;" itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('sk_thumbnail_outbound_100') }}" />
+                                            </a>
+                                        </div>
+                                    {% endfor %}
+                                    <div style="width: 112px;" class="slick-slide slick-active">
+                                        <button onclick="location.href = '{{ path('photo_admin_new') }}';" style="margin-left: 3%;" type="button" class="btn btn-block btn-primary">
+                                            {{ "common.grid.add_photo"|trans }}
+                                        </button>
+                                    </div>
                                 {% else %}
-                                    {{"common.location.no_photos"|trans}}
+                                    <div style="width: 112px;" class="slick-slide slick-current slick-active">
+                                        {{"common.location.no_photos"|trans}}
+                                    </div>
+                                    {#<button onclick="location.href = '{{ path('photo_admin_new') }}';" style="margin-left: 3%;" type="button" class="btn btn-primary">
+                                        {{ "common.grid.add_photo"|trans }}
+                                    </button>#}
                                 {% endif %}
                             </div>
                         </div>
@@ -42,5 +60,8 @@
 {% else %}
     <div class="ibox-content">
         {{"common.location.no_location"|trans}}
+        <button onclick="location.href = '{{ path('photo_admin_new') }}';" style="margin-left: 3%;" type="button" class="btn btn-primary">
+            {{ "common.grid.add_photo"|trans }}
+        </button>
     </div>
 {% endif %}

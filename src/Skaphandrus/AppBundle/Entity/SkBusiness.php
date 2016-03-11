@@ -54,7 +54,7 @@ class SkBusiness {
      * @var string
      */
     //nome da imagem
-    private $picture;
+    private $picture = 'business-profile.jpg';
 
     /**
      * @var \DateTime
