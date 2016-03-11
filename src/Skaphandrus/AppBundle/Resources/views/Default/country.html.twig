@@ -135,8 +135,9 @@
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
 
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
-    <!-- FooTable -->
-{#    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>#}
+
+    {#<!-- FooTable -->
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>#}
 
     <script type="text/javascript">
 
@@ -211,37 +212,61 @@
 
         });
 
+        var countryId = 'country_id= {{ country.id }}';
+
+        /*  funçoes para os footables  */
+        var loadLocationsAll = function () {
+            setTimeout(function () {
+                $.ajax({
+                    type: "get",
+                    url: "{{path("ajax_locations_see_all")}}",
+                    data: countryId,
+                    dataType: "text",
+                    success: function (response) {
+                        $("#locationsInput").html(response);
+                    }
+                });
+            }, 100);
+        };
+        $(this).ready(loadLocationsAll);
+        $('#locationsModal').on('shown.bs.modal', loadLocationsAll);
+
+        var loadSpeciesAll = function () {
+            setTimeout(function () {
+                $.ajax({
+                    type: "get",
+                    url: "{{path("ajax_species_see_all")}}",
+                    data: countryId,
+                    dataType: "text",
+                    success: function (response) {
+                        $("#speciesInput").html(response);
+                    }
+                });
+            }, 100);
+        };
+        $(this).ready(loadSpeciesAll);
+        $('#speciesModal').on('shown.bs.modal', loadSpeciesAll);
+
+        var loadPhotographersAll = function () {
+            setTimeout(function () {
+                $.ajax({
+                    type: "get",
+                    url: "{{path("ajax_photographers_see_all")}}",
+                    data: countryId,
+                    dataType: "text",
+                    success: function (response) {
+                        $("#photographersInput").html(response);
+                    }
+                });
+            }, 100);
+        };
+        $(this).ready(loadPhotographersAll);
+        $('#photographersModal').on('shown.bs.modal', loadPhotographersAll);
+
         {#$(document).ready(function () {
             $('.footable-locations').footable();
             $('.footable-species').footable();
             $('.footable-photographers').footable();
-        });#}
-
-        {#var loadAllLocations = function () {
-            $('#myInput').fadeIn("slow");
-            setTimeout(function () {
-                $.ajax({
-                    type: "get",
-                    url: "{{path("ajax_location_country")}}",
-                    data: 'country_id=' + {{ country.id }},
-                    dataType: "text",
-                    success: function (response) {
-                        $("#myInput").append(response);
-                    }
-                });
-            }, 100);
-        };#}
-
-{#        $('#locationsModal').on('shown.bs.modal', function () {
-            $('#myInput').focus();
-        });
-
-        $('#speciesModal').on('shown.bs.modal', function () {
-            $('#myInput').focus();
-        });
-
-        $('#photographersModal').on('shown.bs.modal', function () {
-            $('#myInput').focus();
         });#}
 
     </script>
@@ -320,16 +345,7 @@
 
                             <div id="box_locations"></div>
 
-                            <div class="ibox-content" >
-                                <div class="row" >
-                                    <div class="col col-lg-12" >
-                                        <button {#style="width: 49%;"#} type="button" class="btn btn-block btn-outline btn-primary" id="show_more_locations">{{ "page.location.button.show_more_locations"|trans }}</button>
-{#                                        <button style="width: 50%;" type="button" class="btn btn-outline btn-default" data-toggle="modal" data-target="#locationsModal">{{ "page.location.button.see_all_locations"|trans }}</button>#}
-                                    </div>
-                                </div>
-                            </div>
-
-                            {#<!-- Locations Modal start -->
+                            <!-- Locations Modal start -->
                             <div class="modal fade" id="locationsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                 <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content">
@@ -338,34 +354,9 @@
                                             <h4 class="modal-title" id="myModalLabel">{% trans with {'%country%': country} %}page.country.h4.locations_modal{% endtrans %}</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <input type="text" class="form-control input-sm m-b-xs" id="filter-locations" placeholder="Search in table">
-                                            <table class="footable footable-locations table" data-page-size="25" data-filter=#filter-locations>
-                                                <thead>
-                                                    <tr>
-                                                        <th>{{ "page.country.table.location"|trans }}</th>
-                                                        <th>{{ "page.country.table.num_photos"|trans }}</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {% for l in locations %}
-                                                        <tr>
-                                                            <td>{{ link_to_location(l) }}</td>
-                                                            <td>
-                                                                <a href="{{ path('photos', { 'location': l.id }) }}">
-                                                                    {{ l.photosInLocation }}
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    {% endfor %}
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <td colspan="2">
-                                                            <ul class="pagination pull-right"></ul>
-                                                        </td>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
+
+                                            <div id="locationsInput"></div>
+
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -373,7 +364,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Locations Modal end -->#}
+                            <!-- Locations Modal end -->
+
+                            <div class="ibox-content" >
+                                <div class="row" >
+                                    <div class="col col-lg-12" >
+                                        <button style="width: 49%;" type="button" class="btn btn-outline btn-primary" id="show_more_locations">{{ "page.location.button.show_more_locations"|trans }}</button>
+                                        <button style="width: 50%;" type="button" class="btn btn-outline btn-default" data-toggle="modal" data-target="#locationsModal">{{ "page.location.button.see_all_locations"|trans }}</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -393,25 +393,18 @@
 
                             <div id="box_species"></div>
 
-                            <div class="ibox-content" >
-                                <div class="row" >
-                                    <div class="col col-lg-12" >
-                                        <button {#style="width: 49%;"#} type="button" class="btn btn-block btn-outline btn-primary" id="show_more_species">{{ "page.location.button.show_more_species"|trans }}</button>
-{#                                        <button style="width: 50%;" type="button" class="btn btn-outline btn-default" data-toggle="modal" data-target="#speciesModal">{{ "page.location.button.see_all_species"|trans }}</button>#}
-                                    </div>
-                                </div>
-                            </div>
-
-                            {#<!-- Species Modal start -->
+                            <!-- Species Modal start -->
                             <div class="modal fade" id="speciesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                <div class="modal-dialog" role="document">
+                                <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                            <h4 class="modal-title" id="myModalLabel">{% trans with {'%country%': country} %}page.country.h4.species_modal{% endtrans %}</h4>
                                         </div>
                                         <div class="modal-body">
-                                            s
+
+                                            <div id="speciesInput"></div>
+
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -419,7 +412,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Species Modal end -->#}
+                            <!-- Species Modal end -->
+
+                            <div class="ibox-content" >
+                                <div class="row" >
+                                    <div class="col col-lg-12" >
+                                        <button style="width: 49%;" type="button" class="btn btn-outline btn-primary" id="show_more_species">{{ "page.location.button.show_more_species"|trans }}</button>
+                                        <button style="width: 50%;" type="button" class="btn btn-outline btn-default" data-toggle="modal" data-target="#speciesModal">{{ "page.location.button.see_all_species"|trans }}</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -439,25 +441,18 @@
 
                             <div id="box_photographers"></div>
 
-                            <div class="ibox-content" >
-                                <div class="row" >
-                                    <div class="col col-lg-12" >
-                                        <button {#style="width: 49%;"#} type="button" class="btn btn-block btn-outline btn-primary" id="show_more_photographers" >{{ "page.location.button.show_more_photographers"|trans }}</button>
-{#                                        <button style="width: 50%;" type="button" class="btn btn-outline btn-default" data-toggle="modal" data-target="#photographersModal">{{ "page.location.button.see_all_photographers"|trans }}</button>#}
-                                    </div>
-                                </div>
-                            </div>
-
-                            {#<!-- Photographers Modal start -->
+                            <!-- Photographers Modal start -->
                             <div class="modal fade" id="photographersModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                <div class="modal-dialog" role="document">
+                                <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                            <h4 class="modal-title" id="myModalLabel">{% trans with {'%country%': country} %}page.country.h4.photographers_modal{% endtrans %}</h4>
                                         </div>
                                         <div class="modal-body">
-                                            p
+
+                                            <div id="photographersInput"></div>
+
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -465,7 +460,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Photographers Modal end -->#}
+                            <!-- Photographers Modal end -->
+
+                            <div class="ibox-content" >
+                                <div class="row" >
+                                    <div class="col col-lg-12" >
+                                        <button style="width: 49%;" type="button" class="btn btn-outline btn-primary" id="show_more_photographers" >{{ "page.location.button.show_more_photographers"|trans }}</button>
+                                        <button style="width: 50%;" type="button" class="btn btn-outline btn-default" data-toggle="modal" data-target="#photographersModal">{{ "page.location.button.see_all_photographers"|trans }}</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

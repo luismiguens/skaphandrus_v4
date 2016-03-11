@@ -1,0 +1,46 @@
+<!-- FooTable -->
+<script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.footable-locations').footable();
+    });
+</script>
+
+{% if spots %}
+    <input type="text" class="form-control input-sm m-b-xs" id="filter-locations" placeholder="Search in table">
+    <table class="footable footable-locations table" data-page-size="25" data-filter=#filter-locations>
+        <thead>
+            <tr>
+                <th>{{ "page.location.table.spot"|trans }}</th>
+                <th>{{ "page.location.table.num_photos"|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in spots %}
+                <tr>
+                    <td>{{ link_to_spot(s) }}</td>
+                    <td>
+                        <a href="{{ path('photos', { 'spot': s.id }) }}">
+                            {{ s.photosInSpot }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">
+                    <ul class="pagination pull-right"></ul>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+{% else %}
+    {{"common.spot.no_spot"|trans}}
+{% endif %}
+
+
+
+

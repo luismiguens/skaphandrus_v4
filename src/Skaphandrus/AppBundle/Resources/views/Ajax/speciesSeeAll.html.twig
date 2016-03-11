@@ -1,0 +1,46 @@
+<!-- FooTable -->
+<script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.footable-species').footable();
+    });
+</script>
+
+{% if species %}
+    <input type="text" class="form-control input-sm m-b-xs" id="filter-species" placeholder="Search in table">
+    <table class="footable footable-species table" data-page-size="25" data-filter=#filter-species>
+        <thead>
+            <tr>
+                <th>{{ "page.country.table.species"|trans }}</th>
+                <th>{{ "page.country.table.num_photos"|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in species %}
+                <tr>
+                    <td>{{ link_to_species(s) }}</td>
+                    <td>
+                        <a href="{{ path('photos', { 'species': s.id }) }}">
+                            {{ s.photosInSpecies }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">
+                    <ul class="pagination pull-right"></ul>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+{% else %}
+    {{"common.species.no_species"|trans}} 
+{% endif %}
+
+
+
+
