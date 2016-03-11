@@ -21,7 +21,6 @@
                                             </a>
                                         </div>
                                     {% endfor %}
-
                                     <div style="width: 112px;" class="slick-slide slick-active">
                                         <button onclick="location.href = '{{ path('photos', { 'location': location.id }) }}'" style="margin-left: 3%;" type="button" class="btn btn-block btn-outline btn-primary">
                                             {{ "common.grid.see_all"|trans }}
@@ -41,12 +40,14 @@
                                         </button>
                                     </div>
                                 {% else %}
-                                    <div style="width: 112px;" class="slick-slide slick-current slick-active">
+                                    <div style="width: 330px; margin-top: 45px" class="slick-slide slick-current slick-active">
                                         {{"common.location.no_photos"|trans}}
                                     </div>
-                                    {#<button onclick="location.href = '{{ path('photo_admin_new') }}';" style="margin-left: 3%;" type="button" class="btn btn-primary">
-                                        {{ "common.grid.add_photo"|trans }}
-                                    </button>#}
+                                    <div style="width: 112px;" class="slick-slide slick-active">
+                                        <button onclick="location.href = '{{ path('photo_admin_new') }}';" style="margin-left: 3%;" type="button" class="btn btn-primary">
+                                            {{ "common.grid.add_photo"|trans }}
+                                        </button>
+                                    </div>
                                 {% endif %}
                             </div>
                         </div>
@@ -60,8 +61,5 @@
 {% else %}
     <div class="ibox-content">
         {{"common.location.no_location"|trans}}
-        <button onclick="location.href = '{{ path('photo_admin_new') }}';" style="margin-left: 3%;" type="button" class="btn btn-primary">
-            {{ "common.grid.add_photo"|trans }}
-        </button>
     </div>
 {% endif %}

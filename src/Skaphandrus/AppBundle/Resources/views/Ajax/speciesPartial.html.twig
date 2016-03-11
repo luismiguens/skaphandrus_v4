@@ -26,7 +26,7 @@
                                             {{ "common.grid.see_all"|trans }}
                                         </button>
                                     </div>
-                                {% elseif s.photosInSpecies <= 6  %}
+                                {% else %}
                                     {% for photo in s.photos %}
                                         <div style="width: 112px;" class="slick-slide slick-current slick-active">
                                             <a class="thumbnail" href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
@@ -39,8 +39,6 @@
                                             {{ "common.grid.add_photo"|trans }}
                                         </button>
                                     </div>
-                                {% else %}
-                                    {{"common.species.no_photos"|trans}}
                                 {% endif %}
                             </div>
                         </div>

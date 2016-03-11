@@ -17,7 +17,7 @@
                     <div class="roller slick-initialized slick-slider">
                         <div class="slick-list draggable">
                             <div style="opacity: 1; width: 800px; left: 0px;" class="slick-track">
-                                {% if p.photos %}
+                                {% if p.photosInUser > 6 %}
                                     {% for photo in p.photos %}
                                         <div style="width: 112px;" class="slick-slide slick-current slick-active">
                                             <a class="thumbnail" href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
@@ -30,6 +30,14 @@
                                             {{ "common.grid.see_all"|trans }}
                                         </button>
                                     </div>
+                                {% else %}
+                                    {% for photo in p.photos %}
+                                        <div style="width: 112px;" class="slick-slide slick-current slick-active">
+                                            <a class="thumbnail" href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
+                                                <img style="width: 100px; margin:1% 2px 0px 2px;" itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('sk_thumbnail_outbound_100') }}" />
+                                            </a>
+                                        </div>
+                                    {% endfor %}
                                 {% endif %}
                             </div>
                         </div>
@@ -43,5 +51,8 @@
 {% else %}
     <div class="ibox-content">
         {{"common.photographers.no_photographers"|trans}}
+        <button onclick="location.href = '{{ path('photo_admin_new') }}';" style="margin-left: 3%;" type="button" class="btn btn-primary">
+            {{ "common.grid.add_photo"|trans }}
+        </button>
     </div>
 {% endif %}

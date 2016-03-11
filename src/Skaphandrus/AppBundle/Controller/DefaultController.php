@@ -959,14 +959,14 @@ class DefaultController extends Controller {
             $business = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
                     ->findBusienssInCountry($country->getId());
 
-//            $locations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
-//                    ->findLocationsInCountry($country->getId(), $locale);
-//
-//            $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
-//                    ->findSpeciesInCountry($country->getId());
-//                    
-//            $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-//                    ->findUsersInCountry($country->getId());
+            $locations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
+                    ->findLocationsInCountry($country->getId(), $locale);
+
+            $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
+                    ->findSpeciesInCountry($country->getId());
+                    
+            $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
+                    ->findUsersInCountry($country->getId());
 //                    
 //            $spots_count = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
 //                ->countSpotsArray();
@@ -998,9 +998,9 @@ class DefaultController extends Controller {
                         'country' => $country,
                         'country_name' => $name,
                         'business' => $business,
-//                        'locations' => $locations,
-//                        'species' => $species,
-//                        'photographers' => $photographers,
+                        'locations' => $locations,
+                        'species' => $species,
+                        'photographers' => $photographers,
             ));
         } else {
             throw $this->createNotFoundException('The country ' . $name . ' does not exist.');
