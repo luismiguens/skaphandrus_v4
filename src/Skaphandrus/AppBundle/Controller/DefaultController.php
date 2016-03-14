@@ -583,7 +583,6 @@ class DefaultController extends Controller {
 
     public function spotAction($country, $location, $slug) {
         $locale = $this->get('request')->getLocale();
-        //spot
         $spot = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')
                 ->findBySlug($slug, $location, $country, $locale);
 
@@ -707,77 +706,10 @@ class DefaultController extends Controller {
             }
         }
 
-//        $marker = new Marker();
-//
-//        $latitude = explode(",", $spot->getCoordinate())[0];
-//        $longitude = explode(",", $spot->getCoordinate())[1];
-//
-//        $infowindow = new InfoWindow();
-//        $spot_url = $this->generateUrl('spot', array(
-//            'slug' => $spot->getName(),
-//            'location' => $spot->getLocation(),
-//            'country' => $spot->getLocation()->getRegion()->getCountry()
-//        ));
-//
-//        $contentString = "<a href=" . $spot_url . ">" . $spot->getName() . "</a>";
-//
-//        $infowindow->setContent($contentString);
-//        $infowindow->setAutoClose(TRUE);
-//
-//        // Configure your marker options
-//        $marker->setInfoWindow($infowindow);
-//        $marker->setPrefixJavascriptVariable('marker_');
-//        $marker->setPosition($latitude, $longitude, true);
-//        $marker->setAnimation(Animation::DROP);
-//
-//        $marker->setOption('clickable', true);
-//        $marker->setOption('flat', true);
-//        $marker->setOptions(array(
-//            'clickable' => true,
-//            'flat' => true,
-//        ));
-//
-//        // Add your marker to the map
-//        //$map = $this->get('ivory_google_map.map');
-//        $map = new Map();
-//
-//        $map->setPrefixJavascriptVariable('map_');
-//        $map->setHtmlContainerId('map_canvas');
-//
-//        $map->setAsync(false);
-//        //$map->setAutoZoom(true);
-//
-//        $map->setCenter($latitude, $longitude, true);
-//        $map->setMapOption('zoom', 10);
-//
-//        //$map->setBound(-2.1, -3.9, 2.6, 1.4, true, true);
-//
-//        $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
-//        $map->setMapOption('mapTypeId', 'roadmap');
-//        $map->setMapOption('disableDefaultUI', true);
-//        $map->setMapOption('disableDoubleClickZoom', true);
-//        $map->setMapOptions(array(
-//            'disableDefaultUI' => true,
-//            'disableDoubleClickZoom' => true,
-//        ));
-//
-//        $map->setStylesheetOption('width', 'auto');
-//        $map->setStylesheetOption('height', '300px');
-//        $map->setStylesheetOptions(array(
-//            'width' => 'auto',
-//            'height' => '300px',
-//        ));
-//
-//        $map->setLanguage('en');
-//        $map->addMarker($marker);
-
-
         if ($spot) {
             return $this->render('SkaphandrusAppBundle:Default:spot.html.twig', array(
                         'spot' => $spot,
                         'map' => $map,
-//                        'map_center_lat' => $centerLatitude,
-//                        'map_center_lon' => $centerLongitude,
                         'business' => $business
 //                        'photographers' => $photographers,
 //                        'species' => $species,
@@ -796,20 +728,18 @@ class DefaultController extends Controller {
         $locale = $this->get('request')->getLocale();
 
         $em = $this->getDoctrine()->getManager();
-
-
         $location = $em->getRepository('SkaphandrusAppBundle:SkLocation')
                 ->findBySlug($name, $country, $locale);
 
-
-
-        //dump($location);
-
         if ($location) {
-            //photographers
-            // $qb_photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->getQueryBuilder(['location' => $location], 20);
-            // $query_photographers = $qb_photographers->getQuery();
-            // $photographers = $query_photographers->getResult();
+
+            $business = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
+                    ->findBusienssInLocation($location->getId());
+
+//            photographers
+//            $qb_photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->getQueryBuilder(['location' => $location], 20);
+//            $query_photographers = $qb_photographers->getQuery();
+//            $photographers = $query_photographers->getResult();
 // 
 //            $spots = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')
 //                    ->findSpotsInLocation($location->getId(), $locale);
@@ -819,10 +749,6 @@ class DefaultController extends Controller {
 //
 //            $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
 //                    ->findUsersInLocation($location->getId());
-
-            $business = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
-                    ->findBusienssInLocation($location->getId());
-
 //            //species
 //            $qb_species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->getQueryBuilder(['location' => $location], 20);
 //            $query_species = $qb_species->getQuery();
@@ -834,7 +760,6 @@ class DefaultController extends Controller {
 //                    $specie->setPhotosCount($photos_count[$specie->getId()]);
 //                }
 //            }
-
 
             $map = null;
             $latitude = 0;
@@ -959,14 +884,14 @@ class DefaultController extends Controller {
             $business = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
                     ->findBusienssInCountry($country->getId());
 
-            $locations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
-                    ->findLocationsInCountry($country->getId(), $locale);
-
-            $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
-                    ->findSpeciesInCountry($country->getId());
-                    
-            $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-                    ->findUsersInCountry($country->getId());
+//            $locations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
+//                    ->findLocationsInCountry($country->getId(), $locale);
+//                    
+//            $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
+//                    ->findSpeciesInCountry($country->getId());
+//
+//            $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
+//                    ->findUsersInCountry($country->getId());
 //                    
 //            $spots_count = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
 //                ->countSpotsArray();
@@ -998,9 +923,9 @@ class DefaultController extends Controller {
                         'country' => $country,
                         'country_name' => $name,
                         'business' => $business,
-                        'locations' => $locations,
-                        'species' => $species,
-                        'photographers' => $photographers,
+//                        'locations' => $locations,
+//                        'species' => $species,
+//                        'photographers' => $photographers,
             ));
         } else {
             throw $this->createNotFoundException('The country ' . $name . ' does not exist.');

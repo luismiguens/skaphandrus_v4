@@ -186,7 +186,7 @@
 
         <!-- Mais imagens autor start -->
         <div class="col col-lg-12">
-            <p style=" margin: 2% 0% 2% 0%; text-align: center;"> {{"page.photo.p.more_photos"|trans}} </p>
+            <p style=" margin: 2% 0% 2% 0%; text-align: center;">{% trans with {'%user%': link_to_user(photo.fosuser) } %}page.photo.p.more_photos{% endtrans %}</p>
         </div>
 
         <div class="row" style="padding: 0% 15% 0% 15%;" >

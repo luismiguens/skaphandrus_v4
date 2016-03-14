@@ -162,7 +162,7 @@
                 setTimeout(function () {
                     $.ajax({
                         type: "get",
-                        url: "{{path("ajax_location_country")}}",
+                        url: "{{path("ajax_locations_show_more")}}",
                         data: 'country_id=' + {{ country.id }} +'&limit=' + limit_spots + '&offset=' + offset_spots,
                         dataType: "text",
                         success: function (response) {
@@ -180,7 +180,7 @@
                 setTimeout(function () {
                     $.ajax({
                         type: "get",
-                        url: "{{path("ajax_species_country")}}",
+                        url: "{{path("ajax_species_show_more")}}",
                         data: 'country_id=' + {{ country.id }} +'&limit=' + limit_species + '&offset=' + offset_species,
                         dataType: "text",
                         success: function (response) {
@@ -198,7 +198,7 @@
                 setTimeout(function () {
                     $.ajax({
                         type: "get",
-                        url: "{{path("ajax_photographers_country")}}",
+                        url: "{{path("ajax_photographers_show_more")}}",
                         data: 'country_id=' + {{ country.id }} +'&limit=' + limit_photographers + '&offset=' + offset_photographers,
                         dataType: "text",
                         success: function (response) {
@@ -370,7 +370,7 @@
                                 <div class="row" >
                                     <div class="col col-lg-12" >
                                         <button style="width: 49%;" type="button" class="btn btn-outline btn-primary" id="show_more_locations">{{ "page.location.button.show_more_locations"|trans }}</button>
-                                        <button style="width: 50%;" type="button" class="btn btn-outline btn-default" data-toggle="modal" data-target="#locationsModal">{{ "page.location.button.see_all_locations"|trans }}</button>
+                                        <button style="width: 49%;" type="button" class="btn btn-outline btn-default" data-toggle="modal" data-target="#locationsModal">{{ "page.location.button.see_all_locations"|trans }}</button>
                                     </div>
                                 </div>
                             </div>
@@ -418,7 +418,7 @@
                                 <div class="row" >
                                     <div class="col col-lg-12" >
                                         <button style="width: 49%;" type="button" class="btn btn-outline btn-primary" id="show_more_species">{{ "page.location.button.show_more_species"|trans }}</button>
-                                        <button style="width: 50%;" type="button" class="btn btn-outline btn-default" data-toggle="modal" data-target="#speciesModal">{{ "page.location.button.see_all_species"|trans }}</button>
+                                        <button style="width: 49%;" type="button" class="btn btn-outline btn-default" data-toggle="modal" data-target="#speciesModal">{{ "page.location.button.see_all_species"|trans }}</button>
                                     </div>
                                 </div>
                             </div>
@@ -466,7 +466,7 @@
                                 <div class="row" >
                                     <div class="col col-lg-12" >
                                         <button style="width: 49%;" type="button" class="btn btn-outline btn-primary" id="show_more_photographers" >{{ "page.location.button.show_more_photographers"|trans }}</button>
-                                        <button style="width: 50%;" type="button" class="btn btn-outline btn-default" data-toggle="modal" data-target="#photographersModal">{{ "page.location.button.see_all_photographers"|trans }}</button>
+                                        <button style="width: 49%;" type="button" class="btn btn-outline btn-default" data-toggle="modal" data-target="#photographersModal">{{ "page.location.button.see_all_photographers"|trans }}</button>
                                     </div>
                                 </div>
                             </div>
@@ -487,6 +487,7 @@
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane active">
                     <div class="panel-body">
+                        <h4>{% trans with {'%country%': country} %}page.country.h4.dive_center{% endtrans %}</h4>
                         <div class="row" >
                             {% for b in business %}
                                 {% for t in b.type %}
@@ -522,6 +523,7 @@
                 </div>
                 <div id="tab-2" class="tab-pane">
                     <div class="panel-body">
+                        <h4>{% trans with {'%country%': country} %}page.country.h4.liveaboard{% endtrans %}</h4>
                         <div class="row" >
                             {% for b in business %}
                                 {% for t in b.type %}
@@ -557,6 +559,7 @@
                 </div>
                 <div id="tab-3" class="tab-pane">
                     <div class="panel-body">
+                        <h4>{% trans with {'%country%': country} %}page.country.h4.accommodation{% endtrans %}</h4>
                         <div class="row" >
                             {% for b in business %}
                                 {% for t in b.type %}

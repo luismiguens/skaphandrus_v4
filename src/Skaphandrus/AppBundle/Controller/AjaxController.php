@@ -15,6 +15,8 @@ class AjaxController extends Controller {
         return $this->render('SkaphandrusAppBundle:Ajax:index.html.twig');
     }
 
+    /////// See All start \\\\\\\\
+
     public function spotSeeAllAction(Request $request) {
 
         $locale = $this->get('request')->getLocale();
@@ -47,6 +49,9 @@ class AjaxController extends Controller {
         elseif ($request->query->get('location_id')):
             $location_id = $request->query->get('location_id');
             $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findSpeciesInLocation($location_id);
+        elseif ($request->query->get('spot_id')):
+            $spot_id = $request->query->get('spot_id');
+            $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findSpeciesInSpot($spot_id);
         endif;
 
         return $this->render('SkaphandrusAppBundle:Ajax:speciesSeeAll.html.twig', array(
@@ -62,52 +67,22 @@ class AjaxController extends Controller {
         elseif ($request->query->get('location_id')):
             $location_id = $request->query->get('location_id');
             $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->findUsersInLocation($location_id);
+        elseif ($request->query->get('spot_id')):
+            $spot_id = $request->query->get('spot_id');
+            $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->findUsersInSpot($spot_id);
         endif;
-        
+
         return $this->render('SkaphandrusAppBundle:Ajax:photographersSeeAll.html.twig', array(
                     'photographers' => $photographers,
         ));
     }
 
-    public function speciesSpotAction(Request $request) {
+    /////// See All end \\\\\\\\
+    //
+    //
+    /////// Show More start \\\\\\\\
 
-        $em = $this->getDoctrine()->getManager();
-
-        $limit = $request->query->get('limit');
-        $offset = $request->query->get('offset');
-        $spot_id = $request->query->get('spot_id');
-
-        $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->getMoreSpeciesSpot($spot_id, $limit, $offset);
-
-        foreach ($species as $s):
-            $s->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpecies')->findPhotosSpot($s->getId(), $spot_id));
-        endforeach;
-
-        return $this->render('SkaphandrusAppBundle:Ajax:speciesPartial.html.twig', array(
-                    'species' => $species,
-        ));
-    }
-
-    public function photographersSpotAction(Request $request) {
-
-        $em = $this->getDoctrine()->getManager();
-
-        $limit = $request->query->get('limit');
-        $offset = $request->query->get('offset');
-        $spot_id = $request->query->get('spot_id');
-
-        $photographers = $em->getRepository('SkaphandrusAppBundle:FosUser')->getMorePhotographersSpot($spot_id, $limit, $offset);
-
-        foreach ($photographers as $p):
-            $p->setPhotos($em->getRepository('SkaphandrusAppBundle:FosUser')->findPhotosSpot($p->getId(), $spot_id));
-        endforeach;
-
-        return $this->render('SkaphandrusAppBundle:Ajax:photographersPartial.html.twig', array(
-                    'photographers' => $photographers,
-        ));
-    }
-
-    public function spotLocationAction(Request $request) {
+    public function spotShowMoreAction(Request $request) {
 
         $em = $this->getDoctrine()->getManager();
 
@@ -127,49 +102,10 @@ class AjaxController extends Controller {
         ));
     }
 
-    public function speciesLocationAction(Request $request) {
+    public function locationShowMoreAction(Request $request) {
 
         $em = $this->getDoctrine()->getManager();
 
-        $limit = $request->query->get('limit');
-        $offset = $request->query->get('offset');
-        $location_id = $request->query->get('location_id');
-
-        $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->getMoreSpeciesLocation($location_id, $limit, $offset);
-
-        foreach ($species as $s):
-            $s->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpecies')->findPhotosLocation($s->getId(), $location_id));
-        endforeach;
-
-        return $this->render('SkaphandrusAppBundle:Ajax:speciesPartial.html.twig', array(
-                    'species' => $species,
-        ));
-    }
-
-    public function photographersLocationAction(Request $request) {
-
-        $em = $this->getDoctrine()->getManager();
-
-        $limit = $request->query->get('limit');
-        $offset = $request->query->get('offset');
-        $location_id = $request->query->get('location_id');
-
-        $photographers = $em->getRepository('SkaphandrusAppBundle:FosUser')->getMorePhotographersLocation($location_id, $limit, $offset);
-
-        foreach ($photographers as $p):
-            $p->setPhotos($em->getRepository('SkaphandrusAppBundle:FosUser')->findPhotosLocation($p->getId(), $location_id));
-        endforeach;
-
-        return $this->render('SkaphandrusAppBundle:Ajax:photographersPartial.html.twig', array(
-                    'photographers' => $photographers,
-        ));
-    }
-
-    public function locationCountryAction(Request $request) {
-
-        $em = $this->getDoctrine()->getManager();
-
-//        $locale = $this->get('request')->getLocale();
         $limit = $request->query->get('limit');
         $offset = $request->query->get('offset');
         $country_id = $request->query->get('country_id');
@@ -187,42 +123,69 @@ class AjaxController extends Controller {
         ));
     }
 
-    public function speciesCountryAction(Request $request) {
+    public function speciesShowMoreAction(Request $request) {
 
         $em = $this->getDoctrine()->getManager();
 
         $limit = $request->query->get('limit');
         $offset = $request->query->get('offset');
-        $country_id = $request->query->get('country_id');
 
-        $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->getMoreSpeciesCountry($country_id, $limit, $offset);
-
-        foreach ($species as $s):
-            $s->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpecies')->findPhotosCountry($s->getId(), $country_id));
-        endforeach;
+        if ($request->query->get('country_id')):
+            $country_id = $request->query->get('country_id');
+            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->getMoreSpeciesCountry($country_id, $limit, $offset);
+            foreach ($species as $s):
+                $s->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpecies')->findPhotosCountry($s->getId(), $country_id));
+            endforeach;
+        elseif ($request->query->get('location_id')):
+            $location_id = $request->query->get('location_id');
+            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->getMoreSpeciesLocation($location_id, $limit, $offset);
+            foreach ($species as $s):
+                $s->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpecies')->findPhotosLocation($s->getId(), $location_id));
+            endforeach;
+        elseif ($request->query->get('spot_id')):
+            $spot_id = $request->query->get('spot_id');
+            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->getMoreSpeciesSpot($spot_id, $limit, $offset);
+            foreach ($species as $s):
+                $s->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpecies')->findPhotosSpot($s->getId(), $spot_id));
+            endforeach;
+        endif;
 
         return $this->render('SkaphandrusAppBundle:Ajax:speciesPartial.html.twig', array(
                     'species' => $species,
         ));
     }
 
-    public function photographersCountryAction(Request $request) {
+    public function photographersShowMoreAction(Request $request) {
 
         $em = $this->getDoctrine()->getManager();
 
         $limit = $request->query->get('limit');
         $offset = $request->query->get('offset');
-        $country_id = $request->query->get('country_id');
 
-        $photographers = $em->getRepository('SkaphandrusAppBundle:FosUser')->getMorePhotographersCountry($country_id, $limit, $offset);
-
-        foreach ($photographers as $p):
-            $p->setPhotos($em->getRepository('SkaphandrusAppBundle:FosUser')->findPhotosCountry($p->getId(), $country_id));
-        endforeach;
+        if ($request->query->get('country_id')):
+            $country_id = $request->query->get('country_id');
+            $photographers = $em->getRepository('SkaphandrusAppBundle:FosUser')->getMorePhotographersCountry($country_id, $limit, $offset);
+            foreach ($photographers as $p):
+                $p->setPhotos($em->getRepository('SkaphandrusAppBundle:FosUser')->findPhotosCountry($p->getId(), $country_id));
+            endforeach;
+        elseif ($request->query->get('location_id')):
+            $location_id = $request->query->get('location_id');
+            $photographers = $em->getRepository('SkaphandrusAppBundle:FosUser')->getMorePhotographersLocation($location_id, $limit, $offset);
+            foreach ($photographers as $p):
+                $p->setPhotos($em->getRepository('SkaphandrusAppBundle:FosUser')->findPhotosLocation($p->getId(), $location_id));
+            endforeach;
+        elseif ($request->query->get('spot_id')):
+            $spot_id = $request->query->get('spot_id');
+            $photographers = $em->getRepository('SkaphandrusAppBundle:FosUser')->getMorePhotographersSpot($spot_id, $limit, $offset);
+            foreach ($photographers as $p):
+                $p->setPhotos($em->getRepository('SkaphandrusAppBundle:FosUser')->findPhotosSpot($p->getId(), $spot_id));
+            endforeach;
+        endif;
 
         return $this->render('SkaphandrusAppBundle:Ajax:photographersPartial.html.twig', array(
                     'photographers' => $photographers,
         ));
     }
 
+    /////// Show More end \\\\\\\\
 }
