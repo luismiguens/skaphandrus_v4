@@ -507,9 +507,9 @@
                                                 </div>
                                                 <div class="col col-lg-7" >
                                                     <a href="{{ path('business', { 'country': slugify((b.address.location.region.country)), 'location': slugify(b.address.location), 'slug': slugify(b.name) }) }}">
-                                                        <h4>{{b|slice(0, 22)}}</h4>
+                                                        <h4>{{b|slice(0, 15)}}</h4>
                                                     </a>
-                                                    <h5>{{ b.address.location.region.country }}, {{ b.address.location }}</h5>
+                                                    <h5>{#{{ b.address.location.region.country }},#} {{ b.address.location }}</h5>
 
                                                     <button class="btn btn-primary dim" type="button" onclick="location.href = '{{ path('booking_admin_new', {'business_id': b.id}) }}'">{{ "page.business.button.book_now"|trans }}</button>
                                                 </div>
@@ -543,9 +543,9 @@
                                                 </div>
                                                 <div class="col col-lg-7" >
                                                     <a href="{{ path('business', { 'country': slugify((b.address.location.region.country)), 'location': slugify(b.address.location), 'slug': slugify(b.name) }) }}">
-                                                        <h4>{{b|slice(0, 22)}}</h4>
+                                                        <h4>{{b|slice(0, 20)}}</h4>
                                                     </a>
-                                                    <h5>{{ b.address.location.region.country }}, {{ b.address.location }}</h5>
+                                                    <h5>{#{{ b.address.location.region.country }},#} {{ b.address.location }}</h5>
 
                                                     <button class="btn btn-primary dim" type="button" onclick="location.href = '{{ path('booking_admin_new', {'business_id': b.id}) }}'">{{ "page.business.button.book_now"|trans }}</button>
                                                 </div>
@@ -579,9 +579,9 @@
                                                 </div>
                                                 <div class="col col-lg-7" >
                                                     <a href="{{ path('business', { 'country': slugify((b.address.location.region.country)), 'location': slugify(b.address.location), 'slug': slugify(b.name) }) }}">
-                                                        <h4>{{b|slice(0, 22)}}</h4>
+                                                     <h4>{{b|slice(0, 20)}}</h4>
                                                     </a>
-                                                    <h5>{{ b.address.location.region.country }}, {{ b.address.location }}</h5>
+                                                    <h5>{{ b.address.location }}</h5>
 
                                                     <button class="btn btn-primary dim" type="button" onclick="location.href = '{{ path('booking_admin_new', {'business_id': b.id}) }}'">{{ "page.business.button.book_now"|trans }}</button>
                                                 </div>
