@@ -589,8 +589,14 @@ class DefaultController extends Controller {
         $spot->setPhotosInSpot(count($spot->getPhotos()));
         $spot->setPhotos($this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')->findPhotosSpot($spot->getId()));
 
-        $business = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
-                ->findBusienssInSpot($spot->getId());
+        $diveCenters = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
+                ->findDiveCentersInSpot($spot->getId());
+
+        $liveaboards = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
+                ->findLiveaboardsInSpot($spot->getId());
+
+        $accommodations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
+                ->findAccommodationsInSpot($spot->getId());
 
 ////        photos
 //        $qb_photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder(['spot' => $spot], 20);
@@ -710,7 +716,9 @@ class DefaultController extends Controller {
             return $this->render('SkaphandrusAppBundle:Default:spot.html.twig', array(
                         'spot' => $spot,
                         'map' => $map,
-                        'business' => $business
+                        'diveCenters' => $diveCenters,
+                        'liveaboards' => $liveaboards,
+                        'accommodations' => $accommodations,
 //                        'photographers' => $photographers,
 //                        'species' => $species,
             ));
@@ -733,8 +741,14 @@ class DefaultController extends Controller {
 
         if ($location) {
 
-            $business = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
-                    ->findBusienssInLocation($location->getId());
+            $diveCenters = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
+                    ->findDiveCentersInLocation($location->getId());
+
+            $liveaboards = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
+                    ->findLiveaboardsInLocation($location->getId());
+
+            $accommodations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
+                    ->findAccommodationsInLocation($location->getId());
 
 //            photographers
 //            $qb_photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->getQueryBuilder(['location' => $location], 20);
@@ -859,7 +873,9 @@ class DefaultController extends Controller {
                         'map' => $map,
                         'map_center_lat' => $centerLatitude,
                         'map_center_lon' => $centerLongitude,
-                        'business' => $business,
+                        'diveCenters' => $diveCenters,
+                        'liveaboards' => $liveaboards,
+                        'accommodations' => $accommodations,
 //                        'spots' => $spots,
 //                        'photographers' => $photographers,
 //                        'species' => $species,
@@ -881,8 +897,14 @@ class DefaultController extends Controller {
 
         if ($country) {
 
-            $business = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
-                    ->findBusienssInCountry($country->getId());
+            $diveCenters = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
+                    ->findDiveCentersInCountry($country->getId());
+
+            $liveaboards = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
+                    ->findLiveaboardsInCountry($country->getId());
+
+            $accommodations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
+                    ->findAccommodationsInCountry($country->getId());
 
 //            $locations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
 //                    ->findLocationsInCountry($country->getId(), $locale);
@@ -922,7 +944,9 @@ class DefaultController extends Controller {
             return $this->render('SkaphandrusAppBundle:Default:country.html.twig', array(
                         'country' => $country,
                         'country_name' => $name,
-                        'business' => $business,
+                        'diveCenters' => $diveCenters,
+                        'liveaboards' => $liveaboards,
+                        'accommodations' => $accommodations
 //                        'locations' => $locations,
 //                        'species' => $species,
 //                        'photographers' => $photographers,
