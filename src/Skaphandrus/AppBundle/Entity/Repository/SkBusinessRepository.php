@@ -14,45 +14,145 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkBusinessRepository extends EntityRepository {
 
-    public function findBusienssInSpot($spot_id) {
+////////////////////
+    public function findDiveCentersInSpot($spot_id) {
 
         return $this->getEntityManager()->createQuery(
                                 'SELECT b
                 FROM SkaphandrusAppBundle:SkBusiness b
+                JOIN b.admin admin
                 JOIN b.type t
                 JOIN b.address a
                 JOIN a.location l
                 JOIN l.spots s
-                WHERE s.id = :spot_id')
+                WHERE t.id in(1,3,6,8) 
+                AND s.id = :spot_id')
                         ->setParameter('spot_id', $spot_id)->getResult();
     }
 
-    public function findBusienssInLocation($location_id) {
+    public function findLiveaboardsInSpot($spot_id) {
 
         return $this->getEntityManager()->createQuery(
                                 'SELECT b
                 FROM SkaphandrusAppBundle:SkBusiness b
+                JOIN b.admin admin
                 JOIN b.type t
                 JOIN b.address a
                 JOIN a.location l
-                WHERE a.location = :location_id')
+                JOIN l.spots s
+                WHERE t.id in(4) 
+                AND s.id = :spot_id')
+                        ->setParameter('spot_id', $spot_id)->getResult();
+    }
+
+    public function findAccommodationsInSpot($spot_id) {
+
+        return $this->getEntityManager()->createQuery(
+                                'SELECT b
+                FROM SkaphandrusAppBundle:SkBusiness b
+                JOIN b.admin admin
+                JOIN b.type t
+                JOIN b.address a
+                JOIN a.location l
+                JOIN l.spots s
+                WHERE t.id in(7) 
+                AND s.id = :spot_id')
+                        ->setParameter('spot_id', $spot_id)->getResult();
+    }
+
+////////////////////
+//
+////////////////////
+    public function findDiveCentersInLocation($location_id) {
+
+        return $this->getEntityManager()->createQuery(
+                                'SELECT b
+                FROM SkaphandrusAppBundle:SkBusiness b
+                JOIN b.admin admin
+                JOIN b.type t
+                JOIN b.address a
+                JOIN a.location l
+                WHERE t.id in(1,3,6,8) 
+                AND a.location = :location_id')
                         ->setParameter('location_id', $location_id)->getResult();
     }
 
-    public function findBusienssInCountry($country_id) {
-        $query = $this->getEntityManager()->createQuery(
+    public function findLiveaboardsInLocation($location_id) {
+
+        return $this->getEntityManager()->createQuery(
                                 'SELECT b
                 FROM SkaphandrusAppBundle:SkBusiness b
+                JOIN b.admin admin
+                JOIN b.type t
+                JOIN b.address a
+                JOIN a.location l
+                WHERE t.id in(4) 
+                AND a.location = :location_id')
+                        ->setParameter('location_id', $location_id)->getResult();
+    }
+
+    public function findAccommodationsInLocation($location_id) {
+
+        return $this->getEntityManager()->createQuery(
+                                'SELECT b
+                FROM SkaphandrusAppBundle:SkBusiness b
+                JOIN b.admin admin
+                JOIN b.type t
+                JOIN b.address a
+                JOIN a.location l
+                WHERE t.id in(7) 
+                AND a.location = :location_id')
+                        ->setParameter('location_id', $location_id)->getResult();
+    }
+
+////////////////////
+//
+////////////////////
+    public function findDiveCentersInCountry($country_id) {
+        return $this->getEntityManager()->createQuery(
+                                'SELECT b
+                FROM SkaphandrusAppBundle:SkBusiness b
+                JOIN b.admin admin
                 JOIN b.type t
                 JOIN b.address a
                 JOIN a.location l
                 JOIN l.region r
-                WHERE r.country = :country_id')
+                WHERE t.id in(1,3,6,8) 
+                AND r.country = :country_id')
                         ->setParameter('country_id', $country_id)->getResult();
-
-        return $query;
     }
 
+    public function findLiveaboardsInCountry($country_id) {
+        return $this->getEntityManager()->createQuery(
+                                'SELECT b
+                FROM SkaphandrusAppBundle:SkBusiness b
+                JOIN b.admin admin
+                JOIN b.type t
+                JOIN b.address a
+                JOIN a.location l
+                JOIN l.region r
+                WHERE t.id in(4) 
+                AND r.country = :country_id')
+                        ->setParameter('country_id', $country_id)->getResult();
+    }
+
+    public function findAccommodationsInCountry($country_id) {
+        return $this->getEntityManager()->createQuery(
+                                'SELECT b
+                FROM SkaphandrusAppBundle:SkBusiness b
+                JOIN b.admin admin
+                JOIN b.type t
+                JOIN b.address a
+                JOIN a.location l
+                JOIN l.region r
+                WHERE t.id in(7) 
+                AND r.country = :country_id')
+                        ->setParameter('country_id', $country_id)->getResult();
+    }
+
+////////////////////
+//
+////////////////////
     public function findLikeName($term) {
 
         return $this->getEntityManager()->createQuery(

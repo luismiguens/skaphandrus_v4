@@ -13,15 +13,15 @@ sitemap:
     path:     /sitemap/{model}
     defaults: { _controller: "SkaphandrusAppBundle:Sitemap:sitemap" }
 
-#teste:
+#teste_teste:
 #    path:     /teste
 #    defaults: { _controller: "SkaphandrusAppBundle:Testes:teste" }
 
-#contest:
+#contest_teste:
 #    path:     /teste/contest
 #    defaults: { _controller: "SkaphandrusAppBundle:Testes:contest" }
 #    
-#spot:
+#spot_teste:
 #    path:     /teste/spot
 #    defaults: { _controller: "SkaphandrusAppBundle:Testes:spot" }
 #    
@@ -29,58 +29,6 @@ sitemap:
 #    path:     /teste/index
 #    defaults: { _controller: "SkaphandrusAppBundle:Testes:index" }
 
-ajax_spot_see_all:
-    path:     /{_locale}/ajax/see-all/spot
-    defaults: { _controller: "SkaphandrusAppBundle:Ajax:spotSeeAll" }
-
-ajax_locations_see_all:
-    path:     /{_locale}/ajax/see-all/location
-    defaults: { _controller: "SkaphandrusAppBundle:Ajax:locationSeeAll" }
-
-ajax_species_see_all:
-    path:     /{_locale}/ajax/see-all/species
-    defaults: { _controller: "SkaphandrusAppBundle:Ajax:speciesSeeAll" }
-    
-ajax_photographers_see_all:
-    path:     /{_locale}/ajax/see-all/photographers
-    defaults: { _controller: "SkaphandrusAppBundle:Ajax:photographersSeeAll" }    
-
-ajax_species_spot:
-    path:     /{_locale}/ajax/spot/species
-    defaults: { _controller: "SkaphandrusAppBundle:Ajax:speciesSpot" }
-
-ajax_photographers_spot:
-    path:     /{_locale}/ajax/spot/photographers
-    defaults: { _controller: "SkaphandrusAppBundle:Ajax:photographersSpot" }    
-    
-ajax_spot_location:
-    path:     /{_locale}/ajax/location/spot
-    defaults: { _controller: "SkaphandrusAppBundle:Ajax:spotLocation" }
-    
-ajax_species_location:
-    path:     /{_locale}/ajax/location/species
-    defaults: { _controller: "SkaphandrusAppBundle:Ajax:speciesLocation" }
-
-ajax_photographers_location:
-    path:     /{_locale}/ajax/location/photographers
-    defaults: { _controller: "SkaphandrusAppBundle:Ajax:photographersLocation" }   
-   
-ajax_location_country:
-    path:     /{_locale}/ajax/country/location
-    defaults: { _controller: "SkaphandrusAppBundle:Ajax:locationCountry" }
-    
-ajax_species_country:
-    path:     /{_locale}/ajax/country/species
-    defaults: { _controller: "SkaphandrusAppBundle:Ajax:speciesCountry" }
-
-ajax_photographers_country:
-    path:     /{_locale}/ajax/country/photographers
-    defaults: { _controller: "SkaphandrusAppBundle:Ajax:photographersCountry" }    
-
-ajax_index:
-    path:     /{_locale}/ajax/index
-    defaults: { _controller: "SkaphandrusAppBundle:Ajax:index" }
-    
 skaphandrus_app_booking_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skbooking.yml"
     prefix:   /{_locale}/booking_admin
@@ -227,13 +175,48 @@ skaphandrus_app_users_migration:
     defaults: { _controller: SkaphandrusAppBundle:Default:usersMigration }
 
 
+################################################################################  
+### Ajax Partiall Routes
+################################################################################
 
+#### See All ####
+ajax_spot_see_all:
+    path:     /{_locale}/ajax/see-all/spot
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:spotSeeAll" }
 
+ajax_locations_see_all:
+    path:     /{_locale}/ajax/see-all/location
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:locationSeeAll" }
 
+ajax_species_see_all:
+    path:     /{_locale}/ajax/see-all/species
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:speciesSeeAll" }
+    
+ajax_photographers_see_all:
+    path:     /{_locale}/ajax/see-all/photographers
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:photographersSeeAll" }    
 
+#### Show More ####
+ajax_spot_show_more:
+    path:     /{_locale}/ajax/show-more/spot
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:spotShowMore" }
 
+ajax_locations_show_more:
+    path:     /{_locale}/ajax/show-more/location
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:locationShowMore" }
 
+ajax_species_show_more:
+    path:     /{_locale}/ajax/show-more/species
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:speciesShowMore" }
+    
+ajax_photographers_show_more:
+    path:     /{_locale}/ajax/show-more/photographers
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:photographersShowMore" } 
 
+ajax_index:
+    path:     /{_locale}/ajax/index
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:index" }
+    
 ################################################################################  
 ### TRANSVERSAL
 ################################################################################    
