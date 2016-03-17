@@ -837,6 +837,49 @@ class SkSpeciesRepository extends EntityRepository {
         return $values;
     }
 
+    public function getPhotoForAppIdentification($species_id, $limit = 1) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        //ir ao skaphandrus
+
+        $sql = "SELECT sk_photo.id as id, best_rate.rating as rating FROM sk_photo
+                LEFT JOIN ( 
+                        SELECT id, photo_id, species_id, max(rating) as rating
+                        FROM sk_photo_species_validation GROUP BY photo_id
+                        order by rating desc ) as best_rate
+                ON sk_photo.id = best_rate.photo_id
+                WHERE sk_photo.species_id = " . $species_id . "
+                order by best_rate.rating desc lIMIT " . $limit;
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+
+
+        //se não tiver imagens no skaphandrus procurar no image refs
+        if (!$values):
+
+
+
+            $species = $this->getEntityManager()->getRepository('SkaphandrusAppBundle:SkSpecies')->find($species_id);
+            foreach ($species->image_refs as $ir) {
+                if ($ir->getIsPrimary())
+                    return $ir;
+            }
+
+
+
+        endif;
+
+
+
+
+
+
+        return $values;
+    }
+
 //    public function findSpeciesInCountry_to_delete($country_id) {
 //        $query = $this->getEntityManager()
 //                        ->createQuery(
