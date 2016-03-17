@@ -181,7 +181,7 @@ class SkSpecies {
     /**
      * Add criterias
      *
-     * @param \Skaphandrus\AppBundle\Entity\SkIdentificationCriterias $criterias
+     * @param \Skaphandrus\AppBundle\Entity\SkIdentificationCriterias $criteria
      *
      * @return SkSpecies
      */

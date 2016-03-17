@@ -37,7 +37,7 @@ class SkPhotoRepository extends EntityRepository {
         $statement = $connection->prepare($sql);
         $statement->execute();
         $array = $statement->fetchAll();
-        
+
         //ir buscar os ids das fotografias dos utilizadores
         foreach ($array as $key => $value) {
             $photo_ids[] = $value['id'];
@@ -46,10 +46,9 @@ class SkPhotoRepository extends EntityRepository {
         //baralhar os id's
         shuffle($photo_ids);
 
-        
+
         //ir buscar apenas 6 depois de baralhar
-        for ($i = 0; $i <= 9
-                && $i < count($photo_ids); $i++):
+        for ($i = 0; $i <= 9 && $i < count($photo_ids); $i++):
             $photos[] = $photo_ids[$i];
         endfor;
 
@@ -57,7 +56,49 @@ class SkPhotoRepository extends EntityRepository {
 
         //ir buscar os objectos photos
         $photos = $em->createQuery('SELECT p FROM SkaphandrusAppBundle:SkPhoto p '
-                . 'WHERE ' . $qb->expr()->in('p.id', $photos))->getResult();
+                        . 'WHERE ' . $qb->expr()->in('p.id', $photos))->getResult();
+
+
+        return $photos;
+    }
+
+    public function getPhotoSimilarSpecies($species) {
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT p.id as id, ss.name
+                from sk_photo as p
+                join sk_species as s on p.species_id = s.id
+                join sk_species_scientific_name as ss on s.id = ss.species_id
+                join sk_genus as g on g.id = s.genus_id
+                join sk_family as f on f.id = g.family_id
+                join sk_order as o on o.id = f.order_id
+                where o.id = " . $species->getGenus()->getFamily()->getOrder()->getId();
+        
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $array = $statement->fetchAll();
+
+        //ir buscar os ids das fotografias dos utilizadores
+        foreach ($array as $key => $value) {
+            $photo_ids[] = $value['id'];
+        }
+
+        //baralhar os id's
+        shuffle($photo_ids);
+
+
+        //ir buscar apenas 6 depois de baralhar
+        for ($i = 0; $i <= 9 && $i < count($photo_ids); $i++):
+            $photos[] = $photo_ids[$i];
+        endfor;
+
+        $qb = $em->createQueryBuilder('p');
+
+        //ir buscar os objectos photos
+        $photos = $em->createQuery('SELECT p FROM SkaphandrusAppBundle:SkPhoto p '
+                        . 'WHERE ' . $qb->expr()->in('p.id', $photos))->getResult();
 
 
         return $photos;
@@ -105,22 +146,17 @@ class SkPhotoRepository extends EntityRepository {
 //        return $values;
 //    }
 
-    
-    public function getCategories($photo_id){
-        
-        
-                return $this->getEntityManager()->createQuery(
+
+    public function getCategories($photo_id) {
+
+
+        return $this->getEntityManager()->createQuery(
                         "SELECT c FROM SkaphandrusAppBundle:SkPhotoContestCategory c
                             LEFT JOIN SkaphandrusAppBundle:SkPhoto p
                             WHERE p.id > :id ORDER BY p.id ASC "
                 )->setParameter('id', $photo_id)->getResult();
-        
     }
-    
-    
-    
-    
-    
+
     public function getPhotoInContest($photo_id, $locale) {
 
         $em = $this->getEntityManager();

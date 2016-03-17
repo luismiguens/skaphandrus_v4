@@ -272,10 +272,7 @@ class DefaultController extends Controller {
                 break;
         }
 
-
         $taxon_name = ucfirst($node);
-
-
 
         $taxon = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:Sk" . $taxon_name)
                 ->findOneBy(array('name' => $slug));
@@ -314,30 +311,139 @@ class DefaultController extends Controller {
     }
 
     public function speciesPageAction($slug) {
-        $locale = $this->get('request')->getLocale();
+
         $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findBySlug($slug);
 
-
-
         if ($species) {
+
+            $spots = array();
+
+            foreach ($species->getPhotos() as $photo) {
+                if ($photo->getSpot() != null):
+                    $spots[] = $photo->getSpot();
+                endif;
+            }
+
+            $map = null;
+            $latitude = 0;
+            $longitude = 0;
+            $centerLatitude = 0;
+            $centerLongitude = 0;
+
+            if (count($spots) > 0) {
+
+                // Get markers from spots for the map
+                $markers = array();
+
+                foreach ($spots as $spot) {
+
+                    //dump($spot->getCoordinate());
+                    if ($spot->getCoordinate()) {
+                        $marker = new Marker();
+
+                        //remove white spaces
+                        $latitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[0]);
+                        $longitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[1]);
+
+                        $infowindow = new InfoWindow();
+                        $spot_url = $this->generateUrl('spot', array(
+                            'slug' => $spot->getName(),
+                            'location' => $spot->getLocation(),
+                            'country' => $spot->getLocation()->getRegion()->getCountry()
+                        ));
+
+                        $location_url = $this->generateUrl('location', array(
+                            'slug' => $spot->getLocation(),
+                            'country' => $spot->getLocation()->getRegion()->getCountry()
+                        ));
+
+                        $country_url = $this->generateUrl('country', array(
+                            'slug' => $spot->getLocation()->getRegion()->getCountry()
+                        ));
+
+                        $contentString = "<a href=" . $spot_url . ">" . $spot->getName() . ",</a>
+                                <a href=" . $location_url . "> " . $spot->getLocation() . ",</a>
+                                <a href=" . $country_url . "> " . $spot->getLocation()->getRegion()->getCountry() . "</a>";
+
+                        $infowindow->setContent($contentString);
+                        $infowindow->setAutoClose(TRUE);
+
+                        // Marker options
+                        $marker->setInfoWindow($infowindow);
+                        $marker->setPrefixJavascriptVariable('marker_');
+                        $marker->setPosition($latitude, $longitude, true);
+                        $marker->setAnimation(Animation::DROP);
+                        $marker->setOption('clickable', true);
+                        $marker->setOption('flat', true);
+                        $marker->setOptions(array(
+                            'clickable' => true,
+                            'flat' => true,
+                        ));
+
+                        $markers[] = $marker;
+                    }
+                }
+
+                $centerLatitude = $latitude;
+                $centerLongitude = $longitude;
+
+                $map = new Map();
+                $map->setPrefixJavascriptVariable('map_');
+                $map->setHtmlContainerId('map_canvas');
+                $map->setAsync(false);
+                $map->setCenter($centerLatitude, $centerLongitude, true);
+                $map->setMapOption('zoom', 3);
+                $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
+                $map->setMapOption('disableDefaultUI', true);
+                $map->setMapOption('disableDoubleClickZoom', true);
+                $map->setMapOptions(array(
+                    'disableDefaultUI' => true,
+                    'disableDoubleClickZoom' => true,
+                ));
+                $map->setStylesheetOption('width', 'auto');
+                $map->setStylesheetOption('height', '300px');
+                $map->setStylesheetOptions(array(
+                    'width' => 'auto',
+                    'height' => '300px',
+                ));
+                $map->setLanguage('en');
+
+                // Add the spots to the map
+                foreach ($markers as $marker) {
+                    $map->addMarker($marker);
+                }
+            }
 
             $photo = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkPhoto")
                     ->getPrimaryPhotoForSpecies($species->getId());
 
+            $similarSpecies = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
+                    ->getPhotoSimilarSpecies($species);
+
             $criterias = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkSpecies")
                     ->findCriteriasWithCharacters($species->getId());
 
-            $users = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-                    ->findUsersInSpecies($species->getId());
+//            $allCriterias = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkIdentificationCriteria")
+//                    ->findAll();
+//                    
+//            dump($allCriterias);
+//            $users = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
+//                    ->findUsersInSpecies($species->getId());
 
             return $this->render('SkaphandrusAppBundle:Default:species.html.twig', array(
                         "species" => $species,
-                        "criterias" => $criterias,
                         "photo" => $photo,
-                        "users" => $users
+                        "similarSpecies" => $similarSpecies,
+                        "criterias" => $criterias,
+                        "spots" => $spots,
+                        'map' => $map,
+                        'map_center_lat' => $centerLatitude,
+                        'map_center_lon' => $centerLongitude,
+//                        "allCriterias" => $allCriterias
+//                        "users" => $users
             ));
         } else {
-            throw $this->createNotFoundException('The species ' . $name . ' does not exist.');
+            throw $this->createNotFoundException('The species ' . $species . ' does not exist.');
         }
     }
 
@@ -1020,8 +1126,8 @@ class DefaultController extends Controller {
                 ->findOneBy(array('fosUser' => $photo->getFosUser(), 'category' => "behaviour"));
 
 
-//$categories =         $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
-//                ->getCategories($photo->getId()/*24078*/);
+//        $categories = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
+//                ->getCategories($photo->getId()/* 24078 */);
 //        dump($photoInContest);
 
         if ($photo) {

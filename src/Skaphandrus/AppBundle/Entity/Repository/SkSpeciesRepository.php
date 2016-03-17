@@ -197,7 +197,8 @@ class SkSpeciesRepository extends EntityRepository {
                         ->createQuery(
                                 'SELECT crits, chars
                 FROM SkaphandrusAppBundle:SkIdentificationCriteria crits
-                JOIN crits.characters chars JOIN chars.species sp
+                JOIN crits.characters chars 
+                JOIN chars.species sp
                 WHERE sp.id = :species_id'
                         )->setParameter('species_id', $species_id);
         try {

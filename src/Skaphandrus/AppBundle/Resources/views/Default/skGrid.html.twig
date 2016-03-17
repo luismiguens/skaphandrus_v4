@@ -1,37 +1,37 @@
 {#<div class="lightBoxGallery">#}
-    <!-- resultset rows --> 
-    {% for row in photos %}
-        <span itemscope itemtype="http://schema.org/Photograph">
-            <meta itemprop="name" content="{{ row.photo_title}}" />
-            <meta itemprop="dateCreated" content="{{ row.photo_created_at|date("Y-m-d") }}" />
-            <meta itemprop="datePublished" content="{{ row.photo_taken_at|date("Y-m-d") }}" />
-            <span itemprop="author" itemscope itemtype="http://schema.org/Person"  >
-                <meta itemprop="name" content="{{ row.personal_firstname}} {{ row.personal_middlename}} {{ row.personal_lastname}}" />
-                <meta itemprop="url" content="{{ path('user',  { 'id': row.fos_user_id }) }}" />
-            </span>
-{#            {% if row.spot_id is not empty %}
-                <span itemprop="contentLocation" itemscope itemtype="http://schema.org/TouristAttraction">
-                    <meta itemprop="name" content="{{ row.spot_name }}, {{ row.location_name }}" />
-                </span>
-            {% endif %}#}
-            <a href="{{ path('photo_no_slug',  { 'id': row.photo_id }) }}" title="{{ row.photo_title }}">
-                {#<img itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('new_sk_thumbnail_outbound_100') }}" />#}
-                <img style="width: 100px; margin-right: 1px!important;margin-bottom: 1px!important;" itemprop="image" alt="{{ row.photo_title }}" src="{{ ('uploads/fotografias/'~row.photo_image) | imagine_filter('sk_thumbnail_outbound_100') }}" />
-            </a>
+<!-- resultset rows --> 
+{% for row in photos %}
+    <span itemscope itemtype="http://schema.org/Photograph">
+        <meta itemprop="name" content="{{ row.photo_title}}" />
+        <meta itemprop="dateCreated" content="{{ row.photo_created_at|date("Y-m-d") }}" />
+        <meta itemprop="datePublished" content="{{ row.photo_taken_at|date("Y-m-d") }}" />
+        <span itemprop="author" itemscope itemtype="http://schema.org/Person"  >
+            <meta itemprop="name" content="{{ row.personal_firstname}} {{ row.personal_middlename}} {{ row.personal_lastname}}" />
+            <meta itemprop="url" content="{{ path('user',  { 'id': row.fos_user_id }) }}" />
         </span>
-    {% endfor %}
-    <a style="margin-top: 2%;" class="btn btn-block btn-outline btn-primary" href="{{ path('photos', parameters) }}">{{ "common.grid.see_all"|trans }}</a>
-    <!-- The Gallery as lightbox dialog, should be a child element of the document body -->
-    {#    <div id="blueimp-gallery" class="blueimp-gallery">
-            <div class="slides"></div>
-            <h3 class="title"></h3>
-            <a class="prev">‹</a>
-            <a class="next">›</a>
-            <a class="close">×</a>
-            <a class="play-pause"></a>
-            <ol class="indicator"></ol>
-        </div>
-    #}
+        {#            {% if row.spot_id is not empty %}
+                        <span itemprop="contentLocation" itemscope itemtype="http://schema.org/TouristAttraction">
+                            <meta itemprop="name" content="{{ row.spot_name }}, {{ row.location_name }}" />
+                        </span>
+                    {% endif %}#}
+        <a href="{{ path('photo_no_slug',  { 'id': row.photo_id }) }}" title="{{ row.photo_title }}">
+            {#<img itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('new_sk_thumbnail_outbound_100') }}" />#}
+            <img style="width: 100px; margin-right: 1px!important;margin-bottom: 1px!important;" itemprop="image" alt="{{ row.photo_title }}" src="{{ ('uploads/fotografias/'~row.photo_image) | imagine_filter('sk_thumbnail_outbound_100') }}" />
+        </a>
+    </span>
+{% endfor %}
+<a style="margin-top: 2%;" class="btn btn-block btn-outline btn-primary" href="{{ path('photos', parameters) }}">{{ "common.grid.see_all"|trans }}</a>
+<!-- The Gallery as lightbox dialog, should be a child element of the document body -->
+{#    <div id="blueimp-gallery" class="blueimp-gallery">
+        <div class="slides"></div>
+        <h3 class="title"></h3>
+        <a class="prev">‹</a>
+        <a class="next">›</a>
+        <a class="close">×</a>
+        <a class="play-pause"></a>
+        <ol class="indicator"></ol>
+    </div>
+#}
 {#</div>#}
 <style>
     /* Local style for demo purpose */
