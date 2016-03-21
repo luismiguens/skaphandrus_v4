@@ -275,8 +275,8 @@ class AjaxSearchController extends Controller {
         foreach ($skPersonals as $skPersonal) {
             $results[] = array(
                 'id' => $skPersonal->getFosUser()->getId(),
-                'name' => $skPersonal->getName(),
-                'label' => sprintf("%s", $skPersonal->getName())
+                'name' => $skPersonal->getFosUser()->getId()." - ".$skPersonal->getName()." - ".$skPersonal->getFosUser()->getEmail(),
+                'label' => sprintf("%s", $skPersonal->getFosUser()->getId()." - ".$skPersonal->getName()." - ".$skPersonal->getFosUser()->getEmail())
             );
         }
 
