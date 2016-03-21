@@ -3,6 +3,13 @@
 ### ADMIN ROUTES
 ################################################################################ 
 
+testSmartLink:
+    path:     /testSmartLink
+    defaults: { _controller: SkaphandrusAppBundle:Default:testSmartLink, _locale: en }
+    requirements:
+        _locale:  en|pt
+
+
 index2:
     path:     /{_locale}/index2
     defaults: { _controller: SkaphandrusAppBundle:Default:index2, _locale: en }

@@ -44,6 +44,13 @@ class DefaultController extends Controller {
 
         return $this->render('SkaphandrusAppBundle:Default:testThumbnail.html.twig', array('photos' => $photos));
     }
+    
+    
+        public function testSmartLinkAction() {
+
+        return $this->render('SkaphandrusAppBundle:Default:testSmartLink.html.twig');
+    }
+    
 
     public function index2Action() {
         $location = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
