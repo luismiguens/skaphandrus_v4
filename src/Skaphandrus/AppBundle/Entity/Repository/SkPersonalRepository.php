@@ -19,7 +19,8 @@ class SkPersonalRepository extends EntityRepository {
         FROM SkaphandrusAppBundle:SkPersonal p
         join p.fosUser f
         WHERE CONCAT(concat(CONCAT(Concat(p.firstname, ' '), p.middlename),' '),p.lastname) LIKE :term 
-        or CONCAT(Concat(p.firstname, ' '),p.lastname) LIKE :term "
+        or CONCAT(Concat(p.firstname, ' '),p.lastname) LIKE :term 
+        or CONCAT(p.firstname, ' ') LIKE :term "
                 )->setParameter('term', '%' . $term . '%')->getResult();
     }
 
