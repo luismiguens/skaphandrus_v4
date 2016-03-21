@@ -299,93 +299,135 @@
 
 {% block body %}
 
-    <div class="wrapper wrapper-content animated" itemscope itemtype="http://schema.org/City">
+    <div class="wrapper wrapper-content" itemscope itemtype="http://schema.org/City">
+        <div class="animated fadeInRight"> 
 
-        <div class="row" >
-            <div class="col col-lg-12" >
-                <div class="ibox-title" >
-                    <meta itemprop="isicV4" content="96590" />
-                    <h1 itemprop="name">{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h1.title{% endtrans %}</h1>
-                </div>
-                <div class="ibox-content" >
-                    <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.info{% endtrans %}</h3>
-                    {% if location.description is not empty %}
-                        <p itemprop="description">{{ location.description|raw }}</p>
+            <div class="row" >
+                <div class="col col-lg-12" >
+                    <div class="ibox-title" >
+                        <meta itemprop="isicV4" content="96590" />
+                        <h1 itemprop="name">{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h1.title{% endtrans %}</h1>
+                    </div>
+                    <div class="ibox-content" >
+                        <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.info{% endtrans %}</h3>
+                        {% if location.description is not empty %}
+                            <p itemprop="description">{{ location.description|raw }}</p>
 
-                        <div class="span4 collapse-group">
-                            {% if location.waterTemp is not empty %}
-                                <h5 class="collapse">{{ "page.location.h5.water_temp"|trans }}</h5>
-                                <p class="collapse">{{ location.waterTemp }}</p>
-                            {% endif %}
+                            <div class="span4 collapse-group">
+                                {% if location.waterTemp is not empty %}
+                                    <h5 class="collapse">{{ "page.location.h5.water_temp"|trans }}</h5>
+                                    <p class="collapse">{{ location.waterTemp }}</p>
+                                {% endif %}
 
-                            {% if location.suit is not empty %}
-                                <h5 class="collapse">{{ "page.location.h5.suit"|trans }}</h5>
-                                <p class="collapse">{{ location.suit }}</p>
-                            {% endif %}
+                                {% if location.suit is not empty %}
+                                    <h5 class="collapse">{{ "page.location.h5.suit"|trans }}</h5>
+                                    <p class="collapse">{{ location.suit }}</p>
+                                {% endif %}
 
-                            {% if location.visibility is not empty %}
-                                <h5 class="collapse">{{ "page.location.h5.visibility"|trans }}</h5>
-                                <p class="collapse">{{ location.visibility }}</p>
-                            {% endif %}
+                                {% if location.visibility is not empty %}
+                                    <h5 class="collapse">{{ "page.location.h5.visibility"|trans }}</h5>
+                                    <p class="collapse">{{ location.visibility }}</p>
+                                {% endif %}
 
-                            {% if location.climate is not empty %}
-                                <h5 class="collapse">{{ "page.location.h5.climate"|trans }}</h5>
-                                <p class="collapse">{{ location.climate }}</p>
-                            {% endif %}
+                                {% if location.climate is not empty %}
+                                    <h5 class="collapse">{{ "page.location.h5.climate"|trans }}</h5>
+                                    <p class="collapse">{{ location.climate }}</p>
+                                {% endif %}
 
-                            {% if location.howToGo is not empty %}
-                                <h5 class="collapse">{{ "page.location.h5.how_to_go"|trans }}</h5>
-                                <p class="collapse">{{ location.howToGo }}</p>
-                            {% endif %}
+                                {% if location.howToGo is not empty %}
+                                    <h5 class="collapse">{{ "page.location.h5.how_to_go"|trans }}</h5>
+                                    <p class="collapse">{{ location.howToGo }}</p>
+                                {% endif %}
 
-                            {% if location.extraDive is not empty %}
-                                <h5 class="collapse">{{ "page.location.h5.extra_dive"|trans }}</h5>
-                                <p class="collapse">{{ location.extraDive|raw }}</p>
-                            {% endif %}
+                                {% if location.extraDive is not empty %}
+                                    <h5 class="collapse">{{ "page.location.h5.extra_dive"|trans }}</h5>
+                                    <p class="collapse">{{ location.extraDive|raw }}</p>
+                                {% endif %}
 
-                            <a style="margin: 2% 0% 0% 25%; width: 50%; " class="btn btn-block btn-outline btn-primary showdetails" data-toggle="collapse" data-target="#viewdetails"></a>
-                        </div>
-                    {% else %}
-                        {{ "page.location.p.no_description"|trans }}
-                    {% endif %}
+                                <a style="margin: 2% 0% 0% 25%; width: 50%; " class="btn btn-block btn-outline btn-primary showdetails" data-toggle="collapse" data-target="#viewdetails"></a>
+                            </div>
+                        {% else %}
+                            {{ "page.location.p.no_description"|trans }}
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!--  Mapa de spots start -->
-        <div class="row" style ="margin-top: 2%" >
-            <div class="col col-lg-12">
-                <div class="ibox-title" >
-                    <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.spots_map{% endtrans %}</h3>
-                </div>
-                <div class="row" >
-                    <div class="col col-lg-12" >
-                        <div class="ibox" >
-                            {% if map %}
-                                {{ google_map(map) }}
-                            {% endif %}
+            <!--  Mapa de spots start -->
+            <div class="row" style ="margin-top: 2%" >
+                <div class="col col-lg-12">
+                    <div class="ibox-title" >
+                        <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.spots_map{% endtrans %}</h3>
+                    </div>
+                    <div class="row" >
+                        <div class="col col-lg-12" >
+                            <div class="ibox" >
+                                {% if map %}
+                                    {{ google_map(map) }}
+                                {% endif %}
 
-                            <div id="box_spots"></div>
+                                <div id="box_spots"></div>
 
-                            <div class="ibox-content" >
-                                <div class="row" >
-                                    <div class="col col-lg-12" >
-                                        <button style="width: 49%;" type="button" class="btn btn-outline btn-primary" id="show_more_spots">{{ "page.location.button.show_more_spots"|trans }}</button>
-                                        <button style="width: 49%;" type="button" class="btn btn-outline btn-default" data-toggle="modal" data-target="#spotModal">{{ "page.location.button.see_all_spots"|trans }}</button>
+                                <div class="ibox-content" >
+                                    <div class="row" >
+                                        <div class="col col-lg-12" >
+                                            <button style="width: 49%;" type="button" class="btn btn-outline btn-primary" id="show_more_spots">{{ "page.location.button.show_more_spots"|trans }}</button>
+                                            <button style="width: 49%;" type="button" class="btn btn-outline btn-default" data-toggle="modal" data-target="#spotModal">{{ "page.location.button.see_all_spots"|trans }}</button>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <!-- Spots Modal start -->
-                                <div class="modal fade" id="spotModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <!-- Spots Modal start -->
+                                    <div class="modal fade" id="spotModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.country.h4.spot_modal{% endtrans %}</h4>
+                                                </div>
+                                                <div class="modal-body">
+
+                                                    <div id="spotInput"></div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Spots Modal end -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  Mapa de spots end -->
+
+            <!--  Species start -->
+            <div class="row" >
+                <div class="col col-lg-12">
+                    <div class="ibox-title" >
+                        <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.species{% endtrans %}</h3>
+                    </div>
+                    <div class="row" >
+                        <div class="col col-lg-12" >
+                            <div class="ibox" >
+
+                                <div id="box_species"></div>
+
+                                <!-- Species Modal start -->
+                                <div class="modal fade" id="speciesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                     <div class="modal-dialog modal-lg" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="myModalLabel">{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.country.h4.spot_modal{% endtrans %}</h4>
+                                                <h4 class="modal-title" id="myModalLabel">{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h4.species_modal{% endtrans %}</h4>
                                             </div>
                                             <div class="modal-body">
 
-                                                <div id="spotInput"></div>
+                                                <div id="speciesInput"></div>
 
                                             </div>
                                             <div class="modal-footer">
@@ -394,54 +436,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Spots Modal end -->
+                                <!-- Species Modal end -->
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--  Mapa de spots end -->
-
-        <!--  Species start -->
-        <div class="row" >
-            <div class="col col-lg-12">
-                <div class="ibox-title" >
-                    <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.species{% endtrans %}</h3>
-                </div>
-                <div class="row" >
-                    <div class="col col-lg-12" >
-                        <div class="ibox" >
-
-                            <div id="box_species"></div>
-
-                            <!-- Species Modal start -->
-                            <div class="modal fade" id="speciesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title" id="myModalLabel">{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h4.species_modal{% endtrans %}</h4>
+                                <div class="ibox-content" >
+                                    <div class="row" >
+                                        <div class="col col-lg-12" >
+                                            <button style="width: 49%;" type="button" class="btn btn-outline btn-primary" id="show_more_species">{{ "page.location.button.show_more_species"|trans }}</button>
+                                            <button style="width: 49%;" type="button" class="btn btn-outline btn-default" data-toggle="modal" data-target="#speciesModal">{{ "page.location.button.see_all_species"|trans }}</button>
                                         </div>
-                                        <div class="modal-body">
-
-                                            <div id="speciesInput"></div>
-
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Species Modal end -->
-
-                            <div class="ibox-content" >
-                                <div class="row" >
-                                    <div class="col col-lg-12" >
-                                        <button style="width: 49%;" type="button" class="btn btn-outline btn-primary" id="show_more_species">{{ "page.location.button.show_more_species"|trans }}</button>
-                                        <button style="width: 49%;" type="button" class="btn btn-outline btn-default" data-toggle="modal" data-target="#speciesModal">{{ "page.location.button.see_all_species"|trans }}</button>
                                     </div>
                                 </div>
                             </div>
@@ -449,47 +451,47 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <!--  Species end -->
+            <!--  Species end -->
 
-        <!--  Photographers start -->
-        <div class="row" >
-            <div class="col col-lg-12">
-                <div class="ibox-title" >
-                    <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.contributors{% endtrans %}</h3>
-                </div>
-                <div class="row" >
-                    <div class="col col-lg-12" >
-                        <div class="ibox" >
+            <!--  Photographers start -->
+            <div class="row" >
+                <div class="col col-lg-12">
+                    <div class="ibox-title" >
+                        <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.contributors{% endtrans %}</h3>
+                    </div>
+                    <div class="row" >
+                        <div class="col col-lg-12" >
+                            <div class="ibox" >
 
-                            <div id="box_photographers"></div>
+                                <div id="box_photographers"></div>
 
-                            <!-- Photographers Modal start -->
-                            <div class="modal fade" id="photographersModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title" id="myModalLabel">{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h4.photographers_modal{% endtrans %}</h4>
-                                        </div>
-                                        <div class="modal-body">
+                                <!-- Photographers Modal start -->
+                                <div class="modal fade" id="photographersModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h4.photographers_modal{% endtrans %}</h4>
+                                            </div>
+                                            <div class="modal-body">
 
-                                            <div id="photographersInput"></div>
+                                                <div id="photographersInput"></div>
 
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- Photographers Modal end -->
+                                <!-- Photographers Modal end -->
 
-                            <div class="ibox-content" >
-                                <div class="row" >
-                                    <div class="col col-lg-12" >
-                                        <button style="width: 49%;" type="button" class="btn btn-outline btn-primary" id="show_more_photographers" >{{ "page.location.button.show_more_photographers"|trans }}</button>
-                                        <button style="width: 49%;" type="button" class="btn btn-outline btn-default" data-toggle="modal" data-target="#photographersModal">{{ "page.location.button.see_all_photographers"|trans }}</button>
+                                <div class="ibox-content" >
+                                    <div class="row" >
+                                        <div class="col col-lg-12" >
+                                            <button style="width: 49%;" type="button" class="btn btn-outline btn-primary" id="show_more_photographers" >{{ "page.location.button.show_more_photographers"|trans }}</button>
+                                            <button style="width: 49%;" type="button" class="btn btn-outline btn-default" data-toggle="modal" data-target="#photographersModal">{{ "page.location.button.see_all_photographers"|trans }}</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -497,134 +499,134 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <!--  Photographers end -->
+            <!--  Photographers end -->
 
-        <!--  Dive Centers start -->
-        <div class="tabs-container">
-            <ul class="nav nav-tabs">
-                <li class="active"><a aria-expanded="true" data-toggle="tab" href="#tab-1">{{ "page.location.tab1.dive_centers"|trans }}</a></li>
-                <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-2">{{ "page.location.tab2.liveaboard"|trans }}</a></li>
-                <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-3">{{ "page.location.tab3.resorts"|trans }}</a></li>
-            </ul>
-            <div class="tab-content">
-                <div id="tab-1" class="tab-pane active">
-                    <div class="panel-body">
-                        <h4>{{ "page.spot.h4.dive_center"|trans }}</h4>
-                        <div class="row" >
-                            {% if diveCenters %}
-                                {% for b in diveCenters %}
-                                    <div class="col col-lg-4" style="margin-bottom: 1%" >
-                                        <div class="ibox" >
-                                            <div class="col col-lg-5" >
-                                                {% if b.getWebPath %}
+            <!--  Dive Centers start -->
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a aria-expanded="true" data-toggle="tab" href="#tab-1">{{ "page.location.tab1.dive_centers"|trans }}</a></li>
+                    <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-2">{{ "page.location.tab2.liveaboard"|trans }}</a></li>
+                    <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-3">{{ "page.location.tab3.resorts"|trans }}</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane active">
+                        <div class="panel-body">
+                            <h4>{{ "page.spot.h4.dive_center"|trans }}</h4>
+                            <div class="row" >
+                                {% if diveCenters %}
+                                    {% for b in diveCenters %}
+                                        <div class="col col-lg-4" style="margin-bottom: 1%" >
+                                            <div class="ibox" >
+                                                <div class="col col-lg-5" >
+                                                    {% if b.getWebPath %}
+                                                        <a href="{{ path('business', { 'country': slugify((b.address.location.region.country)), 'location': slugify(b.address.location), 'slug': slugify(b.name) }) }}">
+                                                            <img class="logo" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                                        </a>
+                                                    {% else %}
+                                                        <a href="">
+                                                            <img class="logo" src="{{ asset('/uploads/business/blank-logo.png') }}"/>
+                                                        </a>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="col col-lg-7" >
                                                     <a href="{{ path('business', { 'country': slugify((b.address.location.region.country)), 'location': slugify(b.address.location), 'slug': slugify(b.name) }) }}">
-                                                        <img class="logo" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                                        <h4>{{b|slice(0, 21)}}</h4>
                                                     </a>
-                                                {% else %}
-                                                    <a href="">
-                                                        <img class="logo" src="{{ asset('/uploads/business/blank-logo.png') }}"/>
-                                                    </a>
-                                                {% endif %}
-                                            </div>
-                                            <div class="col col-lg-7" >
-                                                <a href="{{ path('business', { 'country': slugify((b.address.location.region.country)), 'location': slugify(b.address.location), 'slug': slugify(b.name) }) }}">
-                                                    <h4>{{b|slice(0, 21)}}</h4>
-                                                </a>
-                                                <h5>{{ b.address.location }}</h5>
+                                                    <h5>{{ b.address.location }}</h5>
 
-                                                <button class="btn btn-primary dim" type="button" onclick="location.href = '{{ path('booking_admin_new', {'business_id': b.id}) }}'">{{ "page.business.button.book_now"|trans }}</button>
+                                                    <button class="btn btn-primary dim" type="button" onclick="location.href = '{{ path('booking_admin_new', {'business_id': b.id}) }}'">{{ "page.business.button.book_now"|trans }}</button>
+                                                </div>
                                             </div>
                                         </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="col col-lg-12">
+                                        {{ "page.spot.h4.no_dive_center"|trans }}
                                     </div>
-                                {% endfor %}
-                            {% else %}
-                                <div class="col col-lg-12">
-                                    {{ "page.spot.h4.no_dive_center"|trans }}
-                                </div>
-                            {% endif %}
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div id="tab-2" class="tab-pane">
-                    <div class="panel-body">
-                        <h4>{{ "page.spot.h4.liveaboard"|trans }}</h4>
-                        <div class="row" >
-                            {% if liveaboards %}
-                                {% for b in liveaboards %}
-                                    <div class="col col-lg-4" style="margin-bottom: 1%" >
-                                        <div class="ibox" >
-                                            <div class="col col-lg-5" >
-                                                {% if b.getWebPath %}
+                    <div id="tab-2" class="tab-pane">
+                        <div class="panel-body">
+                            <h4>{{ "page.spot.h4.liveaboard"|trans }}</h4>
+                            <div class="row" >
+                                {% if liveaboards %}
+                                    {% for b in liveaboards %}
+                                        <div class="col col-lg-4" style="margin-bottom: 1%" >
+                                            <div class="ibox" >
+                                                <div class="col col-lg-5" >
+                                                    {% if b.getWebPath %}
+                                                        <a href="{{ path('business', { 'country': slugify((b.address.location.region.country)), 'location': slugify(b.address.location), 'slug': slugify(b.name) }) }}">
+                                                            <img class="logo" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                                        </a>
+                                                    {% else %}
+                                                        <a href="">
+                                                            <img class="logo" src="{{ asset('/uploads/business/blank-logo.png') }}"/>
+                                                        </a>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="col col-lg-7" >
                                                     <a href="{{ path('business', { 'country': slugify((b.address.location.region.country)), 'location': slugify(b.address.location), 'slug': slugify(b.name) }) }}">
-                                                        <img class="logo" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                                        <h4>{{b|slice(0, 21)}}</h4>
                                                     </a>
-                                                {% else %}
-                                                    <a href="">
-                                                        <img class="logo" src="{{ asset('/uploads/business/blank-logo.png') }}"/>
-                                                    </a>
-                                                {% endif %}
-                                            </div>
-                                            <div class="col col-lg-7" >
-                                                <a href="{{ path('business', { 'country': slugify((b.address.location.region.country)), 'location': slugify(b.address.location), 'slug': slugify(b.name) }) }}">
-                                                    <h4>{{b|slice(0, 21)}}</h4>
-                                                </a>
-                                                <h5>{{ b.address.location }}</h5>
+                                                    <h5>{{ b.address.location }}</h5>
 
-                                                <button class="btn btn-primary dim" type="button" onclick="location.href = '{{ path('booking_admin_new', {'business_id': b.id}) }}'">{{ "page.business.button.book_now"|trans }}</button>
+                                                    <button class="btn btn-primary dim" type="button" onclick="location.href = '{{ path('booking_admin_new', {'business_id': b.id}) }}'">{{ "page.business.button.book_now"|trans }}</button>
+                                                </div>
                                             </div>
                                         </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="col col-lg-12">
+                                        {{ "page.spot.h4.no_liveaboards"|trans }}
                                     </div>
-                                {% endfor %}
-                            {% else %}
-                                <div class="col col-lg-12">
-                                    {{ "page.spot.h4.no_liveaboards"|trans }}
-                                </div>
-                            {% endif %}
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div id="tab-3" class="tab-pane">
-                    <div class="panel-body">
-                        <h4>{{ "page.spot.h4.accommodation"|trans }}</h4>
-                        <div class="row" >
-                            {% if accommodations %}
-                            {% for b in accommodations %}
-                                <div class="col col-lg-4" style="margin-bottom: 1%" >
-                                    <div class="ibox" >
-                                        <div class="col col-lg-5" >
-                                            {% if b.getWebPath %}
-                                                <a href="{{ path('business', { 'country': slugify((b.address.location.region.country)), 'location': slugify(b.address.location), 'slug': slugify(b.name) }) }}">
-                                                    <img class="logo" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
-                                                </a>
-                                            {% else %}
-                                                <a href="">
-                                                    <img class="logo" src="{{ asset('/uploads/business/blank-logo.png') }}"/>
-                                                </a>
-                                            {% endif %}
-                                        </div>
-                                        <div class="col col-lg-7" >
-                                            <a href="{{ path('business', { 'country': slugify((b.address.location.region.country)), 'location': slugify(b.address.location), 'slug': slugify(b.name) }) }}">
-                                                <h4>{{b|slice(0, 21)}}</h4>
-                                            </a>
-                                            <h5>{{ b.address.location }}</h5>
+                    <div id="tab-3" class="tab-pane">
+                        <div class="panel-body">
+                            <h4>{{ "page.spot.h4.accommodation"|trans }}</h4>
+                            <div class="row" >
+                                {% if accommodations %}
+                                    {% for b in accommodations %}
+                                        <div class="col col-lg-4" style="margin-bottom: 1%" >
+                                            <div class="ibox" >
+                                                <div class="col col-lg-5" >
+                                                    {% if b.getWebPath %}
+                                                        <a href="{{ path('business', { 'country': slugify((b.address.location.region.country)), 'location': slugify(b.address.location), 'slug': slugify(b.name) }) }}">
+                                                            <img class="logo" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                                        </a>
+                                                    {% else %}
+                                                        <a href="">
+                                                            <img class="logo" src="{{ asset('/uploads/business/blank-logo.png') }}"/>
+                                                        </a>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="col col-lg-7" >
+                                                    <a href="{{ path('business', { 'country': slugify((b.address.location.region.country)), 'location': slugify(b.address.location), 'slug': slugify(b.name) }) }}">
+                                                        <h4>{{b|slice(0, 21)}}</h4>
+                                                    </a>
+                                                    <h5>{{ b.address.location }}</h5>
 
-                                            <button class="btn btn-primary dim" type="button" onclick="location.href = '{{ path('booking_admin_new', {'business_id': b.id}) }}'">{{ "page.business.button.book_now"|trans }}</button>
+                                                    <button class="btn btn-primary dim" type="button" onclick="location.href = '{{ path('booking_admin_new', {'business_id': b.id}) }}'">{{ "page.business.button.book_now"|trans }}</button>
+                                                </div>
+                                            </div>
                                         </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="col col-lg-12">
+                                        {{ "page.spot.h4.no_accommodation"|trans }}
                                     </div>
-                                </div>
-                            {% endfor %}
-                            {% else %}
-                                <div class="col col-lg-12">
-                                    {{ "page.spot.h4.no_accommodation"|trans }}
-                                </div>
-                            {% endif %}
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!--  Dive Centers end -->
         </div>
-        <!--  Dive Centers end -->
     </div>
 
 {% endblock %}
