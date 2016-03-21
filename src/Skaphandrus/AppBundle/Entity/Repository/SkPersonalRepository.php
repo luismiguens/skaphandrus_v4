@@ -20,7 +20,7 @@ class SkPersonalRepository extends EntityRepository {
         join p.fosUser f
         WHERE CONCAT(concat(CONCAT(Concat(p.firstname, ' '), p.middlename),' '),p.lastname) LIKE :term 
         or CONCAT(Concat(p.firstname, ' '),p.lastname) LIKE :term 
-        or CONCAT(p.firstname, ' ') LIKE :term "
+        or CONCAT(p.firstname, ' ') LIKE :term order by f.id asc"
                 )->setParameter('term', '%' . $term . '%')->getResult();
     }
 
