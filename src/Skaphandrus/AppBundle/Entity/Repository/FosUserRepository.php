@@ -15,6 +15,32 @@ use Skaphandrus\AppBundle\Entity\FosUser;
  */
 class FosUserRepository extends EntityRepository {
 
+    public function getUserToSendEmail() {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT st.fos_user_id as id, st.email_update, u.email as email
+                FROM sk_settings as st
+                JOIN fos_user as u
+                on u.id = st.fos_user_id
+                where st.email_update = 1";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+            $user = new FosUser();
+            $user->setId($value['id']);
+            $user->setEmail($value['email']); 
+            
+            $result[] = $user;
+        }
+
+        return $result;
+    }
+
     public function getMorePhotographersSpecies($species_id, $limit = 3, $offset = 0) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
@@ -42,7 +68,7 @@ class FosUserRepository extends EntityRepository {
         $statement->execute();
         $values = $statement->fetchAll();
         $result = array();
-        
+
         foreach ($values as $value) {
 //            $user = $em->getRepository('SkaphandrusAppBundle:FosUser')->find($value['fosUser']);
 
