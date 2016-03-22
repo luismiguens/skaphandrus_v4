@@ -143,6 +143,10 @@ skaphandrus_app_taxonomic_result_admin:
 skaphandrus_app_spot_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skspot.yml"
     prefix:   /{_locale}/spot_admin
+    
+skaphandrus_app_location_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/sklocation.yml"
+    prefix:   /{_locale}/location_admin
 
 skaphandrus_app_photo_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skphoto.yml"

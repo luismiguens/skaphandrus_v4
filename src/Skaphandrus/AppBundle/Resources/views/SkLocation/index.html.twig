@@ -1,0 +1,67 @@
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Data Tables -->
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/datatables.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- Data Tables -->
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/datatables.min.js') }}"></script>
+{% endblock %}
+
+{% block heading_title %}
+    {{ "form.location.h1.title"|trans }}
+{% endblock %}
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.locations"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block heading_action %}
+    <a href="{{ path('location_admin_new') }}" class="btn btn-primary">{{ "form.location.btn.add"|trans }}</a>
+{% endblock %}
+
+{% block form_title_description %}
+    {{ "form.location.text.description"|trans }}
+{% endblock %}
+
+{% block body -%}
+
+    <table id="datatable-list" class="table display table-striped table-bordered table-hover " cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>{{ "form.location.label.name"|trans }}</th>
+                <th>{{ "form.location.label.region"|trans }}</th>
+                <th>{{ "form.common.label.actions"|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ link_to_location(entity) }}</td>
+                    <td>{{ entity.region }} </td>
+                    <td>
+                        <a class="btn btn-white btn-sm" href="{{ path('location_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.edit"|trans }}</a>
+                        <a class="btn btn-white btn-sm" href="{{ url_to_location(entity) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.view"|trans }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+    <a class="btn btn-primary" href="{{ path('location_admin_new') }}">
+        <i class="fa fa-pencil"></i>  {{ "form.location.btn.add"|trans }}
+    </a>
+
+
+
+
+{% endblock %}

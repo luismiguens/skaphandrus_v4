@@ -1,0 +1,30 @@
+location_admin:
+    path:     /
+    defaults: { _controller: "SkaphandrusAppBundle:SkLocation:index" }
+
+#location_admin_show:
+#    path:     /{id}/show
+#    defaults: { _controller: "SkaphandrusAppBundle:SkLocation:show" }
+
+location_admin_new:
+    path:     /new
+    defaults: { _controller: "SkaphandrusAppBundle:SkLocation:new" }
+
+location_admin_create:
+    path:     /create
+    defaults: { _controller: "SkaphandrusAppBundle:SkLocation:create" }
+    methods:  POST
+
+location_admin_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SkaphandrusAppBundle:SkLocation:edit" }
+
+location_admin_update:
+    path:     /{id}/update
+    defaults: { _controller: "SkaphandrusAppBundle:SkLocation:update" }
+    methods:  [POST, PUT]
+
+location_admin_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SkaphandrusAppBundle:SkLocation:delete" }
+    methods:  [POST, DELETE]

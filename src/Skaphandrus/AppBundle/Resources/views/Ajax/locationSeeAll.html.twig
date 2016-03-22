@@ -19,7 +19,7 @@
         <tbody>
             {% for l in locations %}
                 <tr>
-                    <td>{{ link_to_location(l) }}</td>
+                    <td>{{ link_to_location(l) }}, {{l.region}}</td>
                     <td>
                         <a href="{{ path('photos', { 'location': l.id }) }}">
                             {{ l.photosInLocation }}

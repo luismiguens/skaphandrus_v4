@@ -8,7 +8,7 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 /**
  * SkLocationTranslation
  */
-class SkLocationTranslation {
+class SkLocationTranslation{
 
     use ORMBehaviors\Translatable\Translation;
 

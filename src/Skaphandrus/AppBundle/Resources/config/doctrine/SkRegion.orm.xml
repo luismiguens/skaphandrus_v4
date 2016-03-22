@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Skaphandrus\AppBundle\Entity\SkRegion" table="sk_region">
+  <entity name="Skaphandrus\AppBundle\Entity\SkRegion" repository-class="Skaphandrus\AppBundle\Entity\Repository\SkRegionRepository"  table="sk_region">
     <indexes>
       <index name="sk_region_FI_1" columns="country_id"/>
     </indexes>
