@@ -22,13 +22,13 @@ class EmailController extends Controller {
                 ->setFrom('support-noreply@skaphandrus.com', 'Skaphandrus')
                 ->setTo($email)
                 ->setBcc('rubensardinha@hotmail.com')
-                ->setBody($this->renderView('SkaphandrusAppBundle:Email:email.html.twig'), 'text/html');
+                ->setBody($this->renderView('SkaphandrusAppBundle:Email:content_email.html.twig'), 'text/html');
 
         $this->get('mailer')->send($message);
 
         try {
             return $this->render('SkaphandrusAppBundle:Email:emailSend.html.twig', array(
-                        'email' => $email,
+                        'email_string' => $email,
             ));
         } catch (\Exception $ex) {
             echo $ex->getTraceAsString();
@@ -39,7 +39,13 @@ class EmailController extends Controller {
 
         //criar um ciclo for para todos os utilizadores que tenham  sk_settings.email_update=1
         $users = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-                ->getUserToSendEmail();
+                ->getUserToSendEmailTest();
+        
+        
+        
+        
+        
+        
 
         $addresses = array();
 
@@ -54,7 +60,7 @@ class EmailController extends Controller {
                 ->setFrom('support-noreply@skaphandrus.com', 'Skaphandrus')
                 ->setTo($addresses)
                 ->setBcc('luis.miguens@skaphandrus.com')
-                ->setBody($this->renderView('SkaphandrusAppBundle:Email:email.html.twig'), 'text/html')
+                ->setBody($this->renderView('SkaphandrusAppBundle:Email:content_email.html.twig'), 'text/html')
 //                ->setBody($this->renderView('SkaphandrusAppBundle:Email:email.html.twig', array('email' => teste)), 'text/html')
         /*
          * If you also want to include a plaintext version of the message
@@ -74,7 +80,7 @@ class EmailController extends Controller {
 
         try {
             return $this->render('SkaphandrusAppBundle:Email:emailSend.html.twig', array(
-                        'addresses' => $addresses,
+                        'email_string' => implode(',', $addresses),
             ));
         } catch (\Exception $ex) {
             echo $ex->getTraceAsString();

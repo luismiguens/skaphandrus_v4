@@ -15,6 +15,37 @@ use Skaphandrus\AppBundle\Entity\FosUser;
  */
 class FosUserRepository extends EntityRepository {
 
+    
+    
+    
+        public function getUserToSendEmailTest() {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT st.fos_user_id as id, st.email_update, u.email as email
+                FROM sk_settings as st
+                JOIN fos_user as u
+                on u.id = st.fos_user_id
+                where st.email_update = 1 
+                and (st.fos_user_id = 6591 or st.fos_user_id = 5)";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+            $user = new FosUser();
+            $user->setId($value['id']);
+            $user->setEmail($value['email']); 
+            
+            $result[] = $user;
+        }
+
+        return $result;
+    }
+    
+    
     public function getUserToSendEmail() {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
