@@ -129,7 +129,7 @@ class SkLocationRepository extends EntityRepository {
                         )->setParameter('name', $name)->setParameter('locale', $locale);
         try {
             
-            dump($query->getResult());
+            //dump($query->getResult());
             
             return $query->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
