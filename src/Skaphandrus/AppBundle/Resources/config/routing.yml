@@ -9,7 +9,6 @@ testSmartLink:
     requirements:
         _locale:  en|pt
 
-
 index2:
     path:     /{_locale}/index2
     defaults: { _controller: SkaphandrusAppBundle:Default:index2, _locale: en }
@@ -20,6 +19,15 @@ sitemap:
     path:     /sitemap/{model}
     defaults: { _controller: "SkaphandrusAppBundle:Sitemap:sitemap" }
 
+
+email_teste:
+    path:     /email/send-test-email
+    defaults: { _controller: "SkaphandrusAppBundle:Email:sendTestEmail" }
+    
+email_all:
+    path:     /email/send-all-emails
+    defaults: { _controller: "SkaphandrusAppBundle:Email:sendAllEmails" }
+    
 #teste_teste:
 #    path:     /teste
 #    defaults: { _controller: "SkaphandrusAppBundle:Testes:teste" }
