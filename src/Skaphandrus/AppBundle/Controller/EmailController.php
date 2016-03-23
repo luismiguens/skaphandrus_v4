@@ -51,7 +51,7 @@ class EmailController extends Controller {
                         ->setSubject($subject)
                         ->setFrom('support-noreply@skaphandrus.com', 'Skaphandrus')
                         ->setTo($address->getEmail())
-                        ->setBcc('rubensardinha@hotmail.com')
+                        ->setBcc('luis.t.miguens@gmail.com')
                         ->setBody($this->renderView('SkaphandrusAppBundle:Email:content_email.html.twig', array(
                             'user' => $address->getName()
                         )), 'text/html');
