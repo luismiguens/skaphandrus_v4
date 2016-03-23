@@ -20,39 +20,19 @@ class FosUserRepository extends EntityRepository {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
-        if ($param == 1) {
-            $sql = "SELECT st.fos_user_id as id, st.email_update, u.email as email,
+        $sql = "SELECT st.fos_user_id as id, st.email_update, u.email as email,
                 up.id as p_id, up.firstname as firstname, up.middlename as middlename, up.lastname as lastname
                 FROM sk_settings as st
                 JOIN fos_user as u
                 on u.id = st.fos_user_id
                 JOIN sk_personal as up
-                on u.id = up.fos_user_id
-                where st.email_update = 1 and (st.fos_user_id = 6591 or st.fos_user_id = 5)";
-        } elseif ($param == 2) {
-            $sql = "SELECT st.fos_user_id as id, st.email_update, u.email as email,
-                up.id as p_id, up.firstname as firstname, up.middlename as middlename, up.lastname as lastname
-                FROM sk_settings as st
-                JOIN fos_user as u
-                on u.id = st.fos_user_id
-                JOIN sk_personal as up
-                on u.id = up.fos_user_id
-                where st.email_update = 1 and u.email not like '' ";
-        }
+                on u.id = up.fos_user_id ";
 
-//        $sql = "SELECT st.fos_user_id as id, st.email_update, u.email as email,
-//                up.id as p_id, up.firstname as firstname, up.middlename as middlename, up.lastname as lastname
-//                FROM sk_settings as st
-//                JOIN fos_user as u
-//                on u.id = st.fos_user_id
-//                JOIN sk_personal as up
-//                on u.id = up.fos_user_id ";
-//
-//        if ($param == 1) {
-//            $sql = $sql . " where st.email_update = 1 and (st.fos_user_id = 6591 or st.fos_user_id = 5)";
-//        } elseif ($param == 2) {
-//            $sql = $sql . " where st.email_update = 1 and u.email not like '' ";
-//        }
+        if ($param == 1) {
+            $sql = $sql . " where st.email_update = 1 and (st.fos_user_id = 6591 or st.fos_user_id = 5)";
+        } elseif ($param == 2) {
+            $sql = $sql . " where st.email_update = 1 and u.email not like '' ";
+        }
 
         $statement = $connection->prepare($sql);
         $statement->execute();
