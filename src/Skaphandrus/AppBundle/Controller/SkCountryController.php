@@ -4,35 +4,35 @@ namespace Skaphandrus\AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Skaphandrus\AppBundle\Entity\SkLocation;
-use Skaphandrus\AppBundle\Form\SkLocationType;
+use Skaphandrus\AppBundle\Entity\SkCountry;
+use Skaphandrus\AppBundle\Form\SkCountryType;
 
 /**
- * SkLocation controller.
+ * SkCountry controller.
  *
  */
-class SkLocationController extends Controller {
+class SkCountryController extends Controller {
 
     /**
-     * Lists all SkLocation entities.
+     * Lists all SkCountry entities.
      *
      */
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('SkaphandrusAppBundle:SkLocation')->findAll();
+        $entities = $em->getRepository('SkaphandrusAppBundle:SkCountry')->findAll();
 
-        return $this->render('SkaphandrusAppBundle:SkLocation:index.html.twig', array(
+        return $this->render('SkaphandrusAppBundle:SkCountry:index.html.twig', array(
                     'entities' => $entities,
         ));
     }
 
     /**
-     * Creates a new SkLocation entity.
+     * Creates a new SkCountry entity.
      *
      */
     public function createAction(Request $request) {
-        $entity = new SkLocation();
+        $entity = new SkCountry();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -41,25 +41,25 @@ class SkLocationController extends Controller {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('location_admin_edit', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('country_admin_edit', array('id' => $entity->getId())));
         }
 
-        return $this->render('SkaphandrusAppBundle:SkLocation:new.html.twig', array(
+        return $this->render('SkaphandrusAppBundle:SkCountry:new.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
         ));
     }
 
     /**
-     * Creates a form to create a SkLocation entity.
+     * Creates a form to create a SkCountry entity.
      *
-     * @param SkLocation $entity The entity
+     * @param SkCountry $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(SkLocation $entity) {
-        $form = $this->createForm(new SkLocationType(), $entity, array(
-            'action' => $this->generateUrl('location_admin_create'),
+    private function createCreateForm(SkCountry $entity) {
+        $form = $this->createForm(new SkCountryType(), $entity, array(
+            'action' => $this->generateUrl('country_admin_create'),
             'method' => 'POST',
         ));
 
@@ -69,57 +69,57 @@ class SkLocationController extends Controller {
     }
 
     /**
-     * Displays a form to create a new SkLocation entity.
+     * Displays a form to create a new SkCountry entity.
      *
      */
     public function newAction() {
-        $entity = new SkLocation();
+        $entity = new SkCountry();
         $form = $this->createCreateForm($entity);
 
-        return $this->render('SkaphandrusAppBundle:SkLocation:new.html.twig', array(
+        return $this->render('SkaphandrusAppBundle:SkCountry:new.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
         ));
     }
 
     /**
-     * Finds and displays a SkLocation entity.
+     * Finds and displays a SkCountry entity.
      *
      */
     public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('SkaphandrusAppBundle:SkLocation')->find($id);
+        $entity = $em->getRepository('SkaphandrusAppBundle:SkCountry')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find SkLocation entity.');
+            throw $this->createNotFoundException('Unable to find SkCountry entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('SkaphandrusAppBundle:SkLocation:show.html.twig', array(
+        return $this->render('SkaphandrusAppBundle:SkCountry:show.html.twig', array(
                     'entity' => $entity,
                     'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-     * Displays a form to edit an existing SkLocation entity.
+     * Displays a form to edit an existing SkCountry entity.
      *
      */
     public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('SkaphandrusAppBundle:SkLocation')->find($id);
+        $entity = $em->getRepository('SkaphandrusAppBundle:SkCountry')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find SkLocation entity.');
+            throw $this->createNotFoundException('Unable to find SkCountry entity.');
         }
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('SkaphandrusAppBundle:SkLocation:edit.html.twig', array(
+        return $this->render('SkaphandrusAppBundle:SkCountry:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
@@ -127,15 +127,15 @@ class SkLocationController extends Controller {
     }
 
     /**
-     * Creates a form to edit a SkLocation entity.
+     * Creates a form to edit a SkCountry entity.
      *
-     * @param SkLocation $entity The entity
+     * @param SkCountry $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(SkLocation $entity) {
-        $form = $this->createForm(new SkLocationType(), $entity, array(
-            'action' => $this->generateUrl('location_admin_update', array('id' => $entity->getId())),
+    private function createEditForm(SkCountry $entity) {
+        $form = $this->createForm(new SkCountryType(), $entity, array(
+            'action' => $this->generateUrl('country_admin_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -145,16 +145,16 @@ class SkLocationController extends Controller {
     }
 
     /**
-     * Edits an existing SkLocation entity.
+     * Edits an existing SkCountry entity.
      *
      */
     public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('SkaphandrusAppBundle:SkLocation')->find($id);
+        $entity = $em->getRepository('SkaphandrusAppBundle:SkCountry')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find SkLocation entity.');
+            throw $this->createNotFoundException('Unable to find SkCountry entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -164,11 +164,10 @@ class SkLocationController extends Controller {
         if ($editForm->isValid()) {
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
-            return $this->redirect($this->generateUrl('location_admin_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('country_admin_edit', array('id' => $id)));
         }
 
-        return $this->render('SkaphandrusAppBundle:SkLocation:edit.html.twig', array(
+        return $this->render('SkaphandrusAppBundle:SkCountry:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
@@ -176,7 +175,7 @@ class SkLocationController extends Controller {
     }
 
     /**
-     * Deletes a SkLocation entity.
+     * Deletes a SkCountry entity.
      *
      */
     public function deleteAction(Request $request, $id) {
@@ -185,21 +184,21 @@ class SkLocationController extends Controller {
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('SkaphandrusAppBundle:SkLocation')->find($id);
+            $entity = $em->getRepository('SkaphandrusAppBundle:SkCountry')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find SkLocation entity.');
+                throw $this->createNotFoundException('Unable to find SkCountry entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('location_admin'));
+        return $this->redirect($this->generateUrl('country_admin'));
     }
 
     /**
-     * Creates a form to delete a SkLocation entity by id.
+     * Creates a form to delete a SkCountry entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -207,7 +206,7 @@ class SkLocationController extends Controller {
      */
     private function createDeleteForm($id) {
         return $this->createFormBuilder()
-                        ->setAction($this->generateUrl('location_admin_delete', array('id' => $id)))
+                        ->setAction($this->generateUrl('country_admin_delete', array('id' => $id)))
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'form.common.btn.delete', 'attr' => array('class' => 'btn btn-danger')))
                         ->getForm()

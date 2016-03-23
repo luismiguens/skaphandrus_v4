@@ -128,9 +128,9 @@ class SkLocationRepository extends EntityRepository {
                     AND IDENTITY(r.country) = ' . $this->getEntityManager()->getRepository('SkaphandrusAppBundle:SkCountry')->findBySlug($country, $locale)->getId()
                         )->setParameter('name', $name)->setParameter('locale', $locale);
         try {
-            
-            dump($query->getResult());
-            
+
+//            dump($query->getResult());
+
             return $query->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;

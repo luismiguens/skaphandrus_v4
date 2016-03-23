@@ -16,36 +16,35 @@
 {% endblock %}
 
 {% block heading_title %}
-    {{ "form.location.h1.title"|trans }}
+    {{ "form.region.h1.title"|trans }}
 {% endblock %}
 
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
         <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
-        <li><a href="{{ path('location_admin') }}">{{ "breadcrumb.location"|trans }}</a></li>
-        <li class="active"><strong>{{ "breadcrumb.add_location"|trans }}</strong></li>
+        <li><a href="{{ path('region_admin') }}">{{ "breadcrumb.region"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.add_region"|trans }}</strong></li>
     </ol>
 {% endblock %}
 
 {% block heading_action %}
-    <a href="{{ path('location_admin_new') }}" class="btn btn-primary">{{ "form.location.btn.add"|trans }}</a>
+    <a href="{{ path('region_admin_new') }}" class="btn btn-primary">{{ "form.region.btn.add"|trans }}</a>
 {% endblock %}
 
 {% block form_title_description %}
-    {{ "form.location.text.description"|trans }}
+    {{ "form.region.text.description"|trans }}
 {% endblock %}
 
 
 {% block body %}
-
 
     {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
     {#    {{ form_errors(edit_form) }}#}
 
     {{ form_widget(form) }}
 
-    {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'location_admin', 'new_form':true} %}
+    {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'region_admin', 'new_form':true} %}
     {{ form_end(form) }}
 
 

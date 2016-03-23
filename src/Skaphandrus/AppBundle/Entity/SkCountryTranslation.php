@@ -8,8 +8,7 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 /**
  * SkCountryTranslation
  */
-class SkCountryTranslation
-{
+class SkCountryTranslation {
 
     use ORMBehaviors\Translatable\Translation;
 
@@ -53,7 +52,6 @@ class SkCountryTranslation
      */
     private $otherInformations;
 
-
     /**
      * Set overview
      *
@@ -61,8 +59,7 @@ class SkCountryTranslation
      *
      * @return SkCountryTranslation
      */
-    public function setOverview($overview)
-    {
+    public function setOverview($overview) {
         $this->overview = $overview;
 
         return $this;
@@ -73,8 +70,7 @@ class SkCountryTranslation
      *
      * @return string
      */
-    public function getOverview()
-    {
+    public function getOverview() {
         return $this->overview;
     }
 
@@ -85,8 +81,7 @@ class SkCountryTranslation
      *
      * @return SkCountryTranslation
      */
-    public function setGeographyAndClimate($geographyAndClimate)
-    {
+    public function setGeographyAndClimate($geographyAndClimate) {
         $this->geographyAndClimate = $geographyAndClimate;
 
         return $this;
@@ -97,8 +92,7 @@ class SkCountryTranslation
      *
      * @return string
      */
-    public function getGeographyAndClimate()
-    {
+    public function getGeographyAndClimate() {
         return $this->geographyAndClimate;
     }
 
@@ -109,8 +103,7 @@ class SkCountryTranslation
      *
      * @return SkCountryTranslation
      */
-    public function setEntryRequirements($entryRequirements)
-    {
+    public function setEntryRequirements($entryRequirements) {
         $this->entryRequirements = $entryRequirements;
 
         return $this;
@@ -121,8 +114,7 @@ class SkCountryTranslation
      *
      * @return string
      */
-    public function getEntryRequirements()
-    {
+    public function getEntryRequirements() {
         return $this->entryRequirements;
     }
 
@@ -133,8 +125,7 @@ class SkCountryTranslation
      *
      * @return SkCountryTranslation
      */
-    public function setHealthAndSafety($healthAndSafety)
-    {
+    public function setHealthAndSafety($healthAndSafety) {
         $this->healthAndSafety = $healthAndSafety;
 
         return $this;
@@ -145,8 +136,7 @@ class SkCountryTranslation
      *
      * @return string
      */
-    public function getHealthAndSafety()
-    {
+    public function getHealthAndSafety() {
         return $this->healthAndSafety;
     }
 
@@ -157,8 +147,7 @@ class SkCountryTranslation
      *
      * @return SkCountryTranslation
      */
-    public function setTimeZone($timeZone)
-    {
+    public function setTimeZone($timeZone) {
         $this->timeZone = $timeZone;
 
         return $this;
@@ -169,8 +158,7 @@ class SkCountryTranslation
      *
      * @return string
      */
-    public function getTimeZone()
-    {
+    public function getTimeZone() {
         return $this->timeZone;
     }
 
@@ -181,8 +169,7 @@ class SkCountryTranslation
      *
      * @return SkCountryTranslation
      */
-    public function setCommunications($communications)
-    {
+    public function setCommunications($communications) {
         $this->communications = $communications;
 
         return $this;
@@ -193,8 +180,7 @@ class SkCountryTranslation
      *
      * @return string
      */
-    public function getCommunications()
-    {
+    public function getCommunications() {
         return $this->communications;
     }
 
@@ -205,8 +191,7 @@ class SkCountryTranslation
      *
      * @return SkCountryTranslation
      */
-    public function setPowerAndElectricity($powerAndElectricity)
-    {
+    public function setPowerAndElectricity($powerAndElectricity) {
         $this->powerAndElectricity = $powerAndElectricity;
 
         return $this;
@@ -217,8 +202,7 @@ class SkCountryTranslation
      *
      * @return string
      */
-    public function getPowerAndElectricity()
-    {
+    public function getPowerAndElectricity() {
         return $this->powerAndElectricity;
     }
 
@@ -229,8 +213,7 @@ class SkCountryTranslation
      *
      * @return SkCountryTranslation
      */
-    public function setOtherInformations($otherInformations)
-    {
+    public function setOtherInformations($otherInformations) {
         $this->otherInformations = $otherInformations;
 
         return $this;
@@ -241,8 +224,8 @@ class SkCountryTranslation
      *
      * @return string
      */
-    public function getOtherInformations()
-    {
+    public function getOtherInformations() {
         return $this->otherInformations;
     }
+
 }

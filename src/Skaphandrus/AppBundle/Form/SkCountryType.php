@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SkLocationType extends AbstractType {
+class SkCountryType extends AbstractType {
 
     /**
      * @param FormBuilderInterface $builder
@@ -14,61 +14,67 @@ class SkLocationType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-//            ->add('createdAt')
-//            ->add('updatedAt')
-                ->add('region', 'entity', array(
-                    'class' => 'SkaphandrusAppBundle:SkRegion',
-                    'query_builder' => function (\Skaphandrus\AppBundle\Entity\Repository\SkRegionRepository $er) {
-                        return $er->createQueryBuilder('r')->orderBy('r.country', 'ASC');
-                    },
+                ->add('name', null, array(
                     'attr' => array('class' => 'form-control'),
-                    'label' => 'form.location.label.region'
+                    'label' => 'form.country.label.name',
+                    'required' => true,
+                ))
+                ->add('fipsCode', null, array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.country.label.fipsCode'
+                ))
+                ->add('continent', null, array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'form.country.label.continent',
+                    'required' => true
                 ))
                 ->add('translations', 'a2lix_translations', array(
                     'fields' => array(
-                        'name' => array(
-                            'field_type' => 'text',
-                            'label' => 'form.location.label.name',
-                            'attr' => array('class' => 'form-control'),
-                        ),
-                        'description' => array(
+                        'overview' => array(
                             'field_type' => 'textarea',
-                            'label' => 'form.location.label.description',
-                            'attr' => array('class' => 'form-control', 'rows' => '8'),
-                        ),
-                        'waterTemp' => array(
-                            'field_type' => 'textarea',
-                            'label' => 'form.location.label.waterTemp',
+                            'label' => 'form.country.label.overview',
                             'attr' => array('class' => 'form-control', 'rows' => '8'),
                             'required' => false
                         ),
-                        'suit' => array(
+                        'geographyAndClimate' => array(
                             'field_type' => 'textarea',
-                            'label' => 'form.location.label.suit',
+                            'label' => 'form.country.label.geographyAndClimate',
                             'attr' => array('class' => 'form-control', 'rows' => '8'),
                             'required' => false
                         ),
-                        'visibility' => array(
+                        'entryRequirements' => array(
                             'field_type' => 'textarea',
-                            'label' => 'form.location.label.visibility',
+                            'label' => 'form.country.label.entryRequirements',
                             'attr' => array('class' => 'form-control', 'rows' => '8'),
                             'required' => false
                         ),
-                        'climate' => array(
+                        'healthAndSafety' => array(
                             'field_type' => 'textarea',
-                            'label' => 'form.location.label.climate',
+                            'label' => 'form.country.label.healthAndSafety',
                             'attr' => array('class' => 'form-control', 'rows' => '8'),
                             'required' => false
                         ),
-                        'howToGo' => array(
+                        'timeZone' => array(
                             'field_type' => 'textarea',
-                            'label' => 'form.location.label.howToGo',
+                            'label' => 'form.country.label.timeZone',
                             'attr' => array('class' => 'form-control', 'rows' => '8'),
                             'required' => false
                         ),
-                        'extraDive' => array(
+                        'communications' => array(
                             'field_type' => 'textarea',
-                            'label' => 'form.location.label.extraDive',
+                            'label' => 'form.country.label.communications',
+                            'attr' => array('class' => 'form-control', 'rows' => '8'),
+                            'required' => false
+                        ),
+                        'powerAndElectricity' => array(
+                            'field_type' => 'textarea',
+                            'label' => 'form.country.label.powerAndElectricity',
+                            'attr' => array('class' => 'form-control', 'rows' => '8'),
+                            'required' => false
+                        ),
+                        'otherInformations' => array(
+                            'field_type' => 'textarea',
+                            'label' => 'form.country.label.otherInformations',
                             'attr' => array('class' => 'form-control', 'rows' => '8'),
                             'required' => false
                         )
@@ -82,7 +88,7 @@ class SkLocationType extends AbstractType {
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'Skaphandrus\AppBundle\Entity\SkLocation'
+            'data_class' => 'Skaphandrus\AppBundle\Entity\SkCountry'
         ));
     }
 
@@ -90,7 +96,7 @@ class SkLocationType extends AbstractType {
      * @return string
      */
     public function getName() {
-        return 'skaphandrus_appbundle_sklocation';
+        return 'skaphandrus_appbundle_skcountry';
     }
 
 }

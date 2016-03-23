@@ -19,7 +19,6 @@ sitemap:
     path:     /sitemap/{model}
     defaults: { _controller: "SkaphandrusAppBundle:Sitemap:sitemap" }
 
-
 email_teste:
     path:     /email/send-test-email
     defaults: { _controller: "SkaphandrusAppBundle:Email:sendTestEmail" }
@@ -155,6 +154,14 @@ skaphandrus_app_spot_admin:
 skaphandrus_app_location_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/sklocation.yml"
     prefix:   /{_locale}/location_admin
+
+skaphandrus_app_region_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skregion.yml"
+    prefix:   /{_locale}/region_admin
+
+skaphandrus_app_country_admin:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skcountry.yml"
+    prefix:   /{_locale}/country_admin
 
 skaphandrus_app_photo_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skphoto.yml"

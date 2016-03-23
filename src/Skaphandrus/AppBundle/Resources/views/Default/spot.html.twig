@@ -273,7 +273,7 @@
                             <meta itemprop="longitude" content="{{coordinate[1]}}" />
                         </span>
                         {% if spot.description is not empty %}
-                            <p itemprop="description">{{ spot.description }}</p>
+                            <p itemprop="description">{{ spot.description|raw }}</p>
                         {% else %}
                             {{ "page.spot.p.no_description"|trans }}
                         {% endif %}
