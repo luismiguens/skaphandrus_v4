@@ -252,28 +252,26 @@ class IdentificationController extends Controller {
 //                    JOIN ( select species_id, image_url, image_src, max(is_primary) from sk_species_image_ref group by species_id ) image_refs on image_refs.species_id = " . $view_name . ".species_id
 //                    ORDER by id asc";
 //            
-            
-                        $sql = "SELECT distinct(" . $view_name . ".species_id) as id, sk_species_scientific_name.name as name, image_refs.image_src as image_url, image_refs.image_src as image_src
+
+            $sql = "SELECT distinct(" . $view_name . ".species_id) as id, sk_species_scientific_name.name as name, image_refs.image_src as image_url, image_refs.image_src as image_src
                     FROM " . $view_name . "               
                     JOIN sk_species_scientific_name on " . $view_name . ".species_id = sk_species_scientific_name.species_id
                     JOIN ( select species_id, image_url, image_src, max(is_primary) from sk_species_image_ref group by species_id ) image_refs on image_refs.species_id = " . $view_name . ".species_id
                     ORDER by id asc";
-            
-            
         }
 
         $statement = $connection->prepare($sql);
         $statement->execute();
         $values = $statement->fetchAll();
-        
-        
-        
-        
-        
+
+
+
+
+
 //        foreach ($values as $key => $value) {
 //            
 //        }
-        
+
 
 
         return new JsonResponse($values);
@@ -285,23 +283,54 @@ class IdentificationController extends Controller {
      */
     public function modulesListJsonAction(Request $request) {
         $results = array();
-
-        $module_id = $request->query->get('module_id');
-        if (!$module_id)
-            $module_id = $request->request->get('module_id');
+        $module_object = new \Skaphandrus\AppBundle\Entity\SkIdentificationModule();
 
         $user_id = $request->query->get('user_id');
         if (!$user_id)
             $user_id = $request->request->get('user_id');
 
+        $app_id = $request->query->get('app_id');
+        if (!$app_id)
+            $app_id = $request->request->get('app_id');
 
-        $module_object = new \Skaphandrus\AppBundle\Entity\SkIdentificationModule();
 
-        // Get all masters
-        $masters = $this->getDoctrine()
-                ->getRepository("SkaphandrusAppBundle:SkIdentificationMaster")
-                ->findBy(array('isActive' => TRUE));
+        //se não tiver app_id é a app OCEAN LIFE ID
+        if (!$app_id)
+            $app_id = 1;
 
+        //ocean life id = Get all masters
+        if ($app_id == 1):
+            $masters = $this->getDoctrine()
+                    ->getRepository("SkaphandrusAppBundle:SkIdentificationMaster")
+                    ->findBy(array('isActive' => TRUE));
+
+        //turtles = master id=2 (reptilia)
+        elseif ($app_id == 2) :
+            $masters = $this->getDoctrine()
+                    ->getRepository("SkaphandrusAppBundle:SkIdentificationMaster")
+                    ->findBy(array('isActive' => TRUE, 'id' => 2));
+
+        //nudibranches = master id=5 (slugs)
+        elseif ($app_id == 3) :
+            $masters = $this->getDoctrine()
+                    ->getRepository("SkaphandrusAppBundle:SkIdentificationMaster")
+                    ->findBy(array('isActive' => TRUE, 'id' => 5));
+
+        //fishes = master id=3 (peixes-osseos)
+        elseif ($app_id == 4) :
+            $masters = $this->getDoctrine()
+                    ->getRepository("SkaphandrusAppBundle:SkIdentificationMaster")
+                    ->findBy(array('isActive' => TRUE, 'id' => 3));
+
+        //sharks and rays = master id=4 (sharks and rays)
+        elseif ($app_id == 5) :
+            $masters = $this->getDoctrine()
+                    ->getRepository("SkaphandrusAppBundle:SkIdentificationMaster")
+                    ->findBy(array('isActive' => TRUE, 'id' => 4));
+
+        endif;
+
+        
         // Iterate over all masters
         foreach ($masters as $master_object) {
             $master = array();
@@ -474,15 +503,15 @@ class IdentificationController extends Controller {
                 $skPhoto = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->find($photo['id']);
                 $image_src = $this->get('liip_imagine.cache.manager')->getBrowserPath($skPhoto->getWebPath(), 'sk_downscale_600_400');
 
-                
+
                 $licence = $skPhoto->getCreative();
-                if ($licence==null):
+                if ($licence == null):
                     $licence = "© All rights reserved";
                 else:
                     $licence = $skPhoto->getCreative()->getName();
                 endif;
-                
-                
+
+
                 $photos[] = array(
                     'id' => $skPhoto->getId(),
                     'image_src' => $image_src,
@@ -496,21 +525,21 @@ class IdentificationController extends Controller {
 
 
             //IMAGENS GOOGLE
-            if (count($sk_photos) < $limit){
-                
+            if (count($sk_photos) < $limit) {
+
                 $i = 1;
                 foreach ($species_obj->getImageRefs() as $imageRef_obj) {
                     if ($imageRef_obj->getIsActive()) {
-                        
-                        
+
+
                         $licence = $imageRef_obj->getLicense();
-                if ($licence=="" || $licence==NULL):
-                    $licence = "Images may be subject to copyright.";
-                else:
-                    $licence = $imageRef_obj->getLicense();
-                endif;
-                        
-                        
+                        if ($licence == "" || $licence == NULL):
+                            $licence = "Images may be subject to copyright.";
+                        else:
+                            $licence = $imageRef_obj->getLicense();
+                        endif;
+
+
                         $photos[] = array(
                             'id' => $imageRef_obj->getId(),
                             'image_src' => $imageRef_obj->getImageSrc(),
@@ -521,7 +550,8 @@ class IdentificationController extends Controller {
                                 //Milton já está a receber photographer
                         );
                     }
-                    if ($i++ == $limit) break;
+                    if ($i++ == $limit)
+                        break;
                 }
             }
             $species['images'] = $photos;
@@ -752,15 +782,8 @@ class IdentificationController extends Controller {
 //            return new JsonResponse($response);
 //        }
 //        
-
-        
-        
-        
         //NOTA IMPORTANTE, A ALTERAR NA RELEASE 2.0.1 
         //A ORDEM DESTA VALIDACAO TEM DE SER TROCADA PARA SE IDENTIFICAR QUANDO O FACEBOOK ID JA EXISTE.
-        
-        
-        
         //verify if email is in use
         $query = $em->createQuery("SELECT u FROM SkaphandrusAppBundle:FosUser u WHERE u.email = :email");
         $query->setParameter('email', $email);
