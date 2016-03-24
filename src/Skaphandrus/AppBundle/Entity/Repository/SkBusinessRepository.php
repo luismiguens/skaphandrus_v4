@@ -14,6 +14,8 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkBusinessRepository extends EntityRepository {
 
+    
+    
 ////////////////////
     public function findDiveCentersInSpot($spot_id) {
 

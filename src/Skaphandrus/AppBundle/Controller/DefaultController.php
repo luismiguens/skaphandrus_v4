@@ -492,6 +492,20 @@ class DefaultController extends Controller {
         ));
     }
 
+    
+    
+    public function business_no_slugAction($id) {
+    
+        $business = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
+                ->find($id);
+        
+        return $this->redirect($this->generateUrl('business', array('country' => Utils::slugify($business->getAddress()->getLocation()->getRegion()->getCountry()),
+            'location'=>  Utils::slugify($business->getAddress()->getLocation()),
+            'slug'=>Utils::slugify($business->getName()))));
+        
+    }
+    
+    
     /*
      * Business Page 
      */
