@@ -8,16 +8,14 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 /**
  * SkRegionTranslation
  */
-class SkRegionTranslation
-{
-    
+class SkRegionTranslation {
+
     use ORMBehaviors\Translatable\Translation;
 
     /**
      * @var string
      */
     private $name;
-
 
     /**
      * Set name
@@ -26,8 +24,7 @@ class SkRegionTranslation
      *
      * @return SkRegionTranslation
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -38,9 +35,8 @@ class SkRegionTranslation
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
-}
 
+}

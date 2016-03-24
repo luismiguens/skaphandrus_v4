@@ -157,17 +157,13 @@ class SkCountry {
         return $this->regions;
     }
 
-    
-    
     public function __toString() {
 
         $locale = $this->translate()->getLocale();
         return $this->getCountryName($locale);
-        
     }
 
-    
-    public function getCountryName($locale){
+    public function getCountryName($locale) {
         $name = Intl::getRegionBundle()->getCountryName($this->name, $locale);
 
         if ($locale == "pt") {
@@ -184,9 +180,9 @@ class SkCountry {
 
         if ($locale == "en") {
             if ($this->name == 'AN') {
-               $name = 'Netherlands Antilles';
+                $name = 'Netherlands Antilles';
             }
-           if ($this->name == 'TL') {
+            if ($this->name == 'TL') {
                 $name = 'East Timor';
             }
             if ($this->name == 'PG') {
@@ -196,10 +192,7 @@ class SkCountry {
 
         return $name ? $name : '';
     }
-    
-    
-    
-    
+
     public function getSpotsCount() {
         return $this->spotsCount;
     }

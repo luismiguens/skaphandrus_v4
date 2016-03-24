@@ -1,20 +1,47 @@
-{% extends 'SkaphandrusAppBundle:SkBooking:_base_booking_template.html.twig' %}
+{% extends 'SkaphandrusAppBundle:Email:_base_email_template.html.twig' %}
 
 {% block title %}
-    TITLE
+    Hi, {{ user }}
 {% endblock %}
 
-{% block intro %}
-    INTRO
-{% endblock %}
+{#{% block intro %}
+    <p align="center">This is our newsletter</p>
+{% endblock %}#}
 
 {% block content %}
-    CONTENT
+    
+    <img style="width: 100%" src="http://skaphandrus.com/uploads/contests/12764732_10153996342237661_8511501663064126800_o.jpg"/>
+
+    <p>The 2016 edition of the BIO Nudis photography competition is on!<p>
+
+    <p>Start sharing your nudibranch photos and win points to use in 
+        our Mobile App(<a href="http://oceanlifeid.com/">Ocean Life ID</a>) or in the Skaphandrus Identification System 
+        (<a href="http://skaphandrus.com/en/ocean-life-identification/Nudibranchs">Ocean Life Identification - Nudibranchs</a>)
+    <p>
+
+    <ol>
+        <li>
+            Log in: <a href="http://skaphandrus.com/en/login">Login</a>
+        </li>
+        <li>
+            Upload your nudibranch photos: <a href="http://skaphandrus.com/en/photo_admin/new">Add Photo</a>
+        </li>
+        <li>
+            Submit your photos in the contest: <a href="http://skaphandrus.com/en/underwater-photo-contest/participate/3">Participate</a>
+        </li>
+        <li>
+            Share your photos so you have more chances of getting votes from the public.
+        </li>
+    </ol>
+
+    <p>Submissions end on April 30st 2016!</p>
+    <p>Rules, prizes and more info: <a href="http://skaphandrus.com/en/underwater-photo-contest/BIO-Nudis-2016">BIO Nudis 2016 Photo Contest</a></p>
+
 {% endblock %}
 
-{% block action %}
+{#{% block action %}
     <a href="https://skaphandrus.com" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; width: 100%; box-sizing: border-box; font-size: 14px; color: #FFF; text-decoration: none; line-height: 2; font-weight: bold; text-align: center; cursor: pointer; display: inline-block; border-radius: 5px; text-transform: capitalize; background-color: #1ab394; margin: 0; padding: 0; border-color: #1ab394; border-style: solid; border-width: 5px 10px;">
         Skaphandrus.com
     </a>
-{% endblock %}
+{% endblock %}#}
 

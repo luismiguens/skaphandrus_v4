@@ -26,85 +26,68 @@ class EmailController extends Controller {
 
         $this->get('mailer')->send($message);
 
-        try {
-            return $this->render('SkaphandrusAppBundle:Email:emailSend.html.twig', array(
-                        'email_string' => $email,
-            ));
-        } catch (\Exception $ex) {
-            echo $ex->getTraceAsString();
-        }
+        return $this->render('SkaphandrusAppBundle:Email:sendEmail.html.twig', array(
+                    'sendAddress' => $email,
+        ));
     }
 
-    public function sendAllEmailsAction($subject = "NewsLetter") {
+    public function sendAllEmailsAction(Request $request, $subject = "Skaphandrus - BIO Nudis 2016 Photo Contest") {
 
         //criar um ciclo for para todos os utilizadores que tenham  sk_settings.email_update=1
-        $users = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-                ->getUserToSendEmailTest();
+        //apresentar na view para onde enviou
+        $param = $request->query->get('param');
         
-        
-        
-        
-        
-        
+        $addresses = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
+                ->getUserToSendEmail($param);
 
-        $addresses = array();
+//        $addresses = array("rubensardinha1992@gmail.com", "macacim@hotmail.com", "test@", "rubensardinha@hotmail.com");
+        $sendAddress = array();
 
-        foreach ($users as $user) {
-            if ($user->getEmail()) {
-                $addresses[] = $user->getEmail();
+        foreach ($addresses as $address) {
+
+            if (filter_var($address->getEmail(), FILTER_VALIDATE_EMAIL)) {
+
+                $message = \Swift_Message::newInstance()
+                        ->setSubject($subject)
+                        ->setFrom('support-noreply@skaphandrus.com', 'Skaphandrus')
+                        ->setTo($address->getEmail())
+                        ->setBcc('luis.t.miguens@gmail.com')
+                        ->setBody($this->renderView('SkaphandrusAppBundle:Email:content_email.html.twig', array(
+                            'user' => $address->getName()
+                        )), 'text/html');
+
+                $this->get('mailer')->send($message);
+                $sendAddress[] = $address . " -> " . $address->getEmail();
             }
         }
 
-        $message = \Swift_Message::newInstance()
-                ->setSubject($subject)
-                ->setFrom('support-noreply@skaphandrus.com', 'Skaphandrus')
-                ->setTo($addresses)
-                ->setBcc('luis.miguens@skaphandrus.com')
-                ->setBody($this->renderView('SkaphandrusAppBundle:Email:content_email.html.twig'), 'text/html')
-//                ->setBody($this->renderView('SkaphandrusAppBundle:Email:email.html.twig', array('email' => teste)), 'text/html')
-        /*
-         * If you also want to include a plaintext version of the message
-          ->addPart(
-          $this->renderView(
-          'Emails/registration.txt.twig',
-          array('name' => $name)
-          ),
-          'text/plain'
-          )
-         */
-        ;
-
-        //apresentar na view para onde enviou
-        $this->get('mailer')->send($message);
-
-
-        try {
-            return $this->render('SkaphandrusAppBundle:Email:emailSend.html.twig', array(
-                        'email_string' => implode(',', $addresses),
-            ));
-        } catch (\Exception $ex) {
-            echo $ex->getTraceAsString();
-        }
+        return $this->render('SkaphandrusAppBundle:Email:sendEmail.html.twig', array(
+                    'sendAddress' => implode(', ', $sendAddress),
+        ));
     }
 
 //    public function sendAllEmailsAction($subject = "NewsLetter") {
 //
 //        //criar um ciclo for para todos os utilizadores que tenham  sk_settings.email_update=1
-//        $users = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-//                ->getUserToSendEmail();
+//        //apresentar na view para onde enviou
+////        $users = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
+////                ->getUserToSendEmailTest();
+////        $addresses = array();
 //
-//        $addresses = array();
+//        $addresses = array("rubensardinha@hotmail.com", "teste@gmail", "teste@", "teste@@gmail.com", "rubensardinha1992@gmail.com", "macacim@hotmail.com");
 //
-//        foreach ($users as $user) {
-//            $addresses[] = $user->getEmail();
-//        }
+////        foreach ($users as $user) {
+////            if ($user->getEmail()) {
+////                $addresses[] = $user->getEmail();
+////            }
+////        }
 //
 //        $message = \Swift_Message::newInstance()
 //                ->setSubject($subject)
 //                ->setFrom('support-noreply@skaphandrus.com', 'Skaphandrus')
 //                ->setTo($addresses)
-//                ->setBcc('luis.miguens@skaphandrus.com')
-//                ->setBody($this->renderView('SkaphandrusAppBundle:Email:email.html.twig'), 'text/html')
+//                ->setBcc('rubensardinha@hotmail.com')
+//                ->setBody($this->renderView('SkaphandrusAppBundle:Email:content_email.html.twig'), 'text/html')
 ////                ->setBody($this->renderView('SkaphandrusAppBundle:Email:email.html.twig', array('email' => teste)), 'text/html')
 //        /*
 //         * If you also want to include a plaintext version of the message
@@ -118,12 +101,11 @@ class EmailController extends Controller {
 //         */
 //        ;
 //
-//        //apresentar na view para onde enviou
 //        $this->get('mailer')->send($message);
 //
 //        try {
 //            return $this->render('SkaphandrusAppBundle:Email:emailSend.html.twig', array(
-//                        'addresses' => $addresses,
+//                        'email_string' => implode(',', $addresses),
 //            ));
 //        } catch (\Exception $ex) {
 //            echo $ex->getTraceAsString();

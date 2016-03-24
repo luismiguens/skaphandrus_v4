@@ -316,27 +316,27 @@
                             <div class="span4 collapse-group">
                                 {% if location.waterTemp is not empty %}
                                     <h5 class="collapse">{{ "page.location.h5.water_temp"|trans }}</h5>
-                                    <p class="collapse">{{ location.waterTemp }}</p>
+                                    <p class="collapse">{{ location.waterTemp|raw }}</p>
                                 {% endif %}
 
                                 {% if location.suit is not empty %}
                                     <h5 class="collapse">{{ "page.location.h5.suit"|trans }}</h5>
-                                    <p class="collapse">{{ location.suit }}</p>
+                                    <p class="collapse">{{ location.suit|raw }}</p>
                                 {% endif %}
 
                                 {% if location.visibility is not empty %}
                                     <h5 class="collapse">{{ "page.location.h5.visibility"|trans }}</h5>
-                                    <p class="collapse">{{ location.visibility }}</p>
+                                    <p class="collapse">{{ location.visibility|raw }}</p>
                                 {% endif %}
 
                                 {% if location.climate is not empty %}
                                     <h5 class="collapse">{{ "page.location.h5.climate"|trans }}</h5>
-                                    <p class="collapse">{{ location.climate }}</p>
+                                    <p class="collapse">{{ location.climate|raw }}</p>
                                 {% endif %}
 
                                 {% if location.howToGo is not empty %}
                                     <h5 class="collapse">{{ "page.location.h5.how_to_go"|trans }}</h5>
-                                    <p class="collapse">{{ location.howToGo }}</p>
+                                    <p class="collapse">{{ location.howToGo|raw }}</p>
                                 {% endif %}
 
                                 {% if location.extraDive is not empty %}

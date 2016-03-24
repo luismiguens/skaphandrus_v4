@@ -294,37 +294,37 @@
                             <div class="span4 collapse-group">
                                 {% if country.translate(app.request.locale).geographyAndClimate is not empty %}
                                     <h5 class="collapse">{{ "page.country.h5.geography_and_climate"|trans }}</h5>
-                                    <p class="collapse">{{ country.translate(app.request.locale).geographyAndClimate }}</p>
+                                    <p class="collapse">{{ country.translate(app.request.locale).geographyAndClimate|raw }}</p>
                                 {% endif %}
 
                                 {% if country.translate(app.request.locale).entryRequirements is not empty %}
                                     <h5 class="collapse">{{ "page.country.h5.entry_requirements"|trans }}</h5>
-                                    <p class="collapse">{{ country.translate(app.request.locale).entryRequirements }}</p>
+                                    <p class="collapse">{{ country.translate(app.request.locale).entryRequirements|raw }}</p>
                                 {% endif %}
 
                                 {% if country.translate(app.request.locale).healthAndSafety is not empty %}
                                     <h5 class="collapse">{{ "page.country.h5.health_and_safety"|trans }}</h5>
-                                    <p class="collapse">{{ country.translate(app.request.locale).healthAndSafety }}</p>
+                                    <p class="collapse">{{ country.translate(app.request.locale).healthAndSafety|raw }}</p>
                                 {% endif %}
 
                                 {% if country.translate(app.request.locale).timeZone is not empty %}
                                     <h5 class="collapse">{{ "page.country.h5.time_zone"|trans }}</h5>
-                                    <p class="collapse">{{ country.translate(app.request.locale).timeZone }}</p>
+                                    <p class="collapse">{{ country.translate(app.request.locale).timeZone|raw }}</p>
                                 {% endif %}
 
                                 {% if country.translate(app.request.locale).communications is not empty %}
                                     <h5 class="collapse">{{ "page.country.h5.communications"|trans }}</h5>
-                                    <p class="collapse">{{ country.translate(app.request.locale).communications }}</p>
+                                    <p class="collapse">{{ country.translate(app.request.locale).communications|raw }}</p>
                                 {% endif %}
 
                                 {% if country.translate(app.request.locale).powerAndElectricity is not empty %}
                                     <h5 class="collapse">{{ "page.country.h5.power_and_electricity"|trans }}</h5>
-                                    <p class="collapse">{{ country.translate(app.request.locale).powerAndElectricity }}</p>
+                                    <p class="collapse">{{ country.translate(app.request.locale).powerAndElectricity|raw }}</p>
                                 {% endif %}
 
                                 {% if country.translate(app.request.locale).otherInformations is not empty %}
                                     <h5 class="collapse">{{ "page.country.h5.other_informations"|trans }}</h5>
-                                    <p class="collapse">{{ country.translate(app.request.locale).otherInformations }}</p>
+                                    <p class="collapse">{{ country.translate(app.request.locale).otherInformations|raw }}</p>
                                 {% endif %}
 
                                 <a style="margin: 2% 0% 0% 25%; width: 50%; " class="btn btn-block btn-outline btn-primary showdetails" data-toggle="collapse" data-target="#viewdetails"></a>
