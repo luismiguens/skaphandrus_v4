@@ -194,10 +194,8 @@ class IdentificationController extends Controller {
      */
     public function speciesListJsonAction(Request $request) {
 
-
         $em = $this->getDoctrine()->getManager();
         $connection = $em->getConnection();
-
 
         $character_ids = $request->query->get('characters');
         if (!$character_ids)
@@ -212,14 +210,11 @@ class IdentificationController extends Controller {
 
         //especies com base nos characteres já selecionados
         if ($character_ids) {
-
-
             foreach ($character_ids as $key => $character_id) {
 
                 $character_obj = $this->getDoctrine()
                         ->getRepository("SkaphandrusAppBundle:SkIdentificationCharacter")
                         ->findOneById($character_id);
-
 
                 $characters[$character_obj->getCriteria()->getId()][] = $character_obj->getId();
             }
@@ -252,7 +247,7 @@ class IdentificationController extends Controller {
 //                    ORDER by id asc";
 //            
 
-            $sql = "SELECT distinct(" . $view_name . ".species_id) as id, sk_species_scientific_name.name as name, image_refs.image_src as image_url, image_refs.image_src as image_src
+            $sql = "SELECT distinct(" . $view_name . ".species_id) as id, sk_species_scientific_name.name as name
                     FROM " . $view_name . "               
                     JOIN sk_species_scientific_name on " . $view_name . ".species_id = sk_species_scientific_name.species_id
                     ORDER by id asc";
@@ -262,17 +257,77 @@ class IdentificationController extends Controller {
         $statement->execute();
         $values = $statement->fetchAll();
 
+        $speciesJson = array();
 
 
+        foreach ($values as $sp) {
+            $species = array();
+            $species['id'] = $sp['id'];
+            $species['name'] = $sp['name'];
+            $species['image_url'] = "";
+
+            $species_obj = $em->getRepository("SkaphandrusAppBundle:SkSpecies")->find($sp['id']);
+
+            
+            //dump($species_obj);
+            
+            //ILUSTRACOES CIENTIFICAS (ir buscar ilustração)
+            foreach ($species_obj->getIllustrations() as $key => $illustration) {
+                
+                //echo "<br/> entrou com : " . $illustration->getImage();
+                //$image_src = url_for2('sf_image_file', array('format' => 'default', 'filepath' => 'ilustrations/' . $illustration->getImage()), true);
+                //$image_src = $this->generateUrl('sf_image_file', array('format' => 'default', 'filepath' => 'ilustrations/' . $illustration->getImage()), true);
+                //http://skaphandrus.com/uploads/ilustrations/f4301bfcb9c7a2e353139a5f00025a41c506564f.jpg
+                
+                $image_src = "http://skaphandrus.com/uploads/ilustrations/".$illustration->getImage();
+                
+                $species['image_src'] = $image_src;
+                $species['image_url'] = $image_src;
+                $species['image_type'] = "skaphandrus";
+                $species['is_illustration'] = "true";
+                $species['photographer'] = 'skaphandrus.com';
+                $species['license'] = "© All rights reserved";
+            }
 
 
-//        foreach ($values as $key => $value) {
-//            
-//        }
+            //FOTOGRAFIAS (se não existirem ilustrações)
+            if (count($species_obj->getIllustrations())<1 ):
+                $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
+                        ->getPhotosForIdentification($sp['id'], $module_id, 1);
+
+                //se existirem fotografias SKAPHANDRUS ou GOOGLE
+                if (count($photos) > 0):
+
+                    //fotografias SKAPHANDRUS
+                    if ($photos[0]['image_type'] == "skaphandrus"):
+                        $skPhoto = $this->getDoctrine()
+                                ->getRepository("SkaphandrusAppBundle:SkPhoto")
+                                ->findOneById($photos[0]['id']);
+                        $species['image_src'] = $this->get('liip_imagine.cache.manager')->getBrowserPath($skPhoto->getWebPath(), 'sk_downscale_600_400');
+                        $species['image_url'] = $this->get('liip_imagine.cache.manager')->getBrowserPath($skPhoto->getWebPath(), 'sk_downscale_600_400');
+                    
+                    //fotografias GOOGLE
+                    elseif ($photos[0]['image_type'] == "google"):
+                        $species['image_src'] = $photos[0]['image_src'];
+                        $species['image_url'] = $photos[0]['image_src'];
+                    endif;
+
+                //se não existirem fotografias utiliza a ILUSTRACAO DO MODULO
+                else:
+                    $module_obj = $this->getDoctrine()
+                            ->getRepository("SkaphandrusAppBundle:SkIdentificationModule")
+                            ->findOneById($module_id);
+                    $species['image_src'] = $this->get('liip_imagine.cache.manager')->getBrowserPath($module_obj->getWebPath(), 'sk_downscale_600_400');
+                    $species['image_url'] = $this->get('liip_imagine.cache.manager')->getBrowserPath($module_obj->getWebPath(), 'sk_downscale_600_400');
+                endif;
+
+            endif;
+
+            $speciesJson[] = $species;
+        }
 
 
-
-        return new JsonResponse($values);
+        return new JsonResponse($speciesJson);
     }
 
     /**
@@ -328,7 +383,7 @@ class IdentificationController extends Controller {
 
         endif;
 
-        
+
         // Iterate over all masters
         foreach ($masters as $master_object) {
             $master = array();
@@ -481,15 +536,7 @@ class IdentificationController extends Controller {
             //FOTOGRAFIAS
             $photos = array();
 
-            //ILUSTRACOES CIENTIFICAS
-            // foreach ($skEspecie->getskEspecieIlustracaos() as $key => $skEspecieIlustracao) {
-            //     $fotografia = array();
-            //     $fotografia['id'] = $skEspecieIlustracao->getId();
-            //     $image_src = url_for2('sf_image_file', array('format' => 'default', 'filepath' => 'ilustrations/' . $skEspecieIlustracao->getImagem()), true);
-            //     $fotografia['image_src'] = $image_src;
-            //     $fotografia['is_illustration'] = "true";
-            //     $fotografias[] = $fotografia;
-            // }
+
 
             $limit = 3;
 
