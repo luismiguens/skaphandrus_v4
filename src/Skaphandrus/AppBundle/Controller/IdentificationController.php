@@ -287,8 +287,10 @@ class IdentificationController extends Controller {
                             ->getRepository("SkaphandrusAppBundle:SkPhoto")
                             ->findOneById($photos[0]['id']);
                     $species['image_src'] = $this->get('liip_imagine.cache.manager')->getBrowserPath($skPhoto->getWebPath(), 'sk_downscale_600_400');
+                    $species['image_url'] = $this->get('liip_imagine.cache.manager')->getBrowserPath($skPhoto->getWebPath(), 'sk_downscale_600_400');
                 elseif ($photos[0]['image_type'] == "google"):
                     $species['image_src'] = $photos[0]['image_src'];
+                    $species['image_url'] = $photos[0]['image_url'];
                 endif;
             //se não tiver fotografias utiliza a ilustração do modulo
             else:
@@ -296,6 +298,7 @@ class IdentificationController extends Controller {
                         ->getRepository("SkaphandrusAppBundle:SkIdentificationModule")
                         ->findOneById($module_id);
                 $species['image_src'] = $this->get('liip_imagine.cache.manager')->getBrowserPath($module_obj->getWebPath(), 'sk_downscale_600_400');
+                $species['image_url'] = $this->get('liip_imagine.cache.manager')->getBrowserPath($module_obj->getWebPath(), 'sk_downscale_600_400');
             endif;
 
 
