@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse as JsonResponse;
 
-class IdentificationController extends Controller {
+class IdentificationController_1 extends Controller {
 
     /**
      * 
