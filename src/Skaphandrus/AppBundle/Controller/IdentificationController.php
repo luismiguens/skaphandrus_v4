@@ -235,10 +235,9 @@ class IdentificationController extends Controller {
 //                    WHERE " . $view_name . ".species_id in (" . implode(", ", $pks) . ")
 //                    ORDER by id asc";
 
-            $sql = "SELECT distinct(" . $view_name . ".species_id) as id, sk_species_scientific_name.name as name, image_refs.image_src as image_url, image_refs.image_src as image_src
+            $sql = "SELECT distinct(" . $view_name . ".species_id) as id, sk_species_scientific_name.name as name
                     FROM " . $view_name . "               
                     JOIN sk_species_scientific_name on " . $view_name . ".species_id = sk_species_scientific_name.species_id
-                    JOIN ( select species_id, image_url, image_src, max(is_primary) from sk_species_image_ref group by species_id ) image_refs on image_refs.species_id = " . $view_name . ".species_id
                     WHERE " . $view_name . ".species_id in (" . implode(", ", $pks) . ")
                     ORDER by id asc";
 
@@ -253,10 +252,9 @@ class IdentificationController extends Controller {
 //                    ORDER by id asc";
 //            
 
-            $sql = "SELECT distinct(" . $view_name . ".species_id) as id, sk_species_scientific_name.name as name, image_refs.image_src as image_url, image_refs.image_src as image_src
+            $sql = "SELECT distinct(" . $view_name . ".species_id) as id, sk_species_scientific_name.name as name
                     FROM " . $view_name . "               
                     JOIN sk_species_scientific_name on " . $view_name . ".species_id = sk_species_scientific_name.species_id
-                    JOIN ( select species_id, image_url, image_src, max(is_primary) from sk_species_image_ref group by species_id ) image_refs on image_refs.species_id = " . $view_name . ".species_id
                     ORDER by id asc";
         }
 
@@ -265,16 +263,48 @@ class IdentificationController extends Controller {
         $values = $statement->fetchAll();
 
 
+        $speciesList = array();
+
+
+        foreach ($values as $sp) {
+            $species = array();
+            $species['id'] = $sp['id'];
+            $species['name'] = $sp['name'];
+            $species['image_url'] = "";
+
+
+            $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
+                    ->getPhotosForIdentification($sp['id'], $module_id, 1);
+
+//            dump($photos);
+
+
+            //se tiver fotografias skaphandrus ou google
+            if (count($photos) > 0):
+
+                if ($photos[0]['image_type'] == "skaphandrus"):
+                    $skPhoto = $this->getDoctrine()
+                            ->getRepository("SkaphandrusAppBundle:SkPhoto")
+                            ->findOneById($photos[0]['id']);
+                    $species['image_src'] = $this->get('liip_imagine.cache.manager')->getBrowserPath($skPhoto->getWebPath(), 'sk_downscale_600_400');
+                elseif ($photos[0]['image_type'] == "google"):
+                    $species['image_src'] = $photos[0]['image_src'];
+                endif;
+            //se não tiver fotografias utiliza a ilustração do modulo
+            else:
+                $module_obj = $this->getDoctrine()
+                        ->getRepository("SkaphandrusAppBundle:SkIdentificationModule")
+                        ->findOneById($module_id);
+                $species['image_src'] = $this->get('liip_imagine.cache.manager')->getBrowserPath($module_obj->getWebPath(), 'sk_downscale_600_400');
+            endif;
+
+
+            $speciesList[] = $species;
+        }
 
 
 
-//        foreach ($values as $key => $value) {
-//            
-//        }
-
-
-
-        return new JsonResponse($values);
+        return new JsonResponse($speciesList);
     }
 
     /**
@@ -330,7 +360,7 @@ class IdentificationController extends Controller {
 
         endif;
 
-        
+
         // Iterate over all masters
         foreach ($masters as $master_object) {
             $master = array();
