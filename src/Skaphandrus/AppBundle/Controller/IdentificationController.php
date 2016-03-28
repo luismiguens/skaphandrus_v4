@@ -290,7 +290,7 @@ class IdentificationController extends Controller {
                     $species['image_url'] = $this->get('liip_imagine.cache.manager')->getBrowserPath($skPhoto->getWebPath(), 'sk_downscale_600_400');
                 elseif ($photos[0]['image_type'] == "google"):
                     $species['image_src'] = $photos[0]['image_src'];
-                    $species['image_url'] = $photos[0]['image_url'];
+                    $species['image_url'] = $photos[0]['image_src'];
                 endif;
             //se não tiver fotografias utiliza a ilustração do modulo
             else:
