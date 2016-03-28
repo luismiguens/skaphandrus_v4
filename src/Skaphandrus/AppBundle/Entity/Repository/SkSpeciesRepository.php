@@ -842,9 +842,14 @@ class SkSpeciesRepository extends EntityRepository {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
         $photos = array();
+       
+        
+        
+        if (count($photos) < $limit) {
+            $i = 1;
 
-        //IMAGENS SKAPHANDRUS (prioridade as que têm maior rating)
-        $sql = "SELECT sk_photo.id as id, best_rate.rating as rating FROM sk_photo
+            //IMAGENS SKAPHANDRUS (prioridade as que têm maior rating)
+            $sql = "SELECT sk_photo.id as id, best_rate.rating as rating FROM sk_photo
                 LEFT JOIN ( 
                         SELECT id, photo_id, species_id, max(rating) as rating
                         FROM sk_photo_species_validation GROUP BY photo_id
@@ -853,30 +858,32 @@ class SkSpeciesRepository extends EntityRepository {
                 WHERE sk_photo.species_id = " . $species_id . "
                 order by best_rate.rating desc lIMIT " . $limit;
 
-        $statement = $connection->prepare($sql);
-        $statement->execute();
-        $values = $statement->fetchAll();
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $values = $statement->fetchAll();
 
-        foreach ($values as $photo) {
-            $skPhoto = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($photo['id']);
-            
-            $licence = $skPhoto->getCreative();
-            if ($licence == null):
-                $licence = "© All rights reserved";
-            else:
-                $licence = $skPhoto->getCreative()->getName();
-            endif;
+            foreach ($values as $photo) {
+                $skPhoto = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($photo['id']);
 
-            $photos[] = array(
-                'id' => $skPhoto->getId(),
-                'image_src' => "",
-                'image_type' => "skaphandrus",
-                'photographer' => $skPhoto->getFosUser()->getName(),
-                'license' => $licence
-            );
+                $licence = $skPhoto->getCreative();
+                if ($licence == null):
+                    $licence = "© All rights reserved";
+                else:
+                    $licence = $skPhoto->getCreative()->getName();
+                endif;
+
+                $photos[] = array(
+                    'id' => $skPhoto->getId(),
+                    'image_src' => "",
+                    'image_type' => "skaphandrus",
+                    'photographer' => $skPhoto->getFosUser()->getName(),
+                    'license' => $licence
+                );
+
+                if ($i++ >= $limit)
+                    break;
+            }
         }
-
-
 
 
         //IMAGENS GOOGLE (se o numero de fotografias no skaphandrus for inferior ao limite)
@@ -905,10 +912,18 @@ class SkSpeciesRepository extends EntityRepository {
                             //Milton já está a receber photographer
                     );
                 }
-                if ($i++ == $limit)
+                if ($i++ >= $limit)
                     break;
             }
         }
+
+
+
+
+
+
+
+
 
         //ILUSTRAÇÃO DEFAULT DO MODULO (caso não existam imagens em nenhum dos formatos anteriores)
 //        if (count($photos) < 1) {

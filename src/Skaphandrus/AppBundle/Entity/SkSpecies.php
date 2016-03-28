@@ -46,6 +46,11 @@ class SkSpecies {
      * @var \Doctrine\Common\Collections\Collection
      */
     private $photos;
+    
+        /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $illustrations;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -254,7 +259,7 @@ class SkSpecies {
      *
      * @return SkSpecies
      */
-    public function addPhoto(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photo) {
+    public function addPhoto(\Skaphandrus\AppBundle\Entity\SkPhoto $photo) {
         $this->photos[] = $photo;
 
         return $this;
@@ -265,7 +270,7 @@ class SkSpecies {
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photo
      */
-    public function removePhoto(\Skaphandrus\AppBundle\Entity\SkPhotoSpeciesValidation $photo) {
+    public function removePhoto(\Skaphandrus\AppBundle\Entity\SkPhoto $photo) {
         $this->photos->removeElement($photo);
     }
 
@@ -282,6 +287,63 @@ class SkSpecies {
         return $this->photos = $photos;
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    /**
+     * Add illustration
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkIllustrationSpecies $illustration
+     *
+     * @return SkSpecies
+     */
+    public function addIllustration(\Skaphandrus\AppBundle\Entity\SkSpeciesIllustration $illustration) {
+        $this->illustrations[] = $illustration;
+
+        return $this;
+    }
+
+    /**
+     * Remove illustration
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkIllustrationSpecies $illustration
+     */
+    public function removeIllustration(\Skaphandrus\AppBundle\Entity\SkSpeciesIllustration $illustration) {
+        $this->illustrations->removeElement($illustration);
+    }
+
+    /**
+     * Get illustrations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIllustrations() {
+        return $this->illustrations;
+    }
+
+    public function setIllustrations($illustrations) {
+        return $this->illustrations = $illustrations;
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * Add scientificName
      *
