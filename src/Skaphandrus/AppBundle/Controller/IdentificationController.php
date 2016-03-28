@@ -228,34 +228,34 @@ class IdentificationController extends Controller {
                     ->getRepository("SkaphandrusAppBundle:SkSpecies")
                     ->getSpeciesIDSFromCharacterIDS($characters, $module_id);
 
-//            $sql = "SELECT distinct(" . $view_name . ".species_id) as id, sk_species_scientific_name.name as name, image_refs.image_src as image_url, image_refs.image_src as image_src
-//                    FROM " . $view_name . "               
-//                    JOIN sk_species_scientific_name on " . $view_name . ".species_id = sk_species_scientific_name.species_id
-//                    JOIN ( select species_id, image_url, image_src, max(is_primary) from sk_species_image_ref group by species_id ) image_refs on image_refs.species_id = " . $view_name . ".species_id
-//                    WHERE " . $view_name . ".species_id in (" . implode(", ", $pks) . ")
-//                    ORDER by id asc";
-
-            $sql = "SELECT distinct(" . $view_name . ".species_id) as id, sk_species_scientific_name.name as name
+            $sql = "SELECT distinct(" . $view_name . ".species_id) as id, sk_species_scientific_name.name as name, image_refs.image_src as image_url, image_refs.image_src as image_src
                     FROM " . $view_name . "               
                     JOIN sk_species_scientific_name on " . $view_name . ".species_id = sk_species_scientific_name.species_id
+                    JOIN ( select species_id, image_url, image_src, max(is_primary) from sk_species_image_ref group by species_id ) image_refs on image_refs.species_id = " . $view_name . ".species_id
                     WHERE " . $view_name . ".species_id in (" . implode(", ", $pks) . ")
                     ORDER by id asc";
+
+//            $sql = "SELECT distinct(" . $view_name . ".species_id) as id, sk_species_scientific_name.name as name
+//                    FROM " . $view_name . "               
+//                    JOIN sk_species_scientific_name on " . $view_name . ".species_id = sk_species_scientific_name.species_id
+//                    WHERE " . $view_name . ".species_id in (" . implode(", ", $pks) . ")
+//                    ORDER by id asc";
 
 
 
             //especies com base no modulo selecionado
         } else {
-//            $sql = "SELECT distinct(" . $view_name . ".species_id) as id, sk_species_scientific_name.name as name, image_refs.image_src as image_url, image_refs.image_src as image_src
-//                    FROM " . $view_name . "               
-//                    JOIN sk_species_scientific_name on " . $view_name . ".species_id = sk_species_scientific_name.species_id
-//                    JOIN ( select species_id, image_url, image_src, max(is_primary) from sk_species_image_ref group by species_id ) image_refs on image_refs.species_id = " . $view_name . ".species_id
-//                    ORDER by id asc";
-//            
-
             $sql = "SELECT distinct(" . $view_name . ".species_id) as id, sk_species_scientific_name.name as name, image_refs.image_src as image_url, image_refs.image_src as image_src
                     FROM " . $view_name . "               
                     JOIN sk_species_scientific_name on " . $view_name . ".species_id = sk_species_scientific_name.species_id
+                    JOIN ( select species_id, image_url, image_src, max(is_primary) from sk_species_image_ref group by species_id ) image_refs on image_refs.species_id = " . $view_name . ".species_id
                     ORDER by id asc";
+            
+
+//            $sql = "SELECT distinct(" . $view_name . ".species_id) as id, sk_species_scientific_name.name as name, image_refs.image_src as image_url, image_refs.image_src as image_src
+//                    FROM " . $view_name . "               
+//                    JOIN sk_species_scientific_name on " . $view_name . ".species_id = sk_species_scientific_name.species_id
+//                    ORDER by id asc";
         }
 
         $statement = $connection->prepare($sql);
