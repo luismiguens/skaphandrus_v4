@@ -41,6 +41,8 @@ class SkLocationController extends Controller {
             $em->persist($entity);
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
+            
             return $this->redirect($this->generateUrl('location_admin_edit', array('id' => $entity->getId())));
         }
 
