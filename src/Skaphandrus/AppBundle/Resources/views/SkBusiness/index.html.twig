@@ -87,9 +87,17 @@
                                     </li>
                                 {% endif %}
                             {% endif %}
+                            
+                     
+                            
+                            {#{% if entity.address.location is defined %}#}
+                                
                             <li>
-                                <a class="btn btn-white btn-sm" href="{{ path('business', { 'country': slugify(intl_country_name(entity.country_name)), 'location': slugify(entity.location_name), 'slug': slugify(entity.name) }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.visit_business"|trans }}</a>
+                                <a class="btn btn-white btn-sm" href="{{ path('business_no_slug', { 'id': entity.id}) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.visit_business"|trans }}</a>
                             </li>
+                            {#{% endif %}#}
+                            
+                            
                         </ul>
                     </td>
                 </tr>

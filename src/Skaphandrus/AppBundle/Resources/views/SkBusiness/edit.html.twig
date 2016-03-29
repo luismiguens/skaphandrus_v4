@@ -31,7 +31,7 @@
     {#{% if is_granted("ROLE_ADMIN") %}
         <a href="{{ path('business_admin_new') }}" class="btn btn-primary">{{ "form.business.btn.add"|trans }}</a>
     {% endif %}#}
-    <a class="btn btn-success" href="{{ path('business', { 'country': slugify(intl_country_name(entity.address.location.region.country.name)), 'location': slugify(entity.address.location), 'slug': slugify(entity.name) }) }}">{{ "forms.common.btn.visit_business"|trans }}</a>
+    <a class="btn btn-success" href="{{ path('business', { 'country': slugify(entity.address.location.region.country.getCountryName(app.request.locale)), 'location': slugify(entity.address.location), 'slug': slugify(entity.name) }) }}">{{ "forms.common.btn.visit_business"|trans }}</a>
 
 {% endblock %}
 

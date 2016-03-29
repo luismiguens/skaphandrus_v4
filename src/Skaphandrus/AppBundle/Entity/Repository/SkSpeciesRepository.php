@@ -838,13 +838,18 @@ class SkSpeciesRepository extends EntityRepository {
         return $values;
     }
 
-    public function getPhotoForAppIdentification($species_id, $limit = 1) {
+    public function getPhotosForIdentification($species_id, $module_id, $limit = 1) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
+        $photos = array();
+       
+        
+        
+        if (count($photos) < $limit) {
+            $i = 1;
 
-        //ir ao skaphandrus
-
-        $sql = "SELECT sk_photo.id as id, best_rate.rating as rating FROM sk_photo
+            //IMAGENS SKAPHANDRUS (prioridade as que têm maior rating)
+            $sql = "SELECT sk_photo.id as id, best_rate.rating as rating FROM sk_photo
                 LEFT JOIN ( 
                         SELECT id, photo_id, species_id, max(rating) as rating
                         FROM sk_photo_species_validation GROUP BY photo_id
@@ -853,74 +858,91 @@ class SkSpeciesRepository extends EntityRepository {
                 WHERE sk_photo.species_id = " . $species_id . "
                 order by best_rate.rating desc lIMIT " . $limit;
 
-        $statement = $connection->prepare($sql);
-        $statement->execute();
-        $values = $statement->fetchAll();
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $values = $statement->fetchAll();
 
+            foreach ($values as $photo) {
+                $skPhoto = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($photo['id']);
 
-        //se não tiver imagens no skaphandrus procurar no image refs
-        if (!$values):
+                $licence = $skPhoto->getCreative();
+                if ($licence == null):
+                    $licence = "© All rights reserved";
+                else:
+                    $licence = $skPhoto->getCreative()->getName();
+                endif;
 
+                $photos[] = array(
+                    'id' => $skPhoto->getId(),
+                    'image_src' => "",
+                    'image_type' => "skaphandrus",
+                    'photographer' => $skPhoto->getFosUser()->getName(),
+                    'license' => $licence
+                );
 
-
-            $species = $this->getEntityManager()->getRepository('SkaphandrusAppBundle:SkSpecies')->find($species_id);
-            foreach ($species->image_refs as $ir) {
-                if ($ir->getIsPrimary())
-                    return $ir;
+                if ($i++ >= $limit)
+                    break;
             }
+        }
+
+
+        //IMAGENS GOOGLE (se o numero de fotografias no skaphandrus for inferior ao limite)
+        if (count($photos) < $limit) {
+
+            $i = 1;
+            $species_obj = $em->getRepository("SkaphandrusAppBundle:SkSpecies")->findOneById($species_id);
+
+            foreach ($species_obj->getImageRefs() as $imageRef_obj) {
+                if ($imageRef_obj->getIsActive()) {
+
+                    $licence = $imageRef_obj->getLicense();
+                    if ($licence == "" || $licence == NULL):
+                        $licence = "Images may be subject to copyright.";
+                    else:
+                        $licence = $imageRef_obj->getLicense();
+                    endif;
+
+                    $photos[] = array(
+                        'id' => $imageRef_obj->getId(),
+                        'image_src' => $imageRef_obj->getImageSrc(),
+                        'image_url' => $imageRef_obj->getImageUrl(),
+                        'image_type' => "google",
+                        'photographer' => $imageRef_obj->getPhotographer(),
+                        'license' => $licence
+                            //Milton já está a receber photographer
+                    );
+                }
+                if ($i++ >= $limit)
+                    break;
+            }
+        }
 
 
 
-        endif;
 
 
 
 
 
 
-        return $values;
+        //ILUSTRAÇÃO DEFAULT DO MODULO (caso não existam imagens em nenhum dos formatos anteriores)
+//        if (count($photos) < 1) {
+//
+//            $module_obj = $this->getDoctrine()
+//                    ->getRepository("SkaphandrusAppBundle:SkIdentificationModule")
+//                    ->findOneById($module_id);
+//
+//            $photos[] = array(
+//                'id' => '1',
+//                'image_src' => "",
+//                'image_url' => 'https://skaphandrus.com',
+//                'image_type' => "skaphandrus",
+//                'photographer' => "Skaphandrus.com",
+//                'license' => "© All rights reserved"
+//
+//            );
+//        }
+        return $photos;
     }
 
-//    public function findSpeciesInCountry_to_delete($country_id) {
-//        $query = $this->getEntityManager()
-//                        ->createQuery(
-//                                'SELECT sp as species, COUNT(p.id) as photosInSpecies
-//                FROM SkaphandrusAppBundle:SkSpecies sp
-//                JOIN SkaphandrusAppBundle:SkPhoto p WITH sp.id = p.species
-//                JOIN SkaphandrusAppBundle:SkSpot s WITH s.id = p.spot
-//                JOIN SkaphandrusAppBundle:SkLocation l WITH l.id = s.location
-//                JOIN SkaphandrusAppBundle:SkRegion r WITH r.id = l.region
-//                JOIN SkaphandrusAppBundle:SkCountry c WITH c.id = r.country
-//                WHERE c.id = :country_id
-//                GROUP BY species
-//                ORDER BY photosInSpecies desc'
-//                        )->setParameter('country_id', $country_id);
-//
-//        foreach ($query->getResult() as $value) {
-//            $value['species']->setPhotosInSpecies($value['photosInSpecies']);
-//            $result[] = $value['species'];
-//        }
-//
-//
-//        try {
-//            return $result;
-//        } catch (\Doctrine\ORM\NoResultException $e) {
-//            return null;
-//        }
-//    }
-//
-//    public function findVernacularSearchResults($string, $locale) {
-//        return $this->getEntityManager()
-//                        ->createQuery(
-//                                'SELECT v.name as title, s as object, st.description as description
-//                 FROM SkaphandrusAppBundle:SkSpecies s
-//                 JOIN SkaphandrusAppBundle:SkSpeciesVernacular sv
-//                     WITH IDENTITY(sv.species) = s.id
-//                 JOIN SkaphandrusAppBundle:SkSpeciesTranslation st
-//                     WITH IDENTITY(st.translatable) = s.id
-//                 JOIN sv.vernacular v
-//                 WHERE st.locale = :locale
-//                 AND v.name LIKE :string'
-//                        )->setParameter('locale', $locale)->setParameter('string', '%' . $string . '%')->getResult();
-//    }
 }
