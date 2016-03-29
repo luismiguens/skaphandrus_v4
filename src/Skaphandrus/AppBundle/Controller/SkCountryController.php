@@ -43,6 +43,8 @@ class SkCountryController extends Controller {
 
             return $this->redirect($this->generateUrl('country_admin_edit', array('id' => $entity->getId())));
         }
+        
+        $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
 
         return $this->render('SkaphandrusAppBundle:SkCountry:new.html.twig', array(
                     'entity' => $entity,
@@ -164,6 +166,7 @@ class SkCountryController extends Controller {
         if ($editForm->isValid()) {
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
             return $this->redirect($this->generateUrl('country_admin_edit', array('id' => $id)));
         }
 
