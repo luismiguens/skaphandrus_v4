@@ -852,7 +852,7 @@ class SkSpeciesRepository extends EntityRepository {
             $sql = "SELECT sk_photo.id as id, best_rate.rating as rating FROM sk_photo
                 LEFT JOIN ( 
                         SELECT id, photo_id, species_id, max(rating) as rating
-                        FROM sk_photo_species_validation GROUP BY photo_id
+                        FROM sk_photo_species_validation GROUP BY species_id
                         order by rating desc ) as best_rate
                 ON sk_photo.id = best_rate.photo_id
                 WHERE sk_photo.species_id = " . $species_id . "

@@ -249,8 +249,8 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
         }
 
         //echo $sql;
-        
-        
+
+
         $statement = $connection->prepare($sql);
         $statement->execute();
         $values = $statement->fetchAll();
@@ -272,14 +272,19 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
                 $species['image_src'] = $this->get('liip_imagine.cache.manager')->getBrowserPath('/uploads/fotografias/' . $sp['image_photo'], 'sk_downscale_600_400');
                 $species['image_url'] = $this->get('liip_imagine.cache.manager')->getBrowserPath('/uploads/fotografias/' . $sp['image_photo'], 'sk_downscale_600_400');
 
-
-                
             elseif ($sp['image_google'] != NULL):
                 $species['image_src'] = $sp['image_google'];
                 $species['image_url'] = $sp['image_google'];
+            else:
+
+                $module_obj = $this->getDoctrine()
+                        ->getRepository("SkaphandrusAppBundle:SkIdentificationModule")
+                        ->findOneById($module_id);
+                $species['image_src'] = $this->get('liip_imagine.cache.manager')->getBrowserPath($module_obj->getWebPath(), 'sk_downscale_600_400');
+                $species['image_url'] = $this->get('liip_imagine.cache.manager')->getBrowserPath($module_obj->getWebPath(), 'sk_downscale_600_400');
 
             endif;
-            
+
             $speciesJson[] = $species;
         }
 
