@@ -65,6 +65,12 @@ $(document).ready(function () {
     });
 
     sliders('.slider_similar');
+    sidebar_slide('.latest_model_carrossel');
+    sidebar_contest('.side_contest_slider');
+    $(".right-sidebar-toggle").click(function () {
+        $("body").toggleClass("mini-navbar");
+        SmoothlyMenu();
+    });
 });
 
 /**
@@ -138,10 +144,10 @@ function sliders(selector) {
                 }
             },
             {
-                breakpoint: 780,
+                breakpoint: 480,
                 settings: {
-                    slidesToShow: 6,
-                    slidesToScroll: 10
+                    slidesToShow: 3,
+                    slidesToScroll: 1
                 }
             }
         ]
@@ -166,7 +172,7 @@ function slider_concurso(selector) {
     $(selector).slick({
         infinite: false,
         slidesToShow: 3,
-        slidesToScroll: 4,
+        slidesToScroll: 1,
         centerMode: true,
         centerPadding: '60px',
         autoplay: true,
@@ -175,17 +181,24 @@ function slider_concurso(selector) {
             {
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: 5,
-                    slidesToScroll: 5,
-                    infinite: false,
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                    infinite: true,
                     dots: true
                 }
             },
             {
-                breakpoint: 780,
+                breakpoint: 600,
                 settings: {
-                    slidesToShow: 5,
-                    slidesToScroll: 10
+                    slidesToShow: 2,
+                    slidesToScroll: 2
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
                 }
             }
         ]
@@ -205,8 +218,35 @@ function slide_people(selector) {
                 settings: {
                     slidesToShow: 20,
                     slidesToScroll: 20
-                }
+                },
+                breakpoint : 769,
+                        settings: {
+                            slidesToShow: 15,
+                            slidesToScroll: 15
+                        },
+                breakpoint : 361,
+                        settings: {
+                            slidesToShow: 7,
+                            slidesToScroll: 7
+                        }
             }
         ]
+    });
+}
+
+function sidebar_slide(selector) {
+    $(selector).slick({
+        infinite: false,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        centerMode: false
+    });
+}
+function sidebar_contest(selector) {
+    $(selector).slick({
+        infinite: false,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        centerMode: false
     });
 }

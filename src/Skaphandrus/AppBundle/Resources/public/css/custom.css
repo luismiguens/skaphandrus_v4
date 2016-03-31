@@ -25,7 +25,7 @@
     padding-bottom: 30px; 
 }
 .legenda_foto{
-    font-size: 9px; 
+    font-size: 10px; 
     position: relative; 
 }
 .legenda_foto i{
@@ -34,32 +34,15 @@
     top: 2px; 
     font-size: 15px; 
 }
-/*.sk_navigation .navbar-nav > li.active {
-    background: #fff;
-    border: none;
-}
-.sk_navigation  .navbar {
-    margin-bottom: 0;
-}
-.navbar-fixed-top, .navbar-static-top {
-    background: #FFFFFF;
-}
-.sk_navigation .navbar-brand {
-    background: #1ab394;
-    color: #fff;
-    padding: 15px 25px;
-}
-.sk_navigation .nav > li.active > a {
-    color: #1ab394;
-}
-.navbar-static-top {
-    width: 100%;
-    max-width: 1200px; 
-}
-
-#wrapper #page-wrapper{
+.margin-top-menu{
     margin-top: 50px; 
-}*/
+}
+.top-menu{
+    width: 100%; 
+    max-width: 1300px;  
+    top: 0; 
+    z-index: 10000; 
+}
 .slick-slide{
     margin: 5px; 
 }
@@ -113,43 +96,59 @@
     top: 0; 
     left: 0; 
 }
-.destination_wrapper > div:first-child{
+#top-search{
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: medium none;
+    font-size: 14px;
+    margin: 0 5px;
+    z-index: 2000;
+    padding: 0; 
+    width: 60px;
+    height: 48px; 
+
+}
+.button_side{
+    margin : 13px auto; 
+    font-size : 20px;
+    font-weight : bold; 
+}
+.side_contests .slick-slider{
+    margin: 0; 
+}
+body.canvas-menu.mini-navbar nav.navbar-static-side{
+    width: 260px; 
+}
+.project-people {
+    margin: 0; 
+}
+.species_photos_wrapper{
     position: relative; 
 }
-.destination_wrapper img{
+.species_photos_wrapper .see_all{
     position: absolute; 
-    top: 0;
-    left: 0; 
+    bottom: 5px;
+    right: 0px; 
+} 
+.species_photos_wrapper .see_all > a {
+    padding: 5px; 
+    background-color: rgba(0,0,0,0.3); 
+    color: #FFFFFF; 
 }
-.destination_wrapper h3 {
-    position: absolute; 
-    top: 5px;
-    left: 5px;
-}
-.destination_wrapper:hover ul{
-    -webkit-transform:translateY(0);
-    transform:translateY(0)
-}
-.destination_wrapper ul{
-    -webkit-transform:translateY(120%);
-    transform:translateY(120%);
-    position:absolute;
-    left:10px;
-    right:10px;
-    bottom:-180px;
-    z-index:1;
-    -webkit-transition:-webkit-transform .2s ease-in-out;
-    transition:-webkit-transform .2s ease-in-out;
-    transition:transform .2s ease-in-out
-}
+
 @media (min-width: 767px) {
     .contact-box.center-version.small_version > a .box_spacer_right{
         padding-top: 10px; 
         padding-bottom: 10px; 
     }   
 }
-@media (max-width: 767px){
+@media (max-width: 980px){
     .navbar-header {
         width: 100%; 
+    }
+    .affix{
+        position: static; 
+    }
+    .form_sidebar{
+        max-width: 100%; 
     }
 }

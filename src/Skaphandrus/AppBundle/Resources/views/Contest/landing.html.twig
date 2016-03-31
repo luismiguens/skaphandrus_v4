@@ -22,18 +22,15 @@
 
 {% block page_keywords %}{{keywords}}{% endblock %}
 
-{% block stylesheets %}
+{#{% block stylesheets %}
     {{ parent() }}
-    <link href="{{ asset('bundles/skaphandrusapp/css/custom.css') }}" rel="stylesheet">
 
-{% endblock %}
+
+{% endblock %}#}
 
 {% block javascripts %}
     {{ parent() }}
-    {#    <!-- Slick JQuery -->#}
-    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
 
-    <script src="{{ asset('bundles/skaphandrusapp/js/custom.js') }}"></script>
     <script src='https://www.google.com/recaptcha/api.js'></script>
 
 {% endblock %}
@@ -91,7 +88,8 @@
                                                                 <h4 class="text-navy">{{ "page.contests.h4.endAt"|trans }}:</h4>{{ contest.endAt|date('Y-M-d') }}
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <a class="btn btn-primary dim btn-block" href="{{ path('contest_participate', { 'contest_id': contest.id }) }}">{#<i class="fa fa-upload"></i>#} {{ "form.contest.participate"|trans }}</a>
+                                                                <a class="btn btn-default dim btn-block" href="{{ url_to_contest(contest) }}">{{ "page.contests.link.view"|trans }} </a>
+                                                                <a class="btn btn-primary dim btn-block" href="{{ path('contest_participate', { 'contest_id': contest.id }) }}">{{ "form.contest.participate"|trans }}</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -136,7 +134,7 @@
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-4">
-                                                                <a class="btn btn-default dim btn-block" href="{{ url_to_contest(contest) }}">{#<i class="fa fa-folder"></i>#} {{ "page.contests.link.view"|trans }} </a>
+                                                                <a class="btn btn-primary dim btn-block" href="{{ url_to_contest(contest) }}">{{ "page.contests.link.view"|trans }} </a>
                                                             </div>
                                                         </div>
                                                     </div>
