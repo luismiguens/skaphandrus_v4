@@ -97,7 +97,7 @@ search:
 #################################################################################  
 #### FUN CONTESTS
 #################################################################################
-
+      
 contests_landing_page:
     locales:  { en: "/en/underwater-photo-contest", pt: "/pt/concurso-fotografia-subaquatica" }
     defaults: { _controller: SkaphandrusAppBundle:Contest:landing }

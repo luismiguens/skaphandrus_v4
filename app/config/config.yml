@@ -304,6 +304,10 @@ liip_imagine:
         sk_thumbnail_outbound_130:
             filters:
                 thumbnail: { size: [130, 130], mode: outbound }
+        sk_thumbnail_outbound_200:
+            filters:
+                thumbnail: { size: [200, 200], mode: outbound }
+                
         sk_thumbnail_outbound_198_100:
             filters:
                 thumbnail: { size: [198, 100], mode: outbound }

@@ -1,0 +1,29 @@
+{% extends 'SkaphandrusAppBundle:SkContestRequest:_base_request_email_template.html.twig' %}
+
+{% block title %}
+    Hi, Skaphandrus
+{% endblock %}
+
+{#{% block intro %}
+    <p align="center">This is our newsletter</p>
+{% endblock %}#}
+
+{% block content %}
+
+    <p><strong>{{user}}</strong> wants to create a contest with this description</p>
+    <p><strong>{{description}}</strong></p>
+
+    <p>His/Her email is <strong>{{email}}</strong>
+
+    {% if phone %}
+        and his/her phone is <strong>{{phone}}</strong></p>
+    {% endif %}
+
+{% endblock %}
+
+{#{% block action %}
+    <a href="https://skaphandrus.com" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; width: 100%; box-sizing: border-box; font-size: 14px; color: #FFF; text-decoration: none; line-height: 2; font-weight: bold; text-align: center; cursor: pointer; display: inline-block; border-radius: 5px; text-transform: capitalize; background-color: #1ab394; margin: 0; padding: 0; border-color: #1ab394; border-style: solid; border-width: 5px 10px;">
+        Skaphandrus.com
+    </a>
+{% endblock %}#}
+

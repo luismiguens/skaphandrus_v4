@@ -1,0 +1,155 @@
+.navbar-top-links li:hover{
+    background-color: white;
+}
+#map-canvas{
+    width:auto;
+    height:300px;
+}
+#sports_list_more{
+    display: none; 
+}
+.contact-box.center-version.small_version > a{
+    padding: 5px; 
+}
+.contact-box.center-version.small_version > a img{
+    margin-top: 0; 
+    margin-bottom: 0; 
+    width: 60px; 
+    height: 60px; 
+}
+.contact-box.center-version.small_version > a h3{
+    font-size: 12px; 
+}
+.contact-box.center-version.small_version > a .box_spacer{
+    padding-top: 30px; 
+    padding-bottom: 30px; 
+}
+.legenda_foto{
+    font-size: 9px; 
+    position: relative; 
+}
+.legenda_foto i{
+    position: absolute; 
+    right: 2px; 
+    top: 2px; 
+    font-size: 15px; 
+}
+/*.sk_navigation .navbar-nav > li.active {
+    background: #fff;
+    border: none;
+}
+.sk_navigation  .navbar {
+    margin-bottom: 0;
+}
+.navbar-fixed-top, .navbar-static-top {
+    background: #FFFFFF;
+}
+.sk_navigation .navbar-brand {
+    background: #1ab394;
+    color: #fff;
+    padding: 15px 25px;
+}
+.sk_navigation .nav > li.active > a {
+    color: #1ab394;
+}
+.navbar-static-top {
+    width: 100%;
+    max-width: 1200px; 
+}
+
+#wrapper #page-wrapper{
+    margin-top: 50px; 
+}*/
+.slick-slide{
+    margin: 5px; 
+}
+.form_sidebar{
+    width: 100%; 
+    max-width: 363px; 
+}
+.lista_slides_concurso .slick-current{
+    -ms-transform: scale(1.2); /* IE 9 */
+    -webkit-transform: scale(1.2); /* Safari */
+    transform: scale(1.2);
+}
+.dont_hide_border{
+    padding: 11px 5px; 
+}
+.slider_people .slick-slide{
+    margin: 1px; 
+}
+.grid-sizer,
+.grid-item { width: 20%; }
+/* 2 columns */
+.grid-item--width2 { width: 40%; }
+.wrapper_visual_id{
+    position: relative; 
+}
+.wrapper_visual_id .feature{
+    position: absolute; 
+    left: 10px;
+    top: 10px; 
+    background-color: rgba(0,0,0,0.6); 
+    padding: 5px; 
+    color: #FFFFFF; 
+}
+.wrapper_visual_id .feature_icone{
+    position: absolute; 
+    bottom: 10px; 
+    right: 10px; 
+    font-size: 20px; 
+}
+.wrapper_visual_id .true{
+    color: #1ab394; 
+}
+.wrapper_visual_id .false{
+    color: #f00; 
+}
+.overly{
+    background-color : rgba(0,0,0,.2); 
+    width: 100%; 
+    height: 100%; 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+}
+.destination_wrapper > div:first-child{
+    position: relative; 
+}
+.destination_wrapper img{
+    position: absolute; 
+    top: 0;
+    left: 0; 
+}
+.destination_wrapper h3 {
+    position: absolute; 
+    top: 5px;
+    left: 5px;
+}
+.destination_wrapper:hover ul{
+    -webkit-transform:translateY(0);
+    transform:translateY(0)
+}
+.destination_wrapper ul{
+    -webkit-transform:translateY(120%);
+    transform:translateY(120%);
+    position:absolute;
+    left:10px;
+    right:10px;
+    bottom:-180px;
+    z-index:1;
+    -webkit-transition:-webkit-transform .2s ease-in-out;
+    transition:-webkit-transform .2s ease-in-out;
+    transition:transform .2s ease-in-out
+}
+@media (min-width: 767px) {
+    .contact-box.center-version.small_version > a .box_spacer_right{
+        padding-top: 10px; 
+        padding-bottom: 10px; 
+    }   
+}
+@media (max-width: 767px){
+    .navbar-header {
+        width: 100%; 
+    }
+}
