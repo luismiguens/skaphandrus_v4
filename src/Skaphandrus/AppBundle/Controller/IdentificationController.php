@@ -335,7 +335,7 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
 //                        $species['image_url'] = $photos[0]['image_src'];
 //                    endif;
 //
-//                //se não existirem fotografias utiliza a ILUSTRACAO DO MODULO
+//                //ILUSTRACAO DO MODULO
 //                else:
 //                    $module_obj = $this->getDoctrine()
 //                            ->getRepository("SkaphandrusAppBundle:SkIdentificationModule")
@@ -512,6 +512,9 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
 
         //return new JsonResponse($species_obj);
 
+        
+        $photos_arr = array();
+        
         if ($species_obj) {
             $species['id'] = $species_obj->getId();
             $species['name'] = $species_obj->getName();
@@ -557,72 +560,152 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
             $species['how_to_find'] = $species_obj->translate()->getHowToFind();
 
             //FOTOGRAFIAS
-            $photos = array();
+            
 
 
 
             $limit = 3;
 
-            $sk_photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
-                    ->getSkPhotosForIdentification($species_id, $limit);
 
-            //IMAGENS SKAPHANDRUS
-            foreach ($sk_photos as $photo) {
-                $skPhoto = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->find($photo['id']);
-                $image_src = $this->get('liip_imagine.cache.manager')->getBrowserPath($skPhoto->getWebPath(), 'sk_downscale_600_400');
+            /* OLD OK CODE */
+//            
+//            
+//            $sk_photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
+//                    ->getSkPhotosForIdentification($species_id, $limit);
+//
+//            //IMAGENS SKAPHANDRUS
+//            foreach ($sk_photos as $photo) {
+//                $skPhoto = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->find($photo['id']);
+//                $image_src = $this->get('liip_imagine.cache.manager')->getBrowserPath($skPhoto->getWebPath(), 'sk_downscale_600_400');
+//
+//                $licence = $skPhoto->getCreative();
+//                if ($licence == null):
+//                    $licence = "© All rights reserved";
+//                else:
+//                    $licence = $skPhoto->getCreative()->getName();
+//                endif;
+//
+//                $photos[] = array(
+//                    'id' => $skPhoto->getId(),
+//                    'image_src' => $image_src,
+//                    'image_type' => "skaphandrus",
+//                    'photographer' => $skPhoto->getFosUser()->getName(),
+//                    'license' => $licence
+//                );
+//            }
+//
+//
+//            //IMAGENS GOOGLE
+//            if (count($sk_photos) < $limit) {
+//
+//                $i = 1;
+//                foreach ($species_obj->getImageRefs() as $imageRef_obj) {
+//                    if ($imageRef_obj->getIsActive()) {
+//
+//                        $licence = $imageRef_obj->getLicense();
+//                        if ($licence == "" || $licence == NULL):
+//                            $licence = "Images may be subject to copyright.";
+//                        else:
+//                            $licence = $imageRef_obj->getLicense();
+//                        endif;
+//
+//                        $photos[] = array(
+//                            'id' => $imageRef_obj->getId(),
+//                            'image_src' => $imageRef_obj->getImageSrc(),
+//                            'image_url' => $imageRef_obj->getImageUrl(),
+//                            'image_type' => "google",
+//                            'photographer' => $imageRef_obj->getPhotographer(),
+//                            'license' => $licence
+//                                //Milton já está a receber photographer
+//                        );
+//                    }
+//                    if ($i++ == $limit)
+//                        break;
+//                }
+//            }
 
 
-                $licence = $skPhoto->getCreative();
-                if ($licence == null):
-                    $licence = "© All rights reserved";
-                else:
-                    $licence = $skPhoto->getCreative()->getName();
-                endif;
 
+            //ILUSTRACOES CIENTIFICAS (ir buscar ilustração)
+            foreach ($species_obj->getIllustrations() as $key => $illustration) {
 
-                $photos[] = array(
-                    'id' => $skPhoto->getId(),
+                $image_src = "http://skaphandrus.com/uploads/ilustrations/" . $illustration->getImage();
+                $photos_arr[] = array(
+                    'id' => $illustration->getId(),
                     'image_src' => $image_src,
                     'image_type' => "skaphandrus",
-                    'photographer' => $skPhoto->getFosUser()->getName(),
-                    'license' => $licence
+                    'is_illustration' => "true",
+                    'photographer' => 'skaphandrus.com',
+                    'license' => "© All rights reserved"
                 );
             }
 
 
+            //FOTOGRAFIAS (se não existirem ilustrações)
+            if (count($photos_arr) <= $limit):
+                $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
+                        ->getPhotosForIdentification($species_obj->getId(), $module_id, 3);
+
+                //se existirem fotografias SKAPHANDRUS ou GOOGLE
+                if (count($photos) > 0):
+                    foreach ($photos as $key => $photo) {
+                    
+                        //fotografias SKAPHANDRUS
+                        if ($photo['image_type'] == "skaphandrus"):
+                            $skPhoto = $this->getDoctrine()
+                                    ->getRepository("SkaphandrusAppBundle:SkPhoto")
+                                    ->findOneById($photo['id']);
+
+                            $image_src = $this->get('liip_imagine.cache.manager')->getBrowserPath($skPhoto->getWebPath(), 'sk_downscale_600_400');
+                            
+                            $licence = "© All rights reserved";
+                            $photos_arr[] = array(
+                                'id' => $skPhoto->getId(),
+                                'image_src' => $image_src,
+                                'image_type' => "skaphandrus",
+                                'photographer' => $skPhoto->getFosUser()->getName(),
+                                'license' => $licence
+                            );
 
 
-            //IMAGENS GOOGLE
-            if (count($sk_photos) < $limit) {
 
-                $i = 1;
-                foreach ($species_obj->getImageRefs() as $imageRef_obj) {
-                    if ($imageRef_obj->getIsActive()) {
+                        //fotografias GOOGLE
+                        elseif ($photo['image_type'] == "google"):
 
+                            $photos_arr[] = array(
+                                'id' => $photo['id'],
+                                'image_src' => $photo['image_src'],
+                                'image_url' => $photo['image_url'],
+                                'image_type' => "google",
+                                'photographer' => $photo['photographer'],
+                                'license' => $photo['license']
+                            );
 
-                        $licence = $imageRef_obj->getLicense();
-                        if ($licence == "" || $licence == NULL):
-                            $licence = "Images may be subject to copyright.";
-                        else:
-                            $licence = $imageRef_obj->getLicense();
                         endif;
-
-
-                        $photos[] = array(
-                            'id' => $imageRef_obj->getId(),
-                            'image_src' => $imageRef_obj->getImageSrc(),
-                            'image_url' => $imageRef_obj->getImageUrl(),
-                            'image_type' => "google",
-                            'photographer' => $imageRef_obj->getPhotographer(),
-                            'license' => $licence
-                                //Milton já está a receber photographer
-                        );
                     }
-                    if ($i++ == $limit)
-                        break;
-                }
-            }
-            $species['images'] = $photos;
+
+                //ILUSTRACAO DO MODULO
+                else:
+                    $module_obj = $this->getDoctrine()
+                            ->getRepository("SkaphandrusAppBundle:SkIdentificationModule")
+                            ->findOneById($module_id);
+
+                    $image_src = $this->get('liip_imagine.cache.manager')->getBrowserPath($module_obj->getWebPath(), 'sk_downscale_600_400');
+                    $photos_arr[] = array(
+                        'id' => $module_obj->getId(),
+                        'image_src' => $image_src,
+                        'is_illustration' => "true",
+                        'photographer' => 'skaphandrus.com',
+                        'license' => "© All rights reserved"
+                    );
+
+                endif;
+
+            endif;
+
+            //dump ($photos_arr);
+
+            $species['images'] = $photos_arr;
 
             //CRITERIOS/CARACTERES
             //$species['criterias'] = $this->getCharactersIDSFromSpecies($species_obj->getId(), /*$module_id*/ 2, $this->container, $this->get('request')->getLocale());

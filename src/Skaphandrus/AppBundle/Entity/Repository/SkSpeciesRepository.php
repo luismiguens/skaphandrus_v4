@@ -865,13 +865,14 @@ class SkSpeciesRepository extends EntityRepository {
             foreach ($values as $photo) {
                 $skPhoto = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->find($photo['id']);
 
-                $licence = $skPhoto->getCreative();
-                if ($licence == null):
-                    $licence = "© All rights reserved";
-                else:
-                    $licence = $skPhoto->getCreative()->getName();
-                endif;
+//                $licence = $skPhoto->getCreative();
+//                if ($licence == null):
+//                    $licence = "© All rights reserved";
+//                else:
+//                    $licence = $skPhoto->getCreative()->getName();
+//                endif;
 
+                $licence = "© All rights reserved";
                 $photos[] = array(
                     'id' => $skPhoto->getId(),
                     'image_src' => "",
