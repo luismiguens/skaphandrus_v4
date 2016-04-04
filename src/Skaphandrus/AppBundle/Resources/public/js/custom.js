@@ -16,36 +16,36 @@ $(document).ready(function () {
     }
     //end maps code 
 
-    //listner for spot list view more
-    $("#show_more_spots").click(function () {
-        loader('append', '');
-        $.get('view_more_spots.php', function (data) {
-            killLoader();
-            $('#spots_list').append(data);
-            $('#spots_list .slider_thumbs').slick('unslick');
-            sliders('#spots_list .slider_thumbs');
-
-        });
-    });
-    //listener form species list view more 
-    $("#show_more_species").click(function () {
-        loader('append', '');
-        $.get('view_more_spots.php', function (data) {
-            killLoader();
-            $('#species_list').append(data);
-            sliders('#species_list .slider_thumbs');
-        })
-    });
-
-    //listener form photographers list view more 
-    $("#show_more_photographers").click(function () {
-        loader('append', '');
-        $.get('photographers_scroller.php', function (data) {
-            killLoader();
-            $('#photographers_list').append(data);
-            sliders('#photographers_list .slider_thumbs');
-        })
-    });
+//    //listner for spot list view more
+//    $("#show_more_spots").click(function () {
+//        loader('append', '');
+//        $.get('view_more_spots.php', function (data) {
+//            killLoader();
+//            $('#spots_list').append(data);
+//            $('#spots_list .slider_thumbs').slick('unslick');
+//            sliders('#spots_list .slider_thumbs');
+//
+//        });
+//    });
+//    //listener form species list view more 
+//    $("#show_more_species").click(function () {
+//        loader('append', '');
+//        $.get('view_more_spots.php', function (data) {
+//            killLoader();
+//            $('#species_list').append(data);
+//            sliders('#species_list .slider_thumbs');
+//        })
+//    });
+//
+//    //listener form photographers list view more 
+//    $("#show_more_photographers").click(function () {
+//        loader('append', '');
+//        $.get('photographers_scroller.php', function (data) {
+//            killLoader();
+//            $('#photographers_list').append(data);
+//            sliders('#photographers_list .slider_thumbs');
+//        })
+//    });
 
     //deal with slider in hidden tabs
     $('#tabs_marine_animals a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
@@ -71,6 +71,7 @@ $(document).ready(function () {
         $("body").toggleClass("mini-navbar");
         SmoothlyMenu();
     });
+    fechar_ibox_home();
 });
 
 /**
@@ -86,6 +87,21 @@ function initialize(selector) {
     };
     map = new google.maps.Map(document.getElementById(selector),
             mapOptions);
+}
+/**
+ * Inicialize home ibox closed 
+ */
+function fechar_ibox_home() {
+    var ibox = $("#home_box").closest('div.ibox');
+    var button = $("#home_box").find('i');
+    var content = ibox.find('div.ibox-content');
+    content.slideToggle(200);
+    button.toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
+    ibox.toggleClass('').toggleClass('border-bottom');
+    setTimeout(function () {
+        ibox.resize();
+        ibox.find('[id^=map-]').resize();
+    }, 50);
 }
 /**
  * add markers to a global map varibale with info window 
@@ -159,9 +175,8 @@ function sliders(selector) {
             if (typeof link !== 'undefined') {
                 $(slick.$nextArrow[0]).removeClass('slick-disabled');
                 $(slick.$nextArrow[0]).click(function () {
-
-                    window.location = "#";
-                })
+                    window.location = link;
+                });
             }
         }
     });
@@ -175,8 +190,6 @@ function slider_concurso(selector) {
         slidesToScroll: 1,
         centerMode: true,
         centerPadding: '60px',
-        autoplay: true,
-        autoplaySpeed: 2000,
         responsive: [
             {
                 breakpoint: 1024,
@@ -218,17 +231,21 @@ function slide_people(selector) {
                 settings: {
                     slidesToShow: 20,
                     slidesToScroll: 20
-                },
-                breakpoint : 769,
-                        settings: {
-                            slidesToShow: 15,
-                            slidesToScroll: 15
-                        },
-                breakpoint : 361,
-                        settings: {
-                            slidesToShow: 7,
-                            slidesToScroll: 7
-                        }
+                }
+            },
+            {
+                breakpoint: 769,
+                settings: {
+                    slidesToShow: 15,
+                    slidesToScroll: 15
+                }
+            },
+            {
+                breakpoint: 361,
+                settings: {
+                    slidesToShow: 7,
+                    slidesToScroll: 7
+                }
             }
         ]
     });

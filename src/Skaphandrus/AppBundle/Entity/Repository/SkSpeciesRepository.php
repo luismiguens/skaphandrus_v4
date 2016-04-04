@@ -142,7 +142,7 @@ class SkSpeciesRepository extends EntityRepository {
             JOIN p.spot s
             WHERE p.species = :species_id and s.id = :spot_id
             ORDER BY p.id desc'
-                )->setParameter('species_id', $species_id)->setParameter('spot_id', $spot_id)->setMaxResults(6);
+                )->setParameter('species_id', $species_id)->setParameter('spot_id', $spot_id)->setMaxResults(10);
 
         return $query->getResult();
     }
@@ -155,7 +155,7 @@ class SkSpeciesRepository extends EntityRepository {
             JOIN s.location l
             WHERE p.species = :species_id and l.id = :location_id
             ORDER BY p.id desc'
-                )->setParameter('species_id', $species_id)->setParameter('location_id', $location_id)->setMaxResults(6);
+                )->setParameter('species_id', $species_id)->setParameter('location_id', $location_id)->setMaxResults(10);
 
         return $query->getResult();
     }
@@ -169,7 +169,7 @@ class SkSpeciesRepository extends EntityRepository {
             JOIN l.region r
             WHERE p.species = :species_id and r.country = :country_id
             ORDER BY p.id desc'
-                )->setParameter('species_id', $species_id)->setParameter('country_id', $country_id)->setMaxResults(6);
+                )->setParameter('species_id', $species_id)->setParameter('country_id', $country_id)->setMaxResults(10);
 
         return $query->getResult();
     }

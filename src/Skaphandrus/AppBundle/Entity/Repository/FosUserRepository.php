@@ -283,7 +283,7 @@ class FosUserRepository extends EntityRepository {
             FROM SkaphandrusAppBundle:SkPhoto p
             WHERE p.fosUser = :fosUser_id and p.species = :species_id
             ORDER BY p.id desc'
-                )->setParameter('fosUser_id', $fosUser_id)->setParameter('species_id', $species_id)->setMaxResults(6);
+                )->setParameter('fosUser_id', $fosUser_id)->setParameter('species_id', $species_id)->setMaxResults(10);
 
         return $query->getResult();
     }
@@ -295,7 +295,7 @@ class FosUserRepository extends EntityRepository {
             JOIN p.spot s
             WHERE p.fosUser = :fosUser_id and s.id = :spot_id
             ORDER BY p.id desc'
-                )->setParameter('fosUser_id', $fosUser_id)->setParameter('spot_id', $spot_id)->setMaxResults(6);
+                )->setParameter('fosUser_id', $fosUser_id)->setParameter('spot_id', $spot_id)->setMaxResults(10);
 
         return $query->getResult();
     }
@@ -308,7 +308,7 @@ class FosUserRepository extends EntityRepository {
             JOIN s.location l
             WHERE p.fosUser = :fosUser_id and l.id = :location_id
             ORDER BY p.id desc'
-                )->setParameter('fosUser_id', $fosUser_id)->setParameter('location_id', $location_id)->setMaxResults(6);
+                )->setParameter('fosUser_id', $fosUser_id)->setParameter('location_id', $location_id)->setMaxResults(10);
 
         return $query->getResult();
     }
@@ -322,7 +322,7 @@ class FosUserRepository extends EntityRepository {
             JOIN l.region r
             WHERE p.fosUser = :fosUser_id and r.country = :country_id
             ORDER BY p.id desc'
-                )->setParameter('fosUser_id', $fosUser_id)->setParameter('country_id', $country_id)->setMaxResults(6);
+                )->setParameter('fosUser_id', $fosUser_id)->setParameter('country_id', $country_id)->setMaxResults(10);
 
         return $query->getResult();
     }

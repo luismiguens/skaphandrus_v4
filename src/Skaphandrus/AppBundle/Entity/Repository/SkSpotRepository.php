@@ -76,7 +76,7 @@ class SkSpotRepository extends EntityRepository {
             JOIN p.spot s
             WHERE p.spot = :spot_id 
             ORDER BY p.id desc'
-                )->setParameter('spot_id', $spot_id)->setMaxResults(6);
+                )->setParameter('spot_id', $spot_id)->setMaxResults(10);
 
         return $query->getResult();
     }
@@ -89,7 +89,7 @@ class SkSpotRepository extends EntityRepository {
             JOIN s.location l
             WHERE p.spot = :spot_id and l.id = :location_id
             ORDER BY p.id desc'
-                )->setParameter('spot_id', $spot_id)->setParameter('location_id', $location_id)->setMaxResults(6);
+                )->setParameter('spot_id', $spot_id)->setParameter('location_id', $location_id)->setMaxResults(10);
 
         return $query->getResult();
     }

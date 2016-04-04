@@ -76,7 +76,7 @@ class SkLocationRepository extends EntityRepository {
             JOIN l.region r
             WHERE l.id = :location_id and r.country = :country_id
             ORDER BY p.id desc'
-                )->setParameter('location_id', $location_id)->setParameter('country_id', $country_id)->setMaxResults(6);
+                )->setParameter('location_id', $location_id)->setParameter('country_id', $country_id)->setMaxResults(10);
 
         return $query->getResult();
     }

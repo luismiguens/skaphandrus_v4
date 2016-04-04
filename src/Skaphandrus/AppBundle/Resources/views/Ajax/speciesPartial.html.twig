@@ -1,41 +1,71 @@
 
+<link href="{{ asset('bundles/skaphandrusapp/css/custom.css') }}" rel="stylesheet">
+<script src="{{ asset('bundles/skaphandrusapp/js/custom.js') }}"></script>
+
 {% if species %}
 
     {% for s in species %}
 
-        <div class="ibox-content">
-            <div class="row">
-                <div class="col col-lg-2  col-xs-2 col-md-4 ">
-                    <strong> <h4>{{ link_to_species(s) }}</h4> </strong>
-                    <p>{{"common.species.number_photos"|trans}}: <span class="label label-info">{{s.photosInSpecies}}</span>  </p>
+        <div class="row">
+            <div class="col-sm-4 col-sx-12">
+                <div class="contact-box center-version small_version">
+                    {#<a href="{{ path('photos', { 'location': location.id }) }}">#}
+                    <div class="box_content">
+                        <div class="box_spacer">
+                            <h3 class="m-b-xs">
+                                <strong>
+                                    {{ link_to_species(s) }}
+                                </strong>
+                            </h3>
+                            <div class="font-bold">
+                                <span class="label label-primary">
+                                    <a style="color: white" href="{{ path('photos', { 'location': s.id }) }}">
+                                        {{"common.species.number_photos"|trans}}: {{ s.photosInSpecies }}
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    {#</a>#}
                 </div>
-                <div class="col col-lg-10 col-xs-10 col-md-8">
-                    <div class="roller slick-initialized slick-slider">
-                        <div class="slick-list draggable">
-                            <div style="opacity: 1; width: 800px; left: 0px;" class="slick-track">
+            </div>
+            <div class="col-sm-8 col-sx-12">
+                <div class="row">
+                    <div class="col-lg-11">
+                        <div class="ibox">
+                            <div class="slider_thumbs" data="{{ path('photos', { 'species': s.id }) }}">
                                 {% if s.photosInSpecies > 6 %}
                                     {% for photo in s.photos %}
-                                        <div style="width: 112px;" class="slick-slide slick-current slick-active">
-                                            <a class="thumbnail" href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
-                                                <img style="width: 100px; margin:1% 2px 0px 2px;" itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('sk_thumbnail_outbound_100') }}" />
+                                        <div>
+                                            <a href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
+                                                <img class="img-thumbnail" itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('sk_thumbnail_outbound_100') }}" />
                                             </a>
                                         </div>
                                     {% endfor %}
-                                    <div style="width: 112px;" class="slick-slide slick-active">
-                                        <button onclick="location.href = '{{ path('photos', { 'species': s.id }) }}'" style="margin-left: 3%;" type="button" class="btn btn-block btn-outline btn-primary">
+                                    {#<div>
+                                        <button onclick="location.href = '{{ path('photos', { 'location': location.id }) }}';" type="button" class="btn btn-block btn-outline btn-primary">
                                             {{ "common.grid.see_all"|trans }}
+                                        </button>
+                                    </div>#}
+                                {% elseif s.photosInSpecies > 0 and s.photosInSpecies <= 6  %}
+                                    {% for photo in s.photos %}
+                                        <div>
+                                            <a href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
+                                                <img class="img-thumbnail" itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('sk_thumbnail_outbound_100') }}" />
+                                            </a>
+                                        </div>
+                                    {% endfor %}
+                                    <div>
+                                        <button onclick="location.href = '{{ path('photo_admin_new') }}';" type="button" class="btn btn-block btn-primary">
+                                            {{ "common.grid.add_photo"|trans }}
                                         </button>
                                     </div>
                                 {% else %}
-                                    {% for photo in s.photos %}
-                                        <div style="width: 112px;" class="slick-slide slick-current slick-active">
-                                            <a class="thumbnail" href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
-                                                <img style="width: 100px; margin:1% 2px 0px 2px;" itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('sk_thumbnail_outbound_100') }}" />
-                                            </a>
-                                        </div>
-                                    {% endfor %}
-                                    <div style="width: 112px;" class="slick-slide slick-active">
-                                        <button onclick="location.href = '{{ path('photo_admin_new') }}';" style="margin-left: 3%;" type="button" class="btn btn-block btn-primary">
+                                    <div>
+                                        {{"common.location.no_photos"|trans}}
+                                    </div>
+                                    <div>
+                                        <button onclick="location.href = '{{ path('photo_admin_new') }}';" type="button" class="btn btn-primary">
                                             {{ "common.grid.add_photo"|trans }}
                                         </button>
                                     </div>
@@ -46,6 +76,48 @@
                 </div>
             </div>
         </div>
+
+        {# <div class="row">
+             <div class="col col-lg-2  col-xs-2 col-md-4 ">
+                 <strong> <h4>{{ link_to_species(s) }}</h4> </strong>
+                 <p>{{"common.species.number_photos"|trans}}: <span class="label label-info">{{s.photosInSpecies}}</span>  </p>
+             </div>
+             <div class="col col-lg-10 col-xs-10 col-md-8">
+                 <div class="roller slick-initialized slick-slider">
+                     <div class="slick-list draggable">
+                         <div style="opacity: 1; width: 800px; left: 0px;" class="slick-track">
+                             {% if s.photosInSpecies > 6 %}
+                                 {% for photo in s.photos %}
+                                     <div style="width: 112px;" class="slick-slide slick-current slick-active">
+                                         <a class="thumbnail" href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
+                                             <img style="width: 100px; margin:1% 2px 0px 2px;" itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('sk_thumbnail_outbound_100') }}" />
+                                         </a>
+                                     </div>
+                                 {% endfor %}
+                                 <div style="width: 112px;" class="slick-slide slick-active">
+                                     <button onclick="location.href = '{{ path('photos', { 'species': s.id }) }}'" style="margin-left: 3%;" type="button" class="btn btn-block btn-outline btn-primary">
+                                         {{ "common.grid.see_all"|trans }}
+                                     </button>
+                                 </div>
+                             {% else %}
+                                 {% for photo in s.photos %}
+                                     <div style="width: 112px;" class="slick-slide slick-current slick-active">
+                                         <a class="thumbnail" href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
+                                             <img style="width: 100px; margin:1% 2px 0px 2px;" itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('sk_thumbnail_outbound_100') }}" />
+                                         </a>
+                                     </div>
+                                 {% endfor %}
+                                 <div style="width: 112px;" class="slick-slide slick-active">
+                                     <button onclick="location.href = '{{ path('photo_admin_new') }}';" style="margin-left: 3%;" type="button" class="btn btn-block btn-primary">
+                                         {{ "common.grid.add_photo"|trans }}
+                                     </button>
+                                 </div>
+                             {% endif %}
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>#}
 
     {% endfor %}
 
