@@ -31,6 +31,11 @@
 
 {% block stylesheets %}
     {{ parent() }}
+    
+    
+{#    <link href="{{ asset('bundles/skaphandrusapp/css/custom.css') }}" rel="stylesheet">
+<script src="{{ asset('bundles/skaphandrusapp/js/custom.js') }}"></script>#}
+    
     <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
 
     {#<!-- FooTable -->
@@ -118,11 +123,14 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
+    {#<script src="{{ asset('bundles/skaphandrusapp/js/custom.js') }}"></script>#}
 
     <!-- FooTable -->
     {#    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>#}
 
     <script type="text/javascript">
+
+{#$(document).ready(function () {#}
 
         $('.row .btn').on('click', function (e) {
             e.preventDefault();
@@ -166,12 +174,21 @@
                         dataType: "text",
                         success: function (response) {
                             $("#box_photographers").append(response);
+                            {#$('#box_photographers .slider_thumbs').slick('unslick');#}
+{#                            sliders('#box_photographers .slider_thumbs');#}
+                            
+                            
                         }
                     });
                 }, 100);
             };
             $(this).ready(loadPhotographers);
             $('#show_more_photographers').click(loadPhotographers);
+            
+
+
+
+
 
         });
 
@@ -213,7 +230,7 @@
             $('.footable-species').footable();
             $('.footable-photographers').footable();
         });#}
-
+             {#   });#}
     </script>
 
     {% if map %}

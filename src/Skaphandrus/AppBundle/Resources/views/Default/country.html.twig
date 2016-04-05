@@ -118,6 +118,8 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dotdotdot/jquery.dotdotdot.min.js') }}"></script>
+    
 
     {#<!-- FooTable -->
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>#}
@@ -505,15 +507,15 @@
                                     <div class="row" >
                                         {% if diveCenters %}
                                             {% for b in diveCenters %}
-                                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                                    <div class="contact-box">
+                                                <div class="col-lg-4 col-md-6 col-sm-12" >
+                                                    <div class="contact-box" style="height: 165px">
                                                         <div class="col-sm-4">
                                                             <div class="text-center">
                                                                 <img alt="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-8">
-                                                            <h3><strong>{{b}}</strong></h3>
+                                                            <div style="" class="truncate is-truncated"><h4><strong>{{b|truncate(40)}}</strong></h4></div>
                                                             <p><i class="fa fa-map-marker"></i> {{ b.address.location }}</p>
                                                             <div class="btn btn-primary btn-block btn-xs">
                                                                 <a style="color: white" href="{{ path('business_no_slug', { 'id': b.id}) }}">{{ "forms.common.btn.visit_business"|trans }}</a>
