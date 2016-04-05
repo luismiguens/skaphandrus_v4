@@ -497,45 +497,43 @@
                         <div id="tab-1" class="tab-pane active">
 
                             <div class="panel-body">
-                                <div class="chat-element" style="margin-bottom: -3%;" >
-                                    <h3>{% trans with {'%specie%': species.name } %} page.species.h3.contributors {% endtrans %}</h3>
-                                    <div class="row" >
-                                        <div class="col col-lg-12" >
-                                            <div class="ibox" >
+                                <h3>{% trans with {'%specie%': species.name } %} page.species.h3.contributors {% endtrans %}</h3>
+                                <div class="row" >
+                                    <div class="col col-lg-12" >
+                                        <div class="ibox" >
 
-                                                <div class="ibox-content">
-                                                    <div id="box_photographers"></div>
-                                                </div>
+                                            <div class="ibox-content">
+                                                <div id="box_photographers"></div>
+                                            </div>
 
-                                                <!-- Photographers Modal start -->
-                                                <div class="modal fade" id="photographersModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                                    <div class="modal-dialog modal-lg" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                <h4 class="modal-title" id="myModalLabel">{% trans with {'%specie%': species.name } %} page.species.h3.contributors_modal {% endtrans %}</h4>
-                                                            </div>
-                                                            <div class="modal-body">
+                                            <!-- Photographers Modal start -->
+                                            <div class="modal fade" id="photographersModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title" id="myModalLabel">{% trans with {'%specie%': species.name } %} page.species.h3.contributors_modal {% endtrans %}</h4>
+                                                        </div>
+                                                        <div class="modal-body">
 
-                                                                <div id="photographersInput"></div>
+                                                            <div id="photographersInput"></div>
 
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <!-- Photographers Modal end -->
+                                            </div>
+                                            <!-- Photographers Modal end -->
 
-                                                <div class="ibox-content" >
-                                                    <div class="row" >
-                                                        <div class="col-sm-6 col-sx-12">
-                                                            <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_photographers" >{{ "page.location.button.show_more_photographers"|trans }}</button>
-                                                        </div>
-                                                        <div class="col-sm-6 col-sx-12">
-                                                            <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#photographersModal">{{ "page.location.button.see_all_photographers"|trans }}</button>
-                                                        </div>
+                                            <div class="ibox-content" >
+                                                <div class="row" >
+                                                    <div class="col-sm-6 col-sx-12">
+                                                        <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_photographers" >{{ "page.location.button.show_more_photographers"|trans }}</button>
+                                                    </div>
+                                                    <div class="col-sm-6 col-sx-12">
+                                                        <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#photographersModal">{{ "page.location.button.see_all_photographers"|trans }}</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -580,7 +578,7 @@
                                         </div>
                                     {% endfor %}
                                 </div>
-                                {#<h4>Ridges or scutes (presence)</h4>
+                                <h4>Ridges or scutes (presence)</h4>
                                 <div class="row">
                                     <div class="col-sx-12">
                                         <a href="#" class="btn btn-primary btn-xs pull-right">Report Error</a>
@@ -603,7 +601,7 @@
 
                                         </div>
                                     </div>
-                                </div>#}
+                                </div>
                             </div>
 
 
