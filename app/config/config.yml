@@ -255,7 +255,16 @@ liip_imagine:
             quality: 100
             filters:
                 thumbnail: { size: [120, 90], mode: outbound }
-
+                
+        #species_page
+        sk_resize_476:
+            filters:
+                thumbnail: { size: [476, 300] }
+                
+        sk_resize_238:
+            filters:
+                thumbnail: { size: [238, 150] } 
+                
         sk_widen_50:
             filters:
                 relative_resize: { widen: 50 } 

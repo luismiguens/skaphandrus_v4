@@ -3,6 +3,7 @@ $(document).ready(function () {
 
     sliders('.slider_thumbs');
     slider_concurso('.lista_slides_concurso');
+    slider_similar('.slider_similar');
 
     //maps code
     var selector = "map-canvas";
@@ -64,7 +65,7 @@ $(document).ready(function () {
         percentPosition: true
     });
 
-    sliders('.slider_similar');
+//    sliders('.slider_similar');
     sidebar_slide('.latest_model_carrossel');
     sidebar_contest('.side_contest_slider');
     $(".right-sidebar-toggle").click(function () {
@@ -183,6 +184,41 @@ function sliders(selector) {
 
 }
 
+function slider_similar(selector) {
+
+    $(selector).slick({
+        infinite: true,
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 5,
+                    slidesToScroll: 5,
+                    infinite: true,
+                    autoplay: true,
+                    autoplaySpeed: 2000,
+                    dots: true
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 3,
+                    autoplay: true,
+                    autoplaySpeed: 2000,
+                    slidesToScroll: 1
+                }
+            }
+        ]
+    });
+
+}
+
+
 function slider_concurso(selector) {
     $(selector).slick({
         infinite: false,
@@ -190,6 +226,8 @@ function slider_concurso(selector) {
         slidesToScroll: 1,
         centerMode: true,
         centerPadding: '60px',
+        autoplay: true,
+        autoplayspeed: 1000,
         responsive: [
             {
                 breakpoint: 1024,

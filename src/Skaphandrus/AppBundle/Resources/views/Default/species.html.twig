@@ -219,7 +219,7 @@
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
+        {#$(document).ready(function () {
             $('.center').slick({
                 centerMode: true,
                 centerPadding: '60px',
@@ -258,49 +258,49 @@
                 slidesToShow: 8,
             });
 
-        });
+        });#}
 
-        var limit_photographers = 3;
-        var offset_photographers = -3;
-        var speciesId = 'species_id= {{ species.id }}';
+            var limit_photographers = 3;
+            var offset_photographers = -3;
+            var speciesId = 'species_id= {{ species.id }}';
 
-        var loadPhotographers = function () {
-            $('#box_photographers').fadeIn("slow");
-            offset_photographers = offset_photographers + 3;
-            setTimeout(function () {
-                $.ajax({
-                    type: "get",
-                    url: "{{path("ajax_photographers_show_more")}}",
-                    data: 'species_id=' + {{ species.id }} +'&limit=' + limit_photographers + '&offset=' + offset_photographers,
-                    dataType: "text",
-                    success: function (response) {
-                        $("#box_photographers").append(response);
-                    }
-                });
-            }, 100);
-        };
-        $(this).ready(loadPhotographers);
-        $('#show_more_photographers').click(loadPhotographers);
+            var loadPhotographers = function () {
+                $('#box_photographers').fadeIn("slow");
+                offset_photographers = offset_photographers + 3;
+                setTimeout(function () {
+                    $.ajax({
+                        type: "get",
+                        url: "{{path("ajax_photographers_show_more")}}",
+                        data: 'species_id=' + {{ species.id }} +'&limit=' + limit_photographers + '&offset=' + offset_photographers,
+                        dataType: "text",
+                        success: function (response) {
+                            $("#box_photographers").append(response);
+                        }
+                    });
+                }, 100);
+            };
+            $(this).ready(loadPhotographers);
+            $('#show_more_photographers').click(loadPhotographers);
 
-        var loadPhotographersAll = function () {
-            setTimeout(function () {
-                $.ajax({
-                    type: "get",
-                    url: "{{path("ajax_photographers_see_all")}}",
-                    data: speciesId,
-                    dataType: "text",
-                    success: function (response) {
-                        $("#photographersInput").html(response);
-                    }
-                });
-            }, 100);
-        };
-        $(this).ready(loadPhotographersAll);
-        $('#photographersModal').on('shown.bs.modal', loadPhotographersAll);
+            var loadPhotographersAll = function () {
+                setTimeout(function () {
+                    $.ajax({
+                        type: "get",
+                        url: "{{path("ajax_photographers_see_all")}}",
+                        data: speciesId,
+                        dataType: "text",
+                        success: function (response) {
+                            $("#photographersInput").html(response);
+                        }
+                    });
+                }, 100);
+            };
+            $(this).ready(loadPhotographersAll);
+            $('#photographersModal').on('shown.bs.modal', loadPhotographersAll);
 
-        $(function () {
-            $('.footable-spots').footable();
-        });
+            $(function () {
+                $('.footable-spots').footable();
+            });
 
     </script>
 
@@ -345,11 +345,11 @@
                 <div class="grid grid grid--fluid-5-col">
                     {% if photo is not empty %}
                         <div class="grid-sizer"></div>
-                        <img class="grid-item grid-item--width2" alt="{{photo.species}}" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />
-                        {#                        <img class="grid-item" src="placeholder.jpg" />#}
-                        <div class="grid-item">
-                            {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': species.id }, 'limit':6 } )) }}
-                        </div>
+                        <img class="grid-item grid-item--width2" alt="{{photo.species}}" src="{{ photo.getWebPath | imagine_filter('sk_resize_476') }}" />
+                        {#{% for p in photo %}
+                            <img class="grid-item" alt="{{p.species}}" src="{{ p.getWebPath | imagine_filter('sk_resize_238') }}" />
+                        {% endfor %}#}
+                        <img class="grid-item" src="placeholder.jpg" />
                     {% else %}
                         <div class="row" >
                             <div class="col col-lg-12" >
@@ -367,8 +367,16 @@
 
             <div class="ibox">
                 <div class="ibox-title">
-                    <h2>{{ "page.species.h1.title"|trans }}</h2>
-                    <p itemprop="name">{{ species.name }}</p>
+                    {#{{ "page.species.h1.title"|trans }}#}
+                    <h2 itemprop="name">{{ species.name }}</h2>
+                    {% if species.speciesVernaculars is not empty %}
+                        {#{{ "page.species.h5.common_names"|trans }}:#}
+                        {% for vernacular in species.speciesVernaculars %}
+                            {% if (vernacular.locale == app.request.locale) and (i<4) %}
+                                <p>{{ vernacular.vernacular.name|title }}</p>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
                 </div>
                 <div class="ibox-content">
                     <h3> 
@@ -469,16 +477,38 @@
                     <h2>{{ "page.species.h2.similar_species"|trans }}</h2>	
                 </div>
                 <div class="ibox-content" >
-                    <div class="roller" >
-                        {% for photo in similarSpecies %}
-                            <div class="desc" >
-                                <a class="thumbnail" href="{{ path('species',  { 'slug': photo.species.name }) }}">
-                                    <img alt="{{ photo.species }}" class="img-responsive back" style="width: 100px; height: 100px;" src="{{ photo.getWebPath| imagine_filter('sk_widen_400') }}">
-                                    <div class="over"> {{ photo.species }} </div>
-                                </a>
+
+                    <div class="row">
+                        <div class="col-lg-10 col-lg-offset-1">
+                            <div class="slider_similar">
+                                {% for similarPhoto in similarSpecies %}
+                                    <a class="thumbnail" href="{{ path('species',  { 'slug': similarPhoto.species.name }) }}">
+                                        <img alt="{{ similarPhoto.species }}" class="img-responsive back" src="{{ similarPhoto.getWebPath| imagine_filter('sk_widen_400') }}">
+                                        <div class="text-center"> {{ similarPhoto.species }} </div>
+                                    </a>
+                                {% endfor %}
                             </div>
-                        {% endfor %}
+                        </div>
                     </div>
+
+                    {#<div class="roller" >
+                        {% for photo in similarSpecies %}
+                            <div>
+                                <a class="thumbnail" href="{{ path('species',  { 'slug': photo.species.name }) }}">
+                                <img alt="{{ photo.species }}" class="img-responsive back" src="{{ photo.getWebPath| imagine_filter('sk_widen_400') }}">
+                                <div class="text-center"> {{ photo.species }} </div>
+                            </a>
+                            </div>#}
+
+
+                    {#<div class="desc" >
+                        <a class="thumbnail" href="{{ path('species',  { 'slug': photo.species.name }) }}">
+                            <img alt="{{ photo.species }}" class="img-responsive back" style="width: 100px; height: 100px;" src="{{ photo.getWebPath| imagine_filter('sk_widen_400') }}">
+                            <div class="over"> {{ photo.species }} </div>
+                        </a>
+                    </div>#}
+                    {#{% endfor %}
+                </div>#}
                 </div>
             </div>
             <!-- outras especies similares end -->
@@ -578,7 +608,7 @@
                                         </div>
                                     {% endfor %}
                                 </div>
-                                <h4>Ridges or scutes (presence)</h4>
+                                {#<h4>Ridges or scutes (presence)</h4>
                                 <div class="row">
                                     <div class="col-sx-12">
                                         <a href="#" class="btn btn-primary btn-xs pull-right">Report Error</a>
@@ -601,7 +631,7 @@
 
                                         </div>
                                     </div>
-                                </div>
+                                </div>#}
                             </div>
 
 
@@ -648,9 +678,9 @@
                                         <table class="footable table table-stripped tablet breakpoint footable-spots" data-page-size="10" data-filter=#filter-spots>
                                             <thead>
                                                 <tr>
-                                                    <th>{{ "page.species.table.country"|trans }}</th>
-                                                    <th>{{ "page.species.table.location"|trans }}</th>
-                                                    <th>{{ "page.species.table.spot"|trans }}</th>
+                                                    <th style="width: 33%">{{ "page.species.table.country"|trans }}</th>
+                                                    <th style="width: 33%">{{ "page.species.table.location"|trans }}</th>
+                                                    <th style="width: 33%">{{ "page.species.table.spot"|trans }}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -658,13 +688,13 @@
                                                 {% for spot in spots %}
                                                     {% if spot not in arrayAux %}
                                                         <tr>
-                                                            <td>
+                                                            <td style="width: 33%">
                                                                 {{ link_to_country(spot.location.region.country) }}
                                                             </td>
-                                                            <td>
+                                                            <td style="width: 33%">
                                                                 {{ link_to_location(spot.location) }}
                                                             </td>
-                                                            <td>
+                                                            <td style="width: 33%">
                                                                 {{ link_to_spot(spot) }}
                                                             </td>
                                                         </tr>

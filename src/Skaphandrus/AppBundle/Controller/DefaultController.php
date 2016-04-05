@@ -421,6 +421,16 @@ class DefaultController extends Controller {
                 }
             }
 
+//            $photos = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkSpecies")
+//                    ->getPhotosForIdentification($species->getId(), 0, 7);
+//
+//            dump($photos);
+//            
+//            foreach ($photos as $key => $photo) {
+//                $photo = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkPhoto")
+//                        ->findOneById($photo['id']);
+//            }
+            
             $photo = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkPhoto")
                     ->getPrimaryPhotoForSpecies($species->getId());
 
