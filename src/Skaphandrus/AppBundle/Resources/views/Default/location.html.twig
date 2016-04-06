@@ -42,79 +42,14 @@
     {#    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/footable/footable.core.css') }}" rel="stylesheet">#}
 
     <style type="text/css">
-        {#.ibox-title {
-            margin-top: 1.7%;
-        }#}
-        .ibox-title p {
-            margin-left: 1%;
-        }
-        .ibox-content p {
-            text-align: justify;
-            text-indent: 10px;
-        }
+
         .in.collapse+a.btn.showdetails:before {
             content: "{{"common.hide"|trans}}";
         }
         .collapse+a.btn.showdetails:before {
             content:"{{"common.show_more"|trans}}";
         }
-        .roller {
-            width: 85%;
-            margin-left:3%;
-        }
-        .roller img {
-            min-width: 100px;
-            min-height: 100px;
-        }
-        .roller button {
-            width: 100px;
-            height: 100px;
-            margin-top: 5%;
 
-        }
-        .label {
-            border-radius: 10px;
-        }
-        .thumbnail {
-            border: 1px solid #FFF;
-            margin-bottom: 0%;
-        }
-        a.thumbnail.active, a.thumbnail:focus, a.thumbnail:hover{
-            border-color: #1AB394;
-        }
-        .slick-slider {
-            margin-bottom: 0px;
-        }
-        .img-circle{
-            width: 38px;
-            height: 38px;
-        }
-        .tabs-container{
-            margin-bottom: 2%;
-        }
-        .logo{
-            width: 100px;
-            min-height: 100px;
-            max-height: 300px;
-            padding-top: 5%;
-            padding-bottom: 5%;
-        }
-        .logo2{
-            width: 100px;
-            min-height: 100px;
-            max-height: 300px;
-        }
-        .col-lg-6 h6 {
-            margin-top: 0px;
-            padding-left: 10%;
-        }
-        .col-lg-6 p {
-            margin-bottom: 0px;
-            padding-left: 0%;
-        }
-        .tab-content h6 {
-            text-indent: 10px;
-        }
 
     </style>
 
@@ -154,7 +89,9 @@
                         data: 'location_id=' + {{ location.id }} +'&limit=' + limit_spots + '&offset=' + offset_spots,
                         dataType: "text",
                         success: function (response) {
+                            $('#box_spots .slider_thumbs').slick('unslick'); 
                             $("#box_spots").append(response);
+                            sliders('#box_spots .slider_thumbs');
                         }
                     });
                 }, 100);
@@ -172,7 +109,9 @@
                         data: 'location_id=' + {{ location.id }} +'&limit=' + limit_species + '&offset=' + offset_species,
                         dataType: "text",
                         success: function (response) {
+                            $('#box_species .slider_thumbs').slick('unslick'); 
                             $("#box_species").append(response);
+                            sliders('#box_species .slider_thumbs');
                         }
                     });
                 }, 100);
@@ -190,7 +129,9 @@
                         data: 'location_id=' + {{ location.id }} +'&limit=' + limit_photographers + '&offset=' + offset_photographers,
                         dataType: "text",
                         success: function (response) {
+                            $('#box_photographers .slider_thumbs').slick('unslick'); 
                             $("#box_photographers").append(response);
+                            sliders('#box_photographers .slider_thumbs');
                         }
                     });
                 }, 100);
