@@ -232,24 +232,19 @@
     <div class="wrapper wrapper-content">
         <div class="animated fadeInRight">
 
-            <div class="species_photos_wrapper">
+{#            <div class="species_photos_wrapper">
                 <div class="grid">
                     <div class="grid-sizer"></div>
                     {% for photo in photos %}
-
                         {% if loop.index == 1 %}
-
                             <img class="grid-item grid-item--width2" alt="{{photo.species}}" src="{{ photo.getWebPath | imagine_filter('sk_crop_476') }}" />
                         {% else %}
                             <img class="grid-item" alt="{{photo.species}}" src="{{ photo.getWebPath | imagine_filter('sk_crop_238') }}" />
-
                         {% endif %}
-
-
                     {% endfor %}
 
 
-                    {#   {% if photo is not empty %}
+                    {% if photo is not empty %}
                            <div class="grid-sizer"></div>
                            <img class="grid-item grid-item--width2" alt="{{photo.species}}" src="{{ photo.getWebPath | imagine_filter('sk_resize_476') }}" />
                            {% for p in photo %}
@@ -264,12 +259,14 @@
                                    </div>
                                </div>
                            </div>
-                       {% endif %}#}
+                       {% endif %}
+                       
+                       
                 </div>
                 <div class="see_all">
                     <a href="{{ path('photos', { 'species': species.id }) }}">See all photos</a>
                 </div>
-            </div>
+            </div>#}
 
             <div class="ibox">
                 <div class="ibox-title">
