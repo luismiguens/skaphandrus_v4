@@ -69,144 +69,24 @@
     <link href="{{ asset('bundles/skaphandrusapp/css/plugins/footable/footable.core.css') }}" rel="stylesheet">
 
     <style>
-        .ibox-title p {
-            margin-left: 1%;
-        }
-        .ibox-content p {
-            text-align: justify;
-            text-indent: 10px;
-        }
-        .tox { 
-            text-indent: 25px;
-        }
-        .bigpic { 
-            min-width: 100px ;
-            min-height: 100px ;
-            max-width: 540px;
-            max-height: 600px;
-        }
-        .gallery{
-            max-height: 200px;
-            max-width: 100px;
-            min-width: 100px;
-            min-height: 100px;
-            margin-right: 1.2%;
-            margin-bottom: 1.2%;
-        }
-        .gallery-r {
-            max-height: 200px;
-            max-width: 100px;
-            min-width: 100px;
-            min-height: 100px;
-            margin-bottom: 1.2%;
-        }
-        .thumbnail {
-            border: 1px solid #FFF;
-            margin-bottom: 0%;
-        }
-        .col-lg-2 a {
-            margin: 0%;
-
-        }
-        a.thumbnail.active, a.thumbnail:focus, a.thumbnail:hover{
-            border-color: #1AB394;
-        }
-        .img-responsive{
-            display: inline;
-        }
-        .roller {
-            margin: 0% 5% 0% 5%;
-        }
-        #box_photographers button {
-            width: 100px;
-            height: 100px;
-            margin-top: 5%;
-        }
-        #box_photographers .thumbnail img {
-            width: 100px;
-            height: 100px;
-        }
-        .desc {
-            position:relative;
-            float: left;
-        }
-        .over {
-            content:'\A';
-            position:absolute;
-            width:89px; height:25%;
-            bottom:0; left:0;
-            background:rgba(0,0,0,0.6);
-            opacity:1;
-            transition: all 0.5s;
-            -webkit-transition: all 0.5s;
-            color: white;
-            font-size:10px;
-            padding-left:4%;
-            margin: 0px 0px 5px 10px;
-       	}
-       	.over2 {
-            content:'\A';
-            position:absolute;
-            width:100%; 
-            height:25%;
-            top:0; left:0;
-            background:rgba(0,0,0,0.6);
-            opacity:1;
-            transition: all 0.5s;
-            -webkit-transition: all 0.5s;
-            color: white;
-            font-size:15px;
-            font-weight: 400;
-            text-align: center;
-            padding-top: 4%;
-            border-radius: 4px 4px 0px 0px;
-       	}
-       	.crit {
-            height: 150px;
-            width: 100%;
-            vertical-align:top;
-            margin-right: -5%;
-       	}
-        {#.cretc { 
-            position:absolute; 
-            bottom: 10%; 
-            right: -5%; 
-            z-index: 3;
-            background-image: url("img/right.png");
-            width: 32px;
-            height: 32px;
-        }
-        .cretf { 
-            position:absolute; 
-            bottom: 10%; 
-            right: -5%; 
-            z-index: 3;
-            background-image: url("img/wrong.png");
-            width: 32px;
-            height: 32px;
-        }#}
-        .back {
-            max-height: 100px;
-            width: 100px;
-            vertical-align:top;
-        }
-
-        {#        input[type=checkbox] {
-                    display:none;
-                }
-                input[type=checkbox] + label
-                {
-                    background-position: center;
-                    background-repeat: no-repeat;
-                    background-size: 80%;
-                    background-color: white;
-                    height: 104px;
-                    width: 104px;
-                    display:inline-block;
-                    padding: 0 0 0 0px;
-                    margin-bottom: 0px;
-                    font-weight: normal;
-                }#}
+        {#
+        
+                {#        input[type=checkbox] {
+                            display:none;
+                        }
+                        input[type=checkbox] + label
+                        {
+                            background-position: center;
+                            background-repeat: no-repeat;
+                            background-size: 80%;
+                            background-color: white;
+                            height: 104px;
+                            width: 104px;
+                            display:inline-block;
+                            padding: 0 0 0 0px;
+                            margin-bottom: 0px;
+                            font-weight: normal;
+                        }#}
     </style>
 
 {% endblock %}
@@ -338,27 +218,51 @@
 
 {% block body %}
 
+
+
+
+
+
+
+
+
+
     <div class="wrapper wrapper-content">
         <div class="animated fadeInRight">
 
             <div class="species_photos_wrapper">
-                <div class="grid grid grid--fluid-5-col">
-                    {% if photo is not empty %}
-                        <div class="grid-sizer"></div>
-                        <img class="grid-item grid-item--width2" alt="{{photo.species}}" src="{{ photo.getWebPath | imagine_filter('sk_resize_476') }}" />
-                        {#{% for p in photo %}
-                            <img class="grid-item" alt="{{p.species}}" src="{{ p.getWebPath | imagine_filter('sk_resize_238') }}" />
-                        {% endfor %}#}
-                        <img class="grid-item" src="placeholder.jpg" />
-                    {% else %}
-                        <div class="row" >
-                            <div class="col col-lg-12" >
-                                <div class="ibox" style="margin: 1.2% 0% 0% 0%" >
-                                    <h4 align="center">{{ "page.species.h4.no_photos"|trans }}</h4>
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
+                <div class="grid">
+                    <div class="grid-sizer"></div>
+                    {% for photo in photos %}
+
+                        {% if loop.index == 1 %}
+
+                            <img class="grid-item grid-item--width2" alt="{{photo.species}}" src="{{ photo.getWebPath | imagine_filter('sk_crop_476') }}" />
+                        {% else %}
+                            <img class="grid-item" alt="{{photo.species}}" src="{{ photo.getWebPath | imagine_filter('sk_crop_238') }}" />
+
+                        {% endif %}
+
+
+                    {% endfor %}
+
+
+                    {#   {% if photo is not empty %}
+                           <div class="grid-sizer"></div>
+                           <img class="grid-item grid-item--width2" alt="{{photo.species}}" src="{{ photo.getWebPath | imagine_filter('sk_resize_476') }}" />
+                           {% for p in photo %}
+                               <img class="grid-item" alt="{{p.species}}" src="{{ p.getWebPath | imagine_filter('sk_resize_238') }}" />
+                           {% endfor %}
+                           <img class="grid-item" src="placeholder.jpg" />
+                       {% else %}
+                           <div class="row" >
+                               <div class="col col-lg-12" >
+                                   <div class="ibox" style="margin: 1.2% 0% 0% 0%" >
+                                       <h4 align="center">{{ "page.species.h4.no_photos"|trans }}</h4>
+                                   </div>
+                               </div>
+                           </div>
+                       {% endif %}#}
                 </div>
                 <div class="see_all">
                     <a href="{{ path('photos', { 'species': species.id }) }}">See all photos</a>
@@ -517,65 +421,16 @@
             <div class="ibox" >
                 <div class="tabs-container">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a aria-expanded="true" data-toggle="tab" href="#tab-1">{{ "page.species.tab.contributors"|trans }}</a></li>
-                        <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-2">{{ "page.species.tab.criterias"|trans }}</a></li>
-                        <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-3">{{ "page.species.tab.geo_distribution"|trans }}</a></li>
+                        
+                        <li class="active"><a aria-expanded="true" data-toggle="tab" href="#tab-1">{{ "page.species.tab.criterias"|trans }}</a></li>
+                        <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-2">{{ "page.species.tab.geo_distribution"|trans }}</a></li>
+                        <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-3">{{ "page.species.tab.contributors"|trans }}</a></li>
                     </ul>
                     <div class="tab-content">
 
-                        <!-- Photographers start -->
+                        
+                                                <!-- Criterias start -->
                         <div id="tab-1" class="tab-pane active">
-
-                            <div class="panel-body">
-                                <h3>{% trans with {'%specie%': species.name } %} page.species.h3.contributors {% endtrans %}</h3>
-                                <div class="row" >
-                                    <div class="col col-lg-12" >
-                                        <div class="ibox" >
-
-                                            <div class="ibox-content">
-                                                <div id="box_photographers"></div>
-                                            </div>
-
-                                            <!-- Photographers Modal start -->
-                                            <div class="modal fade" id="photographersModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                                <div class="modal-dialog modal-lg" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                            <h4 class="modal-title" id="myModalLabel">{% trans with {'%specie%': species.name } %} page.species.h3.contributors_modal {% endtrans %}</h4>
-                                                        </div>
-                                                        <div class="modal-body">
-
-                                                            <div id="photographersInput"></div>
-
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- Photographers Modal end -->
-
-                                            <div class="ibox-content" >
-                                                <div class="row" >
-                                                    <div class="col-sm-6 col-sx-12">
-                                                        <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_photographers" >{{ "page.location.button.show_more_photographers"|trans }}</button>
-                                                    </div>
-                                                    <div class="col-sm-6 col-sx-12">
-                                                        <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#photographersModal">{{ "page.location.button.see_all_photographers"|trans }}</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Photographers end -->
-
-                        <!-- Criterias start -->
-                        <div id="tab-2" class="tab-pane">
 
                             <div class="panel-body">
                                 <h3>{% trans with {'%specie%': species.name } %} page.species.h3.species_criteria {% endtrans %}</h3>
@@ -584,17 +439,39 @@
                                     {% for criteria in criterias %}
                                         <div class="ibox" style="padding-left: 2%" >
                                             <h4>{{ criteria }}</h4>
-                                            <a href="#" class="btn btn-primary btn-xs pull-right">Report Error</a>
+                                            {#<a href="#" class="btn btn-primary btn-xs pull-right">Report Error</a>#}
                                         </div>
                                         <div class="ibox" >
                                             {% for character in criteria.characters %}
-                                                <div class="col-sm-2">
-                                                    <div class="wrapper_visual_id thumbnail">
-                                                        <img class="img-responsive" src="{{ character.getWebPath|imagine_filter('sk_widen_240') }}" />
-                                                        <div class="feature text-success">{{ character }}</div>
-                                                        <i class="fa fa-check feature_icone true"></i>
+
+                                                {% if character.isFromSpecies %}
+
+
+                                                    <div class="col-sm-2">
+                                                        <div class="wrapper_visual_id thumbnail">
+                                                            <img class="img-responsive" src="{{ character.getWebPath|imagine_filter('sk_widen_240') }}" />
+                                                            <div class="feature text-success">{{ character }}</div>
+                                                            <i class="fa fa-check feature_icone true"></i>
+                                                        </div>
                                                     </div>
-                                                </div>
+
+                                                {% else %}
+
+
+                                                    <div class="col-sm-2">
+                                                        <div class="wrapper_visual_id thumbnail">
+                                                            <img class="img-responsive" src="{{ character.getWebPath|imagine_filter('sk_widen_240') }}" />
+                                                            <div class="feature text-success">{{ character }}</div>
+                                                            <div class="overly"></div>
+                                                            <i class="fa fa-times feature_icone false"></i>
+                                                        </div>
+                                                    </div>
+
+
+
+
+                                                {% endif %}
+
                                                 {#<div class="col col-lg-2 col-md-4 col-xs-6 " >
                                                     <div class="desc">
                                                         <a class="thumbnail" href="#">
@@ -661,9 +538,12 @@
                             </div>#}
                         </div>
                         <!-- Criterias end -->
+                        
+                        
+                        
 
                         <!-- Map start -->
-                        <div id="tab-3" class="tab-pane">
+                        <div id="tab-2" class="tab-pane">
                             <div class="panel-body">
                                 <h3>{% trans with {'%specie%': species.name } %} page.species.h3.geo_distribution {% endtrans %}</h3>
                                 <span itemscope itemtype="http://schema.org/Map">
@@ -717,6 +597,59 @@
                             </div>
                         </div>
                         <!-- Map end -->
+                        
+                        <!-- Photographers start -->
+                        <div id="tab-3" class="tab-pane">
+
+                            <div class="panel-body">
+                                <h3>{% trans with {'%specie%': species.name } %} page.species.h3.contributors {% endtrans %}</h3>
+                                <div class="row" >
+                                    <div class="col col-lg-12" >
+                                        <div class="ibox" >
+
+                                            <div class="ibox-content">
+                                                <div id="box_photographers"></div>
+                                            </div>
+
+                                            <!-- Photographers Modal start -->
+                                            <div class="modal fade" id="photographersModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title" id="myModalLabel">{% trans with {'%specie%': species.name } %} page.species.h3.contributors_modal {% endtrans %}</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+
+                                                            <div id="photographersInput"></div>
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Photographers Modal end -->
+
+                                            <div class="ibox-content" >
+                                                <div class="row" >
+                                                    <div class="col-sm-6 col-sx-12">
+                                                        <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_photographers" >{{ "page.location.button.show_more_photographers"|trans }}</button>
+                                                    </div>
+                                                    <div class="col-sm-6 col-sx-12">
+                                                        <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#photographersModal">{{ "page.location.button.see_all_photographers"|trans }}</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Photographers end -->
+
+
 
                     </div>
                 </div>

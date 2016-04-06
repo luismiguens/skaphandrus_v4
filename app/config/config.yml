@@ -256,14 +256,14 @@ liip_imagine:
             filters:
                 thumbnail: { size: [120, 90], mode: outbound }
                 
-        #species_page
-        sk_resize_476:
+        #species page big image
+        sk_crop_476:
             filters:
-                thumbnail: { size: [476, 300] }
-                
-        sk_resize_238:
+                thumbnail: { size: [476, 300] , mode: outbound }
+        #species page small images        
+        sk_crop_238:
             filters:
-                thumbnail: { size: [238, 150] } 
+                thumbnail: { size: [238, 150] , mode: outbound } 
                 
         sk_widen_50:
             filters:

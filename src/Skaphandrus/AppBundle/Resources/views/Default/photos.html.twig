@@ -336,11 +336,11 @@
     <script src="{{ asset('bundles/skaphandrusapp/js/imagesloaded.pkgd.min.js') }}"></script>
     <script type="text/javascript">
 
-        var $grid = $('.grid').imagesLoaded(function () {
+        var $grid = $('.gallery').imagesLoaded(function () {
             // init Isotope after all images have loaded
             $grid.isotope({
                 // options
-                itemSelector: '.grid-item',
+                itemSelector: '.grid-item-gallery',
                 layoutMode: 'masonry'
             });
         });
@@ -348,6 +348,16 @@
     </script>
 
 {% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        .grid-item-gallery{width: 25%}
+    </style>
+{% endblock %}
+
+
 
 
 {% block body %}
@@ -389,9 +399,9 @@
 
         <br>
 
-        <div class="row grid">
+        <div class="row gallery">
             {% for photo in pagination %}
-                <div class="col-lg-4 grid-item">
+                <div class="col-lg-4 grid-item-gallery">
                     <div class="ibox float-e-margins">
                         <!--<div class="ibox-title"><h5>{{photo.title}}</h5></div>-->
                         <div itemprop="image" itemscope itemtype="http://schema.org/ImageObject">

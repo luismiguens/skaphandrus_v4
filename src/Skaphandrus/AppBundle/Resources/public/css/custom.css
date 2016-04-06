@@ -67,7 +67,9 @@
     margin: 1px; 
 }
 .grid-sizer,
-.grid-item { width: 20%; }
+.grid-item { 
+    width: 20%; 
+}
 /* 2 columns */
 .grid-item--width2 { width: 40%; }
 .wrapper_visual_id{

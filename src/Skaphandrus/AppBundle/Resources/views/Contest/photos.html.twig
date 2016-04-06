@@ -45,11 +45,11 @@
     <script src="{{ asset('bundles/skaphandrusapp/js/imagesloaded.pkgd.min.js') }}"></script>
     <script type="text/javascript">
         $(function () {
-            var $grid = $('.grid').imagesLoaded(function () {
+            var $grid = $('.grid-contest').imagesLoaded(function () {
 // init Isotope after all images have loaded
                 $grid.isotope({
 // options
-                    itemSelector: '.grid-item',
+                    itemSelector: '.grid-item-contest',
                     layoutMode: 'masonry'
                 });
             });
@@ -71,6 +71,16 @@
         });
     </script>
 {% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        .grid-item-contest{width: 33%}
+    </style>
+{% endblock %}
+
+
 
 {% block body %}
     <div class="row">
@@ -126,12 +136,12 @@
                                 </div>
                             </div>
                             <div class="tab-pane active" id="tab-1">
-                                <div class="row grid">
+                                <div class="row grid-contest">
 
                                     {#<h2>{{ "page.contests_photos.h3.category"|trans }}: {{ category.translate.name }}, {{ category.contest.name }}</h2>#}
 
                                     {% for photo in category.photo %}
-                                        <div class="col-lg-4 grid-item">
+                                        <div class="col-lg-4 grid-item-contest">
                                             <div class="ibox float-e-margins">
                                                 <!--<div class="ibox-title"><h5>{{photo.title}}</h5></div>-->
                                                 <div>

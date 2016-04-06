@@ -42,6 +42,28 @@ where species_id = " . $species_id;
         return $result;
     }
 
+    
+    
+    public function findCriteriaJoinAllCharacters($criteria_id) {
+
+        $query = $this->getEntityManager()
+                        ->createQuery(
+                                'SELECT crits, chars
+                FROM SkaphandrusAppBundle:SkIdentificationCriteria crits
+                JOIN crits.characters chars 
+                WHERE crits.id = :criteria_id'
+                        )->setParameter('criteria_id', $criteria_id);
+        try {
+            return $query->getOneOrNullResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    
+    
+    
+    
     /**
      * Metodo que com base nas especies enviadas, devolve as os critérios e caracteres que fazem match.
      */

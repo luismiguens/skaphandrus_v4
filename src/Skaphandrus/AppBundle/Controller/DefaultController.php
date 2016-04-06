@@ -44,13 +44,11 @@ class DefaultController extends Controller {
 
         return $this->render('SkaphandrusAppBundle:Default:testThumbnail.html.twig', array('photos' => $photos));
     }
-    
-    
-        public function testSmartLinkAction() {
+
+    public function testSmartLinkAction() {
 
         return $this->render('SkaphandrusAppBundle:Default:testSmartLink.html.twig');
     }
-    
 
     public function index2Action() {
         $location = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
@@ -420,36 +418,54 @@ class DefaultController extends Controller {
                     $map->addMarker($marker);
                 }
             }
-
-//            $photos = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkSpecies")
-//                    ->getPhotosForIdentification($species->getId(), 0, 7);
-//
-//            dump($photos);
-//            
-//            foreach ($photos as $key => $photo) {
-//                $photo = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkPhoto")
-//                        ->findOneById($photo['id']);
-//            }
             
-            $photo = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkPhoto")
-                    ->getPrimaryPhotoForSpecies($species->getId());
+            //ir buscar ids das melhores fotografias
+            $p = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkSpecies")
+                    ->getPhotosForIdentification($species->getId(), 0, 7);
+            //para cada id ir buscar o object
+            foreach ($p as $key => $ph) {
+                $photo = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkPhoto")
+                        ->findOneById($ph['id']);
+                $photos[] = $photo;
+            }
+            
+            //ir buscar especies da mesma ordem
+            $species_ids = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
+                    ->findSpeciesInOrder($species, 10);
+            
+            //para cada especie ir buscar a melhor fotografia(devolve array)
+            foreach ($species_ids as $key => $id) {
+                $bestPhotos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
+                        ->getPhotosForIdentification($id['id'], null, 1);
+                
+                $similarSpecies[] = $this->getDoctrine()
+                                    ->getRepository("SkaphandrusAppBundle:SkPhoto")
+                                    ->findOneById($bestPhotos[0]['id']);
+                
+            }
+            
+            
+            
 
-            $similarSpecies = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
-                    ->getPhotoSimilarSpecies($species);
+            //ir buscar a lista de id de criterios da especie
+            $criterias_ids = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkIdentificationCriteria")->getCriteriasFromSpecies($species->getId());
 
-            $criterias = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkSpecies")
-                    ->findCriteriasWithCharacters($species->getId());
+            //ir buscar os criterios e todos os caracteres do criterio
+            foreach ($criterias_ids as $key => $criteria) {
+                $criterias[] = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkIdentificationCriteria')->findCriteriaJoinAllCharacters($criteria);
+            }
 
-//            $allCriterias = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkIdentificationCriteria")
-//                    ->findAll();
-//                    
-//            dump($allCriterias);
-//            $users = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-//                    ->findUsersInSpecies($species->getId());
+
+            foreach ($criterias as $key => $criteria) :
+                foreach ($criteria->getCharacters() as $key => $character):
+                    $isFromSpecies = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->isCharacterFromSpecies($species->getId(), $character->getId());
+                    $character->setIsFromSpecies($isFromSpecies);
+                endforeach;
+            endforeach;
 
             return $this->render('SkaphandrusAppBundle:Default:species.html.twig', array(
                         "species" => $species,
-                        "photo" => $photo,
+                        "photos" => $photos,
                         "similarSpecies" => $similarSpecies,
                         "criterias" => $criterias,
                         "spots" => $spots,
@@ -502,20 +518,16 @@ class DefaultController extends Controller {
         ));
     }
 
-    
-    
     public function business_no_slugAction($id) {
-    
+
         $business = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
                 ->find($id);
-        
+
         return $this->redirect($this->generateUrl('business', array('country' => Utils::slugify($business->getAddress()->getLocation()->getRegion()->getCountry()),
-            'location'=>  Utils::slugify($business->getAddress()->getLocation()),
-            'slug'=>Utils::slugify($business->getName()))));
-        
+                            'location' => Utils::slugify($business->getAddress()->getLocation()),
+                            'slug' => Utils::slugify($business->getName()))));
     }
-    
-    
+
     /*
      * Business Page 
      */

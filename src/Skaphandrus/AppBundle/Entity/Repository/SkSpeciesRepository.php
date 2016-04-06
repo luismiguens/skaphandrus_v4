@@ -207,6 +207,63 @@ class SkSpeciesRepository extends EntityRepository {
             return null;
         }
     }
+    
+
+    
+    public function findSpeciesInOrder($skSpecies, $limit){
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT distinct(s.id) as id 
+                from sk_photo as p
+                join sk_species as s on p.species_id = s.id
+                join sk_genus as g on g.id = s.genus_id
+                join sk_family as f on f.id = g.family_id
+                join sk_order as o on o.id = f.order_id
+                where o.id = " . $skSpecies->getGenus()->getFamily()->getOrder()->getId()." ";
+        
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $species = $statement->fetchAll();
+
+        shuffle($species);
+                
+        return array_slice($species, 0, $limit);
+        
+        
+    }
+
+
+    
+    
+    
+    //verifica se um caracter está mapeado com uma especie
+    public function isCharacterFromSpecies($species_id, $character_id){
+        
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT species_id "
+                . "FROM sk_identification_species_character "
+                . "WHERE species_id = ".$species_id." "
+                . "AND character_id = ".$character_id." ";
+               
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        
+        
+        if($values):
+            return true;
+        else:
+            return false;
+        endif;
+
+        
+        
+    }
+    
+    
 
     public function getQueryBuilder($params, $limit = 20, $order = array('id' => 'desc'), $offset = 0) {
 

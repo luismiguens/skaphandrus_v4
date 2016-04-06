@@ -32,6 +32,14 @@
     {{ parent() }}
 {% endblock %}
 
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        .grid-item-winners{width: 33%}
+    </style>
+{% endblock %}
+
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
         <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>

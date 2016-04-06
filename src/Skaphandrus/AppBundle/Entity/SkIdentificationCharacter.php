@@ -69,6 +69,9 @@ class SkIdentificationCharacter
     
     private $updatedAt;
     
+    
+    private $isFromSpecies = false;
+    
 
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
@@ -109,6 +112,37 @@ class SkIdentificationCharacter
         $this->phylum = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    
+        /**
+     * Set isFromSpecies
+     *
+     * @param string $isFromSpecies
+     *
+     * @return SkIdentificationCharacter
+     */
+    public function setIsFromSpecies($isFromSpecies)
+    {
+        $this->isFromSpecies = $isFromSpecies;
+        
+       
+
+        return $this;
+    }
+
+    /**
+     * Get isFromSpecies
+     *
+     * @return string
+     */
+    public function getIsFromSpecies()
+    {
+        return $this->isFromSpecies;
+    }
+
+    
+    
+    
+    
     /**
      * Set image
      *
