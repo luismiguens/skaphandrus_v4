@@ -99,50 +99,12 @@
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
 
     <script type="text/javascript">
-        {#$(document).ready(function () {
-            $('.center').slick({
-                centerMode: true,
-                centerPadding: '60px',
-                slidesToShow: 3,
-                responsive: [
-                    {
-                        breakpoint: 768,
-                        settings: {
-                            arrows: false,
-                            centerMode: true,
-                            centerPadding: '40px',
-                            slidesToShow: 3
-                        }
-                    },
-                    {
-                        breakpoint: 480,
-                        settings: {
-                            arrows: false,
-                            centerMode: true,
-                            centerPadding: '40px',
-                            slidesToShow: 1
-                        }
-                    }
-                ]
-            });
 
-            $('.roller').slick({
-                infinite: true,
-                slidesToShow: 9,
-                slidesToScroll: 1,
-                autoplay: true,
-                autoplaySpeed: 2000,
-            });
 
-            $('.static').slick({
-                slidesToShow: 8,
-            });
-
-        });#}
-
+        $(function () {
             var limit_photographers = 3;
             var offset_photographers = -3;
-            var speciesId = 'species_id= {{ species.id }}';
+
 
             var loadPhotographers = function () {
                 $('#box_photographers').fadeIn("slow");
@@ -154,7 +116,7 @@
                         data: 'species_id=' + {{ species.id }} +'&limit=' + limit_photographers + '&offset=' + offset_photographers,
                         dataType: "text",
                         success: function (response) {
-                            $('#box_photographers .slider_thumbs').slick('unslick'); 
+                            $('#box_photographers .slider_thumbs').slick('unslick');
                             $("#box_photographers").append(response);
                             sliders('#box_photographers .slider_thumbs');
                         }
@@ -164,25 +126,27 @@
             $(this).ready(loadPhotographers);
             $('#show_more_photographers').click(loadPhotographers);
 
-            var loadPhotographersAll = function () {
-                setTimeout(function () {
-                    $.ajax({
-                        type: "get",
-                        url: "{{path("ajax_photographers_see_all")}}",
-                        data: speciesId,
-                        dataType: "text",
-                        success: function (response) {
-                            $("#photographersInput").html(response);
-                        }
-                    });
-                }, 100);
-            };
-            $(this).ready(loadPhotographersAll);
-            $('#photographersModal').on('shown.bs.modal', loadPhotographersAll);
+        });
+        var speciesId = 'species_id= {{ species.id }}';
+        var loadPhotographersAll = function () {
+            setTimeout(function () {
+                $.ajax({
+                    type: "get",
+                    url: "{{path("ajax_photographers_see_all")}}",
+                    data: speciesId,
+                    dataType: "text",
+                    success: function (response) {
+                        $("#photographersInput").html(response);
+                    }
+                });
+            }, 100);
+        };
+        $(this).ready(loadPhotographersAll);
+        $('#photographersModal').on('shown.bs.modal', loadPhotographersAll);
 
-            $(function () {
-                $('.footable-spots').footable();
-            });
+        $(function () {
+            $('.footable-spots').footable();
+        });
 
     </script>
 
@@ -232,41 +196,41 @@
     <div class="wrapper wrapper-content">
         <div class="animated fadeInRight">
 
-{#            <div class="species_photos_wrapper">
-                <div class="grid">
-                    <div class="grid-sizer"></div>
-                    {% for photo in photos %}
-                        {% if loop.index == 1 %}
-                            <img class="grid-item grid-item--width2" alt="{{photo.species}}" src="{{ photo.getWebPath | imagine_filter('sk_crop_476') }}" />
-                        {% else %}
-                            <img class="grid-item" alt="{{photo.species}}" src="{{ photo.getWebPath | imagine_filter('sk_crop_238') }}" />
-                        {% endif %}
-                    {% endfor %}
-
-
-                    {% if photo is not empty %}
-                           <div class="grid-sizer"></div>
-                           <img class="grid-item grid-item--width2" alt="{{photo.species}}" src="{{ photo.getWebPath | imagine_filter('sk_resize_476') }}" />
-                           {% for p in photo %}
-                               <img class="grid-item" alt="{{p.species}}" src="{{ p.getWebPath | imagine_filter('sk_resize_238') }}" />
-                           {% endfor %}
-                           <img class="grid-item" src="placeholder.jpg" />
-                       {% else %}
-                           <div class="row" >
-                               <div class="col col-lg-12" >
-                                   <div class="ibox" style="margin: 1.2% 0% 0% 0%" >
-                                       <h4 align="center">{{ "page.species.h4.no_photos"|trans }}</h4>
-                                   </div>
-                               </div>
-                           </div>
-                       {% endif %}
-                       
-                       
-                </div>
-                <div class="see_all">
-                    <a href="{{ path('photos', { 'species': species.id }) }}">See all photos</a>
-                </div>
-            </div>#}
+            {#            <div class="species_photos_wrapper">
+                            <div class="grid">
+                                <div class="grid-sizer"></div>
+                                {% for photo in photos %}
+                                    {% if loop.index == 1 %}
+                                        <img class="grid-item grid-item--width2" alt="{{photo.species}}" src="{{ photo.getWebPath | imagine_filter('sk_crop_476') }}" />
+                                    {% else %}
+                                        <img class="grid-item" alt="{{photo.species}}" src="{{ photo.getWebPath | imagine_filter('sk_crop_238') }}" />
+                                    {% endif %}
+                                {% endfor %}
+            
+            
+                                {% if photo is not empty %}
+                                       <div class="grid-sizer"></div>
+                                       <img class="grid-item grid-item--width2" alt="{{photo.species}}" src="{{ photo.getWebPath | imagine_filter('sk_resize_476') }}" />
+                                       {% for p in photo %}
+                                           <img class="grid-item" alt="{{p.species}}" src="{{ p.getWebPath | imagine_filter('sk_resize_238') }}" />
+                                       {% endfor %}
+                                       <img class="grid-item" src="placeholder.jpg" />
+                                   {% else %}
+                                       <div class="row" >
+                                           <div class="col col-lg-12" >
+                                               <div class="ibox" style="margin: 1.2% 0% 0% 0%" >
+                                                   <h4 align="center">{{ "page.species.h4.no_photos"|trans }}</h4>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   {% endif %}
+                                   
+                                   
+                            </div>
+                            <div class="see_all">
+                                <a href="{{ path('photos', { 'species': species.id }) }}">See all photos</a>
+                            </div>
+                        </div>#}
 
             <div class="ibox">
                 <div class="ibox-title">
@@ -420,15 +384,15 @@
             <div class="ibox" >
                 <div class="tabs-container">
                     <ul class="nav nav-tabs">
-                        
+
                         <li class="active"><a aria-expanded="true" data-toggle="tab" href="#tab-1">{{ "page.species.tab.criterias"|trans }}</a></li>
                         <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-2">{{ "page.species.tab.geo_distribution"|trans }}</a></li>
                         <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-3">{{ "page.species.tab.contributors"|trans }}</a></li>
                     </ul>
                     <div class="tab-content">
 
-                        
-                                                <!-- Criterias start -->
+
+                        <!-- Criterias start -->
                         <div id="tab-1" class="tab-pane active">
 
                             <div class="panel-body">
@@ -537,9 +501,9 @@
                             </div>#}
                         </div>
                         <!-- Criterias end -->
-                        
-                        
-                        
+
+
+
 
                         <!-- Map start -->
                         <div id="tab-2" class="tab-pane">
@@ -596,7 +560,7 @@
                             </div>
                         </div>
                         <!-- Map end -->
-                        
+
                         <!-- Photographers start -->
                         <div id="tab-3" class="tab-pane">
 

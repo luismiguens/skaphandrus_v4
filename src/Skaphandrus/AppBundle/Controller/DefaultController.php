@@ -318,6 +318,8 @@ class DefaultController extends Controller {
     public function speciesPageAction($slug) {
 
         $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findBySlug($slug);
+        $photos = array();
+        $criterias = array();
 
         if ($species) {
 
@@ -424,8 +426,7 @@ class DefaultController extends Controller {
                     ->getPhotosForIdentification($species->getId(), 0, 7);
             //para cada id ir buscar o object
             foreach ($p as $key => $ph) {
-                $photo = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkPhoto")
-                        ->findOneById($ph['id']);
+                $photo = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkPhoto")->findOneById($ph['id']);
                 $photos[] = $photo;
             }
             
