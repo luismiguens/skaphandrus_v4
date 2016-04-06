@@ -256,6 +256,11 @@ liip_imagine:
             filters:
                 thumbnail: { size: [120, 90], mode: outbound }
                 
+        #single contest banner image
+        sk_crop_900:
+            filters:
+                thumbnail: { size: [900, 300] , mode: outbound }
+                
         #species page big image
         sk_crop_476:
             filters:

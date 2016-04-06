@@ -24,14 +24,13 @@
 
 {#{% block stylesheets %}
     {{ parent() }}
-    
-    
+
 {% endblock %}#}
 
 {% block javascripts %}
     {{ parent() }}
     <script src='https://www.google.com/recaptcha/api.js'></script>
-
+    
 {% endblock %}
 
 
@@ -51,6 +50,8 @@
     <div class="wrapper wrapper-content">
         <div class="row">
             <div class="col-md-8">
+
+                <!-- Open Contest start -->
                 <div class="row" >
                     <div class="col col-lg-12" >
                         <div class="ibox">
@@ -102,7 +103,9 @@
                         </div>
                     </div>
                 </div>
+                <!-- Open Contest end -->
 
+                <!-- Previus Contest start -->
                 <div class="row" >
                     <div class="col col-lg-12" >
                         <div class="ibox">
@@ -172,9 +175,11 @@
                             </div>
                         </div>
                     </div>
-                </div>    
+                </div>
+                <!-- Previus Contest end -->
             </div>
 
+            <!-- Create Contest start -->
             <div class="col-md-4">
                 <div class="ibox float-e-margins form_sidebar" data-spy="affix" data-offset-top="60">
                     <div class="ibox-title">
@@ -195,6 +200,8 @@
                     </div>
                 </div>
             </div>
+            <!-- Create Contest end -->
+
         </div>
     </div>
 

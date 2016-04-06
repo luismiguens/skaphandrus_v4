@@ -9,30 +9,6 @@
     <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('contests_contest', {'slug': slugify(contest.name), 'locale': 'en'}) }}" />
 {% endblock %}
 
-
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-    </script>
-{% endblock %}
-
-
-{% block stylesheets %}
-    {{ parent() }}
-    <style type="text/css">
-        .contest-dates dt {
-            width: 200px;
-        }
-        .contest-dates dd {
-            margin-left: 220px;
-        }
-    </style>
-{% endblock %}
-
-
 {% set keywords = contest.name %}
 {% set keywords = keywords~', '~("meta_tag.keyword.pictures"|trans) %}
 {% set keywords = keywords~', '~("meta_tag.keyword.images"|trans) %}
@@ -62,6 +38,30 @@
     </ol>
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style type="text/css">
+        .contest-dates dt {
+            width: 200px;
+        }
+        .contest-dates dd {
+            margin-left: 220px;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
 
     {# Calculate the project completeness #}
@@ -78,303 +78,402 @@
         {% set contest_status = 'completed' %}
     {% endif %}
 
-    <div class="row">
-        <div class="col-lg-9">
-            <div class="wrapper wrapper-content animated fadeInUp">
+    <div class="wrapper wrapper-content">
+        <div class="row">
+
+            <!-- Coluna da direira start -->
+            <div class="col-md-8">
+                <!-- Contest Info start -->
                 <div class="ibox">
                     <div class="ibox-content">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="m-b-md">
-                                    {# <a href="#" class="btn btn-white btn-xs pull-right">Edit project</a> #}
-                                    <h1>{% trans with {'%contest%': contest.name} %}page.contest.h1.title{% endtrans %}</h1>
+                        <div class="m-b-md">
+                            <img alt="{{ contest.name }}" src="{{ contest.getWebPathImage | imagine_filter('sk_crop_900') }}" class="img-responsive">
+                        </div>
+                        <div class="row m-b-md">
+                            <div class="col-md-4">
+                                <img src="placeholder.jpg" class="img-responsive" />
+                                <div>
+                                    <h2 class="text-navy">Skaphandrus</h2>
                                 </div>
-                                <dl class="dl-horizontal">
-                                    <dt>{{ "page.contest.dt.status"|trans }}:</dt> <dd><span class="label label-primary">{{ ("page.contest.label.status_" ~ contest_status)|trans }}</span></dd>
-                                </dl>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-5 contest-dates">
-
-                                {#<a href="#" data-toggle="tooltip" title="Some tooltip text!">Hover over me</a>#}
-
-                                <dl class="dl-horizontal">
-                                    {#<dt>{{ "page.contest.dt.created_by"|trans }}:</dt> <dd>Alex Smith</dd>#}
-                                    <dt>{{ "page.contest.dt.client"|trans }}:</dt> <dd><a href="#" class="text-navy"> Skaphandrus</a> </dd>
-                                    {#<dt>{{ "page.contest.dt.created"|trans }}:</dt> <dd>  {{ contest.createdAt|date("m/d/Y") }} </dd>#}
-                                    <dt>{{ "form.photo_contest.label.begin_at"|trans }}:</dt> <dd><a href="#" data-toggle="tooltip" title="{{"form.photo_contest.help.beginAt"|trans}}">{{ contest.beginAt|date("d-m-Y") }}</a></dd>
-                                    <dt>{{ "form.photo_contest.label.public_votation_at"|trans }}:</dt> <dd><a href="#" data-toggle="tooltip" title="{{"form.photo_contest.help.publicVotationAt"|trans}}">{{ contest.publicVotationAt|date("d-m-Y") }}</a></dd>
-                                    <dt>{{ "form.photo_contest.label.end_at"|trans }}:</dt> <dd><a href="#" data-toggle="tooltip" title="{{"form.photo_contest.help.endAt"|trans}}">{{ contest.endAt|date("d-m-Y") }}</a></dd>
-                                    {#<dt>{{ "page.contest.dt.jury_votation_at"|trans }}:</dt> <dd>{{ contest.endAt|date("d-m-Y") }}</dd>#}
-                                    {#<dt>{{ "page.contest.dt.to"|trans }}:</dt> <dd>{{ contest.winnersAt|date("d-m-Y") }}</dd>#}
-                                    <dt>{{ "form.photo_contest.label.winner_at"|trans }}:</dt> <dd><a href="#" data-toggle="tooltip" title="{{"form.photo_contest.help.winnersAt"|trans}}">{{ contest.winnersAt|date("d-m-Y") }}</a></dd>
-                                </dl>
-                                <dl class="dl-horizontal">
-                                    <dt>{{ "page.contest.dt.numero_photos"|trans }}:</dt> <dd>{{ contest.photos|length }}</dd>
-                                    <dt>{{ "page.contest.dt.numero_photographers"|trans }}:</dt> <dd>{{ photographers|length }}</dd>
-                                </dl>
-                            </div>
-                            <div class="col-lg-7" id="cluster_info">
-                                <dl class="dl-horizontal" >
-                                    <dt>{{ "page.contest.dt.participants"|trans }}:</dt>
-                                    <dd class="project-people">
-                                        {#{% for photographer in photographers[:5] %}#}
-                                        {% for photographer in photographers %}
-                                            <a href="{{ url_to_user(photographer) }}">
-                                                <img alt="{{ photographer }}" class="img-circle" src="{{ photographer.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
-                                            </a>
-                                        {% endfor %}
-                                        <a href="{{ url_to_contest_photographers(contest) }}">
-                                            {{ "page.contest.link.more_photographers"|trans }}
-                                        </a>    
-
-                                    </dd>
-                                </dl>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <table class="table">
+                                            <tr>
+                                                <th>{{ "form.photo_contest.label.begin_at"|trans }}</th>
+                                                <td><a href="#" data-toggle="tooltip" title="{{"form.photo_contest.help.beginAt"|trans}}">{{ contest.beginAt|date("d-m-Y") }}</a></td>
+                                            </tr>
+                                            <tr>
+                                                <th>{{ "form.photo_contest.label.end_at"|trans }}</th>
+                                                <td><a href="#" data-toggle="tooltip" title="{{"form.photo_contest.help.endAt"|trans}}">{{ contest.endAt|date("d-m-Y") }}</a></td>
+                                            </tr>
+                                            <tr>
+                                                <th>{{ "page.contest.dt.total_price"|trans }}</th>
+                                                <td>N/A</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <table class="table">
+                                            <tr>
+                                                <th>{{ "page.contest.dt.numero_photos"|trans }}</th>
+                                                <td>{{ contest.photos|length }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>{{ "page.contest.dt.numero_photographers"|trans }}</th>
+                                                <td>{{ photographers|length }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>{{ "page.contest.dt.num_visualizacoes"|trans }}</th>
+                                                <td>N/A</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
-                                <dl class="dl-horizontal">
-                                    <dt>{{ "page.contest.label.completed"|trans }}:</dt>
-                                    <dd>
-                                        <div class="progress progress-striped active m-b-sm">
-                                            <div style="width: {{ percentage }}%;" class="progress-bar"></div>
-                                        </div>
-                                        <small>{{ "page.contest.label.contest_completed_in"|trans }} <strong>{{ percentage }}%</strong>.</small>
-                                    </dd>
-                                </dl>
+                                <h4>{{ "page.contest.dt.participants"|trans }}</h4>
                             </div>
                         </div>
-                        <div class="row m-t-sm">
-                            <div class="col-lg-12">
-                                <div class="panel blank-panel">
-                                    <div class="panel-heading">
-                                        <div class="panel-options">
-                                            <ul class="nav nav-tabs">
-                                                <li class="active">
-                                                    <a href="#tab-1" data-toggle="tab">
-                                                        {{ "page.contest.tab.get_started"|trans }}
-                                                    </a>
-                                                </li>
-                                                <li class="dropdown" role="presentation">
-                                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                                        {{ "page.contest.tab.photos"|trans }} <span class="caret"></span>
-                                                    </a>
-                                                    <ul class="dropdown-menu" role="menu">
-                                                        {% for cat in contest.categories %}
-                                                            <li><a href="{{ url_to_contest_photos(cat) }}">{{ cat.translate(app.request.locale).name }}</a></li>
-                                                            {% endfor %}
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <a href="{{ url_to_contest_photographers(contest) }}">
-                                                        {{ "page.contest.tab.photographers"|trans }}
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="{{ url_to_contest_sponsors(contest) }}">
-                                                        {{ "page.contest.tab.sponsors"|trans }}
-                                                    </a>
-                                                </li>
-                                                {% if contest.isWinnersReady %} 
-                                                    <li>
-                                                        <a href="{{ url_to_contest_winners(contest) }}">
-                                                            {{ "page.contest.tab.winners"|trans }}
-                                                        </a>
-                                                    </li>
-                                                {% endif%}
-                                            </ul>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <div class="col-lg-10 col-lg-offset-1">
+                                        <div class="slider_people project-people">
+                                            {% for photographer in photographers %}
+                                                <a href="{{ url_to_user(photographer) }}">
+                                                    <img alt="{{ photographer }}" class="img-circle" src="{{ photographer.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
+                                                </a>
+                                            {% endfor %}
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-6" style="margin-top:5px;">
+                                    {% if contest.isInProgress %}
+                                        <a class="btn btn-primary btn-xs" href="{{ path('contest_participate', { 'contest_id': contest.id }) }}">{{ "page.contest.label.participate"|trans }}</a>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6" style="margin-top:5px;">
+                                    {% if contest.isInProgress %}
+                                        <a class="btn btn-primary btn-xs" href="{{ path('contests_photos', { 'contest_slug': contest, 'category_slug': contest.categories[0] }) }}">{{ "page.contest.label.vote"|trans }}</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h4>{{ "page.contest.label.completed"|trans }}</h4>
+                                <div class="progress progress-striped active m-b-sm">
+                                    <div style="width: {{ percentage }}%;" class="progress-bar"></div>
+                                </div>
+                                <small>{{ "page.contest.label.contest_completed_in"|trans }} <strong>{{ percentage }}%</strong>.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contest Info end -->
+
+                {#<div class="row">
+                    <div class="col-lg-12">
+                        <div class="m-b-md">
+                            <h1>{% trans with {'%contest%': contest.name} %}page.contest.h1.title{% endtrans %}</h1>
+                        </div>
+                        <dl class="dl-horizontal">
+                            <dt>{{ "page.contest.dt.status"|trans }}:</dt> <dd><span class="label label-primary">{{ ("page.contest.label.status_" ~ contest_status)|trans }}</span></dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-5 contest-dates">
+                        <dl class="dl-horizontal">
+                            <dt>{{ "page.contest.dt.client"|trans }}:</dt> <dd><a href="#" class="text-navy"> Skaphandrus</a> </dd>
+                            <dt>{{ "form.photo_contest.label.begin_at"|trans }}:</dt> <dd><a href="#" data-toggle="tooltip" title="{{"form.photo_contest.help.beginAt"|trans}}">{{ contest.beginAt|date("d-m-Y") }}</a></dd>
+                            <dt>{{ "form.photo_contest.label.public_votation_at"|trans }}:</dt> <dd><a href="#" data-toggle="tooltip" title="{{"form.photo_contest.help.publicVotationAt"|trans}}">{{ contest.publicVotationAt|date("d-m-Y") }}</a></dd>
+                            <dt>{{ "form.photo_contest.label.end_at"|trans }}:</dt> <dd><a href="#" data-toggle="tooltip" title="{{"form.photo_contest.help.endAt"|trans}}">{{ contest.endAt|date("d-m-Y") }}</a></dd>
+                            <dt>{{ "form.photo_contest.label.winner_at"|trans }}:</dt> <dd><a href="#" data-toggle="tooltip" title="{{"form.photo_contest.help.winnersAt"|trans}}">{{ contest.winnersAt|date("d-m-Y") }}</a></dd>
+                        </dl>
+                        <dl class="dl-horizontal">
+                            <dt>{{ "page.contest.dt.numero_photos"|trans }}:</dt> <dd>{{ contest.photos|length }}</dd>
+                            <dt>{{ "page.contest.dt.numero_photographers"|trans }}:</dt> <dd>{{ photographers|length }}</dd>
+                        </dl>
+                    </div>
+                    <div class="col-lg-7" id="cluster_info">
+                        <dl class="dl-horizontal" >
+                            <dt>{{ "page.contest.dt.participants"|trans }}:</dt>
+                            <dd class="project-people">
+                                {% for photographer in photographers %}
+                                    <a href="{{ url_to_user(photographer) }}">
+                                        <img alt="{{ photographer }}" class="img-circle" src="{{ photographer.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
+                                    </a>
+                                {% endfor %}
+                                <a href="{{ url_to_contest_photographers(contest) }}">
+                                    {{ "page.contest.link.more_photographers"|trans }}
+                                </a>    
+
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <dl class="dl-horizontal">
+                            <dt>{{ "page.contest.label.completed"|trans }}:</dt>
+                            <dd>
+                                <div class="progress progress-striped active m-b-sm">
+                                    <div style="width: {{ percentage }}%;" class="progress-bar"></div>
+                                </div>
+                                <small>{{ "page.contest.label.contest_completed_in"|trans }} <strong>{{ percentage }}%</strong>.</small>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>#}
+
+                <!-- Tabs start -->
+                <div class="row" >
+                    <div class="col col-lg-12">
+                        <div class="tabs-container">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#tab-1" data-toggle="tab">
+                                        {{ "page.contest.tab.get_started"|trans }}
+                                    </a>
+                                </li>
+                                <li class="dropdown" role="presentation">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                                        {{ "page.contest.tab.photos"|trans }} <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        {% for cat in contest.categories %}
+                                            <li><a href="{{ url_to_contest_photos(cat) }}">{{ cat.translate(app.request.locale).name }}</a></li>
+                                            {% endfor %}
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="{{ url_to_contest_photographers(contest) }}">
+                                        {{ "page.contest.tab.photographers"|trans }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url_to_contest_sponsors(contest) }}">
+                                        {{ "page.contest.tab.sponsors"|trans }}
+                                    </a>
+                                </li>
+                                {% if contest.isWinnersReady %} 
+                                    <li>
+                                        <a href="{{ url_to_contest_winners(contest) }}">
+                                            {{ "page.contest.tab.winners"|trans }}
+                                        </a>
+                                    </li>
+                                {% endif%}
+                            </ul>
+
+                            <div class="tab-content">
+                                <div id="tab-1" class="tab-pane active">
                                     <div class="panel-body">
 
-                                        <div class="tab-content">
-                                            <div class="tab-pane active" id="tab-1">
-
-                                                <section id="categories">
-                                                    <h2>{{ "page.contest.h2.categories"|trans }}</h2>
-                                                    <table class="table table-striped">
-                                                        <thead>
-                                                            <tr>
-                                                                <th></th>
-                                                                <th></th>
-                                                                <th>{{ "page.contest.table.sponsors"|trans }}</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {% for category in contest.categories %}
-                                                                <tr>
-                                                                    <td>
-                                                                        {% if category.image %}
-                                                                            {# <img src="/{{ category.photo.0.webPath }}" alt="{{ category.photo.0.title }}" title="{{ category.photo.0.title }}"> #}
-                                                                            <img class="img-rounded" src="{{ category.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ category.name }}" title="{{ category.name }}">
-                                                                        {% endif %}
-                                                                    </td>
-                                                                    <td>
-                                                                        <h4>{{ link_to_contest_photos(category) }}</h4>
-                                                                        <p>{{ category.translate.description }}</p>
-                                                                    </td>
-                                                                    <td>
-                                                                        {% for award in category.awards %}
-                                                                            {% for sponsor in award.sponsor %}
-                                                                                {% if sponsor.getWebPath %}
-
-                                                                                    <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
-                                                                                {% endif %}
-
-                                                                            {% endfor %}
-
-
-
-                                                                        {% endfor %}
-                                                                    </td>
-                                                                </tr>
-                                                            {% endfor %}
-                                                        </tbody>
-                                                    </table>
-                                                </section>
-
-                                                <section id="awards">
-                                                    <h2>{{ "page.contest.h2.awards"|trans }}</h2>
-                                                    <table class="table table-striped">
-                                                        <thead>
-                                                            <tr>
-                                                                <th></th>
-                                                                <th></th>
-                                                                <th>{{ "page.contest.table.sponsors"|trans }}</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {% for award in contest.awards %}
-                                                                <tr>
-                                                                    <td>
-                                                                        {% if award.image %}
-                                                                            {# <img src="/{{ award.image }}" alt="{{ award.translate.name }}" title="{{ award.translate.name }}"> #}
-                                                                            <img src="{{ award.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ award.translate.name }}" title="{{ award.translate.name }}">
-                                                                        {% endif %}
-                                                                    </td>
-                                                                    <td>
-                                                                        <h4>{{ award.translate.name }}</h4>
-                                                                        <p>{{ award.translate.description }}</p>
-                                                                    </td>
-                                                                    <td>
-
-                                                                        {% for sponsor in award.sponsor %}
-
-                                                                            {% if sponsor.getWebPath %}
-                                                                                <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
-
-                                                                            {% endif %}
-                                                                        {% endfor %}
-
-
-
-                                                                    </td>
-                                                                </tr>
-                                                            {% endfor %}
-                                                        </tbody>
-                                                    </table>
-                                                </section>
-
-                                                <section id="rules">
-                                                    <h2>{{ "page.contest.h2.rules"|trans }}</h2>
-                                                    {{ contest.translate.rules|raw }}
-                                                </section>
-
-                                                <section id="judges">
-                                                    <h2>{{ "page.contest.h2.judges"|trans }}</h2>
-                                                    <table class="table table-striped">
-                                                        <thead>
-                                                            <tr>
-                                                                <th></th>
-                                                                <th></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {% for judge in judges %}
-                                                                <tr>
-                                                                    <td>
-                                                                        {# @TODO: Add judge real photo #}
-                                                                        <img class="img-rounded" src="{{ judge.fosUser.settings.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ judge.fosUser.name }}" title="{{ judge.fosUser.name }}">
-                                                                    </td>
-                                                                    <td>
-                                                                        <h4>{{ judge.fosUser.name }}</h4>
-
-                                                                        {% if judge.description %}
-                                                                            <p>{{ judge.description|truncate(250, true) }} <a href="{{ url_to_user(judge.fosUser) }}">{{ "page.contest.table.read_more"|trans }}</a></p>
-                                                                            {% else %}
-                                                                            <p>{{ judge.fosUser.settings.observations|truncate(250, true) }} <a href="{{ url_to_user(judge.fosUser) }}">{{ "page.contest.table.read_more"|trans }}</a></p>
-                                                                            {% endif %}
-                                                                    </td>
-                                                                </tr>
-                                                            {% endfor %}
-                                                        </tbody>
-                                                    </table>
-                                                </section>
-
-                                                <section id="sponsors">
-                                                    <h2>{{ "page.contest.h2.sponsors"|trans }}</h2>
-                                                    <table class="table table-striped">
-                                                        <thead>
-                                                            <tr>
-                                                                <th></th>
-                                                                <th></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {% for sponsor in sponsors %}
-                                                                <tr>
-                                                                    <td>
+                                        <section id="categories">
+                                            <h2>{{ "page.contest.h2.categories"|trans }}</h2>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th>{{ "page.contest.table.sponsors"|trans }}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for category in contest.categories %}
+                                                        <tr>
+                                                            <td>
+                                                                {% if category.image %}
+                                                                    <img class="img-rounded" src="{{ category.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ category.name }}" title="{{ category.name }}">
+                                                                {% endif %}
+                                                            </td>
+                                                            <td>
+                                                                <h4>{{ link_to_contest_photos(category) }}</h4>
+                                                                <p>{{ category.translate.description }}</p>
+                                                            </td>
+                                                            <td>
+                                                                {% for award in category.awards %}
+                                                                    {% for sponsor in award.sponsor %}
                                                                         {% if sponsor.getWebPath %}
                                                                             <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
                                                                         {% endif %}
-                                                                    </td>
-                                                                    <td>
-                                                                        <h4>{{ sponsor.name }}</h4>
-                                                                        <p>{{ sponsor.translate.description }}</p>
-                                                                    </td>
-                                                                </tr>
-                                                            {% endfor %}
-                                                        </tbody>
-                                                    </table>
-                                                </section>
+                                                                    {% endfor %}
+                                                                {% endfor %}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </section>
 
-                                            </div>
-                                        </div>
+                                        <section id="awards">
+                                            <h2>{{ "page.contest.h2.awards"|trans }}</h2>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th>{{ "page.contest.table.sponsors"|trans }}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for award in contest.awards %}
+                                                        <tr>
+                                                            <td>
+                                                                {% if award.image %}
+                                                                    <img src="{{ award.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ award.translate.name }}" title="{{ award.translate.name }}">
+                                                                {% endif %}
+                                                            </td>
+                                                            <td>
+                                                                <h4>{{ award.translate.name }}</h4>
+                                                                <p>{{ award.translate.description }}</p>
+                                                            </td>
+                                                            <td>
+                                                                {% for sponsor in award.sponsor %}
+                                                                    {% if sponsor.getWebPath %}
+                                                                        <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </section>
+
+                                        <section id="rules">
+                                            <h2>{{ "page.contest.h2.rules"|trans }}</h2>
+                                            {{ contest.translate.rules|raw }}
+                                        </section>
+
+                                        <section id="judges">
+                                            <h2>{{ "page.contest.h2.judges"|trans }}</h2>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for judge in judges %}
+                                                        <tr>
+                                                            <td>
+                                                                <img class="img-rounded" src="{{ judge.fosUser.settings.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ judge.fosUser.name }}" title="{{ judge.fosUser.name }}">
+                                                            </td>
+                                                            <td>
+                                                                <h4>{{ judge.fosUser.name }}</h4>
+                                                                {% if judge.description %}
+                                                                    <p>{{ judge.description|truncate(250, true) }} 
+                                                                        <a href="{{ url_to_user(judge.fosUser) }}">{{ "page.contest.table.read_more"|trans }}</a>
+                                                                    </p>
+                                                                {% else %}
+                                                                    <p>{{ judge.fosUser.settings.observations|truncate(250, true) }} 
+                                                                        <a href="{{ url_to_user(judge.fosUser) }}">{{ "page.contest.table.read_more"|trans }}</a>
+                                                                    </p>
+                                                                {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </section>
+
+                                        <section id="sponsors">
+                                            <h2>{{ "page.contest.h2.sponsors"|trans }}</h2>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for sponsor in sponsors %}
+                                                        <tr>
+                                                            <td>
+                                                                {% if sponsor.getWebPath %}
+                                                                    <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
+                                                                {% endif %}
+                                                            </td>
+                                                            <td>
+                                                                <h4>{{ sponsor.name }}</h4>
+                                                                <p>{{ sponsor.translate.description }}</p>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </section>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- Tabs end -->
             </div>
-        </div>
-        <div class="col-lg-3">
-            <div class="wrapper wrapper-content project-manager hidden-sm hidden-xs hidden-md" data-spy="affix" data-offset-top="155" style="top: 0; max-width: 250px;">
-                <h2>{{ contest.name }}</h2>
-                <!--<img src="{{ contest.image }}" class="img-responsive">-->
-                <img alt="{{ contest.name }}" src="{{ contest.getWebPathImage | imagine_filter('sk_widen_400') }}" class="img-responsive">
-                <p class="">
-                    {{ contest.translate.description|raw }}
-                </p>
-                <div class="row">
-                    <nav id="navbar-sidebar">
-                        <ul class="nav nav-pills nav-stacked">
-                            <li><a href="#categories">{{ "page.contest.menu.categories"|trans }}</a></li>
-                            <li><a href="#awards">{{ "page.contest.menu.awards"|trans }}</a></li>
-                            <li><a href="#rules">{{ "page.contest.menu.rules"|trans }}</a></li>
-                            <li><a href="#judges">{{ "page.contest.menu.judges"|trans }}</a></li>
-                            <li><a href="#sponsors">{{ "page.contest.menu.sponsors"|trans }}</a></li>
-                        </ul>
-                    </nav>
+            <!-- Coluna da direira end -->
+
+            <!-- Coluna da esquerda start -->   
+            <div class="col-md-4">
+                <div class="ibox float-e-margins form_sidebar" data-spy="affix" data-offset-top="60">
+                    <div class="ibox-title">
+                        <h5>{{ "page.contests.h5.create_contest"|trans }}</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <p>{{ "page.contests.p.fill_form"|trans }}{#Fill the form or <a href="#">READ MORE</a>#}</p>
+
+                        {% for flashMessage in app.session.flashbag.get('notice') %}
+                            <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                {{ flashMessage|trans }}
+                            </div>
+                        {% endfor %}
+
+                        {{ render(controller('SkaphandrusAppBundle:SkContestRequest:new')) }}
+
+                    </div>
                 </div>
-                <br/>
-                {% if contest.isInProgress %}
-                    <a href="{{ path('contest_participate', { 'contest_id': contest.id }) }}" class="btn btn-primary btn-block"><i class="fa fa-upload"></i> {{ "page.contests.link.join"|trans }}</a>
-                {% endif %}
             </div>
+            <!-- Coluna da esquerda end -->   
+
         </div>
     </div>
+
+    <!-- Menu Lateral antigo -->
+    {#<div class="col-lg-3">
+        <div class="wrapper wrapper-content project-manager hidden-sm hidden-xs hidden-md" data-spy="affix" data-offset-top="155" style="top: 0; max-width: 250px;">
+            <h2>{{ contest.name }}</h2>
+            <!--<img src="{{ contest.image }}" class="img-responsive">-->
+            <img alt="{{ contest.name }}" src="{{ contest.getWebPathImage | imagine_filter('sk_widen_400') }}" class="img-responsive">
+            <p class="">
+                {{ contest.translate.description|raw }}
+            </p>
+            <div class="row">
+                <nav id="navbar-sidebar">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li><a href="#categories">{{ "page.contest.menu.categories"|trans }}</a></li>
+                        <li><a href="#awards">{{ "page.contest.menu.awards"|trans }}</a></li>
+                        <li><a href="#rules">{{ "page.contest.menu.rules"|trans }}</a></li>
+                        <li><a href="#judges">{{ "page.contest.menu.judges"|trans }}</a></li>
+                        <li><a href="#sponsors">{{ "page.contest.menu.sponsors"|trans }}</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <br/>
+            {% if contest.isInProgress %}
+                <a href="{{ path('contest_participate', { 'contest_id': contest.id }) }}" class="btn btn-primary btn-block"><i class="fa fa-upload"></i> {{ "page.contests.link.join"|trans }}</a>
+            {% endif %}
+        </div>
+    </div>#}
+    {#    </div>#}
 {% endblock %}

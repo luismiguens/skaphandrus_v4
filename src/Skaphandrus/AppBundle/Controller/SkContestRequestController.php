@@ -44,7 +44,7 @@ class SkContestRequestController extends Controller {
                     ->setSubject("Create Photo Contest")
                     ->setFrom('support-noreply@skaphandrus.com', 'Skaphandrus')
                     ->setTo('rubensardinha1992@gmail.com')
-                    ->setBcc('luis.t.miguens@gmail.com')
+//                    ->setBcc('luis.t.miguens@gmail.com')
                     ->setBody($this->renderView('SkaphandrusAppBundle:SkContestRequest:content_email.html.twig', array(
                         'user' => $entity->getName(),
                         'email' => $entity->getEmail(),
@@ -55,7 +55,7 @@ class SkContestRequestController extends Controller {
             $this->get('mailer')->send($message);
 
             $this->get('session')->getFlashBag()->add('notice', 'form.common.message.request_saved');
-            return $this->redirect($this->generateUrl('contests_landing_page'));
+            return $this->redirect($request->headers->get('referer'));
         }
 
         return $this->render('SkaphandrusAppBundle:SkContestRequest:new.html.twig', array(
