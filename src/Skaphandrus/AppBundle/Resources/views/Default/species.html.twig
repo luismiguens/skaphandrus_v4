@@ -154,7 +154,9 @@
                         data: 'species_id=' + {{ species.id }} +'&limit=' + limit_photographers + '&offset=' + offset_photographers,
                         dataType: "text",
                         success: function (response) {
+                            $('#box_photographers .slider_thumbs').slick('unslick'); 
                             $("#box_photographers").append(response);
+                            sliders('#box_photographers .slider_thumbs');
                         }
                     });
                 }, 100);
