@@ -151,7 +151,9 @@
                         data: 'country_id=' + {{ country.id }} +'&limit=' + limit_spots + '&offset=' + offset_spots,
                         dataType: "text",
                         success: function (response) {
+                            $('#box_locations .slider_thumbs').slick('unslick'); 
                             $("#box_locations").append(response);
+                            sliders('#box_locations .slider_thumbs');
                             
                         }
                     });
@@ -170,7 +172,9 @@
                         data: 'country_id=' + {{ country.id }} +'&limit=' + limit_species + '&offset=' + offset_species,
                         dataType: "text",
                         success: function (response) {
+                            $('#box_species .slider_thumbs').slick('unslick'); 
                             $("#box_species").append(response);
+                             sliders('#box_species .slider_thumbs');
                         }
                     });
                 }, 100);
@@ -188,13 +192,16 @@
                         data: 'country_id=' + {{ country.id }} +'&limit=' + limit_photographers + '&offset=' + offset_photographers,
                         dataType: "text",
                         success: function (response) {
+                            $('#box_photographers .slider_thumbs').slick('unslick'); 
                             $("#box_photographers").append(response);
+                            sliders('#box_photographers .slider_thumbs');
                         }
                     });
                 }, 100);
             };
             $(this).ready(loadPhotographers);
             $('#show_more_photographers').click(loadPhotographers);
+                            
 
         });
 
