@@ -1,0 +1,358 @@
+{% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
+
+{% block page_title %}{{ "page.destinations.meta_tag.title"|trans }}{% endblock %}
+
+{% block page_description %}{{ "page.destinations.meta_tag.description"|trans }}{% endblock %}
+
+{% set keywords = ("meta_tag.keyword.world"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.map"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.scuba"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.diving"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.sites"|trans) %}
+{% set keywords = keywords~', '~("meta_tag.keyword.countries"|trans) %}
+
+{% block page_keywords %}{{keywords}}{% endblock %}
+
+{% block hreflang %}
+    <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('destinations', {'locale': 'pt'}) }}" />
+    <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('destinations', {'locale': 'en'}) }}" />
+{% endblock %}
+
+{% block heading_title %}
+    {{ "page.locations_home.h1.heading_title"|trans }}
+{% endblock %}
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+        <li itemprop="itemListElement"><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
+        <li itemprop="itemListElement" class="active"><strong>{{ "page.destinations.h1.title"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/destinations.css') }}">
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+    <div class="wrapper wrapper-content">
+        <div class="row animated fadeInRight">
+
+            <!-- Destinos start -->
+            <div class="dvb-container">
+                <ul class="dvb-md-list" >
+                    <li class="dvb-md-item" >
+                        <a href="#" style="background-image:url(placeholder.jpg);" class="dvb-md-link" ></a>
+                        <h3 class="dvb-md-name" >
+                            <a href="#" >Egypt</a>
+                        </h3>
+                        <ul class="dvb-md-info" >
+                            <li class="dvb-mdi-item" >
+                                <a href="#" class="dvb-mdi-link" >139 dive centers</a>
+                            </li>
+                            <li class="dvb-mdi-item" >
+                                <a href="#" class="dvb-mdi-link" >219 liveaboard trips</a>
+                            </li>
+                            <li class="dvb-mdi-item" >
+                                <a href="#" class="dvb-mdi-link" >198 dive sites</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dvb-md-item" >
+                        <a href="#" style="background-image:url(placeholder.jpg);" class="dvb-md-link" ></a>
+                        <h3 class="dvb-md-name" >
+                            <a href="#" >Indonesia</a>
+                        </h3>
+                        <ul class="dvb-md-info" >
+                            <li class="dvb-mdi-item" >
+                                <a href="#" class="dvb-mdi-link" >95 dive centers</a>
+                            </li>
+                            <li class="dvb-mdi-item" >
+                                <a href="#" class="dvb-mdi-link" >153 liveaboard trips</a>
+                            </li>
+                            <li class="dvb-mdi-item" >
+                                <a href="#" class="dvb-mdi-link" >600 dive sites</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dvb-md-item" >
+                        <a href="#" style="background-image:url(placeholder.jpg);" class="dvb-md-link" ></a>
+                        <h3 class="dvb-md-name" >
+                            <a href="#" >Thailand</a>
+                        </h3>
+                        <ul class="dvb-md-info" >
+                            <li class="dvb-mdi-item">
+                                <a href="#" class="dvb-mdi-link" >104 dive centers</a>
+                            </li>
+                            <li class="dvb-mdi-item" >
+                                <a href="#" class="dvb-mdi-link" >25 liveaboard trips</a>
+                            </li>
+                            <li class="dvb-mdi-item" >
+                                <a href="#" class="dvb-mdi-link" >113 dive sites</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dvb-md-item" >
+                        <a href="#" style="background-image:url(placeholder.jpg);" class="dvb-md-link" ></a>
+                        <h3 class="dvb-md-name" >
+                            <a href="#" >Maldives</a>
+                        </h3>
+                        <ul class="dvb-md-info" >
+                            <li class="dvb-mdi-item" >
+                                <a href="#" class="dvb-mdi-link" >18 dive centers</a>
+                            </li>
+                            <li class="dvb-mdi-item" >
+                                <a href="#" class="dvb-mdi-link" >106 liveaboard trips</a>
+                            </li>
+                            <li class="dvb-mdi-item" >
+                                <a href="#" class="dvb-mdi-link" >183 dive sites</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dvb-md-item" >
+                        <a href="#" style="background-image:url(placeholder.jpg);" class="dvb-md-link" ></a>
+                        <h3 class="dvb-md-name" >
+                            <a href="#" >Mexico</a>
+                        </h3>
+                        <ul class="dvb-md-info" >
+                            <li class="dvb-mdi-item" >
+                                <a href="#" class="dvb-mdi-link" >106 dive centers</a>
+                            </li>
+                            <li class="dvb-mdi-item" >
+                                <a href="#" class="dvb-mdi-link" >16 liveaboard trips</a>
+                            </li>
+                            <li class="dvb-mdi-item" >
+                                <a href="#" class="dvb-mdi-link" >174 dive sites</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dvb-md-item" >
+                        <a href="#" style="background-image:url(placeholder.jpg);" class="dvb-md-link" ></a>
+                        <h3 class="dvb-md-name" >
+                            <a href="#" >Philippines</a>
+                        </h3><ul class="dvb-md-info" >
+                            <li class="dvb-mdi-item" >
+                                <a href="#" class="dvb-mdi-link" >86 dive centers</a>
+                            </li><li class="dvb-mdi-item" >
+                                <a href="#" class="dvb-mdi-link" >21 liveaboard trips</a>
+                            </li>
+                            <li class="dvb-mdi-item" >
+                                <a href="#" class="dvb-mdi-link" >271 dive sites</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dvb-md-item" >
+                        <a href="#" style="background-image:url(placeholder.jpg);" class="dvb-md-link" ></a>
+                        <h3 class="dvb-md-name" >
+                            <a href="#" >Spain</a>
+                        </h3>
+                        <ul class="dvb-md-info" >
+                            <li class="dvb-mdi-item" >
+                                <a href="#" class="dvb-mdi-link" >65 dive centers</a>
+                            </li>
+                            <li class="dvb-mdi-item" >
+                                <a href="#" class="dvb-mdi-link" >311 dive sites</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="row">
+                    <div class="col-sm-3">
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="btn btn-primary btn-block">See more</div>
+                    </div>
+                    <div class="col-sm-3">
+
+                    </div>
+                </div>
+            </div>
+            <!-- Destinos end -->
+
+            <!-- Map start -->
+            <div class="ibox">
+                <div class="ibox-title">
+                    Where / What / When to Dive
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <div id="map-canvas"></div>  
+                        </div>
+                        <div class="col-sm-3">
+                            <h3>Filters</h3>
+                            <form >
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Dive Site" />
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Local" />
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Country" />
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Species" />
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Month" />
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Dive type" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Map end -->
+
+            <!-- Tab Business start -->
+            <div class="row" >
+                <div class="col col-lg-12">
+
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a aria-expanded="true" data-toggle="tab" href="#tab-1">LIVE A BOARD</a></li>
+                            <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-2">DIVE CENTERS</a></li>
+                            <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-3">RESORTS</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="tab-1" class="tab-pane active">
+                                <div class="panel-body">
+                                    <?php for ($h = 0; $h < 3; $h++): ?>
+                                    <div class="row">
+                                        <?php for ($i = 0; $i < 3; $i++): ?>
+                                        <div class="col-lg-4">
+                                            <div class="contact-box">
+                                                <a href="profile.html">
+                                                    <div class="col-sm-4">
+                                                        <div class="text-center">
+                                                            <img alt="image" class="img-thumbnail m-t-xs img-responsive" src="placeholder-100x100.jpg">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <h3><strong>John Smith</strong></h3>
+                                                        <p><i class="fa fa-map-marker"></i> Riviera State 32/106</p>
+                                                        <div class="btn btn-primary btn-block btn-xs">More info</div>
+                                                        <div class="btn btn-primary btn-block dim btn-xs">Book now</div>
+
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </a>
+                                            </div>  
+                                        </div>
+                                        <?php endfor; ?>
+                                    </div>
+                                    <?php endfor; ?>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="btn btn-primary btn-block">See more</div>
+                                        </div>
+                                        <div class="col-sm-3">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab-2" class="tab-pane">
+                                <div class="panel-body">
+                                    <?php for ($h = 0; $h < 3; $h++): ?>
+                                    <div class="row">
+                                        <?php for ($i = 0; $i < 3; $i++): ?>
+                                        <div class="col-lg-4">
+                                            <div class="contact-box">
+                                                <a href="profile.html">
+                                                    <div class="col-sm-4">
+                                                        <div class="text-center">
+                                                            <img alt="image" class="img-thumbnail m-t-xs img-responsive" src="placeholder-100x100.jpg">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <h3><strong>John Smith</strong></h3>
+                                                        <p><i class="fa fa-map-marker"></i> Riviera State 32/106</p>
+                                                        <div class="btn btn-primary btn-block btn-xs">More info</div>
+                                                        <div class="btn btn-primary btn-block dim btn-xs">Book now</div>
+
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </a>
+                                            </div>  
+                                        </div>
+                                        <?php endfor; ?>
+                                    </div>
+                                    <?php endfor; ?>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="btn btn-primary btn-block">See more</div>
+                                        </div>
+                                        <div class="col-sm-3">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab-3" class="tab-pane">
+                                <div class="panel-body">
+                                    <?php for ($h = 0; $h < 3; $h++): ?>
+                                    <div class="row">
+                                        <?php for ($i = 0; $i < 3; $i++): ?>
+                                        <div class="col-lg-4">
+                                            <div class="contact-box">
+                                                <a href="profile.html">
+                                                    <div class="col-sm-4">
+                                                        <div class="text-center">
+                                                            <img alt="image" class="img-thumbnail m-t-xs img-responsive" src="placeholder-100x100.jpg">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <h3><strong>John Smith</strong></h3>
+                                                        <p><i class="fa fa-map-marker"></i> Riviera State 32/106</p>
+                                                        <div class="btn btn-primary btn-block btn-xs">More info</div>
+                                                        <div class="btn btn-primary btn-block dim btn-xs">Book now</div>
+
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </a>
+                                            </div>  
+                                        </div>
+                                        <?php endfor; ?>
+                                    </div>
+                                    <?php endfor; ?>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="btn btn-primary btn-block">See more</div>
+                                        </div>
+                                        <div class="col-sm-3">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Tab Business end -->
+            
+        </div>
+    </div>
+
+{% endblock %}

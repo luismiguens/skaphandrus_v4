@@ -80,6 +80,26 @@ class AjaxController extends Controller {
         ));
     }
 
+    public function businessSeeAllAction(Request $request) {
+
+        if ($request->query->get('dive_center')):
+            $diveCenters = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
+                    ->findUpdatedDiveCenters();
+        elseif ($request->query->get('liveaboards')):
+            $liveaboards = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
+                    ->findUpdatedLiveaboards();
+        elseif ($request->query->get('accommodations')):
+            $accommodations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
+                    ->findUpdatedAccommodations();
+        endif;
+
+        return $this->render('SkaphandrusAppBundle:Ajax:photographersSeeAll.html.twig', array(
+                    'diveCenters' => $diveCenters,
+                    'liveaboards' => $liveaboards,
+                    'accommodations' => $accommodations,
+        ));
+    }
+
     /////// See All end \\\\\\\\
     //
     //

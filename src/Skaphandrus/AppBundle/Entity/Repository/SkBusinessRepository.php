@@ -14,8 +14,48 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkBusinessRepository extends EntityRepository {
 
-    
-    
+    public function findUpdatedDiveCenters() {
+
+        return $this->getEntityManager()->createQuery(
+                                'SELECT b
+                FROM SkaphandrusAppBundle:SkBusiness b
+                JOIN b.admin admin
+                JOIN b.type t
+                JOIN b.address a
+                JOIN a.location l
+                JOIN l.spots s
+                WHERE t.id in(1,3,6,8)')
+                        ->getResult();
+    }
+
+    public function findUpdatedLiveaboards() {
+
+        return $this->getEntityManager()->createQuery(
+                                'SELECT b
+                FROM SkaphandrusAppBundle:SkBusiness b
+                JOIN b.admin admin
+                JOIN b.type t
+                JOIN b.address a
+                JOIN a.location l
+                JOIN l.spots s
+                WHERE t.id in(4)')
+                        ->getResult();
+    }
+
+    public function findUpdatedAccommodations() {
+
+        return $this->getEntityManager()->createQuery(
+                                'SELECT b
+                FROM SkaphandrusAppBundle:SkBusiness b
+                JOIN b.admin admin
+                JOIN b.type t
+                JOIN b.address a
+                JOIN a.location l
+                JOIN l.spots s
+                WHERE t.id in(7)')
+                        ->getResult();
+    }
+
 ////////////////////
     public function findDiveCentersInSpot($spot_id) {
 

@@ -420,7 +420,7 @@ class DefaultController extends Controller {
                     $map->addMarker($marker);
                 }
             }
-            
+
             //ir buscar ids das melhores fotografias
             $p = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkSpecies")
                     ->getPhotosForIdentification($species->getId(), 0, 7);
@@ -429,24 +429,20 @@ class DefaultController extends Controller {
                 $photo = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkPhoto")->findOneById($ph['id']);
                 $photos[] = $photo;
             }
-            
+
             //ir buscar especies da mesma ordem
             $species_ids = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
                     ->findSpeciesInOrder($species, 10);
-            
+
             //para cada especie ir buscar a melhor fotografia(devolve array)
             foreach ($species_ids as $key => $id) {
                 $bestPhotos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
                         ->getPhotosForIdentification($id['id'], null, 1);
-                
+
                 $similarSpecies[] = $this->getDoctrine()
-                                    ->getRepository("SkaphandrusAppBundle:SkPhoto")
-                                    ->findOneById($bestPhotos[0]['id']);
-                
+                        ->getRepository("SkaphandrusAppBundle:SkPhoto")
+                        ->findOneById($bestPhotos[0]['id']);
             }
-            
-            
-            
 
             //ir buscar a lista de id de criterios da especie
             $criterias_ids = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkIdentificationCriteria")->getCriteriasFromSpecies($species->getId());
@@ -455,7 +451,6 @@ class DefaultController extends Controller {
             foreach ($criterias_ids as $key => $criteria) {
                 $criterias[] = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkIdentificationCriteria')->findCriteriaJoinAllCharacters($criteria);
             }
-
 
             foreach ($criterias as $key => $criteria) :
                 foreach ($criteria->getCharacters() as $key => $character):
@@ -725,6 +720,31 @@ class DefaultController extends Controller {
         } else {
             throw $this->createNotFoundException('The business "' . $slug . '" does not exist in the location ' . $location . ' or country ' . $country);
         }
+    }
+
+    /*
+     * Destinations page
+     */
+
+    public function destinationsAction() {
+
+//        $diveCenters = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
+//                ->findDiveCentersInSpot($spot->getId());
+//
+//        $liveaboards = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
+//                ->findLiveaboardsInSpot($spot->getId());
+//
+//        $accommodations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
+//                ->findAccommodationsInSpot($spot->getId());
+
+        $destinations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')->findAll();
+
+        return $this->render('SkaphandrusAppBundle:Default:destinations.html.twig', array(
+//                    'diveCenters' => $diveCenters,
+//                    'liveaboards' => $liveaboards,
+//                    'accommodations' => $accommodations,
+                    'destinations' => $destinations,
+        ));
     }
 
     /*
