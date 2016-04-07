@@ -63,7 +63,7 @@
                         success: function (data) {
                             $('.vote-button.btn-success').removeClass('btn-success').addClass('btn-primary').html('<i class="fa fa-check"></i> {{ "page.contest.btn.vote"|trans }}');
                             $('.vote-button#' + photo_id).removeClass('btn-primary').addClass('btn-success').html('<i class="fa fa-check"></i> {{ "page.contest.btn.voted"|trans }}');
-                        };
+                        }
                     });
                 }
             });
