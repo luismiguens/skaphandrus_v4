@@ -171,6 +171,7 @@
         
         <lifecycle-callbacks>
             <lifecycle-callback type="postLoad" method="doStuffOnPostLoad"/>
+            <lifecycle-callback type="postUpdate" method="doStuffOnPostUpdate"/>
         </lifecycle-callbacks>
         
     </entity>

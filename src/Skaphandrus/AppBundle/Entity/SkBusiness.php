@@ -1078,4 +1078,20 @@ class SkBusiness {
         }
     }
 
+    
+    
+    public function doStuffOnPostUpdate(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+        $entity = $args->getEntity();
+        $entityManager = $args->getEntityManager();
+        //$entity = new SkBusiness();
+
+        $entity->updatedAt = new \DateTime('now');        
+
+        $entityManager->persist($entity);
+        
+
+    }
+
+    
+    
 }

@@ -1330,6 +1330,8 @@ class DefaultController extends Controller {
 
     public function userAction($id) {
         $locale = $this->get('request')->getLocale();
+        
+        $friends = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPerson')->findByFosUser($id);
 
         $user = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
                 ->findOneById($id);
@@ -1349,6 +1351,7 @@ class DefaultController extends Controller {
         if ($user) {
             return $this->render('SkaphandrusAppBundle:Default:user.html.twig', array(
                         'user' => $user,
+                        'friends' => $friends,
                         'species' => $species,
                         'spots' => $spots,
                         'validations' => $validations,
