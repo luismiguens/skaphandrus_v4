@@ -1333,29 +1333,37 @@ class DefaultController extends Controller {
         
         $friends = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPerson')->findByFosUser($id);
 
+        
+//        $user = new FosUser();
+        
         $user = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
                 ->findOneById($id);
 
-        $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
-                ->findSpeciesInUser($user->getId());
+//        $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
+//                ->findSpeciesInUser($user->getId());
 
         $spots = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')
                 ->findSpotsInUser($user->getId(), $locale);
+//
+//        $validations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
+//                ->getUserValidations($user->getId());
+//
+//        $sugestions = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
+//                ->getUserSugestions($user->getId());
 
-        $validations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-                ->getUserValidations($user->getId());
-
-        $sugestions = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-                ->getUserSugestions($user->getId());
-
+        
+        $acquisitions = $user->getAcquisitions();
+        
+        
         if ($user) {
             return $this->render('SkaphandrusAppBundle:Default:user.html.twig', array(
                         'user' => $user,
                         'friends' => $friends,
-                        'species' => $species,
+//                        'species' => $species,
                         'spots' => $spots,
-                        'validations' => $validations,
-                        'sugestions' => $sugestions,
+                'acquisitions' => $acquisitions,
+//                        'validations' => $validations,
+//                        'sugestions' => $sugestions,
             ));
         } else {
             throw $this->createNotFoundException('The user with id "' . $id . '" does not exist.');

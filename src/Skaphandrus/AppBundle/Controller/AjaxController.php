@@ -173,6 +173,30 @@ class AjaxController extends Controller {
                     'species' => $species,
         ));
     }
+    
+    
+        public function validationsShowMoreAction(Request $request) {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $limit = $request->query->get('limit');
+        $offset = $request->query->get('offset');
+
+        if ($request->query->get('user_id')):
+            $user_id = $request->query->get('user_id');
+            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->getMoreSpeciesValidationsUser($user_id, $limit, $offset);
+            foreach ($species as $s):
+                $s->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpecies')->findValidationsPhotosUser($s->getId(), $user_id));
+            endforeach;
+            
+            
+        endif;
+
+        return $this->render('SkaphandrusAppBundle:Ajax:speciesPartial.html.twig', array(
+                    'species' => $species,
+        ));
+    }
+    
 
     public function photographersShowMoreAction(Request $request) {
 
