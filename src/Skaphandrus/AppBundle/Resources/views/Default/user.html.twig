@@ -24,6 +24,133 @@
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/peity/jquery.peity.min.js') }}"></script>
     <!-- FooTable -->
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
+
+
+
+
+
+    <script type="text/javascript">
+
+        $('.row .btn').on('click', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $collapse = $this.closest('.collapse-group').find('.collapse');
+            $collapse.collapse('toggle');
+        });
+
+        $(function () {
+            var limit_spots = 3;
+            var offset_spots = -3;
+            var limit_species = 3;
+            var offset_species = -3;
+
+            var loadSpots = function () {
+                $('#box_spots').fadeIn("slow");
+                offset_spots = offset_spots + 3;
+                setTimeout(function () {
+                    $.ajax({
+                        type: "get",
+                        url: "{{path("ajax_spot_show_more")}}",
+                        data: 'user_id=' + {{ user.id }} +'&limit=' + limit_spots + '&offset=' + offset_spots,
+                        dataType: "text",
+                        success: function (response) {
+                            $('#box_spots .slider_thumbs').slick('unslick');
+                            $("#box_spots").append(response);
+                            sliders('#box_spots .slider_thumbs');
+                        }
+                    });
+                }, 100);
+            };
+            $(this).ready(loadSpots);
+            $('#show_more_spots').click(loadSpots);
+
+            var loadSpecies = function () {
+                $('#box_species').fadeIn("slow");
+                offset_species = offset_species + 3;
+                setTimeout(function () {
+                    $.ajax({
+                        type: "get",
+                        url: "{{path("ajax_species_show_more")}}",
+                        data: 'user_id=' + {{ user.id }} +'&limit=' + limit_species + '&offset=' + offset_species,
+                        dataType: "text",
+                        success: function (response) {
+                            $('#box_species .slider_thumbs').slick('unslick');
+                            $("#box_species").append(response);
+                            sliders('#box_species .slider_thumbs');
+                        }
+                    });
+                }, 100);
+            };
+                $(this).ready(loadSpecies);
+                $('#show_more_species').click(loadSpecies);
+
+
+            });
+
+            var userId = 'user_id= {{ user.id }}';
+
+            /*  funçoes para os footables  */
+            var loadSpotAll = function () {
+                setTimeout(function () {
+                    $.ajax({
+                        type: "get",
+                        url: "{{path("ajax_spot_see_all")}}",
+                        data: userId,
+                        dataType: "text",
+                        success: function (response) {
+                            $("#spotInput").html(response);
+                        }
+                    });
+                }, 100);
+            };
+        {#$(this).ready(loadSpotAll);#}
+            $('#spotModal').on('shown.bs.modal', loadSpotAll);
+
+            var loadSpeciesAll = function () {
+                setTimeout(function () {
+                    $.ajax({
+                        type: "get",
+                        url: "{{path("ajax_species_see_all")}}",
+                        data: userId,
+                        dataType: "text",
+                        success: function (response) {
+                            $("#speciesInput").html(response);
+                        }
+                    });
+                }, 100);
+            };
+        {#$(this).ready(loadSpeciesAll);#}
+            $('#speciesModal').on('shown.bs.modal', loadSpeciesAll);
+
+
+
+        {#        $(document).ready(function () {
+                    $('.footable-spots').footable();
+                    $('.footable-species').footable();
+                    $('.footable-photographers').footable();
+                });#}
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <script>
         $(function () {
             $("span.pie").peity("pie", {fill: ['#1ab394', '#d7d7d7', '#ffffff']});
@@ -58,316 +185,623 @@
 
 {% block body %}
 
-    <div class="wrapper wrapper-content" itemscope itemtype="http://schema.org/ProfilePage">
-        <div class="row animated fadeInRight">
-            <!-- Left Column -->
+    <!--<div class="wrapper wrapper-content" itemscope itemtype="http://schema.org/ProfilePage">-->
+
+
+
+
+
+
+
+
+
+    <!-- page-heading end -->
+    <div class="wrapper wrapper-content animated">
+        <div class="row m-b-lg m-t-lg">
+            <div class="col-md-6">
+                <div class="profile-image"> 
+                    <img itemprop="image" alt="{{ user.personal.name }}" class="img-circle circle-border m-b-md" src="{{ user.settings.getWebPath | imagine_filter('sk_widen_590') }}" />
+                </div>
+                <div class="profile-info">
+                    <div class="">
+                        <div>
+                            <h2 class="no-margins">{{ user.personal.name }}</h2>
+                            <h4>{{ user.personal.honorific }}</h4>
+                            <button class="btn btn-sm btn-primary">Add Friend</button>
+                            <button class="btn btn-sm btn-primary">Send Message</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-4">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>{{ "page.user.h5.profile_detail"|trans }}</h5>
-                        {#<div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="#">Edit profile</a>
-                                </li>
-                                <li><a href="#">Submit Photo</a>
-                                </li>
-                            </ul>
-                            <!--<a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>-->
-                        </div>#}
-                    </div>
-                    <div>
-                        <div class="ibox-content no-padding border-left-right">
-                            <img itemprop="image" alt="{{ user.personal.name }}" class="img-responsive" src="{{ user.settings.getWebPath | imagine_filter('sk_widen_590') }}" />
-                        </div>
-                        <div class="ibox-content profile-content">
-                            <h4><strong>{{ user.personal.name }}</strong></h4>
-                            <!--<p><i class="fa fa-map-marker"></i> Riviera State 32/106</p>-->
-                            <h5>{{ "page.user.h5.about_me"|trans }}</h5>
-                            <p itemprop="description">{{user.settings.observations|raw}}</p>
-                            <!--<div class="row m-t-lg">
-                                <div class="col-md-4">
-                                    <span class="bar">5,3,9,6,5,9,7,3,5,2</span>
-                                    <h5><strong>169</strong> Posts</h5>
-                                </div>
-                                <div class="col-md-4">
-                                    <span class="line">5,3,9,6,5,9,7,3,5,2</span>
-                                    <h5><strong>28</strong> Following</h5>
-                                </div>
-                                <div class="col-md-4">
-                                    <span class="bar">5,3,2,-1,-3,-2,2,3,5,2</span>
-                                    <h5><strong>240</strong> Followers</h5>
-                                </div>
-                            </div>-->
-                            <div class="user-button">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <a href="{{ url('fos_message_thread_new' )}}" class="btn btn-primary btn-sm btn-block"><i class="fa fa-envelope"></i> {{"page.user.label.send_message"|trans}}</a>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <a href="{{ path('person_admin_new') }}" class="btn btn-default btn-sm btn-block"><i class="fa fa-group"></i>  {{"page.user.label.add_contact"|trans}}</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <table class="table small m-b-xs">
+                    <tbody>
+                        <tr>
+                            <td><strong>142</strong> Photos </td>
+                            <td><strong>22</strong> Spots </td>
+                            <td><strong>22</strong> Points </td>
+                        </tr>
+                        <tr>
+                            <td><strong>61</strong> Tags </td>
+                            <td><strong>54</strong> Friends </td>
+                            <td><strong>22</strong> Identifications </td>
+                        </tr>
+                        <tr>
+                            <td><strong>154</strong> Species </td>
+                            <td><strong>32</strong> Courses </td>
+                            <td><strong>22</strong> definir </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <!-- End Left Column -->
-            <!-- Right Column -->
-            <div class="col-md-8">
-                <div class="ibox-title">
-                    <h5>{{ "page.photo.h5.related_contents"|trans }}</h5>
-                    {#<div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#">Config option 1</a>
-                            </li>
-                            <li><a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>#}
-                </div>
-                <div class="ibox float-e-margins">
-                    <div class="ibox-content">
-                        <h1 itemprop="name">{{ user.name }}</h1>
-                        <!-- Start Panel -->
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <div class="panel-options">
-                                    <ul class="nav nav-tabs">
-                                        {% set tab_id = 0 %}
-
-                                        {% if user.photos|first is not empty  %}
-                                            {% set tab_id = tab_id + 1 %}
-                                            {% set tab_photos_id = tab_id %}
-
-                                            <li class="{{tab_id==1?'active'}}">
-                                                <a data-toggle="tab" href="#tab-{{tab_id}}">
-                                                    {{ "page.user.tab.photos"|trans }}
-                                                </a>
-                                            </li>
-                                        {% endif %}
-                                        {% if species|first is not empty %}
-                                            {% set tab_id = tab_id + 1 %}
-                                            {% set tab_species_id = tab_id %}
-
-                                            <li class="{{tab_id==1?'active'}}">
-                                                <a data-toggle="tab" href="#tab-{{tab_id}}">
-                                                    {{ "page.user.tab.species"|trans }}
-                                                </a>
-                                            </li>
-                                        {% endif %}
-                                        {% if spots|first is not empty %}
-                                            {% set tab_id = tab_id + 1 %}
-                                            {% set tab_spots_id = tab_id %}
-
-                                            <li class="{{tab_id==1?'active'}}">
-                                                <a data-toggle="tab" href="#tab-{{tab_id}}">
-                                                    {{ "page.user.tab.spots"|trans }}
-                                                </a>
-                                            </li>
-                                        {% endif %}
-                                        {% if user.photosValidated|first is not empty or sugestions is not empty %}
-                                            {% set tab_id = tab_id + 1 %}
-                                            {% set tab_photosv_id = tab_id %}
-
-                                            <li class="{{tab_id==1?'active'}}">
-                                                <a data-toggle="tab" href="#tab-{{tab_id}}">
-                                                    {{ "page.user.tab.photos_validated"|trans }}
-                                                </a>
-                                            </li>
-                                        {% endif %}
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="tab-content">
-
-                                    <!-- Start Photos Tab -->
-                                    {% if user.photos|first is not empty %}
-                                        <div id="tab-{{tab_photos_id}}" class="tab-pane {{tab_photos_id==1?'active'}}">
-                                            <h3>{% trans with {'%name%': user.personal.name|title} %}page.user.h3.photos{% endtrans %}</h3>
-                                            {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'fosUser': user.id },'limit':24  })) }}
-                                        </div>
-                                    {% endif %}
-                                    <!-- End Photos Tab -->
-                                    <!-- Start Species Tab -->
-                                    {% if species|first is not empty %}
-                                        <div id="tab-{{tab_species_id}}" class="tab-pane {{tab_species_id==1?'active'}}">
-                                            <h3>{% trans with {'%name%': user.personal.name|title} %}page.user.h3.species{% endtrans %}</h3>
-                                            <input type="text" class="form-control input-sm m-b-xs" id="filter-species" placeholder="Search in table">
-                                            <table class="footable footable-species table" data-page-size="50" data-filter=#filter-species>
-                                                <thead>
-                                                    <tr>
-                                                        <th>{{ "page.location.table.name"|trans }}</th>
-                                                        <th>{{ "page.user.table.num_photos"|trans }}</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {% for s in species %}
-                                                        <tr>
-                                                            <td>{{ link_to_species(s) }}</td>
-                                                            <td>
-                                                                <a href="{{ path('photos', {'fosUser': user.id, 'species': s.id}) }}">
-                                                                    {{ s.photosInSpecies }}
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    {% endfor %}
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <td colspan="2">
-                                                            <ul class="pagination pull-right"></ul>
-                                                        </td>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                        </div>
-                                    {% endif %}
-                                    <!-- End Species Tab -->
-                                    <!-- Start Spots Tab -->
-                                    {% if spots|first is not empty %}
-                                        <div id="tab-{{tab_spots_id}}" class="tab-pane {{tab_spots_id==1?'active'}}">
-                                            <h3>{% trans with {'%name%': user.personal.name|title} %}page.user.h3.spots{% endtrans %}</h3>
-                                            <input type="text" class="form-control input-sm m-b-xs" id="filter-spots" placeholder="Search in table">
-                                            <table class="footable footable-spots table" data-page-size="50" data-filter=#filter-spots>
-                                                <thead>
-                                                    <tr>
-                                                        <th>{{ "page.location.table.name"|trans }}</th>
-                                                        <th>{{ "page.user.table.num_photos"|trans }}</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {% for s in spots %}
-                                                        <tr>
-                                                            <td>
-                                                                {{ link_to_spot(s) }}
-                                                                <span itemscope itemtype="http://schema.org/TouristAttraction ">
-                                                                    <meta itemprop="name" content="{{ s }}" />
-                                                                </span>
-                                                            </td>
-                                                            <td>
-                                                                <a href="{{ path('photos', {'fosUser': user.id, 'spot': s.id}) }}">
-                                                                    {{ s.photosInSpot }}
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    {% endfor %}
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <td colspan="2">
-                                                            <ul class="pagination pull-right"></ul>
-                                                        </td>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                        </div>
-                                    {% endif %}
-                                    <!-- End Spots Tab -->
-                                    <!-- Start Photos Validated Tab -->
-                                    {% if user.photosValidated|first is not empty or sugestions is not empty %}
-                                        <div id="tab-{{tab_photosv_id}}" class="tab-pane {{tab_photosv_id==1?'active'}}">
-                                            <h3>{% trans with {'%name%': user.personal.name|title} %}page.user.h3.photos_validated{% endtrans %}</h3>
-
-                                            {% if validations is not empty %}
-                                                <input type="text" class="form-control input-sm m-b-xs" id="filter-validations" placeholder="Search in table">
-                                                <table class="footable footable-validations table" data-page-size="50" data-filter=#filter-validations>
-                                                    <thead>
-                                                        <tr>
-                                                            <th>{{ "page.user.table.species_name"|trans }}</th>
-                                                            <th>{{ "page.user.table.num_validations"|trans }}</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {% for v in validations %}
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="{{ path('species', { 'slug': v.species_name }) }}">{{ v.species_name }}, {{ v.species_author }}</a>
-                                                                </td>
-                                                                <td>
-                                                                    {{ v.count }}
-                                                                </td>
-                                                            </tr>
-                                                        {% endfor %}
-                                                    </tbody>
-                                                    <tfoot>
-                                                        <tr>
-                                                            <td colspan="2">
-                                                                <ul class="pagination pull-right"></ul>
-                                                            </td>
-                                                        </tr>
-                                                    </tfoot>
-                                                </table>
-                                            {% endif %}
-
-                                            {% if sugestions is not empty %}
-                                                <input type="text" class="form-control input-sm m-b-xs" id="filter-sugestions" placeholder="Search in table">
-                                                <table class="footable footable-sugestions table" data-page-size="50" data-filter=#filter-sugestions>
-                                                    <thead>
-                                                        <tr>
-                                                            <th>{{ "page.user.table.species_name"|trans }}</th>
-                                                            <th>{{ "page.user.table.num_sugestions"|trans }}</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {% for sn in sugestions %}
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="{{ path('species', { 'slug': sn.species_name }) }}">{{ sn.species_name }}, {{ sn.species_author }}</a>
-                                                                </td>
-                                                                <td>
-                                                                    {{ sn.count }}
-                                                                </td>
-                                                            </tr>
-                                                        {% endfor %}
-                                                    </tbody>
-                                                    <tfoot>
-                                                        <tr>
-                                                            <td colspan="2">
-                                                                <ul class="pagination pull-right"></ul>
-                                                            </td>
-                                                        </tr>
-                                                    </tfoot>
-                                                </table>
-                                            {% endif %}
-
-                                            {#{% set pva = [] %}
-                                            {% for pv in user.photosValidated[:35] %}
-                                                {% set pva = pva|merge([pv.photo]) %}
-                                            {% endfor %}#}
-                                            {#{{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'photos': pva } })) }}#}
-
-                                        </div>
-                                    {% endif %}
-                                    <!-- End Photos Validated Tab -->
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Panel -->
-                    </div>
-                </div>
-            </div>
-            <!-- End Right Column -->
         </div>
+
+        <!-- full content area -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <h3>{{ "page.user.h5.about_me"|trans }}</h3>
+                        <p class="small"> {{user.settings.observations|raw}} </p>
+                        <div>
+                            <button class="btn btn-sm btn-primary pull-right">View More</button>
+                        </div>
+                        {#                        <div class="ibox">
+                                                    <h4>Portugal / Ponta Delgada</h4>
+                                                    <dl>
+                                                        <dt>Email:</dt>
+                                                        <dd>joão.joão@skaphandrus.com </dd>
+                                                        <dt>Telf:</dt>
+                                                        <dd> 919 919 919</dd>
+                                                        <dt>URL:</dt>
+                                                        <dd><a href="#" class="text-navy"> página web</a> </dd>
+                                                    </dl>
+                                                </div>#}
+                    </div>
+                </div>            
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <h3>Friends</h3>
+                        <div class="user-friends"> 
+
+
+                            {% for person in friends %}
+
+                                {% if person.skaphandrusId != false %}
+                                    <a class="btn btn-white btn-sm" href="{{ path('user', { 'id': person.skaphandrusId.id }) }}">
+                                        <img itemprop="image" alt="{{ person.skaphandrusId.personal.name }}" class="img-circle" src="{{ person.skaphandrusId.settings.getWebPath | imagine_filter('sk_widen_590') }}" />
+                                    </a>
+
+
+
+                                {% endif %}  
+
+                                <a href="#">
+                                    <img itemprop="image" alt="" class="img-circle" src="" />
+                                </a> 
+                            {% endfor %}
+
+
+                            {# <a href="#"><img alt="image" class="img-circle" src="placeholder-100x100.jpg"></a> 
+                             <a href="#"><img alt="image" class="img-circle" src="placeholder-100x100.jpg"></a> 
+                             <a href="#"><img alt="image" class="img-circle" src="placeholder-100x100.jpg"></a> 
+                             <a href="#"><img alt="image" class="img-circle" src="placeholder-100x100.jpg"></a> 
+                             <a href="#"><img alt="image" class="img-circle" src="placeholder-100x100.jpg"></a> 
+                             <a href="#"><img alt="image" class="img-circle" src="placeholder-100x100.jpg"></a> 
+                             <a href="#"><img alt="image" class="img-circle" src="placeholder-100x100.jpg"></a> 
+                             <a href="#"><img alt="image" class="img-circle" src="placeholder-100x100.jpg"></a> 
+                             <a href="#"><img alt="image" class="img-circle" src="placeholder-100x100.jpg"></a> #}
+                        </div>
+                    </div>
+                </div>            <div class="ibox">
+                    <div class="ibox-content">
+                        <h3>Private message</h3>
+                        <p class="small"> Send a private message to João </p>
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <input type="email" class="form-control" placeholder="Message subject">
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea class="form-control" placeholder="Your message" rows="3"></textarea>
+                        </div>
+                        <button class="btn btn-primary btn-block">Send</button>
+                    </div>
+                </div>        </div>
+            <div class="col-md-8">
+                <!-- begin - row dos spots -->
+                <div class="row" >
+                    <div class="col col-lg-12">
+                        <div class="ibox" >
+                            <div class="ibox-title">
+                                <h3>Locals</h3>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="m-b-md">
+                                    {#<div id="map-canvas"></div>#}
+                                </div>
+
+                                <div id="box_spots"></div>
+
+                                <div class="row">
+                                    <div class="col-md-3 hidden-sm">
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        {# <button type="button" class="btn btn-outline btn-primary btn-block" id="#">Show More</button>#}
+                                        <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_spots">{{ "page.location.button.show_more_spots"|trans }}</button>
+                                    </div>
+                                    <div class="col-md-3 hidden-sm">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>   
+                <!-- end - row dos spots -->
+
+                <div class="row" >
+                    <div class="col col-lg-12">
+
+                        <div class="tabs-container" id="tabs_marine_animals">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a aria-expanded="true" data-toggle="tab" href="#tab-1">Photographed</a></li>
+                                <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-2">Identified</a></li> 
+                            </ul>
+                            <div class="tab-content">
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="panel-body">
+                                        <div class="ibox">
+                                            <h4>Marine Animals</h4>
+                                            <div class="ibox-content">
+                                                <div class="row">
+                                                    
+                                                 
+                                                    
+                                                    
+                                                    <div id="box_species"></div>
+                                                    
+                                                    
+                                                    <div class="row">
+                                                        <div class="col-md-3 hidden-sm">
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-12">
+                                                            {#<button type="button" class="btn btn-outline btn-primary btn-block" id="#">Show More</button>#}
+                                                            <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_species">{{ "page.location.button.show_more_species"|trans }}</button>
+                                                        </div>
+                                                        <div class="col-md-3 hidden-sm">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>                </div>
+                                <div id="tab-2" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="ibox">
+                                            <h4>Marine Animals</h4>
+                                            <div class="ibox-content">
+                                                <div class="row">
+                                                    <div class="row">
+                                                        <div class="col-sm-4 col-sx-12">
+                                                            <div class="contact-box center-version small_version">
+                                                                <a href="#">
+                                                                    <div class="box_spacer_right">
+                                                                        <h3 class="m-b-xs"><strong>Title or species name or other</strong></h3>
+                                                                        <div class="font-bold">
+                                                                            <span class="label label-primary">See all photos:
+                                                                                295</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-8 col-sx-12">
+                                                            <div class="row">
+                                                                <div class="col-lg-11">
+                                                                    <div class="ibox">
+                                                                        <div class="slider_thumbs" >
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>    </div>
+                                                    </div>        <div class="row">
+                                                        <div class="col-sm-4 col-sx-12">
+                                                            <div class="contact-box center-version small_version">
+                                                                <a href="#">
+                                                                    <div class="box_spacer_right">
+                                                                        <h3 class="m-b-xs"><strong>Title or species name or other</strong></h3>
+                                                                        <div class="font-bold">
+                                                                            <span class="label label-primary">See all photos:
+                                                                                295</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-8 col-sx-12">
+                                                            <div class="row">
+                                                                <div class="col-lg-11">
+                                                                    <div class="ibox">
+                                                                        <div class="slider_thumbs" >
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>    </div>
+                                                    </div>        <div class="row">
+                                                        <div class="col-sm-4 col-sx-12">
+                                                            <div class="contact-box center-version small_version">
+                                                                <a href="#">
+                                                                    <div class="box_spacer_right">
+                                                                        <h3 class="m-b-xs"><strong>Title or species name or other</strong></h3>
+                                                                        <div class="font-bold">
+                                                                            <span class="label label-primary">See all photos:
+                                                                                295</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-8 col-sx-12">
+                                                            <div class="row">
+                                                                <div class="col-lg-11">
+                                                                    <div class="ibox">
+                                                                        <div class="slider_thumbs" >
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>    </div>
+                                                    </div>        <div class="row">
+                                                        <div class="col-sm-4 col-sx-12">
+                                                            <div class="contact-box center-version small_version">
+                                                                <a href="#">
+                                                                    <div class="box_spacer_right">
+                                                                        <h3 class="m-b-xs"><strong>Title or species name or other</strong></h3>
+                                                                        <div class="font-bold">
+                                                                            <span class="label label-primary">See all photos:
+                                                                                295</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-8 col-sx-12">
+                                                            <div class="row">
+                                                                <div class="col-lg-11">
+                                                                    <div class="ibox">
+                                                                        <div class="slider_thumbs" >
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href="#">
+                                                                                    <img src="placeholder-100x100.jpg" class="img-thumbnail" />
+                                                                                </a>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>    </div>
+                                                    </div>        <div id="spots_list"></div>
+                                                    <div class="row">
+                                                        <div class="col-md-3 hidden-sm">
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-12">
+                                                            <button type="button" class="btn btn-outline btn-primary btn-block" id="#">Show More</button>
+                                                        </div>
+                                                        <div class="col-md-3 hidden-sm">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>            <div class="row" >
+                    <div class="col col-lg-12">
+                        <h2>User Modeles</h2>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="ibox">
+                                    <div class="ibox-content product-box">
+                                        <img src="placeholder.jpg" class="img-responsive" />
+                                        <div class="product-desc">
+                                            <small class="text-muted">Order</small>
+                                            <a href="#" class="product-name"> Species</a>
+                                            <div class="m-t text-righ">
+                                                <a href="#" class="btn btn-xs btn-outline btn-primary">Start using <i class="fa fa-long-arrow-right"></i> </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                    </div>
+                            <div class="col-md-4">
+                                <div class="ibox">
+                                    <div class="ibox-content product-box">
+                                        <img src="placeholder.jpg" class="img-responsive" />
+                                        <div class="product-desc">
+                                            <small class="text-muted">Order</small>
+                                            <a href="#" class="product-name"> Species</a>
+                                            <div class="m-t text-righ">
+                                                <a href="#" class="btn btn-xs btn-outline btn-primary">Start using <i class="fa fa-long-arrow-right"></i> </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                    </div>
+                            <div class="col-md-4">
+                                <div class="ibox">
+                                    <div class="ibox-content product-box">
+                                        <img src="placeholder.jpg" class="img-responsive" />
+                                        <div class="product-desc">
+                                            <small class="text-muted">Order</small>
+                                            <a href="#" class="product-name"> Species</a>
+                                            <div class="m-t text-righ">
+                                                <a href="#" class="btn btn-xs btn-outline btn-primary">Start using <i class="fa fa-long-arrow-right"></i> </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                    </div>                    
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="ibox">
+                                    <div class="ibox-content product-box">
+                                        <img src="placeholder.jpg" class="img-responsive" />
+                                        <div class="product-desc">
+                                            <small class="text-muted">Order</small>
+                                            <a href="#" class="product-name"> Species</a>
+                                            <div class="m-t text-righ">
+                                                <a href="#" class="btn btn-xs btn-outline btn-primary">Start using <i class="fa fa-long-arrow-right"></i> </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                    </div>
+                            <div class="col-md-4">
+                                <div class="ibox">
+                                    <div class="ibox-content product-box">
+                                        <img src="placeholder.jpg" class="img-responsive" />
+                                        <div class="product-desc">
+                                            <small class="text-muted">Order</small>
+                                            <a href="#" class="product-name"> Species</a>
+                                            <div class="m-t text-righ">
+                                                <a href="#" class="btn btn-xs btn-outline btn-primary">Start using <i class="fa fa-long-arrow-right"></i> </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                    </div>
+                            <div class="col-md-4">
+                                <div class="ibox">
+                                    <div class="ibox-content product-box">
+                                        <img src="placeholder.jpg" class="img-responsive" />
+                                        <div class="product-desc">
+                                            <small class="text-muted">Order</small>
+                                            <a href="#" class="product-name"> Species</a>
+                                            <div class="m-t text-righ">
+                                                <a href="#" class="btn btn-xs btn-outline btn-primary">Start using <i class="fa fa-long-arrow-right"></i> </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                    </div>                    
+                        </div>
+                    </div>
+
+                </div>        </div>
+        </div> 
     </div>
+
+
+
+
+
+
+
+
+
+    <!--  </div> -->
 
     {#<h2>{{ "page.user.h2.username"|trans }}: {{ user.username }}</h2>
   

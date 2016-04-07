@@ -13,6 +13,40 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkSpotRepository extends EntityRepository {
 
+    
+        public function getMoreSpotsUser($locale, $user_id, $limit = 3, $offset = 0) {
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT s.id as spot, st.id as st_id, st.name as st_name, count(p.id) as num_photos
+                FROM sk_photo as p
+                right JOIN sk_spot as s on s.id = p.spot_id
+                JOIN sk_spot_translation as st on s.id = st.translatable_id
+                where p.fos_user_id = " . $user_id . " and st.locale = '" . $locale . "'
+                group by spot
+                order by num_photos desc
+                limit " . $limit . "
+                offset " . $offset;
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+            $spot = $em->getRepository('SkaphandrusAppBundle:SkSpot')->find($value['spot']);
+            $spot->setPhotosInSpot($value['num_photos']);
+            $result[] = $spot;
+        }
+
+        return $result;
+
+
+    }
+    
+    
+    
     public function getMoreSpotsLocation($locale, $location_id, $limit = 3, $offset = 0) {
 
         $em = $this->getEntityManager();
@@ -80,6 +114,21 @@ class SkSpotRepository extends EntityRepository {
 
         return $query->getResult();
     }
+    
+    
+        public function findPhotosSpotAndUser($spot_id, $user_id) {
+        $query = $this->getEntityManager()->createQuery(
+                        'SELECT p
+            FROM SkaphandrusAppBundle:SkPhoto p
+            JOIN p.spot s
+            WHERE p.spot = :spot_id 
+            AND p.fosUser = :user_id
+            ORDER BY p.id desc'
+                )->setParameter('spot_id', $spot_id)->setParameter('user_id', $user_id)->setMaxResults(10);
+
+        return $query->getResult();
+    }
+    
 
     public function findPhotosLocation($spot_id, $location_id) {
         $query = $this->getEntityManager()->createQuery(

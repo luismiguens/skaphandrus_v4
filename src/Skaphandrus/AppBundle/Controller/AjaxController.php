@@ -112,13 +112,21 @@ class AjaxController extends Controller {
         $locale = $this->get('request')->getLocale();
         $limit = $request->query->get('limit');
         $offset = $request->query->get('offset');
-        $location_id = $request->query->get('location_id');
+        
+        if ($request->query->get('location_id')):
+            $location_id = $request->query->get('location_id');
+            $spots = $em->getRepository('SkaphandrusAppBundle:SkSpot')->getMoreSpotsLocation($locale, $location_id, $limit, $offset);
+            foreach ($spots as $spot):
+                $spot->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpot')->findPhotosLocation($spot->getId(), $location_id));
+            endforeach;
+        elseif ($request->query->get('user_id')) :
+            $user_id = $request->query->get('user_id');
+            $spots = $em->getRepository('SkaphandrusAppBundle:SkSpot')->getMoreSpotsUser($locale, $user_id, $limit, $offset);
+            foreach ($spots as $spot):
+                $spot->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpot')->findPhotosSpotAndUser($spot->getId(), $user_id));
+            endforeach;
+        endif;
 
-        $spots = $em->getRepository('SkaphandrusAppBundle:SkSpot')->getMoreSpotsLocation($locale, $location_id, $limit, $offset);
-
-        foreach ($spots as $spot):
-            $spot->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpot')->findPhotosLocation($spot->getId(), $location_id));
-        endforeach;
 
         return $this->render('SkaphandrusAppBundle:Ajax:spotPartial.html.twig', array(
                     'spots' => $spots,
@@ -171,6 +179,14 @@ class AjaxController extends Controller {
             foreach ($species as $s):
                 $s->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpecies')->findPhotosSpot($s->getId(), $spot_id));
             endforeach;
+        elseif ($request->query->get('user_id')):
+            $user_id = $request->query->get('user_id');
+            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->getMoreSpeciesUser($user_id, $limit, $offset);
+            foreach ($species as $s):
+                $s->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpecies')->findPhotosUser($s->getId(), $user_id));
+            endforeach;
+            
+            
         endif;
 
         return $this->render('SkaphandrusAppBundle:Ajax:speciesPartial.html.twig', array(
