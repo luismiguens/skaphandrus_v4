@@ -55,7 +55,7 @@ class SkContestRequestController extends Controller {
             $this->get('mailer')->send($message);
 
             $this->get('session')->getFlashBag()->add('notice', 'form.common.message.request_saved');
-            return $this->redirect($this->generateUrl('contests_landing_page'));
+            return $this->redirect($request->headers->get('referer'));
         }
 
         return $this->render('SkaphandrusAppBundle:SkContestRequest:new.html.twig', array(

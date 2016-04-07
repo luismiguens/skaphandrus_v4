@@ -9,7 +9,6 @@
     <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('contests_photos', {'contest_slug': slugify(category.contest.name), 'category_slug': slugify(category.translate('en').name), 'locale': 'en'}) }}" />
 {% endblock %}
 
-
 {% set keywords = category.contest.name %}
 {% set keywords = keywords~', '~("meta_tag.keyword.categories"|trans) %}
 {% set keywords = keywords~', '~("meta_tag.keyword.pictures"|trans) %}
@@ -41,19 +40,19 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/isotope.pkgd.min.js') }}"></script>
-
     <script src="{{ asset('bundles/skaphandrusapp/js/imagesloaded.pkgd.min.js') }}"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+
     <script type="text/javascript">
         $(function () {
             var $grid = $('.grid-contest').imagesLoaded(function () {
-// init Isotope after all images have loaded
+                // init Isotope after all images have loaded
                 $grid.isotope({
-// options
+                    // options
                     itemSelector: '.grid-item-contest',
                     layoutMode: 'masonry'
                 });
             });
-
 
             $('.vote-button').click(function () {
                 photo_id = $(this).attr('id');
@@ -64,14 +63,13 @@
                         success: function (data) {
                             $('.vote-button.btn-success').removeClass('btn-success').addClass('btn-primary').html('<i class="fa fa-check"></i> {{ "page.contest.btn.vote"|trans }}');
                             $('.vote-button#' + photo_id).removeClass('btn-primary').addClass('btn-success').html('<i class="fa fa-check"></i> {{ "page.contest.btn.voted"|trans }}');
-                        },
+                        };
                     });
                 }
             });
         });
     </script>
 {% endblock %}
-
 
 {% block stylesheets %}
     {{ parent() }}
@@ -80,15 +78,16 @@
     </style>
 {% endblock %}
 
-
-
 {% block body %}
-    <div class="row">
-        <div class="col-lg-9">
-            <div class="wrapper wrapper-content animated fadeInUp">
-                <div class="panel blank-panel">
-                    <div class="panel-heading">
-                        <div class="panel-options">
+
+    <div class="wrapper wrapper-content">
+        <div class="row">
+
+            <!-- Coluna da direita -->
+            <div class="col-md-8">
+                <div class="row" >
+                    <div class="col col-lg-12">
+                        <div class="tabs-container">
                             <ul class="nav nav-tabs">
                                 <li>
                                     <a href="{{ url_to_contest(category.contest) }}">
@@ -122,68 +121,92 @@
                                         </a>
                                     </li>
                                 {%endif%}
-
                             </ul>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <div class="tab-content">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="m-b-md">
-                                        <h1>{% trans with {'%contest%': category.contest.name, '%category%': category.translate.name} %}page.contest_photos.h1.title{% endtrans %}</h1>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane active" id="tab-1">
-                                <div class="row grid-contest">
 
-                                    {#<h2>{{ "page.contests_photos.h3.category"|trans }}: {{ category.translate.name }}, {{ category.contest.name }}</h2>#}
-
-                                    {% for photo in category.photo %}
-                                        <div class="col-lg-4 grid-item-contest">
-                                            <div class="ibox float-e-margins">
-                                                <!--<div class="ibox-title"><h5>{{photo.title}}</h5></div>-->
-                                                <div>
-                                                    <div class="ibox-content ibox-content no-padding border-left-right">
-                                                        <a href="{{ url_to_photo(photo) }}" title="{{ photo.title }}">
-                                                            <img alt="{{ photo.title }}" class="img-responsive" src="{{ photo.getWebPath | imagine_filter('sk_widen_265') }}" />
-                                                        </a>
-                                                    </div>
-                                                    <div class="ibox-content profile-content">
-                                                        {# <h4><strong>{{ photo.title }}</strong></h4>#}
-                                                        <div>
-                                                            {% set class = 'btn-primary' %}
-                                                            {% set text = "page.contest.btn.vote"|trans %}
-
-                                                            {% if votedPhoto is not empty and photo.id == votedPhoto.photo.id %}
-                                                                {% set class = 'btn-success' %}
-                                                                {% set text = "page.contest.btn.voted"|trans %}
-                                                            {% endif %}
-
-                                                            {% if category.contest.isInPublicVotation %}
-                                                                {% if is_granted("IS_AUTHENTICATED_FULLY") %}
-                                                                    <button type="button" class="vote-button btn-block btn {{ class }}" id="{{ photo.id }}"><i class="fa fa-check"></i> {{ text }}</button>
-                                                                {% else %}
-                                                                    <a class="btn btn-success btn-outline btn-block" href="{{ path('fos_user_security_login') }}">Login to vote <i class="fa fa-long-arrow-right"></i></a>
-                                                                    {% endif %}
-                                                                {% endif %}
-                                                                {# {% include 'SkaphandrusAppBundle:Common:addThisUnique.html.twig' with {'photography': photo} %}#}
-                                                        </div>
-                                                    </div>
+                            <div id="tab-1" class="tab-pane active">
+                                <div class="panel-body">
+                                    <div class="tab-content">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="m-b-md">
+                                                    <h2>{% trans with {'%contest%': category.contest.name, '%category%': category.translate.name} %}page.contest_photos.h1.title{% endtrans %}</h2>
                                                 </div>
                                             </div>
                                         </div>
-                                    {% endfor %}
+                                        <div class="row grid-contest">
+
+                                            {#<h2>{{ "page.contests_photos.h3.category"|trans }}: {{ category.translate.name }}, {{ category.contest.name }}</h2>#}
+
+                                            {% for photo in category.photo %}
+                                                <div class="col-lg-4 grid-item-contest">
+                                                    <div class="ibox float-e-margins">
+                                                        <!--<div class="ibox-title"><h5>{{photo.title}}</h5></div>-->
+                                                        <div>
+                                                            <div class="ibox-content ibox-content no-padding border-left-right">
+                                                                <a href="{{ url_to_photo(photo) }}" title="{{ photo.title }}">
+                                                                    <img alt="{{ photo.title }}" class="img-responsive" src="{{ photo.getWebPath | imagine_filter('sk_widen_265') }}" />
+                                                                </a>
+                                                            </div>
+                                                            <div class="ibox-content profile-content">
+                                                                {# <h4><strong>{{ photo.title }}</strong></h4>#}
+                                                                <div>
+                                                                    {% set class = 'btn-primary' %}
+                                                                    {% set text = "page.contest.btn.vote"|trans %}
+
+                                                                    {% if votedPhoto is not empty and photo.id == votedPhoto.photo.id %}
+                                                                        {% set class = 'btn-success' %}
+                                                                        {% set text = "page.contest.btn.voted"|trans %}
+                                                                    {% endif %}
+
+                                                                    {% if category.contest.isInPublicVotation %}
+                                                                        {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+                                                                            <button type="button" class="vote-button btn-block btn {{ class }}" id="{{ photo.id }}"><i class="fa fa-check"></i> {{ text }}</button>
+                                                                        {% else %}
+                                                                            <a class="btn btn-success btn-outline btn-block" href="{{ path('fos_user_security_login') }}">
+                                                                                Login to vote <i class="fa fa-long-arrow-right"></i>
+                                                                            </a>
+                                                                        {% endif %}
+                                                                    {% endif %}
+                                                                    {# {% include 'SkaphandrusAppBundle:Common:addThisUnique.html.twig' with {'photography': photo} %}#}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-3">
-            {% include 'SkaphandrusAppBundle:Contest:right-sidebar-contest.html.twig' with {'contest': category.contest} %}
+            <!-- Coluna da direita end -->   
+
+            <!-- Coluna da esquerda start -->              
+            <div class="col-md-4">
+                <div class="ibox float-e-margins form_sidebar" data-spy="affix" data-offset-top="60">
+                    <div class="ibox-title">
+                        <h5>{{ "page.contests.h5.create_contest"|trans }}</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <p>{{ "page.contests.p.fill_form"|trans }}{#Fill the form or <a href="#">READ MORE</a>#}</p>
+
+                        {% for flashMessage in app.session.flashbag.get('notice') %}
+                            <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                {{ flashMessage|trans }}
+                            </div>
+                        {% endfor %}
+
+                        {{ render(controller('SkaphandrusAppBundle:SkContestRequest:new')) }}
+
+                    </div>
+                </div>
+            </div>
+            <!-- Coluna da esquerda end -->   
+
         </div>
     </div>
 

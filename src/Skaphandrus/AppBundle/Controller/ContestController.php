@@ -242,7 +242,6 @@ class ContestController extends Controller {
     public function winnersAction($contest_slug) {
         $name = str_replace('-', ' ', $contest_slug);
 
-
         //$contest = new \Skaphandrus\AppBundle\Entity\SkPhotoContest();
 
         $contest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
@@ -250,12 +249,9 @@ class ContestController extends Controller {
 
         //$category = new \Skaphandrus\AppBundle\Entity\SkPhotoContestCategory();
         foreach ($contest->getCategories() as $key => $category) {
-            $category->setWinnerPhotos($this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')->findJudgeCategoryPoints($category->getId()));
+            $category->setWinnerPhotos($this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestCategory')
+                            ->findJudgeCategoryPoints($category->getId()));
         }
-
-
-
-
 
         if ($contest) {
             return $this->render('SkaphandrusAppBundle:Contest:winners.html.twig', array(
