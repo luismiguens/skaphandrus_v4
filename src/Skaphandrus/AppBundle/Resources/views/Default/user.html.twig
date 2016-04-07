@@ -287,7 +287,7 @@
                         <div class="user-friends"> 
                             {% for person in friends %}
                                 {% if person.skaphandrusId != false %}
-                                    <a class="btn btn-white btn-sm" href="{{ path('user', { 'id': person.skaphandrusId.id }) }}">
+                                    <a href="{{ path('user', { 'id': person.skaphandrusId.id }) }}">
                                         <img itemprop="image" alt="{{ person.skaphandrusId.personal.name }}" class="img-circle" src="{{ person.skaphandrusId.settings.getWebPath | imagine_filter('sk_widen_590') }}" />
                                     </a>
                                 {% endif %}  
