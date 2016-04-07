@@ -219,7 +219,7 @@
         <div class="row m-b-lg m-t-lg">
             <div class="col-md-6">
                 <div class="profile-image"> 
-                    <img itemprop="image" alt="{{ user.personal.name }}" class="img-circle circle-border m-b-md" src="{{ user.settings.getWebPath | imagine_filter('sk_widen_590') }}" />
+                    <img itemprop="image" alt="{{ user.personal.name }}" class="img-circle circle-border m-b-md" src="{{ user.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_100') }}" />
                 </div>
                 <div class="profile-info">
                     <div class="">
@@ -288,7 +288,7 @@
                             {% for person in friends %}
                                 {% if person.skaphandrusId != false %}
                                     <a href="{{ path('user', { 'id': person.skaphandrusId.id }) }}">
-                                        <img itemprop="image" alt="{{ person.skaphandrusId.personal.name }}" class="img-circle" src="{{ person.skaphandrusId.settings.getWebPath | imagine_filter('sk_widen_590') }}" />
+                                        <img itemprop="image" alt="{{ person.skaphandrusId.personal.name }}" class="img-circle" src="{{ person.skaphandrusId.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_100') }}" />
                                     </a>
                                 {% endif %}  
                             {% endfor %}
@@ -405,9 +405,6 @@
                         <div class="row">
                             
                             {% for module in acquisitions %}
-                            
-                                
-                                {#{% set module = acquisition.module %}#}
                                 
                             <div class="col-md-4">
                                 <div class="ibox">
