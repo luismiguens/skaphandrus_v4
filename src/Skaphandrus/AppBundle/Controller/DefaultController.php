@@ -1352,7 +1352,7 @@ class DefaultController extends Controller {
 //                ->getUserSugestions($user->getId());
 
         
-        $acquisitions = $user->getAcquisitions();
+        $acquisitions = $user->getModules();
         
         
         if ($user) {

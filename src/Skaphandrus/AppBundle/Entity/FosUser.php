@@ -143,8 +143,16 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
     public function getModules() {
         $modules = new ArrayCollection();
 
+//        
+//        $module = new SkIdentificationModule();
+//        $module->getIsActive()
+        
         foreach ($this->acquisitions as $acquisition) {
-            $modules[] = $acquisition->getModule();
+            
+            if($acquisition->getModule()->getIsActive()==TRUE):
+                $modules[] = $acquisition->getModule();
+            endif;
+            
         }
 
         return $modules;
