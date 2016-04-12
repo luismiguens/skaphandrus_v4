@@ -1,0 +1,30 @@
+destinations_teste:
+    path:     /
+    defaults: { _controller: "SkaphandrusAppBundle:SkDestinationForm:index" }
+
+destinations_teste_show:
+    path:     /{id}/show
+    defaults: { _controller: "SkaphandrusAppBundle:SkDestinationForm:show" }
+
+destinations_teste_new:
+    path:     /new
+    defaults: { _controller: "SkaphandrusAppBundle:SkDestinationForm:new" }
+
+destinations_teste_create:
+    path:     /create
+    defaults: { _controller: "SkaphandrusAppBundle:SkDestinationForm:create" }
+    methods:  POST
+
+destinations_teste_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SkaphandrusAppBundle:SkDestinationForm:edit" }
+
+destinations_teste_update:
+    path:     /{id}/update
+    defaults: { _controller: "SkaphandrusAppBundle:SkDestinationForm:update" }
+    methods:  [POST, PUT]
+
+destinations_teste_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SkaphandrusAppBundle:SkDestinationForm:delete" }
+    methods:  [POST, DELETE]

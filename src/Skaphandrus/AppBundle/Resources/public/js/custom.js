@@ -265,7 +265,7 @@ function slider_concurso(selector) {
 
 function slide_people(selector) {
     $(selector).slick({
-        infinite: false,
+        infinite: true,
         slidesToShow: 11,
         slidesToScroll: 11,
         centerMode: false,

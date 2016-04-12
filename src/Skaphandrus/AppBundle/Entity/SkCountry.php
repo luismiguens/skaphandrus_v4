@@ -39,12 +39,40 @@ class SkCountry {
     private $regions;
     private $photosCount = 0;
     private $spotsCount = 0;
+    private $diveCentersCount = 0;
+
+    /**
+     * @var \Skaphandrus\AppBundle\Entity\SkPhoto
+     */
+    private $mainPhoto;
 
     /**
      * Constructor
      */
     public function __construct() {
         $this->regions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set mainPhoto
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhoto $mainPhoto
+     *
+     * @return SkPhotoContestAward
+     */
+    public function setMainPhoto(\Skaphandrus\AppBundle\Entity\SkPhoto $mainPhoto = null) {
+        $this->mainPhoto = $mainPhoto;
+
+        return $this;
+    }
+
+    /**
+     * Get mainPhoto
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkPhoto
+     */
+    public function getMainPhoto() {
+        return $this->mainPhoto;
     }
 
     public function setId($param) {
@@ -191,6 +219,14 @@ class SkCountry {
         }
 
         return $name ? $name : '';
+    }
+
+    public function getDiveCentersCount() {
+        return $this->diveCentersCount;
+    }
+
+    public function setDiveCentersCount($diveCentersCount) {
+        $this->diveCentersCount = $diveCentersCount;
     }
 
     public function getSpotsCount() {

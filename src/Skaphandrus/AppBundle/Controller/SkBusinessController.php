@@ -234,6 +234,9 @@ class SkBusinessController extends Controller {
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            $updatedAt = new \DateTime('now');
+            $entity->setUpdatedAt($updatedAt); 
+            
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');

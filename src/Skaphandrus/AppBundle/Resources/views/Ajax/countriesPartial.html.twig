@@ -1,0 +1,56 @@
+{% if countries %}
+    {% for c in countries %}
+        <li class="dvb-md-item" >
+            {% if c.mainPhoto is not null %}
+                {% if loop.index is divisible by(8) or loop.index == 1  %}
+                    <!-- imagem grande -->
+                    <a href="{{path('country', {'slug':c})}}" style="background-image:url({{c.mainPhoto.getWebPath|imagine_filter('sk_crop_555')}});" class="dvb-md-link" ></a>
+                {% else %}
+                    <!-- imagem pequena -->
+                    <a href="{{path('country', {'slug':c})}}" style="background-image:url({{c.mainPhoto.getWebPath|imagine_filter('sk_crop_272')}});" class="dvb-md-link" ></a>
+                {% endif %}
+            {% else %}
+                <a href="{{path('country', {'slug':c})}}" style="background-color: white;" class="dvb-md-link" ></a>
+            {% endif %}
+            <h3 class="dvb-md-name" ><a href="{{path('country', {'slug':c})}}" >{{ c }}</a></h3>
+            <ul class="dvb-md-info" >
+                {% if c.diveCentersCount > 0 %}
+                    <li class="dvb-mdi-item" >
+                        <a href="{{path('country', {'slug':c})}}" class="dvb-mdi-link" >
+                            {{ c.diveCentersCount }} {{ "page.countries_partial.label.diveCenters"|trans }}
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="dvb-mdi-item" >
+                        <a href="{{path('country', {'slug':c})}}" class="dvb-mdi-link" >{{ "page.countries_partial.label.no_diveCenters"|trans }}</a>
+                    </li>
+                {% endif %}
+                {% if c.photosCount > 0 %}
+                    <li class="dvb-mdi-item" >
+                        <a href="{{ path('photos', {'country': c.id}) }}" class="dvb-mdi-link" >
+                            {{ c.photosCount }} {{ "page.countries_partial.label.photos"|trans }}
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="dvb-mdi-item" >
+                        <a href="{{path('country', {'slug':c})}}" class="dvb-mdi-link" >{{ "page.countries_partial.label.no_photos"|trans }}</a>
+                    </li>
+                {% endif %}
+                {% if c.spotsCount > 0 %}
+                    <li class="dvb-mdi-item" >
+                        <a href="{{path('country', {'slug':c})}}" class="dvb-mdi-link" >{{ c.spotsCount }} {{ "page.countries_partial.label.diveSites"|trans }}</a>
+                    </li>
+                {% else %}
+                    <li class="dvb-mdi-item" >
+                        <a href="{{path('country', {'slug':c})}}" class="dvb-mdi-link" >{{ "page.countries_partial.label.no_diveSites"|trans }}</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </li>
+    {% endfor %}
+{% else %}
+    <div class="col col-lg-12">
+        {{ "page.countries_partial.h4.no_countries"|trans }}
+    </div>
+{% endif %}
+

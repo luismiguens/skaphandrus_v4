@@ -1,0 +1,5 @@
+identification_images_admin:
+    path:     /{group_id}
+    defaults: { _controller: "SkaphandrusAppBundle:SkIdentificationImages:index" }
+
+

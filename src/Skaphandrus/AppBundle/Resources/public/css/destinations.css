@@ -1,0 +1,1378 @@
+@media only screen and (min-width:1025px) {
+    .home .dvb-md-item{
+        height: 150px; 
+    }
+    .home .dvb-md-name{
+        font-size: 16px; 
+    }
+    .home .dvb-mdi-link{
+        font-size: 12px; 
+        line-height: 14px; 
+        padding: 2px; 
+        margin: 2px 0; 
+    }
+    .home .dvb-md-info{
+        padding: 0; 
+    }
+}
+
+.dvb-container {
+    max-width: 1400px;
+    margin: 0 auto 20px auto;
+    padding: 0 15px
+}
+
+.dvb-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2147483002;
+    white-space: nowrap;
+    text-align: center;
+    background: rgba(0, 0, 0, .4)
+}
+
+.dvb-loader:before {
+    content: '';
+    display: inline-block;
+    width: 1px;
+    height: 100%;
+    vertical-align: middle
+}
+
+
+@-webkit-keyframes load {
+    from {
+        -webkit-transform: rotate(0);
+        transform: rotate(0)
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
+@keyframes load {
+    from {
+        -webkit-transform: rotate(0);
+        transform: rotate(0)
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
+.dvb-formerror {
+    position: absolute;
+    bottom: 100%;
+    margin-bottom: 4px;
+    left: 0;
+    background: #f00;
+    padding: 0 5px;
+    border-radius: 2px;
+    color: #fff;
+    font-size: 12px;
+    line-height: 18px;
+    white-space: nowrap
+}
+
+.dvb-formerror:after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 7px;
+    width: 6px;
+    height: 6px;
+    background: #f00;
+    margin-top: -3px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg)
+}
+
+#popup-section {
+    position: relative;
+    z-index: 2147483001
+}
+
+.dvb-popup-overlay {
+    position: fixed;
+    background: rgba(0, 0, 0, .8);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    white-space: nowrap;
+    text-align: center;
+    z-index: 1000;
+    overflow: auto
+}
+
+.dvb-popup-overlay:before {
+    content: '';
+    height: 100%;
+    display: inline-block;
+    width: 1px;
+    vertical-align: middle
+}
+
+.dvb-popup-overlay.hidden {
+    display: none
+}
+
+.dvb-popup-overlay .dvb-logo {
+    position: absolute;
+    top: 10px;
+    left: 10px
+}
+
+.dvb-popup {
+    display: inline-block;
+    text-align: left;
+    white-space: normal;
+    vertical-align: middle;
+    width: 500px;
+    padding: 30px 0;
+    max-width: 100%
+}
+
+
+.dvb-p-content {
+    clear: both;
+    background: #fff;
+    font-size: 14px;
+    line-height: 20px;
+    color: #999;
+    padding: 20px;
+    border-radius: 3px;
+    position: relative
+}
+
+.dvb-p-content.hidden {
+    display: none !important
+}
+
+.dvb-p-close {
+    position: relative;
+    float: right;
+    width: 40px;
+    height: 40px;
+    z-index: 1001;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    -webkit-transition: background .2s;
+    transition: background .2s
+}
+
+.dvb-p-close:after,
+.dvb-p-close:before {
+    width: 20px;
+    content: "";
+    height: 1px;
+    background: #fff;
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg)
+}
+
+.dvb-p-close:after {
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg)
+}
+
+.dvb-p-close:hover {
+    background: rgba(255, 255, 255, .4)
+}
+
+@media only screen and (max-width:1024px) {
+    .thumb {
+        opacity: 1
+    }
+}
+
+@media only screen and (max-width:767px) {
+    .dvb-container {
+        padding: 0 10px
+    }
+}
+
+
+.dvb-f-holder {
+    display: inline-block;
+    vertical-align: top;
+    width: 100%
+}
+
+.dvb-f-holder .dvb-f-holder {
+    display: block;
+    width: auto;
+    overflow: hidden
+}
+
+.dvb-fh-aside {
+    float: right;
+    width: 50%;
+    margin-left: 20px
+}
+
+.dvb-fh-frame {
+    float: right;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 25%;
+    padding-left: 2px
+}
+
+.dvb-f-links {
+    overflow: hidden;
+    font-size: 14px;
+    line-height: 26px
+}
+
+.dvb-fh-frame.clients .dvb-fl-item {
+    float: left;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 50%
+}
+
+.dvb-fl-link {
+    text-decoration: none;
+    color: rgba(18, 32, 72, .5)
+}
+
+.dvb-f-title {
+    font: 300 18px/24px 'Open Sans', Arial, Helvetica, sans-serif;
+    margin-bottom: 10px;
+    color: #122048
+}
+
+.dvb-f-title.big {
+    overflow: hidden;
+    font-size: 27px;
+    line-height: 35px
+}
+
+.dvb-f-title i {
+    color: #ea372a;
+    font-style: normal
+}
+
+.dvb-f-subscribe {
+    float: left
+}
+
+.dvb-f-title.subscribed {
+    padding: 30px 0 30px 17px;
+    margin-bottom: 0;
+    background: url("/dive-min/images/front/heart.png") 0 50% no-repeat
+}
+
+.subscribe-form {
+    margin-bottom: 30px;
+    height: 50px;
+    overflow: hidden
+}
+
+.dvb-fs-fld-holder {
+    float: left;
+    position: relative;
+    width: 320px
+}
+
+.dvb-fs-fld {
+    display: block;
+    width: 100%;
+    font: 18px/22px 'Open Sans', Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+    background: #fff;
+    padding: 12px 13px;
+    border: 1px rgba(18, 19, 73, 0.2) solid;
+    border-radius: 3px;
+    outline: none;
+    color: #000;
+    -webkit-box-shadow: none;
+    box-shadow: none
+}
+
+.dvb-fs-submit {
+    float: left;
+    margin-left: 10px;
+    box-sizing: border-box;
+    width: 140px;
+    height: 50px;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-align: center;
+    outline: none;
+    font: 18px/50px 'Open Sans', Arial, Helvetica, sans-serif;
+    color: #fff;
+    background: #ea372a;
+    border-radius: 3px
+}
+
+.dvb-fs-submit.disabled {
+    background: #999;
+    cursor: default
+}
+
+
+.dvb-mcs {
+    padding-top: 10px
+}
+
+.dvb-mcs-text {
+    font-size: 13px;
+    line-height: 15px;
+    opacity: .6;
+    color: #122048;
+    display: inline-block;
+    vertical-align: middle
+}
+
+.dvb-mcs-text a {
+    color: #122048
+}
+
+.dvb-mcs-logo {
+    background: url("/dive-min/images/front/mcsLogo.png") 0 0 no-repeat;
+    -webkit-background-size: contain;
+    background-size: contain;
+    display: inline-block;
+    vertical-align: middle;
+    width: 120px;
+    height: 69px;
+    overflow: hidden;
+    text-indent: -9999px
+}
+
+.dvb-f-logo {
+    display: block;
+    font-size: 14px;
+    line-height: 30px;
+    padding: 12px 0 0 45px;
+    color: #122048;
+    background: url("/dive-min/images/front/footer-logo.png") 0 0 no-repeat
+}
+
+@media only screen and (max-width:1023px) {
+    .dvb-fs-fld-holder {
+        width: 230px
+    }
+    .dvb-fs-submit {
+        width: 110px
+    }
+    .dvb-f-title.big {
+        font-size: 24px;
+        line-height: 30px
+    }
+    #footer .dvb-fld-error {
+        left: 20%
+    }
+}
+
+@media only screen and (max-width:767px) {
+    #footer {
+        padding: 30px 10px
+    }
+    .dvb-f-title.big {
+        font-size: 20px;
+        line-height: 24px
+    }
+    .dvb-fh-aside {
+        margin-left: 0;
+        width: 100%
+    }
+    .dvb-fs-fld-holder,
+    .dvb-f-subscribe,
+    .dvb-fh-frame {
+        width: 100%
+    }
+    .dvb-fs-fld {
+        font-size: 14px;
+        line-height: 20px;
+        padding: 6px
+    }
+    .dvb-fs-submit {
+        width: 100%;
+        font-size: 14px;
+        line-height: 30px;
+        height: 30px;
+        margin: 10px 0 0
+    }
+    .b-ft-social {
+        margin-bottom: 20px
+    }
+    .dvb-f-holder .dvb-f-holder {
+        clear: both;
+        padding-top: 15px
+    }
+    .dvb-f-holder+.dvb-f-holder {
+        margin-top: 20px;
+        padding-top: 20px
+    }
+}
+
+
+.dvb-hl-link {
+    display: block;
+    height: 100%
+}
+
+.dvb-m-heading {
+    overflow: hidden;
+    margin-bottom: 40px;
+    padding-top: 50px
+}
+
+.dvb-m-advantages {
+    float: right;
+    margin-left: 20px
+}
+
+.dvb-m-advantage:nth-child(2n+1) {
+    clear: left
+}
+
+.dvb-m-advantage {
+    color: #122048;
+    float: left;
+    font-size: 18px;
+    line-height: 20px;
+    padding: 0 0 20px 20px;
+    width: 250px
+}
+
+.dvb-m-advantage img {
+    display: block;
+    margin-bottom: 2px
+}
+
+.dvb-mh-title {
+    color: #122048;
+    font: 300 75px/82px "Open Sans", Arial, Helvetica, sans-serif;
+    letter-spacing: -2px
+}
+
+.dvb-ms-tabs {
+    width: 100%;
+    display: table;
+    color: #fff;
+    margin-bottom: 15px;
+    font: 300 24px/42px "Open Sans", Arial, Helvetica, sans-serif
+}
+
+.dvb-ms-tabs li {
+    display: table-cell;
+    border: 1px transparent solid;
+    border-color: transparent transparent rgba(255, 255, 255, .5)
+}
+
+.dvb-ms-tab {
+    width: 10%;
+    white-space: nowrap;
+    padding: 0 25px;
+    border-radius: 3px 3px 0 0;
+    cursor: pointer;
+    text-shadow: 0 0 4px rgba(0, 0, 0, .27);
+    -webkit-transition: background-color .2s;
+    -o-transition: background-color .2s;
+    transition: background-color .2s
+}
+
+.dvb-ms-tab:hover {
+    background-color: rgba(255, 255, 255, .4)
+}
+
+.dvb-ms-tab.active {
+    cursor: default;
+    border-color: rgba(255, 255, 255, .5) rgba(255, 255, 255, .5) transparent;
+    background: none
+}
+
+.dvb-ms-tab .mark-new {
+    margin-left: -10px
+}
+
+.dvb-m-search {
+    position: relative;
+    z-index: 10;
+    margin-bottom: 50px
+}
+
+
+.dvb-ms-fld-holder {
+    float: left;
+    width: calc(50% - 5px);
+    margin-right: 5px;
+    position: relative
+}
+
+.dvb-ms-fld-holder.half {
+    width: calc(25% - 5px)
+}
+
+.dvb-ms-fld {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #fff;
+    border: 1px #95bec8 solid;
+    border-radius: 3px;
+    font: 18px/24px "Open Sans", Arial, Helvetica, sans-serif;
+    padding: 14px;
+    outline: none;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+.dvb-ms-fld.date {
+    cursor: pointer;
+    background: #fff url("/dive-min/images/front/icon-filters_calendar.png") no-repeat scroll 96% 18px;
+    padding-right: 35px
+}
+
+.dvb-ms-fld.date:disabled {
+    opacity: 1 !important
+}
+
+.dvb-ms-date {
+    float: left;
+    width: calc(20% - 5px);
+    margin-right: 5px;
+    position: relative
+}
+
+.dvb-ms-date .pika-single.is-bound {
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    right: 0
+}
+
+.dvb-m-search .dvb-btn {
+    padding: 7px 20px;
+    float: left;
+    width: calc(10% - 40px)
+}
+
+.dvb-ms-suggest {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px #95bec8 solid;
+    border-radius: 0 0 2px 2px;
+    border-top-color: #fff;
+    margin-top: -1px;
+    z-index: 10;
+    font-size: 12px;
+    line-height: 16px;
+    max-height: 320px
+}
+
+.dvb-ms-suggest:empty {
+    display: none
+}
+
+.dvb-mss-item {
+    border-top: 1px solid #e7e7e7;
+    cursor: pointer;
+    overflow: hidden;
+    padding: 8px 15px
+}
+
+.dvb-mss-item:first-child {
+    border-top: 0
+}
+
+.dvb-mss-item i {
+    display: block;
+    color: #999;
+    font-style: normal;
+    font-size: 10px
+}
+
+.dvb-mss-item strong {
+    letter-spacing: 1px;
+    font-weight: bold
+}
+
+.dvb-mss-item:hover {
+    background: #f8f8f8
+}
+
+.dvb-m-destinations {
+    margin-bottom: 70px
+}
+
+.dvb-md-title {
+    font: 300 35px/45px "Open Sans", Arial, Helvetica, sans-serif;
+    color: #122048;
+    margin-bottom: 15px
+}
+
+.dvb-md-list {
+    overflow: hidden;
+    margin: 0 -5px; 
+    padding: 0; 
+}
+.dvb-mdi-item{
+    list-style: none; 
+    list-style-type: none; 
+}
+
+.dvb-md-more {
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, .15);
+    border: 1px #fff solid;
+    color: #fff;
+    font-size: 18px;
+    line-height: 44px;
+    text-shadow: 0 0 4px rgba(0, 0, 0, .27);
+    -webkit-transition: background-color .2s;
+    -o-transition: background-color .2s;
+    transition: background-color .2s
+}
+
+.dvb-md-more:hover {
+    background-color: rgba(255, 255, 255, .2)
+}
+
+.dvb-md-more.loading {
+    background: none;
+    position: relative
+}
+
+.dvb-md-more.loading:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    margin: -15px 0 0 -15px;
+    background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSIxMDBweCIgaGVpZ2h0PSIxMDBweCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDEwMCAxMDA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj48cGF0aCBzdHlsZT0iZmlsbDojRkZGRkZGOyIgZD0iTTUwLDk1LjJDMjUsOTUuMiw0LjgsNzUsNC44LDUwYzAtOC43LDIuNS0xNy4yLDcuMi0yNC41bDUuOSwzLjhjLTQsNi4yLTYuMSwxMy4zLTYuMSwyMC43YzAsMjEuMSwxNy4yLDM4LjIsMzguMiwzOC4yVjk1LjJ6Ii8+PC9zdmc+') 50% 50% no-repeat;
+    background-size: cover;
+    -webkit-animation: load 1s linear infinite;
+    animation: load 1s linear infinite
+}
+
+@-webkit-keyframes load {
+    from {
+        -webkit-transform: rotate(0);
+        transform: rotate(0)
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
+@keyframes load {
+    from {
+        -webkit-transform: rotate(0);
+        transform: rotate(0)
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
+.dvb-md-item {
+    float: left;
+    box-sizing: border-box;
+    width: calc(25% - 10px);
+    margin: 0 5px 10px;
+    height: 270px;
+    padding: 10px 15px;
+    position: relative;
+    background: #000;
+    border-radius: 3px;
+    overflow: hidden;
+    color: #fff;
+    text-shadow: 0 0 4px rgba(0, 0, 0, .27)
+}
+
+.dvb-md-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: 50% 50%;
+    opacity: .9;
+    -webkit-transition: opacity .2s;
+    -o-transition: opacity .2s;
+    transition: opacity .2s
+}
+
+.dvb-md-item:hover .dvb-md-link {
+    opacity: .5
+}
+
+.dvb-md-link:before {
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    background-image: -webkit-linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, 0));
+    background-image: -o-linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, 0));
+    background-image: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, 0));
+    position: absolute;
+    height: 100px
+}
+
+.dvb-md-link:after {
+    content: '';
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .3));
+    background-image: -o-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .3));
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .3));
+    position: absolute;
+    height: 100px
+}
+
+.dvb-md-item:nth-child(1),
+.dvb-md-item:nth-child(7n+1) {
+    width: calc(50% - 10px)
+}
+
+.dvb-md-name {
+    position: relative;
+    float: left;
+    z-index: 1;
+    font: 300 30px/38px "Open Sans", Arial, Helvetica, sans-serif
+}
+
+.dvb-md-name a {
+    text-decoration: none;
+    color: #fff
+}
+
+.dvb-mdi-item+.dvb-mdi-item {
+    border-top: 1px rgba(255, 255, 255, .5) dotted
+}
+
+.dvb-md-info {
+    -webkit-transform: translateY(120%);
+    transform: translateY(120%);
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 0;
+    z-index: 1;
+    -webkit-transition: -webkit-transform .2s ease-in-out;
+    transition: -webkit-transform .2s ease-in-out;
+    transition: transform .2s ease-in-out
+}
+
+.dvb-md-item:nth-child(1) .dvb-md-info,
+.dvb-md-item:nth-child(7n+1) .dvb-md-info,
+.dvb-md-item:hover .dvb-md-info {
+    -webkit-transform: translateY(0);
+    transform: translateY(0)
+}
+
+.dvb-md-item:nth-child(1) .dvb-md-info,
+.dvb-md-item:nth-child(7n+1) .dvb-md-info {
+    bottom: 10px
+}
+
+.dvb-mdi-link {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    position: relative;
+    font-size: 18px;
+    line-height: 24px;
+    padding: 5px;
+    margin: 5px 0;
+    -webkit-transition: background-color .2s;
+    -o-transition: background-color .2s;
+    transition: background-color .2s;
+    border-radius: 3px
+}
+
+.dvb-mdi-link:hover {
+    background-color: rgba(255, 255, 255, .2)
+}
+
+.dvb-mdi-link:after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border: 1px #fff solid;
+    border-width: 0 1px 1px 0;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    position: absolute;
+    top: 12px;
+    right: 8px
+}
+
+.dvb-md-item:nth-child(1) .dvb-mdi-link:after,
+.dvb-md-item:nth-child(7n+1) .dvb-mdi-link:after {
+    display: none
+}
+
+.dvb-md-item:nth-child(1) .dvb-mdi-item+.dvb-mdi-item,
+.dvb-md-item:nth-child(7n+1) .dvb-mdi-item+.dvb-mdi-item {
+    border: none
+}
+
+.dvb-md-item:nth-child(1) .dvb-mdi-item,
+.dvb-md-item:nth-child(7n+1) .dvb-mdi-item {
+    float: left;
+    margin-left: 20px
+}
+
+.dvb-md-item:nth-child(1) .dvb-mdi-item:first-child,
+.dvb-md-item:nth-child(7n+1) .dvb-mdi-item:first-child {
+    margin-left: 0
+}
+
+.dvb-m-content {
+    overflow: hidden;
+    margin: 0 -5px 40px;
+    padding: 0 5px
+}
+
+.dvb-m-content .dvb-md-title {
+    font-size: 27px;
+    margin-bottom: 20px
+}
+
+.dvb-md-description {
+    color: #122048;
+    font-size: 18px;
+    line-height: 27px;
+    overflow: hidden;
+    margin-bottom: 40px
+}
+
+.dvb-m-press {
+    float: right;
+    margin-left: 44px;
+    width: calc(50% - 22px)
+}
+
+.dvb-md-holder {
+    overflow: hidden
+}
+
+.dvb-md-col {
+    float: left;
+    width: calc((100% - 132px)/4);
+    color: #122048
+}
+
+.dvb-md-col a {
+    color: #122048
+}
+
+.dvb-md-col+.dvb-md-col {
+    margin-left: 44px
+}
+
+.dvb-mp-title {
+    margin-bottom: 15px;
+    font: 18px/24px "Open Sans", Arial, Helvetica, sans-serif
+}
+
+.dvb-mp-link {
+    display: inline-block;
+    vertical-align: top
+}
+
+.dvb-mp-link img {
+    float: left
+}
+
+.dvb-mp-list {
+    display: table;
+    width: 100%
+}
+
+.dvb-mp-item {
+    display: table-cell;
+    text-align: left
+}
+
+.dvb-md-about {
+    display: inline-block;
+    vertical-align: top;
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+    line-height: 24px;
+    margin: 20px -5px 0;
+    border-radius: 2px;
+    padding: 0 5px;
+    -webkit-transition: background-color .2s;
+    -o-transition: background-color .2s;
+    transition: background-color .2s
+}
+
+.dvb-md-about:after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border: 1px #fff solid;
+    border-width: 0 1px 1px 0;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    display: inline-block;
+    vertical-align: top;
+    margin: 9px 0 0 3px
+}
+
+.dvb-md-about:hover {
+    background-color: rgba(255, 255, 255, .2)
+}
+
+.dvb-howworks {
+    min-height: 30px;
+    padding: 10px 0 20px
+}
+
+.dvb-hw-container {
+    overflow: hidden;
+    position: relative;
+    -webkit-transition: height .4s;
+    -o-transition: height .4s;
+    transition: height .4s;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background: #fff;
+    border-radius: 3px
+}
+
+
+.dvb-m-banners {
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+    margin-bottom: 50px
+}
+
+.dvb-mb-item {
+    float: left;
+    width: calc((100% - 10px)/2);
+    margin-bottom: 10px
+}
+
+.dvb-mb-item:nth-child(even) {
+    margin-left: 10px
+}
+
+.dvb-banner {
+    display: block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 145px;
+    border: 1px rgba(255, 255, 255, .5) solid;
+    border-radius: 3px;
+    padding: 15px 250px 15px 15px;
+    text-decoration: none;
+    color: #122048;
+    font-size: 18px;
+    line-height: 22px;
+    background-color: rgba(255, 255, 255, .33);
+    -webkit-transition: background-color .2s;
+    -o-transition: background-color .2s;
+    transition: background-color .2s;
+    background-position: 100% 50%;
+    background-repeat: no-repeat
+}
+
+.dvb-bi-title {
+    display: block;
+    margin-bottom: 10px;
+    font: 300 24px/30px "Open Sans", Arial, Helvetica, sans-serif
+}
+
+.dvb-bi-text {
+    display: block;
+    margin-bottom: 10px
+}
+
+.dvb-bi-link {
+    display: inline-block;
+    color: #fff;
+    vertical-align: top;
+    text-shadow: 0 0 4px rgba(0, 0, 0, .27)
+}
+
+.dvb-bi-link:after {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border: 1px #fff solid;
+    border-width: 0 1px 1px 0;
+    vertical-align: middle;
+    margin-left: 5px;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg)
+}
+
+
+
+@media only screen and (max-width:1270px) {
+    .banner01 {
+        padding-right: 50px;
+        background-position: 140% 50%
+    }
+    .banner02 {
+        padding-right: 50px;
+        background-position: 150% 50%
+    }
+}
+
+@media only screen and (max-width:1200px) {
+    .banner02 {
+        padding-right: 50px;
+        background-position: 180% 50%
+    }
+    .dvb-mdi-link {
+        font-size: 16px
+    }
+    .dvb-md-item:nth-child(1) .dvb-mdi-link,
+    .dvb-md-item:nth-child(7n+1) .dvb-mdi-link {
+        margin: 0
+    }
+    .dvb-md-item:nth-child(1) .dvb-mdi-item,
+    .dvb-md-item:nth-child(7n+1) .dvb-mdi-item {
+        margin-left: 10px
+    }
+    .dvb-md-item {
+        width: calc(33.33% - 10px)
+    }
+    .dvb-md-item:nth-child(1),
+    .dvb-md-item:nth-child(7n+1),
+    .dvb-md-item:nth-child(7n) {
+        width: calc(66.66% - 10px)
+    }
+    .dvb-md-item:nth-child(7n) .dvb-md-info {
+        bottom: 10px
+    }
+    .dvb-md-item:nth-child(7n) .dvb-mdi-item {
+        margin-left: 10px;
+        float: left
+    }
+    .dvb-md-item:nth-child(7n) .dvb-mdi-item+.dvb-mdi-item {
+        border: none
+    }
+    .dvb-md-item:nth-child(7n) .dvb-mdi-item:first-child {
+        margin-left: 0
+    }
+}
+
+@media only screen and (max-width:1024px) {
+    .dvb-md-info {
+        -webkit-transform: translateY(0);
+        -ms-transform: translateY(0);
+        -o-transform: translateY(0);
+        transform: translateY(0)
+    }
+    .dvb-mp-list {
+        display: block;
+        overflow: hidden
+    }
+    .dvb-mp-item {
+        float: left;
+        width: 33.33%;
+        margin-bottom: 10px
+    }
+    .dvb-ms-date .pika-single.is-bound {
+        right: auto
+    }
+}
+
+@media only screen and (max-width:1023px) {
+    #wrapper {
+        -webkit-background-size: contain;
+        background-size: contain
+    }
+    .dvb-banner {
+        font-size: 16px;
+        line-height: 20px;
+        padding-right: 100px;
+        background-position: 270% 50%
+    }
+    .banner01 {
+        background-position: 200% 50%
+    }
+    .dvb-bi-title {
+        font-size: 22px;
+        line-height: 26px;
+        margin-bottom: 5px
+    }
+    .dvb-bi-text {
+        margin-bottom: 0
+    }
+    .dvb-md-description {
+        margin-bottom: 20px
+    }
+    .dvb-m-advantages {
+        float: none;
+        margin: 0 0 20px;
+        overflow: hidden
+    }
+    .dvb-m-advantage {
+        padding-left: 0;
+        width: calc((100% - 20px)/2)
+    }
+    .dvb-m-advantage:nth-child(even) {
+        margin-left: 20px
+    }
+    .dvb-md-about {
+        margin: 0 0 30px
+    }
+    .dvb-m-press {
+        float: none;
+        width: 100%;
+        overflow: hidden;
+        margin: 0
+    }
+    .dvb-mp-item {
+        width: 25%
+    }
+    .bsc-col.geo,
+    .dvb-ms-fld-holder,
+    .dvb-ms-fld-holder.half {
+        width: 100%;
+        margin: 0 0 5px
+    }
+    .bsc-col.calendar,
+    .bsc-col.fleets,
+    .dvb-ms-date {
+        width: calc((100% - 5px)/2);
+        margin: 0 0 5px
+    }
+    .bsc-col.fleets,
+    .dvb-ms-date+.dvb-ms-date {
+        margin-left: 5px
+    }
+    .bsc-col.search,
+    .dvb-m-search .dvb-btn {
+        width: 100%;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box
+    }
+    .dvb-mh-title {
+        font-size: 60px;
+        line-height: 68px;
+        text-align: center
+    }
+    .dvb-m-heading {
+        padding-top: 20px;
+        margin-bottom: 20px
+    }
+    .dvb-m-search,
+    .dvb-m-destinations,
+    .dvb-m-banners {
+        margin-bottom: 20px
+    }
+    .dvb-ms-tabs {
+        font-size: 22px
+    }
+    .dvb-md-item,
+    .dvb-md-item:nth-child(7n) {
+        width: calc(50% - 10px)
+    }
+    .dvb-md-item:nth-child(1),
+    .dvb-md-item:nth-child(7n+1) {
+        width: calc(100% - 10px)
+    }
+
+    .dvb-md-item:nth-child(7n) .dvb-md-info {
+        bottom: 0
+    }
+    .dvb-md-item:nth-child(7n) .dvb-mdi-item {
+        margin-left: 0;
+        float: none
+    }
+    .dvb-md-item:nth-child(7n) .dvb-mdi-item+.dvb-mdi-item {
+        border-top: 1px rgba(255, 255, 255, .5) dotted
+    }
+    .dvb-mp-title {
+        color: #122048
+    }
+    .dvb-m-content {
+        margin-bottom: 0
+    }
+}
+
+@media only screen and (max-width:767px) {
+    .dvb-mh-title {
+        font-size: 25px;
+        line-height: 32px;
+        letter-spacing: 0
+    }
+    .dvb-ms-tabs {
+        font-size: 16px;
+        line-height: 32px
+    }
+    .dvb-ms-tab .mark-new {
+        display: none
+    }
+    .dvb-ms-tab {
+        width: 33.33%;
+        padding: 0 5px;
+        text-align: center;
+        white-space: nowrap
+    }
+    .bsc-title {
+        font-size: 14px;
+        line-height: 20px;
+        padding: 6px
+    }
+    .bsc-col.geo .bsc-title:after {
+        top: 9px
+    }
+    .bsc-col.calendar .bsc-title,
+    .dvb-ms-fld.date {
+        background-position: 96% 7px
+    }
+    .bsc-title input {
+        font-size: 14px;
+        line-height: 20px;
+        padding: 6px;
+        margin: -6px
+    }
+    .bsc-drop {
+        padding: 0 10px 5px 5px
+    }
+    .bsc-geo-item,
+    .bsc-allgeo,
+    .bsc-calendar-item,
+    .bsc-fi-name,
+    .bsc-boat-item {
+        font-size: 12px;
+        line-height: 20px;
+        padding: 0 3px
+    }
+    .bsc-boats {
+        padding-left: 5px
+    }
+    .bsc-geo-frame {
+        margin: 0
+    }
+    .bsc-geo-title {
+        font-size: 14px;
+        line-height: 20px;
+        margin: 0 0 5px
+    }
+    .dvb-ms-fld {
+        font-size: 14px;
+        line-height: 20px;
+        padding: 6px
+    }
+    .dvb-ms-date+.dvb-ms-date .pika-single.is-bound {
+        position: absolute !important;
+        top: 100% !important;
+        left: auto !important;
+        right: 0 !important
+    }
+    .dvb-banner {
+        font-size: 13px;
+        line-height: 16px;
+        height: 100px;
+        padding: 7px;
+        -webkit-background-size: contain;
+        background-size: contain
+    }
+    .dvb-mb-item {
+        width: 100%
+    }
+    .dvb-mb-item:nth-child(even) {
+        margin-left: 0
+    }
+    .dvb-bi-title {
+        font-size: 16px;
+        line-height: 20px;
+        margin-bottom: 3px
+    }
+    .dvb-bi-text {
+        margin-bottom: 5px
+    }
+
+    .dvb-md-title {
+        font-size: 22px;
+        line-height: 26px;
+        margin-bottom: 10px;
+        text-align: center
+    }
+    .dvb-md-item:nth-child(n) {
+        width: calc(100% - 10px)
+    }
+    .dvb-md-item:nth-child(n) .dvb-md-info {
+        bottom: 0
+    }
+    .dvb-md-item:nth-child(n) .dvb-mdi-item {
+        margin-left: 0;
+        float: none
+    }
+    .dvb-md-item:nth-child(n) .dvb-mdi-item+.dvb-mdi-item {
+        border-top: 1px rgba(255, 255, 255, .5) dotted
+    }
+    .dvb-md-item:nth-child(n) .dvb-mdi-link:after {
+        display: block
+    }
+    .dvb-mdi-link {
+        font-size: 14px;
+        line-height: 20px;
+        margin: 3px 0
+    }
+    .dvb-md-name {
+        font-size: 20px;
+        line-height: 26px
+    }
+    .dvb-md-more {
+        font-size: 14px;
+        line-height: 34px
+    }
+    .dvb-m-content .dvb-md-title {
+        font-size: 22px;
+        line-height: 26px;
+        text-align: left;
+        margin-bottom: 10px
+    }
+    .dvb-md-description {
+        font-size: 14px
+    }
+    .dvb-m-advantage {
+        font-size: 14px;
+        line-height: 20px;
+        padding-bottom: 10px
+    }
+    .dvb-m-advantages {
+        margin-bottom: 0
+    }
+    .dvb-mp-item {
+        width: 50%
+    }
+}
+
+

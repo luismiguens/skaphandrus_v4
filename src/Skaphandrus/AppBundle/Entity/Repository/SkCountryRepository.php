@@ -18,19 +18,19 @@ class SkCountryRepository extends EntityRepository {
 
         //@LM - procurar nas duas listas de paises porque existem links antigos com os país em Inglês na rota em português.
         //http://skaphandrus.com/pt/spots-mergulho/pais/Spain
-        
-            $exceptions_pt = array(
-                'AN' => 'Antilhas Holandesas',
-                'TL' => 'Timor Leste',
-                'PG' => 'Papua Nova Guiné'
-            );
-       
-            $exceptions_en = array(
-                'AN' => 'Netherlands Antilles',
-                'TL' => 'East Timor',
-                'PG' => 'Papua New Guinea'
-            );
-       
+
+        $exceptions_pt = array(
+            'AN' => 'Antilhas Holandesas',
+            'TL' => 'Timor Leste',
+            'PG' => 'Papua Nova Guiné'
+        );
+
+        $exceptions_en = array(
+            'AN' => 'Netherlands Antilles',
+            'TL' => 'East Timor',
+            'PG' => 'Papua New Guinea'
+        );
+
         $name = Utils::unslugify($slug);
         $countries_pt = array_merge(Intl::getRegionBundle()->getCountryNames('pt'), $exceptions_pt);
         $countries_en = array_merge(Intl::getRegionBundle()->getCountryNames('en'), $exceptions_en);
@@ -42,6 +42,49 @@ class SkCountryRepository extends EntityRepository {
         }
 
         return NULL;
+    }
+
+    //Usado na pagina de destinos
+    public function findAllCountriesDestinations() {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT c.id as country, count(p.id) as num_photos
+                FROM sk_country as c
+                JOIN sk_region as r on c.id = r.country_id
+                JOIN sk_location as l on r.id = l.region_id
+                JOIN sk_spot as s on l.id = s.location_id
+                JOIN sk_photo as p on s.id = p.spot_id
+                group by c.id
+                order by num_photos desc";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+
+        return $values;
+    }
+
+    public function findPartialCountriesDestinations($limit, $offset) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT c.id as country, count(p.id) as num_photos
+                FROM sk_country as c
+                JOIN sk_region as r on c.id = r.country_id
+                JOIN sk_location as l on r.id = l.region_id
+                JOIN sk_spot as s on l.id = s.location_id
+                JOIN sk_photo as p on s.id = p.spot_id
+                group by c.id
+                order by num_photos desc
+                limit " . $limit . "
+                offset " . $offset;
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+
+        return $values;
     }
 
     public function findAllWithSpots() {
@@ -60,6 +103,69 @@ class SkCountryRepository extends EntityRepository {
                 ')->getResult();
     }
 
+    public function countDiveCentersForDestinations() {
+        $business = $this->getEntityManager()
+                        ->createQuery(
+                                'SELECT c.id id, count(b.id) as business_count
+                FROM SkaphandrusAppBundle:SkBusiness b
+                JOIN b.admin admin
+                JOIN b.type t
+                JOIN b.address a
+                JOIN a.location l
+                JOIN l.region r
+                JOIN r.country c
+                WHERE t.id in(1)
+                GROUP BY c.name'
+                        )->getResult();
+
+        $business_array = array();
+        foreach ($business as $result) {
+            $business_array[$result['id']] = $result['business_count'];
+        }
+
+        return $business_array;
+    }
+
+    public function countSpotsForDestinations() {
+        $spots = $this->getEntityManager()
+                        ->createQuery(
+                                'SELECT c.id as id, count(s.id) as spot_count
+                FROM SkaphandrusAppBundle:SkSpot s
+                JOIN s.location l
+                JOIN l.region r
+                JOIN r.country c
+                GROUP BY c.name'
+                        )->getResult();
+
+        $spots_array = array();
+        foreach ($spots as $result) {
+            $spots_array[$result['id']] = $result['spot_count'];
+        }
+
+        return $spots_array;
+    }
+
+    public function countPhotosForDestinations() {
+        $photos = $this->getEntityManager()
+                        ->createQuery(
+                                'SELECT c.id as id, count(p.id) as photo_count
+                FROM SkaphandrusAppBundle:SkPhoto p
+                JOIN p.spot s
+                JOIN s.location l
+                JOIN l.region r
+                JOIN r.country c
+                GROUP BY c.name'
+                        )->getResult();
+
+        $photos_array = array();
+        foreach ($photos as $result) {
+            $photos_array[$result['id']] = $result['photo_count'];
+        }
+
+        return $photos_array;
+    }
+
+    //Usado na pagina da location home
     public function countSpotsArray() {
         $spots = $this->getEntityManager()
                         ->createQuery(
@@ -70,7 +176,6 @@ class SkCountryRepository extends EntityRepository {
                 JOIN r.country c
                 GROUP BY c.name'
                         )->getResult();
-
         $spots_array = array();
         foreach ($spots as $result) {
             $spots_array[$result['code']] = $result['spot_count'];
@@ -78,6 +183,7 @@ class SkCountryRepository extends EntityRepository {
         return $spots_array;
     }
 
+    //Usado na pagina da location home
     public function countPhotosArray() {
         $photos = $this->getEntityManager()
                         ->createQuery(
@@ -89,7 +195,6 @@ class SkCountryRepository extends EntityRepository {
                 JOIN r.country c
                 GROUP BY c.name'
                         )->getResult();
-
         $photos_array = array();
         foreach ($photos as $result) {
             $photos_array[$result['code']] = $result['photo_count'];

@@ -5,6 +5,10 @@ index:
     locales:  { en: "/", pt: "/pt" }
     defaults: { _controller: SkaphandrusAppBundle:Default:index }
 
+destinations:
+    locales:  { en: "/en/destinations", pt: "/pt/destinos" }
+    defaults: { _controller: SkaphandrusAppBundle:Default:destinations }
+
 modules:
     locales:  { en: "/en/ocean-life-identification", pt: "/pt/identificacao-vida-oceanos" }
     defaults: { _controller: SkaphandrusAppBundle:Identification:modules }
@@ -32,7 +36,6 @@ taxon:
 business: 
     locales:  { en: "/en/scuba-diving-center/{country}/{location}/{slug}", pt: "/pt/centros-mergulho/{country}/{location}/{slug}" }
     defaults: { _controller: SkaphandrusAppBundle:Default:business }
-    
     
 business_no_slug:
     locales:  { en: "/en/business/{id}", pt: "/pt/empresa/{id}" }
@@ -90,8 +93,6 @@ user:
 search:
     locales:  { en: "/en/search-results", pt: "/pt/resultados-pesquisa" }
     defaults: { _controller: SkaphandrusAppBundle:Default:search }
-
-
 
 
 #################################################################################  

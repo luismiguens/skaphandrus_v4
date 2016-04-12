@@ -1,0 +1,30 @@
+notify_admin:
+    path:     /
+    defaults: { _controller: "SkaphandrusAppBundle:SkSocialNotify:index" }
+
+notify_admin_show:
+    path:     /{id}/show
+    defaults: { _controller: "SkaphandrusAppBundle:SkSocialNotify:show" }
+
+notify_admin_new:
+    path:     /new
+    defaults: { _controller: "SkaphandrusAppBundle:SkSocialNotify:new" }
+
+notify_admin_create:
+    path:     /create
+    defaults: { _controller: "SkaphandrusAppBundle:SkSocialNotify:create" }
+    methods:  POST
+
+notify_admin_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SkaphandrusAppBundle:SkSocialNotify:edit" }
+
+notify_admin_update:
+    path:     /{id}/update
+    defaults: { _controller: "SkaphandrusAppBundle:SkSocialNotify:update" }
+    methods:  [POST, PUT]
+
+notify_admin_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SkaphandrusAppBundle:SkSocialNotify:delete" }
+    methods:  [POST, DELETE]
