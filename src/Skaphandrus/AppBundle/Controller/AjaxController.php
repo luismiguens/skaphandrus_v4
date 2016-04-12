@@ -155,7 +155,7 @@ class AjaxController extends Controller {
     public function spotShowMoreAction(Request $request) {
 
         $em = $this->getDoctrine()->getManager();
-
+        $class = 'box_spacer';
         $locale = $this->get('request')->getLocale();
         $limit = $request->query->get('limit');
         $offset = $request->query->get('offset');
@@ -167,6 +167,7 @@ class AjaxController extends Controller {
                 $spot->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpot')->findPhotosLocation($spot->getId(), $location_id));
             endforeach;
         elseif ($request->query->get('user_id')) :
+            $class = 'box_spacer_right';
             $user_id = $request->query->get('user_id');
             $spots = $em->getRepository('SkaphandrusAppBundle:SkSpot')->getMoreSpotsUser($locale, $user_id, $limit, $offset);
             foreach ($spots as $spot):
@@ -176,7 +177,7 @@ class AjaxController extends Controller {
 
 
         return $this->render('SkaphandrusAppBundle:Ajax:spotPartial.html.twig', array(
-                    'spots' => $spots,
+                    'spots' => $spots, 'class'=> $class
         ));
     }
 
@@ -204,7 +205,7 @@ class AjaxController extends Controller {
     public function speciesShowMoreAction(Request $request) {
 
         $em = $this->getDoctrine()->getManager();
-
+        $class = 'box_spacer';
         $limit = $request->query->get('limit');
         $offset = $request->query->get('offset');
 
@@ -227,6 +228,7 @@ class AjaxController extends Controller {
                 $s->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpecies')->findPhotosSpot($s->getId(), $spot_id));
             endforeach;
         elseif ($request->query->get('user_id')):
+            $class = 'box_spacer_right';
             $user_id = $request->query->get('user_id');
             $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->getMoreSpeciesUser($user_id, $limit, $offset);
             foreach ($species as $s):
@@ -237,9 +239,33 @@ class AjaxController extends Controller {
         endif;
 
         return $this->render('SkaphandrusAppBundle:Ajax:speciesPartial.html.twig', array(
-                    'species' => $species,
+                    'species' => $species, 'class'=>$class
         ));
     }
+    
+    
+        public function validationsShowMoreAction(Request $request) {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $limit = $request->query->get('limit');
+        $offset = $request->query->get('offset');
+
+        if ($request->query->get('user_id')):
+            $user_id = $request->query->get('user_id');
+            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->getMoreSpeciesValidationsUser($user_id, $limit, $offset);
+            foreach ($species as $s):
+                $s->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpecies')->findValidationsPhotosUser($s->getId(), $user_id));
+            endforeach;
+            
+            
+        endif;
+
+        return $this->render('SkaphandrusAppBundle:Ajax:speciesPartial.html.twig', array(
+                    'species' => $species,'class'=>'box_spacer_right'
+        ));
+    }
+    
 
     public function photographersShowMoreAction(Request $request) {
 

@@ -1338,29 +1338,55 @@ class DefaultController extends Controller {
 
         $friends = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPerson')->findByFosUser($id);
 
+        
+        //$user = new FosUser();
+        
+        
         $user = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
                 ->findOneById($id);
 
-        $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
-                ->findSpeciesInUser($user->getId());
+//        $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
+//                ->findSpeciesInUser($user->getId());
 
         $spots = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')
                 ->findSpotsInUser($user->getId(), $locale);
+//
+//        $validations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
+//                ->getUserValidations($user->getId());
+//
+//        $sugestions = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
+//                ->getUserSugestions($user->getId());
 
-        $validations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-                ->getUserValidations($user->getId());
-
-        $sugestions = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-                ->getUserSugestions($user->getId());
-
+        
+        $acquisitions = $user->getModules();
+        
+        $em = $this->getDoctrine()->getManager();
+        
+       
+        $photosCount = $em->createQuery('SELECT COUNT(p.id) FROM SkaphandrusAppBundle:SkPhoto p WHERE p.fosUser = ?1')->setParameter(1,$id )->getSingleScalarResult();
+        $tagsCount = 0;
+        $speciesCount = $em->createQuery('SELECT COUNT(DISTINCT(p.species)) FROM SkaphandrusAppBundle:SkPhoto p WHERE p.fosUser = ?1')->setParameter(1,$id )->getSingleScalarResult();
+        $spotsCount = $em->createQuery('SELECT COUNT(DISTINCT(p.spot)) FROM SkaphandrusAppBundle:SkPhoto p WHERE p.fosUser = ?1')->setParameter(1,$id )->getSingleScalarResult();;
+        $friendsCount = $em->createQuery('SELECT COUNT(p.id) FROM SkaphandrusAppBundle:SkPerson p WHERE p.fosUser = ?1')->setParameter(1,$id )->getSingleScalarResult();;
+        $pointsCount = $user->getSettings()->getPoints();
+        $validationsCount = $em->createQuery('SELECT COUNT(v.id) FROM SkaphandrusAppBundle:SkPhotoSpeciesValidation v WHERE v.fosUser = ?1')->setParameter(1,$id )->getSingleScalarResult();
+        $suggestionsCount = $em->createQuery('SELECT COUNT(s.id) FROM SkaphandrusAppBundle:SkPhotoSpeciesSugestion s WHERE s.fosUser = ?1')->setParameter(1,$id )->getSingleScalarResult();
+        
+        
         if ($user) {
             return $this->render('SkaphandrusAppBundle:Default:user.html.twig', array(
                         'user' => $user,
                         'friends' => $friends,
-                        'species' => $species,
                         'spots' => $spots,
-                        'validations' => $validations,
-                        'sugestions' => $sugestions,
+                        'acquisitions' => $acquisitions,
+                        'photosCount' => $photosCount,
+                        'tagsCount' => $tagsCount,
+                        'speciesCount' => $speciesCount,
+                        'spotsCount' => $spotsCount,
+                        'friendsCount' => $friendsCount,
+                        'pointsCount' => $pointsCount,
+                        'validationsCount' => $validationsCount,
+                        'suggestionsCount' => $suggestionsCount,
             ));
         } else {
             throw $this->createNotFoundException('The user with id "' . $id . '" does not exist.');

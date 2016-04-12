@@ -1,3 +1,4 @@
+
 {% if spots %}
     {% for spot in spots %}
         <div class="row">
@@ -5,7 +6,7 @@
                 <div class="contact-box center-version small_version">
                     {#<a href="{{ path('photos', { 'location': location.id }) }}">#}
                     <div class="box_content">
-                        <div class="box_spacer">
+                        <div class="{{class}}">
                             <h3 class="m-b-xs">
                                 <strong>
                                     {{ link_to_spot(spot) }}

@@ -256,6 +256,12 @@ ajax_species_show_more:
     path:     /{_locale}/ajax/show-more/species
     defaults: { _controller: "SkaphandrusAppBundle:Ajax:speciesShowMore" }
     
+    
+ajax_validations_show_more:
+    path:     /{_locale}/ajax/show-more/validations
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:validationsShowMore" }
+    
+    
 ajax_photographers_show_more:
     path:     /{_locale}/ajax/show-more/photographers
     defaults: { _controller: "SkaphandrusAppBundle:Ajax:photographersShowMore" } 
