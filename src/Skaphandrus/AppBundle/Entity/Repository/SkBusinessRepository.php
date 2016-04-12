@@ -231,6 +231,34 @@ class SkBusinessRepository extends EntityRepository {
         return $result;
     }
 
+    public function findAllWithAdmin(){
+            
+//        SELECT b.name as name, c.name as country_name, concat(p.firstname,' ',p.middlename, ' ', p.lastname) as user
+//FROM sk_business as b 
+//JOIN sk_address as a on b.id = a.business_id 
+//JOIN sk_business_user as bu on bu.business_id = b.id 
+//JOIN fos_user as u on bu.fos_user_id = u.id join sk_personal as p on u.id = p.fos_user_id
+//LEFT JOIN sk_location as l on a.location_id = l.id 
+//LEFT JOIN sk_region as r on r.id = l.region_id 
+//LEFT JOIN sk_country as c on c.id = r.country_id 
+//ORDER by c.name desc
+        
+        
+        return $this->getEntityManager()->createQuery(
+                                'SELECT b
+                FROM SkaphandrusAppBundle:SkBusiness b
+                JOIN b.admin admin
+                ')->getResult();
+        
+        
+        
+    }
+            
+            
+      
+    
+    
+    
     public function findAllBusiness($locale, $user) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();

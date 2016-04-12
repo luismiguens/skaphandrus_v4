@@ -1,0 +1,114 @@
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Data Tables -->
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/dataTables/datatables.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {#    <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>#}
+    <!-- Data Tables -->
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dataTables/datatables.min.js') }}"></script>
+{% endblock %}
+
+{% block heading_title %}
+    {{ "form.business.h1.title"|trans }}
+{% endblock %}
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.business"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block heading_action %}
+    {% if is_granted("ROLE_ADMIN") %}
+        <a href="{{ path('business_admin_new') }}" class="btn btn-primary">{{ "form.business.btn.add"|trans }}</a>
+    {% endif %}
+{% endblock %}
+
+{% block form_title_description %}
+    {{ "form.business.text.description"|trans }}
+{% endblock %}
+
+{% block body -%}
+
+    <table id="datatable-list" class="table display table-striped table-bordered table-hover" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>{{ "form.business.label.name"|trans }}</th>
+                <th>{{ "form.business.label.laocation"|trans }}</th>
+                <th>{{ "form.business.label.country"|trans }}</th>
+                <th>{{ "form.common.label.actions"|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.name }}</td>
+                    <td>{{ entity.address.location }}</td>
+                    <td>{#{{ intl_country_name(entity.address.location.region.country) }}#}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a class="btn btn-white btn-sm" href="{{ path('business_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_base"|trans }}</a>
+                            </li>
+                            <li>
+                                <a class="btn btn-white btn-sm" href="{{ path('business_settings_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_settings"|trans }}</a>
+                            </li>
+                            {% if is_granted("ROLE_ADMIN") %}
+                                <li>
+                                    <a class="btn btn-white btn-sm" href="{{ path('business_spot_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_dive"|trans }}</a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-white btn-sm" href="{{ path('business_education_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_education"|trans }}</a>
+                                </li>
+                            {% endif %}
+                            {% if entity.plus %}
+                                {% if entity.plus|date("U") > "-1 Year"|date("U") %}
+                                    <li>
+                                        <a class="btn btn-white btn-sm" href="{{ path('business_spot_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_dive"|trans }}</a>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-white btn-sm" href="{{ path('business_education_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_education"|trans }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                            {% if entity.premium %}
+                                {% if entity.premium|date("U") > "-1 Year"|date("U") %}
+                                    <li>
+                                        <a class="btn btn-white btn-sm" href="{{ path('business_spot_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_dive"|trans }}</a>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-white btn-sm" href="{{ path('business_education_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_education"|trans }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                            
+                     
+                            
+                            {#{% if entity.address.location is defined %}#}
+                                
+                            <li>
+                                <a class="btn btn-white btn-sm" href="{{ path('business_no_slug', { 'id': entity.id}) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.visit_business"|trans }}</a>
+                            </li>
+                            {#{% endif %}#}
+                            
+                            
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if is_granted("ROLE_ADMIN") %}
+        <a class="btn btn-primary" href="{{ path('business_admin_new') }}">
+            <i class="fa fa-pencil"></i>  {{ "form.business.btn.add"|trans }}
+        </a>
+    {% endif %}
+
+{% endblock %}

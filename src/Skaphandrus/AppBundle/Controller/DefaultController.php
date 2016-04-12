@@ -1361,8 +1361,9 @@ class DefaultController extends Controller {
         $photosCount = $em->createQuery('SELECT COUNT(p.id) FROM SkaphandrusAppBundle:SkPhoto p WHERE p.fosUser = ?1')->setParameter(1,$id )->getSingleScalarResult();
         $tagsCount = 0;
         $speciesCount = $em->createQuery('SELECT COUNT(DISTINCT(p.species)) FROM SkaphandrusAppBundle:SkPhoto p WHERE p.fosUser = ?1')->setParameter(1,$id )->getSingleScalarResult();
-        $spotsCount = $em->createQuery('SELECT COUNT(DISTINCT(p.spot)) FROM SkaphandrusAppBundle:SkPhoto p WHERE p.fosUser = ?1')->setParameter(1,$id )->getSingleScalarResult();;
-        $friendsCount = $em->createQuery('SELECT COUNT(p.id) FROM SkaphandrusAppBundle:SkPerson p WHERE p.fosUser = ?1')->setParameter(1,$id )->getSingleScalarResult();;
+        $spotsCount = $em->createQuery('SELECT COUNT(DISTINCT(p.spot)) FROM SkaphandrusAppBundle:SkPhoto p WHERE p.fosUser = ?1')->setParameter(1,$id )->getSingleScalarResult();
+        $friendsCount = $em->createQuery('SELECT COUNT(p.id) FROM SkaphandrusAppBundle:SkPerson p WHERE p.fosUser = ?1')->setParameter(1,$id )->getSingleScalarResult();
+        $modulesCount = count($acquisitions);
         $pointsCount = $user->getSettings()->getPoints();
         $validationsCount = $em->createQuery('SELECT COUNT(v.id) FROM SkaphandrusAppBundle:SkPhotoSpeciesValidation v WHERE v.fosUser = ?1')->setParameter(1,$id )->getSingleScalarResult();
         $suggestionsCount = $em->createQuery('SELECT COUNT(s.id) FROM SkaphandrusAppBundle:SkPhotoSpeciesSugestion s WHERE s.fosUser = ?1')->setParameter(1,$id )->getSingleScalarResult();
@@ -1379,6 +1380,7 @@ class DefaultController extends Controller {
                         'speciesCount' => $speciesCount,
                         'spotsCount' => $spotsCount,
                         'friendsCount' => $friendsCount,
+                        'modulesCount' => $modulesCount,
                         'pointsCount' => $pointsCount,
                         'validationsCount' => $validationsCount,
                         'suggestionsCount' => $suggestionsCount,

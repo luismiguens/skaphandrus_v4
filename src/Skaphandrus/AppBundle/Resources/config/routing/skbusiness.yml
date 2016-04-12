@@ -1,3 +1,9 @@
+business_admin_2:
+    path:     /index2
+    defaults: { _controller: "SkaphandrusAppBundle:SkBusiness:index2" }
+
+
+
 business_admin:
     path:     /
     defaults: { _controller: "SkaphandrusAppBundle:SkBusiness:index" }

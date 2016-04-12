@@ -80,6 +80,24 @@ class SkBusinessController extends Controller {
                     'entities' => $entities,
         ));
     }
+    
+    
+      public function index2Action() {
+
+        //$loggedUser = new \Skaphandrus\AppBundle\Entity\FosUser();
+
+        $loggedUser = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $locale = $this->get('request')->getLocale();
+
+        // verifica se o user é admin
+        
+            $entities = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findAllWithAdmin();
+        
+        return $this->render('SkaphandrusAppBundle:SkBusiness:index2.html.twig', array(
+                    'entities' => $entities,
+        ));
+    }
 
     /**
      * Creates a new SkBusiness entity.

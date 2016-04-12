@@ -146,7 +146,11 @@
         {#$(this).ready(loadSpeciesAll);#}
             $('#speciesModal').on('shown.bs.modal', loadSpeciesAll);
 
-
+$('.gridx').masonry({
+  // options
+  itemSelector: '.grid-itemx',
+  {#columnWidth: 200#}
+});
 
         {#        $(document).ready(function () {
                     $('.footable-spots').footable();
@@ -212,7 +216,9 @@
     <!--<div class="wrapper wrapper-content" itemscope itemtype="http://schema.org/ProfilePage">-->
     <div class="wrapper wrapper-content animated">
 
-
+        
+        
+        
         <!-- BEGIN - row das statistics -->
         <div class="row m-b-lg m-t-lg">
             <div class="col-md-6">
@@ -224,8 +230,8 @@
                         <div>
                             <h2 class="no-margins">{{ user.personal.name }}</h2>
                             <h4>{{ user.personal.honorific }}</h4>
-                            <button class="btn btn-sm btn-primary">Add Friend</button>
-                            <button class="btn btn-sm btn-primary">Send Message</button>
+                            <a href="{{ path('person_admin_new') }}" class="btn btn-sm btn-primary"><i class="fa fa-group"></i>  {{"page.user.label.add_contact"|trans}}</a>
+                            <a href="{{ url('fos_message_thread_new' )}}" class="btn btn-sm btn-primary"><i class="fa fa-envelope"></i> {{"page.user.label.send_message"|trans}}</a>
                         </div>
                     </div>
                 </div>
@@ -235,21 +241,22 @@
                     <tbody>
                         <tr>
                             <td><strong>{{photosCount|number_format(0, '.', ',')}}</strong> Photos </td>
-                            <td><strong>{{pointsCount|number_format(0, '.', ',')}}</strong> Points </td>
+                             <td><strong>{{suggestionsCount|number_format(0, '.', ',')}}</strong> Suggestions </td>
                              <td><strong>{{friendsCount}}</strong> Friends </td>
-                            
                             
                         </tr>
                         <tr>
                             <td><strong>{{spotsCount|number_format(0, '.', ',')}}</strong> Spots </td>
                             <td><strong>{{validationsCount|number_format(0, '.', ',')}}</strong> Validations </td>
-                           <td>{#<strong>61</strong> Tags #}</td>
+                            <td><strong>{{modulesCount|number_format(0, '.', ',')}}</strong> Modules </td>
+                           
                             
                         </tr>
                         <tr>
                             <td><strong>{{speciesCount|number_format(0, '.', ',')}}</strong> Species </td>
-                            <td><strong>{{suggestionsCount|number_format(0, '.', ',')}}</strong> Suggestions </td>
-                            <td>{#<strong>22</strong> definir #}</td>
+                            <td><strong>{{pointsCount|number_format(0, '.', ',')}}</strong> Points </td>
+                           
+                            <td>{#<strong>61</strong> Tags #}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -263,7 +270,9 @@
             <!-- BEGIN - left area -->
             <div class="col-md-4">
 
-                <!-- BEGIN about -->
+                <!-- BEGIN - row about -->
+                 {% if user.settings.observations|length > 0 %}
+                
                 <div class="ibox">
                     <div class="ibox-content">
                         <h3>{{ "page.user.h5.about_me"|trans }}</h3>
@@ -287,7 +296,13 @@
                     </div>
                 </div>   
 
-                <!-- Begin Friends -->
+                    {% endif %}
+                    <!-- END - row about -->
+                    
+                    
+                    <!-- Begin Friends -->
+                {% if friends|length > 0 %}
+                
                 <div class="ibox">
                     <div class="ibox-content">
                         <h3>Friends</h3>
@@ -301,7 +316,8 @@
                             {% endfor %}
                         </div>
                     </div>
-                </div>      
+                </div> 
+                {% endif %}
 
                 <!-- BEGIN send message -->
                 <div class="ibox">
@@ -409,15 +425,56 @@
                     </div>
                 </div>    
                 <!-- END das especies fotografas, validadas e sugeridas -->
-
-
-                <!-- BEGIN - row modules -->
+                
+                
+               
+                
+                
+                
+                
+                
+    
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+<!-- BEGIN - row modules -->
+{% if acquisitions|length > 0 %}
+    {#{% if false %}#}
+                
                 <div class="row" >
                     <div class="col col-lg-12">
                         <h2>Modules</h2>
                         <div class="row">
+                            <div class="gridx">
+                            
                             {% for module in acquisitions %}
-                                <div class="col-md-4">
+                                <div class="grid-itemx col col-md-4">
+                                    
+                                    {# <div class="ibox">
+                                        <div class="ibox-content">eqweqwe eqweqwe eqweqwe eqweqwe eqweqwe eqweqwe eqweqwe 
+                                        </div>
+                                     </div>#}
+                                    
+                                    
+                                    
+                            
                                     <div class="ibox">
                                         <div class="ibox-content product-box">
                                             <div class="product-imitation" style="padding: 0px 0px!important;">
@@ -489,12 +546,16 @@
                                             </div>
                                         </div>
                                     </div>                    
-                                </div>
+                                
+                                                </div>
                             {% endfor %}
+                             </div>
                         </div>
                     </div>
                 </div> 
-                <!-- END - row dos modules -->
+                        <!-- END - row dos modules -->
+                      {% endif %}  
+                
             </div>
             <!-- END - right area-->
         </div> 
