@@ -372,8 +372,18 @@ class AjaxController extends Controller {
         $locale = $this->get('request')->getLocale();
 
         $country_name = $request->query->get('country');
+
+        
+        
         $location_name = $request->query->get('location');
+        if (!$location_name)
+            $location_name = $request->request->get('location');
+        
+        
         $spot_name = $request->query->get('spot');
+
+        
+        
         $species_name = $request->query->get('species');
 
 //        $map = $this->get('ivory_google_map.map');
@@ -438,7 +448,7 @@ class AjaxController extends Controller {
                 $map = new Map();
                 $map->setPrefixJavascriptVariable('map_');
                 $map->setHtmlContainerId('map_canvas');
-                $map->setAsync(false);
+                $map->setAsync(true);
                 $map->setCenter($centerLatitude, $centerLongitude, true);
                 $map->setMapOption('zoom', 4);
                 $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
@@ -517,7 +527,7 @@ class AjaxController extends Controller {
                 $map = new Map();
                 $map->setPrefixJavascriptVariable('map_');
                 $map->setHtmlContainerId('map_canvas');
-                $map->setAsync(false);
+                $map->setAsync(true);
                 $map->setCenter($centerLatitude, $centerLongitude, true);
                 $map->setMapOption('zoom', 10);
                 $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
@@ -593,7 +603,7 @@ class AjaxController extends Controller {
                 $map = new Map();
                 $map->setPrefixJavascriptVariable('map_');
                 $map->setHtmlContainerId('map_canvas');
-                $map->setAsync(false);
+                $map->setAsync(true);
                 $map->setCenter($centerLatitude, $centerLongitude, true);
                 $map->setMapOption('zoom', 10);
                 $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
@@ -671,7 +681,7 @@ class AjaxController extends Controller {
                 $map = new Map();
                 $map->setPrefixJavascriptVariable('map_');
                 $map->setHtmlContainerId('map_canvas');
-                $map->setAsync(false);
+                $map->setAsync(true);
                 $map->setCenter($centerLatitude, $centerLongitude, true);
                 $map->setMapOption('zoom', 3);
                 $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
@@ -695,10 +705,41 @@ class AjaxController extends Controller {
                 }
             }
         }
-
-        return $this->render('SkaphandrusAppBundle:Ajax:destinationsPartial.html.twig', array(
-                    'map' => $map,
-        ));
+        
+        
+        
+        
+        
+        
+//        
+//        
+//        
+// $mapHelper = new \Ivory\GoogleMapBundle\Tests\Fixtures\Model\Helper\MapHelper();
+//        $html = $mapHelper->shrender($map);
+//
+//return new \Symfony\Component\HttpFoundation\Response($html);
+//        
+//        
+//       
+//        
+//        
+//        $mapHelperHtml = $mapHelper->renderHtmlContainer($map);// This function renders an html div block with the HTML container ID, the width & the height configured: 
+//        $mapHelperJs = $mapHelper->renderJsContainer($map);//This function renders an html javascript block with all code needed for displaying your map. 
+//        //$response = new \Symfony\Component\HttpFoundation\JsonResponse(); 
+//        //  $response->setCallback($callback); 
+//        $response->setData($mapHelperJs); 
+//        
+//        
+//        
+//        //$response = new \Symfony\Component\HttpFoundation\JsonResponse();
+////    //$response->setData(json_encode($map));
+////        $response->setData($map);
+////    $response->setCallback('load_ivory_google_map');
+//    return $response;
+        
+return $this->render('SkaphandrusAppBundle:Ajax:destinationsPartial.html.twig', array('map' => $map));
+//        
+//        return new \Symfony\Component\HttpFoundation\JsonResponse($view->getContent());
     }
 
 }

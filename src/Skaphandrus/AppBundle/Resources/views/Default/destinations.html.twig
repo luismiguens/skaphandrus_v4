@@ -49,6 +49,12 @@
             var offset_accommodations = -6;
             var limit_countries = 7;
             var offset_countries = -7;
+            
+            
+            var country = "";
+            var location = "";
+            var spot = "";
+            var species = "";
 
             var loadDiveCenters = function () {
                 $('#box_diveCenters').fadeIn("slow");
@@ -192,15 +198,38 @@
 
             /* função que vai buscar o mapa */
             var loadForm = function () {
+            
+            country = $('#country').val();
+            location = $('#location').val();
+            spot = $('#spot').val();
+            species = $('#species').val();
+            
+            
                 $('#box_form').fadeIn("slow");
                 setTimeout(function () {
                     $.ajax({
-                        type: "get",
+                        type: "post",
                         url: "{{path("destinations_form")}}",
-                        data: "location=Sesimbra",
+                        {#async:true,#}
+                        {#jsonpCallback: 'load_ivory_google_map',#}
+                        data: ({country:country, location: location, spot:spot, species:species}),
                         dataType: "text",
-                        success: function (response) {
-                            $("#box_form").append(response);
+                        success: function (data,textStatus,jqXHR) {
+                            $("#box_form").html(data);
+                            
+                            
+                                    console.log(data);
+        console.log(textStatus);
+        console.log(jqXHR);
+
+ {#       $('#myscriptjs script.first').html("function load_ivory_google_map() {" + jqXHR.responseJson + "}");
+#}
+//      load_ivory_google_map(data);
+
+
+       
+                            
+                            
                         }
                     });
                 }, 100);
@@ -271,13 +300,13 @@
                         <div class="col-sm-3">
                             <h4>{{ "page.destinations.h4.filters"|trans }}</h4>
 
-                            <form action="{{ path('destinations_form') }}" method="POST">
+                            {#<form action="#">#}
                                 <div class="form-group">
                                     <input id="spot"  class="form-control" placeholder="{{"page.destinations.h4.diveSites"|trans}}" />
                                     {{"page.destinations.help.diveSites"|trans}}
                                 </div>
                                 <div class="form-group">
-                                    <input id="local"  class="form-control" placeholder="{{"page.destinations.h4.locations"|trans}}" />
+                                    <input id="location"  class="form-control" placeholder="{{"page.destinations.h4.locations"|trans}}" />
                                     {{"page.destinations.help.locations"|trans}}
                                 </div>
                                 <div class="form-group">
@@ -291,7 +320,7 @@
                                 <div class="form-group">
                                     <button id="find_marker" type="buttom" class="btn btn-primary dim btn-block">{{ "page.destinations.submit"|trans }}</button>
                                 </div>
-                            </form>
+                           {# </form>#}
                         </div>
                     </div>
 
