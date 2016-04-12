@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block heading_title %}
-    {{ "page.locations_home.h1.heading_title"|trans }}
+    {{ "page.destinations.h1.heading_title"|trans }}
 {% endblock %}
 
 {% block heading_breadcrumbs %}
@@ -38,139 +38,221 @@
 {% block javascripts %}
     {{ parent() }}
 
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var limit_diveCenters = 6;
+            var offset_diveCenters = -6;
+            var limit_liveaboards = 6;
+            var offset_liveaboards = -6;
+            var limit_accommodations = 6;
+            var offset_accommodations = -6;
+            var limit_countries = 7;
+            var offset_countries = -7;
+
+            var loadDiveCenters = function () {
+                $('#box_diveCenters').fadeIn("slow");
+                offset_diveCenters = offset_diveCenters + 6;
+                setTimeout(function () {
+                    $.ajax({
+                        type: "get",
+                        url: "{{path("ajax_business_show_more")}}",
+                        data: 'business=diveCenters&limit=' + limit_diveCenters + '&offset=' + offset_diveCenters,
+                        dataType: "text",
+                        success: function (response) {
+                            $("#box_diveCenters").append(response);
+                        }
+                    });
+                }, 100);
+            };
+            $(this).ready(loadDiveCenters);
+            $('#show_more_diveCenters').click(loadDiveCenters);
+
+            var loadLiveaboards = function () {
+                $('#box_liveaboards').fadeIn("slow");
+                offset_liveaboards = offset_liveaboards + 6;
+                setTimeout(function () {
+                    $.ajax({
+                        type: "get",
+                        url: "{{path("ajax_business_show_more")}}",
+                        data: 'business=liveaboards&limit=' + limit_liveaboards + '&offset=' + offset_liveaboards,
+                        dataType: "text",
+                        success: function (response) {
+                            $("#box_liveaboards").append(response);
+                        }
+                    });
+                }, 100);
+            };
+            $(this).ready(loadLiveaboards);
+            $('#show_more_liveaboards').click(loadLiveaboards);
+
+            var loadAccommodations = function () {
+                $('#box_accommodations').fadeIn("slow");
+                offset_accommodations = offset_accommodations + 6;
+                setTimeout(function () {
+                    $.ajax({
+                        type: "get",
+                        url: "{{path("ajax_business_show_more")}}",
+                        data: 'business=accommodations&limit=' + limit_accommodations + '&offset=' + offset_accommodations,
+                        dataType: "text",
+                        success: function (response) {
+                            $("#box_accommodations").append(response);
+                        }
+                    });
+                }, 100);
+            };
+            $(this).ready(loadAccommodations);
+            $('#show_more_accommodations').click(loadAccommodations);
+
+            var loadCountries = function () {
+                $('#box_countries').fadeIn("slow");
+                offset_countries = offset_countries + 7;
+                setTimeout(function () {
+                    $.ajax({
+                        type: "get",
+                        url: "{{path("ajax_countries_show_more")}}",
+                        data: 'limit=' + limit_countries + '&offset=' + offset_countries,
+                        dataType: "text",
+                        success: function (response) {
+                            $("#box_countries").append(response);
+                        }
+                    });
+                }, 100);
+            };
+            $(this).ready(loadCountries);
+            $('#show_more_countries').click(loadCountries);
+
+            /*  funçoes para os footables  */
+            var loadDiveCentersAll = function () {
+                setTimeout(function () {
+                    $.ajax({
+                        type: "get",
+                        url: "{{path("ajax_business_see_all")}}",
+                        data: 'business=diveCenters',
+                        dataType: "text",
+                        success: function (response) {
+                            $("#diveCentersInput").html(response);
+                        }
+                    });
+                }, 100);
+            };
+            $(this).ready(loadDiveCentersAll);
+            $('#diveCentersModal').on('shown.bs.modal', loadDiveCentersAll);
+
+            /*  funçoes para os footables  */
+            var loadLiveaboardsAll = function () {
+                setTimeout(function () {
+                    $.ajax({
+                        type: "get",
+                        url: "{{path("ajax_business_see_all")}}",
+                        data: 'business=liveaboards',
+                        dataType: "text",
+                        success: function (response) {
+                            $("#liveaboardsInput").html(response);
+                        }
+                    });
+                }, 100);
+            };
+            $(this).ready(loadLiveaboardsAll);
+            $('#liveaboardsModal').on('shown.bs.modal', loadLiveaboardsAll);
+
+            /*  funçoes para os footables  */
+            var loadAccommodationsAll = function () {
+                setTimeout(function () {
+                    $.ajax({
+                        type: "get",
+                        url: "{{path("ajax_business_see_all")}}",
+                        data: 'business=accommodations',
+                        dataType: "text",
+                        success: function (response) {
+                            $("#accommodationsInput").html(response);
+                        }
+                    });
+                }, 100);
+            };
+            $(this).ready(loadAccommodationsAll);
+            $('#accommodationsModal').on('shown.bs.modal', loadAccommodationsAll);
+
+            /*  funçoes para os footables  */
+            var loadCountriesAll = function () {
+                setTimeout(function () {
+                    $.ajax({
+                        type: "get",
+                        url: "{{path("ajax_countries_see_all")}}",
+                        data: 'business=countries',
+                        dataType: "text",
+                        success: function (response) {
+                            $("#countriesInput").html(response);
+                        }
+                    });
+                }, 100);
+            };
+            $(this).ready(loadCountriesAll);
+            $('#countriesModal').on('shown.bs.modal', loadCountriesAll);
+
+            /* função que vai buscar o mapa */
+            var loadForm = function () {
+                $('#box_form').fadeIn("slow");
+                setTimeout(function () {
+                    $.ajax({
+                        type: "get",
+                        url: "{{path("destinations_form")}}",
+                        data: "location=Sesimbra",
+                        dataType: "text",
+                        success: function (response) {
+                            $("#box_form").append(response);
+                        }
+                    });
+                }, 100);
+            };
+            $(this).ready(loadForm);
+            $('#find_marker').click(loadForm);
+        });
+    </script>
+
 {% endblock %}
 
 {% block body %}
-    <div class="wrapper wrapper-content">
-        <div class="row animated fadeInRight">
+
+    <div class="wrapper wrapper-content" >
+        <div class="animated fadeInRight">
 
             <!-- Destinos start -->
             <div class="dvb-container">
                 <ul class="dvb-md-list" >
-                    <li class="dvb-md-item" >
-                        <a href="#" style="background-image:url(placeholder.jpg);" class="dvb-md-link" ></a>
-                        <h3 class="dvb-md-name" >
-                            <a href="#" >Egypt</a>
-                        </h3>
-                        <ul class="dvb-md-info" >
-                            <li class="dvb-mdi-item" >
-                                <a href="#" class="dvb-mdi-link" >139 dive centers</a>
-                            </li>
-                            <li class="dvb-mdi-item" >
-                                <a href="#" class="dvb-mdi-link" >219 liveaboard trips</a>
-                            </li>
-                            <li class="dvb-mdi-item" >
-                                <a href="#" class="dvb-mdi-link" >198 dive sites</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dvb-md-item" >
-                        <a href="#" style="background-image:url(placeholder.jpg);" class="dvb-md-link" ></a>
-                        <h3 class="dvb-md-name" >
-                            <a href="#" >Indonesia</a>
-                        </h3>
-                        <ul class="dvb-md-info" >
-                            <li class="dvb-mdi-item" >
-                                <a href="#" class="dvb-mdi-link" >95 dive centers</a>
-                            </li>
-                            <li class="dvb-mdi-item" >
-                                <a href="#" class="dvb-mdi-link" >153 liveaboard trips</a>
-                            </li>
-                            <li class="dvb-mdi-item" >
-                                <a href="#" class="dvb-mdi-link" >600 dive sites</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dvb-md-item" >
-                        <a href="#" style="background-image:url(placeholder.jpg);" class="dvb-md-link" ></a>
-                        <h3 class="dvb-md-name" >
-                            <a href="#" >Thailand</a>
-                        </h3>
-                        <ul class="dvb-md-info" >
-                            <li class="dvb-mdi-item">
-                                <a href="#" class="dvb-mdi-link" >104 dive centers</a>
-                            </li>
-                            <li class="dvb-mdi-item" >
-                                <a href="#" class="dvb-mdi-link" >25 liveaboard trips</a>
-                            </li>
-                            <li class="dvb-mdi-item" >
-                                <a href="#" class="dvb-mdi-link" >113 dive sites</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dvb-md-item" >
-                        <a href="#" style="background-image:url(placeholder.jpg);" class="dvb-md-link" ></a>
-                        <h3 class="dvb-md-name" >
-                            <a href="#" >Maldives</a>
-                        </h3>
-                        <ul class="dvb-md-info" >
-                            <li class="dvb-mdi-item" >
-                                <a href="#" class="dvb-mdi-link" >18 dive centers</a>
-                            </li>
-                            <li class="dvb-mdi-item" >
-                                <a href="#" class="dvb-mdi-link" >106 liveaboard trips</a>
-                            </li>
-                            <li class="dvb-mdi-item" >
-                                <a href="#" class="dvb-mdi-link" >183 dive sites</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dvb-md-item" >
-                        <a href="#" style="background-image:url(placeholder.jpg);" class="dvb-md-link" ></a>
-                        <h3 class="dvb-md-name" >
-                            <a href="#" >Mexico</a>
-                        </h3>
-                        <ul class="dvb-md-info" >
-                            <li class="dvb-mdi-item" >
-                                <a href="#" class="dvb-mdi-link" >106 dive centers</a>
-                            </li>
-                            <li class="dvb-mdi-item" >
-                                <a href="#" class="dvb-mdi-link" >16 liveaboard trips</a>
-                            </li>
-                            <li class="dvb-mdi-item" >
-                                <a href="#" class="dvb-mdi-link" >174 dive sites</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dvb-md-item" >
-                        <a href="#" style="background-image:url(placeholder.jpg);" class="dvb-md-link" ></a>
-                        <h3 class="dvb-md-name" >
-                            <a href="#" >Philippines</a>
-                        </h3><ul class="dvb-md-info" >
-                            <li class="dvb-mdi-item" >
-                                <a href="#" class="dvb-mdi-link" >86 dive centers</a>
-                            </li><li class="dvb-mdi-item" >
-                                <a href="#" class="dvb-mdi-link" >21 liveaboard trips</a>
-                            </li>
-                            <li class="dvb-mdi-item" >
-                                <a href="#" class="dvb-mdi-link" >271 dive sites</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dvb-md-item" >
-                        <a href="#" style="background-image:url(placeholder.jpg);" class="dvb-md-link" ></a>
-                        <h3 class="dvb-md-name" >
-                            <a href="#" >Spain</a>
-                        </h3>
-                        <ul class="dvb-md-info" >
-                            <li class="dvb-mdi-item" >
-                                <a href="#" class="dvb-mdi-link" >65 dive centers</a>
-                            </li>
-                            <li class="dvb-mdi-item" >
-                                <a href="#" class="dvb-mdi-link" >311 dive sites</a>
-                            </li>
-                        </ul>
-                    </li>
+
+                    <div id="box_countries"></div>
+
+                    <!-- countries Modal start -->
+                    <div class="modal fade" id="countriesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">{{ "page.destinations.modal.countries_title"|trans }}</h4>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div id="countriesInput"></div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- countries Modal end -->
+
                 </ul>
                 <div class="row">
-                    <div class="col-sm-3">
-
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="btn btn-primary btn-block">See more</div>
-                    </div>
-                    <div class="col-sm-3">
-
+                    <div class="row" >
+                        <div class="col-sm-6 col-sx-12">
+                            <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_countries" >{{ "page.destinations.button.show_more_countries"|trans }}</button>
+                        </div>
+                        <div class="col-sm-6 col-sx-12">
+                            <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#countriesModal">{{ "page.destinations.button.see_all_countries"|trans }}</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -179,33 +261,35 @@
             <!-- Map start -->
             <div class="ibox">
                 <div class="ibox-title">
-                    Where / What / When to Dive
+                    <h3>{{ "page.destinations.button.map"|trans }}</h3>
                 </div>
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-sm-9">
-                            <div id="map-canvas"></div>  
+                            <div id="box_form"></div>
                         </div>
                         <div class="col-sm-3">
-                            <h3>Filters</h3>
-                            <form >
+                            <h4>{{ "page.destinations.h4.filters"|trans }}</h4>
+
+                            <form action="{{ path('destinations_form') }}" method="POST">
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Dive Site" />
+                                    <input id="spot"  class="form-control" placeholder="{{"page.destinations.h4.diveSites"|trans}}" />
+                                    {{"page.destinations.help.diveSites"|trans}}
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Local" />
+                                    <input id="local"  class="form-control" placeholder="{{"page.destinations.h4.locations"|trans}}" />
+                                    {{"page.destinations.help.locations"|trans}}
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Country" />
+                                    <input id="country"  class="form-control" placeholder="{{"page.destinations.h4.countries"|trans}}" />
+                                    {{"page.destinations.help.countries"|trans}}
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Species" />
+                                    <input id="species"  class="form-control" placeholder="{{"page.destinations.h4.species"|trans}}" />
+                                    {{"page.destinations.help.species"|trans}}
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Month" />
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Dive type" />
+                                    <button id="find_marker" type="buttom" class="btn btn-primary dim btn-block">{{ "page.destinations.submit"|trans }}</button>
                                 </div>
                             </form>
                         </div>
@@ -221,128 +305,146 @@
 
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a aria-expanded="true" data-toggle="tab" href="#tab-1">LIVE A BOARD</a></li>
-                            <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-2">DIVE CENTERS</a></li>
-                            <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-3">RESORTS</a></li>
+                            <li class="active"><a aria-expanded="true" data-toggle="tab" href="#tab-1">{{ "page.destinations.tab1.dive_centers"|trans }}</a></li>
+                            <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-2">{{ "page.destinations.tab2.liveaboard"|trans }}</a></li>
+                            <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-3">{{ "page.destinations.tab3.resorts"|trans }}</a></li>
                         </ul>
                         <div class="tab-content">
+
                             <div id="tab-1" class="tab-pane active">
                                 <div class="panel-body">
-                                    <?php for ($h = 0; $h < 3; $h++): ?>
-                                    <div class="row">
-                                        <?php for ($i = 0; $i < 3; $i++): ?>
-                                        <div class="col-lg-4">
-                                            <div class="contact-box">
-                                                <a href="profile.html">
-                                                    <div class="col-sm-4">
-                                                        <div class="text-center">
-                                                            <img alt="image" class="img-thumbnail m-t-xs img-responsive" src="placeholder-100x100.jpg">
-                                                        </div>
+                                    <div class="ibox">
+                                        <h4>{{ "page.destinations.h4.dive_center"|trans }}</h4>
+                                        <div class="ibox-content">
+
+                                            <div id="box_diveCenters"></div>
+
+                                        </div>
+
+                                        <!-- diveCenters Modal start -->
+                                        <div class="modal fade" id="diveCentersModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="myModalLabel">{{ "page.destinations.modal.dive_centers_title"|trans }}</h4>
                                                     </div>
-                                                    <div class="col-sm-8">
-                                                        <h3><strong>John Smith</strong></h3>
-                                                        <p><i class="fa fa-map-marker"></i> Riviera State 32/106</p>
-                                                        <div class="btn btn-primary btn-block btn-xs">More info</div>
-                                                        <div class="btn btn-primary btn-block dim btn-xs">Book now</div>
+                                                    <div class="modal-body">
+
+                                                        <div id="diveCentersInput"></div>
 
                                                     </div>
-                                                    <div class="clearfix"></div>
-                                                </a>
-                                            </div>  
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <?php endfor; ?>
-                                    </div>
-                                    <?php endfor; ?>
-                                    <div class="row">
-                                        <div class="col-sm-3">
+                                        <!-- diveCenters Modal end -->
 
+                                        <div class="ibox-content" >
+                                            <div class="row" >
+                                                <div class="col-sm-6 col-sx-12">
+                                                    <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_diveCenters" >{{ "page.destinations.button.show_more_dive_centers"|trans }}</button>
+                                                </div>
+                                                <div class="col-sm-6 col-sx-12">
+                                                    <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#diveCentersModal">{{ "page.destinations.button.see_all_dive_centers"|trans }}</button>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <div class="btn btn-primary btn-block">See more</div>
-                                        </div>
-                                        <div class="col-sm-3">
 
-                                        </div>
                                     </div>
                                 </div>
                             </div>
+
                             <div id="tab-2" class="tab-pane">
                                 <div class="panel-body">
-                                    <?php for ($h = 0; $h < 3; $h++): ?>
-                                    <div class="row">
-                                        <?php for ($i = 0; $i < 3; $i++): ?>
-                                        <div class="col-lg-4">
-                                            <div class="contact-box">
-                                                <a href="profile.html">
-                                                    <div class="col-sm-4">
-                                                        <div class="text-center">
-                                                            <img alt="image" class="img-thumbnail m-t-xs img-responsive" src="placeholder-100x100.jpg">
-                                                        </div>
+                                    <div class="ibox">
+                                        <h4>{{ "page.destinations.h4.liveaboard"|trans }}</h4>
+                                        <div class="ibox-content">
+
+                                            <div id="box_liveaboards"></div>
+
+                                        </div>
+
+                                        <!-- liveaboards Modal start -->
+                                        <div class="modal fade" id="liveaboardsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="myModalLabel">{{ "page.destinations.modal.liveaboards_title"|trans }}</h4>
                                                     </div>
-                                                    <div class="col-sm-8">
-                                                        <h3><strong>John Smith</strong></h3>
-                                                        <p><i class="fa fa-map-marker"></i> Riviera State 32/106</p>
-                                                        <div class="btn btn-primary btn-block btn-xs">More info</div>
-                                                        <div class="btn btn-primary btn-block dim btn-xs">Book now</div>
+                                                    <div class="modal-body">
+
+                                                        <div id="liveaboardsInput"></div>
 
                                                     </div>
-                                                    <div class="clearfix"></div>
-                                                </a>
-                                            </div>  
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <?php endfor; ?>
-                                    </div>
-                                    <?php endfor; ?>
-                                    <div class="row">
-                                        <div class="col-sm-3">
+                                        <!-- liveaboards Modal end -->
 
+                                        <div class="ibox-content" >
+                                            <div class="row" >
+                                                <div class="col-sm-6 col-sx-12">
+                                                    <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_liveaboards" >{{ "page.destinations.button.show_more_liveaboard"|trans }}</button>
+                                                </div>
+                                                <div class="col-sm-6 col-sx-12">
+                                                    <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#liveaboardsModal">{{ "page.destinations.button.see_all_liveaboard"|trans }}</button>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <div class="btn btn-primary btn-block">See more</div>
-                                        </div>
-                                        <div class="col-sm-3">
 
-                                        </div>
                                     </div>
                                 </div>
                             </div>
+
                             <div id="tab-3" class="tab-pane">
                                 <div class="panel-body">
-                                    <?php for ($h = 0; $h < 3; $h++): ?>
-                                    <div class="row">
-                                        <?php for ($i = 0; $i < 3; $i++): ?>
-                                        <div class="col-lg-4">
-                                            <div class="contact-box">
-                                                <a href="profile.html">
-                                                    <div class="col-sm-4">
-                                                        <div class="text-center">
-                                                            <img alt="image" class="img-thumbnail m-t-xs img-responsive" src="placeholder-100x100.jpg">
-                                                        </div>
+                                    <div class="ibox">
+                                        <h4>{{ "page.destinations.h4.accommodations"|trans }}</h4>
+                                        <div class="ibox-content">
+
+                                            <div id="box_accommodations"></div>
+
+                                        </div>
+
+                                        <!-- accommodations Modal start -->
+                                        <div class="modal fade" id="accommodationsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="myModalLabel">{{ "page.destinations.modal.accommodations_title"|trans }}</h4>
                                                     </div>
-                                                    <div class="col-sm-8">
-                                                        <h3><strong>John Smith</strong></h3>
-                                                        <p><i class="fa fa-map-marker"></i> Riviera State 32/106</p>
-                                                        <div class="btn btn-primary btn-block btn-xs">More info</div>
-                                                        <div class="btn btn-primary btn-block dim btn-xs">Book now</div>
+                                                    <div class="modal-body">
+
+                                                        <div id="accommodationsInput"></div>
 
                                                     </div>
-                                                    <div class="clearfix"></div>
-                                                </a>
-                                            </div>  
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <?php endfor; ?>
-                                    </div>
-                                    <?php endfor; ?>
-                                    <div class="row">
-                                        <div class="col-sm-3">
+                                        <!-- accommodations Modal end -->
 
+                                        <div class="ibox-content" >
+                                            <div class="row" >
+                                                <div class="col-sm-6 col-sx-12">
+                                                    <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_accommodations" >{{ "page.destinations.button.show_more_accomodations"|trans }}</button>
+                                                </div>
+                                                <div class="col-sm-6 col-sx-12">
+                                                    <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#accommodationsModal">{{ "page.destinations.button.see_all_accomodations"|trans }}</button>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <div class="btn btn-primary btn-block">See more</div>
-                                        </div>
-                                        <div class="col-sm-3">
 
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -351,7 +453,7 @@
                 </div>
             </div>
             <!-- Tab Business end -->
-            
+
         </div>
     </div>
 

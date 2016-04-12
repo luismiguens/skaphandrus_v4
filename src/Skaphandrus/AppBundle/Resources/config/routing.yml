@@ -8,7 +8,7 @@ testSmartLink:
     defaults: { _controller: SkaphandrusAppBundle:Default:testSmartLink, _locale: en }
     requirements:
         _locale:  en|pt
-
+        
 index2:
     path:     /{_locale}/index2
     defaults: { _controller: SkaphandrusAppBundle:Default:index2, _locale: en }
@@ -210,6 +210,14 @@ skaphandrus_app_users_migration:
 ################################################################################
 
 #### See All ####
+ajax_business_see_all:
+    path:     /{_locale}/ajax/see-all/business
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:businessSeeAll" }
+    
+ajax_countries_see_all:
+    path:     /{_locale}/ajax/see-all/countries
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:countriesSeeAll" }
+    
 ajax_spot_see_all:
     path:     /{_locale}/ajax/see-all/spot
     defaults: { _controller: "SkaphandrusAppBundle:Ajax:spotSeeAll" }
@@ -227,6 +235,15 @@ ajax_photographers_see_all:
     defaults: { _controller: "SkaphandrusAppBundle:Ajax:photographersSeeAll" }    
 
 #### Show More ####
+ajax_countries_show_more:
+    path:     /{_locale}/ajax/show-more/countries
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:countriesShowMore" }
+
+
+ajax_business_show_more:
+    path:     /{_locale}/ajax/show-more/business
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:businessShowMore" }
+
 ajax_spot_show_more:
     path:     /{_locale}/ajax/show-more/spot
     defaults: { _controller: "SkaphandrusAppBundle:Ajax:spotShowMore" }
@@ -242,6 +259,11 @@ ajax_species_show_more:
 ajax_photographers_show_more:
     path:     /{_locale}/ajax/show-more/photographers
     defaults: { _controller: "SkaphandrusAppBundle:Ajax:photographersShowMore" } 
+
+###
+destinations_form:
+    path:     /{_locale}/destinations_form
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:form" }
 
 ajax_index:
     path:     /{_locale}/ajax/index

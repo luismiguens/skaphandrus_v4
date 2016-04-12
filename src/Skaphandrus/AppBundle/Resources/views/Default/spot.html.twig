@@ -31,11 +31,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    
-    
-{#    <link href="{{ asset('bundles/skaphandrusapp/css/custom.css') }}" rel="stylesheet">
-<script src="{{ asset('bundles/skaphandrusapp/js/custom.js') }}"></script>#}
-    
+    {#<link href="{{ asset('bundles/skaphandrusapp/css/custom.css') }}" rel="stylesheet">#}
     <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
 
     {#<!-- FooTable -->
@@ -87,7 +83,7 @@
                         data: 'spot_id=' + {{ spot.id }} +'&limit=' + limit_species + '&offset=' + offset_species,
                         dataType: "text",
                         success: function (response) {
-                            $('#box_species .slider_thumbs').slick('unslick'); 
+                            $('#box_species .slider_thumbs').slick('unslick');
                             $("#box_species").append(response);
                             sliders('#box_species .slider_thumbs');
                         }
@@ -107,10 +103,10 @@
                         data: 'spot_id=' + {{ spot.id }} +'&limit=' + limit_photographers + '&offset=' + offset_photographers,
                         dataType: "text",
                         success: function (response) {
-                            $('#box_photographers .slider_thumbs').slick('unslick'); 
+                            $('#box_photographers .slider_thumbs').slick('unslick');
                             $("#box_photographers").append(response);
                             sliders('#box_photographers .slider_thumbs');
-                            
+
                         }
                     });
                 }, 100);

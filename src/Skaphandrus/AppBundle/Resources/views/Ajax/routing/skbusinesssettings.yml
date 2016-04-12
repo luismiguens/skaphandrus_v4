@@ -1,0 +1,30 @@
+business_settings_admin:
+    path:     /
+    defaults: { _controller: "SkaphandrusAppBundle:SkBusinessSettings:index" }
+
+business_settings_admin_show:
+    path:     /{id}/show
+    defaults: { _controller: "SkaphandrusAppBundle:SkBusinessSettings:show" }
+
+business_settings_admin_new:
+    path:     /new
+    defaults: { _controller: "SkaphandrusAppBundle:SkBusinessSettings:new" }
+
+business_settings_admin_create:
+    path:     /create
+    defaults: { _controller: "SkaphandrusAppBundle:SkBusinessSettings:create" }
+    methods:  POST
+
+business_settings_admin_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SkaphandrusAppBundle:SkBusinessSettings:edit" }
+
+business_settings_admin_update:
+    path:     /{id}/update
+    defaults: { _controller: "SkaphandrusAppBundle:SkBusinessSettings:update" }
+    methods:  [POST, PUT]
+
+business_settings_admin_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SkaphandrusAppBundle:SkBusinessSettings:delete" }
+    methods:  [POST, DELETE]

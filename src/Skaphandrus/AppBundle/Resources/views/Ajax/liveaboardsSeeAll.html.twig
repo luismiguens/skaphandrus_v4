@@ -1,0 +1,44 @@
+<!-- FooTable -->
+<script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.footable-liveaboards').footable();
+    });
+</script>
+
+{% if liveaboards %}
+    <input type="text" class="form-control input-sm m-b-xs" id="filter-liveaboards" placeholder="Search in table">
+    <table class="footable footable-liveaboards table" data-page-size="25" data-filter=#filter-liveaboards>
+        <thead>
+            <tr>
+                <th>{{ "page.destinations.table.liveaboards"|trans }}</th>
+                <th>{{ "page.destinations.table.business_more_info"|trans }}</th>
+                <th>{{ "page.destinations.table.business_book_now"|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in liveaboards %}
+                <tr>
+                    <td> <a href="{{ path('business_no_slug', { 'id': d.id}) }}">{{ d }}</a></td>
+                    <td> <a class="btn btn-primary btn-block btn-xs" href="{{ path('business_no_slug', { 'id': d.id}) }}">{{ "page.business.button.more_info"|trans }}</a></td>
+                    <td> <a class="btn btn-primary btn-block btn-xs" href="{{ path('booking_admin_new', {'business_id': d.id}) }}">{{ "page.business.button.book_now"|trans }}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">
+                    <ul class="pagination pull-right"></ul>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+{% else %}
+    {{"common.destinations.no_liveaboards"|trans}}
+{% endif %}
+
+
+
+

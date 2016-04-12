@@ -256,20 +256,6 @@ liip_imagine:
             filters:
                 thumbnail: { size: [120, 90], mode: outbound }
                 
-        #single contest banner image
-        sk_crop_900:
-            filters:
-                thumbnail: { size: [900, 300] , mode: outbound }
-                
-        #species page big image
-        sk_crop_476:
-            filters:
-                thumbnail: { size: [476, 300] , mode: outbound }
-        #species page small images        
-        sk_crop_238:
-            filters:
-                thumbnail: { size: [238, 150] , mode: outbound } 
-                
         sk_widen_50:
             filters:
                 relative_resize: { widen: 50 } 
@@ -298,6 +284,32 @@ liip_imagine:
         sk_widen_590:
             filters:
                 relative_resize: { widen: 590 }
+                
+        #single contest banner image
+        sk_crop_900:
+            filters:
+                thumbnail: { size: [900, 300] , mode: outbound }
+        
+        #destinations page imagem grande
+        sk_crop_555:
+            filters:
+                thumbnail: { size: [555, 270] , mode: outbound }                
+        #destinations page imagem pequena
+        sk_crop_272:
+            filters:
+                thumbnail: { size: [272, 270] , mode: outbound }   
+                
+        #species page big image
+        sk_crop_476:
+            filters:
+                thumbnail: { size: [476, 300] , mode: outbound }
+                
+        #species page small images        
+        sk_crop_238:
+            filters:
+                thumbnail: { size: [238, 150] , mode: outbound }         
+                
+                
         sk_thumbnail_outbound_30:
             filters:
                 thumbnail: { size: [30, 30], mode: outbound }

@@ -1,19 +1,19 @@
 @media only screen and (min-width:1025px) {
     .home .dvb-md-item{
-    height: 150px; 
-}
-.home .dvb-md-name{
-    font-size: 16px; 
-}
-.home .dvb-mdi-link{
-    font-size: 12px; 
-    line-height: 14px; 
-    padding: 2px; 
-    margin: 2px 0; 
-}
-.home .dvb-md-info{
-    padding: 0; 
-}
+        height: 150px; 
+    }
+    .home .dvb-md-name{
+        font-size: 16px; 
+    }
+    .home .dvb-mdi-link{
+        font-size: 12px; 
+        line-height: 14px; 
+        padding: 2px; 
+        margin: 2px 0; 
+    }
+    .home .dvb-md-info{
+        padding: 0; 
+    }
 }
 
 .dvb-container {
@@ -627,7 +627,7 @@
     padding: 0; 
 }
 .dvb-mdi-item{
-        list-style: none; 
+    list-style: none; 
     list-style-type: none; 
 }
 

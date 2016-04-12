@@ -1,0 +1,30 @@
+photo_species_sugestion_admin:
+    path:     /
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoSpeciesSugestion:index" }
+
+photo_species_sugestion_admin_show:
+    path:     /{id}/show
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoSpeciesSugestion:show" }
+
+photo_species_sugestion_admin_new:
+    path:     /new/{photo_id}
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoSpeciesSugestion:new" }
+
+photo_species_sugestion_admin_create:
+    path:     /create
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoSpeciesSugestion:create" }
+    methods:  POST
+
+photo_species_sugestion_admin_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoSpeciesSugestion:edit" }
+
+photo_species_sugestion_admin_update:
+    path:     /{id}/update
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoSpeciesSugestion:update" }
+    methods:  [POST, PUT]
+
+photo_species_sugestion_admin_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoSpeciesSugestion:delete" }
+    methods:  [POST, DELETE]

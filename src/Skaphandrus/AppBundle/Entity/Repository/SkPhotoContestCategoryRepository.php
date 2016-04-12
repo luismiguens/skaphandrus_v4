@@ -46,7 +46,7 @@ class SkPhotoContestCategoryRepository extends EntityRepository {
         return $users;
     }
 
-    public function findJudgeCategoryPoints($category_id, $limit = 8) {
+    public function findJudgeCategoryPoints($category_id, $limit = 6) {
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();

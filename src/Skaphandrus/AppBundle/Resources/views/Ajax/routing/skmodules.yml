@@ -1,0 +1,10 @@
+module_admin_edit:
+    path:     /edit
+    defaults: { _controller: "SkaphandrusAppBundle:SkModules:edit" }    
+
+module_admin_update:
+    path:     /update
+    defaults: { _controller: "SkaphandrusAppBundle:SkModules:update" }
+    methods:  [POST, PUT]
+
+

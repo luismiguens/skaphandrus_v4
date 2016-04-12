@@ -60,7 +60,6 @@
             </options>
         </field>
     
-    
         <many-to-one field="fosUser" target-entity="FosUser" fetch="LAZY">
             <join-columns>
                 <join-column name="fos_user_id" referenced-column-name="id"/>
@@ -81,15 +80,11 @@
         <lifecycle-callbacks>
             <lifecycle-callback type="preUpdate" method="doStuffOnPreUpdate"/>
             <lifecycle-callback type="postPersist" method="doStuffOnPostPersist"/>
-<!--            <lifecycle-callback type="postLoad" method="doStuffOnPostLoad"/>-->
+            <!--            <lifecycle-callback type="postLoad" method="doStuffOnPostLoad"/>-->
         </lifecycle-callbacks>
 
         <one-to-many field="speciesValidations" target-entity="SkPhotoSpeciesValidation" mapped-by="photo" />
         <one-to-many field="speciesSugestions" target-entity="SkPhotoSpeciesSugestion" mapped-by="photo" />
-    
-        
-
-        
         
     </entity>
 </doctrine-mapping>

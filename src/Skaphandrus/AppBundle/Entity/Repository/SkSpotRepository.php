@@ -13,8 +13,7 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkSpotRepository extends EntityRepository {
 
-    
-        public function getMoreSpotsUser($locale, $user_id, $limit = 3, $offset = 0) {
+    public function getMoreSpotsUser($locale, $user_id, $limit = 3, $offset = 0) {
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
@@ -41,12 +40,8 @@ class SkSpotRepository extends EntityRepository {
         }
 
         return $result;
-
-
     }
-    
-    
-    
+
     public function getMoreSpotsLocation($locale, $location_id, $limit = 3, $offset = 0) {
 
         $em = $this->getEntityManager();
@@ -114,9 +109,8 @@ class SkSpotRepository extends EntityRepository {
 
         return $query->getResult();
     }
-    
-    
-        public function findPhotosSpotAndUser($spot_id, $user_id) {
+
+    public function findPhotosSpotAndUser($spot_id, $user_id) {
         $query = $this->getEntityManager()->createQuery(
                         'SELECT p
             FROM SkaphandrusAppBundle:SkPhoto p
@@ -128,7 +122,6 @@ class SkSpotRepository extends EntityRepository {
 
         return $query->getResult();
     }
-    
 
     public function findPhotosLocation($spot_id, $location_id) {
         $query = $this->getEntityManager()->createQuery(
@@ -141,6 +134,24 @@ class SkSpotRepository extends EntityRepository {
                 )->setParameter('spot_id', $spot_id)->setParameter('location_id', $location_id)->setMaxResults(10);
 
         return $query->getResult();
+    }
+
+    public function findSpotDestinations($slug) {
+        $name = Utils::unslugify($slug);
+        
+        $query = $this->getEntityManager()
+                ->createQuery(
+                        'SELECT s
+                FROM SkaphandrusAppBundle:SkSpot s
+                JOIN s.translations t
+                JOIN s.location l
+                WHERE REPLACE(t.name, \'-\', \' \') = :name')
+                ->setParameter('name', $name);
+        try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
     }
 
     public function findLikeName($term, $locale) {

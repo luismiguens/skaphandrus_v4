@@ -94,6 +94,25 @@ class SkLocationRepository extends EntityRepository {
 //        return $qb->getQuery()->getSingleResult();
 //    }
 
+    public function findLocationDestinations($slug, $locale) {
+        $name = Utils::unslugify($slug);
+
+        $query = $this->getEntityManager()
+                        ->createQuery(
+                                'SELECT l
+                    FROM SkaphandrusAppBundle:SkLocation l
+                    JOIN l.translations t
+                    WHERE REPLACE(t.name, \'-\', \' \') = :name
+                    AND t.locale = :locale'
+                    )->setParameter('name', $name)->setParameter('locale', $locale);
+        try {
+//            dump($query->getResult());
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
     public function findBySlug_old($slug, $country, $locale) {
         $name = Utils::unslugify($slug);
 

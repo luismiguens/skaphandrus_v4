@@ -1,0 +1,30 @@
+photo_contest_sponsor_admin:
+    path:     /
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestSponsor:index" }
+
+#photo_contest_sponsor_admin_show:
+#    path:     /{id}/show
+#    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestSponsor:show" }
+
+photo_contest_sponsor_admin_new:
+    path:     /new
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestSponsor:new" }
+
+photo_contest_sponsor_admin_create:
+    path:     /create
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestSponsor:create" }
+    methods:  POST
+
+photo_contest_sponsor_admin_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestSponsor:edit" }
+
+photo_contest_sponsor_admin_update:
+    path:     /{id}/update
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestSponsor:update" }
+    methods:  [POST, PUT]
+
+photo_contest_sponsor_admin_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoContestSponsor:delete" }
+    methods:  [POST, DELETE]

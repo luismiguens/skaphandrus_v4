@@ -14,50 +14,83 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkBusinessRepository extends EntityRepository {
 
-    public function findUpdatedDiveCenters() {
+    // See All
+    public function findAllDiveCenters() {
 
         return $this->getEntityManager()->createQuery(
                                 'SELECT b
                 FROM SkaphandrusAppBundle:SkBusiness b
-                JOIN b.admin admin
+                JOIN b.admin a
                 JOIN b.type t
-                JOIN b.address a
-                JOIN a.location l
-                JOIN l.spots s
                 WHERE t.id in(1,3,6,8)')
                         ->getResult();
     }
 
-    public function findUpdatedLiveaboards() {
+    public function findAllLiveaboards() {
 
         return $this->getEntityManager()->createQuery(
                                 'SELECT b
                 FROM SkaphandrusAppBundle:SkBusiness b
-                JOIN b.admin admin
+                JOIN b.admin a
                 JOIN b.type t
-                JOIN b.address a
-                JOIN a.location l
-                JOIN l.spots s
                 WHERE t.id in(4)')
                         ->getResult();
     }
 
-    public function findUpdatedAccommodations() {
+    public function findAllAccommodations() {
 
         return $this->getEntityManager()->createQuery(
                                 'SELECT b
                 FROM SkaphandrusAppBundle:SkBusiness b
-                JOIN b.admin admin
+                JOIN b.admin a
                 JOIN b.type t
-                JOIN b.address a
-                JOIN a.location l
-                JOIN l.spots s
                 WHERE t.id in(7)')
                         ->getResult();
     }
 
+    // Partial
+    public function findDiveCentersPartial($limit = 6, $offset = 0) {
+
+        return $this->getEntityManager()->createQuery(
+                                'SELECT b
+                FROM SkaphandrusAppBundle:SkBusiness b
+                JOIN b.admin a
+                JOIN b.type t
+                WHERE t.id in(1)
+                GROUP BY b
+                ORDER BY b.updatedAt DESC')
+                        ->setMaxResults($limit)->setFirstResult($offset)->getResult();
+    }
+
+    public function findLiveaboardsPartial($limit = 6, $offset = 0) {
+
+        return $this->getEntityManager()->createQuery(
+                                'SELECT b
+                FROM SkaphandrusAppBundle:SkBusiness b
+                JOIN b.admin a
+                JOIN b.type t
+                WHERE t.id in(4)
+                GROUP BY b
+                ORDER BY b.updatedAt DESC')
+                        ->setMaxResults($limit)->setFirstResult($offset)->getResult();
+    }
+
+    public function findAccommodationsPartial($limit = 6, $offset = 0) {
+
+        return $this->getEntityManager()->createQuery(
+                                'SELECT b
+                FROM SkaphandrusAppBundle:SkBusiness b
+                JOIN b.admin a
+                JOIN b.type t
+                WHERE t.id in(7)
+                GROUP BY b
+                ORDER BY b.updatedAt DESC')
+                        ->setMaxResults($limit)->setFirstResult($offset)->getResult();
+    }
+
 ////////////////////
     public function findDiveCentersInSpot($spot_id) {
+//                WHERE t.id in(1,3,6,8)
 
         return $this->getEntityManager()->createQuery(
                                 'SELECT b
@@ -67,7 +100,7 @@ class SkBusinessRepository extends EntityRepository {
                 JOIN b.address a
                 JOIN a.location l
                 JOIN l.spots s
-                WHERE t.id in(1,3,6,8) 
+                WHERE t.id in(1)  
                 AND s.id = :spot_id')
                         ->setParameter('spot_id', $spot_id)->getResult();
     }
@@ -114,7 +147,7 @@ class SkBusinessRepository extends EntityRepository {
                 JOIN b.type t
                 JOIN b.address a
                 JOIN a.location l
-                WHERE t.id in(1,3,6,8) 
+                WHERE t.id in(1) 
                 AND a.location = :location_id')
                         ->setParameter('location_id', $location_id)->getResult();
     }
@@ -159,7 +192,7 @@ class SkBusinessRepository extends EntityRepository {
                 JOIN b.address a
                 JOIN a.location l
                 JOIN l.region r
-                WHERE t.id in(1,3,6,8) 
+                WHERE t.id in(1) 
                 AND r.country = :country_id')
                         ->setParameter('country_id', $country_id)->getResult();
     }
@@ -300,7 +333,7 @@ class SkBusinessRepository extends EntityRepository {
         return $values;
     }
 
-    //Esta a ser uzado na pagina business home
+    //A ser uzado na pagina business home
     public function findAllBusinessHome($locale) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();

@@ -1,0 +1,9 @@
+
+settings_admin_edit:
+    path:     /edit
+    defaults: { _controller: "SkaphandrusAppBundle:SkSettings:edit" }
+
+settings_admin_update:
+    path:     /update
+    defaults: { _controller: "SkaphandrusAppBundle:SkSettings:update" }
+    methods:  [POST, PUT]

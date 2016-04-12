@@ -1,0 +1,54 @@
+<!-- FooTable -->
+<script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.footable-countries').footable();
+    });
+</script>
+
+{% if countries %}
+    <input type="text" class="form-control input-sm m-b-xs" id="filter-countries" placeholder="Search in table">
+    <table class="footable footable-countries table" data-page-size="25" data-filter=#filter-countries>
+        <thead>
+            <tr>
+                <th>{{ "page.countries_all.table.country"|trans }}</th>
+                <th>{{ "page.countries_all.table.num_dive_centers"|trans }}</th>
+                <th>{{ "page.countries_all.table.num_photos"|trans }}</th>
+                <th>{{ "page.countries_all.table.num_dive_sites"|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in countries %}
+                <tr>
+                    <td>{{ link_to_country(c) }}</td>
+                    <td>
+                        {{ c.diveCentersCount }}
+                    </td>
+                    <td>
+                        <a href="{{ path('photos', {'country': c.id}) }}">
+                            {{ c.photosCount }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ c.spotsCount }} 
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    <ul class="pagination pull-right"></ul>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+{% else %}
+    {{"common.countries_all.no_countries"|trans}}
+{% endif %}
+
+
+
+

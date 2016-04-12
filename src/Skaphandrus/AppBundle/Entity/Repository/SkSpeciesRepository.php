@@ -13,8 +13,7 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkSpeciesRepository extends EntityRepository {
 
-    
-        public function getMoreSpeciesUser($user_id, $limit = 3, $offset = 0) {
+    public function getMoreSpeciesUser($user_id, $limit = 3, $offset = 0) {
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
@@ -51,9 +50,7 @@ class SkSpeciesRepository extends EntityRepository {
 
         return $result;
     }
-    
-    
-    
+
     public function getMoreSpeciesSpot($spot_id, $limit = 3, $offset = 0) {
 
         $em = $this->getEntityManager();
@@ -176,8 +173,7 @@ class SkSpeciesRepository extends EntityRepository {
         return $result;
     }
 
-    
-      public function findPhotosUser($species_id, $user_id) {
+    public function findPhotosUser($species_id, $user_id) {
         $query = $this->getEntityManager()->createQuery(
                         'SELECT p
             FROM SkaphandrusAppBundle:SkPhoto p
@@ -187,9 +183,7 @@ class SkSpeciesRepository extends EntityRepository {
 
         return $query->getResult();
     }
-    
-    
-    
+
     public function findPhotosSpot($species_id, $spot_id) {
         $query = $this->getEntityManager()->createQuery(
                         'SELECT p
@@ -246,6 +240,34 @@ class SkSpeciesRepository extends EntityRepository {
         }
     }
 
+    public function findSpeciesDestinations($slug) {
+        $name = Utils::unslugify($slug);
+
+        $query = $this->getEntityManager()
+                        ->createQuery(
+                                'SELECT s
+                FROM SkaphandrusAppBundle:SkSpecies s
+                JOIN s.scientific_names sn
+                WHERE sn.name LIKE :name'
+                        )->setParameter('name', '%'.$name.'%');
+        try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function getSpots($species_id) {
+        return $this->getEntityManager()
+                        ->createQuery(
+                                'SELECT s 
+                FROM SkaphandrusAppBundle:SkSpot s
+                JOIN s.photos p
+                JOIN p.species sp
+                WHERE sp.id = :species_id'
+                        )->setParameter('species_id', $species_id)->getResult();
+    }
+
     public function findCriteriasWithCharacters($species_id) {
 
         $query = $this->getEntityManager()
@@ -262,10 +284,8 @@ class SkSpeciesRepository extends EntityRepository {
             return null;
         }
     }
-    
 
-    
-    public function findSpeciesInOrder($skSpecies, $limit){
+    public function findSpeciesInOrder($skSpecies, $limit) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
@@ -275,50 +295,39 @@ class SkSpeciesRepository extends EntityRepository {
                 join sk_genus as g on g.id = s.genus_id
                 join sk_family as f on f.id = g.family_id
                 join sk_order as o on o.id = f.order_id
-                where o.id = " . $skSpecies->getGenus()->getFamily()->getOrder()->getId()." ";
-        
+                where o.id = " . $skSpecies->getGenus()->getFamily()->getOrder()->getId() . " ";
+
         $statement = $connection->prepare($sql);
         $statement->execute();
         $species = $statement->fetchAll();
 
         shuffle($species);
-                
+
         return array_slice($species, 0, $limit);
-        
-        
     }
 
-
-    
-    
-    
     //verifica se um caracter está mapeado com uma especie
-    public function isCharacterFromSpecies($species_id, $character_id){
-        
+    public function isCharacterFromSpecies($species_id, $character_id) {
+
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
         $sql = "SELECT species_id "
                 . "FROM sk_identification_species_character "
-                . "WHERE species_id = ".$species_id." "
-                . "AND character_id = ".$character_id." ";
-               
+                . "WHERE species_id = " . $species_id . " "
+                . "AND character_id = " . $character_id . " ";
+
         $statement = $connection->prepare($sql);
         $statement->execute();
         $values = $statement->fetchAll();
-        
-        
-        if($values):
+
+
+        if ($values):
             return true;
         else:
             return false;
         endif;
-
-        
-        
     }
-    
-    
 
     public function getQueryBuilder($params, $limit = 20, $order = array('id' => 'desc'), $offset = 0) {
 
@@ -954,9 +963,9 @@ class SkSpeciesRepository extends EntityRepository {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
         $photos = array();
-       
-        
-        
+
+
+
         if (count($photos) < $limit) {
             $i = 1;
 

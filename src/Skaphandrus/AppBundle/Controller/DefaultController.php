@@ -6,7 +6,6 @@ namespace Skaphandrus\AppBundle\Controller;
 // Used Forms
 
 use Ivory\GoogleMap\Overlays\InfoWindow;
-use Doctrine\ORM\Query\ResultSetMapping;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\MapTypeId;
 use Ivory\GoogleMap\Overlays\Animation;
@@ -728,22 +727,8 @@ class DefaultController extends Controller {
 
     public function destinationsAction() {
 
-//        $diveCenters = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
-//                ->findDiveCentersInSpot($spot->getId());
-//
-//        $liveaboards = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
-//                ->findLiveaboardsInSpot($spot->getId());
-//
-//        $accommodations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
-//                ->findAccommodationsInSpot($spot->getId());
-
-        $destinations = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')->findAll();
-
         return $this->render('SkaphandrusAppBundle:Default:destinations.html.twig', array(
-//                    'diveCenters' => $diveCenters,
-//                    'liveaboards' => $liveaboards,
-//                    'accommodations' => $accommodations,
-                    'destinations' => $destinations,
+//                    'destinations' => $destinations,
         ));
     }
 
@@ -1350,7 +1335,7 @@ class DefaultController extends Controller {
 
     public function userAction($id) {
         $locale = $this->get('request')->getLocale();
-        
+
         $friends = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPerson')->findByFosUser($id);
 
         $user = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
