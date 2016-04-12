@@ -14,6 +14,34 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkBusinessRepository extends EntityRepository {
 
+    
+    public function findBusinessessByType($types) {
+
+//1,"Dive Center"
+//2,"Dive School"
+//3,"Dive Shop"
+//4,Liveaboard
+//5,"Dive Association"
+//6,"Dive Club"
+//7,Accommodation
+//8,"Travel Agency"
+//9,"Dive Brand"
+//10,"Dive Organization"
+//11,"Dive Magazine"
+//12,"Hyperbaric Chamber"
+        
+        return $this->getEntityManager()->createQuery(
+                                'SELECT b
+                FROM SkaphandrusAppBundle:SkBusiness b
+                JOIN b.admin a
+                JOIN b.type t
+                WHERE t.id in('.  implode(', ', $types).')')
+                        ->getResult();
+    }
+    
+    
+    
+    
     // See All
     public function findAllDiveCenters() {
 

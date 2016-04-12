@@ -373,18 +373,73 @@ class AjaxController extends Controller {
 
         $country_name = $request->query->get('country');
 
-        
-        
         $location_name = $request->query->get('location');
         if (!$location_name)
             $location_name = $request->request->get('location');
         
-        
         $spot_name = $request->query->get('spot');
+
+        $species_name = $request->query->get('species');
+        
+        
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('s')->from('SkaphandrusAppBundle:SkSpot', 's');
 
         
         
-        $species_name = $request->query->get('species');
+        
+        
+
+        //spots, locations, regions and countries
+        if (array_key_exists('spot', $params)) {
+            $qb->Where('s.spot LIKE ?3');
+            $qb->setParameter(3, "%".$params['spot']."%");
+        }
+
+        if (array_key_exists('location', $params)) {
+            $qb->join('p.spot', 's', 'WITH', 'p.spot = s.id');
+            $qb->join('s.location', 'l', 'WITH', 's.location = ?4');
+            $qb->setParameter(4, $params['location']);
+        }
+
+        if (array_key_exists('region', $params)) {
+            $qb->join('p.spot', 's', 'WITH', 'p.spot = s.id');
+            $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
+            $qb->join('l.region', 'r', 'WITH', 'l.region = ?5');
+            $qb->setParameter(5, $params['region']);
+        }
+
+        if (array_key_exists('country', $params)) {
+            $qb->join('p.spot', 's', 'WITH', 'p.spot = s.id');
+            $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
+            $qb->join('l.region', 'r', 'WITH', 'l.region = r.id');
+            $qb->join('r.country', 'c', 'WITH', 'r.country = ?6');
+            $qb->setParameter(6, $params['country']);
+        }
+
+
+        //species, genus, families, orders, classes, kingdoms
+        if (array_key_exists('species', $params)) {
+            $qb->andWhere('p.species = ?7');
+            $qb->setParameter(7, $params['species']);
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
 //        $map = $this->get('ivory_google_map.map');
         $map = null;
