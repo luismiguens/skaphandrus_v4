@@ -898,10 +898,13 @@ class AjaxController extends Controller {
 //            }
 //        }
 
-
-        return $this->render('SkaphandrusAppBundle:Ajax:destinationsPartial.html.twig', array(
+        $map_html =  $this->render('SkaphandrusAppBundle:Ajax:destinationsPartial.html.twig', array(
                     'map' => $map
-        ));
+        ))->getContent();
+        
+        return new \Symfony\Component\HttpFoundation\JsonResponse(array('map' => $map_html, 'results'=> count($map->getMarkers())));
+
+       
     }
 
 }

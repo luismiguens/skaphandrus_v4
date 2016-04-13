@@ -209,9 +209,11 @@
                         type: "post",
                         url: "{{path("destinations_form")}}",
                         data: ({country: country, location: location, spot: spot, species: species}),
-                        dataType: "text",
+                        dataType: "json",
                         success: function (data) {
-                            $("#box_form").html(data);
+                            alert(data.map);
+                            $("#box_form").html(data.map);
+                            $("#results").html(data.results);
                         }
                     });
                 }, 100);
@@ -281,7 +283,7 @@
                         </div>
                         <div class="col-sm-3">
                             <h4>{{ "page.destinations.h4.filters"|trans }}</h4>
-
+                            <div id="results">0 spots</div>
                             {#<form action="#">#}
                             <div class="form-group">
                                 <input id="spot"  class="form-control" placeholder="{{"page.destinations.h4.diveSites"|trans}}" />
