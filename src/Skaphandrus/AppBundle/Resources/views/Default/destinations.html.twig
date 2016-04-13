@@ -211,9 +211,8 @@
                         data: ({country: country, location: location, spot: spot, species: species}),
                         dataType: "json",
                         success: function (data) {
-                            alert(data.map);
                             $("#box_form").html(data.map);
-                            $("#results").html(data.results);
+                            $("#results").html(data.results + " {{ "page.destinations.label.spot"|trans }}");
                         }
                     });
                 }, 100);
@@ -283,8 +282,9 @@
                         </div>
                         <div class="col-sm-3">
                             <h4>{{ "page.destinations.h4.filters"|trans }}</h4>
-                            <div id="results">0 spots</div>
-                            {#<form action="#">#}
+
+                            <div id="results" style="margin-bottom: 5px"></div> 
+
                             <div class="form-group">
                                 <input id="spot"  class="form-control" placeholder="{{"page.destinations.h4.diveSites"|trans}}" />
                             </div>
@@ -300,7 +300,6 @@
                             <div class="form-group">
                                 <button id="find_marker" type="buttom" class="btn btn-primary dim btn-block">{{ "page.destinations.submit"|trans }}</button>
                             </div>
-                            {# </form>#}
                         </div>
                     </div>
 
