@@ -161,6 +161,11 @@ class SkBusiness {
      */
     private $otherActivity;
 
+    /**
+     * @var \Skaphandrus\AppBundle\Entity\SkPhotoContest
+     */
+    private $photoContest;
+
     /*     * symfony advanced forms
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the  update. If this
@@ -964,6 +969,28 @@ class SkBusiness {
      */
     public function getOtherActivity() {
         return $this->otherActivity;
+    }
+
+    /**
+     * Get photoContest
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkPhotoContest
+     */
+    public function getPhotoContest() {
+        return $this->photoContest;
+    }
+
+    /**
+     * Set photoContest
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContest $photoContest
+     *
+     * @return SkBusiness
+     */
+    public function setPhotoContest(\Skaphandrus\AppBundle\Entity\SkPhotoContest $photoContest = null) {
+        $this->photoContest = $photoContest;
+
+        return $this;
     }
 
     public function getAbsolutePath() {

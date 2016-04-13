@@ -118,11 +118,11 @@ class AjaxController extends Controller {
                 ->findAllCountriesDestinations();
 
         $spots = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')
-                ->countSpotsArray();
+                ->countSpotsForDestinations();
         $photos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')
-                ->countPhotosArray();
+                ->countPhotosForDestinations();
         $diveCenters = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')
-                ->countDiveCentersArray();
+                ->countDiveCentersForDestinations();
 
         foreach ($countries as $country_id) {
 
@@ -177,7 +177,7 @@ class AjaxController extends Controller {
 
 
         return $this->render('SkaphandrusAppBundle:Ajax:spotPartial.html.twig', array(
-                    'spots' => $spots, 'class'=> $class
+                    'spots' => $spots, 'class' => $class
         ));
     }
 
@@ -239,12 +239,11 @@ class AjaxController extends Controller {
         endif;
 
         return $this->render('SkaphandrusAppBundle:Ajax:speciesPartial.html.twig', array(
-                    'species' => $species, 'class'=>$class
+                    'species' => $species, 'class' => $class
         ));
     }
-    
-    
-        public function validationsShowMoreAction(Request $request) {
+
+    public function validationsShowMoreAction(Request $request) {
 
         $em = $this->getDoctrine()->getManager();
 
@@ -257,15 +256,14 @@ class AjaxController extends Controller {
             foreach ($species as $s):
                 $s->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpecies')->findValidationsPhotosUser($s->getId(), $user_id));
             endforeach;
-            
-            
+
+
         endif;
 
         return $this->render('SkaphandrusAppBundle:Ajax:speciesPartial.html.twig', array(
-                    'species' => $species,'class'=>'box_spacer_right'
+                    'species' => $species, 'class' => 'box_spacer_right'
         ));
     }
-    
 
     public function photographersShowMoreAction(Request $request) {
 
@@ -372,266 +370,168 @@ class AjaxController extends Controller {
         $locale = $this->get('request')->getLocale();
 
         $country_name = $request->query->get('country');
+        if (!$country_name):
+            $country_name = $request->request->get('country');
+        endif;
 
         $location_name = $request->query->get('location');
-        if (!$location_name)
+        if (!$location_name):
             $location_name = $request->request->get('location');
-        
+        endif;
+
         $spot_name = $request->query->get('spot');
+        if (!$spot_name):
+            $spot_name = $request->request->get('spot');
+        endif;
 
         $species_name = $request->query->get('species');
-        
-        
-        $qb = $this->getEntityManager()->createQueryBuilder();
+        if (!$species_name):
+            $species_name = $request->request->get('species');
+        endif;
+
+//        $em = $this->getDoctrine()->getManager();
+//        $connection = $em->getConnection();
+//
+//        $sql = "SELECT s.id FROM sk_spot as s ";
+//
+//        //spots, locations, regions and countries
+//        if ($spot_name) {
+//            $sql = $sql . "JOIN sk_spot_translation as st on s.id = st.translatable_id ";
+//            $sql = $sql . " where st.name LIKE '%" . $spot_name . "%'";
+//            $sql = $sql . " and st.locale = '" . $locale . "'";
+//        }
+//
+//        if ($location_name) {
+//            $sql = $sql . " JOIN sk_location as l on s.location_id = l.id ";
+//            $sql = $sql . " JOIN sk_location_translation as lt on l.id = lt.translatable_id ";
+//            $sql = $sql . " where lt.name LIKE '%" . $location_name . "%'";
+//            $sql = $sql . " and lt.locale = '" . $locale . "'";
+//            $sql = $sql . " group by s.id";
+//        }
+//
+//        if ($country_name) {
+//            $country = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')->findBySlug($country_name, $locale);
+//            $sql = $sql . " JOIN sk_location as l on s.location_id = l.id ";
+//            $sql = $sql . " JOIN sk_location_translation as lt on l.id = lt.translatable_id ";
+//            $sql = $sql . " JOIN sk_region as r on l.region_id = r.id ";
+//            $sql = $sql . ' where r.country_id = ' . $country->getId();
+//            $sql = $sql . " and lt.locale = '" . $locale . "' ";
+//            $sql = $sql . " group by s.id";
+//        }
+//        //species
+//        if (array_key_exists('species', $params)) {
+//            $sql = $sql . ' where p.species_id = ' . $params['species'];
+//        }
+//
+//        $statement = $connection->prepare($sql);
+//        $statement->execute();
+//        $values = $statement->fetchAll();
+//
+//        $result = array();
+//
+//        foreach ($values as $value) {
+//            $spot = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')->find($value['id']);
+//            $result[] = $spot;
+//        }
+//        dump($sql);
+
+        $result = null;
+
+        $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
         $qb->select('s')->from('SkaphandrusAppBundle:SkSpot', 's');
 
-        
-        
-        
-        
+        //spots, locations and countries
+        if ($spot_name) {
+            $qb->join('s.translations', 'st');
+            $qb->where('st.name LIKE ?1');
+            $qb->setParameter(1, "%" . $spot_name . "%");
 
-        //spots, locations, regions and countries
-        if (array_key_exists('spot', $params)) {
-            $qb->Where('s.spot LIKE ?3');
-            $qb->setParameter(3, "%".$params['spot']."%");
+            $query = $qb->getQuery();
+            $result = $query->getResult();
+            dump($query);
         }
 
-        if (array_key_exists('location', $params)) {
-            $qb->join('p.spot', 's', 'WITH', 'p.spot = s.id');
-            $qb->join('s.location', 'l', 'WITH', 's.location = ?4');
-            $qb->setParameter(4, $params['location']);
-        }
-
-        if (array_key_exists('region', $params)) {
-            $qb->join('p.spot', 's', 'WITH', 'p.spot = s.id');
+        if ($location_name) {
             $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
-            $qb->join('l.region', 'r', 'WITH', 'l.region = ?5');
-            $qb->setParameter(5, $params['region']);
+            $qb->join('l.translations', 'lt');
+            $qb->andWhere('lt.name LIKE ?2');
+            $qb->setParameter(2, "%" . $location_name . "%");
+
+            $query = $qb->getQuery();
+            $result = $query->getResult();
+            dump($query);
         }
 
-        if (array_key_exists('country', $params)) {
-            $qb->join('p.spot', 's', 'WITH', 'p.spot = s.id');
+        if ($country_name) {
+            $country = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')->findBySlug($country_name, $locale);
+
             $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
             $qb->join('l.region', 'r', 'WITH', 'l.region = r.id');
-            $qb->join('r.country', 'c', 'WITH', 'r.country = ?6');
-            $qb->setParameter(6, $params['country']);
+            $qb->join('r.country', 'c', 'WITH', 'r.country = ?3');
+            $qb->setParameter(3, $country->getId());
+
+            $query = $qb->getQuery();
+            $result = $query->getResult();
+            dump($query);
+        }
+
+        //species
+        if ($species_name) {
+            $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findSpeciesDestinations($species_name);
+
+            $qb->join('s.photos', 'p', 'WITH', 'p.spot = s.id');
+            $qb->join('p.species', 'sp', 'WITH', 'p.species = sp.id');
+            $qb->andWhere('sp.id = ?4');
+            $qb->setParameter(4, $species->getId());
+
+//            $qb->join('s.photos', 'p', 'WITH', 'p.spot = s.id');
+//            $qb->join('p.species', 'sp', 'WITH', 'p.species = sp.id');
+//            $qb->join('sp.scientific_names', 'sn', 'WITH', 'sn.species = sp.id');
+//            $qb->andWhere('sn.name LIKE ?4');
+//            $qb->setParameter(4, "%" . $species_name . "%");
+
+            $query = $qb->getQuery();
+            $result = $query->getResult();
+            dump($query);
         }
 
 
-        //species, genus, families, orders, classes, kingdoms
-        if (array_key_exists('species', $params)) {
-            $qb->andWhere('p.species = ?7');
-            $qb->setParameter(7, $params['species']);
-        }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
 
-//        $map = $this->get('ivory_google_map.map');
-        $map = null;
+        $map = $this->get('ivory_google_map.map');
+        $map->setAsync(true);
+        $map->setCenter(40, 0, true);
+        $map->setStylesheetOptions(array(
+            'width' => 'auto',
+            'height' => '300px',
+        ));
         $latitude = 0;
         $longitude = 0;
         $centerLatitude = 0;
         $centerLongitude = 0;
 
-        //Mapa para os paises
-        if ($country_name) {
-            $country = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')->findBySlug($country_name, $locale);
-            $spot = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')->getSpots($country->getId());
+        if ($result) {
 
-            if (count($spot) > 0) {
+            // Get markers from spots for the map
+            $markers = array();
 
-                // Get markers from spots for the map
-                $markers = array();
-
-                foreach ($spot as $s) {
-
-                    //dump($s->getCoordinate());
-                    if ($s->getCoordinate()) {
-                        $marker = new Marker();
-
-                        //remove white spaces
-                        $latitude = preg_replace('/\s+/', '', explode(",", $s->getCoordinate())[0]);
-                        $longitude = preg_replace('/\s+/', '', explode(",", $s->getCoordinate())[1]);
-
-                        $infowindow = new InfoWindow();
-                        $spot_url = $this->generateUrl('spot', array(
-                            'slug' => $s->getName(),
-                            'location' => $s->getLocation(),
-                            'country' => $s->getLocation()->getRegion()->getCountry()
-                        ));
-
-                        $contentString = "<a href=" . $spot_url . ">" . $s->getName() . "</a>";
-
-                        $infowindow->setContent($contentString);
-                        $infowindow->setAutoClose(TRUE);
-
-                        // Marker options
-                        $marker->setInfoWindow($infowindow);
-                        $marker->setPrefixJavascriptVariable('marker_');
-                        $marker->setPosition($latitude, $longitude, true);
-                        $marker->setAnimation(Animation::DROP);
-                        $marker->setOption('clickable', true);
-                        $marker->setOption('flat', true);
-                        $marker->setOptions(array(
-                            'clickable' => true,
-                            'flat' => true,
-                        ));
-
-                        $markers[] = $marker;
-                    }
-                }
-
-                // Create the map
-                $centerLatitude = $latitude;
-                $centerLongitude = $longitude;
-
-                $map = new Map();
-                $map->setPrefixJavascriptVariable('map_');
-                $map->setHtmlContainerId('map_canvas');
-                $map->setAsync(true);
-                $map->setCenter($centerLatitude, $centerLongitude, true);
-                $map->setMapOption('zoom', 4);
-                $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
-                $map->setMapOption('disableDefaultUI', true);
-                $map->setMapOption('disableDoubleClickZoom', true);
-                $map->setMapOptions(array(
-                    'disableDefaultUI' => true,
-                    'disableDoubleClickZoom' => true,
-                ));
-                $map->setStylesheetOption('width', 'auto');
-                $map->setStylesheetOption('height', '300px');
-                $map->setStylesheetOptions(array(
-                    'width' => 'auto',
-                    'height' => '300px',
-                ));
-                $map->setLanguage('en');
-
-                // Add the spots to the map
-                foreach ($markers as $marker) {
-                    $map->addMarker($marker);
-                }
-            }
-        }
-
-        //Mapa para as locations
-        if ($location_name) {
-            $location = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')->findLocationDestinations($location_name, $locale);
-
-            if (count($location->getSpots()) > 0) {
-
-                // Get markers from spots for the map
-                $markers = array();
-
-                foreach ($location->getSpots() as $s) {
-
-                    //dump($s->getCoordinate());
-                    if ($s->getCoordinate()) {
-                        $marker = new Marker();
-
-                        //remove white spaces
-                        $latitude = preg_replace('/\s+/', '', explode(",", $s->getCoordinate())[0]);
-                        $longitude = preg_replace('/\s+/', '', explode(",", $s->getCoordinate())[1]);
-
-                        $infowindow = new InfoWindow();
-                        $spot_url = $this->generateUrl('spot', array(
-                            'slug' => $s->getName(),
-                            'location' => $s->getLocation(),
-                            'country' => $s->getLocation()->getRegion()->getCountry()
-                        ));
-
-                        $contentString = "<a href=" . $spot_url . ">" . $s->getName() . "</a>";
-
-                        $infowindow->setContent($contentString);
-                        $infowindow->setAutoClose(TRUE);
-
-                        // Marker options
-                        $marker->setInfoWindow($infowindow);
-                        $marker->setPrefixJavascriptVariable('marker_');
-                        $marker->setPosition($latitude, $longitude, true);
-                        $marker->setAnimation(Animation::DROP);
-                        $marker->setOption('clickable', true);
-                        $marker->setOption('flat', true);
-                        $marker->setOptions(array(
-                            'clickable' => true,
-                            'flat' => true,
-                        ));
-
-                        $markers[] = $marker;
-                    }
-                }
-
-                // Create the map
-                $centerLatitude = $latitude;
-                $centerLongitude = $longitude;
-
-                $map = new Map();
-                $map->setPrefixJavascriptVariable('map_');
-                $map->setHtmlContainerId('map_canvas');
-                $map->setAsync(true);
-                $map->setCenter($centerLatitude, $centerLongitude, true);
-                $map->setMapOption('zoom', 10);
-                $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
-                $map->setMapOption('disableDefaultUI', true);
-                $map->setMapOption('disableDoubleClickZoom', true);
-                $map->setMapOptions(array(
-                    'disableDefaultUI' => true,
-                    'disableDoubleClickZoom' => true,
-                ));
-                $map->setStylesheetOption('width', 'auto');
-                $map->setStylesheetOption('height', '300px');
-                $map->setStylesheetOptions(array(
-                    'width' => 'auto',
-                    'height' => '300px',
-                ));
-                $map->setLanguage('en');
-
-                // Add the spots to the map
-                foreach ($markers as $marker) {
-                    $map->addMarker($marker);
-                }
-            }
-        }
-
-        //Mapa para o Spot
-        if ($spot_name) {
-            $spot = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')->findSpotDestinations($spot_name);
-
-            if ($spot) {
-
-                // Get markers from spots for the map
-                $markers = array();
+            foreach ($result as $s) {
 
                 //dump($s->getCoordinate());
-                if ($spot->getCoordinate()) {
+                if ($s->getCoordinate()) {
                     $marker = new Marker();
 
                     //remove white spaces
-                    $latitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[0]);
-                    $longitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[1]);
+                    $latitude = preg_replace('/\s+/', '', explode(",", $s->getCoordinate())[0]);
+                    $longitude = preg_replace('/\s+/', '', explode(",", $s->getCoordinate())[1]);
 
                     $infowindow = new InfoWindow();
                     $spot_url = $this->generateUrl('spot', array(
-                        'slug' => $spot->getName(),
-                        'location' => $spot->getLocation(),
-                        'country' => $spot->getLocation()->getRegion()->getCountry()
+                        'slug' => $s->getName(),
+                        'location' => $s->getLocation(),
+                        'country' => $s->getLocation()->getRegion()->getCountry()
                     ));
 
-                    $contentString = "<a href=" . $spot_url . ">" . $spot->getName() . "</a>";
+                    $contentString = "<a href=" . $spot_url . ">" . $s->getName() . "</a>";
 
                     $infowindow->setContent($contentString);
                     $infowindow->setAutoClose(TRUE);
@@ -650,151 +550,358 @@ class AjaxController extends Controller {
 
                     $markers[] = $marker;
                 }
+            }
 
-                // Create the map
-                $centerLatitude = $latitude;
-                $centerLongitude = $longitude;
+            // Create the map
+            $centerLatitude = $latitude;
+            $centerLongitude = $longitude;
 
-                $map = new Map();
-                $map->setPrefixJavascriptVariable('map_');
-                $map->setHtmlContainerId('map_canvas');
-                $map->setAsync(true);
-                $map->setCenter($centerLatitude, $centerLongitude, true);
-                $map->setMapOption('zoom', 10);
-                $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
-                $map->setMapOption('disableDefaultUI', true);
-                $map->setMapOption('disableDoubleClickZoom', true);
-                $map->setMapOptions(array(
-                    'disableDefaultUI' => true,
-                    'disableDoubleClickZoom' => true,
-                ));
-                $map->setStylesheetOption('width', 'auto');
-                $map->setStylesheetOption('height', '300px');
-                $map->setStylesheetOptions(array(
-                    'width' => 'auto',
-                    'height' => '300px',
-                ));
-                $map->setLanguage('en');
+            $map = new Map();
+            $map->setPrefixJavascriptVariable('map_');
+            $map->setHtmlContainerId('map_canvas');
+            $map->setAsync(true);
+            $map->setCenter($centerLatitude, $centerLongitude, true);
+            $map->setMapOption('zoom', 3);
+            $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
+            $map->setMapOption('disableDefaultUI', true);
+            $map->setMapOption('disableDoubleClickZoom', true);
+            $map->setMapOptions(array(
+                'disableDefaultUI' => true,
+                'disableDoubleClickZoom' => true,
+            ));
+            $map->setStylesheetOption('width', 'auto');
+            $map->setStylesheetOption('height', '300px');
+            $map->setStylesheetOptions(array(
+                'width' => 'auto',
+                'height' => '300px',
+            ));
+            $map->setLanguage('en');
 
-                // Add the spot to the map
+            // Add the spots to the map
+            foreach ($markers as $marker) {
                 $map->addMarker($marker);
             }
         }
 
-        //Mapa para o Species
-        if ($species_name) {
-            $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findSpeciesDestinations($species_name);
-            $spot = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->getSpots($species->getId());
-
-            if (count($spot) > 0) {
-
-                // Get markers from spots for the map
-                $markers = array();
-
-                foreach ($spot as $s) {
-
-                    //dump($s->getCoordinate());
-                    if ($s->getCoordinate()) {
-                        $marker = new Marker();
-
-                        //remove white spaces
-                        $latitude = preg_replace('/\s+/', '', explode(",", $s->getCoordinate())[0]);
-                        $longitude = preg_replace('/\s+/', '', explode(",", $s->getCoordinate())[1]);
-
-                        $infowindow = new InfoWindow();
-                        $spot_url = $this->generateUrl('spot', array(
-                            'slug' => $s->getName(),
-                            'location' => $s->getLocation(),
-                            'country' => $s->getLocation()->getRegion()->getCountry()
-                        ));
-
-                        $contentString = "<a href=" . $spot_url . ">" . $s->getName() . "</a>";
-
-                        $infowindow->setContent($contentString);
-                        $infowindow->setAutoClose(TRUE);
-
-                        // Marker options
-                        $marker->setInfoWindow($infowindow);
-                        $marker->setPrefixJavascriptVariable('marker_');
-                        $marker->setPosition($latitude, $longitude, true);
-                        $marker->setAnimation(Animation::DROP);
-                        $marker->setOption('clickable', true);
-                        $marker->setOption('flat', true);
-                        $marker->setOptions(array(
-                            'clickable' => true,
-                            'flat' => true,
-                        ));
-
-                        $markers[] = $marker;
-                    }
-                }
-
-                // Create the map
-                $centerLatitude = $latitude;
-                $centerLongitude = $longitude;
-
-                $map = new Map();
-                $map->setPrefixJavascriptVariable('map_');
-                $map->setHtmlContainerId('map_canvas');
-                $map->setAsync(true);
-                $map->setCenter($centerLatitude, $centerLongitude, true);
-                $map->setMapOption('zoom', 3);
-                $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
-                $map->setMapOption('disableDefaultUI', true);
-                $map->setMapOption('disableDoubleClickZoom', true);
-                $map->setMapOptions(array(
-                    'disableDefaultUI' => true,
-                    'disableDoubleClickZoom' => true,
-                ));
-                $map->setStylesheetOption('width', 'auto');
-                $map->setStylesheetOption('height', '300px');
-                $map->setStylesheetOptions(array(
-                    'width' => 'auto',
-                    'height' => '300px',
-                ));
-                $map->setLanguage('en');
-
-                // Add the spots to the map
-                foreach ($markers as $marker) {
-                    $map->addMarker($marker);
-                }
-            }
-        }
-        
-        
-        
-        
-        
-        
 //        
-//        
-//        
-// $mapHelper = new \Ivory\GoogleMapBundle\Tests\Fixtures\Model\Helper\MapHelper();
-//        $html = $mapHelper->shrender($map);
 //
-//return new \Symfony\Component\HttpFoundation\Response($html);
-//        
-//        
-//       
-//        
-//        
-//        $mapHelperHtml = $mapHelper->renderHtmlContainer($map);// This function renders an html div block with the HTML container ID, the width & the height configured: 
-//        $mapHelperJs = $mapHelper->renderJsContainer($map);//This function renders an html javascript block with all code needed for displaying your map. 
-//        //$response = new \Symfony\Component\HttpFoundation\JsonResponse(); 
-//        //  $response->setCallback($callback); 
-//        $response->setData($mapHelperJs); 
-//        
-//        
-//        
-//        //$response = new \Symfony\Component\HttpFoundation\JsonResponse();
-////    //$response->setData(json_encode($map));
-////        $response->setData($map);
-////    $response->setCallback('load_ivory_google_map');
-//    return $response;
-        
-return $this->render('SkaphandrusAppBundle:Ajax:destinationsPartial.html.twig', array('map' => $map));
-//        
-//        return new \Symfony\Component\HttpFoundation\JsonResponse($view->getContent());
+//        //Mapa para os paises
+//        if ($country_name) {
+//            $country = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')->findBySlug($country_name, $locale);
+//            $spot = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')->getSpots($country->getId());
+//
+//            if (count($spot) > 0) {
+//
+//                // Get markers from spots for the map
+//                $markers = array();
+//
+//                foreach ($spot as $s) {
+//
+//                    //dump($s->getCoordinate());
+//                    if ($s->getCoordinate()) {
+//                        $marker = new Marker();
+//
+//                        //remove white spaces
+//                        $latitude = preg_replace('/\s+/', '', explode(",", $s->getCoordinate())[0]);
+//                        $longitude = preg_replace('/\s+/', '', explode(",", $s->getCoordinate())[1]);
+//
+//                        $infowindow = new InfoWindow();
+//                        $spot_url = $this->generateUrl('spot', array(
+//                            'slug' => $s->getName(),
+//                            'location' => $s->getLocation(),
+//                            'country' => $s->getLocation()->getRegion()->getCountry()
+//                        ));
+//
+//                        $contentString = "<a href=" . $spot_url . ">" . $s->getName() . "</a>";
+//
+//                        $infowindow->setContent($contentString);
+//                        $infowindow->setAutoClose(TRUE);
+//
+//                        // Marker options
+//                        $marker->setInfoWindow($infowindow);
+//                        $marker->setPrefixJavascriptVariable('marker_');
+//                        $marker->setPosition($latitude, $longitude, true);
+//                        $marker->setAnimation(Animation::DROP);
+//                        $marker->setOption('clickable', true);
+//                        $marker->setOption('flat', true);
+//                        $marker->setOptions(array(
+//                            'clickable' => true,
+//                            'flat' => true,
+//                        ));
+//
+//                        $markers[] = $marker;
+//                    }
+//                }
+//
+//                // Create the map
+//                $centerLatitude = $latitude;
+//                $centerLongitude = $longitude;
+//
+//                $map = new Map();
+//                $map->setPrefixJavascriptVariable('map_');
+//                $map->setHtmlContainerId('map_canvas');
+//                $map->setAsync(true);
+//                $map->setCenter($centerLatitude, $centerLongitude, true);
+//                $map->setMapOption('zoom', 4);
+//                $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
+//                $map->setMapOption('disableDefaultUI', true);
+//                $map->setMapOption('disableDoubleClickZoom', true);
+//                $map->setMapOptions(array(
+//                    'disableDefaultUI' => true,
+//                    'disableDoubleClickZoom' => true,
+//                ));
+//                $map->setStylesheetOption('width', 'auto');
+//                $map->setStylesheetOption('height', '300px');
+//                $map->setStylesheetOptions(array(
+//                    'width' => 'auto',
+//                    'height' => '300px',
+//                ));
+//                $map->setLanguage('en');
+//
+//                // Add the spots to the map
+//                foreach ($markers as $marker) {
+//                    $map->addMarker($marker);
+//                }
+//            }
+//        }
+//
+//        //Mapa para as locations
+//        if ($location_name) {
+//            $location = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')->findLocationDestinations($location_name, $locale);
+//
+//            if (count($location->getSpots()) > 0) {
+//
+//                // Get markers from spots for the map
+//                $markers = array();
+//
+//                foreach ($location->getSpots() as $s) {
+//
+//                    //dump($s->getCoordinate());
+//                    if ($s->getCoordinate()) {
+//                        $marker = new Marker();
+//
+//                        //remove white spaces
+//                        $latitude = preg_replace('/\s+/', '', explode(",", $s->getCoordinate())[0]);
+//                        $longitude = preg_replace('/\s+/', '', explode(",", $s->getCoordinate())[1]);
+//
+//                        $infowindow = new InfoWindow();
+//                        $spot_url = $this->generateUrl('spot', array(
+//                            'slug' => $s->getName(),
+//                            'location' => $s->getLocation(),
+//                            'country' => $s->getLocation()->getRegion()->getCountry()
+//                        ));
+//
+//                        $contentString = "<a href=" . $spot_url . ">" . $s->getName() . "</a>";
+//
+//                        $infowindow->setContent($contentString);
+//                        $infowindow->setAutoClose(TRUE);
+//
+//                        // Marker options
+//                        $marker->setInfoWindow($infowindow);
+//                        $marker->setPrefixJavascriptVariable('marker_');
+//                        $marker->setPosition($latitude, $longitude, true);
+//                        $marker->setAnimation(Animation::DROP);
+//                        $marker->setOption('clickable', true);
+//                        $marker->setOption('flat', true);
+//                        $marker->setOptions(array(
+//                            'clickable' => true,
+//                            'flat' => true,
+//                        ));
+//
+//                        $markers[] = $marker;
+//                    }
+//                }
+//
+//                // Create the map
+//                $centerLatitude = $latitude;
+//                $centerLongitude = $longitude;
+//
+//                $map = new Map();
+//                $map->setPrefixJavascriptVariable('map_');
+//                $map->setHtmlContainerId('map_canvas');
+//                $map->setAsync(true);
+//                $map->setCenter($centerLatitude, $centerLongitude, true);
+//                $map->setMapOption('zoom', 10);
+//                $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
+//                $map->setMapOption('disableDefaultUI', true);
+//                $map->setMapOption('disableDoubleClickZoom', true);
+//                $map->setMapOptions(array(
+//                    'disableDefaultUI' => true,
+//                    'disableDoubleClickZoom' => true,
+//                ));
+//                $map->setStylesheetOption('width', 'auto');
+//                $map->setStylesheetOption('height', '300px');
+//                $map->setStylesheetOptions(array(
+//                    'width' => 'auto',
+//                    'height' => '300px',
+//                ));
+//                $map->setLanguage('en');
+//
+//                // Add the spots to the map
+//                foreach ($markers as $marker) {
+//                    $map->addMarker($marker);
+//                }
+//            }
+//        }
+//
+//        //Mapa para o Spot
+//        if ($spot_name) {
+//            $spot = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')->findSpotDestinations($spot_name);
+//
+//            if ($spot) {
+//
+//                // Get markers from spots for the map
+//                $markers = array();
+//
+//                //dump($s->getCoordinate());
+//                if ($spot->getCoordinate()) {
+//                    $marker = new Marker();
+//
+//                    //remove white spaces
+//                    $latitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[0]);
+//                    $longitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[1]);
+//
+//                    $infowindow = new InfoWindow();
+//                    $spot_url = $this->generateUrl('spot', array(
+//                        'slug' => $spot->getName(),
+//                        'location' => $spot->getLocation(),
+//                        'country' => $spot->getLocation()->getRegion()->getCountry()
+//                    ));
+//
+//                    $contentString = "<a href=" . $spot_url . ">" . $spot->getName() . "</a>";
+//
+//                    $infowindow->setContent($contentString);
+//                    $infowindow->setAutoClose(TRUE);
+//
+//                    // Marker options
+//                    $marker->setInfoWindow($infowindow);
+//                    $marker->setPrefixJavascriptVariable('marker_');
+//                    $marker->setPosition($latitude, $longitude, true);
+//                    $marker->setAnimation(Animation::DROP);
+//                    $marker->setOption('clickable', true);
+//                    $marker->setOption('flat', true);
+//                    $marker->setOptions(array(
+//                        'clickable' => true,
+//                        'flat' => true,
+//                    ));
+//
+//                    $markers[] = $marker;
+//                }
+//
+//                // Create the map
+//                $centerLatitude = $latitude;
+//                $centerLongitude = $longitude;
+//
+//                $map = new Map();
+//                $map->setPrefixJavascriptVariable('map_');
+//                $map->setHtmlContainerId('map_canvas');
+//                $map->setAsync(true);
+//                $map->setCenter($centerLatitude, $centerLongitude, true);
+//                $map->setMapOption('zoom', 10);
+//                $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
+//                $map->setMapOption('disableDefaultUI', true);
+//                $map->setMapOption('disableDoubleClickZoom', true);
+//                $map->setMapOptions(array(
+//                    'disableDefaultUI' => true,
+//                    'disableDoubleClickZoom' => true,
+//                ));
+//                $map->setStylesheetOption('width', 'auto');
+//                $map->setStylesheetOption('height', '300px');
+//                $map->setStylesheetOptions(array(
+//                    'width' => 'auto',
+//                    'height' => '300px',
+//                ));
+//                $map->setLanguage('en');
+//
+//                // Add the spot to the map
+//                $map->addMarker($marker);
+//            }
+//        }
+//
+//        //Mapa para o Species
+//        if ($species_name) {
+//            $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findSpeciesDestinations($species_name);
+//            $spot = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->getSpots($species->getId());
+//
+//            if (count($spot) > 0) {
+//
+//                // Get markers from spots for the map
+//                $markers = array();
+//
+//                foreach ($spot as $s) {
+//
+//                    //dump($s->getCoordinate());
+//                    if ($s->getCoordinate()) {
+//                        $marker = new Marker();
+//
+//                        //remove white spaces
+//                        $latitude = preg_replace('/\s+/', '', explode(",", $s->getCoordinate())[0]);
+//                        $longitude = preg_replace('/\s+/', '', explode(",", $s->getCoordinate())[1]);
+//
+//                        $infowindow = new InfoWindow();
+//                        $spot_url = $this->generateUrl('spot', array(
+//                            'slug' => $s->getName(),
+//                            'location' => $s->getLocation(),
+//                            'country' => $s->getLocation()->getRegion()->getCountry()
+//                        ));
+//
+//                        $contentString = "<a href=" . $spot_url . ">" . $s->getName() . "</a>";
+//
+//                        $infowindow->setContent($contentString);
+//                        $infowindow->setAutoClose(TRUE);
+//
+//                        // Marker options
+//                        $marker->setInfoWindow($infowindow);
+//                        $marker->setPrefixJavascriptVariable('marker_');
+//                        $marker->setPosition($latitude, $longitude, true);
+//                        $marker->setAnimation(Animation::DROP);
+//                        $marker->setOption('clickable', true);
+//                        $marker->setOption('flat', true);
+//                        $marker->setOptions(array(
+//                            'clickable' => true,
+//                            'flat' => true,
+//                        ));
+//
+//                        $markers[] = $marker;
+//                    }
+//                }
+//
+//                // Create the map
+//                $centerLatitude = $latitude;
+//                $centerLongitude = $longitude;
+//
+//                $map = new Map();
+//                $map->setPrefixJavascriptVariable('map_');
+//                $map->setHtmlContainerId('map_canvas');
+//                $map->setAsync(true);
+//                $map->setCenter($centerLatitude, $centerLongitude, true);
+//                $map->setMapOption('zoom', 3);
+//                $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
+//                $map->setMapOption('disableDefaultUI', true);
+//                $map->setMapOption('disableDoubleClickZoom', true);
+//                $map->setMapOptions(array(
+//                    'disableDefaultUI' => true,
+//                    'disableDoubleClickZoom' => true,
+//                ));
+//                $map->setStylesheetOption('width', 'auto');
+//                $map->setStylesheetOption('height', '300px');
+//                $map->setStylesheetOptions(array(
+//                    'width' => 'auto',
+//                    'height' => '300px',
+//                ));
+//                $map->setLanguage('en');
+//
+//                // Add the spots to the map
+//                foreach ($markers as $marker) {
+//                    $map->addMarker($marker);
+//                }
+//            }
+//        }
+
+
+        return $this->render('SkaphandrusAppBundle:Ajax:destinationsPartial.html.twig', array(
+                    'map' => $map
+        ));
     }
 
 }

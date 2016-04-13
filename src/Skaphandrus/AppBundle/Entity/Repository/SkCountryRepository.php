@@ -103,6 +103,7 @@ class SkCountryRepository extends EntityRepository {
                 ')->getResult();
     }
 
+    //Usado na pagina destinations
     public function countDiveCentersForDestinations() {
         $business = $this->getEntityManager()
                         ->createQuery(
@@ -126,6 +127,7 @@ class SkCountryRepository extends EntityRepository {
         return $business_array;
     }
 
+    //Usado na pagina destinations
     public function countSpotsForDestinations() {
         $spots = $this->getEntityManager()
                         ->createQuery(
@@ -145,6 +147,7 @@ class SkCountryRepository extends EntityRepository {
         return $spots_array;
     }
 
+    //Usado na pagina destinations
     public function countPhotosForDestinations() {
         $photos = $this->getEntityManager()
                         ->createQuery(
@@ -202,6 +205,18 @@ class SkCountryRepository extends EntityRepository {
         return $photos_array;
     }
 
+    public function getSpots($country_id) {
+        return $this->getEntityManager()
+                        ->createQuery(
+                                'SELECT s 
+                FROM SkaphandrusAppBundle:SkSpot s
+                JOIN s.location l
+                JOIN l.region r
+                JOIN r.country c
+                WHERE c.id = :country_id'
+                        )->setParameter('country_id', $country_id)->getResult();
+    }
+
 //    public function getPhotographers($country_id) {
 //        return $this->getEntityManager()
 //            ->createQuery(
@@ -217,18 +232,4 @@ class SkCountryRepository extends EntityRepository {
 //                GROUP BY u.id'
 //            )->setParameter('country_id', $country_id)->getResult();
 //    }
-
-
-    public function getSpots($country_id) {
-        return $this->getEntityManager()
-                        ->createQuery(
-                                'SELECT s 
-                FROM SkaphandrusAppBundle:SkSpot s
-                JOIN s.location l
-                JOIN l.region r
-                JOIN r.country c
-                WHERE c.id = :country_id'
-                        )->setParameter('country_id', $country_id)->getResult();
-    }
-
 }

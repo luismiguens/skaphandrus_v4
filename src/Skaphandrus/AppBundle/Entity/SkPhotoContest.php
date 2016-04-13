@@ -120,6 +120,11 @@ class SkPhotoContest {
     private $type;
 
     /**
+     * @var integer
+     */
+    private $business;
+
+    /**
      * Constructor
      */
     public function __construct() {
@@ -691,6 +696,28 @@ class SkPhotoContest {
      */
     public function getPublicVotationAt() {
         return $this->publicVotationAt;
+    }
+
+    /**
+     * Set business
+     *
+     * @param integer $business
+     *
+     * @return SkBusiness
+     */
+    public function setBusiness($business) {
+        $this->business = $business;
+
+        return $this;
+    }
+
+    /**
+     * Get business
+     *
+     * @return integer
+     */
+    public function getBusiness() {
+        return $this->business;
     }
 
     public function isInPromotion() {

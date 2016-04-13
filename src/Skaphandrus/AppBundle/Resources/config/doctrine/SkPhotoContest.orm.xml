@@ -42,6 +42,10 @@
             </options>
         </field>
         
+        <one-to-one field="business" target-entity="SkBusiness" inversed-by="photoContest" nullable="false">
+            <join-column name="business_id" referenced-column-name="id" />
+        </one-to-one>
+        
         <one-to-many field="categories" target-entity="SkPhotoContestCategory" mapped-by="contest"/>
         <!--<one-to-many field="sponsors" target-entity="SkPhotoContestSponsor" mapped-by="contest"/>-->
         <one-to-many field="awards" target-entity="SkPhotoContestAward" mapped-by="contest"/>

@@ -91,9 +91,9 @@
                         </div>
                         <div class="row m-b-md">
                             <div class="col-md-4">
-                                {#<img src="placeholder.jpg" class="img-responsive" />#}
+                                <img src="{{ contest.business.getWebPath | imagine_filter('sk_widen_100') }}" class="img-responsive" />
                                 <div>
-                                    <h2 class="text-navy">Skaphandrus</h2>
+                                    <h2 class="text-navy">{{ contest.business.name }}</h2>
                                 </div>
                             </div>
                             <div class="col-md-8">
