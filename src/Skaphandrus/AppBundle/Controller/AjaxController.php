@@ -472,13 +472,13 @@ class AjaxController extends Controller {
         }
 
         if ($country_name) {
-            $country = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')->findCountryDestinations($country_name, $locale);
+            $country_ids = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')->findCountryDestinations($country_name, $locale);
 
             $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
             $qb->join('l.region', 'r', 'WITH', 'l.region = r.id');
             $qb->join('r.country', 'c', 'WITH', 'r.country = c.id');
-            $qb->andWhere('c.name LIKE ?3');
-            $qb->setParameter(3, "%" . $country->getName() . "%");
+            $qb->andWhere('c.id IN( ?3 )');
+            $qb->setParameter(3, implode(', ',$country_ids) );
 
             $query = $qb->getQuery();
             $result = $query->getResult();
