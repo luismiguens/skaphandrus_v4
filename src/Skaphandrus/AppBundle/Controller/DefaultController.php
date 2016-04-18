@@ -1334,14 +1334,12 @@ class DefaultController extends Controller {
      */
 
     public function userAction($id) {
-        $locale = $this->get('request')->getLocale();
 
+        $locale = $this->get('request')->getLocale();
         $friends = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPerson')->findByFosUser($id);
 
-        
         //$user = new FosUser();
-        
-        
+
         $user = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
                 ->findOneById($id);
 
@@ -1357,28 +1355,109 @@ class DefaultController extends Controller {
 //        $sugestions = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
 //                ->getUserSugestions($user->getId());
 
-        
+
         $acquisitions = $user->getModules();
-        
+
         $em = $this->getDoctrine()->getManager();
-        
-       
-        $photosCount = $em->createQuery('SELECT COUNT(p.id) FROM SkaphandrusAppBundle:SkPhoto p WHERE p.fosUser = ?1')->setParameter(1,$id )->getSingleScalarResult();
+
+        $photosCount = $em->createQuery('SELECT COUNT(p.id) FROM SkaphandrusAppBundle:SkPhoto p WHERE p.fosUser = ?1')->setParameter(1, $id)->getSingleScalarResult();
         $tagsCount = 0;
-        $speciesCount = $em->createQuery('SELECT COUNT(DISTINCT(p.species)) FROM SkaphandrusAppBundle:SkPhoto p WHERE p.fosUser = ?1')->setParameter(1,$id )->getSingleScalarResult();
-        $spotsCount = $em->createQuery('SELECT COUNT(DISTINCT(p.spot)) FROM SkaphandrusAppBundle:SkPhoto p WHERE p.fosUser = ?1')->setParameter(1,$id )->getSingleScalarResult();
-        $friendsCount = $em->createQuery('SELECT COUNT(p.id) FROM SkaphandrusAppBundle:SkPerson p WHERE p.fosUser = ?1')->setParameter(1,$id )->getSingleScalarResult();
+        $speciesCount = $em->createQuery('SELECT COUNT(DISTINCT(p.species)) FROM SkaphandrusAppBundle:SkPhoto p WHERE p.fosUser = ?1')->setParameter(1, $id)->getSingleScalarResult();
+        $spotsCount = $em->createQuery('SELECT COUNT(DISTINCT(p.spot)) FROM SkaphandrusAppBundle:SkPhoto p WHERE p.fosUser = ?1')->setParameter(1, $id)->getSingleScalarResult();
+        $friendsCount = $em->createQuery('SELECT COUNT(p.id) FROM SkaphandrusAppBundle:SkPerson p WHERE p.fosUser = ?1')->setParameter(1, $id)->getSingleScalarResult();
         $modulesCount = count($acquisitions);
         $pointsCount = $user->getSettings()->getPoints();
-        $validationsCount = $em->createQuery('SELECT COUNT(v.id) FROM SkaphandrusAppBundle:SkPhotoSpeciesValidation v WHERE v.fosUser = ?1')->setParameter(1,$id )->getSingleScalarResult();
-        $suggestionsCount = $em->createQuery('SELECT COUNT(s.id) FROM SkaphandrusAppBundle:SkPhotoSpeciesSugestion s WHERE s.fosUser = ?1')->setParameter(1,$id )->getSingleScalarResult();
-        
-        
+        $validationsCount = $em->createQuery('SELECT COUNT(v.id) FROM SkaphandrusAppBundle:SkPhotoSpeciesValidation v WHERE v.fosUser = ?1')->setParameter(1, $id)->getSingleScalarResult();
+        $suggestionsCount = $em->createQuery('SELECT COUNT(s.id) FROM SkaphandrusAppBundle:SkPhotoSpeciesSugestion s WHERE s.fosUser = ?1')->setParameter(1, $id)->getSingleScalarResult();
+
+        $map = null;
+        $latitude = 0;
+        $longitude = 0;
+//        $centerLatitude = 0;
+//        $centerLongitude = 0;
+
+        if (count($spots) > 0) {
+
+            // Get markers from spots for the map
+            $markers = array();
+
+            foreach ($spots as $spot) {
+
+                //dump($spot->getCoordinate());
+                if ($spot->getCoordinate()) {
+                    $marker = new Marker();
+
+                    //remove white spaces
+                    $latitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[0]);
+                    $longitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[1]);
+
+                    $infowindow = new InfoWindow();
+                    $spot_url = $this->generateUrl('spot', array(
+                        'slug' => $spot->getName(),
+                        'location' => $spot->getLocation(),
+                        'country' => $spot->getLocation()->getRegion()->getCountry()
+                    ));
+
+                    $contentString = "<a href=" . $spot_url . ">" . $spot->getName() . "</a>";
+
+                    $infowindow->setContent($contentString);
+                    $infowindow->setAutoClose(TRUE);
+
+                    // Marker options
+                    $marker->setInfoWindow($infowindow);
+                    $marker->setPrefixJavascriptVariable('marker_');
+                    $marker->setPosition($latitude, $longitude, true);
+                    $marker->setAnimation(Animation::DROP);
+                    $marker->setOption('clickable', true);
+                    $marker->setOption('flat', true);
+                    $marker->setOptions(array(
+                        'clickable' => true,
+                        'flat' => true,
+                    ));
+
+                    $markers[] = $marker;
+                }
+            }
+
+            // Create the map
+//            $centerLatitude = $latitude;
+//            $centerLongitude = $longitude;
+
+            $map = new Map();
+            $map->setPrefixJavascriptVariable('map_');
+            $map->setHtmlContainerId('map_canvas');
+            $map->setAsync(false);
+            $map->setCenter(40, 0, true);
+            $map->setMapOption('zoom', 3);
+//            $map->setCenter($centerLatitude, $centerLongitude, true);
+//            $map->setMapOption('zoom', 10);
+            $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
+            $map->setMapOption('disableDefaultUI', true);
+            $map->setMapOption('disableDoubleClickZoom', true);
+            $map->setMapOptions(array(
+                'disableDefaultUI' => true,
+                'disableDoubleClickZoom' => true,
+            ));
+            $map->setStylesheetOption('width', 'auto');
+            $map->setStylesheetOption('height', '300px');
+            $map->setStylesheetOptions(array(
+                'width' => 'auto',
+                'height' => '300px',
+            ));
+            $map->setLanguage('en');
+
+            // Add the spots to the map
+            foreach ($markers as $marker) {
+                $map->addMarker($marker);
+            }
+        }
+
         if ($user) {
             return $this->render('SkaphandrusAppBundle:Default:user.html.twig', array(
                         'user' => $user,
                         'friends' => $friends,
-                        'spots' => $spots,
+                        //'spots' => $spots,
+                        'map' => $map,
                         'acquisitions' => $acquisitions,
                         'photosCount' => $photosCount,
                         'tagsCount' => $tagsCount,

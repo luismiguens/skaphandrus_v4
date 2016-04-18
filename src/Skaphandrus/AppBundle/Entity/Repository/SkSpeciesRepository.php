@@ -13,6 +13,44 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkSpeciesRepository extends EntityRepository {
 
+    public function getMoreSpeciesSuggestionsUser($user_id, $limit = 3, $offset = 0) {
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT sp.id as species_id, ssn.name as ssn_name, ssn.author as sss_author, count(p.id) as num_photos
+                FROM sk_species_scientific_name as ssn
+                join sk_species as sp
+                on sp.id = ssn.species_id
+                join sk_photo_species_sugestion as p
+                on sp.id = p.species_id
+                where p.fos_user_id = " . $user_id . "
+                group by species_id 
+                order by num_photos desc
+                limit " . $limit . "
+                offset " . $offset;
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+//            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->find($value['species']);  
+
+            $species = new \Skaphandrus\AppBundle\Entity\SkSpecies();
+            $species->setId($value['species_id']);
+            $scientific_name = new \Skaphandrus\AppBundle\Entity\SkSpeciesScientificName();
+            $scientific_name->setName($value['ssn_name']);
+            $scientific_name->setAuthor($value['sss_author']);
+            $species->addScientificName($scientific_name);
+            $species->setPhotosInSpecies($value['num_photos']);
+            $result[] = $species;
+        }
+
+        return $result;
+    }
+
     public function getMoreSpeciesValidationsUser($user_id, $limit = 3, $offset = 0) {
 
         $em = $this->getEntityManager();
@@ -216,6 +254,18 @@ class SkSpeciesRepository extends EntityRepository {
                         'SELECT p
             FROM SkaphandrusAppBundle:SkPhoto p
             JOIN p.speciesValidations as v  
+            WHERE v.species = :species_id and v.fosUser = :user_id
+            ORDER BY p.id desc'
+                )->setParameter('species_id', $species_id)->setParameter('user_id', $user_id)->setMaxResults(10);
+
+        return $query->getResult();
+    }
+
+    public function findSuggestionsPhotosUser($species_id, $user_id) {
+        $query = $this->getEntityManager()->createQuery(
+                        'SELECT p
+            FROM SkaphandrusAppBundle:SkPhoto p
+            JOIN p.speciesSuggestions as v  
             WHERE v.species = :species_id and v.fosUser = :user_id
             ORDER BY p.id desc'
                 )->setParameter('species_id', $species_id)->setParameter('user_id', $user_id)->setMaxResults(10);
@@ -684,10 +734,10 @@ class SkSpeciesRepository extends EntityRepository {
 
 //    
 //    SELECT distinct(sk_identification_criteria_matrix_13.species_id) as id, sk_species_scientific_name.name as name, image_refs.image_url
-//FROM sk_identification_criteria_matrix_13                
-//JOIN sk_species_scientific_name on sk_identification_criteria_matrix_13.species_id = sk_species_scientific_name.species_id
-//JOIN ( select species_id, image_url from sk_species_image_ref ) image_refs on image_refs.species_id = sk_identification_criteria_matrix_13.species_id
-//ORDER by id asc
+//    FROM sk_identification_criteria_matrix_13                
+//    JOIN sk_species_scientific_name on sk_identification_criteria_matrix_13.species_id = sk_species_scientific_name.species_id
+//    JOIN ( select species_id, image_url from sk_species_image_ref ) image_refs on image_refs.species_id = sk_identification_criteria_matrix_13.species_id
+//    ORDER by id asc
 
     /**
      * Metodo que com base no modulo_id, devolve as especies que pertencem a esse modulo.
@@ -948,6 +998,76 @@ class SkSpeciesRepository extends EntityRepository {
                 join sk_species as sp
                 on sp.id = ssn.species_id
                 join sk_photo as p
+                on sp.id = p.species_id
+                where p.fos_user_id = " . $user_id . "
+                group by species_id 
+                order by num_photos desc";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+//            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->find($value['species']);
+
+            $species = new \Skaphandrus\AppBundle\Entity\SkSpecies();
+            $species->setId($value['species_id']);
+            $scientific_name = new \Skaphandrus\AppBundle\Entity\SkSpeciesScientificName();
+            $scientific_name->setName($value['ssn_name']);
+            $scientific_name->setAuthor($value['sss_author']);
+            $species->addScientificName($scientific_name);
+            $species->setPhotosInSpecies($value['num_photos']);
+            $result[] = $species;
+        }
+
+        return $result;
+    }
+
+    public function findValidatedSpeciesInUser($user_id) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT sp.id as species_id, ssn.name as ssn_name, ssn.author as sss_author, count(p.id) as num_photos
+                FROM sk_species_scientific_name as ssn
+                join sk_species as sp
+                on sp.id = ssn.species_id
+                join sk_photo_species_validation as p
+                on sp.id = p.species_id
+                where p.fos_user_id = " . $user_id . "
+                group by species_id 
+                order by num_photos desc";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+//            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->find($value['species']);
+
+            $species = new \Skaphandrus\AppBundle\Entity\SkSpecies();
+            $species->setId($value['species_id']);
+            $scientific_name = new \Skaphandrus\AppBundle\Entity\SkSpeciesScientificName();
+            $scientific_name->setName($value['ssn_name']);
+            $scientific_name->setAuthor($value['sss_author']);
+            $species->addScientificName($scientific_name);
+            $species->setPhotosInSpecies($value['num_photos']);
+            $result[] = $species;
+        }
+
+        return $result;
+    }
+
+    public function findSuggestedSpeciesInUser($user_id) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT sp.id as species_id, ssn.name as ssn_name, ssn.author as sss_author, count(p.id) as num_photos
+                FROM sk_species_scientific_name as ssn
+                join sk_species as sp
+                on sp.id = ssn.species_id
+                join sk_photo_species_sugestion as p
                 on sp.id = p.species_id
                 where p.fos_user_id = " . $user_id . "
                 group by species_id 

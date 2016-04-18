@@ -54,7 +54,7 @@ class SkCountryRepository extends EntityRepository {
                 JOIN sk_region as r on c.id = r.country_id
                 JOIN sk_location as l on r.id = l.region_id
                 JOIN sk_spot as s on l.id = s.location_id
-                JOIN sk_photo as p on s.id = p.spot_id
+                LEFT JOIN sk_photo as p on s.id = p.spot_id
                 group by c.id
                 order by num_photos desc";
 
@@ -74,7 +74,7 @@ class SkCountryRepository extends EntityRepository {
                 JOIN sk_region as r on c.id = r.country_id
                 JOIN sk_location as l on r.id = l.region_id
                 JOIN sk_spot as s on l.id = s.location_id
-                JOIN sk_photo as p on s.id = p.spot_id
+                LEFT JOIN sk_photo as p on s.id = p.spot_id
                 group by c.id
                 order by num_photos desc
                 limit " . $limit . "

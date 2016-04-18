@@ -53,7 +53,8 @@
             var country = "";
             var location = "";
             var spot = "";
-            var species = "";
+            var scientific_name = "";
+            var common_name = "";
 
             var loadDiveCenters = function () {
                 $('#box_diveCenters').fadeIn("slow");
@@ -201,14 +202,15 @@
                 country = $('#country').val();
                 location = $('#location').val();
                 spot = $('#spot').val();
-                species = $('#species').val();
+                scientific_name = $('#scientific').val();
+                common_name = $('#common').val();
 
                 $('#box_form').fadeIn("slow");
                 setTimeout(function () {
                     $.ajax({
                         type: "post",
                         url: "{{path("destinations_form")}}",
-                        data: ({country: country, location: location, spot: spot, species: species}),
+                        data: ({country: country, location: location, spot: spot, scientific_name: scientific_name, common_name: common_name}),
                         dataType: "json",
                         success: function (data) {
                             $("#box_form").html(data.map);
@@ -286,16 +288,19 @@
                             <div id="results" style="margin-bottom: 5px"></div> 
 
                             <div class="form-group">
-                                <input id="spot"  class="form-control" placeholder="{{"page.destinations.h4.diveSites"|trans}}" />
+                                <input id="spot" class="form-control" placeholder="{{"page.destinations.h4.diveSites"|trans}}" />
                             </div>
                             <div class="form-group">
-                                <input id="location"  class="form-control" placeholder="{{"page.destinations.h4.locations"|trans}}" />
+                                <input id="location" class="form-control" placeholder="{{"page.destinations.h4.locations"|trans}}" />
                             </div>
                             <div class="form-group">
-                                <input id="country"  class="form-control" placeholder="{{"page.destinations.h4.countries"|trans}}" />
+                                <input id="country" class="form-control" placeholder="{{"page.destinations.h4.countries"|trans}}" />
                             </div>
                             <div class="form-group">
-                                <input id="species"  class="form-control" placeholder="{{"page.destinations.h4.species"|trans}}" />
+                                <input id="scientific" class="form-control" placeholder="{{"page.destinations.h4.species"|trans}}" />
+                            </div>
+                            <div class="form-group">
+                                <input id="common" class="form-control" placeholder="{{"page.destinations.h4.common"|trans}}" />
                             </div>
                             <div class="form-group">
                                 <button id="find_marker" type="buttom" class="btn btn-primary dim btn-block">{{ "page.destinations.submit"|trans }}</button>

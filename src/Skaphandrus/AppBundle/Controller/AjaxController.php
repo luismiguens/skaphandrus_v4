@@ -25,9 +25,14 @@ class AjaxController extends Controller {
     public function spotSeeAllAction(Request $request) {
 
         $locale = $this->get('request')->getLocale();
-        $location_id = $request->query->get('location_id');
 
-        $spots = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')->findSpotsInLocation($location_id, $locale);
+        if ($request->query->get('location_id')):
+            $location_id = $request->query->get('location_id');
+            $spots = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')->findSpotsInLocation($location_id, $locale);
+        elseif ($request->query->get('user_id')):
+            $user_id = $request->query->get('user_id');
+            $spots = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')->findSpotsInUser($user_id);
+        endif;
 
         return $this->render('SkaphandrusAppBundle:Ajax:spotSeeAll.html.twig', array(
                     'spots' => $spots,
@@ -57,7 +62,32 @@ class AjaxController extends Controller {
         elseif ($request->query->get('spot_id')):
             $spot_id = $request->query->get('spot_id');
             $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findSpeciesInSpot($spot_id);
+        elseif ($request->query->get('user_id')):
+            $user_id = $request->query->get('user_id');
+            $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findSpeciesInUser($user_id);
         endif;
+
+        return $this->render('SkaphandrusAppBundle:Ajax:speciesSeeAll.html.twig', array(
+                    'species' => $species,
+        ));
+    }
+
+    public function validationsSeeAllAction(Request $request) {
+
+        $user_id = $request->query->get('user_id');
+
+        $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findValidatedSpeciesInUser($user_id);
+
+        return $this->render('SkaphandrusAppBundle:Ajax:speciesSeeAll.html.twig', array(
+                    'species' => $species,
+        ));
+    }
+
+    public function suggestionsSeeAllAction(Request $request) {
+
+        $user_id = $request->query->get('user_id');
+
+        $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findSuggestedSpeciesInUser($user_id);
 
         return $this->render('SkaphandrusAppBundle:Ajax:speciesSeeAll.html.twig', array(
                     'species' => $species,
@@ -265,6 +295,28 @@ class AjaxController extends Controller {
         ));
     }
 
+    public function suggestionsShowMoreAction(Request $request) {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $limit = $request->query->get('limit');
+        $offset = $request->query->get('offset');
+
+        if ($request->query->get('user_id')):
+            $user_id = $request->query->get('user_id');
+            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->getMoreSpeciesSuggestionsUser($user_id, $limit, $offset);
+            foreach ($species as $s):
+                $s->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpecies')->findSuggestionsPhotosUser($s->getId(), $user_id));
+            endforeach;
+
+
+        endif;
+
+        return $this->render('SkaphandrusAppBundle:Ajax:speciesPartial.html.twig', array(
+                    'species' => $species, 'class' => 'box_spacer_right'
+        ));
+    }
+
     public function photographersShowMoreAction(Request $request) {
 
         $em = $this->getDoctrine()->getManager();
@@ -384,56 +436,15 @@ class AjaxController extends Controller {
             $spot_name = $request->request->get('spot');
         endif;
 
-        $species_name = $request->query->get('species');
-        if (!$species_name):
-            $species_name = $request->request->get('species');
+        $scientific_name = $request->query->get('scientific_name');
+        if (!$scientific_name):
+            $scientific_name = $request->request->get('scientific_name');
         endif;
 
-//        $em = $this->getDoctrine()->getManager();
-//        $connection = $em->getConnection();
-//
-//        $sql = "SELECT s.id FROM sk_spot as s ";
-//
-//        //spots, locations, regions and countries
-//        if ($spot_name) {
-//            $sql = $sql . "JOIN sk_spot_translation as st on s.id = st.translatable_id ";
-//            $sql = $sql . " where st.name LIKE '%" . $spot_name . "%'";
-//            $sql = $sql . " and st.locale = '" . $locale . "'";
-//        }
-//
-//        if ($location_name) {
-//            $sql = $sql . " JOIN sk_location as l on s.location_id = l.id ";
-//            $sql = $sql . " JOIN sk_location_translation as lt on l.id = lt.translatable_id ";
-//            $sql = $sql . " where lt.name LIKE '%" . $location_name . "%'";
-//            $sql = $sql . " and lt.locale = '" . $locale . "'";
-//            $sql = $sql . " group by s.id";
-//        }
-//
-//        if ($country_name) {
-//            $country = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')->findBySlug($country_name, $locale);
-//            $sql = $sql . " JOIN sk_location as l on s.location_id = l.id ";
-//            $sql = $sql . " JOIN sk_location_translation as lt on l.id = lt.translatable_id ";
-//            $sql = $sql . " JOIN sk_region as r on l.region_id = r.id ";
-//            $sql = $sql . ' where r.country_id = ' . $country->getId();
-//            $sql = $sql . " and lt.locale = '" . $locale . "' ";
-//            $sql = $sql . " group by s.id";
-//        }
-//        //species
-//        if (array_key_exists('species', $params)) {
-//            $sql = $sql . ' where p.species_id = ' . $params['species'];
-//        }
-//
-//        $statement = $connection->prepare($sql);
-//        $statement->execute();
-//        $values = $statement->fetchAll();
-//
-//        $result = array();
-//
-//        foreach ($values as $value) {
-//            $spot = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')->find($value['id']);
-//            $result[] = $spot;
-//        }
-//        dump($sql);
+        $common_name = $request->query->get('common_name');
+        if (!$common_name):
+            $common_name = $request->request->get('common_name');
+        endif;
 
         $result = null;
 
@@ -461,7 +472,7 @@ class AjaxController extends Controller {
         }
 
         if ($country_name) {
-            $country = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')->findBySlug($country_name, $locale);
+            $country = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')->findCountryDestinations($country_name, $locale);
 
             $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
             $qb->join('l.region', 'r', 'WITH', 'l.region = r.id');
@@ -473,13 +484,26 @@ class AjaxController extends Controller {
             $result = $query->getResult();
         }
 
-        //species
-        if ($species_name) {
+        //species scientific name
+        if ($scientific_name) {
             $qb->join('s.photos', 'p', 'WITH', 'p.spot = s.id');
             $qb->join('p.species', 'sp', 'WITH', 'p.species = sp.id');
             $qb->join('sp.scientific_names', 'sn', 'WITH', 'sn.species = sp.id');
             $qb->andWhere('sn.name LIKE ?4');
-            $qb->setParameter(4, "%" . $species_name . "%");
+            $qb->setParameter(4, "%" . $scientific_name . "%");
+
+            $query = $qb->getQuery();
+            $result = $query->getResult();
+        }
+
+        //species common name
+        if ($common_name) {
+            $qb->join('s.photos', 'p', 'WITH', 'p.spot = s.id');
+            $qb->join('p.species', 'sp', 'WITH', 'p.species = sp.id');
+            $qb->join('sp.species_vernaculars', 'sv', 'WITH', 'sv.species = sp.id');
+            $qb->join('sv.vernacular', 'v', 'WITH', 'sv.vernacular = v.id');
+            $qb->andWhere('v.name LIKE ?5');
+            $qb->setParameter(5, "%" . $common_name . "%");
 
             $query = $qb->getQuery();
             $result = $query->getResult();
@@ -491,7 +515,7 @@ class AjaxController extends Controller {
         $map->setCenter(40, 0, true);
         $map->setStylesheetOptions(array(
             'width' => 'auto',
-            'height' => '300px',
+            'height' => '350px',
         ));
         $latitude = 0;
         $longitude = 0;
@@ -559,10 +583,10 @@ class AjaxController extends Controller {
                 'disableDoubleClickZoom' => true,
             ));
             $map->setStylesheetOption('width', 'auto');
-            $map->setStylesheetOption('height', '300px');
+            $map->setStylesheetOption('height', '350px');
             $map->setStylesheetOptions(array(
                 'width' => 'auto',
-                'height' => '300px',
+                'height' => '350px',
             ));
             $map->setLanguage('en');
 
