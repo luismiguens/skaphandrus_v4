@@ -627,19 +627,19 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
 
 
             //ILUSTRACOES CIENTIFICAS (ir buscar ilustração)
-//            foreach ($species_obj->getIllustrations() as $key => $illustration) {
-//
-//                $image_src = "http://skaphandrus.com/uploads/ilustrations/" . $illustration->getImage();
-//                $photos_arr[] = array(
-//                    'id' => $illustration->getId(),
-//                    'image_src' => $image_src,
-//                    'image_url' => $image_src,
-//                    'image_type' => "skaphandrus",
-//                    'is_illustration' => "true",
-//                    'photographer' => 'skaphandrus.com',
-//                    'license' => "© All rights reserved"
-//                );
-//            }
+            foreach ($species_obj->getIllustrations() as $key => $illustration) {
+
+                $image_src = "http://skaphandrus.com/uploads/ilustrations/" . $illustration->getImage();
+                $photos_arr[] = array(
+                    'id' => $illustration->getId(),
+                    'image_src' => $image_src,
+                    'image_url' => $image_src,
+                    'image_type' => "skaphandrus",
+                    //'is_illustration' => "true",
+                    'photographer' => 'skaphandrus.com',
+                    'license' => "© All rights reserved"
+                );
+            }
 
 
             //FOTOGRAFIAS (se não existirem ilustrações)
