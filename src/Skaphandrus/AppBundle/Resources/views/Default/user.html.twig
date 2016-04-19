@@ -564,8 +564,8 @@
                         <div class="row" >
                             <div class="col col-lg-12">
                                 <h2>{% trans with {'%name%': user.personal.name|title} %}page.user.h2.modules{% endtrans %}</h2>
-                                <div class="row gridx">
-                                   {# <div class="gridx">#}
+                                <div class="row">
+                                    <div class="gridx">
                                         {% for module in acquisitions %}
                                             <div class="grid-itemx col col-md-4">
                                                 <div class="ibox">
@@ -644,7 +644,7 @@
 
                                             </div>
                                         {% endfor %}
-                                    {#</div>#}
+                                    </div>
                                 </div>
                             </div>
                         </div> 
