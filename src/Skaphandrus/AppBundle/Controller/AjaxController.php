@@ -515,7 +515,7 @@ class AjaxController extends Controller {
         $map->setCenter(40, 0, true);
         $map->setStylesheetOptions(array(
             'width' => 'auto',
-            'height' => '350px',
+            'height' => '450px',
         ));
         $latitude = 0;
         $longitude = 0;
@@ -583,10 +583,10 @@ class AjaxController extends Controller {
                 'disableDoubleClickZoom' => true,
             ));
             $map->setStylesheetOption('width', 'auto');
-            $map->setStylesheetOption('height', '350px');
+            $map->setStylesheetOption('height', '450px');
             $map->setStylesheetOptions(array(
                 'width' => 'auto',
-                'height' => '350px',
+                'height' => '450px',
             ));
             $map->setLanguage('en');
 
