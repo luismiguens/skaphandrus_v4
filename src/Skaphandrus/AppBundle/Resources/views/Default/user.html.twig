@@ -22,18 +22,13 @@
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/peity/jquery.peity.min.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/isotope.pkgd.min.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/imagesloaded.pkgd.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/imagesloaded.pkgd.min.js') }}"></script>    
+    <script src="https://raw.githubusercontent.com/jedfoster/Readmore.js/master/readmore.min.js"></script>
 
     {#<!-- FooTable -->
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>#}
 
     <script type="text/javascript">
-
-
-
-
-
-
 
         $(function () {
             var limit_spots = 3;
@@ -65,8 +60,6 @@
             $(this).ready(loadSpots);
             $('#show_more_spots').click(loadSpots);
 
-
-
             var loadSpecies = function () {
                 $('#box_species').fadeIn("slow");
                 offset_species = offset_species + 3;
@@ -86,7 +79,6 @@
             };
             $(this).ready(loadSpecies);
             $('#show_more_species').click(loadSpecies);
-
 
             var loadValidations = function () {
                 $('#box_validations').fadeIn("slow");
@@ -192,22 +184,22 @@
         };
         $('#suggestionsModal').on('shown.bs.modal', loadSuggestionsAll);
 
-
-   var $grid = $('.gridx').imagesLoaded(function () {
-                // init Isotope after all images have loaded
-                $grid.isotope({
-                    // options
-                    itemSelector: '.grid-itemx',
-                    layoutMode: 'masonry'
-                });
+        var $grid = $('.gridx').imagesLoaded(function () {
+            // init Isotope after all images have loaded
+            $grid.isotope({
+                // options
+                itemSelector: '.grid-itemx',
+                layoutMode: 'masonry'
             });
+        });
 
-
-
-{#        $('.gridx').masonry({
-            // options
-            itemSelector: '.grid-itemx'
-        });#}
+        $('#readMore').readmore({
+            speed: 75,
+            heightMargin: 25,
+            collapsedHeight: 250,
+            moreLink: '<a class="btn btn-sm btn-primary pull-right" href="#">{{"common.show_more"|trans}}</a>',
+            lessLink: '<a class="btn btn-sm btn-primary pull-right" href="#">{{"common.hide"|trans}}</a>'
+        });
 
         $(function () {
             $("span.pie").peity("pie", {fill: ['#1ab394', '#d7d7d7', '#ffffff']});
@@ -215,13 +207,10 @@
             $(".bar").peity("bar", {fill: ["#1ab394", "#d7d7d7"]});
         });
 
-        $('.row .showdetails').on('click', function (e) {
-            e.preventDefault();
-            var $this = $(this);
-            var $collapse = $this.closest('.collapse-group').find('.collapse');
-            $collapse.collapse('toggle');
-        });
-
+        {#$('.gridx').masonry({
+            // options
+            itemSelector: '.grid-itemx'
+        });#}
     </script>
 
 {% endblock %}
@@ -232,15 +221,6 @@
 
     {#<!-- FooTable -->
     <link href="{{ asset('bundles/skaphandrusapp/css/plugins/footable/footable.core.css') }}" rel="stylesheet">#}
-
-    <style type="text/css">
-        .in.collapse+a.btn.showdetails:before {
-            content: "{{"common.hide"|trans}}";
-        }
-        .collapse+a.btn.showdetails:before {
-            content:"{{"common.show_more"|trans}}";
-        }
-    </style>
 
 {% endblock %}
 
@@ -309,11 +289,10 @@
                                 <h3>{{ "page.user.h5.about_me"|trans }}</h3>
                             </div>
                             <div class="ibox-content">
-                                <p class="small" itemprop="description"> {{user.settings.observations|raw|truncate(101)}} </p>
-
-                                <div class="ibox span4 collapse-group ">
-                                    <p class="small collapse" itemprop="description"> {{user.settings.observations|raw|slice(101,5000)}} </p>
-                                    <a class="showdetails btn btn-sm btn-primary pull-right" data-toggle="collapse" data-target="#viewdetails"></a>
+                                <div class="ibox">
+                                    <div id="readMore">                                
+                                        <p class="small" itemprop="description"> {{user.settings.observations|raw}} </p>
+                                    </div>
                                 </div>
                                 {#<h4>Portugal / Ponta Delgada</h4>
                                 <dl>
@@ -340,7 +319,7 @@
                                     {% for person in friends %}
                                         {% if person.skaphandrusId != false %}
                                             <a href="{{ path('user', { 'id': person.skaphandrusId.id }) }}">
-                                                <img alt="{{ person.skaphandrusId.personal.name }}" class="img-circle" src="{{ person.skaphandrusId.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_100') }}" />
+                                                <img title="{{ person.skaphandrusId.personal.name }}" alt="{{ person.skaphandrusId.personal.name }}" class="img-circle" src="{{ person.skaphandrusId.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_100') }}" />
                                             </a>
                                         {% endif %}  
                                     {% endfor %}
