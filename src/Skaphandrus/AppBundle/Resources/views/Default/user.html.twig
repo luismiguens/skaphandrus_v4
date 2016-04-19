@@ -29,13 +29,7 @@
 
     <script type="text/javascript">
 
-
-
-
-
-
-
-        $(function () {
+    $(function () {
             var limit_spots = 3;
             var offset_spots = -3;
             var limit_species = 3;
@@ -193,21 +187,21 @@
         $('#suggestionsModal').on('shown.bs.modal', loadSuggestionsAll);
 
 
-   var $grid = $('.gridx').imagesLoaded(function () {
-                // init Isotope after all images have loaded
-                $grid.isotope({
-                    // options
-                    itemSelector: '.grid-itemx',
-                    layoutMode: 'masonry'
-                });
+        var $grid = $('.gridx').imagesLoaded(function () {
+            // init Isotope after all images have loaded
+            $grid.isotope({
+                // options
+                itemSelector: '.grid-itemx',
+                layoutMode: 'masonry'
             });
+        });
 
 
 
-{#        $('.gridx').masonry({
-            // options
-            itemSelector: '.grid-itemx'
-        });#}
+        {#        $('.gridx').masonry({
+                    // options
+                    itemSelector: '.grid-itemx'
+                });#}
 
         $(function () {
             $("span.pie").peity("pie", {fill: ['#1ab394', '#d7d7d7', '#ffffff']});
@@ -309,11 +303,15 @@
                                 <h3>{{ "page.user.h5.about_me"|trans }}</h3>
                             </div>
                             <div class="ibox-content">
-                                <p class="small" itemprop="description"> {{user.settings.observations|raw|truncate(101)}} </p>
+                                <p class="small" itemprop="description"> {{user.settings.observations|raw|truncate(1000)}} </p>
 
                                 <div class="ibox span4 collapse-group ">
-                                    <p class="small collapse" itemprop="description"> {{user.settings.observations|raw|slice(101,5000)}} </p>
+                                    <p class="small collapse" itemprop="description"> {{user.settings.observations|raw|slice(1000,5000)}} </p>
+                                    
+                                     {% if user.settings.observations|length > 1000 %}
                                     <a class="showdetails btn btn-sm btn-primary pull-right" data-toggle="collapse" data-target="#viewdetails"></a>
+                                    {% endif %}
+                                    
                                 </div>
                                 {#<h4>Portugal / Ponta Delgada</h4>
                                 <dl>
