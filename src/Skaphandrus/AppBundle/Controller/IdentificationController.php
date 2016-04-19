@@ -635,7 +635,7 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
                     'image_src' => $image_src,
                     'image_url' => $image_src,
                     'image_type' => "skaphandrus",
-                    //'is_illustration' => "true",
+                    //'is_illustration' => "true", está a dar erro?!?!?!
                     'photographer' => 'skaphandrus.com',
                     'license' => "© All rights reserved"
                 );

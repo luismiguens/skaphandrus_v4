@@ -206,6 +206,10 @@
                 common_name = $('#common').val();
 
                 $('#box_form').fadeIn("slow");
+                
+                $("#results").html("<div class='sk-spinner sk-spinner-three-bounce'><div class='sk-bounce1'></div><div class='sk-bounce2'></div><div class='sk-bounce3'></div></div>");
+                
+                
                 setTimeout(function () {
                     $.ajax({
                         type: "post",
@@ -291,7 +295,7 @@
                         <div class="col-sm-3">
                             <h4>{{ "page.destinations.h4.filters"|trans }}</h4>
 
-                            <div id="results" style="margin-bottom: 5px"></div> 
+                            <div id="results" style="margin-bottom: 5px; min-height: 23px"></div> 
 
                             <fieldset>
                                 <legend style="color:gray"><h4>{{"page.destinations.legend.places"|trans}}</h4></legend>
