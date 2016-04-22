@@ -71,17 +71,19 @@ class SkBookingController extends Controller {
     public function createAction(Request $request) {
         $entity = new SkBooking();
         $em = $this->getDoctrine()->getManager();
+        
+        $business_id = $request->query->get('skaphandrus_appbundle_skbooking')['business'];
+        if (!$business_id):
+            $business_id = $request->request->get('skaphandrus_appbundle_skbooking')['business'];
+        endif;
 
-//        $business_id = $request->query->get('business_id');
-//        if (!$business_id):
-//            $business_id = $request->request->get('business_id');
-//        endif;
+
 //        $business_id = 1977;
-//        $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->find($business_id);
+        $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->find($business_id);
 
         $fos_user = $this->get('security.token_storage')->getToken()->getUser();
         $entity->setFosUser($fos_user);
-        //$entity->setBusiness($business);
+        $entity->setBusiness($business);
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -90,9 +92,7 @@ class SkBookingController extends Controller {
             $em->persist($entity);
             $em->flush();
 
-
             //enviar email com indicação de nova reserva
-
             $subject = "New Booking Submited";
 
             $this->sendEmailBooking($entity, $subject);
