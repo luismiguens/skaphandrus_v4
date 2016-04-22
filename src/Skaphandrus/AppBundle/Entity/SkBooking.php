@@ -69,8 +69,58 @@ class SkBooking {
      */
     private $bookingOtherActivity;
 
+    /**
+     * @var SkBookingPackage
+     */
+    private $bookingPackage;
+
     public function __construct() {
         $this->createdAt = new \DateTime();
+    }
+
+    /**
+     * Add bookingPackage
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBookingPackage $bookingPackage
+     *
+     * @return SkPhoto
+     */
+    public function addBookingPackage(\Skaphandrus\AppBundle\Entity\SkBookingPackage $bookingPackage) {
+        $this->bookingPackage[] = $bookingPackage;
+        $bookingPackage->setBooking($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove bookingPackage
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBookingPackage $bookingPackage
+     */
+    public function removeBookingPackage(\Skaphandrus\AppBundle\Entity\SkBookingPackage $bookingPackage) {
+        $this->bookingPackage->removeElement($bookingPackage);
+    }
+
+    /**
+     * Set bookingPackage
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBookingPackage $bookingPackage
+     *
+     * @return SkBooking
+     */
+    public function setBookingPackage($bookingPackage) {
+        $this->bookingPackage = $bookingPackage;
+
+        return $this;
+    }
+
+    /**
+     * Get bookingPackage
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBookingPackage() {
+        return $this->bookingPackage;
     }
 
     /**

@@ -22,7 +22,7 @@
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/peity/jquery.peity.min.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/isotope.pkgd.min.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/imagesloaded.pkgd.min.js') }}"></script>    
+    <script src="{{ asset('bundles/skaphandrusapp/js/imagesloaded.pkgd.min.js') }}"></script>
     <script src="https://raw.githubusercontent.com/jedfoster/Readmore.js/master/readmore.min.js"></script>
 
     {#<!-- FooTable -->
@@ -194,13 +194,11 @@
         });
 
         $('#readMore').readmore({
-            speed: 250,
-            heightMargin: 250,
+            speed: 75,
+            heightMargin: 25,
             collapsedHeight: 250,
-            moreLink: '<a style="margin-top:10px;" href="#">{{"common.show_more"|trans}}</a>',
-            lessLink: '<a style="margin-top:10px;" href="#">{{"common.hide"|trans}}</a>'
-{#            moreLink: '<a class="btn btn-sm btn-primary pull-right" href="#">{{"common.show_more"|trans}}</a>',
-            lessLink: '<a class="btn btn-sm btn-primary pull-right" href="#">{{"common.hide"|trans}}</a>'#}
+            moreLink: '<a style="width: 50%;" class="btn btn-sm btn-primary pull-right" href="#">{{"common.show_more"|trans}}</a>',
+            lessLink: '<a style="width: 50%;" class="btn btn-sm btn-primary pull-right" href="#">{{"common.hide"|trans}}</a>'
         });
 
         $(function () {
@@ -240,8 +238,8 @@
 {% block body %}
 
     <div class="wrapper wrapper-content" itemscope itemtype="http://schema.org/ProfilePage">
-
         <div class="animated fadeInLeft">
+
             <!-- BEGIN - row das statistics -->
             <div class="row m-b-lg m-t-lg">
                 <div class="col-md-6">
@@ -287,10 +285,10 @@
                     <!-- BEGIN - row about -->
                     {% if user.settings.observations|length > 0 %}
                         <div class="ibox">
-                            <div class="ibox-title">
-                                <h3>{{ "page.user.h5.about_me"|trans }}</h3>
-                            </div>
+                            {#<div class="ibox-title">#}
+                            {#</div>#}
                             <div class="ibox-content">
+                                <h3>{{ "page.user.h5.about_me"|trans }}</h3>
                                 <div class="ibox">
                                     <div id="readMore">                                
                                         <p class="small" itemprop="description"> {{user.settings.observations|raw}} </p>
@@ -313,10 +311,10 @@
                     <!-- Begin Friends -->
                     {% if friends|length > 0 %}
                         <div class="ibox">
-                            <div class="ibox-title">
-                                <h3>{{ "page.user.h5.friends"|trans }}</h3>
-                            </div>
+                            {#<div class="ibox-title">#}
+                            {#</div>#}
                             <div class="ibox-content">
+                                <h3>{{ "page.user.h5.friends"|trans }}</h3>
                                 <div class="user-friends"> 
                                     {% for person in friends %}
                                         {% if person.skaphandrusId != false %}
@@ -333,7 +331,9 @@
                     <!-- BEGIN send message -->
                     {#<div class="ibox">
                         <div class="ibox-content">
-                            <h3>Private message</h3>
+                            <div class="ibox-title">
+                                <h3>Private message</h3>
+                            </div>
                             <p class="small"> Send a private message to João </p>
                             <div class="form-group">
                                 <label>Subject</label>
@@ -356,10 +356,9 @@
                     <div class="row" >
                         <div class="col col-lg-12">
                             <div class="ibox" >
-                                <div class="ibox-title">
-                                    <h3>{% trans with {'%name%': user.personal.name|title} %}page.user.h3.spots{% endtrans %}</h3>
-                                </div>
                                 <div class="ibox-content">
+                                    <h3>{% trans with {'%name%': user.personal.name|title} %}page.user.h3.spots{% endtrans %}</h3>
+
                                     {% if map %}
                                         <div class="m-b-md">
                                             {{google_map(map)}}
@@ -368,38 +367,36 @@
 
                                     <div id="box_spots"></div>
 
-                                    <div class="ibox-content" >
-                                        <div class="row" >
-                                            <div class="col-sm-6 col-sx-12">
-                                                <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_spots">{{ "page.profile.button.show_more_spots"|trans }}</button>
-                                            </div>
-                                            <div class="col-sm-6 col-sx-12">
-                                                <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#spotModal">{{ "page.profile.button.see_all_spots"|trans }}</button>
-                                            </div>
+                                    <div class="row" >
+                                        <div class="col-sm-6 col-sx-12">
+                                            <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_spots">{{ "page.profile.button.show_more_spots"|trans }}</button>
                                         </div>
+                                        <div class="col-sm-6 col-sx-12">
+                                            <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#spotModal">{{ "page.profile.button.see_all_spots"|trans }}</button>
+                                        </div>
+                                    </div>
 
-                                        <!-- Spots Modal start -->
-                                        <div class="modal fade" id="spotModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                            <div class="modal-dialog modal-lg" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title" id="myModalLabel">{% trans with {'%name%': user.personal.name|title} %}page.user.h3.spots{% endtrans %}</h4>
-                                                    </div>
-                                                    <div class="modal-body">
+                                    <!-- Spots Modal start -->
+                                    <div class="modal fade" id="spotModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">{% trans with {'%name%': user.personal.name|title} %}page.user.h3.spots{% endtrans %}</h4>
+                                                </div>
+                                                <div class="modal-body">
 
-                                                        <div id="spotInput"></div>
+                                                    <div id="spotInput"></div>
 
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- Spots Modal end -->
-
                                     </div>
+                                    <!-- Spots Modal end -->
+
                                 </div>
                             </div>
                         </div>
@@ -422,43 +419,39 @@
                                         <div class="panel-body">
                                             <div class="ibox">
                                                 <h4>{% trans with {'%name%': user.personal.name|title} %}page.user.h3.species{% endtrans %}</h4>
-                                                <div class="ibox-content">
 
-                                                    <div id="box_species"></div>
+                                                <div id="box_species"></div>
 
-                                                    <div class="ibox-content" >
-                                                        <div class="row" >
-                                                            <div class="col-sm-6 col-sx-12">
-                                                                <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_species">{{ "page.profile.button.show_more_species"|trans }}</button>
-                                                            </div>
-                                                            <div class="col-sm-6 col-sx-12">
-                                                                <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#speciesModal">{{ "page.profile.button.see_all_species"|trans }}</button>
-                                                            </div>
-                                                        </div>
-
-                                                        <!-- Species Modal start -->
-                                                        <div class="modal fade" id="speciesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                                            <div class="modal-dialog modal-lg" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                        <h4 class="modal-title" id="myModalLabel">{% trans with {'%name%': user.personal.name|title} %}page.user.h3.species{% endtrans %}</h4>
-                                                                    </div>
-                                                                    <div class="modal-body">
-
-                                                                        <div id="speciesInput"></div>
-
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- Species Modal end -->
-
+                                                <div class="row" >
+                                                    <div class="col-sm-6 col-sx-12">
+                                                        <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_species">{{ "page.profile.button.show_more_species"|trans }}</button>
+                                                    </div>
+                                                    <div class="col-sm-6 col-sx-12">
+                                                        <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#speciesModal">{{ "page.profile.button.see_all_species"|trans }}</button>
                                                     </div>
                                                 </div>
+
+                                                <!-- Species Modal start -->
+                                                <div class="modal fade" id="speciesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel">{% trans with {'%name%': user.personal.name|title} %}page.user.h3.species{% endtrans %}</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+
+                                                                <div id="speciesInput"></div>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Species Modal end -->
+
                                             </div>
                                         </div>                
                                     </div>
@@ -467,43 +460,39 @@
                                         <div class="panel-body">
                                             <div class="ibox">
                                                 <h4>{% trans with {'%name%': user.personal.name|title} %}page.user.h3.photos_validated{% endtrans %}</h4>
-                                                <div class="ibox-content">
 
-                                                    <div id="box_validations"></div>
+                                                <div id="box_validations"></div>
 
-                                                    <div class="ibox-content" >
-                                                        <div class="row" >
-                                                            <div class="col-sm-6 col-sx-12">
-                                                                <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_validations">{{ "page.profile.button.show_more_validations"|trans }}</button>
-                                                            </div>
-                                                            <div class="col-sm-6 col-sx-12">
-                                                                <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#validationsModal">{{ "page.profile.button.see_all_validations"|trans }}</button>
-                                                            </div>
-                                                        </div>
-
-                                                        <!-- Validations Modal start -->
-                                                        <div class="modal fade" id="validationsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                                            <div class="modal-dialog modal-lg" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                        <h4 class="modal-title" id="myModalLabel">{% trans with {'%name%': user.personal.name|title} %}page.user.h3.photos_validated{% endtrans %}</h4>
-                                                                    </div>
-                                                                    <div class="modal-body">
-
-                                                                        <div id="validationsInput"></div>
-
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- Validations Modal end -->
-
+                                                <div class="row" >
+                                                    <div class="col-sm-6 col-sx-12">
+                                                        <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_validations">{{ "page.profile.button.show_more_validations"|trans }}</button>
+                                                    </div>
+                                                    <div class="col-sm-6 col-sx-12">
+                                                        <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#validationsModal">{{ "page.profile.button.see_all_validations"|trans }}</button>
                                                     </div>
                                                 </div>
+
+                                                <!-- Validations Modal start -->
+                                                <div class="modal fade" id="validationsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel">{% trans with {'%name%': user.personal.name|title} %}page.user.h3.photos_validated{% endtrans %}</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+
+                                                                <div id="validationsInput"></div>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Validations Modal end -->
+
                                             </div>
                                         </div>                
                                     </div>
@@ -512,48 +501,45 @@
                                         <div class="panel-body">
                                             <div class="ibox">
                                                 <h4>{% trans with {'%name%': user.personal.name|title} %}page.user.h3.photos_suggested{% endtrans %}</h4>
-                                                <div class="ibox-content">
 
-                                                    <div id="box_suggestions"></div>
+                                                <div id="box_suggestions"></div>
 
-                                                    <div class="ibox-content" >
-                                                        <div class="row" >
-                                                            <div class="col-sm-6 col-sx-12">
-                                                                <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_suggestions">{{ "page.profile.button.show_more_suggestions"|trans }}</button>
-                                                            </div>
-                                                            <div class="col-sm-6 col-sx-12">
-                                                                <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#suggestionsModal">{{ "page.profile.button.see_all_suggestions"|trans }}</button>
-                                                            </div>
-                                                        </div>
-
-                                                        <!-- Suggestions Modal start -->
-                                                        <div class="modal fade" id="suggestionsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                                            <div class="modal-dialog modal-lg" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                        <h4 class="modal-title" id="myModalLabel">{% trans with {'%name%': user.personal.name|title} %}page.user.h3.photos_suggested{% endtrans %}</h4>
-                                                                    </div>
-                                                                    <div class="modal-body">
-
-                                                                        <div id="suggestionsInput"></div>
-
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- Suggestions Modal end -->
-
+                                                <div class="row" >
+                                                    <div class="col-sm-6 col-sx-12">
+                                                        <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_suggestions">{{ "page.profile.button.show_more_suggestions"|trans }}</button>
+                                                    </div>
+                                                    <div class="col-sm-6 col-sx-12">
+                                                        <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#suggestionsModal">{{ "page.profile.button.see_all_suggestions"|trans }}</button>
                                                     </div>
                                                 </div>
+
+                                                <!-- Suggestions Modal start -->
+                                                <div class="modal fade" id="suggestionsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel">{% trans with {'%name%': user.personal.name|title} %}page.user.h3.photos_suggested{% endtrans %}</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+
+                                                                <div id="suggestionsInput"></div>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Suggestions Modal end -->
+
                                             </div>
                                         </div>                
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>    
                     <!-- END das especies fotografas, validadas e sugeridas -->
@@ -656,8 +642,9 @@
                 <!-- END - right area-->
             </div> 
             <!-- END - row full content area -->
-        </div>
 
+        </div>
     </div> 
+
 {% endblock %}
 

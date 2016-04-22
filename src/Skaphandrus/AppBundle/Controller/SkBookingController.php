@@ -147,8 +147,6 @@ class SkBookingController extends Controller {
             $business_id = $request->request->get('business_id');
         endif;
 
-//        $business_id = 1977;
-
         $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->find($business_id);
         $entity->setBusiness($business);
 
@@ -290,12 +288,12 @@ class SkBookingController extends Controller {
             $em->flush();
 
             //enviar email com indicação de actualização da reserva
-            
+
             $subject = "Update Booking Submited";
 
             $this->sendEmailBooking($entity, $subject);
 
-            
+
             $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
 
             return $this->redirect($this->generateUrl('booking_admin_show', array('id' => $id)));

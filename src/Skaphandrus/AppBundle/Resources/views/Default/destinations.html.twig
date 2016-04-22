@@ -206,10 +206,10 @@
                 common_name = $('#common').val();
 
                 $('#box_form').fadeIn("slow");
-                
+
                 $("#results").html("<div class='sk-spinner sk-spinner-three-bounce'><div class='sk-bounce1'></div><div class='sk-bounce2'></div><div class='sk-bounce3'></div></div>");
-                
-                
+
+
                 setTimeout(function () {
                     $.ajax({
                         type: "post",
@@ -270,13 +270,11 @@
 
                 </ul>
                 <div class="row">
-                    <div class="row" >
-                        <div class="col-sm-6 col-sx-12">
-                            <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_countries" >{{ "page.destinations.button.show_more_countries"|trans }}</button>
-                        </div>
-                        <div class="col-sm-6 col-sx-12">
-                            <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#countriesModal">{{ "page.destinations.button.see_all_countries"|trans }}</button>
-                        </div>
+                    <div class="col-sm-6 col-sx-12">
+                        <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_countries" >{{ "page.destinations.button.show_more_countries"|trans }}</button>
+                    </div>
+                    <div class="col-sm-6 col-sx-12">
+                        <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#countriesModal">{{ "page.destinations.button.see_all_countries"|trans }}</button>
                     </div>
                 </div>
             </div>
@@ -346,11 +344,9 @@
                                 <div class="panel-body">
                                     <div class="ibox">
                                         <h4>{{ "page.destinations.h4.dive_center"|trans }}</h4>
-                                        <div class="ibox-content">
-
-                                            <div id="box_diveCenters"></div>
-
-                                        </div>
+                                        {#<div class="ibox-content">#}
+                                        <div id="box_diveCenters"></div>
+                                        {#</div>#}
 
                                         <!-- diveCenters Modal start -->
                                         <div class="modal fade" id="diveCentersModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -373,16 +369,16 @@
                                         </div>
                                         <!-- diveCenters Modal end -->
 
-                                        <div class="ibox-content" >
-                                            <div class="row" >
-                                                <div class="col-sm-6 col-sx-12">
-                                                    <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_diveCenters" >{{ "page.destinations.button.show_more_dive_centers"|trans }}</button>
-                                                </div>
-                                                <div class="col-sm-6 col-sx-12">
-                                                    <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#diveCentersModal">{{ "page.destinations.button.see_all_dive_centers"|trans }}</button>
-                                                </div>
+                                        {#<div class="ibox-content" >#}
+                                        <div class="row" >
+                                            <div class="col-sm-6 col-sx-12">
+                                                <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_diveCenters" >{{ "page.destinations.button.show_more_dive_centers"|trans }}</button>
+                                            </div>
+                                            <div class="col-sm-6 col-sx-12">
+                                                <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#diveCentersModal">{{ "page.destinations.button.see_all_dive_centers"|trans }}</button>
                                             </div>
                                         </div>
+                                        {#</div>#}
 
                                     </div>
                                 </div>
@@ -392,11 +388,9 @@
                                 <div class="panel-body">
                                     <div class="ibox">
                                         <h4>{{ "page.destinations.h4.liveaboard"|trans }}</h4>
-                                        <div class="ibox-content">
-
-                                            <div id="box_liveaboards"></div>
-
-                                        </div>
+                                        {#<div class="ibox-content">#}
+                                        <div id="box_liveaboards"></div>
+                                        {#</div>#}
 
                                         <!-- liveaboards Modal start -->
                                         <div class="modal fade" id="liveaboardsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -419,16 +413,16 @@
                                         </div>
                                         <!-- liveaboards Modal end -->
 
-                                        <div class="ibox-content" >
-                                            <div class="row" >
-                                                <div class="col-sm-6 col-sx-12">
-                                                    <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_liveaboards" >{{ "page.destinations.button.show_more_liveaboard"|trans }}</button>
-                                                </div>
-                                                <div class="col-sm-6 col-sx-12">
-                                                    <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#liveaboardsModal">{{ "page.destinations.button.see_all_liveaboard"|trans }}</button>
-                                                </div>
+                                        {#<div class="ibox-content" >#}
+                                        <div class="row" >
+                                            <div class="col-sm-6 col-sx-12">
+                                                <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_liveaboards" >{{ "page.destinations.button.show_more_liveaboard"|trans }}</button>
+                                            </div>
+                                            <div class="col-sm-6 col-sx-12">
+                                                <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#liveaboardsModal">{{ "page.destinations.button.see_all_liveaboard"|trans }}</button>
                                             </div>
                                         </div>
+                                        {#</div>#}
 
                                     </div>
                                 </div>
@@ -438,11 +432,9 @@
                                 <div class="panel-body">
                                     <div class="ibox">
                                         <h4>{{ "page.destinations.h4.accommodations"|trans }}</h4>
-                                        <div class="ibox-content">
-
-                                            <div id="box_accommodations"></div>
-
-                                        </div>
+                                        {#<div class="ibox-content">#}
+                                        <div id="box_accommodations"></div>
+                                        {#</div>#}
 
                                         <!-- accommodations Modal start -->
                                         <div class="modal fade" id="accommodationsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -465,16 +457,16 @@
                                         </div>
                                         <!-- accommodations Modal end -->
 
-                                        <div class="ibox-content" >
-                                            <div class="row" >
-                                                <div class="col-sm-6 col-sx-12">
-                                                    <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_accommodations" >{{ "page.destinations.button.show_more_accomodations"|trans }}</button>
-                                                </div>
-                                                <div class="col-sm-6 col-sx-12">
-                                                    <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#accommodationsModal">{{ "page.destinations.button.see_all_accomodations"|trans }}</button>
-                                                </div>
+                                        {#<div class="ibox-content" >#}
+                                        <div class="row" >
+                                            <div class="col-sm-6 col-sx-12">
+                                                <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_accommodations" >{{ "page.destinations.button.show_more_accomodations"|trans }}</button>
+                                            </div>
+                                            <div class="col-sm-6 col-sx-12">
+                                                <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#accommodationsModal">{{ "page.destinations.button.see_all_accomodations"|trans }}</button>
                                             </div>
                                         </div>
+                                        {#</div>#}
 
                                     </div>
                                 </div>

@@ -13,6 +13,35 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkSpotRepository extends EntityRepository {
 
+    public function getMoreSpotsBusiness($locale, $business_id, $limit = 3, $offset = 0) {
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT s.id as spot, st.id as st_id, st.name as st_name, count(p.id) as num_photos
+                FROM sk_photo as p
+                right JOIN sk_spot as s on s.id = p.spot_id
+                JOIN sk_spot_translation as st on s.id = st.translatable_id
+                where p.business_id = " . $business_id . " and st.locale = '" . $locale . "'
+                group by spot
+                order by num_photos desc
+                limit " . $limit . "
+                offset " . $offset;
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+            $spot = $em->getRepository('SkaphandrusAppBundle:SkSpot')->find($value['spot']);
+            $spot->setPhotosInSpot($value['num_photos']);
+            $result[] = $spot;
+        }
+
+        return $result;
+    }
+
     public function getMoreSpotsUser($locale, $user_id, $limit = 3, $offset = 0) {
 
         $em = $this->getEntityManager();
@@ -98,6 +127,18 @@ class SkSpotRepository extends EntityRepository {
 //        }
     }
 
+    public function findPhotosBusiness($spot_id, $business_id) {
+        $query = $this->getEntityManager()->createQuery(
+                        'SELECT p
+            FROM SkaphandrusAppBundle:SkPhoto p
+            JOIN p.spot s
+            WHERE p.spot = :spot_id and p.business = :business_id
+            ORDER BY p.id desc'
+                )->setParameter('spot_id', $spot_id)->setParameter('business_id', $business_id)->setMaxResults(10);
+
+        return $query->getResult();
+    }
+
     public function findPhotosSpot($spot_id) {
         $query = $this->getEntityManager()->createQuery(
                         'SELECT p
@@ -138,7 +179,7 @@ class SkSpotRepository extends EntityRepository {
 
     public function findSpotDestinations($slug) {
         $name = Utils::unslugify($slug);
-        
+
         $query = $this->getEntityManager()
                 ->createQuery(
                         'SELECT s
@@ -315,6 +356,32 @@ class SkSpotRepository extends EntityRepository {
                 GROUP BY spot
                 order by photosInSpot desc'
                         )->setParameter('user_id', $user_id);
+
+        foreach ($query->getResult() as $value) {
+            $value['spot']->setPhotosInSpot($value['photosInSpot']);
+            $result[] = $value['spot'];
+        }
+
+        try {
+            return $result;
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function findSpotsInBusiness($business_id) {
+
+        $result = array();
+
+        $query = $this->getEntityManager()
+                        ->createQuery(
+                                'SELECT s as spot, COUNT(p.id) as photosInSpot
+                FROM SkaphandrusAppBundle:SkSpot s
+                JOIN SkaphandrusAppBundle:SkPhoto p WITH s.id = p.spot
+                WHERE p.business = :business_id
+                GROUP BY spot
+                order by photosInSpot desc'
+                        )->setParameter('business_id', $business_id);
 
         foreach ($query->getResult() as $value) {
             $value['spot']->setPhotosInSpot($value['photosInSpot']);

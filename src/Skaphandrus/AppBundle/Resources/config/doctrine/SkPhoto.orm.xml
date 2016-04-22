@@ -7,6 +7,7 @@
             <index name="sk_fotografia_FI_3" columns="species_id"/>
             <index name="sk_fotografia_FI_4" columns="spot_id"/>
             <index name="sk_fotografia_FI_6" columns="creative_id"/>
+            <index name="sk_fotografia_FI_7" columns="business_id"/>
         </indexes>
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
@@ -51,6 +52,12 @@
         <many-to-one field="species" target-entity="SkSpecies" fetch="LAZY">
             <join-columns>
                 <join-column name="species_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+    
+        <many-to-one field="business" target-entity="SkBusiness" fetch="LAZY">
+            <join-columns>
+                <join-column name="business_id" referenced-column-name="id"/>
             </join-columns>
         </many-to-one>
     

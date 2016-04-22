@@ -82,6 +82,13 @@ class SkPhotoType extends AbstractType {
                     'required' => false,
                     'help' => 'form.photo.help.species'
                 ))
+                ->add('business', 'autocomplete', array(
+                    'class' => 'SkaphandrusAppBundle:SkBusiness',
+                    'attr' => array('class' => 'form-control m-b'),
+                    'label' => 'form.photo.label.business',
+                    'required' => false,
+                    'help' => 'form.photo.help.business'
+                ))
 //                ->add('fosUser', 'hidden', 
 //                        array(
 //                            'data_class' => 'Skaphandrus\AppBundle\Entity\FosUser',

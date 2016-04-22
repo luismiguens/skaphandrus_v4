@@ -86,7 +86,7 @@
                         data: 'location_id=' + {{ location.id }} +'&limit=' + limit_spots + '&offset=' + offset_spots,
                         dataType: "text",
                         success: function (response) {
-                            $('#box_spots .slider_thumbs').slick('unslick'); 
+                            $('#box_spots .slider_thumbs').slick('unslick');
                             $("#box_spots").append(response);
                             sliders('#box_spots .slider_thumbs');
                         }
@@ -106,7 +106,7 @@
                         data: 'location_id=' + {{ location.id }} +'&limit=' + limit_species + '&offset=' + offset_species,
                         dataType: "text",
                         success: function (response) {
-                            $('#box_species .slider_thumbs').slick('unslick'); 
+                            $('#box_species .slider_thumbs').slick('unslick');
                             $("#box_species").append(response);
                             sliders('#box_species .slider_thumbs');
                         }
@@ -126,7 +126,7 @@
                         data: 'location_id=' + {{ location.id }} +'&limit=' + limit_photographers + '&offset=' + offset_photographers,
                         dataType: "text",
                         success: function (response) {
-                            $('#box_photographers .slider_thumbs').slick('unslick'); 
+                            $('#box_photographers .slider_thumbs').slick('unslick');
                             $("#box_photographers").append(response);
                             sliders('#box_photographers .slider_thumbs');
                         }
@@ -459,36 +459,36 @@
                         <div class="panel-body">
                             <div class="ibox">
                                 <h4>{{ "page.spot.h4.dive_center"|trans }}</h4>
-                                <div class="ibox-content">
-                                    <div class="row" >
-                                        {% if diveCenters %}
-                                            {% for b in diveCenters %}
-                                                <div class="col-lg-4 col-md-6 col-sm-12" >
-                                                    <div class="contact-box" style="height: 165px">
-                                                        <div class="col-sm-4">
-                                                            <div class="text-center">
-                                                                <img alt="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
-                                                            </div>
+                                {#<div class="ibox-content">#}
+                                <div class="row" >
+                                    {% if diveCenters %}
+                                        {% for b in diveCenters %}
+                                            <div class="col-lg-4 col-md-6 col-sm-12" >
+                                                <div class="contact-box" style="height: 165px">
+                                                    <div class="col-sm-4">
+                                                        <div class="text-center">
+                                                            <img alt="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
                                                         </div>
-                                                        <div class="col-sm-8">
-                                                            <h4><strong>{{b|truncate(40)}}</strong></h4>
-                                                            <p><i class="fa fa-map-marker"></i> {{ b.address.location }}</p>
-                                                            <div>
-                                                                <a class="btn btn-primary btn-block btn-xs" href="{{ path('business_no_slug', { 'id': b.id}) }}">{{ "page.business.button.more_info"|trans }}</a>
-                                                                <a class="btn btn-primary btn-block btn-xs" href="{{ path('booking_admin_new', {'business_id': b.id}) }}">{{ "page.business.button.book_now"|trans }}</a>
-                                                            </div>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <h4><strong>{{b|truncate(40)}}</strong></h4>
+                                                        <p><i class="fa fa-map-marker"></i> {{ b.address.location }}</p>
+                                                        <div>
+                                                            <a class="btn btn-primary btn-block btn-xs" href="{{ path('business_no_slug', { 'id': b.id}) }}">{{ "page.business.button.more_info"|trans }}</a>
+                                                            <a class="btn btn-primary btn-block btn-xs" href="{{ path('booking_admin_new', {'business_id': b.id}) }}">{{ "page.business.button.book_now"|trans }}</a>
                                                         </div>
-                                                        <div class="clearfix"></div>
-                                                    </div> 
-                                                </div>
-                                            {% endfor %}
-                                        {% else %}
-                                            <div class="col col-lg-12">
-                                                {{ "page.spot.h4.no_dive_center"|trans }}
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </div> 
                                             </div>
-                                        {% endif %}
-                                    </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="col col-lg-12">
+                                            {{ "page.spot.h4.no_dive_center"|trans }}
+                                        </div>
+                                    {% endif %}
                                 </div>
+                                {#</div>#}
                             </div>
                         </div>
                     </div>
@@ -496,36 +496,36 @@
                         <div class="panel-body">
                             <div class="ibox">
                                 <h4>{{ "page.spot.h4.liveaboard"|trans }}</h4>
-                                <div class="ibox-content">
-                                    <div class="row" >
-                                        {% if liveaboards %}
-                                            {% for b in liveaboards %}
-                                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                                    <div class="contact-box" style="height: 165px">
-                                                        <div class="col-sm-4">
-                                                            <div class="text-center">
-                                                                <img alt="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
-                                                            </div>
+                                {#<div class="ibox-content">#}
+                                <div class="row" >
+                                    {% if liveaboards %}
+                                        {% for b in liveaboards %}
+                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                <div class="contact-box" style="height: 165px">
+                                                    <div class="col-sm-4">
+                                                        <div class="text-center">
+                                                            <img alt="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
                                                         </div>
-                                                        <div class="col-sm-8">
-                                                            <h4><strong>{{b|truncate(40)}}</strong></h4>
-                                                            <p><i class="fa fa-map-marker"></i> {{ b.address.location }}</p>
-                                                            <div>
-                                                                <a class="btn btn-primary btn-block btn-xs" href="{{ path('business_no_slug', { 'id': b.id}) }}">{{ "page.business.button.more_info"|trans }}</a>
-                                                                <a class="btn btn-primary btn-block btn-xs" href="{{ path('booking_admin_new', {'business_id': b.id}) }}">{{ "page.business.button.book_now"|trans }}</a>
-                                                            </div>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <h4><strong>{{b|truncate(40)}}</strong></h4>
+                                                        <p><i class="fa fa-map-marker"></i> {{ b.address.location }}</p>
+                                                        <div>
+                                                            <a class="btn btn-primary btn-block btn-xs" href="{{ path('business_no_slug', { 'id': b.id}) }}">{{ "page.business.button.more_info"|trans }}</a>
+                                                            <a class="btn btn-primary btn-block btn-xs" href="{{ path('booking_admin_new', {'business_id': b.id}) }}">{{ "page.business.button.book_now"|trans }}</a>
                                                         </div>
-                                                        <div class="clearfix"></div>
-                                                    </div> 
-                                                </div>
-                                            {% endfor %}
-                                        {% else %}
-                                            <div class="col col-lg-12">
-                                                {{ "page.spot.h4.no_liveaboard"|trans }}
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </div> 
                                             </div>
-                                        {% endif %}
-                                    </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="col col-lg-12">
+                                            {{ "page.spot.h4.no_liveaboard"|trans }}
+                                        </div>
+                                    {% endif %}
                                 </div>
+                                {#</div>#}
                             </div>
                         </div>
                     </div>
@@ -533,36 +533,36 @@
                         <div class="panel-body">
                             <div class="ibox">
                                 <h4>{{ "page.spot.h4.accommodation"|trans }}</h4>
-                                <div class="ibox-content">
-                                    <div class="row" >
-                                        {% if accommodations %}
-                                            {% for b in accommodations %}
-                                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                                    <div class="contact-box" style="height: 165px">
-                                                        <div class="col-sm-4">
-                                                            <div class="text-center">
-                                                                <img alt="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
-                                                            </div>
+                                {#<div class="ibox-content">#}
+                                <div class="row" >
+                                    {% if accommodations %}
+                                        {% for b in accommodations %}
+                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                <div class="contact-box" style="height: 165px">
+                                                    <div class="col-sm-4">
+                                                        <div class="text-center">
+                                                            <img alt="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
                                                         </div>
-                                                        <div class="col-sm-8">
-                                                            <h4><strong>{{b|truncate(40)}}</strong></h4>
-                                                            <p><i class="fa fa-map-marker"></i> {{ b.address.location }}</p>
-                                                            <div>
-                                                                <a class="btn btn-primary btn-block btn-xs" href="{{ path('business_no_slug', { 'id': b.id}) }}">{{ "page.business.button.more_info"|trans }}</a>
-                                                                <a class="btn btn-primary btn-block btn-xs" href="{{ path('booking_admin_new', {'business_id': b.id}) }}">{{ "page.business.button.book_now"|trans }}</a>
-                                                            </div>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <h4><strong>{{b|truncate(40)}}</strong></h4>
+                                                        <p><i class="fa fa-map-marker"></i> {{ b.address.location }}</p>
+                                                        <div>
+                                                            <a class="btn btn-primary btn-block btn-xs" href="{{ path('business_no_slug', { 'id': b.id}) }}">{{ "page.business.button.more_info"|trans }}</a>
+                                                            <a class="btn btn-primary btn-block btn-xs" href="{{ path('booking_admin_new', {'business_id': b.id}) }}">{{ "page.business.button.book_now"|trans }}</a>
                                                         </div>
-                                                        <div class="clearfix"></div>
-                                                    </div> 
-                                                </div>
-                                            {% endfor %}
-                                        {% else %}
-                                            <div class="col col-lg-12">
-                                                {{ "page.spot.h4.no_accommodation"|trans }}
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </div> 
                                             </div>
-                                        {% endif %}
-                                    </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="col col-lg-12">
+                                            {{ "page.spot.h4.no_accommodation"|trans }}
+                                        </div>
+                                    {% endif %}
                                 </div>
+                                {#</div>#}
                             </div>
                         </div>
                     </div>

@@ -528,11 +528,19 @@ class DefaultController extends Controller {
      */
 
     public function businessAction($country, $location, $slug) {
+
+        $em = $this->getDoctrine()->getManager();
+
         $locale = $this->get('request')->getLocale();
         $business = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
                 ->findBySlug($country, $location, $slug, $locale);
 
         if ($business) {
+
+            $photosCount = $em->createQuery('SELECT count(p.id) FROM SkaphandrusAppBundle:SkBusiness b JOIN b.spot s JOIN s.photos p WHERE b.id = ?1')->setParameter(1, $business->getId())->getSingleScalarResult();
+            $speciesCount = $em->createQuery('SELECT COUNT(DISTINCT(p.species)) FROM SkaphandrusAppBundle:SkBusiness b JOIN b.spot s JOIN s.photos p WHERE b.id = ?1')->setParameter(1, $business->getId())->getSingleScalarResult();
+//            $friendsCount = $em->createQuery('SELECT COUNT(p.id) FROM SkaphandrusAppBundle:SkPerson p WHERE p.fosUser = ?1')->setParameter(1, $id)->getSingleScalarResult();
+//            $tagsCount = 0;
 
             $map = null;
             $latitude = 0;
@@ -709,12 +717,10 @@ class DefaultController extends Controller {
 
             return $this->render('SkaphandrusAppBundle:Default:business.html.twig', array(
                         'business' => $business,
+                        'photosCount' => $photosCount,
+                        'speciesCount' => $speciesCount,
                         'map' => $map,
-                        'map_center_lat' => $centerLatitude,
-                        'map_center_lon' => $centerLongitude,
                         'mapSpot' => $mapSpot,
-                        'map_center_latSpot' => $centerLatitudeSpot,
-                        'map_center_lonSpot' => $centerLongitudeSpot,
             ));
         } else {
             throw $this->createNotFoundException('The business "' . $slug . '" does not exist in the location ' . $location . ' or country ' . $country);
