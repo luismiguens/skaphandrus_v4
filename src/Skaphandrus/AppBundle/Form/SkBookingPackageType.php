@@ -9,38 +9,23 @@ use Skaphandrus\AppBundle\Entity\Repository\SkBusinessDivePriceRepository;
 
 class SkBookingPackageType extends AbstractType {
 
-    
-
-    
-    
-    
-    
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        
+
         $business_id = $options['business_id'];
-        
-        dump($business_id);
-        //dump($builder->getData());
-          //      $sk_booking = new \Skaphandrus\AppBundle\Entity\SkBooking();
-        //$sk_booking = $builder->getData();
-        
-        
-        //$business = $sk_booking->getBusiness()
-        
         
         $builder
                 ->add('bookingPackage', 'entity', array(
                     'attr' => array('class' => 'form-control m-b'),
                     'label' => 'form.booking_package.label.bookingPackage',
                     'class' => 'SkaphandrusAppBundle:SkBusinessDivePrice',
-                    'query_builder' => function (SkBusinessDivePriceRepository $er) {
+                    'query_builder' => function (SkBusinessDivePriceRepository $er) use($business_id) {
                         return $er->createQueryBuilder('p')
                                 ->orWhere('p.business = ?1')
-                                ->setParameter(1, 1977);
+                                ->setParameter(1, $business_id);
                     },
                     'required' => true
                 ))
@@ -57,7 +42,7 @@ class SkBookingPackageType extends AbstractType {
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'Skaphandrus\AppBundle\Entity\SkBookingPackage',
-            'business_id' => null    
+            'business_id' => null
         ));
     }
 

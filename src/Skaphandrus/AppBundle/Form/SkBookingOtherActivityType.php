@@ -5,6 +5,7 @@ namespace Skaphandrus\AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Skaphandrus\AppBundle\Entity\Repository\SkOtherActivityRepository;
 
 class SkBookingOtherActivityType extends AbstractType {
 
@@ -13,10 +14,20 @@ class SkBookingOtherActivityType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        
+        $business_id = $options['business_id'];
+        
         $builder
                 ->add('otherActivity', null, array(
                     'attr' => array('class' => 'form-control m-b'),
                     'label' => 'form.booking_other_activity.label.other_activity',
+                    'class' => 'SkaphandrusAppBundle:SkOtherActivity',
+                    'query_builder' => function (SkOtherActivityRepository $er) use($business_id) {
+                        return $er->createQueryBuilder('o')
+                                ->join('o.business', 'b')
+                                ->orWhere('b.id = ?1')
+                                ->setParameter(1, $business_id);
+                    },
                     'required' => true
                 ))
                 ->add('schedule', 'choice', array(
@@ -44,7 +55,8 @@ class SkBookingOtherActivityType extends AbstractType {
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'Skaphandrus\AppBundle\Entity\SkBookingOtherActivity'
+            'data_class' => 'Skaphandrus\AppBundle\Entity\SkBookingOtherActivity',
+            'business_id' => null
         ));
     }
 

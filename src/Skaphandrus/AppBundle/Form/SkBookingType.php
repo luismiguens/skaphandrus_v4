@@ -13,10 +13,9 @@ class SkBookingType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        
-      dump($builder->getData());
-        
-        
+
+        $business = $builder->getData();
+
         $builder
                 ->add('business', 'autocomplete', array(
                     'class' => 'SkaphandrusAppBundle:SkBusiness',
@@ -73,7 +72,7 @@ class SkBookingType extends AbstractType {
                 ))
                 ->add('bookingPackage', 'collection', array(
                     'type' => new SkBookingPackageType(),
-                    'options' => array('business_id'=> 1977),
+                    'options' => array('business_id' => $business->getBusiness()->getId()),
                     'allow_add' => true,
                     'allow_delete' => true,
                     'prototype' => true,
@@ -83,6 +82,7 @@ class SkBookingType extends AbstractType {
                 ))
                 ->add('bookingOtherActivity', 'collection', array(
                     'type' => new SkBookingOtherActivityType(),
+                    'options' => array('business_id' => $business->getBusiness()->getId()),
                     'allow_add' => true,
                     'allow_delete' => true,
                     'prototype' => true,
