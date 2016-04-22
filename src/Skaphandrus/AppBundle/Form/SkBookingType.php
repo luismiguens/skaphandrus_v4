@@ -67,6 +67,15 @@ class SkBookingType extends AbstractType {
                     'required' => false,
                     'label' => 'form.booking.label.booking_dive'
                 ))
+                ->add('bookingPackage', 'collection', array(
+                    'type' => new SkBookingPackageType(),
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'prototype' => true,
+                    'by_reference' => false,
+                    'required' => false,
+                    'label' => 'form.booking.label.booking_package'
+                ))
                 ->add('bookingOtherActivity', 'collection', array(
                     'type' => new SkBookingOtherActivityType(),
                     'allow_add' => true,

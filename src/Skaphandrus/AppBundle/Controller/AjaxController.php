@@ -32,6 +32,9 @@ class AjaxController extends Controller {
         elseif ($request->query->get('user_id')):
             $user_id = $request->query->get('user_id');
             $spots = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')->findSpotsInUser($user_id);
+        elseif ($request->query->get('business_id')):
+            $business_id = $request->query->get('business_id');
+            $spots = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpot')->findSpotsInBusiness($business_id);
         endif;
 
         return $this->render('SkaphandrusAppBundle:Ajax:spotSeeAll.html.twig', array(
@@ -65,6 +68,9 @@ class AjaxController extends Controller {
         elseif ($request->query->get('user_id')):
             $user_id = $request->query->get('user_id');
             $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findSpeciesInUser($user_id);
+        elseif ($request->query->get('business_id')):
+            $business_id = $request->query->get('business_id');
+            $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findSpeciesInBusiness($business_id);
         endif;
 
         return $this->render('SkaphandrusAppBundle:Ajax:speciesSeeAll.html.twig', array(
@@ -108,6 +114,9 @@ class AjaxController extends Controller {
         elseif ($request->query->get('species_id')):
             $species_id = $request->query->get('species_id');
             $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->findUsersInSpecies($species_id);
+        elseif ($request->query->get('business_id')):
+            $business_id = $request->query->get('business_id');
+            $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->findUsersInBusiness($business_id);
         endif;
 
         return $this->render('SkaphandrusAppBundle:Ajax:photographersSeeAll.html.twig', array(
@@ -203,6 +212,13 @@ class AjaxController extends Controller {
             foreach ($spots as $spot):
                 $spot->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpot')->findPhotosSpotAndUser($spot->getId(), $user_id));
             endforeach;
+        elseif ($request->query->get('business_id')) :
+            $class = 'box_spacer_right';
+            $business_id = $request->query->get('business_id');
+            $spots = $em->getRepository('SkaphandrusAppBundle:SkSpot')->getMoreSpotsBusiness($locale, $business_id, $limit, $offset);
+            foreach ($spots as $spot):
+                $spot->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpot')->findPhotosBusiness($spot->getId(), $business_id));
+            endforeach;
         endif;
 
 
@@ -264,7 +280,13 @@ class AjaxController extends Controller {
             foreach ($species as $s):
                 $s->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpecies')->findPhotosUser($s->getId(), $user_id));
             endforeach;
-
+        elseif ($request->query->get('business_id')):
+            $class = 'box_spacer_right';
+            $business_id = $request->query->get('business_id');
+            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->getMoreSpeciesBusiness($business_id, $limit, $offset);
+            foreach ($species as $s):
+                $s->setPhotos($em->getRepository('SkaphandrusAppBundle:SkSpecies')->findPhotosBusiness($s->getId(), $business_id));
+            endforeach;
 
         endif;
 
@@ -347,6 +369,12 @@ class AjaxController extends Controller {
             $photographers = $em->getRepository('SkaphandrusAppBundle:FosUser')->getMorePhotographersSpecies($species_id, $limit, $offset);
             foreach ($photographers as $p):
                 $p->setPhotos($em->getRepository('SkaphandrusAppBundle:FosUser')->findPhotosSpecies($p->getId(), $species_id));
+            endforeach;
+        elseif ($request->query->get('business_id')):
+            $business_id = $request->query->get('business_id');
+            $photographers = $em->getRepository('SkaphandrusAppBundle:FosUser')->getMorePhotographersBusiness($business_id, $limit, $offset);
+            foreach ($photographers as $p):
+                $p->setPhotos($em->getRepository('SkaphandrusAppBundle:FosUser')->findPhotosBusiness($p->getId(), $business_id));
             endforeach;
         endif;
 
@@ -478,7 +506,7 @@ class AjaxController extends Controller {
             $qb->join('l.region', 'r', 'WITH', 'l.region = r.id');
             $qb->join('r.country', 'c', 'WITH', 'r.country = c.id');
             $qb->andWhere('c.id IN( ?3 )');
-            $qb->setParameter(3, implode(', ',$country_ids) );
+            $qb->setParameter(3, implode(', ', $country_ids));
 
             $query = $qb->getQuery();
             $result = $query->getResult();

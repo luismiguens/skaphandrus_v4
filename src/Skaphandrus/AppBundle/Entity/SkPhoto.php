@@ -100,6 +100,11 @@ class SkPhoto {
     private $points;
 
     /**
+     * @var \Skaphandrus\AppBundle\Entity\SkSpot
+     */
+    private $business;
+
+    /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the  update. If this
      * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
@@ -376,6 +381,28 @@ class SkPhoto {
      */
     public function getSpot() {
         return $this->spot;
+    }
+
+    /**
+     * Set business
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBusiness $business
+     *
+     * @return SkPhoto
+     */
+    public function setBusiness(\Skaphandrus\AppBundle\Entity\SkBusiness $business = null) {
+        $this->business = $business;
+
+        return $this;
+    }
+
+    /**
+     * Get business
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkBusiness
+     */
+    public function getBusiness() {
+        return $this->business;
     }
 
     /**

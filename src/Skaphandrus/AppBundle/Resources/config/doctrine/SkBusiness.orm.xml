@@ -171,6 +171,8 @@
         
         <one-to-one field="photoContest" target-entity="SkPhotoContest" mapped-by="business" />
         
+        <one-to-many field="photos" target-entity="SkPhoto" mapped-by="spot"/>
+        
         <lifecycle-callbacks>
             <lifecycle-callback type="postLoad" method="doStuffOnPostLoad"/>
             <lifecycle-callback type="postUpdate" method="doStuffOnPostUpdate"/>

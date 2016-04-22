@@ -28,6 +28,47 @@ class SkBusinessDivePrice {
     private $business;
 
     /**
+     * @var Collection
+     */
+    private $package;
+
+//    /**
+//     * @var Collection
+//     */
+//    private $booking;
+//    
+//    /**
+//     * Add booking
+//     *
+//     * @param SkBooking $booking
+//     *
+//     * @return SkCurrency
+//     */
+//    public function addBooking(SkBooking $booking) {
+//        $this->booking[] = $booking;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Remove booking
+//     *
+//     * @param SkBooking $booking
+//     */
+//    public function removeBooking(SkBooking $booking) {
+//        $this->booking->removeElement($booking);
+//    }
+//
+//    /**
+//     * Get booking
+//     *
+//     * @return Collection
+//     */
+//    public function getBooking() {
+//        return $this->booking;
+//    }
+
+    /**
      * Set numberofdives
      *
      * @param integer $numberofdives
@@ -100,6 +141,42 @@ class SkBusinessDivePrice {
      */
     public function getBusiness() {
         return $this->business;
+    }
+
+    /**
+     * Add package
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBookingPackage $package
+     *
+     * @return SkBookingPackage
+     */
+    public function addBookingPackage(\Skaphandrus\AppBundle\Entity\SkBookingPackage $package) {
+        $this->package[] = $package;
+        $package->setBooking($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove package
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBookingPackage $package
+     */
+    public function removeBookingPackage(\Skaphandrus\AppBundle\Entity\SkBookingPackage $package) {
+        $this->package->removeElement($package);
+    }
+
+    /**
+     * Get package
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBookingPackage() {
+        return $this->package;
+    }
+
+    public function __toString() {
+        return $this->getNumberofdives() . " dives, " . $this->getValueperdives() . " €";
     }
 
 }

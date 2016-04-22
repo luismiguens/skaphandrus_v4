@@ -127,12 +127,71 @@
         });
         /////////////////////  BookingDive code end  \\\\\\\\\\\\\\\\\\\\\\\
 
+        //http://symfony.com/doc/current/cookbook/form/form_collections.html
+        /////////////////////  BookingPackage code start  \\\\\\\\\\\\\\\\\\\\\\\
+        var $container2 = $('ul.bookingPackage');
+        // button to add a new SportParam
+        var $addBookingPackageLink = $('<br/><a href="#" class="btn btn-primary btn-xs">{{ "form.common.btn.create"|trans }}</a>');
+        var $newLinkLi2 = $('<li></li>').append($addBookingPackageLink);
+
+        $(document).ready(function () {
+            //delete button on each existing SportParam
+            $container2.find('li').each(function () {
+                addBookingPackageDeleteLink($(this));
+            });
+
+            //add button
+            $container2.append($newLinkLi2);
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $container2.data('index', $container2.find(':input').length);
+
+            // adding a new form when cliking Add button
+            $addBookingPackageLink.on('click', function (e) {
+                e.preventDefault();
+
+                addBookingPackageForm($container2, $newLinkLi2);
+
+            });
+
+            // adding a new form SportParam
+            function addBookingPackageForm($container, $newLinkLi) {
+
+                var $prototype = $container.attr('data-prototype');
+
+                var newForm = $prototype.replace(/__name__/g, $container.children().length - 1);
+
+                var $newFormLi = $("<li margin-bottom:1px';></li>").append(newForm);
+                $newLinkLi.before($newFormLi);
+
+                addBookingPackageDeleteLink($newFormLi);
+            }
+
+
+            function addBookingPackageDeleteLink($paramFormLi) {
+
+                var $removeFormA = $('<a href="#" class="btn btn-danger  btn-xs">{{ "form.common.btn.delete"|trans }}</a> <div class="hr-line-dashed"></div>');
+
+                $paramFormLi.append($removeFormA);
+
+                $removeFormA.on('click', function (e) {
+
+                    e.preventDefault();
+
+                    $paramFormLi.remove();
+                });
+            }
+
+        });
+        /////////////////////  BookingPackage code end  \\\\\\\\\\\\\\\\\\\\\\\
+
         $(document).ready(function () {
             var allfield7s = document.getElementsByName("fakeskaphandrus_appbundle_skbooking[business]");
             for (var i = 0; i < allfield7s.length; i++)
                 allfield7s[i].setAttribute("readonly", true);
         });
-        
+
     </script>
 
 {% endblock %}
@@ -175,7 +234,7 @@
         }
     </style>
 
-        {{ form_row(edit_form.business) }}
+    {{ form_row(edit_form.business) }}
     <div class="hr-line-dashed"></div>
     {{ form_row(edit_form.beginAt) }}
     <div class="hr-line-dashed"></div>
@@ -198,9 +257,24 @@
         </div>
     </div>
     <div class="hr-line-dashed"></div>
-    
-    
-    
+
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label">{{ form_label(edit_form.bookingPackage) }}</label>
+        <div class="col-sm-9">
+            <ul class=bookingPackage data-prototype="{{ form_widget(edit_form.bookingPackage.vars.prototype)|e }}">
+                {% for package in edit_form.bookingPackage %}
+                    <li>
+                        {{ form_widget(package) }}
+                    </li>
+                {% endfor %}
+            </ul>
+            {#<div class="hr-line-dashed"></div>#}
+        </div>
+    </div>
+    <div class="hr-line-dashed"></div>
+
+
     <div class="form-group">
         <label class="col-sm-3 control-label">{{ form_label(edit_form.bookingOtherActivity) }}</label>
         <div class="col-sm-9">
@@ -215,8 +289,8 @@
         </div>
     </div>
     <div class="hr-line-dashed"></div>
-         
-         
+
+
 
     {{ form_row(edit_form.observations) }}
     <div class="hr-line-dashed"></div>

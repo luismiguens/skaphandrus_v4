@@ -33,7 +33,7 @@
         </field>
         
         <one-to-many field="bookingOtherActivity" target-entity="SkBookingOtherActivity" mapped-by="booking">
-        <cascade>
+            <cascade>
                 <cascade-persist/>
             </cascade>
         </one-to-many>
@@ -43,8 +43,6 @@
                 <cascade-persist/>
             </cascade>
         </one-to-many>
-        
-  
         
         <many-to-one field="business" target-entity="SkBusiness" fetch="LAZY">
             <join-columns>
@@ -57,6 +55,23 @@
                 <join-column name="fos_user_id" referenced-column-name="id"/>
             </join-columns>
         </many-to-one>
+        
+        <one-to-many field="bookingPackage" target-entity="SkBookingPackage" mapped-by="booking">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        
+        <!--        <many-to-many field="bookingPackage" target-entity="SkBusinessDivePrice" inversed-by="booking" fetch="LAZY">
+            <join-table name="sk_booking_package">
+                <join-columns>
+                    <join-column name="booking_id" referenced-column-name="id"/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="package_id" referenced-column-name="id"/>
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>-->
         
     </entity>
 </doctrine-mapping>

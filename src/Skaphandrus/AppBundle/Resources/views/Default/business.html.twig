@@ -9,7 +9,6 @@
     <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('business', {'country':slugify(business.address.location.region.country.getCountryName('en')), 'location':slugify(business.address.location.translate('en').name), 'slug':slugify(business.name), 'locale': 'en'}) }}" />
 {% endblock %}
 
-
 {% set keywords = business.name %}
 {% set keywords = keywords~', '~("meta_tag.keyword.scuba_diving_center"|trans) %}
 {% set keywords = keywords~', '~("meta_tag.keyword.dive_center"|trans) %}
@@ -27,46 +26,156 @@
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/peity/jquery.peity.min.js') }}"></script>
+    <script src="https://raw.githubusercontent.com/jedfoster/Readmore.js/master/readmore.min.js"></script>
 
-    {% if map %}
-        <script>
-                    // Fix bug on Gmap inside tabs
-                    $('.nav-tabs').on('shown.bs.tab', function () {
-            google.maps.event.trigger(window, 'resize', {});
-                    setTimeout(function () {
-            {{ map.javascriptVariable }}.setCenter({{ map.center.javascriptVariable }});
-                        }, 100);
-                });</script>
-        {% endif %}
+    <script type="text/javascript">
+
+        $(function () {
+            var limit_spots = 3;
+            var offset_spots = -3;
+            var limit_species = 3;
+            var offset_species = -3;
+            var limit_photographers = 3;
+            var offset_photographers = -3;
+
+            var loadSpots = function () {
+                $('#box_spots').fadeIn("slow");
+                offset_spots = offset_spots + 3;
+                setTimeout(function () {
+                    $.ajax({
+                        type: "get",
+                        url: "{{path("ajax_spot_show_more")}}",
+                        data: 'business_id=' + {{ business.id }} +'&limit=' + limit_spots + '&offset=' + offset_spots,
+                        dataType: "text",
+                        success: function (response) {
+                            $('#box_spots .slider_thumbs').slick('unslick');
+                            $("#box_spots").append(response);
+                            sliders('#box_spots .slider_thumbs');
+                        }
+                    });
+                }, 100);
+            };
+            $(this).ready(loadSpots);
+            $('#show_more_spots').click(loadSpots);
+
+            var loadSpecies = function () {
+                $('#box_species').fadeIn("slow");
+                offset_species = offset_species + 3;
+                setTimeout(function () {
+                    $.ajax({
+                        type: "get",
+                        url: "{{path("ajax_species_show_more")}}",
+                        data: 'business_id=' + {{ business.id }} +'&limit=' + limit_species + '&offset=' + offset_species,
+                        dataType: "text",
+                        success: function (response) {
+                            $('#box_species .slider_thumbs').slick('unslick');
+                            $("#box_species").append(response);
+                            sliders('#box_species .slider_thumbs');
+                        }
+                    });
+                }, 100);
+            };
+            $(this).ready(loadSpecies);
+            $('#show_more_species').click(loadSpecies);
+
+            var loadPhotographers = function () {
+                $('#box_photographers').fadeIn("slow");
+                offset_photographers = offset_photographers + 3;
+                setTimeout(function () {
+                    $.ajax({
+                        type: "get",
+                        url: "{{path("ajax_photographers_show_more")}}",
+                        data: 'business_id=' + {{ business.id }} +'&limit=' + limit_photographers + '&offset=' + offset_photographers,
+                        dataType: "text",
+                        success: function (response) {
+                            $('#box_photographers .slider_thumbs').slick('unslick');
+                            $("#box_photographers").append(response);
+                            sliders('#box_photographers .slider_thumbs');
+                        }
+                    });
+                }, 100);
+            };
+            $(this).ready(loadPhotographers);
+            $('#show_more_photographers').click(loadPhotographers);
+
+        });
+
+        var businessId = 'business_id= {{ business.id }}';
+
+        /*  funçoes para os footables  */
+        var loadSpotAll = function () {
+            setTimeout(function () {
+                $.ajax({
+                    type: "get",
+                    url: "{{path("ajax_spot_see_all")}}",
+                    data: businessId,
+                    dataType: "text",
+                    success: function (response) {
+                        $("#spotInput").html(response);
+                    }
+                });
+            }, 100);
+        };
+        $('#spotModal').on('shown.bs.modal', loadSpotAll);
+
+        var loadSpeciesAll = function () {
+            setTimeout(function () {
+                $.ajax({
+                    type: "get",
+                    url: "{{path("ajax_species_see_all")}}",
+                    data: businessId,
+                    dataType: "text",
+                    success: function (response) {
+                        $("#speciesInput").html(response);
+                    }
+                });
+            }, 100);
+        };
+        $('#speciesModal').on('shown.bs.modal', loadSpeciesAll);
+
+        var loadPhotographersAll = function () {
+            setTimeout(function () {
+                $.ajax({
+                    type: "get",
+                    url: "{{path("ajax_photographers_see_all")}}",
+                    data: businessId,
+                    dataType: "text",
+                    success: function (response) {
+                        $("#photographersInput").html(response);
+                    }
+                });
+            }, 100);
+        };
+        $('#photographersModal').on('shown.bs.modal', loadPhotographersAll);
+
+
+        $('#readMore').readmore({
+            speed: 75,
+            heightMargin: 25,
+            collapsedHeight: 200,
+            moreLink: '<a style="width: 50%;" class="btn btn-sm btn-primary pull-right" href="#">{{"common.show_more"|trans}}</a>',
+            lessLink: '<a style="width: 50%;" class="btn btn-sm btn-primary pull-right" href="#">{{"common.hide"|trans}}</a>'
+        });
+
+    </script>
 
     {% if mapSpot %}
         <script>
-                    // Fix bug on Gmap inside tabs
-                    $('.nav-tabs').on('shown.bs.tab', function () {
-            google.maps.event.trigger(window, 'resize', {});
-                    setTimeout(function () {
+            // Fix bug on Gmap inside tabs
+            $('.nav-tabs').on('shown.bs.tab', function () {
+                google.maps.event.trigger(window, 'resize', {});
+                setTimeout(function () {
             {{ mapSpot.javascriptVariable }}.setCenter({{ mapSpot.center.javascriptVariable }});
-                        }, 100);
-                });</script>
-        {% endif %}
+                    }, 100);
+                });
+        </script>
+    {% endif %}
 
 {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
-
-    <style type="text/css">
-        #map_canvas {
-            margin-bottom: 25px;
-        }
-        .colunas {
-            -webkit-columns: auto 2; /* Chrome, Safari, Opera */
-            -moz-columns: auto 2; /* Firefox */
-            columns: auto 2;
-        }
-    </style>
-
 
 {% endblock %}
 
@@ -83,214 +192,302 @@
 
 {% block body %}
 
-    <div class="wrapper wrapper-content" itemscope itemtype="http://schema.org/LocalBusiness">
-        <div class="row animated fadeInRight">
-            <!-- Left Column -->
-            <div class="col-md-4">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>{{ "page.business.h5.detail"|trans }}</h5>
+    <div class="wrapper wrapper-content" itemscope itemtype="http://schema.org/ProfilePage">
+        <div class="animated fadeInLeft">
+
+            <!-- BEGIN - row das statistics -->
+            <div class="row m-b-lg m-t-lg">
+                <div class="col-md-6">
+                    <div class="profile-image"> 
+                        <img itemprop="image" alt="{{ business.name }}" class="img-circle circle-border m-b-md" src="{{ business.getWebPath | imagine_filter('sk_thumbnail_outbound_100') }}" />
                     </div>
-                    <div>
-                        <div class="ibox-content no-padding border-left-right">
-                            {% if business.picture %}
-                                <img itemprop="image" alt="{{ business.name }}" class="img-responsive" src="{{ business.getWebPath | imagine_filter('sk_widen_590') }}" />
-                            {% endif %}
-                        </div>
-                        <div class="ibox-content profile-content">
-                            <h4 itemprop="legalName">
-                                <strong>{{ business.name|title }}</strong>
-                            </h4>
-                            {% if business.foundedAt %}
-                                <h5>{{ "page.business.h5.founded_at"|trans }}: {{ business.foundedAt|date("d-M-Y") }}</h5>
-                            {% endif %}
-                            <br/>
-                            <h4>{{ "page.business.h4.address"|trans }}</h4>
-                            <table class="table">
-                                {% if business.address.street %}
-                                    <tr>
-                                        <th>
-                                            {{ "page.business.h5.address_street"|trans }}
-                                        </th>
-                                        <td>
-                                            <meta itemprop="address" content="{{ business.address.street }}" />{{ business.address.street }}
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                                {% if business.address.location %}
-                                    <tr>
-                                        <th>
-                                            {{ "page.business.h5.address_location"|trans }}
-                                        </th>
-                                        <td>
-                                            <meta itemprop="address" content="{{ business.address.location }}" />{{ business.address.location }}
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                                {% if business.address.postcode %}
-                                    <tr>
-                                        <th>
-                                            {{ "page.business.h5.address_postcode"|trans }}
-                                        </th>
-                                        <td>
-                                            {{ business.address.postcode }}
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                                {% if business.address.province %}
-                                    <tr>
-                                        <th>
-                                            {{ "page.business.h5.address_province"|trans }}
-                                        </th>
-                                        <td>
-                                            {{ business.address.province }}
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                            </table>
-
-                            {% if map %}
-                                {{ google_map(map) }}
-                            {% endif %}
-
-                            <br/>
-                            <h4>{{ "page.business.h4.contact"|trans }}</h4>
-                            <table class="table">
-                                {% if business.contact.email %}
-                                    <tr>
-                                        <th>
-                                            {{ "page.business.h5.contact_email"|trans }}
-                                        </th>
-                                        <td>
-                                            <meta itemprop="email" content="{{ business.contact.email }}" />{{ business.contact.email }}
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                                {% if business.contact.fax %}
-                                    <tr>
-                                        <th>
-                                            {{ "page.business.h5.contact_fax"|trans }}
-                                        </th>
-                                        <td>
-                                            <meta itemprop="faxNumber" content="{{ business.contact.fax }}" />{{ business.contact.fax }}
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                                {% if business.contact.homepage %}
-                                    <tr>
-                                        <th>
-                                            {{ "page.business.h5.contact_homepage"|trans }}
-                                        </th>
-                                        <td>
-                                            {{ business.contact.homepage }}
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                                {% if business.contact.mobilephone %}
-                                    <tr>
-                                        <th>
-                                            {{ "page.business.h5.contact_mobilephone"|trans }}
-                                        </th>
-                                        <td>
-                                            {{ business.contact.mobilephone }}
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                                {% if business.contact.phone %}
-                                    <tr>
-                                        <th>
-                                            {{ "page.business.h5.contact_phone"|trans }}
-                                        </th>
-                                        <td>
-                                            <meta itemprop="telephone" content="{{ business.contact.phone }}" />{{ business.contact.phone }}
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                            </table>
+                    <div class="profile-info">
+                        <div>
+                            <h2 class="no-margins" itemprop="name">{{ business.name }}</h2>
+                            <h4>{{ business.address.location }}, {{ business.address.location.region.country }}</h4>
+                            <a class="btn btn-sm btn-primary" href="{{ path('booking_admin_new', {'business_id': business.id}) }}" >{{ "page.business.button.book_now"|trans }} <i class="fa fa-long-arrow-right"></i></a>
                         </div>
                     </div>
+                </div>
+                <div class="col-md-4">
+                    <table class="table small m-b-xs">
+                        <tbody>
+                            <tr>
+                                <td><strong>{{ photosCount }}</strong> {{ "page.business.label.photos"|trans }} </td>
+                                <td><strong>{{ business.spot|length }}</strong> {{ "page.business.label.spots"|trans }} </td>
+                            </tr>
+                            <tr>
+                                <td><strong>???</strong> {{ "page.business.label.tags"|trans }} </td>
+                                <td><strong>???</strong> {{ "page.business.label.friends"|trans }} </td>
+                            </tr>
+                            <tr>
+                                <td><strong>{{ speciesCount }}</strong> {{ "page.business.label.species"|trans }} </td>
+                                <td><strong>{{ business.educationCourse|length }}</strong> {{ "page.business.label.courses"|trans }} </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <!-- End Left Column -->
-            <!-- Right Column -->
-            <div class="col-md-8">
-                <div class="ibox-title">
-                    <h5>{{ "page.business.h5.related_contents"|trans }}</h5>
-                    {#<div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#">Config option 1</a>
-                            </li>
-                            <li><a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>#}
+            <!-- END - row statistics -->
+
+            <!-- BEGIN - row full content area -->
+            <div class="row">
+
+                <div class="col-md-4">
+
+                    <!-- BEGIN - row about -->
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            {% if business.about|length > 0 %}
+                                <h3>{{ "page.business.h4.about"|trans }}</h3>
+                                <div class="ibox">
+                                    <p class="small"> {{ business.about|raw }} </p>
+                                </div>
+                            {% endif %}
+                            <div class="ibox">
+                                <h4>{{ "page.business.h4.address"|trans }}</h4>
+                                <dl>
+                                    {% if business.address.street %}
+                                        <dt>{{ "page.business.h5.address_street"|trans }}:</dt>
+                                        <dd>
+                                            <meta itemprop="address" content="{{ business.address.street }}" />
+                                            {{ business.address.street }}
+                                        </dd>
+                                    {% endif %}
+                                    {% if business.address.location %}
+                                        <dt>{{ "page.business.h5.address_location"|trans }}:</dt>
+                                        <dd>
+                                            <meta itemprop="address" content="{{ business.address.location }}" />
+                                            {{ business.address.location }}
+                                        </dd>
+                                    {% endif %}
+                                    {% if business.address.province %}
+                                        <dt>{{ "page.business.h5.address_province"|trans }}:</dt>
+                                        <dd>
+                                            {{ business.address.province }}
+                                        </dd>
+                                    {% endif %}
+                                    {% if business.address.location %}
+                                        <dt>{{ "page.business.h5.address_country"|trans }}:</dt>
+                                        <dd>
+                                            {{ business.address.location.region.country }}
+                                        </dd>
+                                    {% endif %}
+                                </dl>
+
+                                {% if map %}
+                                    {{ google_map(map) }}
+                                {% endif %}
+
+                                <h4>{{ "page.business.h4.contact"|trans }}</h4>
+                                <dl>
+                                    {% if business.contact.email %}
+                                        <dt>{{ "page.business.h5.contact_email"|trans }}:</dt>
+                                        <dd>
+                                            <meta itemprop="email" content="{{ business.contact.email }}" />
+                                            {{ business.contact.email }}
+                                        </dd>
+                                    {% endif %}
+                                    {% if business.contact.fax %}
+                                        <dt>{{ "page.business.h5.contact_fax"|trans }}:</dt>
+                                        <dd>
+                                            <meta itemprop="faxNumber" content="{{ business.contact.fax }}" />
+                                            {{ business.contact.fax }}
+                                        </dd>
+                                    {% endif %}
+                                    {% if business.contact.mobilephone %}
+                                        <dt>{{ "page.business.h5.contact_mobilephone"|trans }}:</dt>
+                                        <dd>
+                                            {{ business.contact.mobilephone }}
+                                        </dd>
+                                    {% endif %}
+                                    {% if business.contact.phone %}
+                                        <dt>{{ "page.business.h5.contact_phone"|trans }}:</dt>
+                                        <dd>
+                                            <meta itemprop="telephone" content="{{ business.contact.phone }}" />
+                                            {{ business.contact.phone }}
+                                        </dd>
+                                    {% endif %}
+                                    {% if business.contact.homepage %}
+                                        <dt>{{ "page.business.h5.contact_homepage"|trans }}:</dt>
+                                        <dd>
+                                            <a href="#" class="text-navy">{{ business.contact.homepage }}</a>
+                                        </dd>
+                                    {% endif %}
+                                </dl>
+                            </div>
+                            {#<a href="{{ url('fos_message_thread_new' )}}" class="btn btn-primary btn-block"><i class="fa fa-envelope"></i> {{"page.user.label.send_message"|trans}}</a>#}
+                            <div class="btn btn-primary btn-block">Send mail ???</div>
+                        </div>
+                    </div>
+                    <!-- END - row about -->
+
+                    <!-- BEGIN - row type, currency, languages -->
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <div class="m-b-md">
+                                {% if business.type|length > 0 %}
+                                    <h4>{{ "page.business.h4.type"|trans }}</h4>
+                                    <div>
+                                        {% for type in business.type %}
+                                            <p><i class="fa fa-check text-navy"></i> {{ type }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="m-b-md">
+                                {% if business.currency|length > 0 %}
+                                    <h4>{{ "page.business.h4.currency"|trans }}</h4>
+                                    <div>
+                                        {% for currency in business.currency %}
+                                            <p itemprop="currenciesAccepted"><i class="fa fa-check text-navy"></i> {{ currency|title }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="m-b-md">
+                                {% if business.language|length > 0 %}
+                                    <h4>{{ "page.business.h4.language"|trans }}</h4>
+                                    <div>
+                                        {% for language in business.language %}
+                                            <p><i class="fa fa-check text-navy"></i> {{ language|title }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="m-b-md">
+                                {% if business.otherActivity|length > 0 %}
+                                    <h4>{{ "page.business.h4.other_activity"|trans }}</h4>
+                                    <div>
+                                        {% for activity in business.otherActivity %}
+                                            <p><i class="fa fa-check text-navy"></i> {{ activity|title }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END - row type, currency, languages  -->
+
                 </div>
-                <div class="ibox float-e-margins">
-                    <div class="ibox-content">
-                        <h1>{% trans with {'%business%': business.name|title, '%location%': business.address.location, '%country%': business.address.location.region.country} %}page.business.h1.title{% endtrans %}</h1>
-                        <!-- Start Panel -->
-                        <!-- Se for premium -->
-                        {% if business.isPremium or business.isPlus %}
-                            <div class="panel">
-                                <div class="panel-heading">
-                                    <!--<div class="panel-title m-b-md"><h4>Blank Panel with text tabs</h4></div>-->
-                                    <div class="panel-options">
-                                        <ul class="nav nav-tabs">
-                                            <li class="active"><a data-toggle="tab" href="#tab-1">{{ "page.business.tab.info"|trans }}</a></li>
-                                            <li><a data-toggle="tab" href="#tab-2">{{ "page.business.tab.dive"|trans }}</a></li>
-                                            <li><a data-toggle="tab" href="#tab-3">{{ "page.business.tab.education"|trans }}</a></li>
-                                            <li><a data-toggle="tab" href="#tab-4">{{ "page.business.tab.book_now"|trans }}</a></li>
-                                        </ul>
+
+                <div class="col-md-8">
+
+                    <!-- BEGIN - row descriptions  -->
+                    {% if business.description %}
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <h3>{{ "page.business.h4.description"|trans }}</h3>
+                                <div class="m-b-md">
+                                    <div id="readMore">                                
+                                        {% if business.description %}
+                                            <p itemprop="description">{{ business.description|raw }}</p>
+                                        {% endif %}
+                                        {% if business.mission %}
+                                            <h4>{{ "page.business.h4.mission"|trans }}</h4>
+                                            <p>{{ business.mission|raw }}</p>
+                                        {% endif %}
+                                        {% if business.awards %}
+                                            <h4>{{ "page.business.h4.awards"|trans }}</h4>
+                                            <p itemprop="awards">{{ business.awards|raw }}</p>
+                                        {% endif %}
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <!-- END - row descriptions  -->
 
-                                <div class="panel-body">
-                                    <div class="tab-content">
-                                        <div id="tab-1" class="tab-pane active">
-                                            {% include 'SkaphandrusAppBundle:Common:business-info-commom.html.twig' %}
-                                        </div>
+                    {% if business.isPremium or business.isPlus %}
 
-                                        <div id="tab-2" class="tab-pane">
+                        <div class="tabs-container" id="tabs_marine_animals">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a aria-expanded="true" data-toggle="tab" href="#tab-1">{{ "page.business.tab.dive"|trans }}</a></li>
+                                <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-2">{{ "page.business.tab.education"|trans }}</a></li>
+                                <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-3">{{ "page.business.tab.activity"|trans }} <span class="label label-warning">NEW</span></a></li>
+                            </ul>
+                            <div class="tab-content">
+
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="panel-body">
+                                        <div class="ibox">
+
                                             <h3>{% trans with {'%business%': business.name} %}page.business.h3.dive{% endtrans %}</h3>
                                             <br/>
 
+                                            <!-- BEGIN - row spots -->
                                             {% if mapSpot %}
                                                 <h4>{{ "page.business.h4.map"|trans }}</h4>
                                                 {{ google_map(mapSpot) }}
                                             {% endif %}
                                             <br/>
 
-                                            <!-- Dive Spots -->
-                                            {% set diveS = '' %}
-                                            {% for spot in business.spot %}
-                                                {% set diveS = spot %}
-                                            {% endfor %}
-                                            {% if diveS %}
-                                                <h4>{{ "page.business.h4.dive_spot"|trans }}</h4>
-                                                <div class="colunas">
-                                                    {% for spot in business.spot %}
-                                                        <p>{{ link_to_spot(spot, business.address.location, business.address.location.region.country) }}</p>
-                                                    {% endfor %}
+                                            <div id="box_spots"></div>
+
+                                            <div class="row" >
+                                                <div class="col-sm-6 col-sx-12">
+                                                    <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_spots">{{ "page.profile.button.show_more_spots"|trans }}</button>
                                                 </div>
-                                            {% endif %}
+                                                <div class="col-sm-6 col-sx-12">
+                                                    <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#spotModal">{{ "page.profile.button.see_all_spots"|trans }}</button>
+                                                </div>
+                                            </div>
+
+                                            <!-- Spots Modal start -->
+                                            <div class="modal fade" id="spotModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title" id="myModalLabel">{% trans with {'%name%': business.name|title} %}page.business.h4.spots{% endtrans %}</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+
+                                                            <div id="spotInput"></div>
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Spots Modal end -->
+                                            <!-- END - row spots  -->
                                             <br/>
 
-                                            <!-- Dive Price -->
-                                            {% set diveP = '' %}
-                                            {% for dive in business.divePrice %}
-                                                {% set diveP = dive %}
-                                            {% endfor %}
-                                            {% if diveP %}
+                                            <!-- BEGIN - row dive pack  -->
+                                            {% if business.divePrice %}
                                                 <h4>{{ "page.business.h4.dive_price"|trans }}</h4>
+                                                <div class="row">
+                                                    {% for pack in business.divePrice %}
+                                                        <div class="col-md-3 col-sm-4 col-xs-6">
+                                                            <div class="ibox">
+                                                                <div class="ibox-content product-box">
+                                                                    <img src="{{ business.getWebPath | imagine_filter('sk_widen_100') }}" class="img-responsive"/>
+                                                                    <div class="product-desc">
+                                                                        <span class="product-price">
+                                                                            {{ pack.valueperdives }} {{ business.unit.currency }}
+                                                                        </span>
+                                                                        <a href="#" class="product-name">
+                                                                            {{ pack.numberofdives }}
+                                                                            {% if pack.numberofdives < 10 %}
+                                                                                {{ "label.dive"|trans }}
+                                                                            {% else %}
+                                                                                {{ "label.dives"|trans }}
+                                                                            {% endif %}
+                                                                        </a>
+                                                                        <div class="m-t text-righ">
+                                                                            <a class="btn btn-xs btn-outline btn-primary" href="{{ path('booking_admin_new', {'business_id': business.id}) }}" >{{ "page.business.button.book_now"|trans }} <i class="fa fa-long-arrow-right"></i></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+
+                                                {#<h4>{{ "page.business.h4.dive_price"|trans }}</h4>#}
                                                 <table class="table table-striped">
                                                     <thead>
                                                         <tr>
@@ -314,15 +511,13 @@
                                                         {% endfor %}
                                                     </tbody>
                                                 </table>
+
                                             {% endif %}
+                                            <!-- END - row dive pack  -->
                                             <br/>
 
-                                            <!-- Rent Equipment -->
-                                            {% set rentEqui = '' %}
-                                            {% for equipment in business.rentEquipment %}
-                                                {% set rentEqui = equipment %}
-                                            {% endfor %}
-                                            {% if rentEqui %}
+                                            <!-- BEGIN - row rentEquipment  -->
+                                            {% if business.rentEquipment %}
                                                 <h4>{{ "page.business.h4.rent_equipment"|trans }}</h4>
                                                 <table class="table table-striped">
                                                     <thead>
@@ -343,96 +538,84 @@
                                                     </tbody>
                                                 </table>
                                             {% endif %}
+                                            <!-- END - row dive pack  -->
                                             <br/>
 
+                                            <!-- BEGIN - row extra informations  -->
                                             <!-- Dive Access -->
                                             {% if business.diveAccess %}
                                                 <h4>{{ "page.business.h4.dive_access"|trans }}</h4>
                                                 <table class="table">
                                                     <tbody>
                                                         <tr>
-                                                            <th style="width: 50%">{{ "page.dive_access.table.day_dive_boat"|trans }}</th>
-                                                                {% if business.diveAccess.dayDiveBoat == true %}
-                                                                <td>
-                                                                    <i class="fa fa-check text-navy"></i>
-                                                                </td>
-                                                            {% else %}
-                                                                <td>
-                                                                    <i class="fa fa-times text-danger"></i>
-                                                                </td>
-                                                            {% endif %}
+                                                            <th style="width: 50%">
+                                                                {{ "page.dive_access.table.day_dive_boat"|trans }}
+                                                            </th>
+                                                            {% if business.diveAccess.dayDiveBoat == true %}
+                                                                <td><i class="fa fa-check text-navy"></i></td>
+                                                                {% else %}
+                                                                <td><i class="fa fa-times text-danger"></i></td>
+                                                                {% endif %}
                                                         </tr>
                                                         <tr>
-                                                            <th style="width: 50%">{{ "page.dive_access.table.shore_dive"|trans }}</th>
-                                                                {% if business.diveAccess.shoreDive == true %}
-                                                                <td>
-                                                                    <i class="fa fa-check text-navy"></i>
-                                                                </td>
-                                                            {% else %}
-                                                                <td>
-                                                                    <i class="fa fa-times text-danger"></i>
-                                                                </td>
-                                                            {% endif %}
+                                                            <th style="width: 50%">
+                                                                {{ "page.dive_access.table.shore_dive"|trans }}
+                                                            </th>
+                                                            {% if business.diveAccess.shoreDive == true %}
+                                                                <td><i class="fa fa-check text-navy"></i></td>
+                                                                {% else %}
+                                                                <td><i class="fa fa-times text-danger"></i></td>
+                                                                {% endif %}
                                                         </tr>
                                                         <tr>
-                                                            <th style="width: 50%">{{ "page.dive_access.table.night_dive"|trans }}</th>
-                                                                {% if business.diveAccess.nightDive == true %}
-                                                                <td>
-                                                                    <i class="fa fa-check text-navy"></i>
-                                                                </td>
-                                                            {% else %}
-                                                                <td>
-                                                                    <i class="fa fa-times text-danger"></i>
-                                                                </td>
-                                                            {% endif %}
+                                                            <th style="width: 50%">
+                                                                {{ "page.dive_access.table.night_dive"|trans }}
+                                                            </th>
+                                                            {% if business.diveAccess.nightDive == true %}
+                                                                <td><i class="fa fa-check text-navy"></i></td>
+                                                                {% else %}
+                                                                <td><i class="fa fa-times text-danger"></i></td>
+                                                                {% endif %}
                                                         </tr>
                                                         <tr>
-                                                            <th style="width: 50%">{{ "page.dive_access.table.house_reef"|trans }}</th>
-                                                                {% if business.diveAccess.houseReef == true %}
-                                                                <td>
-                                                                    <i class="fa fa-check text-navy"></i>
-                                                                </td>
-                                                            {% else %}
-                                                                <td>
-                                                                    <i class="fa fa-times text-danger"></i>
-                                                                </td>
-                                                            {% endif %}
+                                                            <th style="width: 50%">
+                                                                {{ "page.dive_access.table.house_reef"|trans }}
+                                                            </th>
+                                                            {% if business.diveAccess.houseReef == true %}
+                                                                <td><i class="fa fa-check text-navy"></i></td>
+                                                                {% else %}
+                                                                <td><i class="fa fa-times text-danger"></i></td>
+                                                                {% endif %}
                                                         </tr>
                                                         <tr>
-                                                            <th style="width: 50%">{{ "page.dive_access.table.day_tours"|trans }}</th>
-                                                                {% if business.diveAccess.dayTours == true %}
-                                                                <td>
-                                                                    <i class="fa fa-check text-navy"></i>
-                                                                </td>
-                                                            {% else %}
-                                                                <td>
-                                                                    <i class="fa fa-times text-danger"></i>
-                                                                </td>
-                                                            {% endif %}
+                                                            <th style="width: 50%">
+                                                                {{ "page.dive_access.table.day_tours"|trans }}
+                                                            </th>
+                                                            {% if business.diveAccess.dayTours == true %}
+                                                                <td><i class="fa fa-check text-navy"></i></td>
+                                                                {% else %}
+                                                                <td><i class="fa fa-times text-danger"></i></td>
+                                                                {% endif %}
                                                         </tr>
                                                         <tr>
-                                                            <th style="width: 50%">{{ "page.dive_access.table.half_day_tours"|trans }}</th>
-                                                                {% if business.diveAccess.halfDayTours == true %}
-                                                                <td>
-                                                                    <i class="fa fa-check text-navy"></i>
-                                                                </td>
-                                                            {% else %}
-                                                                <td>
-                                                                    <i class="fa fa-times text-danger"></i>
-                                                                </td>
-                                                            {% endif %}
+                                                            <th style="width: 50%">
+                                                                {{ "page.dive_access.table.half_day_tours"|trans }}
+                                                            </th>
+                                                            {% if business.diveAccess.halfDayTours == true %}
+                                                                <td><i class="fa fa-check text-navy"></i></td>
+                                                                {% else %}
+                                                                <td><i class="fa fa-times text-danger"></i></td>
+                                                                {% endif %}
                                                         </tr>
                                                         <tr>
-                                                            <th style="width: 50%">{{ "page.dive_access.table.unguided_dives"|trans }}</th>
-                                                                {% if business.diveAccess.unguidedDives == true %}
-                                                                <td>
-                                                                    <i class="fa fa-check text-navy"></i>
-                                                                </td>
-                                                            {% else %}
-                                                                <td>
-                                                                    <i class="fa fa-times text-danger"></i>
-                                                                </td>
-                                                            {% endif %}
+                                                            <th style="width: 50%">
+                                                                {{ "page.dive_access.table.unguided_dives"|trans }}
+                                                            </th>
+                                                            {% if business.diveAccess.unguidedDives == true %}
+                                                                <td><i class="fa fa-check text-navy"></i></td>
+                                                                {% else %}
+                                                                <td><i class="fa fa-times text-danger"></i></td>
+                                                                {% endif %}
                                                         </tr>
                                                         {% if business.diveAccess.perDayDives %}
                                                             <tr>
@@ -479,42 +662,30 @@
                                                                 {{ "page.gas.table.atmospheric_air"|trans }}
                                                             </th>
                                                             {% if business.gas.atmosphericAir == true %}
-                                                                <td>
-                                                                    <i class="fa fa-check text-navy"></i>
-                                                                </td>
-                                                            {% else %}
-                                                                <td>
-                                                                    <i class="fa fa-times text-danger"></i>
-                                                                </td>
-                                                            {% endif %}
+                                                                <td><i class="fa fa-check text-navy"></i></td>
+                                                                {% else %}
+                                                                <td><i class="fa fa-times text-danger"></i></td>
+                                                                {% endif %}
                                                         </tr>
                                                         <tr>
                                                             <th style="width: 50%">
                                                                 {{ "page.gas.table.nitrox"|trans }}
                                                             </th>
                                                             {% if business.gas.nitrox == true %}
-                                                                <td>
-                                                                    <i class="fa fa-check text-navy"></i>
-                                                                </td>
-                                                            {% else %}
-                                                                <td>
-                                                                    <i class="fa fa-times text-danger"></i>
-                                                                </td>
-                                                            {% endif %}
+                                                                <td><i class="fa fa-check text-navy"></i></td>
+                                                                {% else %}
+                                                                <td><i class="fa fa-times text-danger"></i></td>
+                                                                {% endif %}
                                                         </tr>
                                                         <tr>
                                                             <th style="width: 50%">
                                                                 {{ "page.gas.table.trimix"|trans }}
                                                             </th>
                                                             {% if business.gas.trimix == true %}
-                                                                <td>
-                                                                    <i class="fa fa-check text-navy"></i>
-                                                                </td>
-                                                            {% else %}
-                                                                <td>
-                                                                    <i class="fa fa-times text-danger"></i>
-                                                                </td>
-                                                            {% endif %}
+                                                                <td><i class="fa fa-check text-navy"></i></td>
+                                                                {% else %}
+                                                                <td><i class="fa fa-times text-danger"></i></td>
+                                                                {% endif %}
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -531,28 +702,20 @@
                                                                 {{ "page.safety.table.oxigen"|trans }}
                                                             </th>
                                                             {% if business.safety.oxigen == true %}
-                                                                <td>
-                                                                    <i class="fa fa-check text-navy"></i>
-                                                                </td>
-                                                            {% else %}
-                                                                <td>
-                                                                    <i class="fa fa-times text-danger"></i>
-                                                                </td>
-                                                            {% endif %}
+                                                                <td><i class="fa fa-check text-navy"></i></td>
+                                                                {% else %}
+                                                                <td><i class="fa fa-times text-danger"></i></td>
+                                                                {% endif %}
                                                         </tr>
                                                         <tr>
                                                             <th style="width: 50%">
                                                                 {{ "page.safety.table.first_aid_kit"|trans }}
                                                             </th>
                                                             {% if business.safety.firstAidKit == true %}
-                                                                <td>
-                                                                    <i class="fa fa-check text-navy"></i>
-                                                                </td>
-                                                            {% else %}
-                                                                <td>
-                                                                    <i class="fa fa-times text-danger"></i>
-                                                                </td>
-                                                            {% endif %}
+                                                                <td><i class="fa fa-check text-navy"></i></td>
+                                                                {% else %}
+                                                                <td><i class="fa fa-times text-danger"></i></td>
+                                                                {% endif %}
                                                         </tr>
                                                         {% if business.safety.hourstohospital %}
                                                             <tr>
@@ -569,10 +732,15 @@
                                                     </tbody>
                                                 </table>
                                             {% endif %}
+                                            <!-- END - row extra informations  -->
                                         </div>
+                                    </div>                
+                                </div>
 
+                                <div id="tab-2" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="ibox">
 
-                                        <div id="tab-3" class="tab-pane">
                                             <h3>{% trans with {'%business%': business.name} %}page.business.h3.education{% endtrans %}</h3>
                                             <br/>
 
@@ -587,42 +755,30 @@
                                                             </th>
 
                                                             {% if business.educationConditions.swimmingPool == true %}
-                                                                <td>
-                                                                    <i class="fa fa-check text-navy"></i>
-                                                                </td>
-                                                            {% else %}
-                                                                <td>
-                                                                    <i class="fa fa-times text-danger"></i>
-                                                                </td>
-                                                            {% endif %}
+                                                                <td><i class="fa fa-check text-navy"></i></td>
+                                                                {% else %}
+                                                                <td><i class="fa fa-times text-danger"></i></td>
+                                                                {% endif %}
                                                         </tr>
                                                         <tr>
                                                             <th style="width: 50%">
                                                                 {{ "page.education_counditions.table.separate_classroom"|trans }}
                                                             </th>
                                                             {% if business.educationConditions.separateClassroom == true %}
-                                                                <td>
-                                                                    <i class="fa fa-check text-navy"></i>
-                                                                </td>
-                                                            {% else %}
-                                                                <td>
-                                                                    <i class="fa fa-times text-danger"></i>
-                                                                </td>
-                                                            {% endif %}
+                                                                <td><i class="fa fa-check text-navy"></i></td>
+                                                                {% else %}
+                                                                <td><i class="fa fa-times text-danger"></i></td>
+                                                                {% endif %}
                                                         </tr>
                                                         <tr>
                                                             <th style="width: 50%">
                                                                 {{ "page.education_counditions.table.single_education"|trans }}
                                                             </th>
                                                             {% if business.educationConditions.singleEducation == true %}
-                                                                <td>
-                                                                    <i class="fa fa-check text-navy"></i>
-                                                                </td>
-                                                            {% else %}
-                                                                <td>
-                                                                    <i class="fa fa-times text-danger"></i>
-                                                                </td>
-                                                            {% endif %}
+                                                                <td><i class="fa fa-check text-navy"></i></td>
+                                                                {% else %}
+                                                                <td><i class="fa fa-times text-danger"></i></td>
+                                                                {% endif %}
                                                         </tr>
                                                         {% if business.educationConditions.maxGroupSize %}
                                                             <tr>
@@ -642,11 +798,7 @@
                                             <br/>
 
                                             <!-- Education Course -->
-                                            {% set education = '' %}
-                                            {% for course in business.educationCourse %}
-                                                {% set education = course %}
-                                            {% endfor %}
-                                            {% if education %}
+                                            {% if business.educationCourse %}
                                                 <h4>{{ "page.business.h4.education_course"|trans }}</h4>
                                                 <table class="table table-striped">
                                                     <thead>
@@ -667,42 +819,103 @@
                                             {% endif %}
 
                                         </div>
-                                        <div id="tab-4" class="tab-pane">
-                                            <h3>{% trans with {'%business%': business.name} %}page.business.h3.book_now{% endtrans %}</h3>
+                                    </div>                
+                                </div>
+
+                                <div id="tab-3" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="ibox">
+
+                                            <h3>{% trans with {'%business%': business.name} %}page.business.h3.activity{% endtrans %}</h3>
                                             <br/>
-                                            <a class="btn btn-primary btn-lg" href="{{ path('booking_admin_new', {'business_id': business.id}) }}" class="btn btn-primary">{{ "page.business.button.book_now"|trans }}</a>
 
-                                            {#<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-                                                {{ "page.business.button.book_now"|trans }}
-                                            </button>#}
-                                            {# {% if is_granted("IS_AUTHENTICATED_FULLY") %}#}
-                                            {# {{ render(controller('SkaphandrusAppBundle:SkBooking:new', {'business_id': business.id})) }}#}
-                                            {#{% endif %}#}
+                                            <!-- BEGIN - Species -->
+                                            <h4>{% trans with {'%name%': business.name|title} %}page.business.h4.species{% endtrans %}</h4>
 
-                                            {#{{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
-                                            {{ form_widget(form) }}
-                                            {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'booking_admin', 'new_form':false} %}
-                                            {{ form_end(form) }}
+                                            <div id="box_species"></div>
 
-                                            {{ form(form) }}#}
+                                            <div class="row" >
+                                                <div class="col-sm-6 col-sx-12">
+                                                    <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_species">{{ "page.profile.button.show_more_species"|trans }}</button>
+                                                </div>
+                                                <div class="col-sm-6 col-sx-12">
+                                                    <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#speciesModal">{{ "page.profile.button.see_all_species"|trans }}</button>
+                                                </div>
+                                            </div>
+
+                                            <!-- Species Modal start -->
+                                            <div class="modal fade" id="speciesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title" id="myModalLabel">{% trans with {'%name%': business.name|title} %}page.business.h4.species{% endtrans %}</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+
+                                                            <div id="speciesInput"></div>
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Species Modal end -->
+                                            <!-- END - Species -->
+                                            <br/>
+
+                                            <!-- BEGIN - Photographers -->
+                                            <h4>{% trans with {'%name%': business.name|title} %}page.business.h4.photographers{% endtrans %}</h4>
+
+                                            <div id="box_photographers"></div>
+
+                                            <div class="row" >
+                                                <div class="col-sm-6 col-sx-12">
+                                                    <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_photographers" >{{ "page.location.button.show_more_photographers"|trans }}</button>
+                                                </div>
+                                                <div class="col-sm-6 col-sx-12">
+                                                    <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#photographersModal">{{ "page.location.button.see_all_photographers"|trans }}</button>
+                                                </div>
+                                            </div>
+
+                                            <!-- Photographers Modal start -->
+                                            <div class="modal fade" id="photographersModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title" id="myModalLabel">{% trans with {'%country%': business.name|title} %}page.business.h4.photographers_modal{% endtrans %}</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+
+                                                            <div id="photographersInput"></div>
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Photographers Modal end -->
+                                            <!-- END - Photographers -->
 
                                         </div>
-                                    </div>
+                                    </div>                
                                 </div>
-                            </div>
 
-                            <!-- Se nao for premium -->
-                        {% else %}
-                            <br/>
-                            {% include 'SkaphandrusAppBundle:Common:business-info-commom.html.twig' %}
-                        {% endif %}
-                        <!-- End Panel -->
-                    </div>
+                            </div>
+                        </div>
+
+                    {% endif %}
+
                 </div>
             </div>
-            <!-- End Right Column -->
+            <!-- END - row full content area -->
+
         </div>
     </div>
-
 
 {% endblock %}

@@ -13,6 +13,44 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkSpeciesRepository extends EntityRepository {
 
+    public function getMoreSpeciesBusiness($business_id, $limit = 3, $offset = 0) {
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT sp.id as species_id, ssn.name as ssn_name, ssn.author as sss_author, count(p.id) as num_photos
+                FROM sk_species_scientific_name as ssn
+                join sk_species as sp
+                on sp.id = ssn.species_id
+                join sk_photo as p
+                on sp.id = p.species_id
+                where p.business_id = " . $business_id . "
+                group by species_id 
+                order by num_photos desc
+                limit " . $limit . "
+                offset " . $offset;
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+//            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->find($value['species']);  
+
+            $species = new \Skaphandrus\AppBundle\Entity\SkSpecies();
+            $species->setId($value['species_id']);
+            $scientific_name = new \Skaphandrus\AppBundle\Entity\SkSpeciesScientificName();
+            $scientific_name->setName($value['ssn_name']);
+            $scientific_name->setAuthor($value['sss_author']);
+            $species->addScientificName($scientific_name);
+            $species->setPhotosInSpecies($value['num_photos']);
+            $result[] = $species;
+        }
+
+        return $result;
+    }
+
     public function getMoreSpeciesSuggestionsUser($user_id, $limit = 3, $offset = 0) {
 
         $em = $this->getEntityManager();
@@ -281,6 +319,18 @@ class SkSpeciesRepository extends EntityRepository {
             WHERE p.species = :species_id and p.fosUser = :user_id
             ORDER BY p.id desc'
                 )->setParameter('species_id', $species_id)->setParameter('user_id', $user_id)->setMaxResults(10);
+
+        return $query->getResult();
+    }
+
+    public function findPhotosBusiness($species_id, $busienss_id) {
+
+        $query = $this->getEntityManager()->createQuery(
+                        'SELECT p
+            FROM SkaphandrusAppBundle:SkPhoto p
+            WHERE p.species = :species_id and p.business = :busienss_id
+            ORDER BY p.id desc'
+                )->setParameter('species_id', $species_id)->setParameter('busienss_id', $busienss_id)->setMaxResults(10);
 
         return $query->getResult();
     }
@@ -975,6 +1025,41 @@ class SkSpeciesRepository extends EntityRepository {
 
         foreach ($values as $value) {
 //            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->find($value['species']);  
+
+            $species = new \Skaphandrus\AppBundle\Entity\SkSpecies();
+            $species->setId($value['species_id']);
+            $scientific_name = new \Skaphandrus\AppBundle\Entity\SkSpeciesScientificName();
+            $scientific_name->setName($value['ssn_name']);
+            $scientific_name->setAuthor($value['sss_author']);
+            $species->addScientificName($scientific_name);
+            $species->setPhotosInSpecies($value['num_photos']);
+            $result[] = $species;
+        }
+
+        return $result;
+    }
+
+    public function findSpeciesInBusiness($business_id) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT sp.id as species_id, ssn.name as ssn_name, ssn.author as sss_author, count(p.id) as num_photos
+                FROM sk_species_scientific_name as ssn
+                join sk_species as sp
+                on sp.id = ssn.species_id
+                join sk_photo as p
+                on sp.id = p.species_id
+                where p.business_id = " . $business_id . "
+                group by species_id 
+                order by num_photos desc";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+//            $species = $em->getRepository('SkaphandrusAppBundle:SkSpecies')->find($value['species']);
 
             $species = new \Skaphandrus\AppBundle\Entity\SkSpecies();
             $species->setId($value['species_id']);

@@ -117,5 +117,10 @@ $(document).ready(function () {
     if ($('#skaphandrus_appbundle_skbooking_business').length) {
         $('#skaphandrus_appbundle_skbooking_business').autocompleter({url_list: '/en/ajax_search_business/', url_get: '/en/ajax_get_business/'});
     }
+    
+        // Formulário SkBooking
+    if ($('#skaphandrus_appbundle_skphoto_business').length) {
+        $('#skaphandrus_appbundle_skphoto_business').autocompleter({url_list: '/en/ajax_search_business/', url_get: '/en/ajax_get_business/'});
+    }
 
 });

@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <entity name="Skaphandrus\AppBundle\Entity\SkBookingDive" table="sk_booking_dive">
+    <entity name="Skaphandrus\AppBundle\Entity\SkBookingPackage" table="sk_booking_package">
         <indexes>
-            <index name="fk_sk_booking_dive_1_idx" columns="booking_id"/>
+            <index name="fk_sk_booking_package_1_idx" columns="booking_id"/>
+            <index name="fk_sk_booking_package_2_idx" columns="package_id"/>
         </indexes>
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
         </id>
-        <field name="pax" type="integer" column="pax" nullable="false">
+        <field name="quantity" type="integer" column="quantity" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
         </field>
-        <field name="numberDives" type="integer" column="number_dives" nullable="false">
-            <options>
-                <option name="unsigned"/>
-            </options>
-        </field>
-        <field name="dateAt" type="date" column="date_at" nullable="false"/>
         
+        <many-to-one field="bookingPackage" target-entity="SkBusinessDivePrice" fetch="LAZY">
+            <join-columns>
+                <join-column name="package_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
         <many-to-one field="booking" target-entity="SkBooking" fetch="LAZY">
             <join-columns>
                 <join-column name="booking_id" referenced-column-name="id"/>

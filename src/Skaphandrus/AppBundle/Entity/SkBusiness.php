@@ -166,6 +166,11 @@ class SkBusiness {
      */
     private $photoContest;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $photos;
+
     /*     * symfony advanced forms
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the  update. If this
@@ -991,6 +996,41 @@ class SkBusiness {
         $this->photoContest = $photoContest;
 
         return $this;
+    }
+
+    /**
+     * Add photo
+     *
+     * @param \Skaphandrus\AppBundle\Entity\skPhoto $photo
+     *
+     * @return SkSpot
+     */
+    public function addPhoto(\Skaphandrus\AppBundle\Entity\skPhoto $photo) {
+        $this->photos[] = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Remove photo
+     *
+     * @param \Skaphandrus\AppBundle\Entity\skPhoto $photo
+     */
+    public function removePhoto(\Skaphandrus\AppBundle\Entity\skPhoto $photo) {
+        $this->photos->removeElement($photo);
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotos() {
+        return $this->photos;
+    }
+
+    public function setPhotos($photos) {
+        return $this->photos = $photos;
     }
 
     public function getAbsolutePath() {
