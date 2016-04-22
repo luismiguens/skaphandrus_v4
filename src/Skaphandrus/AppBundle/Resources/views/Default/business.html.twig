@@ -205,7 +205,7 @@
                         <div>
                             <h2 class="no-margins" itemprop="name">{{ business.name }}</h2>
                             <h4>{{ business.address.location }}, {{ business.address.location.region.country }}</h4>
-                            <a class="btn btn-sm btn-primary" href="{{ path('booking_admin_new', {'business_id': business.id}) }}" >{{ "page.business.button.book_now"|trans }} <i class="fa fa-long-arrow-right"></i></a>
+                            <a class="btn btn-sm btn-primary" href="{{ path('booking_admin_new', {'business_id': business.id}) }}" >{{ "page.business.button.book_now"|trans }}</a>
                         </div>
                     </div>
                 </div>
@@ -217,8 +217,8 @@
                                 <td><strong>{{ business.spot|length }}</strong> {{ "page.business.label.spots"|trans }} </td>
                             </tr>
                             <tr>
-                                <td><strong>???</strong> {{ "page.business.label.tags"|trans }} </td>
-                                <td><strong>???</strong> {{ "page.business.label.friends"|trans }} </td>
+                                <td><strong>{{ photographersCount }}</strong> {{ "page.business.label.photographers"|trans }} </td>
+                                <td><strong>{{ business.divePrice|length }}</strong> {{ "page.business.label.dive_packs"|trans }} </td>
                             </tr>
                             <tr>
                                 <td><strong>{{ speciesCount }}</strong> {{ "page.business.label.species"|trans }} </td>
@@ -279,7 +279,7 @@
                                     {{ google_map(map) }}
                                 {% endif %}
 
-                                <h4>{{ "page.business.h4.contact"|trans }}</h4>
+                                {#<h4>{{ "page.business.h4.contact"|trans }}</h4>
                                 <dl>
                                     {% if business.contact.email %}
                                         <dt>{{ "page.business.h5.contact_email"|trans }}:</dt>
@@ -313,11 +313,10 @@
                                         <dd>
                                             <a href="#" class="text-navy">{{ business.contact.homepage }}</a>
                                         </dd>
-                                    {% endif %}
+                                    {% endif %}#}
                                 </dl>
                             </div>
-                            {#<a href="{{ url('fos_message_thread_new' )}}" class="btn btn-primary btn-block"><i class="fa fa-envelope"></i> {{"page.user.label.send_message"|trans}}</a>#}
-                            <div class="btn btn-primary btn-block">Send mail ???</div>
+                            {#<div class="btn btn-primary btn-block">Send mail ???</div>#}
                         </div>
                     </div>
                     <!-- END - row about -->

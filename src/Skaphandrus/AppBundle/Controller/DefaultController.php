@@ -537,10 +537,9 @@ class DefaultController extends Controller {
 
         if ($business) {
 
-            $photosCount = $em->createQuery('SELECT count(p.id) FROM SkaphandrusAppBundle:SkBusiness b JOIN b.spot s JOIN s.photos p WHERE b.id = ?1')->setParameter(1, $business->getId())->getSingleScalarResult();
-            $speciesCount = $em->createQuery('SELECT COUNT(DISTINCT(p.species)) FROM SkaphandrusAppBundle:SkBusiness b JOIN b.spot s JOIN s.photos p WHERE b.id = ?1')->setParameter(1, $business->getId())->getSingleScalarResult();
-//            $friendsCount = $em->createQuery('SELECT COUNT(p.id) FROM SkaphandrusAppBundle:SkPerson p WHERE p.fosUser = ?1')->setParameter(1, $id)->getSingleScalarResult();
-//            $tagsCount = 0;
+            $photosCount = $em->createQuery('SELECT count(p.id) FROM SkaphandrusAppBundle:SkPhoto p WHERE p.business = ?1')->setParameter(1, $business->getId())->getSingleScalarResult();
+            $speciesCount = $em->createQuery('SELECT COUNT(DISTINCT(p.species)) FROM SkaphandrusAppBundle:SkPhoto p WHERE p.business = ?1')->setParameter(1, $business->getId())->getSingleScalarResult();
+            $photographersCount = $em->createQuery('SELECT COUNT(DISTINCT(p.fosUser)) FROM SkaphandrusAppBundle:SkPhoto p WHERE p.business = ?1')->setParameter(1, $business->getId())->getSingleScalarResult();
 
             $map = null;
             $latitude = 0;
@@ -719,6 +718,7 @@ class DefaultController extends Controller {
                         'business' => $business,
                         'photosCount' => $photosCount,
                         'speciesCount' => $speciesCount,
+                        'photographersCount' => $photographersCount,
                         'map' => $map,
                         'mapSpot' => $mapSpot,
             ));
