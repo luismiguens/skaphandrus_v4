@@ -194,11 +194,13 @@
         });
 
         $('#readMore').readmore({
-            speed: 75,
-            heightMargin: 25,
+            speed: 250,
+            heightMargin: 250,
             collapsedHeight: 250,
-            moreLink: '<a class="btn btn-sm btn-primary pull-right" href="#">{{"common.show_more"|trans}}</a>',
-            lessLink: '<a class="btn btn-sm btn-primary pull-right" href="#">{{"common.hide"|trans}}</a>'
+            moreLink: '<a style="margin-top:10px;" href="#">{{"common.show_more"|trans}}</a>',
+            lessLink: '<a style="margin-top:10px;" href="#">{{"common.hide"|trans}}</a>'
+{#            moreLink: '<a class="btn btn-sm btn-primary pull-right" href="#">{{"common.show_more"|trans}}</a>',
+            lessLink: '<a class="btn btn-sm btn-primary pull-right" href="#">{{"common.hide"|trans}}</a>'#}
         });
 
         $(function () {
