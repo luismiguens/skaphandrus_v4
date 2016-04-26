@@ -274,6 +274,15 @@
                                             {% endif %}
                                         </li>
                                         <li style="margin-bottom: 2%;">
+                                            {% dump(photo.business) %}
+                                            <strong>{{ "page.photo.h3.business"|trans }}: </strong>
+                                            {% if photo.business is not empty %}
+                                                {{ photo.business }}
+                                            {% else %}
+                                                {{ "page.photo.h3.no_business"|trans }}
+                                            {% endif %}
+                                        </li>
+                                        <li style="margin-bottom: 2%;">
                                             <strong>{{ "page.photo.h5.description"|trans }}: </strong>
                                             {% if photo.description is not empty %}
                                                 <p itemprop="description">{{ photo.description }}</p>

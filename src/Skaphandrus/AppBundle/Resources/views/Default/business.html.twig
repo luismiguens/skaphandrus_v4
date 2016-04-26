@@ -258,7 +258,7 @@
                                         <dt>{{ "page.business.h5.address_location"|trans }}:</dt>
                                         <dd>
                                             <meta itemprop="address" content="{{ business.address.location }}" />
-                                            {{ business.address.location }}
+                                            {{ link_to_location(business.address.location, business.address.location.region.country) }}
                                         </dd>
                                     {% endif %}
                                     {% if business.address.province %}
@@ -270,7 +270,7 @@
                                     {% if business.address.location %}
                                         <dt>{{ "page.business.h5.address_country"|trans }}:</dt>
                                         <dd>
-                                            {{ business.address.location.region.country }}
+                                            {{ link_to_country(business.address.location.region.country) }}
                                         </dd>
                                     {% endif %}
                                 </dl>
@@ -421,6 +421,24 @@
                                             {% endif %}
                                             <br/>
 
+                                            <!-- Dive Spots -->
+                                            {% if business.spot|length > 0 %}
+                                                <h4>{{ "page.business.h4.dive_spot"|trans }}</h4>
+                                                <div class="row">
+                                                    {% for spot in business.spot %}
+                                                        <div class="col-md-4 col-sm-4 col-xs-6">
+                                                            <p>
+                                                                {{ link_to_spot(spot, business.address.location, business.address.location.region.country) }},
+                                                                {{ link_to_location(business.address.location, business.address.location.region.country) }},
+                                                                {{ link_to_country(business.address.location.region.country) }}
+                                                            </p>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                            <br/>
+
+                                            <h4>{% trans with {'%business%': business.name|title} %}page.business.h4.spots{% endtrans %}</h4>
                                             <div id="box_spots"></div>
 
                                             <div class="row" >
@@ -438,7 +456,7 @@
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                            <h4 class="modal-title" id="myModalLabel">{% trans with {'%name%': business.name|title} %}page.business.h4.spots{% endtrans %}</h4>
+                                                            <h4 class="modal-title" id="myModalLabel">{% trans with {'%business%': business.name|title} %}page.business.h4.spots{% endtrans %}</h4>
                                                         </div>
                                                         <div class="modal-body">
 
@@ -463,7 +481,12 @@
                                                         <div class="col-md-3 col-sm-4 col-xs-6">
                                                             <div class="ibox">
                                                                 <div class="ibox-content product-box">
-                                                                    <img src="{{ business.getWebPath | imagine_filter('sk_widen_100') }}" class="img-responsive"/>
+                                                                    <div class="product-imitation" style="padding: 0px 0px!important;">
+                                                                        <img src="http://localhost:8000/uploads/business/package_burned.png" class="img-responsive" alt="{{ pack.valueperdives }} {{ business.unit.currency }}"/>
+                                                                    </div>
+                                                                    {#<img src="{{ '/uploads/business/package.png'| imagine_filter('sk_widen_100') }}" class="img-responsive"/>#}
+                                                                    {#<img src="{{ business.getWebPath | imagine_filter('sk_widen_100') }}" class="img-responsive"/>#}
+
                                                                     <div class="product-desc">
                                                                         <span class="product-price">
                                                                             {{ pack.valueperdives }} {{ business.unit.currency }}
@@ -487,7 +510,7 @@
                                                 </div>
 
                                                 {#<h4>{{ "page.business.h4.dive_price"|trans }}</h4>#}
-                                                <table class="table table-striped">
+                                                {#<table class="table table-striped">
                                                     <thead>
                                                         <tr>
                                                             <th style="width: 50%">{{ "page.dive_price.table.number_of_dives"|trans }}</th>
@@ -509,7 +532,7 @@
                                                             </tr>
                                                         {% endfor %}
                                                     </tbody>
-                                                </table>
+                                                </table>#}
 
                                             {% endif %}
                                             <!-- END - row dive pack  -->
@@ -829,7 +852,7 @@
                                             <br/>
 
                                             <!-- BEGIN - Species -->
-                                            <h4>{% trans with {'%name%': business.name|title} %}page.business.h4.species{% endtrans %}</h4>
+                                            <h4>{% trans with {'%business%': business.name|title} %}page.business.h4.species{% endtrans %}</h4>
 
                                             <div id="box_species"></div>
 
@@ -848,7 +871,7 @@
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                            <h4 class="modal-title" id="myModalLabel">{% trans with {'%name%': business.name|title} %}page.business.h4.species{% endtrans %}</h4>
+                                                            <h4 class="modal-title" id="myModalLabel">{% trans with {'%business%': business.name|title} %}page.business.h4.species{% endtrans %}</h4>
                                                         </div>
                                                         <div class="modal-body">
 
@@ -866,7 +889,7 @@
                                             <br/>
 
                                             <!-- BEGIN - Photographers -->
-                                            <h4>{% trans with {'%name%': business.name|title} %}page.business.h4.photographers{% endtrans %}</h4>
+                                            <h4>{% trans with {'%business%': business.name|title} %}page.business.h4.photographers{% endtrans %}</h4>
 
                                             <div id="box_photographers"></div>
 
@@ -885,7 +908,7 @@
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                            <h4 class="modal-title" id="myModalLabel">{% trans with {'%country%': business.name|title} %}page.business.h4.photographers_modal{% endtrans %}</h4>
+                                                            <h4 class="modal-title" id="myModalLabel">{% trans with {'%business%': business.name|title} %}page.business.h4.photographers_modal{% endtrans %}</h4>
                                                         </div>
                                                         <div class="modal-body">
 

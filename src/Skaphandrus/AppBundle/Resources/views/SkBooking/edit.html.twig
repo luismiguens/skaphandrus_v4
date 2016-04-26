@@ -257,36 +257,40 @@
     </div>
     <div class="hr-line-dashed"></div>
 
-    <div class="form-group">
-        <label class="col-sm-3 control-label">{{ form_label(edit_form.bookingPackage) }}</label>
-        <div class="col-sm-9">
-            <ul class=bookingPackage data-prototype="{{ form_widget(edit_form.bookingPackage.vars.prototype)|e }}">
-                {% for package in edit_form.bookingPackage %}
-                    <li>
-                        {{ form_widget(package) }}
-                    </li>
-                {% endfor %}
-            </ul>
-            {#<div class="hr-line-dashed"></div>#}
+    {% if edit_form.bookingPackage.vars.prototype.children.bookingPackage.vars.choices %}
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{ form_label(edit_form.bookingPackage) }}</label>
+            <div class="col-sm-9">
+                <ul class=bookingPackage data-prototype="{{ form_widget(edit_form.bookingPackage.vars.prototype)|e }}">
+                    {% for package in edit_form.bookingPackage %}
+                        <li>
+                            {{ form_widget(package) }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                {#<div class="hr-line-dashed"></div>#}
+            </div>
         </div>
-    </div>
-    <div class="hr-line-dashed"></div>
+        <div class="hr-line-dashed"></div>
+    {% endif %}
 
-    <div class="form-group">
-        <label class="col-sm-3 control-label">{{ form_label(edit_form.bookingOtherActivity) }}</label>
-        <div class="col-sm-9">
-            <ul class=bookingOtherActivity data-prototype="{{ form_widget(edit_form.bookingOtherActivity.vars.prototype)|e }}">
-                {% for activity in edit_form.bookingOtherActivity %}
-                    <li>
-                        {{ form_widget(activity) }}
-                    </li>
-                {% endfor %}
-            </ul>
-            {# <div class="hr-line-dashed"></div>#}
+    {% if edit_form.bookingOtherActivity.vars.prototype.children.otherActivity.vars.choices %}
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{ form_label(edit_form.bookingOtherActivity) }}</label>
+            <div class="col-sm-9">
+                <ul class=bookingOtherActivity data-prototype="{{ form_widget(edit_form.bookingOtherActivity.vars.prototype)|e }}">
+                    {% for activity in edit_form.bookingOtherActivity %}
+                        <li>
+                            {{ form_widget(activity) }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                {# <div class="hr-line-dashed"></div>#}
+            </div>
         </div>
-    </div>
-    <div class="hr-line-dashed"></div>
-
+        <div class="hr-line-dashed"></div>
+    {% endif %}
+    
     {{ form_row(edit_form.observations) }}
     <div class="hr-line-dashed"></div>
     {{ form_row(edit_form.phoneNumber) }}
@@ -297,6 +301,7 @@
     {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'booking_admin', 'new_form':false} %}
 
     {% do edit_form.bookingDive.setRendered %}
+    {% do edit_form.bookingPackage.setRendered %}
     {% do edit_form.bookingOtherActivity.setRendered %}
     {{ form_end(edit_form) }}
 

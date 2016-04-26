@@ -18,12 +18,27 @@ class SkBookingBusinessController extends Controller {
      *
      */
     public function bookingBusinessAction(Request $request) {
-        $em = $this->getDoctrine()->getManager();        
+        $loggedUser = $this->get('security.token_storage')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('SkaphandrusAppBundle:SkBooking')->findBy(array('business' => $request->query->get('id')));
 
-        return $this->render('SkaphandrusAppBundle:SkBookingBusiness:index.html.twig', array(
-                    'entities' => $entities,
-        ));
+        $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->find($request->query->get('id'));
+
+        if (!$business) {
+            throw $this->createNotFoundException('Unable to find SkBusiness entity.');
+        }
+
+        // verifica se o user é admin e se o user é admin do business
+        if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN', $loggedUser) || $business->isUserAdminFromBusiness($loggedUser)) {
+
+            return $this->render('SkaphandrusAppBundle:SkBookingBusiness:index.html.twig', array(
+                        'entities' => $entities,
+            ));
+        } else {
+            throw $this->createAccessDeniedException('Unauthorised access!');
+//            return $this->redirect($this->generateUrl('error403'));
+//            return $this->render('SkaphandrusAppBundle:Common:error403.html.twig');
+        }
     }
 
     /**

@@ -31,7 +31,8 @@ class SkBookingPackageType extends AbstractType {
                 ))
                 ->add('quantity', null, array(
                     'attr' => array('class' => 'form-control', 'min' => 1,),
-                    'label' => 'form.booking_package.label.quantity'
+                    'label' => 'form.booking_package.label.quantity',
+                    'data' => 1
                 ))
         ;
     }

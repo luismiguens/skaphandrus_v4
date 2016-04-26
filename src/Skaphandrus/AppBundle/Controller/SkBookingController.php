@@ -71,12 +71,11 @@ class SkBookingController extends Controller {
     public function createAction(Request $request) {
         $entity = new SkBooking();
         $em = $this->getDoctrine()->getManager();
-        
+
         $business_id = $request->query->get('skaphandrus_appbundle_skbooking')['business'];
         if (!$business_id):
             $business_id = $request->request->get('skaphandrus_appbundle_skbooking')['business'];
         endif;
-
 
 //        $business_id = 1977;
         $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->find($business_id);
@@ -250,6 +249,14 @@ class SkBookingController extends Controller {
             $originalOtherActivity->add($other);
         }
 
+        //http://symfony.com/doc/current/cookbook/form/form_collections.html
+        //For deleting dives 
+        $originalPackages = new ArrayCollection();
+        // Create an ArrayCollection of the current Tag objects in the database
+        foreach ($entity->getBookingPackage() as $other) {
+            $originalPackages->add($other);
+        }
+
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
@@ -283,6 +290,21 @@ class SkBookingController extends Controller {
                     $em->remove($other);
                 }
             }
+
+            // remove the relationship between the Tag and the Task
+            foreach ($originalPackages as $other) {
+                if (false === $entity->getBookingPackage()->contains($other)) {
+                    // remove the Task from the Tag
+                    $other->getBooking()->removeBookingPackage($other);
+
+                    // if it was a many-to-one relationship, remove the relationship like this
+                    // $course->setBusiness(null);
+                    // $em->persist($course);
+                    // if you wanted to delete the Tag entirely, you can also do that
+                    $em->remove($other);
+                }
+            }
+
 
             $em->persist($entity);
             $em->flush();

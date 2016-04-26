@@ -275,8 +275,8 @@ class AjaxSearchController extends Controller {
         foreach ($skPersonals as $skPersonal) {
             $results[] = array(
                 'id' => $skPersonal->getFosUser()->getId(),
-                'name' => $skPersonal->getFosUser()->getId()." - ".$skPersonal->getName()." - ".$skPersonal->getFosUser()->getEmail(),
-                'label' => sprintf("%s", $skPersonal->getFosUser()->getId()." - ".$skPersonal->getName()." - ".$skPersonal->getFosUser()->getEmail())
+                'name' => $skPersonal->getFosUser()->getId() . " - " . $skPersonal->getName() . " - " . $skPersonal->getFosUser()->getEmail(),
+                'label' => sprintf("%s", $skPersonal->getFosUser()->getId() . " - " . $skPersonal->getName() . " - " . $skPersonal->getFosUser()->getEmail())
             );
         }
 
@@ -299,8 +299,8 @@ class AjaxSearchController extends Controller {
         foreach ($skBusiness as $business) {
             $results[] = array(
                 'id' => $business->getId(),
-                'name' => $business->getName(),
-                'label' => sprintf("%s", $business->getName())
+                'name' => $business->getName() . " - " . $business->getAddress()->getLocation() . " - " . $business->getAddress()->getLocation()->getRegion()->getCountry(),
+                'label' => sprintf("%s", $business->getName() . " - " . $business->getAddress()->getLocation() . " - " . $business->getAddress()->getLocation()->getRegion()->getCountry()),
             );
         }
 
@@ -311,7 +311,7 @@ class AjaxSearchController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->find($id);
 
-        return new Response($business->getName());
+        return new Response($business->getName() . " - " . $business->getAddress()->getLocation() . " - " . $business->getAddress()->getLocation()->getRegion()->getCountry());
     }
 
 }

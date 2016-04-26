@@ -28,6 +28,9 @@
                                 <a href="{{ path('business_education_admin_edit', { 'id': business.id }) }}">{{ "forms.common.btn.edit_education"|trans }}</a>
                             </li>
                         {% endif %}
+                        <li>
+                            <a href="{{ path('business_no_slug', { 'id': business.id}) }}">{{ "forms.common.btn.visit_business"|trans }}</a>
+                        </li>
                     </ul>
                 </li>
             {% endfor %}
