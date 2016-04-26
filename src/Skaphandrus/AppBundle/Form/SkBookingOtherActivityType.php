@@ -41,7 +41,8 @@ class SkBookingOtherActivityType extends AbstractType {
                 ))
                 ->add('pax', null, array(
                     'attr' => array('class' => 'form-control', 'min' => 1,),
-                    'label' => 'form.booking_other_activity.label.pax'
+                    'label' => 'form.booking_other_activity.label.pax',
+                    'data' => 1
                 ))
                 ->add('dateAt', null, array(
                     'years' => range(2016, 2030),

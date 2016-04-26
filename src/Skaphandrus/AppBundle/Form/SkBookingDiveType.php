@@ -16,11 +16,13 @@ class SkBookingDiveType extends AbstractType {
         $builder
                 ->add('pax', null, array(
                     'attr' => array('class' => 'form-control', 'min' => 1,),
-                    'label' => 'form.booking_dive.label.pax'
+                    'label' => 'form.booking_dive.label.pax',
+                    'data' => 1
                 ))
                 ->add('numberDives', null, array(
                     'attr' => array('class' => 'form-control', 'min' => 1,),
-                    'label' => 'form.booking_dive.label.number_dives'
+                    'label' => 'form.booking_dive.label.number_dives',
+                    'data' => 1
                 ))
                 ->add('dateAt', null, array(
                     'years' => range(2016, 2030),
