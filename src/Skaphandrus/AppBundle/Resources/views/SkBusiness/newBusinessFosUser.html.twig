@@ -1,0 +1,115 @@
+{% extends 'SkaphandrusAppBundle::form_layout.html.twig' %}
+
+{% form_theme form 'SkaphandrusAppBundle:Form:vertical_choices_rows.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
+
+    <script type="text/javascript" >
+        $(function () {
+            $("#skaphandrus_business_user_registration_country").change(function () {
+                var data = {
+                    country_id: $(this).val()
+                };
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path("business_fos_user_regions") }}',
+                    data: data,
+                    success: function (data) {
+                        var $region_selector = $('#skaphandrus_business_user_registration_region');
+
+                        $region_selector.html('<option>Region</option>');
+
+                        for (var i = 0, total = data.length; i < total; i++) {
+                            $region_selector.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                        }
+
+                        $('#skaphandrus_business_user_registration_location').html("<option>Ciudad</option>");
+                    }
+                });
+            });
+
+            $("#skaphandrus_business_user_registration_region").change(function () {
+                var data = {
+                    region_id: $(this).val()
+                };
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path("business_fos_user_locations") }}',
+                    data: data,
+                    success: function (data) {
+                        var $location_selector = $('#skaphandrus_business_user_registration_location');
+
+                        $location_selector.html('<option>City</option>');
+
+                        for (var i = 0, total = data.length; i < total; i++) {
+                            $location_selector.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+{% endblock %}
+
+
+{% block styleshets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block heading_title %}
+    {{ "form.business.h1.title"|trans }}
+{% endblock %}
+
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url_to_dashboard() }}">{{ "breadcrumb.dashboard"|trans }}</a></li>
+        <li><a href="{{ path('business_admin')}}">{{ "breadcrumb.business"|trans }}</a></li>
+        <li class="active"><strong>{{ "breadcrumb.add_business"|trans }}</strong></li>
+    </ol>
+{% endblock %}
+
+{% block heading_action %}
+    <a href="{{ path('business_admin_new') }}" class="btn btn-primary">{{ "form.business.btn.add"|trans }}</a>
+{% endblock %}
+
+{% block form_title_description %}
+    {{ "form.business.text.description"|trans }}
+{% endblock %}
+
+
+{% block body %}
+
+    <style>
+        .ui-autocomplete-loading {
+            background: white url("http://jqueryui.com/resources/demos/autocomplete/images/ui-anim_basic_16x16.gif") right center no-repeat;
+        }
+    </style>
+
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+
+    {{ form_errors(form) }}
+
+
+    {{ form_row(form.name) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.password) }}
+    <hr>
+    {{ form_row(form.business_name) }}
+    {{ form_row(form.business_email) }}
+    {{ form_row(form.country) }}
+    {{ form_row(form.region) }}
+    {{ form_row(form.location) }}
+
+
+
+
+    {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'business_admin', 'new_form':false} %}
+    {{ form_end(form) }}
+
+{% endblock %}

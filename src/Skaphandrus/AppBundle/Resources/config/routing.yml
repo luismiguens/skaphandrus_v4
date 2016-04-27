@@ -3,6 +3,20 @@
 ### ADMIN ROUTES
 ################################################################################ 
 
+
+
+business_fos_user_regions:
+    path:     /{_locale}/select_regions
+    defaults: { _controller: "SkaphandrusAppBundle:SkBusinessFosUser:regions" }
+
+business_fos_user_locations:
+    path:     /{_locale}/select_locations
+    defaults: { _controller: "SkaphandrusAppBundle:SkBusinessFosUser:locations" }
+
+
+
+
+
 testSmartLink:
     path:     /testSmartLink
     defaults: { _controller: SkaphandrusAppBundle:Default:testSmartLink, _locale: en }
@@ -54,6 +68,12 @@ skaphandrus_app_business_booking_admin:
 skaphandrus_app_business_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skbusiness.yml"
     prefix:   /{_locale}/business_admin
+    
+    
+    
+skaphandrus_app_business_fos_user:
+    resource: "@SkaphandrusAppBundle/Resources/config/routing/skbusinessfosuser.yml"
+    prefix:   /{_locale}/business
     
 skaphandrus_app_business_spot_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skbusinessspot.yml"

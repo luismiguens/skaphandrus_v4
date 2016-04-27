@@ -11,6 +11,15 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: validator.contains_sufficient_points }
 
+
+    validator.email_unique:
+        class: Skaphandrus\AppBundle\Validator\Constraints\EmailUniqueValidator
+        arguments: [ "@translator.default","@service_container"]
+        tags:
+            - { name: validator.constraint_validator, alias: validator.email_unique}
+
+
+
     utils.twig_extension:
         class: Skaphandrus\AppBundle\Twig\UtilsExtension
         #public: false

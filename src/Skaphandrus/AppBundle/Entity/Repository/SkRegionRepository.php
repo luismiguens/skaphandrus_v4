@@ -12,6 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class SkRegionRepository extends EntityRepository {
 
-
+    public function findRegionsJoinTranslations($country_id, $locale) {
+        return $this->getEntityManager()
+                        ->createQuery(
+                                'SELECT r, t
+                FROM SkaphandrusAppBundle:SkRegion r JOIN r.translations t
+                WHERE t.locale =:locale AND r.country =:country_id
+                ')
+               ->setParameter('locale', $locale)
+                ->setParameter('country_id', $country_id)->getResult();
+    }
 
 }

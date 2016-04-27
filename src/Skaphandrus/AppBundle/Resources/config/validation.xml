@@ -11,6 +11,14 @@
             </constraint>
         </property>
     </class>-->
+    
+    <class name="Skaphandrus\AppBundle\Entity\SkBusinessFosUser">
+        <property name="email">
+            <constraint name="Skaphandrus\AppBundle\Validator\Constraints\EmailUnique" />
+        </property>
+    </class>
+    
+    
     <class name="Skaphandrus\AppBundle\Entity\FosUser">
         <property name="acquisitions">
             <constraint name="Skaphandrus\AppBundle\Validator\Constraints\ContainsSufficientPoints" />

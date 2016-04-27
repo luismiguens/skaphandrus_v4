@@ -1,0 +1,9 @@
+
+business_fos_user_new:
+    path:     /new
+    defaults: { _controller: "SkaphandrusAppBundle:SkBusinessFosUser:new" }
+
+business_fos_user_create:
+    path:     /create
+    defaults: { _controller: "SkaphandrusAppBundle:SkBusinessFosUser:create" }
+    methods:  POST

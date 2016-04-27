@@ -102,6 +102,7 @@ class SkRegion {
 
     public function __toString() {
         return $this->getName() . ", " . $this->getCountry()->getCountryName('en');
+        //return "ssss";
     }
 
 }
