@@ -2,7 +2,6 @@
 
 namespace Skaphandrus\AppBundle\Entity;
 
-
 /**
  * SkBusinessFosUser
  */
@@ -39,6 +38,11 @@ class SkBusinessFosUser {
     private $businessEmail;
 
     /**
+     * @var string
+     */
+    private $observations;
+
+    /**
      * Set name
      *
      * @param string $name
@@ -59,7 +63,6 @@ class SkBusinessFosUser {
     public function getName() {
 
         return $this->name;
-
     }
 
     /**
@@ -175,6 +178,29 @@ class SkBusinessFosUser {
     public function getBusinessEmail() {
 
         return $this->businessEmail;
+    }
+    
+        /**
+     * Set observations
+     *
+     * @param string $observations
+     *
+     * @return SkBusiness
+     */
+    public function setObservations($observations) {
+        $this->observations = $observations;
+
+        return $this;
+    }
+
+    /**
+     * Get observations
+     *
+     * @return string
+     */
+    public function getObservations() {
+
+        return $this->observations;
     }
 
 }

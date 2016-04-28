@@ -5,19 +5,37 @@ namespace Skaphandrus\AppBundle\Controller;
 use Skaphandrus\AppBundle\Entity\SkAddress;
 use Skaphandrus\AppBundle\Entity\SkBusiness;
 use Skaphandrus\AppBundle\Entity\SkBusinessFosUser;
+use Skaphandrus\AppBundle\Entity\FosUser;
 use Skaphandrus\AppBundle\Entity\SkContact;
 use Skaphandrus\AppBundle\Form\SkBusinessFosUserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * SkBusiness controller.
  *
  */
 class SkBusinessFosUserController extends Controller {
+
+    public function sendRegistrationEmail(SkBusinessFosUser $businessFosUser, SkBusiness $business) {
+        $message = \Swift_Message::newInstance()
+                ->setSubject("Thanks for registering " . $businessFosUser->getBusinessName())
+                ->setFrom('support-noreply@skaphandrus.com', 'Skaphandrus')
+                ->setTo($businessFosUser->getEmail())
+                ->setCc('registration@skaphandrus.com')
+                ->setBody(
+                $this->renderView(
+                        'SkaphandrusAppBundle:SkBusinessFosUser:registrationEmail.html.twig', array(
+                    'businessFosUser' => $businessFosUser,
+                    'business' => $business,
+                )), 'text/html'
+                )
+        ;
+
+        $this->get('mailer')->send($message);
+    }
 
     public function regionsAction(Request $request) {
         $country_id = $request->get('country_id');
@@ -32,7 +50,6 @@ class SkBusinessFosUserController extends Controller {
         endforeach;
 
         return new JsonResponse($array);
-
     }
 
     public function locationsAction(Request $request) {
@@ -41,13 +58,11 @@ class SkBusinessFosUserController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $locations = $em->getRepository('SkaphandrusAppBundle:SkLocation')->findBy(array('region' => $region_id));
 
-
         $array = array();
         foreach ($locations as $key => $location):
             $array[$key]['id'] = $location->getId();
             $array[$key]['name'] = $location->getName();
         endforeach;
-
 
         return new JsonResponse($array);
     }
@@ -57,71 +72,108 @@ class SkBusinessFosUserController extends Controller {
      *
      */
     public function createAction(Request $request) {
-        
         $em = $this->getDoctrine()->getManager();
         $entity = new SkBusinessFosUser();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-        
-            
-            //criar utilizar
+
+            $businessFosUser = $form->getData();
             $business = new SkBusiness();
-            $fos_user = new FosUser();
+            $user = new FosUser();
 
-            
-            //autenticar utilizador
-            
-            
-            
+            //
+            //criar utilizar
+            //
+            //to use in username
+            $date = date_create();
+            //username = timestamp
+            $username = date_timestamp_get($date);
+
+            //user settings
+            $settings = new \Skaphandrus\AppBundle\Entity\SkSettings();
+            $settings->setFosUser($user);
+            $emailNotificationTime = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkEmailNotificationTime")->findOneById(1);
+            $settings->setEmailNotificationTime($emailNotificationTime);
+            $user->setSettings($settings);
+            $em->persist($settings);
+
+            //set encoded password
+            $factory = $this->get('security.encoder_factory');
+            $encoder = $factory->getEncoder($user);
+            $password = $encoder->encodePassword($businessFosUser->getPassword(), $user->getSalt());
+            $user->setPassword($password);
+
+            //firstname and lastname
+            $name = explode(" ", $businessFosUser->getName());
+
+            $firstName = "";
+            if (array_key_exists(0, $name)) {
+                $firstName = $name[0];
+            }
+            $lastName = "";
+            if (array_key_exists(1, $name)) {
+                $lastName = $name[1];
+            }
+
+            $personal = new \Skaphandrus\AppBundle\Entity\SkPersonal();
+            $personal->setFirstname($firstName);
+            $personal->setLastname($lastName);
+            $personal->setHonorific("Scuba Diver");
+            $personal->setFosUser($user);
+            $user->setPersonal($personal);
+            $em->persist($personal);
+
+            //user username and email
+            $user->setUsername($username);
+            $user->setUsernameCanonical($username);
+            $user->setEmail($businessFosUser->getEmail());
+            $user->setEmailCanonical($businessFosUser->getEmail());
+            $user->setEnabled(true);
+            $user->setLocked(false);
+            $user->setExpired(false);
+            $user->setCredentialsExpired(false);
+            $em->persist($user);
+
+            //
             //criar empresa
-            
-            
-            
-            //associar empresa ao utilizador
-            
-            
-            
-            
-            //encaminha para a edição total da empresa
-            
-            
-            
-            //enviar email para utilizador com dados de user e da empresa (colocar partnerships@skaphandrus.com em cc)
-            
-            
-            $businessFosUser = new SkBusinessFosUser();
-            //$businessFosUser = $form->getData();
-
-
+            //
             $business->setName($businessFosUser->getBusinessName());
-
 
             $contact = new SkContact();
             $contact->setEmail($businessFosUser->getBusinessEmail());
             $business->setContact($contact);
-
+            $em->persist($contact);
 
             $address = new SkAddress();
-            $address->setLocation($businessFosUser->getBusinessLocation());
+            $address->setLocation($businessFosUser->getLocation());
             $business->setAddress($address);
+            $em->persist($address);
 
+            //
+            //associar empresa ao utilizador
+            //
+            $business->addAdmin($user);
 
-
-            $business->set($businessFosUser->getBusinessName());
-            $business->setName($businessFosUser->getBusinessName());
-
-
-
-            $em->persist($entity);
+            $em->persist($business);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
-            return $this->redirect($this->generateUrl('business_admin_edit', array('id' => $entity->getId())));
+            //enviar email para utilizador com dados de user e da empresa (colocar partnerships@skaphandrus.com em cc)
+            $this->sendRegistrationEmail($entity, $business);
+
+            //
+            //autenticar utilizador
+            //
+            $token = new \Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken($user, $user->getPassword(), 'main', $user->getRoles());
+            $this->get('security.token_storage')->setToken($token);
+            $this->get('session')->set('_security_main', serialize($token));
+
+            //encaminha para a edição total da empresa
+            return $this->redirect($this->generateUrl('business_admin_edit', array('id' => $business->getId())));
         }
 
-        return $this->render('SkaphandrusAppBundle:SkBusiness:newBusinessFosUser.html.twig', array(
+        return $this->render('SkaphandrusAppBundle:SkBusinessFosUser:newBusinessFosUser.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
         ));
@@ -150,11 +202,10 @@ class SkBusinessFosUserController extends Controller {
      *
      */
     public function newAction() {
-
         $entity = new SkBusinessFosUser();
         $form = $this->createCreateForm($entity);
 
-        return $this->render('SkaphandrusAppBundle:SkBusiness:newBusinessFosUser.html.twig', array(
+        return $this->render('SkaphandrusAppBundle:SkBusinessFosUser:newBusinessFosUser.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
         ));

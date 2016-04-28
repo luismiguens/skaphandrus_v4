@@ -8,32 +8,30 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Doctrine\ORM\EntityRepository;
 
-class AddCountryFieldSubscriber implements EventSubscriberInterface
-{
+class AddCountryFieldSubscriber implements EventSubscriberInterface {
+
     private $propertyPathToLocation;
 
-    public function __construct($propertyPathToLocation)
-    {
+    public function __construct($propertyPathToLocation) {
         $this->propertyPathToLocation = $propertyPathToLocation;
     }
 
-    public static function getSubscribedEvents()
-    {
+    public static function getSubscribedEvents() {
         return array(
             FormEvents::PRE_SET_DATA => 'preSetData',
-            FormEvents::PRE_SUBMIT   => 'preSubmit'
+            FormEvents::PRE_SUBMIT => 'preSubmit'
         );
     }
 
-    private function addCountryForm($form, $country = null)
-    {
+    private function addCountryForm($form, $country = null) {
         $formOptions = array(
-            'class'         => 'SkaphandrusAppBundle:SkCountry',
-            'mapped'        => false,
-            'label'         => 'Country',
-            'empty_value'   => 'Country',
-            'attr'          => array(
-                'class' => 'country_selector',
+            'class' => 'SkaphandrusAppBundle:SkCountry',
+            'mapped' => false,
+            'empty_value' => 'form.business_fos_user.label.country',
+            'label' => false,
+//            'label' => 'form.business_fos_user.label.country',
+            'attr' => array(
+                'class' => 'form-control',
             ),
         );
 
@@ -44,8 +42,7 @@ class AddCountryFieldSubscriber implements EventSubscriberInterface
         $form->add('country', 'entity', $formOptions);
     }
 
-    public function preSetData(FormEvent $event)
-    {
+    public function preSetData(FormEvent $event) {
         $data = $event->getData();
         $form = $event->getForm();
 
@@ -55,16 +52,16 @@ class AddCountryFieldSubscriber implements EventSubscriberInterface
 
         $accessor = PropertyAccess::getPropertyAccessor();
 
-        $location    = $accessor->getValue($data, $this->propertyPathToLocation);
+        $location = $accessor->getValue($data, $this->propertyPathToLocation);
         $country = ($location) ? $location->getRegion()->getCountry() : null;
 
         $this->addCountryForm($form, $country);
     }
 
-    public function preSubmit(FormEvent $event)
-    {
+    public function preSubmit(FormEvent $event) {
         $form = $event->getForm();
 
         $this->addCountryForm($form);
     }
+
 }

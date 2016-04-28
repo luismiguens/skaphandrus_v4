@@ -325,43 +325,51 @@
                     <div class="ibox">
                         <div class="ibox-content">
                             <div class="m-b-md">
+                                <h4>{{ "page.business.h4.type"|trans }}</h4>
                                 {% if business.type|length > 0 %}
-                                    <h4>{{ "page.business.h4.type"|trans }}</h4>
                                     <div>
                                         {% for type in business.type %}
                                             <p><i class="fa fa-check text-navy"></i> {{ type }}</p>
                                         {% endfor %}
                                     </div>
+                                {% else %}
+                                    {{ "page.business.h4.no_type"|trans }}
                                 {% endif %}
                             </div>
                             <div class="m-b-md">
+                                <h4>{{ "page.business.h4.currency"|trans }}</h4>
                                 {% if business.currency|length > 0 %}
-                                    <h4>{{ "page.business.h4.currency"|trans }}</h4>
                                     <div>
                                         {% for currency in business.currency %}
                                             <p itemprop="currenciesAccepted"><i class="fa fa-check text-navy"></i> {{ currency|title }}</p>
                                         {% endfor %}
                                     </div>
+                                {% else %}
+                                    {{ "page.business.h4.no_currency"|trans }}
                                 {% endif %}
                             </div>
                             <div class="m-b-md">
+                                <h4>{{ "page.business.h4.language"|trans }}</h4>
                                 {% if business.language|length > 0 %}
-                                    <h4>{{ "page.business.h4.language"|trans }}</h4>
                                     <div>
                                         {% for language in business.language %}
                                             <p><i class="fa fa-check text-navy"></i> {{ language|title }}</p>
                                         {% endfor %}
                                     </div>
+                                {% else %}
+                                    {{ "page.business.h4.no_language"|trans }}
                                 {% endif %}
                             </div>
                             <div class="m-b-md">
+                                <h4>{{ "page.business.h4.other_activity"|trans }}</h4>
                                 {% if business.otherActivity|length > 0 %}
-                                    <h4>{{ "page.business.h4.other_activity"|trans }}</h4>
                                     <div>
                                         {% for activity in business.otherActivity %}
                                             <p><i class="fa fa-check text-navy"></i> {{ activity|title }}</p>
                                         {% endfor %}
                                     </div>
+                                {% else %}
+                                    {{ "page.business.h4.no_other_activity"|trans }}
                                 {% endif %}
                             </div>
                         </div>
@@ -391,6 +399,15 @@
                                             <p itemprop="awards">{{ business.awards|raw }}</p>
                                         {% endif %}
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <h3>{{ "page.business.h4.description"|trans }}</h3>
+                                <div class="m-b-md">
+                                    {{ "page.business.h4.no_description"|trans }}
                                 </div>
                             </div>
                         </div>

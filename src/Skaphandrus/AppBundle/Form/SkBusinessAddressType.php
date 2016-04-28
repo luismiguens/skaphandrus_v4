@@ -13,10 +13,7 @@ class SkBusinessAddressType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        
 
-        
-        
         $builder
                 ->add('postcode', 'text', array(
                     'attr' => array('class' => 'form-control'),
