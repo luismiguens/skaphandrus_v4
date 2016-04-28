@@ -499,7 +499,8 @@
                                                             <div class="ibox">
                                                                 <div class="ibox-content product-box">
                                                                     <div class="product-imitation" style="padding: 0px 0px!important;">
-                                                                        <img src="http://localhost:8000/uploads/business/package_burned.png" class="img-responsive" alt="{{ pack.valueperdives }} {{ business.unit.currency }}"/>
+                                                                        {#<img src="http://localhost:8000/uploads/business/package_burned.png" class="img-responsive" alt="{{ pack.valueperdives }} {{ business.unit.currency }}"/>#}
+                                                                        <img src="{{ '/uploads/business/package_dives.png'| imagine_filter('sk_widen_240') }}" alt="{{ pack.valueperdives }} {{ business.unit.currency }}" class="img-responsive"/>
                                                                     </div>
                                                                     {#<img src="{{ '/uploads/business/package.png'| imagine_filter('sk_widen_100') }}" class="img-responsive"/>#}
                                                                     {#<img src="{{ business.getWebPath | imagine_filter('sk_widen_100') }}" class="img-responsive"/>#}
