@@ -108,24 +108,18 @@ class SkBusinessFosUserController extends Controller {
             //firstname and lastname
             $name = explode(" ", $businessFosUser->getName());
 
-            $firstName = "";
-            $middleName = "";
-            $lastName = "";
-            
             $firstName = $name[0];
-                        
+            $middleName = NULL;
+            $lastName = NULL;
             //se preencher tres nomes
             if (array_key_exists(2, $name)) {
                 $middleName = $name[1];
                 $lastName = $name[2];
-            
-            //se preencher dois nomes     
-            }elseif(array_key_exists(1, $name)){
+
+                //se preencher dois nomes     
+            } elseif (array_key_exists(1, $name)) {
                 $lastName = $name[1];
             }
-            
-            
-            
 
             $personal = new \Skaphandrus\AppBundle\Entity\SkPersonal();
             $personal->setFirstname($firstName);
