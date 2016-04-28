@@ -73,7 +73,7 @@ class SkBusinessFosUserType extends AbstractType {
                 ->add('observations', 'textarea', array(
                     'label' => false,
                     'required' => false,
-                    'help' => 'form.business_fos_user.help.observations',
+//                    'help' => 'form.business_fos_user.help.observations',
                     'attr' => array(
                         'class' => 'form-control',
                         'rows' => 4,
