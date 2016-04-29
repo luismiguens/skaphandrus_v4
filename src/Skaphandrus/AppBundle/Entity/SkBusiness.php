@@ -240,7 +240,7 @@ class SkBusiness {
         if ($this->name):
             return $this->name;
         else:
-            return "NULL";
+            return "";
         endif;
     }
 

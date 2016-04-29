@@ -304,6 +304,15 @@ class SkBusinessRepository extends EntityRepository {
                 )->getResult();
     }
 
+    public function findBusinessPremiumOrPlus() {
+        return $this->getEntityManager()->createQuery(
+                        'SELECT b
+            FROM SkaphandrusAppBundle:SkBusiness b
+            WHERE b.premiumAt is not null 
+            OR b.plusAt is not null '
+                )->getResult();
+    }
+
     public function findAllBusinessLite() {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();

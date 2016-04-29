@@ -227,7 +227,7 @@ function slider_concurso(selector) {
         centerMode: true,
         centerPadding: '60px',
         autoplay: true,
-        autoplayspeed: 1000,
+        autoplayspeed: 750,
         responsive: [
             {
                 breakpoint: 1024,
@@ -294,6 +294,8 @@ function sidebar_slide(selector) {
         infinite: false,
         slidesToShow: 1,
         slidesToScroll: 1,
+        autoplay: true,
+        autoplayspeed: 750,
         centerMode: false
     });
 }
@@ -302,6 +304,8 @@ function sidebar_contest(selector) {
         infinite: false,
         slidesToShow: 3,
         slidesToScroll: 1,
+        autoplay: true,
+        autoplayspeed: 750,
         centerMode: false
     });
 }

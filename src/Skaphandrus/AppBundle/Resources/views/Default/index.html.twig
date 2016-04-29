@@ -48,24 +48,6 @@
             };
             $(this).ready(loadCountries);
             $('#show_more_countries').click(loadCountries);
-
-            /*  funçoes para os footables  */
-            var loadCountriesAll = function () {
-                setTimeout(function () {
-                    $.ajax({
-                        type: "get",
-                        url: "{{path("ajax_countries_see_all")}}",
-                        data: 'business=countries',
-                        dataType: "text",
-                        success: function (response) {
-                            $("#countriesInput").html(response);
-                        }
-                    });
-                }, 100);
-            };
-            $(this).ready(loadCountriesAll);
-            $('#countriesModal').on('shown.bs.modal', loadCountriesAll);
-
         });
 
         var $grid = $('.gallery-index').imagesLoaded(function () {
@@ -88,9 +70,14 @@
             <!-- BEGIN - parte inicial -->
             <div class="row">
                 <div class="col-lg-12">
+                    {#{% if app.user %}
+                        {% set id = "home_box" %}
+                    {% else %}
+                        {% set id = "" %}
+                    {% endif %}#}
                     <div class="ibox" id="home_box">
                         <div class="ibox-title">
-                            <h5>Title</h5>
+                            <h5>{{"page.index.h5.title"|trans}}</h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
@@ -227,116 +214,256 @@
                                         </div>
                                     {% endfor %}
                                 </div>
-                                <a class="btn btn-primary btn-block" href="{{path("photos")}}">{{"page.home.a.all_photos"|trans}}</a>
+                                <div class="row">
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-6">
+                                        <button type="button" class="btn btn-block btn-primary dim m-b-md" onclick="location.href = '{{ path('photos') }}';">
+                                            {{"page.home.button.all_photos"|trans}}
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-3"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- END - photos -->
 
-                    <!-- Destinos start -->
+                </div>
+
+                <div class="col-md-4">
+
+                    <button type="button" class="btn btn-block btn-warning dim m-b-md" onclick="location.href = '{{ path('destinations') }}';">
+                        <div class="button_side">{{ "page.index.button.book_now"|trans }}</div>
+                    </button>
+
+                    <!-- BEGIN - business -->
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h3>{{ "page.index.h3.business"|trans }}</h3>
+                        </div>
+                        <div class="ibox-content">
+                            {#<h3>Title</h3>#}
+                            {% for b in business %}
+                                <div class="contact-box">
+                                    <div class="col-sm-4">
+                                        <div class="text-center">
+                                            <img alt="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <h4><strong>{{b|truncate(40)}}</strong></h4>
+                                        <p><i class="fa fa-map-marker"></i>{{ b.address.location }}, {{ b.address.location.region.country }}</p>
+                                        <div>
+                                            <a class="btn btn-primary btn-block btn-xs" href="{{ path('business_no_slug', { 'id': b.id}) }}">{{ "page.business.button.more_info"|trans }}</a>
+                                            <a class="btn btn-primary btn-block btn-xs" href="{{ path('booking_admin_new', {'business_id': b.id}) }}">{{ "page.business.button.book_now"|trans }}</a>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            {% endfor %}
+
+                            {% if app.user %}
+                                <button class="btn btn-primary dim btn-block m-b-md" onclick="location.href = '{{ path('business_admin_new') }}';">
+                                    {{ "page.index.button.logged_become_partner"|trans }}
+                                </button>
+                            {% else %}
+                                <button class="btn btn-primary dim btn-block m-b-md" onclick="location.href = '{{ path('business_fos_user_new') }}';">
+                                    {{ "page.index.button.register_become_partner"|trans }}
+                                </button>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    <!-- END - business -->
+
+                    <!-- BEGIN - modules -->
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <img src="{{ asset('bundles/skaphandrusapp/img/landing/webpage-01.jpg') }}" alt="Ocean Life Identification"  class="img-responsive" />
+                                </div>
+                                <div class="col-xs-8">
+                                    <h3>{{ "page.index.identification.timeline"|trans }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-lg-10 col-lg-offset-1">
+                                    <div class="latest_model_carrossel">
+                                        {% for module in modules %}
+                                            <a href="{{ url_to_module(module) }}">
+                                                <img class="thumbnail" src="{{ module.getWebPath | imagine_filter('sk_widen_240') }}" alt="{{module.name}}" />
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary btn-block dim" onclick="location.href = '{{ path('modules') }}';">
+                                {{ "page.index.button.modules"|trans }}
+                            </button>
+                        </div>
+                    </div>
+                    <!-- END - modules -->
+
+                    <!-- BEGIN - contest -->
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <img src="{{ asset('bundles/skaphandrusapp/img/landing/webpage-03.jpg') }}" alt="Ocean Life Identification"  class="img-responsive" />
+                                </div>
+                                <div class="col-xs-8">
+                                    <h3>{{"page.index.contests.list"|trans}}</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+
+                            <!-- BEGIN contest in progress -->
+                            <div class="m-b-md">
+                                <table class="table table-hover no-margins">
+                                    {% for contest in contests %}
+                                        {% if contest.isInProgress %}
+                                            <tr>
+                                                <td class="text-navy">
+                                                    <meta itemprop="name" content="{{ contest }}" />
+                                                    <meta itemprop="startDate" content="{{ contest.beginAt|date("Y-m-d") }}" />
+                                                    <meta itemprop="endDate" content="{{ contest.endAt|date("Y-m-d") }}" />
+                                                    <span itemprop="location" itemscope itemtype="http://schema.org/Place">
+                                                        <meta itemprop="name" content="Azores" />
+                                                        <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+                                                            <meta itemprop="name" content="Azores" />
+                                                        </span>
+                                                    </span>
+                                                    {{link_to_contest(contest)}}
+                                                </td>
+                                                <td>
+                                                    <!-- Calculate the project completeness -->
+                                                    {% if "now"|date("U") < contest.beginAt|date("U") %}
+                                                        {% set percentage = 0 %}
+                                                        {% set contest_status = 'not-started' %}
+                                                        {% set button_class = 'default' %}
+                                                        <meta itemprop="eventStatus" content="not-started" />
+                                                    {% elseif "now"|date("U") < contest.endAt|date("U") %}
+                                                        {% set time_length = contest.endAt|date("U") - contest.beginAt|date("U") %}
+                                                        {% set current_time_length = "now"|date("U") - contest.beginAt|date("U") %}
+                                                        {% set percentage = ( (current_time_length * 100) / time_length )|number_format %}
+                                                        {% set contest_status = 'active' %}
+                                                        {% set button_class = 'warning' %}
+                                                        <meta itemprop="eventStatus" content="active" />
+                                                    {% else %}
+                                                        {% set percentage = 100 %}
+                                                        {% set contest_status = 'completed' %}
+                                                        {% set button_class = 'primary' %}
+                                                        <meta itemprop="eventStatus" content="completed" />
+                                                    {% endif %}
+                                                    <span class="label label-{{ button_class }}">
+                                                        {{ ("page.contests.label.status_" ~ contest_status)|trans }}
+                                                    </span>
+                                                </td>
+                                                <td>{{ contest.business.name }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                </table>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <!-- END contest in progress -->
+
+                            <!-- BEGIN contest ended -->
+                            {% for contest in contests %}
+                                {% if "now"|date("U") > contest.endAt|date("U") %}
+                                    <div class="row">
+                                        <div class="col-xs-9">
+                                            <h4>{{link_to_contest(contest)}}</h4>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            {% if "now"|date("U") < contest.beginAt|date("U") %}
+                                                {% set percentage = 0 %}
+                                                {% set contest_status = 'not-started' %}
+                                                {% set button_class = 'default' %}
+                                                <meta itemprop="eventStatus" content="not-started" />
+                                            {% elseif "now"|date("U") < contest.endAt|date("U") %}
+                                                {% set time_length = contest.endAt|date("U") - contest.beginAt|date("U") %}
+                                                {% set current_time_length = "now"|date("U") - contest.beginAt|date("U") %}
+                                                {% set percentage = ( (current_time_length * 100) / time_length )|number_format %}
+                                                {% set contest_status = 'active' %}
+                                                {% set button_class = 'warning' %}
+                                                <meta itemprop="eventStatus" content="active" />
+                                            {% else %}
+                                                {% set percentage = 100 %}
+                                                {% set contest_status = 'completed' %}
+                                                {% set button_class = 'primary' %}
+                                                <meta itemprop="eventStatus" content="completed" />
+                                            {% endif %}
+                                            <span class="label label-{{ button_class }}">
+                                                {{ ("page.contests.label.status_" ~ contest_status)|trans }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row side_contests">
+                                        <div class="col-lg-10 col-lg-offset-1">
+                                            <div class="side_contest_slider">
+                                                {% for category in contest.categories %}
+                                                    {% for award in category.awards %}
+                                                        <a href="{{ path('photo_no_slug',  { 'id': award.winnerPhoto.id }) }}">
+                                                            <div class="img-thumbnail">
+                                                                <img alt="{{ award.winnerPhoto }}" class="img-responsive" src="{{ award.winnerPhoto.getWebPath | imagine_filter('sk_thumbnail_outbound_200') }} " />
+                                                            </div>
+                                                        </a>
+                                                    {% endfor %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                {% endif %}
+                            {% endfor %}
+                            <!-- END contest ended -->
+
+                            <button type="button" class="btn btn-block dim btn-primary" onclick="location.href = '{{ path('contests_landing_page') }}';">
+                                {{ "page.index.button.create_contest"|trans }}
+                            </button>
+                        </div>
+                    </div>
+                    <!-- END - contest -->
+
+                </div>
+            </div>
+
+            <!-- Destinos start -->
+            <div class="row">
+                <div class="col-md-12">
+
                     <div class="ibox">
                         <div class="ibox-title">
                             <h3>{{ "page.home.h3.destinations"|trans }}</h3>
                         </div>
                         <div class="ibox-content">
                             {#<h3>{{ "page.home.h3.destinations"|trans }}</h3>#}
-                            <div class="home">
-                                <div class="dvb-container">
-                                    <ul class="dvb-md-list" >
-
-                                        <div id="box_countries"></div>
-
-                                        <!-- countries Modal start -->
-                                        <div class="modal fade" id="countriesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                            <div class="modal-dialog modal-lg" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title" id="myModalLabel">{{ "page.destinations.modal.countries_title"|trans }}</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-
-                                                        <div id="countriesInput"></div>
-
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- countries Modal end -->
-
-                                    </ul>
-                                    <div class="row">
-                                        <div class="col-sm-6 col-sx-12">
-                                            <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_countries" >{{ "page.destinations.button.show_more_countries"|trans }}</button>
-                                        </div>
-                                        <div class="col-sm-6 col-sx-12">
-                                            <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#countriesModal">{{ "page.destinations.button.see_all_countries"|trans }}</button>
-                                        </div>
+                            {#<div class="home">#}
+                            <div class="dvb-container">
+                                <ul class="dvb-md-list" >
+                                    <div id="box_countries"></div>
+                                </ul>
+                                <div class="row">
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-6">
+                                        <button type="button" class="btn btn-block btn-primary dim m-b-md" onclick="location.href = '{{ path('destinations') }}';">
+                                            {{ "page.destinations.button.see_all_countries"|trans }}
+                                        </button>
                                     </div>
+                                    <div class="col-sm-3"></div>
                                 </div>
                             </div>
+                            {#</div>#}
                         </div>
                     </div>
-                    <!-- Destinos end -->
-
-                </div>
-
-                <div class="col-md-4">
-
-                    {#<button class="btn btn-block btn-warning dim m-b-md">
-                        <div class="button_side">BOOK YOUR NEXT DIVE</div>
-                    </button>
-                    <div class="ibox">
-
-                        <div class="ibox-content">
-                            <h3>Title</h3>
-                            <div class="contact-box">
-                                <a href="profile.html">
-                                    <div class="col-sm-4">
-                                        <div class="text-center">
-                                            <img alt="image" class="img-thumbnail m-t-xs img-responsive" src="placeholder-100x100.jpg">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <h3><strong>John Smith</strong></h3>
-                                        <p><i class="fa fa-map-marker"></i> Riviera State 32/106</p>
-                                        <div class="btn btn-primary btn-block btn-xs">More info</div>
-                                        <div class="btn btn-primary btn-block dim btn-xs">Book now</div>
-
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </a>
-                            </div>
-                            <div class="contact-box">
-                                <a href="profile.html">
-                                    <div class="col-sm-4">
-                                        <div class="text-center">
-                                            <img alt="image" class="img-thumbnail m-t-xs img-responsive" src="placeholder-100x100.jpg">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <h3><strong>John Smith</strong></h3>
-                                        <p><i class="fa fa-map-marker"></i> Riviera State 32/106</p>
-                                        <div class="btn btn-primary btn-block btn-xs">More info</div>
-                                        <div class="btn btn-primary btn-block dim btn-xs">Book now</div>
-
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </a>
-                            </div>
-                            <button class="btn btn-primary dim btn-block m-b-md">
-                                BECOME A PARTNER
-                            </button>
-                        </div>
-                    </div>
-
-                    <?php include 'home/side1.php'; ?>
-                    <?php include 'home/side2.php'; ?>#}
                 </div>
             </div>
+            <!-- Destinos end -->
 
         </div>
     </div>

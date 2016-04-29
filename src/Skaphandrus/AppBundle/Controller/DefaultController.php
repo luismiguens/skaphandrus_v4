@@ -34,12 +34,18 @@ class DefaultController extends Controller {
 
         $modules = $em->getRepository('SkaphandrusAppBundle:SkIdentificationModule')->findBy(array('isEnabled' => '1'), array('updatedAt' => 'DESC'), 8);
         $contests = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')->findBy(array('isVisible' => true), array('createdAt' => 'DESC'), 8);
-        $photos = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->findBy(array(), array('createdAt' => 'DESC'), 12);
+        $photos = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->findBy(array(), array('createdAt' => 'DESC'), 15);
+        $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findBy(array(), array('createdAt' => 'DESC'), 3);
+//        $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findBusinessPremiumOrPlus();
+
+        
+//        dump($business);
 
         return $this->render('SkaphandrusAppBundle:Default:index.html.twig', array(
                     'modules' => $modules,
                     'contests' => $contests,
                     'photos' => $photos,
+                    'business' => $business,
         ));
     }
 
