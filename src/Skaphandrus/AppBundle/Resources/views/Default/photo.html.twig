@@ -277,7 +277,7 @@
                                             {% dump(photo.business) %}
                                             <strong>{{ "page.photo.h3.business"|trans }}: </strong>
                                             {% if photo.business is not empty %}
-                                                {{ photo.business }}
+                                                <a href="{{path("business_no_slug", {'id':photo.business.id})}}">{{ photo.business }}</a>
                                             {% else %}
                                                 {{ "page.photo.h3.no_business"|trans }}
                                             {% endif %}

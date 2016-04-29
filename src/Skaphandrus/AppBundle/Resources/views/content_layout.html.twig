@@ -28,94 +28,92 @@
         <meta name="google-play-app" content="app-id=com.skaphandrus.oceanlifeid">
 
         <!-- hreflang for language -->
-    {% block hreflang %}{% endblock %}
-    <meta itemprop="inLanguage" content="{{app.request.locale}}" />
+        {% block hreflang %}
+        {% endblock %}
+        <meta itemprop="inLanguage" content="{{app.request.locale}}" />
 
-    {% block stylesheets %}
-        <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('bundles/skaphandrusapp/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+        {% block stylesheets %}
+            <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/skaphandrusapp/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
-        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css"/>
-        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick-theme.css"/>
+            <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css"/>
+            <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick-theme.css"/>
 
-        <link href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}" rel="stylesheet">
-        <link href="{{ asset('bundles/skaphandrusapp/css/style.css') }}" rel="stylesheet">
-        <link href="{{ asset('bundles/skaphandrusapp/css/app.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/skaphandrusapp/css/style.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/skaphandrusapp/css/app.css') }}" rel="stylesheet">
 
-        <link href="{{ asset('bundles/skaphandrusapp/css/custom.css') }}" rel="stylesheet">
-    {% endblock %}
+            <link href="{{ asset('bundles/skaphandrusapp/css/custom.css') }}" rel="stylesheet">
+        {% endblock %}
 
-</head>
+    </head>
 
-<body class="boxed-layout canvas-menu" {% block body_data_attributes %}{% endblock %}>
+    <body class="boxed-layout canvas-menu" {% block body_data_attributes %}{% endblock %}>
 
-    <div id="wrapper">
+        <div id="wrapper">
 
-        {% include 'SkaphandrusAppBundle:Common:sidebar-menu.html.twig' with {'layout': 'content'} %}
+            {% include 'SkaphandrusAppBundle:Common:sidebar-menu.html.twig' with {'layout': 'content'} %}
 
-        <div id="page-wrapper" class="gray-bg">
-            <div class="row border-bottom">
-                {% include 'SkaphandrusAppBundle:Common:navbar-menu.html.twig' with {'bg': 'white-bg'} %}
-            </div>
-            <!-- page-heading begin -->
-            <div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-sm-8">
-                    <h2>
-                        {% block heading_title %}
-                        {% endblock %}
-                    </h2>
-                    {% block heading_breadcrumbs %}
-                    {% endblock %}
+            <div id="page-wrapper" class="gray-bg">
+                <div class="row border-bottom">
+                    {% include 'SkaphandrusAppBundle:Common:navbar-menu.html.twig' with {'bg': 'white-bg'} %}
                 </div>
-                <div class="col-sm-4">
-                    <div class="title-action">
-                        {% block heading_action %}
+                <!-- page-heading begin -->
+                <div class="row wrapper border-bottom white-bg page-heading">
+                    <div class="col-sm-8">
+                        <h2>
+                            {% block heading_title %}
+                            {% endblock %}
+                        </h2>
+                        {% block heading_breadcrumbs %}
                         {% endblock %}
                     </div>
+                    <div class="col-sm-4">
+                        <div class="title-action">
+                            {% block heading_action %}
+                            {% endblock %}
+                        </div>
+                    </div>
                 </div>
+                <!-- page-heading end -->
+
+                {% block body %}
+                {% endblock %}
+
+                {% include 'SkaphandrusAppBundle:Common:footer.html.twig'%}
+
             </div>
-            <!-- page-heading end -->
-
-            {% block body %}
-            {% endblock %}
-
-            {% include 'SkaphandrusAppBundle:Common:footer.html.twig'%}
-
         </div>
-    </div>
 
-    {% block javascripts %}
-        <!-- Mainly scripts -->
-        <script src="{{ asset('bundles/skaphandrusapp/js/jquery-2.1.1.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+        {% block javascripts %}
+            <!-- Mainly scripts -->
+            <script src="{{ asset('bundles/skaphandrusapp/js/jquery-2.1.1.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-        {#    <!-- Slick JQuery -->#}
-        <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/custom.js') }}"></script>
+            <!-- Slick JQuery -->
+            <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/custom.js') }}"></script>
 
-        <!-- Custom and plugin javascript -->
-        <script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/masonary/masonry.pkgd.min.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>
+            <!-- Custom and plugin javascript -->
+            <script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/plugins/masonary/masonry.pkgd.min.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>
+        {% endblock %}
 
-        
-
-    {% endblock %}
-
-    {% include 'SkaphandrusAppBundle:Common:analytics.html.twig'%}
+        {% include 'SkaphandrusAppBundle:Common:analytics.html.twig'%}
 
 
-    {#<a href="{{ path('taxonomy', { 'locale': 'en' }) }}">English </a>
-    <a href="{{ path('taxonomy', { 'locale': 'pt' }) }}">Português </a>#}
+        {#<a href="{{ path('taxonomy', { 'locale': 'en' }) }}">English </a>
+        <a href="{{ path('taxonomy', { 'locale': 'pt' }) }}">Português </a>#}
 
 
-    <!-- Go to www.addthis.com/dashboard to customize your tools -->
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51cb05087500d7e6" async="async"></script>
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51cb05087500d7e6" async="async"></script>
 
 
-</body>
+    </body>
 
 </html>

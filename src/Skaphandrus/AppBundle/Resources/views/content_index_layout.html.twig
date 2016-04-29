@@ -28,70 +28,72 @@
         <meta name="google-play-app" content="app-id=com.skaphandrus.oceanlifeid">
 
         <!-- hreflang for language -->
-    {% block hreflang %}{% endblock %}
-    <meta itemprop="inLanguage" content="{{app.request.locale}}" />
+        {% block hreflang %}
+        {% endblock %}
+        <meta itemprop="inLanguage" content="{{app.request.locale}}" />
 
 
-    {% block stylesheets %}
+        {% block stylesheets %}
+            <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/skaphandrusapp/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
-        <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('bundles/skaphandrusapp/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/skaphandrusapp/css/style.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/skaphandrusapp/css/app.css') }}" rel="stylesheet">
+        {% endblock %}
+    </head>
 
-        <link href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}" rel="stylesheet">
-        <link href="{{ asset('bundles/skaphandrusapp/css/style.css') }}" rel="stylesheet">
-        <link href="{{ asset('bundles/skaphandrusapp/css/app.css') }}" rel="stylesheet">
-    {% endblock %}
-</head>
+    <body class="boxed-layout canvas-menu" {% block body_data_attributes %}{% endblock %} >
 
-<body class="boxed-layout canvas-menu" {% block body_data_attributes %}{% endblock %} >
-    
-    <div id="wrapper">
+        <div id="wrapper">
 
-        {% include 'SkaphandrusAppBundle:Common:sidebar-menu.html.twig' with {'layout': 'content'} %}
+            {% include 'SkaphandrusAppBundle:Common:sidebar-menu.html.twig' with {'layout': 'content'} %}
 
-        <div id="page-wrapper" class="gray-bg">
-            <div class="row border-bottom">
-                {% include 'SkaphandrusAppBundle:Common:navbar-menu.html.twig' with {'color': 'white-bg'} %}
+            <div id="page-wrapper" class="gray-bg">
+                <div class="row border-bottom">
+                    {% include 'SkaphandrusAppBundle:Common:navbar-menu.html.twig' with {'color': 'white-bg'} %}
+                </div>
+                {#<!-- page-heading begin -->
+                <div class="row wrapper border-bottom white-bg page-heading">
+                    <div class="col-sm-8">
+                        <h2>{% block heading_title %}{% endblock %}</h2>
+                    {% block heading_breadcrumbs %}{% endblock %}
+                    </div>
+                    <div class="col-sm-4">
+                       <div class="title-action">
+                    {% block heading_action %}{% endblock %}
+                       </div>
+                    </div>
+                </div>#}
+                <!-- page-heading end -->
+
+                {% block body %}
+                {% endblock %}
+
+                {% include 'SkaphandrusAppBundle:Common:footer.html.twig'%}
+
             </div>
-            {#<!-- page-heading begin -->
-            <div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-sm-8">
-                    <h2>{% block heading_title %}{% endblock %}</h2>
-                {% block heading_breadcrumbs %}{% endblock %}
-                </div>
-                <div class="col-sm-4">
-                   <div class="title-action">
-                {% block heading_action %}{% endblock %}
-                   </div>
-                </div>
-            </div>#}
-            <!-- page-heading end -->
+        </div>
 
-        {% block body %}{% endblock %}
+        {% block javascripts %}
+            <!-- Mainly scripts -->
+            <script src="{{ asset('bundles/skaphandrusapp/js/jquery-2.1.1.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-        {% include 'SkaphandrusAppBundle:Common:footer.html.twig'%}
+            <!-- Custom and plugin javascript -->
+            <script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/plugins/masonary/masonry.pkgd.min.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>
+        {% endblock %}
 
-    </div>
-</div>
+        {% include 'SkaphandrusAppBundle:Common:analytics.html.twig'%}
 
-{% block javascripts %}
-    <!-- Mainly scripts -->
-    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-2.1.1.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51cb05087500d7e6" async="async"></script>
 
-    <!-- Custom and plugin javascript -->
-    <script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>
-{% endblock %}
-
-{% include 'SkaphandrusAppBundle:Common:analytics.html.twig'%}
-
-<!-- Go to www.addthis.com/dashboard to customize your tools -->
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51cb05087500d7e6" async="async"></script>
-
-</body>
+    </body>
 
 </html>

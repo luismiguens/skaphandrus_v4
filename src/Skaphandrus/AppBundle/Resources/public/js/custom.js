@@ -144,12 +144,6 @@ function killLoader() {
 }
 
 function sliders(selector) {
-   
-    
-//if( $( selector ).length){
-//    $(selector).slick('unslick');
-//}
-
 
     $(selector).slick({
         infinite: false,

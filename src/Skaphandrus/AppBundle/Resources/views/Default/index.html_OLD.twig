@@ -1,0 +1,300 @@
+{% extends 'SkaphandrusAppBundle::content_index_layout.html.twig' %}
+
+{% block page_title %}{{ "page.home.meta_tag.title"|trans }}{% endblock %}
+{% block page_description %}{% endblock %}
+{% block page_keywords %}{% endblock %}
+
+
+{% block hreflang %}
+    <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('index', {'locale': 'pt'}) }}" />
+    <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('index', {'locale': 'en'}) }}" />
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="wrapper wrapper-content animated">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox">
+                    <div class="ibox-content">
+
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="text-center m-t-lg">
+                                    <img src="{{ asset('bundles/skaphandrusapp/img/landing/webpage-02.jpg') }}" alt="Citizen science network">
+                                </div>
+                                <div class="text-center m-t-lg">
+                                    <h1>Skaphandrus <span class="text-navy"> <br>{{"page.home.h1.citizen_science_network"|trans|raw}}</span></h1>
+                                    <small>{{"page.home.slogan.citizen_science_network"|trans|raw}}</small>
+                                </div>
+                                <div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="text-center p-m">
+                                        <p>
+                                            {{"page.home.project_description.citizen_science_network"|trans|raw}}
+                                        </p>
+                                        <p class="text-center m-t-md"><a href="{{ path('fos_user_security_login') }}" class="btn btn-primary">{{"page.common.btn.join_us"|trans|raw}}</a></p>
+                                    </div>
+                                    <div>
+                                        <div class="text-center">
+                                            <small> {{"page.index.text_helper.message"|trans}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="text-center m-t-lg">
+                                    <img src="{{ asset('bundles/skaphandrusapp/img/landing/webpage-01.jpg') }}" alt="Ocean Life Identification" >
+                                </div>
+                                <div class="text-center m-t-lg">
+                                    <h1>Skaphandrus <span class="text-navy"><br>{{"page.home.h1.ocean_life_identification"|trans|raw}}</span></h1>
+                                    <small>{{"page.home.slogan.ocean_life_identification"|trans|raw}}</small>
+                                </div>
+                                <div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="text-center p-m">
+                                        <p>
+                                            {{"page.home.project_description.ocean_life_identification"|trans|raw}} </p>
+                                        <p class="text-center m-t-md"><a href="{{ path('modules')}}" class="btn btn-success">{{"page.common.btn.read_more"|trans|raw}}</a><br></p>
+                                    </div>
+                                    <div>
+                                        <div class="text-center">
+                                            <small> {{"page.index.text_helper.message"|trans}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="text-center m-t-lg">
+                                    <img src="{{ asset('bundles/skaphandrusapp/img/landing/webpage-03.jpg') }}" alt="UW Contests" >
+                                </div>
+                                <div class="text-center m-t-lg">
+                                    <h1>Skaphandrus <span class="text-navy"><br>{{"page.home.h1.underwater_contests"|trans|raw}}</span></h1>
+                                    <small>{{"page.home.slogan.underwater_contests"|trans|raw}}</small>
+                                </div>
+                                <div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="text-center p-m">
+                                        <p>
+                                            {{"page.home.project_description.underwater_contests"|trans|raw}} </p>
+                                        <p class="text-center m-t-md"><a href="{{ path('contests_landing_page') }}" class="btn btn-success">{{"page.common.btn.read_more"|trans|raw}}</a></p>
+                                    </div>
+                                    <div>
+                                        <div class="text-center">
+                                            <small> {{"page.index.text_helper.message"|trans}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <!-- Skaphandrus Activity -->              
+            <div class="col-lg-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>{{"page.index.h5.citizen_activity"|trans}}</h5>
+                        {#                       
+                        <div class="ibox-tools">
+                                                   <span class="label label-warning-light">10 Messages</span>
+                                               </div>
+                        #}                   
+                    </div>
+                    <div class="ibox-content">
+                        <div>
+                            {{ render(controller('SkaphandrusAppBundle:Common:skActivity', { 'parameters': { 'citizen_activity': 'citizen_activity' },'limit':10 } )) }}
+                            {#<button class="btn btn-primary btn-block m-t"><i class="fa fa-arrow-down"></i> Show More</button>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end activity -->
+
+
+            <!-- Identification Activity -->              
+            <div class="col-lg-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>{{"page.index.identification.timeline"|trans}}</h5>
+                        <span class="label label-primary">{{"page.index.identification.timeline.label"|trans}}</span>
+                        {# <div class="ibox-tools">
+                             <a class="collapse-link">
+                                 <i class="fa fa-chevron-up"></i>
+                             </a>
+                             <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                                 <i class="fa fa-wrench"></i>
+                             </a>
+                             <ul class="dropdown-menu dropdown-user">
+                                 <li><a href="#">Config option 1</a>
+                                 </li>
+                                 <li><a href="#">Config option 2</a>
+                                 </li>
+                             </ul>
+                             <a class="close-link">
+                                 <i class="fa fa-times"></i>
+                             </a>
+                         </div>#}
+                    </div>
+                    <div class="ibox-content inspinia-timeline">
+                        {% for module in modules %}
+                            <div class="timeline-item">
+                                <div class="row">
+                                    <div class="col-xs-3 date">
+                                        <i class="fa fa-cube"></i>
+                                        {{module.updatedAt|date("m/d/Y")}}
+                                        <br>
+                                        <small class="text-navy">{{module.updatedAt|time_diff}}</small>
+                                    </div>
+                                    <div class="col-xs-7 content">
+                                        <p class="m-b-xs"><strong>{{module}}</strong></p>
+                                        <p><a href="{{ url_to_module(module) }}"><img class="thumbnail" src="{{ module.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{module.name}}" /></a></p>
+                                                {#<p>Conference on the sales results for the previous year. Monica please examine sales trends in marketing and products.</p>#}
+
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="ibox float-e-margins">
+
+                    <div class="ibox-title">
+                        <h5>{{"page.index.h5.identification_activity"|trans}}</h5>
+                        {#                       <div class="ibox-tools">
+                                                   <span class="label label-warning-light">10 Messages</span>
+                                               </div>
+                        #}                  
+                    </div>
+
+                    {# <div class="ibox-content ibox-heading">
+                                                    <h3><i class="fa fa-envelope-o"></i> New messages</h3>
+                                                    <small><i class="fa fa-tim"></i> You have 22 new messages and 16 waiting in draft folder.</small>
+                                                </div>#}
+                    <div class="ibox-content">
+                        <div>
+                            {{ render(controller('SkaphandrusAppBundle:Common:skActivity', { 'parameters': { 'identification_activity': 'identification_activity' },'limit':10 } )) }}
+                            {#<button class="btn btn-primary btn-block m-t"><i class="fa fa-arrow-down"></i> Show More</button>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end activity -->
+
+
+            <!-- Contests Activity -->              
+            <div class="col-lg-4">
+
+                <div class="ibox float-e-margins" itemscope itemtype="http://schema.org/Festival">
+                    <div class="ibox-title">
+                        <h5>{{"page.index.contests.list"|trans}}</h5>
+                        <!--<div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>-->
+                    </div>
+                    <div class="ibox-content">
+                        <table class="table table-hover no-margins">
+                            <thead>
+                                <tr>
+                                    <th>{{ "page.contests.label.name"|trans }}</th>
+                                    <th>{{ "page.contests.label.status"|trans }}</th>
+                                    <th>{{ "page.contests.label.photos"|trans }}</th>
+                                    <th>{{ "page.contests.label.awards"|trans }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for contest in contests %}
+                                    {% if contest.isInPromotion %}
+                                        <tr>
+                                            <td class="text-navy">
+                                                <meta itemprop="name" content="{{ contest }}" />
+                                                <meta itemprop="startDate" content="{{ contest.beginAt|date("Y-m-d") }}" />
+                                                <meta itemprop="endDate" content="{{ contest.endAt|date("Y-m-d") }}" />
+                                                <span itemprop="location" itemscope itemtype="http://schema.org/Place">
+                                                    <meta itemprop="name" content="Azores" />
+                                                    <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+                                                        <meta itemprop="name" content="Azores" />
+                                                    </span>
+                                                </span>
+
+                                                {{link_to_contest(contest)}}</td>
+                                            <td>
+                                                {# Calculate the project completeness #}
+                                                {% if "now"|date("U") < contest.beginAt|date("U") %}
+                                                    {% set percentage = 0 %}
+                                                    {% set contest_status = 'not-started' %}
+                                                    {% set button_class = 'default' %}
+                                                    <meta itemprop="eventStatus" content="not-started" />
+                                                {% elseif "now"|date("U") < contest.endAt|date("U") %}
+                                                    {% set time_length = contest.endAt|date("U") - contest.beginAt|date("U") %}
+                                                    {% set current_time_length = "now"|date("U") - contest.beginAt|date("U") %}
+                                                    {% set percentage = ( (current_time_length * 100) / time_length )|number_format %}
+                                                    {% set contest_status = 'active' %}
+                                                    {% set button_class = 'warning' %}
+                                                    <meta itemprop="eventStatus" content="active" />
+                                                {% else %}
+                                                    {% set percentage = 100 %}
+                                                    {% set contest_status = 'completed' %}
+                                                    {% set button_class = 'primary' %}
+                                                    <meta itemprop="eventStatus" content="completed" />
+                                                {% endif %}
+                                                <span class="label label-{{ button_class }}"><small>{{ ("page.contests.label.status_" ~ contest_status)|trans }}</small></span></td>
+                                            <td>{{ contest.photos|length }}</td>
+                                            <td>
+                                                {% for award in contest.awards %}
+                                                    <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                                        <meta itemprop="name" content="{{ award.name }}" />
+                                                        <meta itemprop="category" content="{{ award.category }}" />
+                                                        {% for sponsor in award.sponsor %}
+                                                            <span itemprop="seller" itemscope itemtype="http://schema.org/Person">
+                                                                <meta itemprop="name" content="{{ sponsor.name }}" />
+                                                            </span>
+                                                        {% endfor %}
+                                                    </span>
+                                                {% endfor %}
+                                                {{ contest.awards|length }}
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>{{"page.index.h5.contests_activity"|trans}}</h5>
+                        {#                       <div class="ibox-tools">
+                                                   <span class="label label-warning-light">10 Messages</span>
+                                               </div>
+                        #}                   
+                    </div>
+                    <div class="ibox-content">
+                        <div>
+                            {{ render(controller('SkaphandrusAppBundle:Common:skActivity', { 'parameters': { 'contests_activity': 'contests_activity' },'limit':10 } )) }}
+                            {# <button class="btn btn-primary btn-block m-t"><i class="fa fa-arrow-down"></i> Show More</button>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end activity -->
+        </div>
+    </div>
+
+{% endblock %}
+
