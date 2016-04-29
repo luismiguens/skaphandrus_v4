@@ -274,7 +274,7 @@
                                             {% endif %}
                                         </li>
                                         <li style="margin-bottom: 2%;">
-                                            {% dump(photo.business) %}
+                                            {#{% dump(photo.business) %}#}
                                             <strong>{{ "page.photo.h3.business"|trans }}: </strong>
                                             {% if photo.business is not empty %}
                                                 <a href="{{path("business_no_slug", {'id':photo.business.id})}}">{{ photo.business }}</a>
