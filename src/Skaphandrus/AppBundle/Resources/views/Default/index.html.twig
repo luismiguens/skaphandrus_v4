@@ -70,12 +70,12 @@
             <!-- BEGIN - parte inicial -->
             <div class="row">
                 <div class="col-lg-12">
-                    {#{% if app.user %}
+                    {% if app.user %}
                         {% set id = "home_box" %}
                     {% else %}
                         {% set id = "" %}
-                    {% endif %}#}
-                    <div class="ibox" id="home_box">
+                    {% endif %}
+                    <div class="ibox" id="{{id}}}">
                         <div class="ibox-title">
                             <h5>{{"page.index.h5.title"|trans}}</h5>
                             <div class="ibox-tools">
