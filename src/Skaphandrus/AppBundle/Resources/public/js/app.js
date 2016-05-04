@@ -111,7 +111,7 @@ $(document).ready(function () {
     // Formulário SkBusinessSettingsAdmins
     if ($('#skaphandrus_appbundle_skbusiness_adminAutocomplete').length) {
         $('#skaphandrus_appbundle_skbusiness_adminAutocomplete').autocompleterMultiple({form_name: 'skaphandrus_appbundle_skbusiness', field_name: 'adminChoices', url_list: '/en/ajax_search_fosUser/', url_get: '/en/ajax_get_fosUser/'});
-        $('#skaphandrus_appbundle_skbusiness_adminAutocomplete').attr("Add the users who works and manage your page.");
+//        $('#skaphandrus_appbundle_skbusiness_adminAutocomplete').attr("Add the users who works and manage your page.");
     }
 
     // Formulário SkBooking

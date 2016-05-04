@@ -47,7 +47,7 @@
     <div class="wizard clearfix" id="wizard">
         <div class="steps clearfix" >
             <ul role="tablist">
-                <li class="disabled">
+                <li class="done">
                     <a href="{{ path("business_admin_edit", {"id":entity.id}) }}">
                         {{ "forms.common.btn.edit_base"|trans }}
                     </a>
@@ -58,16 +58,29 @@
                     </a>
                 </li>
                 {% if entity.isPremium or entity.isPlus or is_granted("ROLE_ADMIN") %}
-                    <li class="disabled">
+                    <li class="done">
                         <a href="{{ path("business_spot_admin_edit", {"id":entity.id}) }}">
                             {{ "forms.common.btn.edit_dive"|trans }}
                         </a>
                     </li>
-                    <li class="disabled">
+                    <li class="done">
                         <a href="{{ path("business_education_admin_edit", {"id":entity.id}) }}">
                             {{ "forms.common.btn.edit_education"|trans }}
                         </a>
                     </li>
+                    
+                    {% else %}
+                         <li class="disabled">
+                        <a href="#">
+                            {{ "forms.common.btn.edit_dive"|trans }}
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a href="#">
+                            {{ "forms.common.btn.edit_education"|trans }}
+                        </a>
+                    </li>
+                    
                 {% endif %}
             </ul>
         </div>

@@ -43,7 +43,7 @@
             if (options) {
                 $.extend(settings, options);
             }
-            var $this = $(this), $fakeInput = $('<input type="text" class="form-control" name="fake' + $this.attr('name') + '">');
+            var $this = $(this), $fakeInput = $('<input type="text" placeholder="Add users who works and manage your page." class="form-control" name="fake' + $this.attr('name') + '">');
             $this.hide().after($fakeInput);
             $fakeInput.autocomplete({
                 minLength: 4,
