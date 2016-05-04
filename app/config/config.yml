@@ -284,6 +284,11 @@ liip_imagine:
         sk_widen_590:
             filters:
                 relative_resize: { widen: 590 }
+        
+        #usado na pagina de um concurso
+        sk_widen_900:
+            filters:
+                relative_resize: { widen: 900 }
                 
         #single contest banner image
         sk_crop_900:

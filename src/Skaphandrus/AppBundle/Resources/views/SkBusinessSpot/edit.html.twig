@@ -6,8 +6,10 @@
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/hack/autocompleter-jqueryui.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/staps/jquery.steps.min.js') }}"></script>
+
     <script>
-        
+
         //http://symfony.com/doc/current/cookbook/form/form_collections.html
         /////////////////////  DivePrice code start  \\\\\\\\\\\\\\\\\\\\\\\
         var $container = $('ul.divePrice');
@@ -66,7 +68,7 @@
 
         });
         /////////////////////  DivePrice code end  \\\\\\\\\\\\\\\\\\\\\\\
-        
+
         //http://symfony.com/doc/current/cookbook/form/form_collections.html
         /////////////////////  RentEquipment code start  \\\\\\\\\\\\\\\\\\\\\\\
         var $container1 = $('ul.rentEquipment');
@@ -131,6 +133,13 @@
 
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/steps/jquery.steps.css') }}" rel="stylesheet">
+    <style>
+        #wizard a  { cursor: pointer; }
+    </style>
+{% endblock %}
 
 {% block heading_title %}
     {{ "form.business_dive.h1.title"|trans }}
@@ -158,6 +167,37 @@
 
 {% block body %}
 
+    <div class="wizard clearfix" id="wizard">
+        <div class="steps clearfix" >
+            <ul role="tablist">
+                <li class="disabled">
+                    <a href="{{ path("business_admin_edit", {"id":entity.id}) }}">
+                        {{ "forms.common.btn.edit_base"|trans }}
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href="{{ path("business_settings_admin_edit", {"id":entity.id}) }}">
+                        {{ "forms.common.btn.edit_settings"|trans }}
+                    </a>
+                </li>
+                {% if entity.isPremium or entity.isPlus or is_granted("ROLE_ADMIN") %}
+                    <li class="current">
+                        <a href="{{ path("business_spot_admin_edit", {"id":entity.id}) }}">
+                            {{ "forms.common.btn.edit_dive"|trans }}
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a href="{{ path("business_education_admin_edit", {"id":entity.id}) }}">
+                            {{ "forms.common.btn.edit_education"|trans }}
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+            
+    <br/>
+    
     {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
 
     <style>
@@ -166,17 +206,17 @@
         }
     </style>
 
-{#        <label class="col-sm-3 control-label">{{ form_label(edit_form.spot) }}</label>
-        <div class="col-sm-9">
-            <ul class=diveSpot data-prototype="{{ form_widget(edit_form.spot.vars.prototype)|e }}">
-                {% for diveSpot in edit_form.spot %}
-                    <li>
-                        {{ form_widget(diveSpot) }}
-                    </li>
-                {% endfor %}
-            </ul>
-            <div class="hr-line-dashed"></div>
-        </div>#}
+    {#        <label class="col-sm-3 control-label">{{ form_label(edit_form.spot) }}</label>
+            <div class="col-sm-9">
+                <ul class=diveSpot data-prototype="{{ form_widget(edit_form.spot.vars.prototype)|e }}">
+                    {% for diveSpot in edit_form.spot %}
+                        <li>
+                            {{ form_widget(diveSpot) }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="hr-line-dashed"></div>
+            </div>#}
 
     {{ form_row(edit_form.spotAutocomplete) }}
     {{ form_row(edit_form.spotChoices) }}

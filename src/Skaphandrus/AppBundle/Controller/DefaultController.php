@@ -32,18 +32,30 @@ class DefaultController extends Controller {
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $modules = $em->getRepository('SkaphandrusAppBundle:SkIdentificationModule')->findBy(array('isEnabled' => '1'), array('updatedAt' => 'DESC'), 8);
-        $contests = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')->findBy(array('isVisible' => true), array('createdAt' => 'DESC'), 8);
-        $photos = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->findBy(array(), array('createdAt' => 'DESC'), 15);
-        $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findBy(array(), array('createdAt' => 'DESC'), 3);
-//        $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findBusinessPremiumOrPlus();
+        $modules = $em->getRepository('SkaphandrusAppBundle:SkIdentificationModule')
+                ->findBy(array('isEnabled' => '1'), array('updatedAt' => 'DESC'), 8);
 
-        
-//        dump($business);
+        $contestInProgress = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
+                ->findContestInProgress();
+
+        $contestEnded = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
+                ->findContestEnded();
+
+//        $contests = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')
+//                ->findBy(array('isVisible' => true), array('createdAt' => 'DESC'), 8);
+
+        $photos = $em->getRepository('SkaphandrusAppBundle:SkPhoto')
+                ->findBy(array(), array('createdAt' => 'DESC'), 15);
+
+        $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')
+                ->findBy(array(), array('createdAt' => 'DESC'), 3);
+
+//        $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findBusinessPremiumOrPlus();
 
         return $this->render('SkaphandrusAppBundle:Default:index.html.twig', array(
                     'modules' => $modules,
-                    'contests' => $contests,
+                    'contestInProgress' => $contestInProgress,
+                    'contestEnded' => $contestEnded,
                     'photos' => $photos,
                     'business' => $business,
         ));

@@ -9,9 +9,16 @@
     <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/gmaps.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/form_business.js') }}"></script>
-
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/staps/jquery.steps.min.js') }}"></script>
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/steps/jquery.steps.css') }}" rel="stylesheet">
+    <style>
+        #wizard a  { cursor: pointer; }
+    </style>
+{% endblock %}
 
 {% block heading_title %}
     {{ "form.business.h1.title"|trans }}
@@ -41,6 +48,37 @@
 {% endblock %}
 
 {% block body %}
+
+    <div class="wizard clearfix" id="wizard">
+        <div class="steps clearfix" >
+            <ul>
+                <li class="current">
+                    <a href="{{ path("business_admin_edit", {"id":entity.id}) }}">
+                        {{ "forms.common.btn.edit_base"|trans }}
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href="{{ path("business_settings_admin_edit", {"id":entity.id}) }}">
+                        {{ "forms.common.btn.edit_settings"|trans }}
+                    </a>
+                </li>
+                {% if entity.isPremium or entity.isPlus or is_granted("ROLE_ADMIN") %}
+                    <li class="disabled">
+                        <a href="{{ path("business_spot_admin_edit", {"id":entity.id}) }}">
+                            {{ "forms.common.btn.edit_dive"|trans }}
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a href="{{ path("business_education_admin_edit", {"id":entity.id}) }}">
+                            {{ "forms.common.btn.edit_education"|trans }}
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <br/>
 
     {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
 

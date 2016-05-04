@@ -11,9 +11,15 @@ class ContestController extends Controller {
 
     public function landingAction() {
 
-        $contests = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
-                ->findBy(array('isVisible' => true), array('beginAt' => 'DESC'));
+        $contestInProgress = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
+                ->findContestInProgress();
 
+        $contestEnded = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
+                ->findContestEnded();
+        
+//        $contests = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
+//                ->findBy(array('isVisible' => true), array('beginAt' => 'DESC'));
+//
 //        foreach ($contests as $contest) {
 //            $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
 //                    ->getPhotographers($contest->getId());
@@ -22,7 +28,8 @@ class ContestController extends Controller {
 //        }
 
         return $this->render('SkaphandrusAppBundle:Contest:landing.html.twig', array(
-                    'contests' => $contests
+                    'contestInProgress' => $contestInProgress,
+                    'contestEnded' => $contestEnded
         ));
     }
 

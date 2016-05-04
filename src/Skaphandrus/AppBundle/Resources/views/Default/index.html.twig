@@ -75,7 +75,7 @@
                     {% else %}
                         {% set id = "" %}
                     {% endif %}
-                    <div class="ibox" id="{{id}}}">
+                    <div class="ibox" id="{{ id }}">
                         <div class="ibox-title">
                             <h5>{{"page.index.h5.title"|trans}}</h5>
                             <div class="ibox-tools">
@@ -232,9 +232,9 @@
 
                 <div class="col-md-4">
 
-                    <button type="button" class="btn btn-block btn-warning dim m-b-md" onclick="location.href = '{{ path('destinations') }}';">
+                    {#<button type="button" class="btn btn-block btn-warning dim m-b-md" onclick="location.href = '{{ path('destinations') }}';">
                         <div class="button_side">{{ "page.index.button.book_now"|trans }}</div>
-                    </button>
+                    </button>#}
 
                     <!-- BEGIN - business -->
                     <div class="ibox">
@@ -322,10 +322,48 @@
                         <div class="ibox-content">
 
                             <!-- BEGIN contest in progress -->
-                            <div class="m-b-md">
-                                <table class="table table-hover no-margins">
-                                    {% for contest in contests %}
-                                        {% if contest.isInProgress %}
+                            {% if contestInProgress %}
+                                {% for contest in contestInProgress %}
+                                    <div class="row">
+                                        <div class="col-xs-5">
+                                            <h4>{{link_to_contest(contest)}}</h4>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            {% if "now"|date("U") < contest.beginAt|date("U") %}
+                                                {% set percentage = 0 %}
+                                                {% set contest_status = 'not-started' %}
+                                                {% set button_class = 'default' %}
+                                                <meta itemprop="eventStatus" content="not-started" />
+                                            {% elseif "now"|date("U") < contest.endAt|date("U") %}
+                                                {% set time_length = contest.endAt|date("U") - contest.beginAt|date("U") %}
+                                                {% set current_time_length = "now"|date("U") - contest.beginAt|date("U") %}
+                                                {% set percentage = ( (current_time_length * 100) / time_length )|number_format %}
+                                                {% set contest_status = 'active' %}
+                                                {% set button_class = 'warning' %}
+                                                <meta itemprop="eventStatus" content="active" />
+                                            {% else %}
+                                                {% set percentage = 100 %}
+                                                {% set contest_status = 'completed' %}
+                                                {% set button_class = 'primary' %}
+                                                <meta itemprop="eventStatus" content="completed" />
+                                            {% endif %}
+                                            <span class="label label-{{ button_class }}">
+                                                {{ ("page.contests.label.status_" ~ contest_status)|trans }}
+                                            </span>
+                                        </div>
+                                        {% if contest.business is not null %}
+                                            <div class="col-xs-4">
+                                                {{ contest.business.name }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                {% endfor %}
+
+
+                                {#<div class="m-b-md">
+                                    <table class="table table-hover no-margins">
+                                        {% for contest in contestInProgress %}
                                             <tr>
                                                 <td class="text-navy">
                                                     <meta itemprop="name" content="{{ contest }}" />
@@ -365,61 +403,60 @@
                                                 </td>
                                                 <td>{{ contest.business.name }}</td>
                                             </tr>
-                                        {% endif %}
-                                    {% endfor %}
-                                </table>
-                            </div>
-                            <div class="hr-line-dashed"></div>
+                                        {% endfor %}
+                                    </table>
+                                </div>#}
+
+                            {% endif %}
                             <!-- END contest in progress -->
 
                             <!-- BEGIN contest ended -->
-                            {% for contest in contests %}
-                                {% if "now"|date("U") > contest.endAt|date("U") %}
-                                    <div class="row">
-                                        <div class="col-xs-9">
-                                            <h4>{{link_to_contest(contest)}}</h4>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            {% if "now"|date("U") < contest.beginAt|date("U") %}
-                                                {% set percentage = 0 %}
-                                                {% set contest_status = 'not-started' %}
-                                                {% set button_class = 'default' %}
-                                                <meta itemprop="eventStatus" content="not-started" />
-                                            {% elseif "now"|date("U") < contest.endAt|date("U") %}
-                                                {% set time_length = contest.endAt|date("U") - contest.beginAt|date("U") %}
-                                                {% set current_time_length = "now"|date("U") - contest.beginAt|date("U") %}
-                                                {% set percentage = ( (current_time_length * 100) / time_length )|number_format %}
-                                                {% set contest_status = 'active' %}
-                                                {% set button_class = 'warning' %}
-                                                <meta itemprop="eventStatus" content="active" />
-                                            {% else %}
-                                                {% set percentage = 100 %}
-                                                {% set contest_status = 'completed' %}
-                                                {% set button_class = 'primary' %}
-                                                <meta itemprop="eventStatus" content="completed" />
-                                            {% endif %}
-                                            <span class="label label-{{ button_class }}">
-                                                {{ ("page.contests.label.status_" ~ contest_status)|trans }}
-                                            </span>
-                                        </div>
+                            {% for contest in contestEnded %}
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                        <h4>{{link_to_contest(contest)}}</h4>
                                     </div>
-                                    <div class="row side_contests">
-                                        <div class="col-lg-10 col-lg-offset-1">
-                                            <div class="side_contest_slider">
-                                                {% for category in contest.categories %}
-                                                    {% for award in category.awards %}
-                                                        <a href="{{ path('photo_no_slug',  { 'id': award.winnerPhoto.id }) }}">
-                                                            <div class="img-thumbnail">
-                                                                <img alt="{{ award.winnerPhoto }}" class="img-responsive" src="{{ award.winnerPhoto.getWebPath | imagine_filter('sk_thumbnail_outbound_200') }} " />
-                                                            </div>
-                                                        </a>
-                                                    {% endfor %}
+                                    <div class="col-xs-3">
+                                        {% if "now"|date("U") < contest.beginAt|date("U") %}
+                                            {% set percentage = 0 %}
+                                            {% set contest_status = 'not-started' %}
+                                            {% set button_class = 'default' %}
+                                            <meta itemprop="eventStatus" content="not-started" />
+                                        {% elseif "now"|date("U") < contest.endAt|date("U") %}
+                                            {% set time_length = contest.endAt|date("U") - contest.beginAt|date("U") %}
+                                            {% set current_time_length = "now"|date("U") - contest.beginAt|date("U") %}
+                                            {% set percentage = ( (current_time_length * 100) / time_length )|number_format %}
+                                            {% set contest_status = 'active' %}
+                                            {% set button_class = 'warning' %}
+                                            <meta itemprop="eventStatus" content="active" />
+                                        {% else %}
+                                            {% set percentage = 100 %}
+                                            {% set contest_status = 'completed' %}
+                                            {% set button_class = 'primary' %}
+                                            <meta itemprop="eventStatus" content="completed" />
+                                        {% endif %}
+                                        <span class="label label-{{ button_class }}">
+                                            {{ ("page.contests.label.status_" ~ contest_status)|trans }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row side_contests">
+                                    <div class="col-lg-10 col-lg-offset-1">
+                                        <h5>{{"page.index.h5.winner_photo_contest"|trans}}</h5>
+                                        <div class="side_contest_slider">
+                                            {% for category in contest.categories %}
+                                                {% for award in category.awards %}
+                                                    <a href="{{ path('photo_no_slug',  { 'id': award.winnerPhoto.id }) }}">
+                                                        <div class="img-thumbnail">
+                                                            <img alt="{{ award.winnerPhoto }}" class="img-responsive" src="{{ award.winnerPhoto.getWebPath | imagine_filter('sk_thumbnail_outbound_200') }} " />
+                                                        </div>
+                                                    </a>
                                                 {% endfor %}
-                                            </div>
+                                            {% endfor %}
                                         </div>
                                     </div>
-                                    <div class="hr-line-dashed"></div>
-                                {% endif %}
+                                </div>
+                                <div class="hr-line-dashed"></div>
                             {% endfor %}
                             <!-- END contest ended -->
 

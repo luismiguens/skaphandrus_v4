@@ -1,0 +1,66 @@
+<nav class="navbar navbar-inverse navbar-static-top {% if color is defined %}{{ color }}{% endif %}" style="margin-bottom: 0">
+    <div class="navbar-header">
+        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+        <form class="navbar-form-custom" action="{{ path('search') }}" {#itemprop="potentialAction" itemscope itemtype="http://schema.org/SearchAction"#}>
+            <div class="form-group">
+                {#                <meta itemprop="target" content="http://www.skaphandrus.com/search?q={string}" />#}
+                <input {#itemprop="query-input"#} type="text" placeholder="{{ "pages.common.label.search_something"|trans }}" class="form-control" name="string" id="string">
+            </div>
+        </form>
+
+        <style type="text/css">
+            .navbar-top-links li:hover{
+                background-color: white;
+            }
+        </style>    
+
+        <ul class="nav navbar-top-links navbar-right" itemscope itemtype="http://schema.org/SiteNavigationElement">
+            <li itemprop="name" content="{{ "navbar.menu.label.home"|trans }}"><a itemprop="url" content="{{url('index') }}" href="{{path('index') }}">{{ "navbar.menu.label.home"|trans }}</a></li>
+            <li itemprop="name" content="{{ "navbar.menu.label.identification"|trans }}"><a itemprop="url" content="{{url('modules') }}" href="{{path('modules')}}">{{"navbar.menu.label.identification"|trans}}</a></li>
+            <li itemprop="name" content="{{ "navbar.menu.label.uw_contests"|trans }}"><a itemprop="url" content="{{url('contests_landing_page') }}" href="{{path('contests_landing_page')}}">{{"navbar.menu.label.uw_contests"|trans}}</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{"navbar.menu.label.contents"|trans}} <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li itemprop="name" content="{{ "navbar.menu.label.world_map"|trans }}"><a itemprop="url" content="{{url('locations_home') }}" href="{{path('locations_home')}}">{{"navbar.menu.label.world_map"|trans}} </a></li>
+                    <li itemprop="name" content="{{ "navbar.menu.label.taxonomy"|trans }}"><a itemprop="url" content="{{url('taxonomy') }}" href="{{path('taxonomy')}}">{{"navbar.menu.label.taxonomy"|trans}} </a></li>
+                    <li itemprop="name" content="{{ "navbar.menu.label.photos"|trans }}"><a itemprop="url" content="{{url('photos') }}" href="{{path('photos')}}">{{"navbar.menu.label.photos"|trans}} </a></li>
+                    <li itemprop="name" content="{{ "navbar.menu.label.users-home"|trans }}"><a itemprop="url" content="{{url('users-home') }}" href="{{path('users-home')}}">{{"navbar.menu.label.users-home"|trans}} </a></li>
+                        {#<li itemprop="name" content="{{ "navbar.menu.label.business-home"|trans }}"><a itemprop="url" content="{{url('business-home') }}" href="{{path('business-home')}}">{{"navbar.menu.label.business-home"|trans}} </a></li>#}
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <ul class="nav navbar-top-links navbar-right">
+
+        {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+            <li>
+                <span class="m-r-sm text-muted welcome-message">{{ "pages.common.label.welcome_skaphandrus"|trans }}</span>
+            </li>
+
+            <!-- begin messages dropdown -->
+            {{ render(controller('SkaphandrusAppBundle:Common:skMessages')) }}
+            <!-- end messages dropdown -->
+
+            <!-- begin notifications dropdown -->
+            {{ render(controller('SkaphandrusAppBundle:Common:skNotifications')) }}
+            <!-- end notifications dropdown -->
+
+            {#            <li>
+                            <span class="m-r-sm text-muted welcome-message">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span>
+                        </li>#}
+            <li>
+                <a href="{{ path('fos_user_security_logout') }}">
+                    <i class="fa fa-sign-out"></i> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            </li>
+        {% else %}
+            <li>
+                <a href="{{ path('fos_user_security_login') }}">
+                    <i class="fa fa-sign-out"></i> {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+
+</nav>
