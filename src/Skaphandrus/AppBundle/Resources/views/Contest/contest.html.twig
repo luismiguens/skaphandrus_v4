@@ -42,11 +42,11 @@
     {{ parent() }}
     <script src='https://www.google.com/recaptcha/api.js'></script>
 
-    <script type="text/javascript">
+{#    <script type="text/javascript">
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
-    </script>
+    </script>#}
 {% endblock %}
 
 {% block stylesheets %}
@@ -104,11 +104,11 @@
                                             <table class="table">
                                                 <tr>
                                                     <th>{{ "form.photo_contest.label.begin_at"|trans }}</th>
-                                                    <td><a href="#" data-toggle="tooltip" title="{{"form.photo_contest.help.beginAt"|trans}}">{{ contest.beginAt|date("d-m-Y") }}</a></td>
+                                                    <td><a href="#" data-toggle="tooltip" data-placement="bottom" title="{{"form.photo_contest.help.beginAt"|trans}}">{{ contest.beginAt|date("d-m-Y") }}</a></td>
                                                 </tr>
                                                 <tr>
                                                     <th>{{ "form.photo_contest.label.end_at"|trans }}</th>
-                                                    <td><a href="#" data-toggle="tooltip" title="{{"form.photo_contest.help.endAt"|trans}}">{{ contest.endAt|date("d-m-Y") }}</a></td>
+                                                    <td><a href="#" data-toggle="tooltip" data-placement="bottom" title="{{"form.photo_contest.help.endAt"|trans}}">{{ contest.endAt|date("d-m-Y") }}</a></td>
                                                 </tr>
                                                 <tr>
                                                     <th>{{ "page.contest.dt.total_price"|trans }}</th>

@@ -7,6 +7,7 @@
 
 $(document).ready(function () {
 
+    $('[data-toggle="tooltip"]').tooltip();
 
     if ($('#datatable-list').length) {
         $('#datatable-list').DataTable({
