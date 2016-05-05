@@ -66,6 +66,9 @@
                                 <li>
                                     <a class="btn btn-white btn-sm" href="{{ path('business_education_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_education"|trans }}</a>
                                 </li>
+                                <li>
+                                    <a class="btn btn-white btn-sm" href="{{ path('business_booking_admin', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.business_booking"|trans }}</a>
+                                </li>
                             {% endif %}
                             {% if entity.plus %}
                                 {% if entity.plus|date("U") > "-1 Year"|date("U") %}
@@ -74,6 +77,9 @@
                                     </li>
                                     <li>
                                         <a class="btn btn-white btn-sm" href="{{ path('business_education_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_education"|trans }}</a>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-white btn-sm" href="{{ path('business_booking_admin', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.business_booking"|trans }}</a>
                                     </li>
                                 {% endif %}
                             {% endif %}
@@ -84,6 +90,9 @@
                                     </li>
                                     <li>
                                         <a class="btn btn-white btn-sm" href="{{ path('business_education_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit_education"|trans }}</a>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-white btn-sm" href="{{ path('business_booking_admin', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.business_booking"|trans }}</a>
                                     </li>
                                 {% endif %}
                             {% endif %}

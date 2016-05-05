@@ -14,6 +14,7 @@
     {{ parent() }}
     <link href="{{ asset('bundles/skaphandrusapp/css/plugins/steps/jquery.steps.css') }}" rel="stylesheet">
     <style>
+        .wizard > .steps > ul > li { width: 20% !important; }
         #wizard a  { cursor: pointer; }
     </style>
 {% endblock %}
@@ -68,9 +69,13 @@
                             {{ "forms.common.btn.edit_education"|trans }}
                         </a>
                     </li>
-                    
-                    {% else %}
-                         <li class="disabled">
+                    <li class="done">
+                        <a href="{{ path("business_booking_admin", {"id":entity.id}) }}">
+                            {{ "forms.common.btn.business_booking"|trans }}
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="disabled">
                         <a href="#">
                             {{ "forms.common.btn.edit_dive"|trans }}
                         </a>
@@ -80,7 +85,11 @@
                             {{ "forms.common.btn.edit_education"|trans }}
                         </a>
                     </li>
-                    
+                    <li class="disabled">
+                        <a href="#">
+                            {{ "forms.common.btn.business_booking"|trans }}
+                        </a>
+                    </li>
                 {% endif %}
             </ul>
         </div>

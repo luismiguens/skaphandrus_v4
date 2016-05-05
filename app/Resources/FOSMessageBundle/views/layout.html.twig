@@ -3,14 +3,14 @@
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
 <!--[if !IE]><!--> <html lang="{{ app.request.locale }}" xmlns:fb="http://www.facebook.com/2008/fbml" > <!--<![endif]--> 
-    
+
 
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# skaphandrus: http://ogp.me/ns/fb/skaphandrus#">
-        
+
         <title>{% block page_title %}{% endblock %}</title>
         <link rel="shortcut icon" href="favicon.ico"> 
-        
-        
+
+
         <!-- Meta -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,17 +20,17 @@
         <meta name="robots" content="noodp">
         <meta name="keywords" content="{% block page_keywords %}{% endblock %}" />
         <meta name="description" content="{% block page_description %}{% endblock %}" />
-       
-        
+
+
         <!-- smart app link -->        
         <meta name="apple-itunes-app" content="app-id=894101166"/>
         <meta name="google-play-app" content="app-id=com.skaphandrus.oceanlifeid">
-        
+
         <!-- hreflang for language -->
         <link rel="alternate" hreflang="pt" href="http://skaphandrus.com/pt" />
         <link rel="alternate" hreflang="en" href="http://skaphandrus.com/en" />
-        
-        
+
+
         {% block stylesheets %}
             <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">
             <link href="{{ asset('bundles/skaphandrusapp/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
@@ -38,51 +38,47 @@
             <link href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}" rel="stylesheet">
             <link href="{{ asset('bundles/skaphandrusapp/css/style.css') }}" rel="stylesheet">
             <link href="{{ asset('bundles/skaphandrusapp/css/app.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/skaphandrusapp/css/custom.css') }}" rel="stylesheet">
             <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
 
         {% endblock %}
     </head>
 
-
-
-
-
-    <body class="boxed-layout">
+    <body class="top-navigation ">
         <div id="wrapper">
-            {% include 'SkaphandrusAppBundle:Common:sidebar-menu.html.twig' with {'layout': 'form'} %}
+            {#            {% include 'SkaphandrusAppBundle:Common:sidebar-menu.html.twig' with {'layout': 'form'} %}#}
             <div id="page-wrapper" class="gray-bg">
-                <div class="row border-bottom">
-                    {% include 'SkaphandrusAppBundle:Common:navbar-menu.html.twig' with {'color': 'white-bg'} %}
+                {#<div class="row border-bottom">#}
+                {% include 'SkaphandrusAppBundle:Common:navbar-menu.html.twig' with {'color': 'white-bg'} %}
+                {#</div>#}
+                {% block body %}
+                {% endblock %}
+                <div class="footer">
+                    <div class="pull-right">
+                        10GB of <strong>250GB</strong> Free.
+                    </div>
+                    <div>
+                        <strong>Copyright</strong> Example Company &copy; 2014-2015
+                    </div>
                 </div>
-                {% block body %}{% endblock %}
-            <div class="footer">
-                <div class="pull-right">
-                    10GB of <strong>250GB</strong> Free.
-                </div>
-                <div>
-                    <strong>Copyright</strong> Example Company &copy; 2014-2015
-                </div>
+
             </div>
-
         </div>
-    </div>
 
+        {% block javascripts %}
+            <!-- Mainly scripts -->
+            <script src="{{ asset('bundles/skaphandrusapp/js/jquery-2.1.1.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
+            <!-- Custom and plugin javascript -->
+            <script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>
 
-    {% block javascripts %}
-        <!-- Mainly scripts -->
-        <script src="{{ asset('bundles/skaphandrusapp/js/jquery-2.1.1.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
-
-        <!-- Custom and plugin javascript -->
-        <script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>
-
-    {% endblock %}
-</body>
+        {% endblock %}
+    </body>
 
 </html>
 

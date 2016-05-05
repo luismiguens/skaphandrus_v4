@@ -14,8 +14,8 @@
 {% block page_keywords %}{{keywords}}{% endblock %}
 
 {% block hreflang %}
-<link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('locations_home', {'locale': 'pt'}) }}" />
-<link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('locations_home', {'locale': 'en'}) }}" />
+    <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('locations_home', {'locale': 'pt'}) }}" />
+    <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('locations_home', {'locale': 'en'}) }}" />
 {% endblock %}
 
 
@@ -52,8 +52,8 @@
         {% for c in countries %}
                 "{{ c.name }}":{{ c.spotsCount }}
             {% if not loop.last %}
-            ,            {% endif %}
-        {% endfor %}
+                            ,{% endif %}
+                {% endfor %}
             };
                     $('#world-map').vectorMap({
             map: 'world_mill_en',
@@ -75,112 +75,116 @@
                     }]
                     },
                     onRegionClick: function (event, code) {
-        {% for c in countries %}
+                    {% for c in countries %}
                         if (code == "{{ c.name }}") {
                             window.location = "{{ url_to_country(c) }}";
                         }
-        {% endfor %}
+                    {% endfor %}
                     }
             });
             });
-    </script>
-{% endblock %}
+                </script>
+                {% endblock %}
 
-{% block body %}
-    <div class="wrapper wrapper-content">
-        <div class="row animated fadeInRight">
-            <!-- left column -->
+                    {% block body %}
+                        <div class="wrapper wrapper-content">
+                            <div class="row animated fadeInRight">
+                                <div class="container">
 
-            <!-- main locations activity -->              
-            <div class="col-lg-4">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>{{ "page.locations_home.h5.locations_home_activity"|trans }}</h5>
+                                    <!-- left column -->
 
-                    </div>
-                    <div class="ibox-content">
-                        <div>
-                            {{ render(controller('SkaphandrusAppBundle:Common:skActivity', { 'parameters': { 'locations_home': 'locations_home' },'limit':30 } )) }}
-                            {#<button class="btn btn-primary btn-block m-t"><i class="fa fa-arrow-down"></i> Show More</button>#}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- end activity -->
+                                    <!-- main locations activity -->              
+                                    <div class="col-lg-4">
+                                        <div class="ibox float-e-margins">
+                                            <div class="ibox-title">
+                                                <h5>{{ "page.locations_home.h5.locations_home_activity"|trans }}</h5>
 
-            <!-- end left column -->
-            <!-- right column -->
-            <div class="col-md-8">
-                <div class="ibox">
-                    <div class="ibox-title">
-                        <h5>{{ "page.locations_home.h5.related_contents"|trans }}</h5>
-                        {#<div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="#">Config option 1</a></li>
-                                <li><a href="#">Config option 2</a></li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>#}
-                    </div>
+                                            </div>
+                                            <div class="ibox-content">
+                                                <div>
+                                                    {{ render(controller('SkaphandrusAppBundle:Common:skActivity', { 'parameters': { 'locations_home': 'locations_home' },'limit':30 } )) }}
+                                                    {#<button class="btn btn-primary btn-block m-t"><i class="fa fa-arrow-down"></i> Show More</button>#}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end activity -->
 
-                    <div class="ibox-content">
-                        <h1>{{ "page.locations_home.h1.world_map"|trans }}</h1>
-                        <br>
-                        <span itemscope itemtype="http://schema.org/Map">
-                            <meta itemprop="name" content="World Map" />
-                            <div id="world-map" style="height: 300px; margin-bottom: 25px;">
+                                    <!-- end left column -->
+                                    <!-- right column -->
+                                    <div class="col-md-8">
+                                        <div class="ibox">
+                                            <div class="ibox-title">
+                                                <h5>{{ "page.locations_home.h5.related_contents"|trans }}</h5>
+                                                {#<div class="ibox-tools">
+                                                    <a class="collapse-link">
+                                                        <i class="fa fa-chevron-up"></i>
+                                                    </a>
+                                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                                        <i class="fa fa-wrench"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu dropdown-user">
+                                                        <li><a href="#">Config option 1</a></li>
+                                                        <li><a href="#">Config option 2</a></li>
+                                                    </ul>
+                                                    <a class="close-link">
+                                                        <i class="fa fa-times"></i>
+                                                    </a>
+                                                </div>#}
+                                            </div>
+
+                                            <div class="ibox-content">
+                                                <h1>{{ "page.locations_home.h1.world_map"|trans }}</h1>
+                                                <br>
+                                                <span itemscope itemtype="http://schema.org/Map">
+                                                    <meta itemprop="name" content="World Map" />
+                                                    <div id="world-map" style="height: 300px; margin-bottom: 25px;">
+                                                    </div>
+                                                </span>
+                                                <h3>{{ "page.locations_home.h3.world_map"|trans }}</h3>
+                                                <input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
+                                                <table class="footable table" data-page-size="50" data-filter=#filter>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>{{ "page.locations_home.label.country"|trans }}</th>
+                                                            <th>{{ "page.locations_home.label.spots"|trans }}</th>
+                                                            <th>{{ "page.locations_home.label.photos"|trans }}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for c in countries %}
+                                                            <tr>
+                                                                <td>
+                                                                    {{ link_to_country(c) }}
+                                                                    <span itemscope itemtype="http://schema.org/Country">
+                                                                        <meta itemprop="name" content="{{ c }}" />
+                                                                    </span>
+                                                                </td>
+                                                                <td>{{ c.spotsCount }}</td>
+                                                                <td>
+                                                                    {% if c.photosCount > 0 %}
+                                                                        <a href="{{ path('photos', {'country': c.id}) }}">{{ c.photosCount }}</a>
+                                                                    {% else %}
+                                                                        {{ c.photosCount }}
+                                                                    {% endif %}
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td colspan="3">
+                                                                <ul class="pagination pull-right"></ul>
+                                                            </td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
-                        </span>
-                        <h3>{{ "page.locations_home.h3.world_map"|trans }}</h3>
-                        <input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
-                        <table class="footable table" data-page-size="50" data-filter=#filter>
-                            <thead>
-                                <tr>
-                                    <th>{{ "page.locations_home.label.country"|trans }}</th>
-                                    <th>{{ "page.locations_home.label.spots"|trans }}</th>
-                                    <th>{{ "page.locations_home.label.photos"|trans }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for c in countries %}
-                                <tr>
-                                    <td>
-                                        {{ link_to_country(c) }}
-                                        <span itemscope itemtype="http://schema.org/Country">
-                                            <meta itemprop="name" content="{{ c }}" />
-                                        </span>
-                                    </td>
-                                    <td>{{ c.spotsCount }}</td>
-                                    <td>
-                                        {% if c.photosCount > 0 %}
-                                            <a href="{{ path('photos', {'country': c.id}) }}">{{ c.photosCount }}</a>
-                                        {% else %}
-                                            {{ c.photosCount }}
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="3">
-                                        <ul class="pagination pull-right"></ul>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                        </div>
 
-{% endblock %}
+                    {% endblock %}

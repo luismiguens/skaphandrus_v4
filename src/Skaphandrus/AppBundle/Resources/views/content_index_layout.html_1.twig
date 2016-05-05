@@ -2,13 +2,15 @@
 
 <!--[if IE 8]> <html lang="{{ app.request.locale }}" class="ie8"> <![endif]-->  
 <!--[if IE 9]> <html lang="{{ app.request.locale }}" class="ie9"> <![endif]-->  
-<!--[if !IE]><!--> <html lang="{{ app.request.locale }}" itemscope itemtype="http://schema.org/WebPage"> <!--<![endif]--> 
+<!--[if !IE]><!--> <html lang="{{ app.request.locale }}" xmlns:fb="http://www.facebook.com/2008/fbml" itemscope itemtype="http://schema.org/WebPage"> <!--<![endif]--> 
 
-    <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# skaphandrus: http://ogp.me/ns/skaphandrus#">
+
+    <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# skaphandrus: http://ogp.me/ns/fb/skaphandrus#">
 
         <title>{% block page_title %}{% endblock %}</title>
         <link rel="icon" href="{{ app.request.getSchemeAndHttpHost() ~ "/favicon.ico"}}"/>
         <link rel="shortcut icon" href="{{ app.request.getSchemeAndHttpHost() ~ "/favicon.ico"}}"  />
+
 
         <!-- Meta -->
         <meta charset="utf-8">
@@ -20,8 +22,6 @@
         <meta name="keywords" content="{% block page_keywords %}{% endblock %}" />
         <meta name="description" content="{% block page_description %}{% endblock %}" />
 
-        {% block facebook_tags %}
-        {% endblock %}
 
         <!-- smart app link -->        
         <meta name="apple-itunes-app" content="app-id=894101166"/>
@@ -32,49 +32,40 @@
         {% endblock %}
         <meta itemprop="inLanguage" content="{{app.request.locale}}" />
 
+
         {% block stylesheets %}
             <link href="{{ asset('bundles/skaphandrusapp/css/bootstrap.min.css') }}" rel="stylesheet">
             <link href="{{ asset('bundles/skaphandrusapp/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
-            <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css"/>
-            <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick-theme.css"/>
-
             <link href="{{ asset('bundles/skaphandrusapp/css/animate.css') }}" rel="stylesheet">
             <link href="{{ asset('bundles/skaphandrusapp/css/style.css') }}" rel="stylesheet">
             <link href="{{ asset('bundles/skaphandrusapp/css/app.css') }}" rel="stylesheet">
-
-            <link href="{{ asset('bundles/skaphandrusapp/css/custom.css') }}" rel="stylesheet">
         {% endblock %}
-
     </head>
 
-    <body class="top-navigation" {% block body_data_attributes %}{% endblock %}>
+    <body class="boxed-layout canvas-menu" {% block body_data_attributes %}{% endblock %} >
+
         <div id="wrapper">
+
+            {% include 'SkaphandrusAppBundle:Common:sidebar-menu.html.twig' with {'layout': 'content'} %}
+
             <div id="page-wrapper" class="gray-bg">
-
-                {% include 'SkaphandrusAppBundle:Common:navbar-menu.html.twig' with {'bg': 'white-bg'} %}
-
-                {% set _heading_breadcrumbs = block('heading_breadcrumbs') %}
-                {% if _heading_breadcrumbs is not empty %}
-                    <!-- page-heading begin -->
-                    <div class="row wrapper border-bottom white-bg page-heading">
-                        <div class="col-sm-8">
-                            <h2>
-                                {% block heading_title %}
-                                {% endblock %}
-                            </h2>
-                            {% block heading_breadcrumbs %}
-                            {% endblock %}
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="title-action">
-                                {% block heading_action %}
-                                {% endblock %}
-                            </div>
-                        </div>
+                <div class="row border-bottom">
+                    {% include 'SkaphandrusAppBundle:Common:navbar-menu.html.twig' with {'color': 'white-bg'} %}
+                </div>
+                {#<!-- page-heading begin -->
+                <div class="row wrapper border-bottom white-bg page-heading">
+                    <div class="col-sm-8">
+                        <h2>{% block heading_title %}{% endblock %}</h2>
+                    {% block heading_breadcrumbs %}{% endblock %}
                     </div>
-                    <!-- page-heading end -->
-                {% endif %}
+                    <div class="col-sm-4">
+                       <div class="title-action">
+                    {% block heading_action %}{% endblock %}
+                       </div>
+                    </div>
+                </div>#}
+                <!-- page-heading end -->
 
                 {% block body %}
                 {% endblock %}
@@ -91,10 +82,6 @@
             <script src="{{ asset('bundles/skaphandrusapp/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
             <script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-            <!-- Slick JQuery -->
-            <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
-            <script src="{{ asset('bundles/skaphandrusapp/js/custom.js') }}"></script>
-
             <!-- Custom and plugin javascript -->
             <script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>
             <script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
@@ -104,14 +91,8 @@
 
         {% include 'SkaphandrusAppBundle:Common:analytics.html.twig'%}
 
-
-        {#<a href="{{ path('taxonomy', { 'locale': 'en' }) }}">English </a>
-        <a href="{{ path('taxonomy', { 'locale': 'pt' }) }}">Português </a>#}
-
-
         <!-- Go to www.addthis.com/dashboard to customize your tools -->
         <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51cb05087500d7e6" async="async"></script>
-
 
     </body>
 

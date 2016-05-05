@@ -215,344 +215,347 @@
 
 {% block body %}
 
-{#    <div class="wrapper wrapper-content" itemscope itemtype="http://schema.org/Country">#}
+    {#    <div class="wrapper wrapper-content" itemscope itemtype="http://schema.org/Country">#}
     <div class="wrapper wrapper-content" itemscope itemtype="http://schema.org/Country">
         <div class="animated fadeInRight"> 
+            <div class="container">
 
-            <div class="row" >
-                <div class="col col-lg-12" >
-                    <div class="ibox-title" >
-                        <meta itemprop="isicV4" content="96590" />
-                        <h1 itemprop="name">{% trans with {'%country%': country} %}page.country.h1.title{% endtrans %}</h1>
-                    </div>
-                    <div class="ibox-content" >
-                        <h3>{% trans with {'%country%': country} %}page.country.h3.info{% endtrans %}</h3>
-                        {% if country.translate(app.request.locale).overview is not empty %}
-                            <p itemprop="description">{{ country.translate(app.request.locale).overview|raw  }}</p>
-
-                            <div class="span4 collapse-group">
-                                {% if country.translate(app.request.locale).geographyAndClimate is not empty %}
-                                    <h5 class="collapse">{{ "page.country.h5.geography_and_climate"|trans }}</h5>
-                                    <p class="collapse">{{ country.translate(app.request.locale).geographyAndClimate|raw }}</p>
-                                {% endif %}
-
-                                {% if country.translate(app.request.locale).entryRequirements is not empty %}
-                                    <h5 class="collapse">{{ "page.country.h5.entry_requirements"|trans }}</h5>
-                                    <p class="collapse">{{ country.translate(app.request.locale).entryRequirements|raw }}</p>
-                                {% endif %}
-
-                                {% if country.translate(app.request.locale).healthAndSafety is not empty %}
-                                    <h5 class="collapse">{{ "page.country.h5.health_and_safety"|trans }}</h5>
-                                    <p class="collapse">{{ country.translate(app.request.locale).healthAndSafety|raw }}</p>
-                                {% endif %}
-
-                                {% if country.translate(app.request.locale).timeZone is not empty %}
-                                    <h5 class="collapse">{{ "page.country.h5.time_zone"|trans }}</h5>
-                                    <p class="collapse">{{ country.translate(app.request.locale).timeZone|raw }}</p>
-                                {% endif %}
-
-                                {% if country.translate(app.request.locale).communications is not empty %}
-                                    <h5 class="collapse">{{ "page.country.h5.communications"|trans }}</h5>
-                                    <p class="collapse">{{ country.translate(app.request.locale).communications|raw }}</p>
-                                {% endif %}
-
-                                {% if country.translate(app.request.locale).powerAndElectricity is not empty %}
-                                    <h5 class="collapse">{{ "page.country.h5.power_and_electricity"|trans }}</h5>
-                                    <p class="collapse">{{ country.translate(app.request.locale).powerAndElectricity|raw }}</p>
-                                {% endif %}
-
-                                {% if country.translate(app.request.locale).otherInformations is not empty %}
-                                    <h5 class="collapse">{{ "page.country.h5.other_informations"|trans }}</h5>
-                                    <p class="collapse">{{ country.translate(app.request.locale).otherInformations|raw }}</p>
-                                {% endif %}
-
-                                <a style="margin: 2% 0% 0% 25%; width: 50%; " class="btn btn-block btn-outline btn-primary showdetails" data-toggle="collapse" data-target="#viewdetails"></a>
-                            </div>
-                        {% else %}
-                            {{ "page.country.p.no_description"|trans }}
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-
-            <!--  Mapa de spots start -->
-            <div class="row" style ="margin-top: 2%" >
-                <div class="col col-lg-12">
-                    <div class="ibox-title" >
-                        <h3>{% trans with {'%country%': country} %}page.country.h3.locations{% endtrans %}</h3>
-                    </div>
-                    <div class="row" >
-                        <div class="col col-lg-12" >
-                            <div class="ibox" >
-
-                                <div class="ibox-content">
-                                    <div id="box_locations"></div>
-                                </div>
-
-                                <!-- Locations Modal start -->
-                                <div class="modal fade" id="locationsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                    <div class="modal-dialog modal-lg" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="myModalLabel">{% trans with {'%country%': country} %}page.country.h4.locations_modal{% endtrans %}</h4>
-                                            </div>
-                                            <div class="modal-body">
-
-                                                <div id="locationsInput"></div>
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Locations Modal end -->
-
-                                <div class="ibox-content" >
-                                    <div class="row" >
-                                        <div class="col-sm-6 col-sx-12">
-                                            <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_locations">{{ "page.location.button.show_more_locations"|trans }}</button>
-                                        </div>
-                                        <div class="col-sm-6 col-sx-12">
-                                            <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#locationsModal">{{ "page.location.button.see_all_locations"|trans }}</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="row" >
+                    <div class="col col-lg-12" >
+                        <div class="ibox-title" >
+                            <meta itemprop="isicV4" content="96590" />
+                            <h1 itemprop="name">{% trans with {'%country%': country} %}page.country.h1.title{% endtrans %}</h1>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <!--  Mapa de spots end -->
+                        <div class="ibox-content" >
+                            <h3>{% trans with {'%country%': country} %}page.country.h3.info{% endtrans %}</h3>
+                            {% if country.translate(app.request.locale).overview is not empty %}
+                                <p itemprop="description">{{ country.translate(app.request.locale).overview|raw  }}</p>
 
-            <!--  Species start -->
-            <div class="row" >
-                <div class="col col-lg-12">
-                    <div class="ibox-title" >
-                        <h3>{% trans with {'%country%': country} %}page.country.h3.species{% endtrans %}</h3>
-                    </div>
-                    <div class="row" >
-                        <div class="col col-lg-12" >
-                            <div class="ibox" >
-
-                                <div class="ibox-content">
-                                    <div id="box_species"></div>
-                                </div>
-
-                                <!-- Species Modal start -->
-                                <div class="modal fade" id="speciesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                    <div class="modal-dialog modal-lg" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="myModalLabel">{% trans with {'%country%': country} %}page.country.h4.species_modal{% endtrans %}</h4>
-                                            </div>
-                                            <div class="modal-body">
-
-                                                <div id="speciesInput"></div>
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Species Modal end -->
-
-                                <div class="ibox-content" >
-                                    <div class="row" >
-                                        <div class="col-sm-6 col-sx-12">
-                                            <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_species">{{ "page.location.button.show_more_species"|trans }}</button>
-                                        </div>
-                                        <div class="col-sm-6 col-sx-12">
-                                            <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#speciesModal">{{ "page.location.button.see_all_species"|trans }}</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  Species end -->
-
-            <!--  Photographers start -->
-            <div class="row" >
-                <div class="col col-lg-12">
-                    <div class="ibox-title" >
-                        <h3>{% trans with {'%country%': country} %}page.country.h3.contributors{% endtrans %}</h3>
-                    </div>
-                    <div class="row" >
-                        <div class="col col-lg-12" >
-                            <div class="ibox" >
-
-                                <div class="ibox-content">
-                                    <div id="box_photographers"></div>
-                                </div>
-
-                                <!-- Photographers Modal start -->
-                                <div class="modal fade" id="photographersModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                    <div class="modal-dialog modal-lg" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="myModalLabel">{% trans with {'%country%': country} %}page.country.h4.photographers_modal{% endtrans %}</h4>
-                                            </div>
-                                            <div class="modal-body">
-
-                                                <div id="photographersInput"></div>
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Photographers Modal end -->
-
-                                <div class="ibox-content" >
-                                    <div class="row" >
-                                        <div class="col-sm-6 col-sx-12">
-                                            <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_photographers" >{{ "page.location.button.show_more_photographers"|trans }}</button>
-                                        </div>
-                                        <div class="col-sm-6 col-sx-12">
-                                            <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#photographersModal">{{ "page.location.button.see_all_photographers"|trans }}</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  Photographers end -->
-
-            <!--  Dive Centers start -->
-            <div class="tabs-container">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a aria-expanded="true" data-toggle="tab" href="#tab-1">{{ "page.country.tab1.dive_centers"|trans }}</a></li>
-                    <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-2">{{ "page.country.tab2.liveaboard"|trans }}</a></li>
-                    <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-3">{{ "page.country.tab3.resorts"|trans }}</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div id="tab-1" class="tab-pane active">
-                        <div class="panel-body">
-                            <div class="ibox">
-                                <h4>{{ "page.spot.h4.dive_center"|trans }}</h4>
-                                {#<div class="ibox-content">#}
-                                <div class="row" >
-                                    {% if diveCenters %}
-                                        {% for b in diveCenters %}
-                                            <div class="col-lg-4 col-md-6 col-sm-12" >
-                                                <div class="contact-box" style="height: 165px">
-                                                    <div class="col-sm-4">
-                                                        <div class="text-center">
-                                                            <img alt="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-8">
-                                                        <h4><strong>{{b|truncate(40)}}</strong></h4>
-                                                        <p><i class="fa fa-map-marker"></i> {{ b.address.location }}</p>
-                                                        <div>
-                                                            <a class="btn btn-outline btn-primary btn-block btn-xs" href="{{ path('business_no_slug', { 'id': b.id}) }}">{{ "page.business.button.more_info"|trans }}</a>
-                                                            <a class="btn btn-primary btn-block btn-xs" href="{{ path('booking_admin_new', {'business_id': b.id}) }}">{{ "page.business.button.book_now"|trans }}</a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                </div> 
-                                            </div>
-                                        {% endfor %}
-                                    {% else %}
-                                        <div class="col col-lg-12">
-                                            {{ "page.spot.h4.no_dive_center"|trans }}
-                                        </div>
+                                <div class="span4 collapse-group">
+                                    {% if country.translate(app.request.locale).geographyAndClimate is not empty %}
+                                        <h5 class="collapse">{{ "page.country.h5.geography_and_climate"|trans }}</h5>
+                                        <p class="collapse">{{ country.translate(app.request.locale).geographyAndClimate|raw }}</p>
                                     {% endif %}
+
+                                    {% if country.translate(app.request.locale).entryRequirements is not empty %}
+                                        <h5 class="collapse">{{ "page.country.h5.entry_requirements"|trans }}</h5>
+                                        <p class="collapse">{{ country.translate(app.request.locale).entryRequirements|raw }}</p>
+                                    {% endif %}
+
+                                    {% if country.translate(app.request.locale).healthAndSafety is not empty %}
+                                        <h5 class="collapse">{{ "page.country.h5.health_and_safety"|trans }}</h5>
+                                        <p class="collapse">{{ country.translate(app.request.locale).healthAndSafety|raw }}</p>
+                                    {% endif %}
+
+                                    {% if country.translate(app.request.locale).timeZone is not empty %}
+                                        <h5 class="collapse">{{ "page.country.h5.time_zone"|trans }}</h5>
+                                        <p class="collapse">{{ country.translate(app.request.locale).timeZone|raw }}</p>
+                                    {% endif %}
+
+                                    {% if country.translate(app.request.locale).communications is not empty %}
+                                        <h5 class="collapse">{{ "page.country.h5.communications"|trans }}</h5>
+                                        <p class="collapse">{{ country.translate(app.request.locale).communications|raw }}</p>
+                                    {% endif %}
+
+                                    {% if country.translate(app.request.locale).powerAndElectricity is not empty %}
+                                        <h5 class="collapse">{{ "page.country.h5.power_and_electricity"|trans }}</h5>
+                                        <p class="collapse">{{ country.translate(app.request.locale).powerAndElectricity|raw }}</p>
+                                    {% endif %}
+
+                                    {% if country.translate(app.request.locale).otherInformations is not empty %}
+                                        <h5 class="collapse">{{ "page.country.h5.other_informations"|trans }}</h5>
+                                        <p class="collapse">{{ country.translate(app.request.locale).otherInformations|raw }}</p>
+                                    {% endif %}
+
+                                    <a style="margin: 2% 0% 0% 25%; width: 50%; " class="btn btn-block btn-outline btn-primary showdetails" data-toggle="collapse" data-target="#viewdetails"></a>
                                 </div>
-                                {#</div>#}
-                            </div>
+                            {% else %}
+                                {{ "page.country.p.no_description"|trans }}
+                            {% endif %}
                         </div>
                     </div>
-                    <div id="tab-2" class="tab-pane">
-                        <div class="panel-body">
-                            <div class="ibox">
-                                <h4>{{ "page.spot.h4.liveaboard"|trans }}</h4>
-                                {#<div class="ibox-content">#}
-                                <div class="row" >
-                                    {% if liveaboards %}
-                                        {% for b in liveaboards %}
-                                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                                <div class="contact-box" style="height: 165px">
-                                                    <div class="col-sm-4">
-                                                        <div class="text-center">
-                                                            <img alt="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-8">
-                                                        <h4><strong>{{b|truncate(40)}}</strong></h4>
-                                                        <p><i class="fa fa-map-marker"></i> {{ b.address.location }}</p>
-                                                        <div>
-                                                            <a class="btn btn-outline btn-primary btn-block btn-xs" href="{{ path('business_no_slug', { 'id': b.id}) }}">{{ "page.business.button.more_info"|trans }}</a>
-                                                            <a class="btn btn-primary btn-block btn-xs" href="{{ path('booking_admin_new', {'business_id': b.id}) }}">{{ "page.business.button.book_now"|trans }}</a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                </div> 
-                                            </div>
-                                        {% endfor %}
-                                    {% else %}
-                                        <div class="col col-lg-12">
-                                            {{ "page.spot.h4.no_liveaboard"|trans }}
-                                        </div>
-                                    {% endif %}
-                                </div>
-                                {#</div>#}
-                            </div>
+                </div>
+
+                <!--  Mapa de spots start -->
+                <div class="row" style ="margin-top: 2%" >
+                    <div class="col col-lg-12">
+                        <div class="ibox-title" >
+                            <h3>{% trans with {'%country%': country} %}page.country.h3.locations{% endtrans %}</h3>
                         </div>
-                    </div>
-                    <div id="tab-3" class="tab-pane">
-                        <div class="panel-body">
-                            <div class="ibox">
-                                <h4>{{ "page.spot.h4.accommodation"|trans }}</h4>
-                                {#<div class="ibox-content">#}
-                                <div class="row" >
-                                    {% if accommodations %}
-                                        {% for b in accommodations %}
-                                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                                <div class="contact-box" style="height: 165px">
-                                                    <div class="col-sm-4">
-                                                        <div class="text-center">
-                                                            <img alt="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-8">
-                                                        <h4><strong>{{b|truncate(40)}}</strong></h4>
-                                                        <p><i class="fa fa-map-marker"></i> {{ b.address.location }}</p>
-                                                        <div>
-                                                            <a class="btn btn-outline btn-primary btn-block btn-xs" href="{{ path('business_no_slug', { 'id': b.id}) }}">{{ "page.business.button.more_info"|trans }}</a>
-                                                            <a class="btn btn-primary btn-block btn-xs" href="{{ path('booking_admin_new', {'business_id': b.id}) }}">{{ "page.business.button.book_now"|trans }}</a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                </div> 
+                        <div class="row" >
+                            <div class="col col-lg-12" >
+                                <div class="ibox" >
+
+                                    <div class="ibox-content">
+                                        <div id="box_locations"></div>
+                                    </div>
+
+                                    <!-- Locations Modal start -->
+                                    <div class="modal fade" id="locationsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">{% trans with {'%country%': country} %}page.country.h4.locations_modal{% endtrans %}</h4>
+                                                </div>
+                                                <div class="modal-body">
+
+                                                    <div id="locationsInput"></div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                </div>
                                             </div>
-                                        {% endfor %}
-                                    {% else %}
-                                        <div class="col col-lg-12">
-                                            {{ "page.spot.h4.no_accommodation"|trans }}
                                         </div>
-                                    {% endif %}
+                                    </div>
+                                    <!-- Locations Modal end -->
+
+                                    <div class="ibox-content" >
+                                        <div class="row" >
+                                            <div class="col-sm-6 col-sx-12">
+                                                <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_locations">{{ "page.location.button.show_more_locations"|trans }}</button>
+                                            </div>
+                                            <div class="col-sm-6 col-sx-12">
+                                                <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#locationsModal">{{ "page.location.button.see_all_locations"|trans }}</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                {#</div>#}
                             </div>
                         </div>
                     </div>
                 </div>
+                <!--  Mapa de spots end -->
+
+                <!--  Species start -->
+                <div class="row" >
+                    <div class="col col-lg-12">
+                        <div class="ibox-title" >
+                            <h3>{% trans with {'%country%': country} %}page.country.h3.species{% endtrans %}</h3>
+                        </div>
+                        <div class="row" >
+                            <div class="col col-lg-12" >
+                                <div class="ibox" >
+
+                                    <div class="ibox-content">
+                                        <div id="box_species"></div>
+                                    </div>
+
+                                    <!-- Species Modal start -->
+                                    <div class="modal fade" id="speciesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">{% trans with {'%country%': country} %}page.country.h4.species_modal{% endtrans %}</h4>
+                                                </div>
+                                                <div class="modal-body">
+
+                                                    <div id="speciesInput"></div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Species Modal end -->
+
+                                    <div class="ibox-content" >
+                                        <div class="row" >
+                                            <div class="col-sm-6 col-sx-12">
+                                                <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_species">{{ "page.location.button.show_more_species"|trans }}</button>
+                                            </div>
+                                            <div class="col-sm-6 col-sx-12">
+                                                <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#speciesModal">{{ "page.location.button.see_all_species"|trans }}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  Species end -->
+
+                <!--  Photographers start -->
+                <div class="row" >
+                    <div class="col col-lg-12">
+                        <div class="ibox-title" >
+                            <h3>{% trans with {'%country%': country} %}page.country.h3.contributors{% endtrans %}</h3>
+                        </div>
+                        <div class="row" >
+                            <div class="col col-lg-12" >
+                                <div class="ibox" >
+
+                                    <div class="ibox-content">
+                                        <div id="box_photographers"></div>
+                                    </div>
+
+                                    <!-- Photographers Modal start -->
+                                    <div class="modal fade" id="photographersModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">{% trans with {'%country%': country} %}page.country.h4.photographers_modal{% endtrans %}</h4>
+                                                </div>
+                                                <div class="modal-body">
+
+                                                    <div id="photographersInput"></div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Photographers Modal end -->
+
+                                    <div class="ibox-content" >
+                                        <div class="row" >
+                                            <div class="col-sm-6 col-sx-12">
+                                                <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_photographers" >{{ "page.location.button.show_more_photographers"|trans }}</button>
+                                            </div>
+                                            <div class="col-sm-6 col-sx-12">
+                                                <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#photographersModal">{{ "page.location.button.see_all_photographers"|trans }}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  Photographers end -->
+
+                <!--  Dive Centers start -->
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a aria-expanded="true" data-toggle="tab" href="#tab-1">{{ "page.country.tab1.dive_centers"|trans }}</a></li>
+                        <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-2">{{ "page.country.tab2.liveaboard"|trans }}</a></li>
+                        <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-3">{{ "page.country.tab3.resorts"|trans }}</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="tab-1" class="tab-pane active">
+                            <div class="panel-body">
+                                <div class="ibox">
+                                    <h4>{{ "page.spot.h4.dive_center"|trans }}</h4>
+                                    {#<div class="ibox-content">#}
+                                    <div class="row" >
+                                        {% if diveCenters %}
+                                            {% for b in diveCenters %}
+                                                <div class="col-lg-4 col-md-6 col-sm-12" >
+                                                    <div class="contact-box" style="height: 165px">
+                                                        <div class="col-sm-4">
+                                                            <div class="text-center">
+                                                                <img alt="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-8">
+                                                            <h4><strong>{{b|truncate(40)}}</strong></h4>
+                                                            <p><i class="fa fa-map-marker"></i> {{ b.address.location }}</p>
+                                                            <div>
+                                                                <a class="btn btn-outline btn-primary btn-block btn-xs" href="{{ path('business_no_slug', { 'id': b.id}) }}">{{ "page.business.button.more_info"|trans }}</a>
+                                                                <a class="btn btn-primary btn-block btn-xs" href="{{ path('booking_admin_new', {'business_id': b.id}) }}">{{ "page.business.button.book_now"|trans }}</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </div> 
+                                                </div>
+                                            {% endfor %}
+                                        {% else %}
+                                            <div class="col col-lg-12">
+                                                {{ "page.spot.h4.no_dive_center"|trans }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    {#</div>#}
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-2" class="tab-pane">
+                            <div class="panel-body">
+                                <div class="ibox">
+                                    <h4>{{ "page.spot.h4.liveaboard"|trans }}</h4>
+                                    {#<div class="ibox-content">#}
+                                    <div class="row" >
+                                        {% if liveaboards %}
+                                            {% for b in liveaboards %}
+                                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                                    <div class="contact-box" style="height: 165px">
+                                                        <div class="col-sm-4">
+                                                            <div class="text-center">
+                                                                <img alt="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-8">
+                                                            <h4><strong>{{b|truncate(40)}}</strong></h4>
+                                                            <p><i class="fa fa-map-marker"></i> {{ b.address.location }}</p>
+                                                            <div>
+                                                                <a class="btn btn-outline btn-primary btn-block btn-xs" href="{{ path('business_no_slug', { 'id': b.id}) }}">{{ "page.business.button.more_info"|trans }}</a>
+                                                                <a class="btn btn-primary btn-block btn-xs" href="{{ path('booking_admin_new', {'business_id': b.id}) }}">{{ "page.business.button.book_now"|trans }}</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </div> 
+                                                </div>
+                                            {% endfor %}
+                                        {% else %}
+                                            <div class="col col-lg-12">
+                                                {{ "page.spot.h4.no_liveaboard"|trans }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    {#</div>#}
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-3" class="tab-pane">
+                            <div class="panel-body">
+                                <div class="ibox">
+                                    <h4>{{ "page.spot.h4.accommodation"|trans }}</h4>
+                                    {#<div class="ibox-content">#}
+                                    <div class="row" >
+                                        {% if accommodations %}
+                                            {% for b in accommodations %}
+                                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                                    <div class="contact-box" style="height: 165px">
+                                                        <div class="col-sm-4">
+                                                            <div class="text-center">
+                                                                <img alt="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-8">
+                                                            <h4><strong>{{b|truncate(40)}}</strong></h4>
+                                                            <p><i class="fa fa-map-marker"></i> {{ b.address.location }}</p>
+                                                            <div>
+                                                                <a class="btn btn-outline btn-primary btn-block btn-xs" href="{{ path('business_no_slug', { 'id': b.id}) }}">{{ "page.business.button.more_info"|trans }}</a>
+                                                                <a class="btn btn-primary btn-block btn-xs" href="{{ path('booking_admin_new', {'business_id': b.id}) }}">{{ "page.business.button.book_now"|trans }}</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </div> 
+                                                </div>
+                                            {% endfor %}
+                                        {% else %}
+                                            <div class="col col-lg-12">
+                                                {{ "page.spot.h4.no_accommodation"|trans }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    {#</div>#}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  Dive Centers end -->
+
             </div>
-            <!--  Dive Centers end -->
         </div>
     </div>
 

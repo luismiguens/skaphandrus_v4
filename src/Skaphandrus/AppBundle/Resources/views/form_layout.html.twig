@@ -90,39 +90,38 @@
                                             </div>
                                         {% endfor %}
 
-
-
-                                    {% block body %}{% endblock %}
+                                        {% block body %}
+                                        {% endblock %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>        
+                    </div>        
+
+                </div>
+
+                {% include 'SkaphandrusAppBundle:Common:footer.html.twig'%}
 
             </div>
-
-            {% include 'SkaphandrusAppBundle:Common:footer.html.twig'%}
-
         </div>
-    </div>
 
 
 
-    {% block javascripts %}
-        <!-- Mainly scripts -->
-        <script src="{{ asset('bundles/skaphandrusapp/js/jquery-2.1.1.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+        {% block javascripts %}
+            <!-- Mainly scripts -->
+            <script src="{{ asset('bundles/skaphandrusapp/js/jquery-2.1.1.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-        <!-- Custom and plugin javascript -->
-        <script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
-        <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>
+            <!-- Custom and plugin javascript -->
+            <script src="{{ asset('bundles/skaphandrusapp/js/inspinia.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/plugins/pace/pace.min.js') }}"></script>
+            <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>
 
-    {% endblock %}
+        {% endblock %}
 
-    {% include 'SkaphandrusAppBundle:Common:analytics.html.twig'%}
-</body>
+        {% include 'SkaphandrusAppBundle:Common:analytics.html.twig'%}
+    </body>
 
 </html>

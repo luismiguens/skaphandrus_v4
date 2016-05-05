@@ -3,11 +3,17 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/app.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/staps/jquery.steps.min.js') }}"></script>
 {% endblock %}
 
 
 {% block stylesheets %}
     {{ parent() }}
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/steps/jquery.steps.css') }}" rel="stylesheet">
+    <style>
+        .wizard > .steps > ul > li { width: 20% !important; }
+        #wizard a  { cursor: pointer; }
+    </style>
 {% endblock %}
 
 {% block heading_title %}
@@ -26,7 +32,61 @@
     {{ "page.business_booking.text.description"|trans }}
 {% endblock %}
 
+{% block heading_action %}
+    <a class="btn btn-success" href="{{ path('business', { 'country': slugify(business.address.location.region.country.getCountryName(app.request.locale)), 'location': slugify(business.address.location), 'slug': slugify(business.name) }) }}">{{ "forms.common.btn.visit_business"|trans }}</a>
+{% endblock %}
+
 {% block body -%}
+
+    <div class="wizard clearfix" id="wizard">
+        <div class="steps clearfix" >
+            <ul role="tablist">
+                <li class="done">
+                    <a href="{{ path("business_admin_edit", {"id":business.id}) }}">
+                        {{ "forms.common.btn.edit_base"|trans }}
+                    </a>
+                </li>
+                <li class="done">
+                    <a href="{{ path("business_settings_admin_edit", {"id":business.id}) }}">
+                        {{ "forms.common.btn.edit_settings"|trans }}
+                    </a>
+                </li>
+                {% if business.isPremium or business.isPlus or is_granted("ROLE_ADMIN") %}
+                    <li class="done">
+                        <a href="{{ path("business_spot_admin_edit", {"id":business.id}) }}">
+                            {{ "forms.common.btn.edit_dive"|trans }}
+                        </a>
+                    </li>
+                    <li class="done">
+                        <a href="{{ path("business_education_admin_edit", {"id":business.id}) }}">
+                            {{ "forms.common.btn.edit_education"|trans }}
+                        </a>
+                    </li>
+                    <li class="current">
+                        <a href="{{ path("business_booking_admin", {"id":business.id}) }}">
+                            {{ "forms.common.btn.business_booking"|trans }}
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="disabled">
+                        <a href="#">
+                            {{ "forms.common.btn.edit_dive"|trans }}
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a href="#">
+                            {{ "forms.common.btn.edit_education"|trans }}
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a href="#">
+                            {{ "forms.common.btn.business_booking"|trans }}
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
 
     {% if entities %}
         <table class="table table-striped" >
@@ -64,5 +124,5 @@
     {% else %}
         {{ "page.business_booking.text.no_booking_found"|trans }}
     {% endif %}
-    
+
 {% endblock %}

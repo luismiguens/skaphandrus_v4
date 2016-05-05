@@ -43,29 +43,11 @@
         {% endblock %}
     </head>
 
-    <body class="boxed-layout canvas-menu" {% block body_data_attributes %}{% endblock %} >
-
+    <body class="top-navigation" {% block body_data_attributes %}{% endblock %} >
         <div id="wrapper">
-
-            {% include 'SkaphandrusAppBundle:Common:sidebar-menu.html.twig' with {'layout': 'content'} %}
-
             <div id="page-wrapper" class="gray-bg">
-                <div class="row border-bottom">
-                    {% include 'SkaphandrusAppBundle:Common:navbar-menu.html.twig' with {'color': 'white-bg'} %}
-                </div>
-                {#<!-- page-heading begin -->
-                <div class="row wrapper border-bottom white-bg page-heading">
-                    <div class="col-sm-8">
-                        <h2>{% block heading_title %}{% endblock %}</h2>
-                    {% block heading_breadcrumbs %}{% endblock %}
-                    </div>
-                    <div class="col-sm-4">
-                       <div class="title-action">
-                    {% block heading_action %}{% endblock %}
-                       </div>
-                    </div>
-                </div>#}
-                <!-- page-heading end -->
+
+                {% include 'SkaphandrusAppBundle:Common:navbar-menu.html.twig' with {'bg': 'white-bg'} %}
 
                 {% block body %}
                 {% endblock %}

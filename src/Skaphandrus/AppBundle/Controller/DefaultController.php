@@ -500,23 +500,6 @@ class DefaultController extends Controller {
     }
 
     /*
-     * business Home page
-     */
-
-    public function businessHomeAction(Request $request) {
-
-        $locale = $this->get('request')->getLocale();
-
-        $businesses = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
-                ->findAllBusinessHome($locale);
-
-
-        return $this->render('SkaphandrusAppBundle:Default:business-home.html.twig', array(
-                    'businesses' => $businesses,
-        ));
-    }
-
-    /*
      * Users Home page
      */
 

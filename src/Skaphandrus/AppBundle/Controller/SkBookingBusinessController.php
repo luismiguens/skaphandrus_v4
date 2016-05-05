@@ -33,6 +33,7 @@ class SkBookingBusinessController extends Controller {
 
             return $this->render('SkaphandrusAppBundle:SkBookingBusiness:index.html.twig', array(
                         'entities' => $entities,
+                        'business' => $business
             ));
         } else {
             throw $this->createAccessDeniedException('Unauthorised access!');

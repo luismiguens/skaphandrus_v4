@@ -182,403 +182,406 @@
 
     <div class="wrapper wrapper-content">
         <div class="animated fadeInRight">
+            <div class="container">
 
-            {#<div class="species_photos_wrapper">
-                <div class="grid">
-                    <div class="grid-sizer"></div>
-                    {% for photo in photos %}
-                        {% if loop.index == 1 %}
-                            <img class="grid-item grid-item--width2" alt="{{photo.species}}" src="{{ photo.getWebPath | imagine_filter('sk_crop_476') }}" />
-                        {% else %}
-                            <img class="grid-item" alt="{{photo.species}}" src="{{ photo.getWebPath | imagine_filter('sk_crop_238') }}" />
-                        {% endif %}
-                    {% endfor %}
-                    {% if photo is not empty %}
+                {#<div class="species_photos_wrapper">
+                    <div class="grid">
                         <div class="grid-sizer"></div>
-                        <img class="grid-item grid-item--width2" alt="{{photo.species}}" src="{{ photo.getWebPath | imagine_filter('sk_resize_476') }}" />
-                        {% for p in photo %}
-                            <img class="grid-item" alt="{{p.species}}" src="{{ p.getWebPath | imagine_filter('sk_resize_238') }}" />
-                        {% endfor %}
-                        <img class="grid-item" src="placeholder.jpg" />
-                    {% else %}
-                        <div class="row" >
-                            <div class="col col-lg-12" >
-                                <div class="ibox" style="margin: 1.2% 0% 0% 0%" >
-                                    <h4 align="center">{{ "page.species.h4.no_photos"|trans }}</h4>
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
-                </div>
-                <div class="see_all">
-                    <a href="{{ path('photos', { 'species': species.id }) }}">See all photos</a>
-                </div>
-            </div>#}
-            <div class="ibox">
-                <div class="ibox-title">
-                    {#{{ "page.species.h1.title"|trans }}#}
-                    <h2 itemprop="name">{{ species.name }}</h2>
-                    {% if species.speciesVernaculars is not empty %}
-                        {#{{ "page.species.h5.common_names"|trans }}:#}
-                        {% for vernacular in species.speciesVernaculars %}
-                            {% if (vernacular.locale == app.request.locale) and (i<4) %}
-                                <p>{{ vernacular.vernacular.name|title }}</p>
+                        {% for photo in photos %}
+                            {% if loop.index == 1 %}
+                                <img class="grid-item grid-item--width2" alt="{{photo.species}}" src="{{ photo.getWebPath | imagine_filter('sk_crop_476') }}" />
+                            {% else %}
+                                <img class="grid-item" alt="{{photo.species}}" src="{{ photo.getWebPath | imagine_filter('sk_crop_238') }}" />
                             {% endif %}
                         {% endfor %}
-                    {% endif %}
-                </div>
-                <div class="ibox-content">
-                    <h3> 
-                        {{ "page.species.h5.description"|trans }}
-                    </h3>
-                    {% if species.translate(app.request.locale).description is not empty %}
-                        <p itemprop="description">
-                            {{ species.translate(app.request.locale).description }}
-                        </p>
-                    {% else %}
-                        {{ "page.species.p.no_description"|trans }}
-                    {% endif %}
-                    <h3>{{ "page.species.h5.taxonomic_structure"|trans }}</h3>
-                    <ul class="list-unstyled" itemscope itemtype="http://schema.org/ListItem">
-                        <li class="tox" itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.kingdom.taxonNodeName|trans, species.genus.family.order.class.phylum.kingdom) }}</li>
-                        <li class="tox" itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.taxonNodeName|trans, species.genus.family.order.class.phylum) }}</li>
-                        <li class="tox" itemprop="item">{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(species.genus.family.order.class.taxonNodeName|trans, species.genus.family.order.class) }}</li>
-                        <li class="tox" itemprop="item">{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(species.genus.family.order.taxonNodeName|trans, species.genus.family.order) }}</li>
-                        <li class="tox" itemprop="item">{{ "page.species.label.species_family"|trans }}: {{ link_to_taxon(species.genus.family.taxonNodeName|trans, species.genus.family) }}</li>
-                        <li class="tox" itemprop="item">{{ "page.species.label.species_genus"|trans }}: {{ link_to_taxon(species.genus.taxonNodeName|trans, species.genus) }}</li>
-                    </ul>
-                </div>
-            </div>
-
-            {#<div class="row" >
-                <div class="col col-lg-12" >
-                    <div class="ibox-title" >
-                        <h1 itemprop="name">{{ "page.species.h1.title"|trans }}: {{ species.name }}</h1>
+                        {% if photo is not empty %}
+                            <div class="grid-sizer"></div>
+                            <img class="grid-item grid-item--width2" alt="{{photo.species}}" src="{{ photo.getWebPath | imagine_filter('sk_resize_476') }}" />
+                            {% for p in photo %}
+                                <img class="grid-item" alt="{{p.species}}" src="{{ p.getWebPath | imagine_filter('sk_resize_238') }}" />
+                            {% endfor %}
+                            <img class="grid-item" src="placeholder.jpg" />
+                        {% else %}
+                            <div class="row" >
+                                <div class="col col-lg-12" >
+                                    <div class="ibox" style="margin: 1.2% 0% 0% 0%" >
+                                        <h4 align="center">{{ "page.species.h4.no_photos"|trans }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
-                </div>
-            </div>
-            <div class="ibox" >
-                <div class="ibox-content" >
-                    <div class="row" >
-                        <!-- coluna da direita start -->
-                        <div class="col col-lg-6" >
-                            <div class="ibox" >
-                                <h3> 
-                                    {{ "page.species.h5.description"|trans }}
-                                </h3>
-                                {% if species.translate(app.request.locale).description is not empty %}
-                                    <p itemprop="description">
-                                        {{ species.translate(app.request.locale).description }}
-                                    </p>
-                                {% else %}
-                                    {{ "page.species.p.no_description"|trans }}
+                    <div class="see_all">
+                        <a href="{{ path('photos', { 'species': species.id }) }}">See all photos</a>
+                    </div>
+                </div>#}
+                <div class="ibox">
+                    <div class="ibox-title">
+                        {#{{ "page.species.h1.title"|trans }}#}
+                        <h2 itemprop="name">{{ species.name }}</h2>
+                        {% if species.speciesVernaculars is not empty %}
+                            {#{{ "page.species.h5.common_names"|trans }}:#}
+                            {% for vernacular in species.speciesVernaculars %}
+                                {% if (vernacular.locale == app.request.locale) and (i<4) %}
+                                    <p>{{ vernacular.vernacular.name|title }}</p>
                                 {% endif %}
-                                <h3>{{ "page.species.h5.taxonomic_structure"|trans }}</h3>
-                                <ul class="list-unstyled" itemscope itemtype="http://schema.org/ListItem">
-                                    <li class="tox" itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.kingdom.taxonNodeName|trans, species.genus.family.order.class.phylum.kingdom) }}</li>
-                                    <li class="tox" itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.taxonNodeName|trans, species.genus.family.order.class.phylum) }}</li>
-                                    <li class="tox" itemprop="item">{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(species.genus.family.order.class.taxonNodeName|trans, species.genus.family.order.class) }}</li>
-                                    <li class="tox" itemprop="item">{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(species.genus.family.order.taxonNodeName|trans, species.genus.family.order) }}</li>
-                                    <li class="tox" itemprop="item">{{ "page.species.label.species_family"|trans }}: {{ link_to_taxon(species.genus.family.taxonNodeName|trans, species.genus.family) }}</li>
-                                    <li class="tox" itemprop="item">{{ "page.species.label.species_genus"|trans }}: {{ link_to_taxon(species.genus.taxonNodeName|trans, species.genus) }}</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- coluna da direita end -->
-        
-                        <!-- coluna da esquerda start -->
-                        <div class="col col-lg-6" >
-                            {% if photo is not empty %}
-                                <div class="row" >
-                                    <div class="col col-lg-12" >
-                                        <div class="ibox" style="margin-bottom: 0px;" >
-                                            <img alt="{{photo.species}}" class="img-responsive bigpic" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />  
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row" >
-                                    <div class="col col-lg-12" >
-                                        <div class="ibox" style="margin: 1.2% 0% 0% 0%" >
-                                            <h3 align="center">{% trans with {'%specie%': species.name } %} page.species.h3.photos {% endtrans %}</h3>
-                                            {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': species.id }, 'limit':15 } )) }}
-                                        </div>
-                                    </div>
-                                </div>
-                            {% else %}
-                                <div class="row" >
-                                    <div class="col col-lg-12" >
-                                        <div class="ibox" style="margin: 1.2% 0% 0% 0%" >
-                                            <h4 align="center">{{ "page.species.h4.no_photos"|trans }}</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endif %}
-                        </div>
-                        <!-- coluna da esquerda end -->
-                    </div>
-                </div>
-            </div>
-        
-            <!-- outras especies similares start -->
-            <div class="ibox" >
-                <div class="ibox-title" >
-                    <h2>{{ "page.species.h2.similar_species"|trans }}</h2>	
-                </div>
-                <div class="ibox-content" >
-        
-                    <div class="row">
-                        <div class="col-lg-10 col-lg-offset-1">
-                            <div class="slider_similar">
-                                {% for similarPhoto in similarSpecies %}
-                                    <a class="thumbnail" href="{{ path('species',  { 'slug': similarPhoto.species.name }) }}">
-                                        <img alt="{{ similarPhoto.species }}" class="img-responsive back" src="{{ similarPhoto.getWebPath| imagine_filter('sk_widen_400') }}">
-                                        <div class="text-center"> {{ similarPhoto.species }} </div>
-                                    </a>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-        
-                    {#<div class="roller" >
-                        {% for photo in similarSpecies %}
-                            <div>
-                                <a class="thumbnail" href="{{ path('species',  { 'slug': photo.species.name }) }}">
-                                <img alt="{{ photo.species }}" class="img-responsive back" src="{{ photo.getWebPath| imagine_filter('sk_widen_400') }}">
-                                <div class="text-center"> {{ photo.species }} </div>
-                            </a>
-                            </div>#}
-
-
-            {#<div class="desc" >
-                <a class="thumbnail" href="{{ path('species',  { 'slug': photo.species.name }) }}">
-                    <img alt="{{ photo.species }}" class="img-responsive back" style="width: 100px; height: 100px;" src="{{ photo.getWebPath| imagine_filter('sk_widen_400') }}">
-                    <div class="over"> {{ photo.species }} </div>
-                </a>
-            </div>#}
-            {#{% endfor %}
-        </div>#}
-        </div>
-    </div>
-    <!-- outras especies similares end -->
-
-    <!-- Tabs -->
-    <div class="ibox" >
-        <div class="tabs-container">
-            <ul class="nav nav-tabs">
-
-                <li class="active"><a aria-expanded="true" data-toggle="tab" href="#tab-1">{{ "page.species.tab.criterias"|trans }}</a></li>
-                <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-2">{{ "page.species.tab.geo_distribution"|trans }}</a></li>
-                <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-3">{{ "page.species.tab.contributors"|trans }}</a></li>
-            </ul>
-            <div class="tab-content">
-
-
-                <!-- Criterias start -->
-                <div id="tab-1" class="tab-pane active">
-
-                    <div class="panel-body">
-                        <h3>{% trans with {'%specie%': species.name } %} page.species.h3.species_criteria {% endtrans %}</h3>
-
-                        <div class="ibox-content" >
-                            {% for criteria in criterias %}
-                                <div class="ibox" style="padding-left: 2%" >
-                                    <h4>{{ criteria }}</h4>
-                                    {#<a href="#" class="btn btn-primary btn-xs pull-right">Report Error</a>#}
-                                </div>
-                                <div class="ibox" >
-                                    {% for character in criteria.characters %}
-                                        {% if character.isFromSpecies %}
-                                            <div class="col-sm-2">
-                                                <div class="wrapper_visual_id thumbnail">
-                                                    <img class="img-responsive" src="{{ character.getWebPath|imagine_filter('sk_widen_240') }}" />
-                                                    <div class="feature text-success">{{ character }}</div>
-                                                    <i class="fa fa-check feature_icone true"></i>
-                                                </div>
-                                            </div>
-                                        {% else %}
-                                            <div class="col-sm-2">
-                                                <div class="wrapper_visual_id thumbnail">
-                                                    <img class="img-responsive" src="{{ character.getWebPath|imagine_filter('sk_widen_240') }}" />
-                                                    <div class="feature text-success">{{ character }}</div>
-                                                    <div class="overly"></div>
-                                                    <i class="fa fa-times feature_icone false"></i>
-                                                </div>
-                                            </div>
-                                        {% endif %}
-
-                                        {#<div class="col col-lg-2 col-md-4 col-xs-6 " >
-                                            <div class="desc">
-                                                <a class="thumbnail" href="#">
-                                                    <img class="crit" src="{{ character.getWebPath|imagine_filter('sk_widen_240') }}" alt="{{ character }}" />
-                                                    <div class="over2" >{{ character }}</div>
-                                                    <i style="position:absolute; bottom:5%; right:0%; z-index:3; " class="fa fa-check text-navy fa-3x"></i>
-                                                </a>
-                                            </div>
-                                        </div>#}
-                                    {% endfor %}
-                                </div>
                             {% endfor %}
-                        </div>
-                        {#<h4>Ridges or scutes (presence)</h4>
-                        <div class="row">
-                            <div class="col-sx-12">
-                                <a href="#" class="btn btn-primary btn-xs pull-right">Report Error</a>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <div class="wrapper_visual_id thumbnail">
-                                    <img class="img-responsive" src="http://skaphandrus.com/media/cache/sk_widen_240/uploads/characters/bc3ddcf5d5fafa66b6755cb672472d0473b39d28.jpg" />
-                                    <div class="feature text-success">Feature</div>
-                                    <i class="fa fa-check feature_icone true"></i>
-                                </div>
-                            </div>
-                            <div class="col-sm-2">
-                                <div class="wrapper_visual_id thumbnail">
-                                    <img class="img-responsive" src="http://skaphandrus.com/media/cache/sk_widen_240/uploads/characters/90b653cbfb2d13e1a1246c2df30fc3abbcaf77cc.jpg" />
-                                    <div class="feature text-success">Feature</div>
-                                    <div class="overly"></div>
-                                    <i class="fa fa-times feature_icone false"></i>
-
-                                </div>
-                            </div>
-                        </div>#}
+                        {% endif %}
                     </div>
-
-                    {#<div class="panel-body">
-                        <h3>{% trans with {'%specie%': species.name } %} page.species.h3.species_criteria {% endtrans %}</h3>
-                        <div class="ibox-content" >
-                            {% for criteria in criterias %}
-                                <div class="ibox" style="padding-left: 2%" >
-                                    <h2>{{ criteria }}</h2>
-                                </div>
-                                <div class="ibox" >
-                                    {% for character in criteria.characters %}
-                                        <div class="col col-lg-2 col-md-4 col-xs-6 " >
-                                            <div class="desc">
-                                                <a class="thumbnail" href="#">
-                                                    <img class="crit" src="{{ character.getWebPath|imagine_filter('sk_widen_240') }}" alt="{{ character }}" />
-                                                    <div class="over2" >{{ character }}</div>
-                                                    <i style="position:absolute; bottom:5%; right:0%; z-index:3; " class="fa fa-check text-navy fa-3x"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <button style=" margin-top: 3%; margin-left: 90%;" tabindex="0" type="button" class="btn btn-sm btn-primary">Report Error</button>   
-                    </div>#}
-                </div>
-                <!-- Criterias end -->
-
-                <!-- Map start -->
-                <div id="tab-2" class="tab-pane">
-                    <div class="panel-body">
-                        <h3>{% trans with {'%specie%': species.name } %} page.species.h3.geo_distribution {% endtrans %}</h3>
-                        <span itemscope itemtype="http://schema.org/Map">
-                            <meta itemprop="name" content="World Map" />
-                            {% if map %}
-                                {{ google_map(map) }}
-                            {% endif %}
-                        </span>
-                        <div class="ibox-content">
-                            {% if spots is not empty %}
-                                <input type="text" class="form-control input-sm m-b-xs" id="filter-spots" placeholder="Search in table">
-                                <table class="footable table table-stripped tablet breakpoint footable-spots" data-page-size="10" data-filter=#filter-spots>
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 33%">{{ "page.species.table.country"|trans }}</th>
-                                            <th style="width: 33%">{{ "page.species.table.location"|trans }}</th>
-                                            <th style="width: 33%">{{ "page.species.table.spot"|trans }}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% set arrayAux = [] %}
-                                        {% for spot in spots %}
-                                            {% if spot not in arrayAux %}
-                                                <tr>
-                                                    <td style="width: 33%">
-                                                        {{ link_to_country(spot.location.region.country) }}
-                                                    </td>
-                                                    <td style="width: 33%">
-                                                        {{ link_to_location(spot.location) }}
-                                                    </td>
-                                                    <td style="width: 33%">
-                                                        {{ link_to_spot(spot) }}
-                                                    </td>
-                                                </tr>
-                                                {% set arrayAux = arrayAux|merge([spot]) %}
-                                            {% endif %}
-                                        {% endfor %}
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td colspan="3">
-                                                <ul class="pagination pull-right"></ul>
-                                            </td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            {% else %}
-                                {{ "page.species.p.no_geo_distribution"|trans }}
-                            {% endif %}
-                        </div>  
+                    <div class="ibox-content">
+                        <h3> 
+                            {{ "page.species.h5.description"|trans }}
+                        </h3>
+                        {% if species.translate(app.request.locale).description is not empty %}
+                            <p itemprop="description">
+                                {{ species.translate(app.request.locale).description }}
+                            </p>
+                        {% else %}
+                            {{ "page.species.p.no_description"|trans }}
+                        {% endif %}
+                        <h3>{{ "page.species.h5.taxonomic_structure"|trans }}</h3>
+                        <ul class="list-unstyled" itemscope itemtype="http://schema.org/ListItem">
+                            <li class="tox" itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.kingdom.taxonNodeName|trans, species.genus.family.order.class.phylum.kingdom) }}</li>
+                            <li class="tox" itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.taxonNodeName|trans, species.genus.family.order.class.phylum) }}</li>
+                            <li class="tox" itemprop="item">{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(species.genus.family.order.class.taxonNodeName|trans, species.genus.family.order.class) }}</li>
+                            <li class="tox" itemprop="item">{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(species.genus.family.order.taxonNodeName|trans, species.genus.family.order) }}</li>
+                            <li class="tox" itemprop="item">{{ "page.species.label.species_family"|trans }}: {{ link_to_taxon(species.genus.family.taxonNodeName|trans, species.genus.family) }}</li>
+                            <li class="tox" itemprop="item">{{ "page.species.label.species_genus"|trans }}: {{ link_to_taxon(species.genus.taxonNodeName|trans, species.genus) }}</li>
+                        </ul>
                     </div>
                 </div>
-                <!-- Map end -->
 
-                <!-- Photographers start -->
-                <div id="tab-3" class="tab-pane">
-
-                    <div class="panel-body">
-                        <h3>{% trans with {'%specie%': species.name } %} page.species.h3.contributors {% endtrans %}</h3>
+                {#<div class="row" >
+                    <div class="col col-lg-12" >
+                        <div class="ibox-title" >
+                            <h1 itemprop="name">{{ "page.species.h1.title"|trans }}: {{ species.name }}</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="ibox" >
+                    <div class="ibox-content" >
                         <div class="row" >
-                            <div class="col col-lg-12" >
+                            <!-- coluna da direita start -->
+                            <div class="col col-lg-6" >
                                 <div class="ibox" >
-
-                                    <div class="ibox-content">
-                                        <div id="box_photographers"></div>
-                                    </div>
-
-                                    <!-- Photographers Modal start -->
-                                    <div class="modal fade" id="photographersModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                        <div class="modal-dialog modal-lg" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    <h4 class="modal-title" id="myModalLabel">{% trans with {'%specie%': species.name } %} page.species.h3.contributors_modal {% endtrans %}</h4>
-                                                </div>
-                                                <div class="modal-body">
-
-                                                    <div id="photographersInput"></div>
-
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                </div>
+                                    <h3> 
+                                        {{ "page.species.h5.description"|trans }}
+                                    </h3>
+                                    {% if species.translate(app.request.locale).description is not empty %}
+                                        <p itemprop="description">
+                                            {{ species.translate(app.request.locale).description }}
+                                        </p>
+                                    {% else %}
+                                        {{ "page.species.p.no_description"|trans }}
+                                    {% endif %}
+                                    <h3>{{ "page.species.h5.taxonomic_structure"|trans }}</h3>
+                                    <ul class="list-unstyled" itemscope itemtype="http://schema.org/ListItem">
+                                        <li class="tox" itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.kingdom.taxonNodeName|trans, species.genus.family.order.class.phylum.kingdom) }}</li>
+                                        <li class="tox" itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.taxonNodeName|trans, species.genus.family.order.class.phylum) }}</li>
+                                        <li class="tox" itemprop="item">{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(species.genus.family.order.class.taxonNodeName|trans, species.genus.family.order.class) }}</li>
+                                        <li class="tox" itemprop="item">{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(species.genus.family.order.taxonNodeName|trans, species.genus.family.order) }}</li>
+                                        <li class="tox" itemprop="item">{{ "page.species.label.species_family"|trans }}: {{ link_to_taxon(species.genus.family.taxonNodeName|trans, species.genus.family) }}</li>
+                                        <li class="tox" itemprop="item">{{ "page.species.label.species_genus"|trans }}: {{ link_to_taxon(species.genus.taxonNodeName|trans, species.genus) }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- coluna da direita end -->
+            
+                            <!-- coluna da esquerda start -->
+                            <div class="col col-lg-6" >
+                                {% if photo is not empty %}
+                                    <div class="row" >
+                                        <div class="col col-lg-12" >
+                                            <div class="ibox" style="margin-bottom: 0px;" >
+                                                <img alt="{{photo.species}}" class="img-responsive bigpic" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />  
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Photographers Modal end -->
+                                    <div class="row" >
+                                        <div class="col col-lg-12" >
+                                            <div class="ibox" style="margin: 1.2% 0% 0% 0%" >
+                                                <h3 align="center">{% trans with {'%specie%': species.name } %} page.species.h3.photos {% endtrans %}</h3>
+                                                {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': species.id }, 'limit':15 } )) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="row" >
+                                        <div class="col col-lg-12" >
+                                            <div class="ibox" style="margin: 1.2% 0% 0% 0%" >
+                                                <h4 align="center">{{ "page.species.h4.no_photos"|trans }}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <!-- coluna da esquerda end -->
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- outras especies similares start -->
+                <div class="ibox" >
+                    <div class="ibox-title" >
+                        <h2>{{ "page.species.h2.similar_species"|trans }}</h2>	
+                    </div>
+                    <div class="ibox-content" >
+            
+                        <div class="row">
+                            <div class="col-lg-10 col-lg-offset-1">
+                                <div class="slider_similar">
+                                    {% for similarPhoto in similarSpecies %}
+                                        <a class="thumbnail" href="{{ path('species',  { 'slug': similarPhoto.species.name }) }}">
+                                            <img alt="{{ similarPhoto.species }}" class="img-responsive back" src="{{ similarPhoto.getWebPath| imagine_filter('sk_widen_400') }}">
+                                            <div class="text-center"> {{ similarPhoto.species }} </div>
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+            
+                        {#<div class="roller" >
+                            {% for photo in similarSpecies %}
+                                <div>
+                                    <a class="thumbnail" href="{{ path('species',  { 'slug': photo.species.name }) }}">
+                                    <img alt="{{ photo.species }}" class="img-responsive back" src="{{ photo.getWebPath| imagine_filter('sk_widen_400') }}">
+                                    <div class="text-center"> {{ photo.species }} </div>
+                                </a>
+                                </div>#}
+
+
+                {#<div class="desc" >
+                    <a class="thumbnail" href="{{ path('species',  { 'slug': photo.species.name }) }}">
+                        <img alt="{{ photo.species }}" class="img-responsive back" style="width: 100px; height: 100px;" src="{{ photo.getWebPath| imagine_filter('sk_widen_400') }}">
+                        <div class="over"> {{ photo.species }} </div>
+                    </a>
+                </div>#}
+                {#{% endfor %}
+            </div>#}
+
+                <!-- outras especies similares end -->
+
+                <!-- Tabs -->
+                <div class="ibox" >
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs">
+
+                            <li class="active"><a aria-expanded="true" data-toggle="tab" href="#tab-1">{{ "page.species.tab.criterias"|trans }}</a></li>
+                            <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-2">{{ "page.species.tab.geo_distribution"|trans }}</a></li>
+                            <li class=""><a aria-expanded="false" data-toggle="tab" href="#tab-3">{{ "page.species.tab.contributors"|trans }}</a></li>
+                        </ul>
+                        <div class="tab-content">
+
+
+                            <!-- Criterias start -->
+                            <div id="tab-1" class="tab-pane active">
+
+                                <div class="panel-body">
+                                    <h3>{% trans with {'%specie%': species.name } %} page.species.h3.species_criteria {% endtrans %}</h3>
 
                                     <div class="ibox-content" >
-                                        <div class="row" >
-                                            <div class="col-sm-6 col-sx-12">
-                                                <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_photographers" >{{ "page.location.button.show_more_photographers"|trans }}</button>
+                                        {% for criteria in criterias %}
+                                            <div class="ibox" style="padding-left: 2%" >
+                                                <h4>{{ criteria }}</h4>
+                                                {#<a href="#" class="btn btn-primary btn-xs pull-right">Report Error</a>#}
                                             </div>
-                                            <div class="col-sm-6 col-sx-12">
-                                                <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#photographersModal">{{ "page.location.button.see_all_photographers"|trans }}</button>
+                                            <div class="ibox" >
+                                                {% for character in criteria.characters %}
+                                                    {% if character.isFromSpecies %}
+                                                        <div class="col-sm-2">
+                                                            <div class="wrapper_visual_id thumbnail">
+                                                                <img class="img-responsive" src="{{ character.getWebPath|imagine_filter('sk_widen_240') }}" />
+                                                                <div class="feature text-success">{{ character }}</div>
+                                                                <i class="fa fa-check feature_icone true"></i>
+                                                            </div>
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="col-sm-2">
+                                                            <div class="wrapper_visual_id thumbnail">
+                                                                <img class="img-responsive" src="{{ character.getWebPath|imagine_filter('sk_widen_240') }}" />
+                                                                <div class="feature text-success">{{ character }}</div>
+                                                                <div class="overly"></div>
+                                                                <i class="fa fa-times feature_icone false"></i>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+
+                                                    {#<div class="col col-lg-2 col-md-4 col-xs-6 " >
+                                                        <div class="desc">
+                                                            <a class="thumbnail" href="#">
+                                                                <img class="crit" src="{{ character.getWebPath|imagine_filter('sk_widen_240') }}" alt="{{ character }}" />
+                                                                <div class="over2" >{{ character }}</div>
+                                                                <i style="position:absolute; bottom:5%; right:0%; z-index:3; " class="fa fa-check text-navy fa-3x"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>#}
+                                                {% endfor %}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    {#<h4>Ridges or scutes (presence)</h4>
+                                    <div class="row">
+                                        <div class="col-sx-12">
+                                            <a href="#" class="btn btn-primary btn-xs pull-right">Report Error</a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <div class="wrapper_visual_id thumbnail">
+                                                <img class="img-responsive" src="http://skaphandrus.com/media/cache/sk_widen_240/uploads/characters/bc3ddcf5d5fafa66b6755cb672472d0473b39d28.jpg" />
+                                                <div class="feature text-success">Feature</div>
+                                                <i class="fa fa-check feature_icone true"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="wrapper_visual_id thumbnail">
+                                                <img class="img-responsive" src="http://skaphandrus.com/media/cache/sk_widen_240/uploads/characters/90b653cbfb2d13e1a1246c2df30fc3abbcaf77cc.jpg" />
+                                                <div class="feature text-success">Feature</div>
+                                                <div class="overly"></div>
+                                                <i class="fa fa-times feature_icone false"></i>
+            
+                                            </div>
+                                        </div>
+                                    </div>#}
+                                </div>
+
+                                {#<div class="panel-body">
+                                    <h3>{% trans with {'%specie%': species.name } %} page.species.h3.species_criteria {% endtrans %}</h3>
+                                    <div class="ibox-content" >
+                                        {% for criteria in criterias %}
+                                            <div class="ibox" style="padding-left: 2%" >
+                                                <h2>{{ criteria }}</h2>
+                                            </div>
+                                            <div class="ibox" >
+                                                {% for character in criteria.characters %}
+                                                    <div class="col col-lg-2 col-md-4 col-xs-6 " >
+                                                        <div class="desc">
+                                                            <a class="thumbnail" href="#">
+                                                                <img class="crit" src="{{ character.getWebPath|imagine_filter('sk_widen_240') }}" alt="{{ character }}" />
+                                                                <div class="over2" >{{ character }}</div>
+                                                                <i style="position:absolute; bottom:5%; right:0%; z-index:3; " class="fa fa-check text-navy fa-3x"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <button style=" margin-top: 3%; margin-left: 90%;" tabindex="0" type="button" class="btn btn-sm btn-primary">Report Error</button>   
+                                </div>#}
+                            </div>
+                            <!-- Criterias end -->
+
+                            <!-- Map start -->
+                            <div id="tab-2" class="tab-pane">
+                                <div class="panel-body">
+                                    <h3>{% trans with {'%specie%': species.name } %} page.species.h3.geo_distribution {% endtrans %}</h3>
+                                    <span itemscope itemtype="http://schema.org/Map">
+                                        <meta itemprop="name" content="World Map" />
+                                        {% if map %}
+                                            {{ google_map(map) }}
+                                        {% endif %}
+                                    </span>
+                                    <div class="ibox-content">
+                                        {% if spots is not empty %}
+                                            <input type="text" class="form-control input-sm m-b-xs" id="filter-spots" placeholder="Search in table">
+                                            <table class="footable table table-stripped tablet breakpoint footable-spots" data-page-size="10" data-filter=#filter-spots>
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 33%">{{ "page.species.table.country"|trans }}</th>
+                                                        <th style="width: 33%">{{ "page.species.table.location"|trans }}</th>
+                                                        <th style="width: 33%">{{ "page.species.table.spot"|trans }}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% set arrayAux = [] %}
+                                                    {% for spot in spots %}
+                                                        {% if spot not in arrayAux %}
+                                                            <tr>
+                                                                <td style="width: 33%">
+                                                                    {{ link_to_country(spot.location.region.country) }}
+                                                                </td>
+                                                                <td style="width: 33%">
+                                                                    {{ link_to_location(spot.location) }}
+                                                                </td>
+                                                                <td style="width: 33%">
+                                                                    {{ link_to_spot(spot) }}
+                                                                </td>
+                                                            </tr>
+                                                            {% set arrayAux = arrayAux|merge([spot]) %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <ul class="pagination pull-right"></ul>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        {% else %}
+                                            {{ "page.species.p.no_geo_distribution"|trans }}
+                                        {% endif %}
+                                    </div>  
+                                </div>
+                            </div>
+                            <!-- Map end -->
+
+                            <!-- Photographers start -->
+                            <div id="tab-3" class="tab-pane">
+
+                                <div class="panel-body">
+                                    <h3>{% trans with {'%specie%': species.name } %} page.species.h3.contributors {% endtrans %}</h3>
+                                    <div class="row" >
+                                        <div class="col col-lg-12" >
+                                            <div class="ibox" >
+
+                                                <div class="ibox-content">
+                                                    <div id="box_photographers"></div>
+                                                </div>
+
+                                                <!-- Photographers Modal start -->
+                                                <div class="modal fade" id="photographersModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel">{% trans with {'%specie%': species.name } %} page.species.h3.contributors_modal {% endtrans %}</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+
+                                                                <div id="photographersInput"></div>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Photographers Modal end -->
+
+                                                <div class="ibox-content" >
+                                                    <div class="row" >
+                                                        <div class="col-sm-6 col-sx-12">
+                                                            <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_photographers" >{{ "page.location.button.show_more_photographers"|trans }}</button>
+                                                        </div>
+                                                        <div class="col-sm-6 col-sx-12">
+                                                            <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#photographersModal">{{ "page.location.button.see_all_photographers"|trans }}</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <!-- Photographers end -->
+
                         </div>
                     </div>
                 </div>
-                <!-- Photographers end -->
-
             </div>
         </div>
     </div>

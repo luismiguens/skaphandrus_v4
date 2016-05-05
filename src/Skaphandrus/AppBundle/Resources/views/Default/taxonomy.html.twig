@@ -5,8 +5,8 @@
 {% block page_description %}{{ "page.taxonomy.meta_tag.description"|trans }}{% endblock %}
 
 {% block hreflang %}
-<link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('taxonomy', {'locale': 'pt'}) }}" />
-<link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('taxonomy', {'locale': 'en'}) }}" />
+    <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('taxonomy', {'locale': 'pt'}) }}" />
+    <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('taxonomy', {'locale': 'en'}) }}" />
 {% endblock %}
 
 
@@ -68,16 +68,18 @@
 
 {% block body %}
     <div class="wrapper wrapper-content">
-        <div class="row animated fadeInRight">
-            <!-- left column -->
-            <div class="col-md-12">
-                <div  class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h1>{{ "page.taxonomy.h1.title"|trans }}</h1>
-                    </div>
-                    <div>
-                        <div class="ibox-content">
-                            <div style="text-align: left;" id="jstree"></div>
+        <div class="container">
+            <div class="row animated fadeInRight">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <div  class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h1>{{ "page.taxonomy.h1.title"|trans }}</h1>
+                        </div>
+                        <div>
+                            <div class="ibox-content">
+                                <div style="text-align: left;" id="jstree"></div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -40,10 +40,6 @@ business:
 business_no_slug:
     locales:  { en: "/en/business/{id}", pt: "/pt/empresa/{id}" }
     defaults: { _controller: SkaphandrusAppBundle:Default:business_no_slug }
-
-business-home: 
-    locales:  { en: "/en/scuba-diving-center", pt: "/pt/centros-mergulho" }
-    defaults: { _controller: SkaphandrusAppBundle:Default:businessHome }
     
 users-home: 
     locales:  { en: "/en/users", pt: "/pt/utilizadores" }

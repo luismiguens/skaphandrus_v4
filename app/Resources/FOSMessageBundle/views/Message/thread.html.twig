@@ -15,11 +15,11 @@
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/summernote/summernote.min.js') }}"></script>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             $('.summernote').summernote();
         });
 
-        $('#submit').click(function() {
+        $('#submit').click(function () {
             $('#message_body').html($('.summernote').code());
             $('#message').submit();
         });
@@ -27,60 +27,70 @@
 {% endblock %}
 
 {% block body %}
-<div class="wrapper wrapper-content">
-    <div class="row">
-        <div class="col-lg-3">
-            {% include 'FOSMessageBundle::_sidebar.html.twig' %}
-        </div>
-        <div class="col-lg-9 animated fadeInRight">
-            <div class="mail-box-header">
-                <div class="pull-right tooltip-demo">
-                    {% if fos_message_can_delete_thread(thread) %}
-                        {% if fos_message_deleted_by_participant(thread) %}
-                            {% set formAction %}{{ url('fos_message_thread_undelete', {'threadId': thread.id}) }}{% endset %}
-                            {% set submitValue %}{% trans from 'FOSMessageBundle' %}undelete{% endtrans %}{% endset %}
-                        {% else %}
-                            {% set formAction %}{{ url('fos_message_thread_delete', {'threadId': thread.id}) }}{% endset %}
-                            {% set submitValue %}{% trans from 'FOSMessageBundle' %}delete{% endtrans %}{% endset %}
-                        {% endif %}
-                        <form action="{{ formAction }}" method="post">
-                            <a href="#message" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="{{ "reply"|trans }}"><i class="fa fa-reply"></i> {{ "reply"|trans }}</a>
-                            <button class="btn btn-white btn-sm" data-placement="top" data-toggle="tooltip" title="{{ submitValue }}"><i class="fa fa-trash-o"></i> </button>
-                        </form>
-                    {% endif %}
+    <div class="wrapper wrapper-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    {% include 'FOSMessageBundle::_sidebar.html.twig' %}
                 </div>
-                <h2>
-                    {{ "form.message.label.view_message"|trans }}
-                </h2>
-                <div class="mail-tools tooltip-demo m-t-md">
-                    <h3><span class="font-noraml">{{ "subject"|trans }}: </span>{{ thread.subject }}</h3>
-                </div>
-            </div>
-            <div class="mail-box">
-                {% for message in thread.messages %}
-                <div class="mail-body">
-                    <h5>
-                        <span class="pull-right font-noraml">{{ message.createdAt|date }}</span>
-                        <span class="font-noraml">{{ "from"|trans }}: </span>{{ message.sender|e }}
-                    </h5>
-                    {{ message.body|raw }}
-                </div>
-                {% endfor %}
-                <div class="clearfix"></div>
-                {{ form_start(form, {'action': url('fos_message_thread_view', {'threadId': thread.id}), 'method': 'POST', 'attr': {'class': 'form-horizontal', 'id': 'message'}}) }}
-                    <div class="mail-text h-200">
-                        {{ form_widget(form.body, {'attr': {'class': 'summernote'}}) }}
+                <div class="col-lg-9 animated fadeInRight">
+                    <div class="mail-box-header">
+                        <div class="pull-right tooltip-demo">
+                            {% if fos_message_can_delete_thread(thread) %}
+                                {% if fos_message_deleted_by_participant(thread) %}
+                                    {% set formAction %}
+                                        {{ url('fos_message_thread_undelete', {'threadId': thread.id}) }}
+                                    {% endset %}
+                                    {% set submitValue %}
+                                        {% trans from 'FOSMessageBundle' %}undelete{% endtrans %}
+                                    {% endset %}
+                                {% else %}
+                                    {% set formAction %}
+                                        {{ url('fos_message_thread_delete', {'threadId': thread.id}) }}
+                                    {% endset %}
+                                    {% set submitValue %}
+                                        {% trans from 'FOSMessageBundle' %}delete{% endtrans %}
+                                    {% endset %}
+                                {% endif %}
+                                <form action="{{ formAction }}" method="post">
+                                    <a href="#message" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="{{ "reply"|trans }}"><i class="fa fa-reply"></i> {{ "reply"|trans }}</a>
+                                    <button class="btn btn-white btn-sm" data-placement="top" data-toggle="tooltip" title="{{ submitValue }}"><i class="fa fa-trash-o"></i> </button>
+                                </form>
+                            {% endif %}
+                        </div>
+                        <h2>
+                            {{ "form.message.label.view_message"|trans }}
+                        </h2>
+                        <div class="mail-tools tooltip-demo m-t-md">
+                            <h3><span class="font-noraml">{{ "subject"|trans }}: </span>{{ thread.subject }}</h3>
+                        </div>
+                    </div>
+                    <div class="mail-box">
+                        {% for message in thread.messages %}
+                            <div class="mail-body">
+                                <h5>
+                                    <span class="pull-right font-noraml">{{ message.createdAt|date }}</span>
+                                    <span class="font-noraml">{{ "from"|trans }}: </span>{{ message.sender|e }}
+                                </h5>
+                                {{ message.body|raw }}
+                            </div>
+                        {% endfor %}
+                        <div class="clearfix"></div>
+                        {{ form_start(form, {'action': url('fos_message_thread_view', {'threadId': thread.id}), 'method': 'POST', 'attr': {'class': 'form-horizontal', 'id': 'message'}}) }}
+                        <div class="mail-text h-200">
+                            {{ form_widget(form.body, {'attr': {'class': 'summernote'}}) }}
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="mail-body text-right tooltip-demo">
+                            <button id="submit" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="{{ "form.new_message.btn.send"|trans }}"><i class="fa fa-reply"></i> {{ "form.new_message.btn.send"|trans }}</button>
+                            <a href="{{ url('fos_message_inbox') }}" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="{{ "form.new_message.btn.discard"|trans }}"><i class="fa fa-times"></i> {{ "form.new_message.btn.discard"|trans }}</a>
+                        </div>
+                        {{ form_end(form) }}
                         <div class="clearfix"></div>
                     </div>
-                    <div class="mail-body text-right tooltip-demo">
-                        <button id="submit" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="{{ "form.new_message.btn.send"|trans }}"><i class="fa fa-reply"></i> {{ "form.new_message.btn.send"|trans }}</button>
-                        <a href="{{ url('fos_message_inbox') }}" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="{{ "form.new_message.btn.discard"|trans }}"><i class="fa fa-times"></i> {{ "form.new_message.btn.discard"|trans }}</a>
-                    </div>
-                {{ form_end(form) }}
-                <div class="clearfix"></div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}
 
