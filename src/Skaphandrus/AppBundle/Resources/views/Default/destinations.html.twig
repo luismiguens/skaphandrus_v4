@@ -22,12 +22,14 @@
     {{ "page.destinations.h1.heading_title"|trans }}
 {% endblock %}
 
-{% block heading_breadcrumbs %}
+{#{% block heading_breadcrumbs %}
     <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
         <li itemprop="itemListElement"><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
         <li itemprop="itemListElement" class="active"><strong>{{ "page.destinations.h1.title"|trans }}</strong></li>
     </ol>
-{% endblock %}
+{% endblock %}#}
+
+{% block heading_breadcrumbs %}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -241,7 +243,7 @@
     <div class="wrapper wrapper-content" >
         <div class="animated fadeInRight">
             <div class="container">
-
+                <h1>{{ "page.destinations.h1.title"|trans }}</h1>
                 <!-- Destinos start -->
                 <div class="dvb-container">
                     <ul class="dvb-md-list" >

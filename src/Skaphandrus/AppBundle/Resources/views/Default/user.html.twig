@@ -228,12 +228,16 @@
     {{ user.personal.name }}
 {% endblock %}
 
-{% block heading_breadcrumbs %}
+{#{% block heading_breadcrumbs %}
     <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
         <li itemprop="itemListElement"><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
         <li itemprop="itemListElement" class="active"><strong>{{ user.personal.name }}</strong></li>
     </ol>
-{% endblock %}
+{% endblock %}#}
+
+{% block heading_breadcrumbs %}{% endblock %}
+
+
 
 {% block body %}
 

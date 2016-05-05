@@ -64,6 +64,8 @@
 
 {% block stylesheets %}
     {{ parent() }}
+    
+    {{ google_map_css(map) }}
     <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
     <!-- FooTable -->
     <link href="{{ asset('bundles/skaphandrusapp/css/plugins/footable/footable.core.css') }}" rel="stylesheet">
@@ -91,6 +93,9 @@
 
 {% block javascripts %}
     {{ parent() }}
+    
+    {{ google_map_js(map) }}
+    
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
 
     <!-- FooTable -->
@@ -479,7 +484,7 @@
                                     <span itemscope itemtype="http://schema.org/Map">
                                         <meta itemprop="name" content="World Map" />
                                         {% if map %}
-                                            {{ google_map(map) }}
+                                           {{ google_map_container(map) }}
                                         {% endif %}
                                     </span>
                                     <div class="ibox-content">

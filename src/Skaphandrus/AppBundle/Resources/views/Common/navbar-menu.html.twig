@@ -22,23 +22,23 @@
                     <a aria-expanded="false" role="button" href="layouts.html"> Back to main Layout page</a>
                 </li>#}
                 <li itemprop="name" content="{{ "navbar.menu.label.identification"|trans }}">
-                    <a itemprop="url" content="{{ url('modules') }}" href="{{ path('modules') }}">
-                        Species Identification{#{{ "navbar.menu.label.identification"|trans }}#}
+                    <a itemprop="url" content="{{ url('modules') }}" title="{{ "navbar.menu.label.title.identification"|trans }}" href="{{ path('modules') }}">
+                        {{ "navbar.menu.label.identification"|trans }}
                     </a>
                 </li>
                 <li itemprop="name" content="{{ "navbar.menu.label.uw_contests"|trans }}">
-                    <a itemprop="url" content="{{ url('contests_landing_page') }}" href="{{ path('contests_landing_page')}}">
-                        Photo Contests{#{{"navbar.menu.label.uw_contests"|trans}}#}
+                    <a itemprop="url" content="{{ url('contests_landing_page') }}" title="{{"navbar.menu.label.title.uw_contests"|trans}}" href="{{ path('contests_landing_page')}}">
+                        {{"navbar.menu.label.uw_contests"|trans}}
                     </a>
                 </li>
                 <li itemprop="name" content="{{ "navbar.menu.label.destinations"|trans }}">
-                    <a itemprop="url" content="{{ url('destinations') }}" href="{{ path('destinations')}}">
-                        Top Destinations{#{{"navbar.menu.label.destinations"|trans}}#}
+                    <a itemprop="url" content="{{ url('destinations') }}" title="{{"navbar.menu.label.title.destinations"|trans}}" href="{{ path('destinations')}}">
+                        {{"navbar.menu.label.destinations"|trans}}
                     </a>
                 </li>
                 <li itemprop="name" content="{{ "navbar.menu.label.photos"|trans }}">
-                    <a itemprop="url" content="{{ url('photos') }}" href="{{ path('photos')}}">
-                        Underwater Photos{#{{"navbar.menu.label.photos"|trans}}#}
+                    <a itemprop="url" content="{{ url('photos') }}" title="{{"navbar.menu.label.title.photos"|trans}}" href="{{ path('photos')}}">
+                        {{"navbar.menu.label.photos"|trans}}
                     </a>
                 </li>
 
@@ -55,84 +55,6 @@
             <ul class="nav navbar-nav navbar-right">
 
                 {% if is_granted("IS_AUTHENTICATED_FULLY") %}
-
-                    {% set array = app.user|split(' ', 2) %}
-
-                    <li itemprop="name" content="{{ "navbar.menu.label.destinations"|trans }}">
-                        <a itemprop="url" content="{{ url('user', { 'id': app.user.id }) }}" href="{{  path('user', { 'id': app.user.id }) }}">
-                            {{ attribute(array, 0) }}
-                        </a>
-                    </li>
-
-                    <li class="dropdown">
-                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-user" aria-hidden="true"></i>  {% if not is_granted("ROLE_ADMIN") %} {{ "account_admin"|trans }} {% endif %}{#<span class="caret"></span>#}</a>
-                        <ul role="menu" class="dropdown-menu">
-
-                            <li class="{{ 'SkPhotoController' in app.request.attributes.get("_controller")?'active' }}">
-                                <a href="{{ path('photo_admin') }}"><i class="fa fa-photo"></i> <span class="nav-label">{{ "photo_admin"|trans }} </span></a>
-                            </li>
-                            <li class="{{ 'SkSpotController' in app.request.attributes.get("_controller")?'active' }}">
-                                <a href="{{ path('spot_admin') }}"><i class="fa fa-globe"></i> <span class="nav-label">{{ "spot_admin"|trans }} </span></a>
-                            </li>
-
-                            <li class="{{ 'SkBookingController' in app.request.attributes.get("_controller")?'active' }}">
-                                <a href="{{ path('booking_admin') }}"><i class="fa fa-star"></i> <span class="nav-label">{{ "booking_admin"|trans }} </span></a>
-                            </li>
-                            <li class="{{ 'SkModulesController' in app.request.attributes.get("_controller")?'active' }}">
-                                <a href="{{ path('module_admin_edit') }}"><i class="fa fa-cube"></i> <span class="nav-label">{{ "modules_admin"|trans }} </span></a>
-                            </li>
-
-                            <li class="{{ 'SkPointsController' in app.request.attributes.get("_controller")?'active' }}">
-                                <a href="{{ path('points_admin') }}"><i class="fa fa-star"></i> <span class="nav-label">{{ "points_admin"|trans }} </span></a>
-                            </li>
-
-                            {% if not is_granted("ROLE_ADMIN") %}
-                                {{ render(controller('SkaphandrusAppBundle:Common:skBusinessList')) }}
-                            {% endif %}
-
-                        </ul>
-                    </li>
-
-                    <li class="dropdown">
-                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-cog" aria-hidden="true"></i> {% if not is_granted("ROLE_ADMIN") %} {{ "settings_admin"|trans }} {% endif %}{#<span class="caret"></span>#}</a>
-                        <ul role="menu" class="dropdown-menu">
-
-                            <li class="{{ 'SkSettingsController' in app.request.attributes.get("_controller")?'active' }}">
-                                <a href="{{ path('settings_admin_edit') }}"><i class="fa fa-cog" aria-hidden="true"></i> {{ "settings_admin"|trans }} </a>
-                            </li>
-                            <li class="{{ 'SkProfileController' in app.request.attributes.get("_controller")?'active' }}">
-                                <a href="{{ path('profile_admin_edit') }}"><i class="fa fa-user" aria-hidden="true"></i> {{ "profile_admin"|trans }} </a>
-                            </li>
-                            <li class="{{ 'MessageController' in app.request.attributes.get("_controller")?'active' }}">
-                                <a href="{{ path('fos_message_inbox') }}"><i class="fa fa-envelope"></i> <span class="nav-label">{{ "messages_admin"|trans }} </span></a>
-                            </li>
-                            <li class="{{ 'SkSocialNotifyController' in app.request.attributes.get("_controller")?'active' }}">
-                                <a href="{{ path('notify_admin') }}"><i class="fa fa-bell"></i> <span class="nav-label">{{ "notify_admin"|trans }} </span></a>
-                            </li>
-                            <li class="{{ 'SkPersonController' in app.request.attributes.get("_controller")?'active' }}">
-                                <a href="{{ path('person_admin') }}"><i class="fa fa-group"></i> <span class="nav-label">{{ "person_admin"|trans }} </span></a>
-                            </li>           
-
-                            {% if is_granted("ROLE_ADMIN") %}
-
-                                <li class="divider"></li>
-                                <li class="{{ 'TranslationController' in app.request.attributes.get("_controller")?'active' }}">
-                                    <a target="_blank" href="{{ path('lexik_translation_grid') }}">
-                                        <i class="fa fa-language"></i> <span class="nav-label">Translations</span>
-                                    </a>
-                                </li>
-
-                            {% endif %}
-
-                            <li class="divider"></li>
-                            <li>
-                                <a href="{{ path('fos_user_security_logout') }}">
-                                    <i class="fa fa-sign-out"></i> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                                </a>
-                            </li>
-
-                        </ul>
-                    </li>
 
                     {% if is_granted("ROLE_ADMIN") %}
 
@@ -208,8 +130,92 @@
 
                             </ul>
                         </li>
+                        <li><a href="#">|</a></li>
+                        {% endif %}
 
-                    {% endif %}
+
+
+
+                    {% set array = app.user|split(' ', 2) %}
+
+                    <li itemprop="name" content="{{ "navbar.menu.label.destinations"|trans }}">
+                        <a itemprop="url" content="{{ url('user', { 'id': app.user.id }) }}" href="{{  path('user', { 'id': app.user.id }) }}">
+                            {{ attribute(array, 0) }}
+                        </a>
+                    </li>
+
+
+                    <li class="dropdown">
+                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-user" aria-hidden="true"></i>  {% if not is_granted("ROLE_ADMIN") %} {{ "account_admin"|trans }} {% endif %}{#<span class="caret"></span>#}</a>
+                        <ul role="menu" class="dropdown-menu">
+
+                            <li class="{{ 'SkPhotoController' in app.request.attributes.get("_controller")?'active' }}">
+                                <a href="{{ path('photo_admin') }}"><i class="fa fa-photo"></i> <span class="nav-label">{{ "photo_admin"|trans }} </span></a>
+                            </li>
+                            <li class="{{ 'SkSpotController' in app.request.attributes.get("_controller")?'active' }}">
+                                <a href="{{ path('spot_admin') }}"><i class="fa fa-globe"></i> <span class="nav-label">{{ "spot_admin"|trans }} </span></a>
+                            </li>
+
+                            <li class="{{ 'SkBookingController' in app.request.attributes.get("_controller")?'active' }}">
+                                <a href="{{ path('booking_admin') }}"><i class="fa fa-star"></i> <span class="nav-label">{{ "booking_admin"|trans }} </span></a>
+                            </li>
+                            <li class="{{ 'SkModulesController' in app.request.attributes.get("_controller")?'active' }}">
+                                <a href="{{ path('module_admin_edit') }}"><i class="fa fa-cube"></i> <span class="nav-label">{{ "modules_admin"|trans }} </span></a>
+                            </li>
+
+                            <li class="{{ 'SkPointsController' in app.request.attributes.get("_controller")?'active' }}">
+                                <a href="{{ path('points_admin') }}"><i class="fa fa-star"></i> <span class="nav-label">{{ "points_admin"|trans }} </span></a>
+                            </li>
+
+                            {% if not is_granted("ROLE_ADMIN") %}
+                                {{ render(controller('SkaphandrusAppBundle:Common:skBusinessList')) }}
+                            {% endif %}
+
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-cog" aria-hidden="true"></i> {% if not is_granted("ROLE_ADMIN") %} {{ "settings_admin"|trans }} {% endif %}{#<span class="caret"></span>#}</a>
+                        <ul role="menu" class="dropdown-menu">
+
+                            <li class="{{ 'SkSettingsController' in app.request.attributes.get("_controller")?'active' }}">
+                                <a href="{{ path('settings_admin_edit') }}"><i class="fa fa-cog" aria-hidden="true"></i> {{ "settings_admin"|trans }} </a>
+                            </li>
+                            <li class="{{ 'SkProfileController' in app.request.attributes.get("_controller")?'active' }}">
+                                <a href="{{ path('profile_admin_edit') }}"><i class="fa fa-user" aria-hidden="true"></i> {{ "profile_admin"|trans }} </a>
+                            </li>
+                            <li class="{{ 'MessageController' in app.request.attributes.get("_controller")?'active' }}">
+                                <a href="{{ path('fos_message_inbox') }}"><i class="fa fa-envelope"></i> <span class="nav-label">{{ "messages_admin"|trans }} </span></a>
+                            </li>
+                            <li class="{{ 'SkSocialNotifyController' in app.request.attributes.get("_controller")?'active' }}">
+                                <a href="{{ path('notify_admin') }}"><i class="fa fa-bell"></i> <span class="nav-label">{{ "notify_admin"|trans }} </span></a>
+                            </li>
+                            <li class="{{ 'SkPersonController' in app.request.attributes.get("_controller")?'active' }}">
+                                <a href="{{ path('person_admin') }}"><i class="fa fa-group"></i> <span class="nav-label">{{ "person_admin"|trans }} </span></a>
+                            </li>           
+
+                            {% if is_granted("ROLE_ADMIN") %}
+
+                                <li class="divider"></li>
+                                <li class="{{ 'TranslationController' in app.request.attributes.get("_controller")?'active' }}">
+                                    <a target="_blank" href="{{ path('lexik_translation_grid') }}">
+                                        <i class="fa fa-language"></i> <span class="nav-label">Translations</span>
+                                    </a>
+                                </li>
+
+                            {% endif %}
+
+                            <li class="divider"></li>
+                            <li>
+                                <a href="{{ path('fos_user_security_logout') }}">
+                                    <i class="fa fa-sign-out"></i> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+
 
                 {% else %}
                     <li>

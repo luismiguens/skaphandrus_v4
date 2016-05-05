@@ -6,7 +6,7 @@ index:
     defaults: { _controller: SkaphandrusAppBundle:Default:index }
 
 destinations:
-    locales:  { en: "/en/destinations", pt: "/pt/destinos" }
+    locales:  { en: "/en/scuba-diving-sites", pt: "/pt/spots-mergulho" }
     defaults: { _controller: SkaphandrusAppBundle:Default:destinations }
 
 modules:

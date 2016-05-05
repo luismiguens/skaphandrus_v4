@@ -38,12 +38,15 @@
     {{ "page.contests.title.underwater_contests"|trans }}
 {% endblock %}
 
-{% block heading_breadcrumbs %}
+{#{% block heading_breadcrumbs %}
     <ol class="breadcrumb">
         <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
         <li class="active"><strong>{{ "page.contest.breadcrumb.contests"|trans }}</strong></li>
     </ol>
-{% endblock %}
+{% endblock %}#}
+
+{% block heading_breadcrumbs %}{% endblock %}
+
 
 {% block body %}
 

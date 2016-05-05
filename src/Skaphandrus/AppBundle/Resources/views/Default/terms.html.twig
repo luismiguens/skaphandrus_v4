@@ -15,12 +15,15 @@
     {{ "page.terms.h1.title"|trans }}
 {% endblock %}
 
-{% block heading_breadcrumbs %}
+{#{% block heading_breadcrumbs %}
     <ol class="breadcrumb">
         <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
         <li class="active"><strong>{{ "page.terms.h1.title"|trans }}</strong></li>
     </ol>
-{% endblock %}
+{% endblock %}#}
+
+{% block heading_breadcrumbs %}{% endblock %}
+
 
 {% block body %}
     <div class="wrapper wrapper-content">

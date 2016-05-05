@@ -57,6 +57,7 @@
                 {% set _heading_breadcrumbs = block('heading_breadcrumbs') %}
                 {% if _heading_breadcrumbs is not empty %}
                     <!-- page-heading begin -->
+                   
                     <div class="row wrapper border-bottom white-bg page-heading">
                         <div class="col-sm-8">
                             <h2>
@@ -73,10 +74,15 @@
                             </div>
                         </div>
                     </div>
+                           
                     <!-- page-heading end -->
                 {% endif %}
 
                 {% block body %}
+                    
+                    
+                    
+                    
                 {% endblock %}
 
                 {% include 'SkaphandrusAppBundle:Common:footer.html.twig'%}

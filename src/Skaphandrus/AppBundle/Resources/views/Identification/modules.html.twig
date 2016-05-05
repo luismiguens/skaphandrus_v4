@@ -35,12 +35,17 @@
     {{ "page.modules.title"|trans }}
 {% endblock %}
 
-{% block heading_breadcrumbs %}
-    {#<ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+{#{% block heading_breadcrumbs %}
+    <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
         <li itemprop="itemListElement"><a href="{{ path('index')}}">{{ "page.common.breadcrumb.homepage"|trans }}</a></li>
         <li itemprop="itemListElement" class="active"><strong>{{ "page.modules.breadcrumb.modules"|trans }}</strong></li>
-    </ol>#}
-{% endblock %}
+    </ol>
+{% endblock %}#}
+
+{% block heading_breadcrumbs %}{% endblock %}
+
+
+
 
 {% block heading_action %}
     <a href="{{ path('photo_admin_new') }}" class="btn btn-primary">{{ "form.photo.btn.add"|trans }}</a>
