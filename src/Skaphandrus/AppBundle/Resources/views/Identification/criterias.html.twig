@@ -46,6 +46,53 @@
 
 {% block angular_app %}criteriasApp{%endblock%}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+
+        input[type=checkbox] {
+            display:none;
+        }
+
+        input[type=checkbox] + label
+        {
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 80%;
+            background-color: white;
+            height: 140px;
+            width: 140px;
+            display:inline-block;
+            padding: 0 0 0 0px;
+            margin-bottom: 0px;
+            font-weight: normal;
+        }
+
+        input[type=checkbox]:checked + label
+        {
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: white;
+            background-size: 100%;
+            height:140px;
+            width: 140px;
+            display:inline-block;
+            padding: 0 0 0 0px;
+            box-shadow: inset 0 0 0 100px rgba(0,0,0,.2);
+            margin-bottom: 0px;
+        }
+
+
+        input[type=checkbox]:hover + label
+        {
+            cursor: pointer; 
+            cursor: hand; 
+        }
+
+    </style>
+
+{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
 
@@ -116,7 +163,7 @@
                 self.clickCriterias = function () {
                 self.showCriterias = true;
                         $("html, body").animate({ scrollTop: 0 }, "slow");
-                        };
+                };
                 //user click species
                 self.clickSpecies = function (id) {
                 $http({
@@ -154,13 +201,10 @@
                         $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
                 }]);</script>
 
-
-
-
-
-    <script>
-                $(function(){
-                $('.ibox-content-species').slimScroll({
+    <script type="text/javascript">
+                $(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+                        $('.ibox-content-species').slimScroll({
                 height: '600px'
                 });
                         $('.ibox-content-criterias').slimScroll({
@@ -174,8 +218,8 @@
 {% block body %}
     <div class="wrapper wrapper-content">
         <div class ="container">
-
             <div class="row">
+
                 <div class="col-md-3" >
                     <div  data-spy="affix" data-offset-top="156" style="width: 265px;top: 0;">
                         <div class="ibox" >
@@ -246,7 +290,7 @@
                             <h5>{{ "page.species.h5.photos"|trans }}</h5>
                             <div class="row" >
                                 <div ng-repeat="img in mainCtrl.infoSpecies.images | limitTo:4" class="col-xs-6 col-md-3">
-                                    <div ng-switch on="img.is_illustration">
+                                    <div align="center" class="thumbnail" ng-switch on="img.is_illustration">
                                         <div ng-switch-when="true">
                                             <!-- code to render a large video block-->
                                             <a href="#" class="thumbnail">
@@ -259,6 +303,8 @@
                                                 <img ng-src="{[{img.image_src}]}"/>
                                             </a>
                                         </div>
+                                        <p>{{"page.species.p.photographer"|trans}}: {[{img.photographer}]}</p>
+                                        <p>{{"page.species.p.license"|trans}}: {[{img.license}]}</p>
                                     </div>
                                 </div>
                             </div>
@@ -298,53 +344,10 @@
                         </div>
                     </div>
 
-                </div><!-- end tab 2-->
+                </div>
                 <!-- </div> end main tabs -->
-            </div> <!-- end row -->
 
-            <style>
-
-                input[type=checkbox] {
-                    display:none;
-                }
-
-                input[type=checkbox] + label
-                {
-                    background-position: center;
-                    background-repeat: no-repeat;
-                    background-size: 80%;
-                    background-color: white;
-                    height: 140px;
-                    width: 140px;
-                    display:inline-block;
-                    padding: 0 0 0 0px;
-                    margin-bottom: 0px;
-                    font-weight: normal;
-                }
-
-                input[type=checkbox]:checked + label
-                {
-                    background-position: center;
-                    background-repeat: no-repeat;
-                    background-color: white;
-                    background-size: 100%;
-                    height:140px;
-                    width: 140px;
-                    display:inline-block;
-                    padding: 0 0 0 0px;
-                    box-shadow: inset 0 0 0 100px rgba(0,0,0,.2);
-                    margin-bottom: 0px;
-                }
-
-
-                input[type=checkbox]:hover + label
-                {
-                    cursor: pointer; 
-                    cursor: hand; 
-                }
-
-            </style>
-            
+            </div>
         </div>
     </div><!-- end wrapper -->
 
