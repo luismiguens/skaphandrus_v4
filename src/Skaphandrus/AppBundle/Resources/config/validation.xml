@@ -47,8 +47,8 @@
                 </option>
             </constraint>
             <constraint name="Image">
-                <option name="minWidth">300</option>
-                <option name="minHeight">300</option>
+                <option name="minWidth">120</option>
+                <option name="minHeight">120</option>
             </constraint>
         </property>
     </class>
