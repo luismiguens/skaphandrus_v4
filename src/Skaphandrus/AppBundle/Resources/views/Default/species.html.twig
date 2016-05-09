@@ -64,8 +64,10 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    
-    {{ google_map_css(map) }}
+
+    {% if map %}
+        {{ google_map_css(map) }}
+    {% endif %}
     <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
     <!-- FooTable -->
     <link href="{{ asset('bundles/skaphandrusapp/css/plugins/footable/footable.core.css') }}" rel="stylesheet">
@@ -93,13 +95,18 @@
 
 {% block javascripts %}
     {{ parent() }}
-    
-    {{ google_map_js(map) }}
-    
+
+    {% if map %}
+        {{ google_map_js(map) }}
+    {% endif %}
+
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
 
     <!-- FooTable -->
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
+
+    <script src="{{ asset('bundles/skaphandrusapp/js/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/imagesloaded.pkgd.min.js') }}"></script>
 
     <script type="text/javascript">
 
@@ -147,18 +154,29 @@
 
         $(function () {
             $('.footable-spots').footable();
+
+            var $grid = $('.grid').imagesLoaded(function () {
+                // init Isotope after all images have loaded
+                $grid.isotope({
+                    // options
+                    itemSelector: '.grid-item',
+                    layoutMode: 'masonry'
+                });
+            });
         });
 
     </script>
 
     {% if map %}
         <script type="text/javascript">
-            // Fix bug on Gmap inside tabs
-            $('.nav-tabs').on('shown.bs.tab', function () {
-                google.maps.event.trigger(window, 'resize', {});
-                setTimeout(function () {
+            $(function () {
+                // Fix bug on Gmap inside tabs
+                $('.nav-tabs').on('shown.bs.tab', function () {
+                    google.maps.event.trigger(window, 'resize', {});
+                    setTimeout(function () {
             {{ map.javascriptVariable }}.setCenter({{ map.center.javascriptVariable }});
-                    }, 100);
+                        }, 100);
+                    });
                 });
         </script>
     {% endif %}
@@ -220,118 +238,77 @@
                         <a href="{{ path('photos', { 'species': species.id }) }}">See all photos</a>
                     </div>
                 </div>#}
+
                 <div class="ibox">
                     <div class="ibox-title">
                         {#{{ "page.species.h1.title"|trans }}#}
                         <h2 itemprop="name">{{ species.name }}</h2>
-                        {% if species.speciesVernaculars is not empty %}
-                            {#{{ "page.species.h5.common_names"|trans }}:#}
-                            {% for vernacular in species.speciesVernaculars %}
-                                {% if (vernacular.locale == app.request.locale) and (i<4) %}
-                                    <p>{{ vernacular.vernacular.name|title }}</p>
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
                     </div>
                     <div class="ibox-content">
-                        <h3> 
-                            {{ "page.species.h5.description"|trans }}
-                        </h3>
-                        {% if species.translate(app.request.locale).description is not empty %}
-                            <p itemprop="description">
-                                {{ species.translate(app.request.locale).description }}
-                            </p>
-                        {% else %}
-                            {{ "page.species.p.no_description"|trans }}
-                        {% endif %}
-                        <h3>{{ "page.species.h5.taxonomic_structure"|trans }}</h3>
-                        <ul class="list-unstyled" itemscope itemtype="http://schema.org/ListItem">
-                            <li class="tox" itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.kingdom.taxonNodeName|trans, species.genus.family.order.class.phylum.kingdom) }}</li>
-                            <li class="tox" itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.taxonNodeName|trans, species.genus.family.order.class.phylum) }}</li>
-                            <li class="tox" itemprop="item">{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(species.genus.family.order.class.taxonNodeName|trans, species.genus.family.order.class) }}</li>
-                            <li class="tox" itemprop="item">{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(species.genus.family.order.taxonNodeName|trans, species.genus.family.order) }}</li>
-                            <li class="tox" itemprop="item">{{ "page.species.label.species_family"|trans }}: {{ link_to_taxon(species.genus.family.taxonNodeName|trans, species.genus.family) }}</li>
-                            <li class="tox" itemprop="item">{{ "page.species.label.species_genus"|trans }}: {{ link_to_taxon(species.genus.taxonNodeName|trans, species.genus) }}</li>
-                        </ul>
+                        <div class="row">
+                            <div class="col-md-6">
+
+                                {% for photo in photos %}
+                                    {% if loop.index == 1 %}
+                                        <div align="center">
+                                            <a href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
+                                                <img  alt="{{photo.species}}" style="max-height: 560px; max-width: 560px;" src="{{ asset('uploads/fotografias/' ~ photo.image) }}" />
+                                                {#<img  alt="{{photo.species}}" style="max-height: 560px!important; max-width: 560px!important;" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />#}
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+
+                                <h3>{{ "page.species.h5.description"|trans }}</h3>
+                                {% if species.translate(app.request.locale).description is not empty %}
+                                    <p itemprop="description">
+                                        {{ species.translate(app.request.locale).description }}
+                                    </p>
+                                {% else %}
+                                    {{ "page.species.p.no_description"|trans }}
+                                {% endif %}
+
+                                {% if species.speciesVernaculars is not empty %}
+                                    <h3>{{ "page.species.h5.common_names"|trans }}</h3>
+                                    <ul class="list-unstyled">
+                                        {% for vernacular in species.speciesVernaculars %}
+                                            {% if (vernacular.locale == app.request.locale) and (i<4) %}
+                                                <li>
+                                                    {{ vernacular.vernacular.name|title }}
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+
+                                <h3>{{ "page.species.h5.taxonomic_structure"|trans }}</h3>
+                                <ul class="list-unstyled" itemscope itemtype="http://schema.org/ListItem">
+                                    <li class="tox" itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.kingdom.taxonNodeName|trans, species.genus.family.order.class.phylum.kingdom) }}</li>
+                                    <li class="tox" itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.taxonNodeName|trans, species.genus.family.order.class.phylum) }}</li>
+                                    <li class="tox" itemprop="item">{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(species.genus.family.order.class.taxonNodeName|trans, species.genus.family.order.class) }}</li>
+                                    <li class="tox" itemprop="item">{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(species.genus.family.order.taxonNodeName|trans, species.genus.family.order) }}</li>
+                                    <li class="tox" itemprop="item">{{ "page.species.label.species_family"|trans }}: {{ link_to_taxon(species.genus.family.taxonNodeName|trans, species.genus.family) }}</li>
+                                    <li class="tox" itemprop="item">{{ "page.species.label.species_genus"|trans }}: {{ link_to_taxon(species.genus.taxonNodeName|trans, species.genus) }}</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                {% if species.photos is not empty %}
+                                    <h3>{% trans with {'%specie%': species.name } %} page.species.h3.photos {% endtrans %}</h3>
+                                    {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': species.id },'limit':20  } )) }}
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                {#<div class="row" >
-                    <div class="col col-lg-12" >
-                        <div class="ibox-title" >
-                            <h1 itemprop="name">{{ "page.species.h1.title"|trans }}: {{ species.name }}</h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="ibox" >
-                    <div class="ibox-content" >
-                        <div class="row" >
-                            <!-- coluna da direita start -->
-                            <div class="col col-lg-6" >
-                                <div class="ibox" >
-                                    <h3> 
-                                        {{ "page.species.h5.description"|trans }}
-                                    </h3>
-                                    {% if species.translate(app.request.locale).description is not empty %}
-                                        <p itemprop="description">
-                                            {{ species.translate(app.request.locale).description }}
-                                        </p>
-                                    {% else %}
-                                        {{ "page.species.p.no_description"|trans }}
-                                    {% endif %}
-                                    <h3>{{ "page.species.h5.taxonomic_structure"|trans }}</h3>
-                                    <ul class="list-unstyled" itemscope itemtype="http://schema.org/ListItem">
-                                        <li class="tox" itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.kingdom.taxonNodeName|trans, species.genus.family.order.class.phylum.kingdom) }}</li>
-                                        <li class="tox" itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.taxonNodeName|trans, species.genus.family.order.class.phylum) }}</li>
-                                        <li class="tox" itemprop="item">{{ "page.species.label.species_class"|trans }}: {{ link_to_taxon(species.genus.family.order.class.taxonNodeName|trans, species.genus.family.order.class) }}</li>
-                                        <li class="tox" itemprop="item">{{ "page.species.label.species_order"|trans }}: {{ link_to_taxon(species.genus.family.order.taxonNodeName|trans, species.genus.family.order) }}</li>
-                                        <li class="tox" itemprop="item">{{ "page.species.label.species_family"|trans }}: {{ link_to_taxon(species.genus.family.taxonNodeName|trans, species.genus.family) }}</li>
-                                        <li class="tox" itemprop="item">{{ "page.species.label.species_genus"|trans }}: {{ link_to_taxon(species.genus.taxonNodeName|trans, species.genus) }}</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <!-- coluna da direita end -->
-            
-                            <!-- coluna da esquerda start -->
-                            <div class="col col-lg-6" >
-                                {% if photo is not empty %}
-                                    <div class="row" >
-                                        <div class="col col-lg-12" >
-                                            <div class="ibox" style="margin-bottom: 0px;" >
-                                                <img alt="{{photo.species}}" class="img-responsive bigpic" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />  
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row" >
-                                        <div class="col col-lg-12" >
-                                            <div class="ibox" style="margin: 1.2% 0% 0% 0%" >
-                                                <h3 align="center">{% trans with {'%specie%': species.name } %} page.species.h3.photos {% endtrans %}</h3>
-                                                {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': species.id }, 'limit':15 } )) }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% else %}
-                                    <div class="row" >
-                                        <div class="col col-lg-12" >
-                                            <div class="ibox" style="margin: 1.2% 0% 0% 0%" >
-                                                <h4 align="center">{{ "page.species.h4.no_photos"|trans }}</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endif %}
-                            </div>
-                            <!-- coluna da esquerda end -->
-                        </div>
-                    </div>
-                </div>
-            
+
                 <!-- outras especies similares start -->
                 <div class="ibox" >
                     <div class="ibox-title" >
                         <h2>{{ "page.species.h2.similar_species"|trans }}</h2>	
                     </div>
                     <div class="ibox-content" >
-            
+
                         <div class="row">
                             <div class="col-lg-10 col-lg-offset-1">
                                 <div class="slider_similar">
@@ -344,26 +321,8 @@
                                 </div>
                             </div>
                         </div>
-            
-                        {#<div class="roller" >
-                            {% for photo in similarSpecies %}
-                                <div>
-                                    <a class="thumbnail" href="{{ path('species',  { 'slug': photo.species.name }) }}">
-                                    <img alt="{{ photo.species }}" class="img-responsive back" src="{{ photo.getWebPath| imagine_filter('sk_widen_400') }}">
-                                    <div class="text-center"> {{ photo.species }} </div>
-                                </a>
-                                </div>#}
-
-
-                {#<div class="desc" >
-                    <a class="thumbnail" href="{{ path('species',  { 'slug': photo.species.name }) }}">
-                        <img alt="{{ photo.species }}" class="img-responsive back" style="width: 100px; height: 100px;" src="{{ photo.getWebPath| imagine_filter('sk_widen_400') }}">
-                        <div class="over"> {{ photo.species }} </div>
-                    </a>
-                </div>#}
-                {#{% endfor %}
-            </div>#}
-
+                    </div> 
+                </div>
                 <!-- outras especies similares end -->
 
                 <!-- Tabs -->
@@ -385,95 +344,40 @@
                                     <h3>{% trans with {'%specie%': species.name } %} page.species.h3.species_criteria {% endtrans %}</h3>
 
                                     <div class="ibox-content" >
-                                        {% for criteria in criterias %}
-                                            <div class="ibox" style="padding-left: 2%" >
-                                                <h4>{{ criteria }}</h4>
-                                                {#<a href="#" class="btn btn-primary btn-xs pull-right">Report Error</a>#}
-                                            </div>
-                                            <div class="ibox" >
-                                                {% for character in criteria.characters %}
-                                                    {% if character.isFromSpecies %}
-                                                        <div class="col-sm-2">
-                                                            <div class="wrapper_visual_id thumbnail">
-                                                                <img class="img-responsive" src="{{ character.getWebPath|imagine_filter('sk_widen_240') }}" />
-                                                                <div class="feature text-success">{{ character }}</div>
-                                                                <i class="fa fa-check feature_icone true"></i>
+                                        {% if criterias %}
+                                            {% for criteria in criterias %}
+                                                <div class="ibox" style="padding-left: 2%" >
+                                                    <h4>{{ criteria }}</h4>
+                                                    {#<a href="#" class="btn btn-primary btn-xs pull-right">Report Error</a>#}
+                                                </div>
+                                                <div class="ibox" >
+                                                    {% for character in criteria.characters %}
+                                                        {% if character.isFromSpecies %}
+                                                            <div class="col-sm-2">
+                                                                <div class="wrapper_visual_id thumbnail">
+                                                                    <img class="img-responsive" src="{{ character.getWebPath|imagine_filter('sk_widen_240') }}" />
+                                                                    <div class="feature text-success">{{ character }}</div>
+                                                                    <i class="fa fa-check feature_icone true"></i>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    {% else %}
-                                                        <div class="col-sm-2">
-                                                            <div class="wrapper_visual_id thumbnail">
-                                                                <img class="img-responsive" src="{{ character.getWebPath|imagine_filter('sk_widen_240') }}" />
-                                                                <div class="feature text-success">{{ character }}</div>
-                                                                <div class="overly"></div>
-                                                                <i class="fa fa-times feature_icone false"></i>
+                                                        {% else %}
+                                                            <div class="col-sm-2">
+                                                                <div class="wrapper_visual_id thumbnail">
+                                                                    <img class="img-responsive" src="{{ character.getWebPath|imagine_filter('sk_widen_240') }}" />
+                                                                    <div class="feature text-success">{{ character }}</div>
+                                                                    <div class="overly"></div>
+                                                                    <i class="fa fa-times feature_icone false"></i>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    {% endif %}
-
-                                                    {#<div class="col col-lg-2 col-md-4 col-xs-6 " >
-                                                        <div class="desc">
-                                                            <a class="thumbnail" href="#">
-                                                                <img class="crit" src="{{ character.getWebPath|imagine_filter('sk_widen_240') }}" alt="{{ character }}" />
-                                                                <div class="over2" >{{ character }}</div>
-                                                                <i style="position:absolute; bottom:5%; right:0%; z-index:3; " class="fa fa-check text-navy fa-3x"></i>
-                                                            </a>
-                                                        </div>
-                                                    </div>#}
-                                                {% endfor %}
-                                            </div>
-                                        {% endfor %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            {% endfor %}
+                                        {% else %}
+                                            {{ "page.species.p.no_critirias"|trans }}
+                                        {% endif %}
                                     </div>
-                                    {#<h4>Ridges or scutes (presence)</h4>
-                                    <div class="row">
-                                        <div class="col-sx-12">
-                                            <a href="#" class="btn btn-primary btn-xs pull-right">Report Error</a>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-2">
-                                            <div class="wrapper_visual_id thumbnail">
-                                                <img class="img-responsive" src="http://skaphandrus.com/media/cache/sk_widen_240/uploads/characters/bc3ddcf5d5fafa66b6755cb672472d0473b39d28.jpg" />
-                                                <div class="feature text-success">Feature</div>
-                                                <i class="fa fa-check feature_icone true"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <div class="wrapper_visual_id thumbnail">
-                                                <img class="img-responsive" src="http://skaphandrus.com/media/cache/sk_widen_240/uploads/characters/90b653cbfb2d13e1a1246c2df30fc3abbcaf77cc.jpg" />
-                                                <div class="feature text-success">Feature</div>
-                                                <div class="overly"></div>
-                                                <i class="fa fa-times feature_icone false"></i>
-            
-                                            </div>
-                                        </div>
-                                    </div>#}
                                 </div>
-
-                                {#<div class="panel-body">
-                                    <h3>{% trans with {'%specie%': species.name } %} page.species.h3.species_criteria {% endtrans %}</h3>
-                                    <div class="ibox-content" >
-                                        {% for criteria in criterias %}
-                                            <div class="ibox" style="padding-left: 2%" >
-                                                <h2>{{ criteria }}</h2>
-                                            </div>
-                                            <div class="ibox" >
-                                                {% for character in criteria.characters %}
-                                                    <div class="col col-lg-2 col-md-4 col-xs-6 " >
-                                                        <div class="desc">
-                                                            <a class="thumbnail" href="#">
-                                                                <img class="crit" src="{{ character.getWebPath|imagine_filter('sk_widen_240') }}" alt="{{ character }}" />
-                                                                <div class="over2" >{{ character }}</div>
-                                                                <i style="position:absolute; bottom:5%; right:0%; z-index:3; " class="fa fa-check text-navy fa-3x"></i>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                {% endfor %}
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                    <button style=" margin-top: 3%; margin-left: 90%;" tabindex="0" type="button" class="btn btn-sm btn-primary">Report Error</button>   
-                                </div>#}
                             </div>
                             <!-- Criterias end -->
 
@@ -484,7 +388,7 @@
                                     <span itemscope itemtype="http://schema.org/Map">
                                         <meta itemprop="name" content="World Map" />
                                         {% if map %}
-                                           {{ google_map_container(map) }}
+                                            {{ google_map_container(map) }}
                                         {% endif %}
                                     </span>
                                     <div class="ibox-content">
@@ -547,7 +451,7 @@
                                                 </div>
 
                                                 <!-- Photographers Modal start -->
-                                                <div class="modal fade" id="photographersModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal fade" id="photographersModal" style="margin-top: 30px" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                     <div class="modal-dialog modal-lg" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">

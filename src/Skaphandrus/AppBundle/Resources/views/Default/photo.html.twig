@@ -85,6 +85,7 @@
             display: none;
         }
     </style>
+
 {% endblock %}
 
 {% block javascripts %}
@@ -96,6 +97,9 @@
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/hack/autocompleter-jqueryui.js') }}"></script>
+
+    <script src="{{ asset('bundles/skaphandrusapp/js/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/imagesloaded.pkgd.min.js') }}"></script>
 
     <!-- Slick JQuery -->
     <script type="text/javascript">
@@ -111,39 +115,39 @@
             });
 
             $('.variable-width').show();
+
+            var $grid = $('.grid').imagesLoaded(function () {
+                // init Isotope after all images have loaded
+                $grid.isotope({
+                    // options
+                    itemSelector: '.grid-item',
+                    layoutMode: 'masonry'
+                });
+            });
         });
 
     </script>
 
     <!-- EndOff: Slick JQuery -->
 
-    {#    <script type="text/javascript">
-            $(function () {
-                var $grid = $('.grid').imagesLoaded(function () {
-    // init Isotope after all images have loaded
-                    $grid.isotope({
-    // options
-                        itemSelector: '.grid-item',
-                        layoutMode: 'masonry'
+    {#<script type="text/javascript">
+        $(function () {
+
+            $('.vote-button').click(function () {
+                photo_id = $(this).attr('id');
+
+                if ($(this).hasClass('btn-primary')) {
+                    $.ajax({
+                        url: "/{{ app.request.locale }}/category/{{ category.id }}/vote-photo/" + $(this).attr('id'),
+                        success: function (data) {
+                            $('.vote-button.btn-success').removeClass('btn-success').addClass('btn-primary').html('<i class="fa fa-check"></i> {{ "page.contest.btn.vote"|trans }}');
+                            $('.vote-button#' + photo_id).removeClass('btn-primary').addClass('btn-success').html('<i class="fa fa-check"></i> {{ "page.contest.btn.voted"|trans }}');
+                        },
                     });
-                });
-    
-    
-                $('.vote-button').click(function () {
-                    photo_id = $(this).attr('id');
-    
-                    if ($(this).hasClass('btn-primary')) {
-                        $.ajax({
-                            url: "/{{ app.request.locale }}/category/{{ category.id }}/vote-photo/" + $(this).attr('id'),
-                            success: function (data) {
-                                $('.vote-button.btn-success').removeClass('btn-success').addClass('btn-primary').html('<i class="fa fa-check"></i> {{ "page.contest.btn.vote"|trans }}');
-                                $('.vote-button#' + photo_id).removeClass('btn-primary').addClass('btn-success').html('<i class="fa fa-check"></i> {{ "page.contest.btn.voted"|trans }}');
-                            },
-                        });
-                    }
-                });
+                }
             });
-        </script>#}
+        });
+    </script>#}
 
 {% endblock %}
 
@@ -323,12 +327,6 @@
                             </div>
                             <!-- Social buttons end -->
 
-                            {#{% dump(categories)%}
-        
-                            {% for category in categories %}
-                                {{category}}
-                            {% endfor %}#}
-
                             <!-- contests area begin-->
                             {#<div style="margin-top: 1%;" class="row">
                                 <div class="col-lg-12">
@@ -359,12 +357,12 @@
                                                                     <td>
                                                                         {% set class = 'btn-primary' %}
                                                                         {% set text = "page.contest.btn.vote"|trans %}
-        
+
                                                                         {% if votedPhoto is not empty and photo.id == votedPhoto.photo.id %}
                                                                             {% set class = 'btn-success' %}
                                                                             {% set text = "page.contest.btn.voted"|trans %}
                                                                         {% endif %}
-        
+
                                                                         {% if category.contest.isInPublicVotation %}
                                                                             {% if is_granted("IS_AUTHENTICATED_FULLY") %}
                                                                                 <button type="button" class="vote-button btn-block btn {{ class }}" id="{{ photo.id }}">
