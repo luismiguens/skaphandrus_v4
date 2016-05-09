@@ -91,6 +91,15 @@
         }
     </style>#}
 
+    <style type="text/css">
+
+        .grid-item {
+            display: none;
+        }
+
+    </style>
+
+
 {% endblock %}
 
 {% block javascripts %}
@@ -156,6 +165,9 @@
             $('.footable-spots').footable();
 
             var $grid = $('.grid').imagesLoaded(function () {
+
+                $('.grid-item').show();
+
                 // init Isotope after all images have loaded
                 $grid.isotope({
                     // options
@@ -291,9 +303,9 @@
                                     <li class="tox" itemprop="item">{{ "page.species.label.species_genus"|trans }}: {{ link_to_taxon(species.genus.taxonNodeName|trans, species.genus) }}</li>
                                 </ul>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 species-images">
                                 {% if species.photos is not empty %}
-                                    <h3>{% trans with {'%specie%': species.name } %} page.species.h3.photos {% endtrans %}</h3>
+                                    {#<h3>{% trans with {'%specie%': species.name } %} page.species.h3.photos {% endtrans %}</h3>#}
                                     {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': species.id },'limit':20  } )) }}
                                 {% endif %}
                             </div>

@@ -84,6 +84,11 @@
         .variable-width {
             display: none;
         }
+
+        .grid-item {
+            display: none;
+        }
+
     </style>
 
 {% endblock %}
@@ -117,6 +122,9 @@
             $('.variable-width').show();
 
             var $grid = $('.grid').imagesLoaded(function () {
+                
+                $('.grid-item').show();
+                
                 // init Isotope after all images have loaded
                 $grid.isotope({
                     // options
