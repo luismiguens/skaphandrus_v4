@@ -44,6 +44,8 @@
 </style>
 
 <div class="grid">
+
+    <div id="loading"></div>
     <!-- resultset rows --> 
     {% for row in photos %}
         <div class="grid-item">
@@ -66,5 +68,6 @@
     {% endfor %}
 </div>
 
+<div id="space"></div>
 <a style="margin-top: 2%;" class="btn btn-block btn-outline btn-primary" href="{{ path('photos', parameters) }}">{{ "common.grid.see_all"|trans }}</a>
 

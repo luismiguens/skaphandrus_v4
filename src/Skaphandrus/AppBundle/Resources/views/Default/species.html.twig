@@ -72,8 +72,12 @@
     <!-- FooTable -->
     <link href="{{ asset('bundles/skaphandrusapp/css/plugins/footable/footable.core.css') }}" rel="stylesheet">
 
-    {#<style>
-        input[type=checkbox] {
+    <style type="text/css">
+        .grid-item {
+            display: none;
+        }
+
+        {#input[type=checkbox] {
             display:none;
         }
         input[type=checkbox] + label
@@ -88,23 +92,12 @@
             padding: 0 0 0 0px;
             margin-bottom: 0px;
             font-weight: normal;
-        }
-    </style>#}
-
-    <style type="text/css">
-
-        .grid-item {
-            display: none;
-        }
-
+        }#}
     </style>
-
-
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-
     {% if map %}
         {{ google_map_js(map) }}
     {% endif %}
@@ -143,6 +136,24 @@
             $(this).ready(loadPhotographers);
             $('#show_more_photographers').click(loadPhotographers);
 
+            var loadCriterias = function () {
+                $('#criterias').fadeIn("slow");
+                $("#criterias").html("<div class='sk-spinner sk-spinner-three-bounce'><div class='sk-bounce1'></div><div class='sk-bounce2'></div><div class='sk-bounce3'></div></div>");
+
+                setTimeout(function () {
+                    $.ajax({
+                        type: "get",
+                        url: "{{path("ajax_criterias")}}",
+                        data: 'slug=' + "{{ species.name }}",
+                        dataType: "text",
+                        success: function (response) {
+                            $("#criterias").html(response);
+                        }
+                    });
+                }, 100);
+            };
+            $(this).ready(loadCriterias);
+
         });
         var speciesId = 'species_id= {{ species.id }}';
         var loadPhotographersAll = function () {
@@ -164,10 +175,12 @@
         $(function () {
             $('.footable-spots').footable();
 
+            $("#loading").html("<div class='sk-spinner sk-spinner-three-bounce'><div class='sk-bounce1'></div><div class='sk-bounce2'></div><div class='sk-bounce3'></div></div>");
+            $("#space").html("<br/>");
             var $grid = $('.grid').imagesLoaded(function () {
-
                 $('.grid-item').show();
-
+                $("#space").hide();
+                $("#loading").hide();
                 // init Isotope after all images have loaded
                 $grid.isotope({
                     // options
@@ -175,6 +188,7 @@
                     layoutMode: 'masonry'
                 });
             });
+
         });
 
     </script>
@@ -262,9 +276,9 @@
 
                                 {% for photo in photos %}
                                     {% if loop.index == 1 %}
-                                        <div align="center">
+                                        <div>
                                             <a href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
-                                                <img  alt="{{photo.species}}" style="max-height: 560px; max-width: 560px;" src="{{ asset('uploads/fotografias/' ~ photo.image) }}" />
+                                                <img  alt="{{photo.species}}" style="max-height: 560px; max-width: 560px;" src="{{ photo.getWebPath | imagine_filter('sk_upscale_800_600') }}" />
                                                 {#<img  alt="{{photo.species}}" style="max-height: 560px!important; max-width: 560px!important;" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />#}
                                             </a>
                                         </div>
@@ -280,11 +294,11 @@
                                     {{ "page.species.p.no_description"|trans }}
                                 {% endif %}
 
-                                {% if species.speciesVernaculars is not empty %}
+                                {% if species.speciesVernaculars|length > 0 %}
                                     <h3>{{ "page.species.h5.common_names"|trans }}</h3>
                                     <ul class="list-unstyled">
                                         {% for vernacular in species.speciesVernaculars %}
-                                            {% if (vernacular.locale == app.request.locale) and (i<4) %}
+                                            {% if (vernacular.locale == app.request.locale) %}
                                                 <li>
                                                     {{ vernacular.vernacular.name|title }}
                                                 </li>
@@ -355,39 +369,9 @@
                                 <div class="panel-body">
                                     <h3>{% trans with {'%specie%': species.name } %} page.species.h3.species_criteria {% endtrans %}</h3>
 
-                                    <div class="ibox-content" >
-                                        {% if criterias %}
-                                            {% for criteria in criterias %}
-                                                <div class="ibox" style="padding-left: 2%" >
-                                                    <h4>{{ criteria }}</h4>
-                                                    {#<a href="#" class="btn btn-primary btn-xs pull-right">Report Error</a>#}
-                                                </div>
-                                                <div class="ibox" >
-                                                    {% for character in criteria.characters %}
-                                                        {% if character.isFromSpecies %}
-                                                            <div class="col-sm-2">
-                                                                <div class="wrapper_visual_id thumbnail">
-                                                                    <img class="img-responsive" src="{{ character.getWebPath|imagine_filter('sk_widen_240') }}" />
-                                                                    <div class="feature text-success">{{ character }}</div>
-                                                                    <i class="fa fa-check feature_icone true"></i>
-                                                                </div>
-                                                            </div>
-                                                        {% else %}
-                                                            <div class="col-sm-2">
-                                                                <div class="wrapper_visual_id thumbnail">
-                                                                    <img class="img-responsive" src="{{ character.getWebPath|imagine_filter('sk_widen_240') }}" />
-                                                                    <div class="feature text-success">{{ character }}</div>
-                                                                    <div class="overly"></div>
-                                                                    <i class="fa fa-times feature_icone false"></i>
-                                                                </div>
-                                                            </div>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </div>
-                                            {% endfor %}
-                                        {% else %}
-                                            {{ "page.species.p.no_critirias"|trans }}
-                                        {% endif %}
+                                    <div class="ibox-content">
+                                        <div id="loadCriterias"></div>
+                                        <div id="criterias"></div>
                                     </div>
                                 </div>
                             </div>

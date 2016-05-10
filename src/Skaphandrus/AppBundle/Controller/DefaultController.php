@@ -342,7 +342,7 @@ class DefaultController extends Controller {
 
         $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findBySlug($slug);
         $photos = array();
-        $criterias = array();
+//        $criterias = array();
 
         if ($species) {
 
@@ -467,26 +467,26 @@ class DefaultController extends Controller {
                         ->findOneById($bestPhotos[0]['id']);
             }
 
-            //ir buscar a lista de id de criterios da especie
-            $criterias_ids = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkIdentificationCriteria")->getCriteriasFromSpecies($species->getId());
-
-            //ir buscar os criterios e todos os caracteres do criterio
-            foreach ($criterias_ids as $key => $criteria) {
-                $criterias[] = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkIdentificationCriteria')->findCriteriaJoinAllCharacters($criteria);
-            }
-
-            foreach ($criterias as $key => $criteria) :
-                foreach ($criteria->getCharacters() as $key => $character):
-                    $isFromSpecies = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->isCharacterFromSpecies($species->getId(), $character->getId());
-                    $character->setIsFromSpecies($isFromSpecies);
-                endforeach;
-            endforeach;
+//            //ir buscar a lista de id de criterios da especie
+//            $criterias_ids = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkIdentificationCriteria")->getCriteriasFromSpecies($species->getId());
+//
+//            //ir buscar os criterios e todos os caracteres do criterio
+//            foreach ($criterias_ids as $key => $criteria) {
+//                $criterias[] = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkIdentificationCriteria')->findCriteriaJoinAllCharacters($criteria);
+//            }
+//
+//            foreach ($criterias as $key => $criteria) :
+//                foreach ($criteria->getCharacters() as $key => $character):
+//                    $isFromSpecies = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->isCharacterFromSpecies($species->getId(), $character->getId());
+//                    $character->setIsFromSpecies($isFromSpecies);
+//                endforeach;
+//            endforeach;
 
             return $this->render('SkaphandrusAppBundle:Default:species.html.twig', array(
                         "species" => $species,
                         "photos" => $photos,
                         "similarSpecies" => $similarSpecies,
-                        "criterias" => $criterias,
+//                        "criterias" => $criterias,
                         "spots" => $spots,
                         'map' => $map,
                         'map_center_lat' => $centerLatitude,

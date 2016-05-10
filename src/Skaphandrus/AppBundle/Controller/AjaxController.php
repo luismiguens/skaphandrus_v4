@@ -20,6 +20,35 @@ class AjaxController extends Controller {
         return $this->render('SkaphandrusAppBundle:Ajax:index.html.twig');
     }
 
+    public function criteriasForSpeciesAction(Request $request) {
+        $criterias = array();
+        
+        if ($request->query->get('slug')):
+            $slug = $request->query->get('slug');
+        endif;
+
+        $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findBySlug($slug);
+
+        //ir buscar a lista de id de criterios da especie
+        $criterias_ids = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkIdentificationCriteria")->getCriteriasFromSpecies($species->getId());
+
+        //ir buscar os criterios e todos os caracteres do criterio
+        foreach ($criterias_ids as $key => $criteria) {
+            $criterias[] = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkIdentificationCriteria')->findCriteriaJoinAllCharacters($criteria);
+        }
+
+        foreach ($criterias as $key => $criteria) :
+            foreach ($criteria->getCharacters() as $key => $character):
+                $isFromSpecies = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->isCharacterFromSpecies($species->getId(), $character->getId());
+                $character->setIsFromSpecies($isFromSpecies);
+            endforeach;
+        endforeach;
+
+        return $this->render('SkaphandrusAppBundle:Ajax:criteriasForSpecies.html.twig', array(
+                    "criterias" => $criterias,
+        ));
+    }
+
     /////// See All start \\\\\\\\
 
     public function spotSeeAllAction(Request $request) {

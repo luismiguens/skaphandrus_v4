@@ -1,6 +1,6 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block page_title %}{% trans with {'%title%': photo.title|capitalize, '%taken_by%': photo.fosuser } %}page.photo.meta_tag.title{% endtrans %}{% endblock %}
+{% block page_title %}{% trans with {'%title%': photo.title|title, '%taken_by%': photo.fosuser } %}page.photo.meta_tag.title{% endtrans %}{% endblock %}
 
 {% block page_description %}{{ photo.description [0:160] }}{% endblock %}
 
@@ -121,10 +121,12 @@
 
             $('.variable-width').show();
 
+            $("#loading").html("<div class='sk-spinner sk-spinner-three-bounce'><div class='sk-bounce1'></div><div class='sk-bounce2'></div><div class='sk-bounce3'></div></div>");
+            $("#space").html("<br/>");
             var $grid = $('.grid').imagesLoaded(function () {
-                
                 $('.grid-item').show();
-                
+                $("#space").hide();
+                $("#loading").hide();
                 // init Isotope after all images have loaded
                 $grid.isotope({
                     // options
@@ -186,7 +188,7 @@
                 <div class="col col-lg-12" >
                     <div class="carousel slide" id="carousel1">
                         <div class="carousel-inner">
-                            <img style="width: 590px;" itemprop="image" alt="{{photo.title}}" class="img-responsive child" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />
+                            <img style="width: 590px;" itemprop="image" alt="{{photo.title}}" class="img-responsive child" src="{{ photo.getWebPath | imagine_filter('sk_upscale_800_600') }}" />
                         </div>
                         <a style="margin-left: 20%; background: none" data-slide="prev" class="left carousel-control" href="{{path('photo_no_slug', {'id':previous_photo}) }}">
                             <span class="glyphicon glyphicon-chevron-left"></span>

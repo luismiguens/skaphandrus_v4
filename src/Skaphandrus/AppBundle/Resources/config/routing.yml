@@ -221,6 +221,10 @@ skaphandrus_app_users_migration:
 ### Ajax Partiall Routes
 ################################################################################
 
+ajax_criterias:
+    path:     /{_locale}/ajax/criterias
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:criteriasForSpecies" }
+
 #### See All ####
 ajax_business_see_all:
     path:     /{_locale}/ajax/see-all/business

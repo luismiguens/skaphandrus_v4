@@ -1,0 +1,33 @@
+
+{% if criterias %}
+    {% for criteria in criterias %}
+        <div class="ibox" style="padding-left: 2%" >
+            <h4>{{ criteria }}</h4>                                                    
+        </div>
+        <div class="ibox" >
+            {% for character in criteria.characters %}
+                {% if character.isFromSpecies %}
+                    <div class="col-sm-2">
+                        <div class="wrapper_visual_id thumbnail">
+                            <img class="img-responsive" src="{{ character.getWebPath|imagine_filter('sk_widen_240') }}" />
+                            <div class="feature text-success">{{ character }}</div>
+                            <i class="fa fa-check feature_icone true"></i>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col-sm-2">
+                        <div class="wrapper_visual_id thumbnail">
+                            <img class="img-responsive" src="{{ character.getWebPath|imagine_filter('sk_widen_240') }}" />
+                            <div class="feature text-success">{{ character }}</div>
+                            <div class="overly"></div>
+                            <i class="fa fa-times feature_icone false"></i>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% else %}
+    {{ "page.species.p.no_critirias"|trans }}
+{% endif %}
+
