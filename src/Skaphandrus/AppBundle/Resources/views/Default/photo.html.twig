@@ -191,7 +191,7 @@
                 <div class="col col-lg-12" >
                     <div class="carousel slide" id="carousel1">
                         <div class="carousel-inner">
-                            <img style="max-height: 600px;max-width: 600px;" itemprop="image" alt="{{photo.title}}" class="img-responsive child" src="{{ photo.getWebPath | imagine_filter('sk_downscale_max_600_600') }}" />
+                            <img style="max-height: 600px;max-width: 600px;" itemprop="image" alt="{{photo.title}}" class="img-responsive child" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />
                         </div>
                         <a style="margin-left: 20%; background: none" data-slide="prev" class="left carousel-control" href="{{path('photo_no_slug', {'id':previous_photo}) }}">
                             <span class="glyphicon glyphicon-chevron-left"></span>
