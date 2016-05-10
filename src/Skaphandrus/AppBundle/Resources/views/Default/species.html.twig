@@ -77,6 +77,10 @@
             display: none;
         }
 
+        .variable-width {
+            display: none;
+        }
+
         {#input[type=checkbox] {
             display:none;
         }
@@ -137,26 +141,26 @@
             $(this).ready(loadPhotographers);
             $('#show_more_photographers').click(loadPhotographers);
 
-            /* função para load dos criterios */
-            var loadCriterias = function () {
-                $('#criterias').fadeIn("slow");
-                $("#criterias").html("<div class='sk-spinner sk-spinner-three-bounce'><div class='sk-bounce1'></div><div class='sk-bounce2'></div><div class='sk-bounce3'></div></div>");
-
-                setTimeout(function () {
-                    $.ajax({
-                        type: "get",
-                        url: "{{path("ajax_criterias")}}",
-                        data: 'slug=' + "{{ species.name }}",
-                        dataType: "text",
-                        success: function (response) {
-                            $("#criterias").html(response);
-                        }
-                    });
-                }, 100);
-            };
-            $(this).ready(loadCriterias);
-
         });
+
+        /* função para load dos criterios */
+        var loadCriterias = function () {
+            $('#criterias').fadeIn("slow");
+            $("#criterias").html("<div class='sk-spinner sk-spinner-three-bounce'><div class='sk-bounce1'></div><div class='sk-bounce2'></div><div class='sk-bounce3'></div></div>");
+
+            setTimeout(function () {
+                $.ajax({
+                    type: "get",
+                    url: "{{path("ajax_criterias")}}",
+                    data: 'slug=' + "{{ species.name }}",
+                    dataType: "text",
+                    success: function (response) {
+                        $("#criterias").html(response);
+                    }
+                });
+            }, 100);
+        };
+        $(this).ready(loadCriterias);
 
         /* funçao de load de todos os fotografos */
         var speciesId = 'species_id= {{ species.id }}';
@@ -178,6 +182,18 @@
 
         /* outras funçoes */
         $(function () {
+
+            $('.variable-width').slick({
+                dots: true,
+                infinite: true,
+                speed: 300,
+                slidesToShow: 3,
+                centerMode: true,
+                variableWidth: true
+            });
+
+            $('.variable-width').show();
+
             $('.footable-spots').footable();
 
             $("#loading").html("<div class='sk-spinner sk-spinner-three-bounce'><div class='sk-bounce1'></div><div class='sk-bounce2'></div><div class='sk-bounce3'></div></div>");
@@ -283,8 +299,7 @@
                                     {% if loop.index == 1 %}
                                         <div>
                                             <a href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
-                                                <img  alt="{{photo.species}}" style="max-height: 560px; max-width: 560px;" src="{{ photo.getWebPath | imagine_filter('sk_upscale_800_600') }}" />
-                                                {#<img  alt="{{photo.species}}" style="max-height: 560px!important; max-width: 560px!important;" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />#}
+                                                <img  alt="{{photo.species}}" style="max-height: 560px; max-width: 560px;" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />
                                             </a>
                                         </div>
                                     {% endif %}
@@ -345,7 +360,7 @@
                                 <div class="slider_similar">
                                     {% for similarPhoto in similarSpecies %}
                                         <a class="thumbnail" href="{{ path('species',  { 'slug': similarPhoto.species.name }) }}">
-                                            <img alt="{{ similarPhoto.species }}" class="img-responsive back" src="{{ similarPhoto.getWebPath| imagine_filter('sk_widen_400') }}">
+                                            <img alt="{{ similarPhoto.species }}" style="height: 100px" class="img-responsive back" src="{{ similarPhoto.getWebPath| imagine_filter('sk_widen_400') }}">
                                             <div class="text-center"> {{ similarPhoto.species }} </div>
                                         </a>
                                     {% endfor %}
@@ -354,6 +369,39 @@
                         </div>
                     </div> 
                 </div>
+                <!-- outras especies similares end -->
+
+                <!-- outras especies similares start -->
+                <h2 style="margin-left: 15px">{{ "page.species.h2.similar_species"|trans }}</h2>
+                <div class="row">
+                    <div class="col-lg-10 col-lg-offset-1">
+                        <div class="slider_similar" align="center">
+                            {% for similarPhoto in similarSpecies %}
+                                <a class="thumbnail" href="{{ path('species',  { 'slug': similarPhoto.species.name }) }}">
+                                    <img alt="{{ similarPhoto.species }}" style="height: 100px" class="img-responsive back" src="{{ similarPhoto.getWebPath| imagine_filter('sk_widen_400') }}">
+                                    <div class="text-center"> {{ similarPhoto.species }} </div>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <h2 style="margin-left: 15px">{{ "page.species.h2.similar_species"|trans }}</h2>
+                <div class="row">
+                    <div class="col-lg-10 col-lg-offset-1">
+                        <div class="slider variable-width" align="center">
+                            {% for p in similarSpecies %}
+                                <div>
+                                    <a href="{{ path('photo_no_slug',  { 'id': p.id }) }}" title="{{ p.title }}">
+                                        <img style="margin: 5px; width: auto; height: 100px; " alt="{{ p.title }}" src="{{ p.getWebPath | imagine_filter('sk_widen_400') }}" />
+                                        <div class="text-center"> {{ p.species }} </div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
                 <!-- outras especies similares end -->
 
                 <!-- Tabs -->

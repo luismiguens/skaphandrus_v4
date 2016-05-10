@@ -345,6 +345,7 @@ liip_imagine:
         sk_upscale_800_600:
             filters:
                 upscale: { min: [800, 600] }
+                thumbnail: { size: [800, 600], mode: outbound }
                 
         #for photo page
         sk_downscale_800_600:
