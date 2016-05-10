@@ -116,6 +116,7 @@
             var limit_photographers = 3;
             var offset_photographers = -3;
 
+            /* funçao de load para mais fotografos */
             var loadPhotographers = function () {
                 $('#box_photographers').fadeIn("slow");
                 offset_photographers = offset_photographers + 3;
@@ -136,6 +137,7 @@
             $(this).ready(loadPhotographers);
             $('#show_more_photographers').click(loadPhotographers);
 
+            /* função para load dos criterios */
             var loadCriterias = function () {
                 $('#criterias').fadeIn("slow");
                 $("#criterias").html("<div class='sk-spinner sk-spinner-three-bounce'><div class='sk-bounce1'></div><div class='sk-bounce2'></div><div class='sk-bounce3'></div></div>");
@@ -155,6 +157,8 @@
             $(this).ready(loadCriterias);
 
         });
+
+        /* funçao de load de todos os fotografos */
         var speciesId = 'species_id= {{ species.id }}';
         var loadPhotographersAll = function () {
             setTimeout(function () {
@@ -172,6 +176,7 @@
         $(this).ready(loadPhotographersAll);
         $('#photographersModal').on('shown.bs.modal', loadPhotographersAll);
 
+        /* outras funçoes */
         $(function () {
             $('.footable-spots').footable();
 
