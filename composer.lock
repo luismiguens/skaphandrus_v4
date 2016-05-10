@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7fe51fa20beb359da023b03f46288f8e",
+    "hash": "3907ad9e01e0cfad05f7c0a24cf34529",
     "packages": [
         {
             "name": "a2lix/translation-form-bundle",
@@ -123,7 +123,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BeSimple/BeSimpleI18nRoutingBundle/zipball/093fbd4efcbaec07a8b9fec19577b81038a504c2",
+                "url": "https://api.github.com/repos/BeSimple/BeSimpleI18nRoutingBundle/zipball/1b212198c3b6fa70f18c6cdcf034d75df2ec9a28",
                 "reference": "093fbd4efcbaec07a8b9fec19577b81038a504c2",
                 "shasum": ""
             },
@@ -1628,7 +1628,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/d5b28c367d393f9d9fbc48c4138b2a74d51c0c83",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/c85b5d9e48c0f2918ac6161e268d6f981a24c875",
                 "reference": "d5b28c367d393f9d9fbc48c4138b2a74d51c0c83",
                 "shasum": ""
             },
@@ -2241,7 +2241,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/DoctrineBehaviors/zipball/a2a3b5aefd77eed6ca38231f2b3ace9640306137",
+                "url": "https://api.github.com/repos/KnpLabs/DoctrineBehaviors/zipball/9314801e018d0363a36565b49cc1f1faf5f399b1",
                 "reference": "a2a3b5aefd77eed6ca38231f2b3ace9640306137",
                 "shasum": ""
             },
@@ -2687,59 +2687,58 @@
         },
         {
             "name": "liip/imagine-bundle",
-            "version": "1.3.1",
-            "target-dir": "Liip/ImagineBundle",
+            "version": "1.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipImagineBundle.git",
-                "reference": "91ed657efca36693c6d5ab02c5cc2f7cd9bd3ee9"
+                "reference": "b657b6601a24da525645fb5358ce77fdf57889f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/91ed657efca36693c6d5ab02c5cc2f7cd9bd3ee9",
-                "reference": "91ed657efca36693c6d5ab02c5cc2f7cd9bd3ee9",
+                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/b657b6601a24da525645fb5358ce77fdf57889f1",
+                "reference": "b657b6601a24da525645fb5358ce77fdf57889f1",
                 "shasum": ""
             },
             "require": {
                 "imagine/imagine": "~0.5,<0.7",
-                "php": ">=5.3.2",
-                "symfony/filesystem": "~2.3 || ~3.0",
-                "symfony/finder": "~2.3 || ~3.0",
-                "symfony/framework-bundle": "~2.3 || ~3.0",
-                "symfony/options-resolver": "~2.3 || ~3.0"
+                "php": "^5.3.9|^7.0",
+                "symfony/filesystem": "~2.3|~3.0",
+                "symfony/finder": "~2.3|~3.0",
+                "symfony/framework-bundle": "~2.3|~3.0",
+                "symfony/options-resolver": "~2.3|~3.0"
             },
             "require-dev": {
                 "amazonwebservices/aws-sdk-for-php": "~1.0",
                 "aws/aws-sdk-php": "~2.4",
                 "doctrine/cache": "~1.1",
-                "doctrine/mongodb-odm": "1.0.*",
                 "doctrine/orm": "~2.3",
                 "ext-gd": "*",
                 "phpunit/phpunit": "~4.3",
                 "psr/log": "~1.0",
-                "symfony/browser-kit": "~2.3 || ~3.0",
-                "symfony/console": "~2.3 || ~3.0",
-                "symfony/form": "~2.3 || ~3.0",
-                "symfony/phpunit-bridge": "~2.3 || ~3.0",
-                "symfony/yaml": "~2.3 || ~3.0",
+                "symfony/browser-kit": "~2.3|~3.0",
+                "symfony/console": "~2.3|~3.0",
+                "symfony/dependency-injection": "~2.3|~3.0",
+                "symfony/form": "~2.3|~3.0",
+                "symfony/phpunit-bridge": "~2.3|~3.0",
+                "symfony/yaml": "~2.3|~3.0",
                 "twig/twig": "~1.12"
             },
             "suggest": {
                 "amazonwebservices/aws-sdk-for-php": "Add it if you'd like to use aws v1 resolver",
                 "aws/aws-sdk-php": "Add it if you'd like to use aws v2 or v3 resolver",
+                "league/flysystem": "If you'd want to use Flysystem binary loader",
                 "monolog/monolog": "If you'd want to write logs",
                 "twig/twig": "If you'd want to use some handy twig filters, version 1.12 or greater required"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev",
-                    "dev-0.x": "0.x-dev"
+                    "dev-master": "1.0.x-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Liip\\ImagineBundle": ""
+                "psr-4": {
+                    "Liip\\ImagineBundle\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2758,7 +2757,7 @@
                 "image",
                 "imagine"
             ],
-            "time": "2015-08-27 11:27:33"
+            "time": "2016-05-06 06:27:38"
         },
         {
             "name": "midgard/createphp",
@@ -3920,12 +3919,12 @@
             "version": "1.2.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony-cmf/BlockBundle.git",
+                "url": "https://github.com/symfony-cmf/block-bundle.git",
                 "reference": "f0e6a935a4fb3e6ce71b2acf987d732854946388"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony-cmf/BlockBundle/zipball/f0e6a935a4fb3e6ce71b2acf987d732854946388",
+                "url": "https://api.github.com/repos/symfony-cmf/block-bundle/zipball/f0e6a935a4fb3e6ce71b2acf987d732854946388",
                 "reference": "f0e6a935a4fb3e6ce71b2acf987d732854946388",
                 "shasum": ""
             },
@@ -3988,12 +3987,12 @@
             "version": "1.2.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony-cmf/ContentBundle.git",
+                "url": "https://github.com/symfony-cmf/content-bundle.git",
                 "reference": "d01c3d31d6d2861a08042ce4917eb323f5803e24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony-cmf/ContentBundle/zipball/d01c3d31d6d2861a08042ce4917eb323f5803e24",
+                "url": "https://api.github.com/repos/symfony-cmf/content-bundle/zipball/d01c3d31d6d2861a08042ce4917eb323f5803e24",
                 "reference": "d01c3d31d6d2861a08042ce4917eb323f5803e24",
                 "shasum": ""
             },
@@ -4052,12 +4051,12 @@
             "version": "1.2.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony-cmf/CoreBundle.git",
+                "url": "https://github.com/symfony-cmf/core-bundle.git",
                 "reference": "496e5f39c99afe41ab93f008586bdb8c3082ef82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony-cmf/CoreBundle/zipball/496e5f39c99afe41ab93f008586bdb8c3082ef82",
+                "url": "https://api.github.com/repos/symfony-cmf/core-bundle/zipball/496e5f39c99afe41ab93f008586bdb8c3082ef82",
                 "reference": "496e5f39c99afe41ab93f008586bdb8c3082ef82",
                 "shasum": ""
             },
@@ -4169,12 +4168,12 @@
             "version": "1.2.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony-cmf/MediaBundle.git",
+                "url": "https://github.com/symfony-cmf/media-bundle.git",
                 "reference": "49c7c0a3f1cb5aaabef7c5bac196b71b3b8fe282"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony-cmf/MediaBundle/zipball/49c7c0a3f1cb5aaabef7c5bac196b71b3b8fe282",
+                "url": "https://api.github.com/repos/symfony-cmf/media-bundle/zipball/49c7c0a3f1cb5aaabef7c5bac196b71b3b8fe282",
                 "reference": "49c7c0a3f1cb5aaabef7c5bac196b71b3b8fe282",
                 "shasum": ""
             },
@@ -4231,12 +4230,12 @@
             "version": "1.2.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony-cmf/MenuBundle.git",
+                "url": "https://github.com/symfony-cmf/menu-bundle.git",
                 "reference": "1c57dc945d977c92d3a7ade05cde73faa542cc86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony-cmf/MenuBundle/zipball/1c57dc945d977c92d3a7ade05cde73faa542cc86",
+                "url": "https://api.github.com/repos/symfony-cmf/menu-bundle/zipball/1c57dc945d977c92d3a7ade05cde73faa542cc86",
                 "reference": "1c57dc945d977c92d3a7ade05cde73faa542cc86",
                 "shasum": ""
             },
@@ -4349,12 +4348,12 @@
             "version": "1.3.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony-cmf/RoutingBundle.git",
+                "url": "https://github.com/symfony-cmf/routing-bundle.git",
                 "reference": "c4950dda9c4f60d2186d24bf7c7e1b4c05f5daf6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony-cmf/RoutingBundle/zipball/c4950dda9c4f60d2186d24bf7c7e1b4c05f5daf6",
+                "url": "https://api.github.com/repos/symfony-cmf/routing-bundle/zipball/c4950dda9c4f60d2186d24bf7c7e1b4c05f5daf6",
                 "reference": "c4950dda9c4f60d2186d24bf7c7e1b4c05f5daf6",
                 "shasum": ""
             },
@@ -4415,12 +4414,12 @@
             "version": "1.2.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony-cmf/SimpleCmsBundle.git",
+                "url": "https://github.com/symfony-cmf/simple-cms-bundle.git",
                 "reference": "a45ce134d5932e2377437f8d2cf20077c1aaed40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony-cmf/SimpleCmsBundle/zipball/a45ce134d5932e2377437f8d2cf20077c1aaed40",
+                "url": "https://api.github.com/repos/symfony-cmf/simple-cms-bundle/zipball/a45ce134d5932e2377437f8d2cf20077c1aaed40",
                 "reference": "a45ce134d5932e2377437f8d2cf20077c1aaed40",
                 "shasum": ""
             },

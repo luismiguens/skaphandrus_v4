@@ -196,8 +196,8 @@ function slider_similar(selector) {
             {
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: 5,
-                    slidesToScroll: 5,
+                    slidesToShow: 4,
+                    slidesToScroll: 4,
                     infinite: true,
                     autoplay: true,
                     autoplaySpeed: 2000,
@@ -217,6 +217,7 @@ function slider_similar(selector) {
     });
 
 }
+
 
 
 function slider_concurso(selector) {

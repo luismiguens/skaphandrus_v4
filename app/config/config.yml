@@ -256,6 +256,15 @@ liip_imagine:
             filters:
                 thumbnail: { size: [120, 90], mode: outbound }
                 
+                
+        sk_downscale_max_800_600:
+            filters:    
+                downscale: { max: [800, 600] }
+        
+        sk_downscale_max_600_600:
+            filters:    
+                downscale: { max: [600, 600] }
+                
         sk_widen_50:
             filters:
                 relative_resize: { widen: 50 } 
@@ -342,10 +351,13 @@ liip_imagine:
         sk_thumbnail_outbound_198_100:
             filters:
                 thumbnail: { size: [198, 100], mode: outbound }
-        sk_upscale_800_600:
-            filters:
+       
+        
+        sk_upscale_min_800_600:
+            filters:    
                 upscale: { min: [800, 600] }
-                thumbnail: { size: [800, 600], mode: outbound }
+
+
                 
         #for photo page
         sk_downscale_800_600:

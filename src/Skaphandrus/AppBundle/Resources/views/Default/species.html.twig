@@ -76,27 +76,6 @@
         .grid-item {
             display: none;
         }
-
-        .variable-width {
-            display: none;
-        }
-
-        {#input[type=checkbox] {
-            display:none;
-        }
-        input[type=checkbox] + label
-        {
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: 80%;
-            background-color: white;
-            height: 104px;
-            width: 104px;
-            display:inline-block;
-            padding: 0 0 0 0px;
-            margin-bottom: 0px;
-            font-weight: normal;
-        }#}
     </style>
 {% endblock %}
 
@@ -182,17 +161,6 @@
 
         /* outras funçoes */
         $(function () {
-
-            $('.variable-width').slick({
-                dots: true,
-                infinite: true,
-                speed: 300,
-                slidesToShow: 3,
-                centerMode: true,
-                variableWidth: true
-            });
-
-            $('.variable-width').show();
 
             $('.footable-spots').footable();
 
@@ -299,7 +267,7 @@
                                     {% if loop.index == 1 %}
                                         <div>
                                             <a href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
-                                                <img  alt="{{photo.species}}" style="max-height: 560px; max-width: 560px;" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />
+                                                <img  alt="{{photo.species}}" style="max-height: 560px; max-width: 560px;" src="{{ photo.getWebPath | imagine_filter('sk_downscale_max_600_600') }}" />
                                             </a>
                                         </div>
                                     {% endif %}
@@ -349,14 +317,18 @@
 
 
                 <!-- outras especies similares start -->
-                <div class="ibox" >
+{#                <div class="ibox" >
                     <div class="ibox-title" >
                         <h2>{{ "page.species.h2.similar_species"|trans }}</h2>	
                     </div>
                     <div class="ibox-content" >
 
                         <div class="row">
-                            <div class="col-lg-10 col-lg-offset-1">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                
+                                
+                                <h2>{{ "page.species.h2.similar_species"|trans }}</h2>
+                                
                                 <div class="slider_similar">
                                     {% for similarPhoto in similarSpecies %}
                                         <a class="thumbnail" href="{{ path('species',  { 'slug': similarPhoto.species.name }) }}">
@@ -368,13 +340,13 @@
                             </div>
                         </div>
                     </div> 
-                </div>
+                </div>#}
                 <!-- outras especies similares end -->
 
                 <!-- outras especies similares start -->
                 <h2 style="margin-left: 15px">{{ "page.species.h2.similar_species"|trans }}</h2>
                 <div class="row">
-                    <div class="col-lg-10 col-lg-offset-1">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="slider_similar" align="center">
                             {% for similarPhoto in similarSpecies %}
                                 <a class="thumbnail" href="{{ path('species',  { 'slug': similarPhoto.species.name }) }}">
@@ -385,23 +357,6 @@
                         </div>
                     </div>
                 </div>
-
-                <h2 style="margin-left: 15px">{{ "page.species.h2.similar_species"|trans }}</h2>
-                <div class="row">
-                    <div class="col-lg-10 col-lg-offset-1">
-                        <div class="slider variable-width" align="center">
-                            {% for p in similarSpecies %}
-                                <div>
-                                    <a href="{{ path('photo_no_slug',  { 'id': p.id }) }}" title="{{ p.title }}">
-                                        <img style="margin: 5px; width: auto; height: 100px; " alt="{{ p.title }}" src="{{ p.getWebPath | imagine_filter('sk_widen_400') }}" />
-                                        <div class="text-center"> {{ p.species }} </div>
-                                    </a>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-
                 <!-- outras especies similares end -->
 
                 <!-- Tabs -->

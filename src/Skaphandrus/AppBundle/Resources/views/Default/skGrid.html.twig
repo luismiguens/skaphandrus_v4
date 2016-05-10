@@ -27,6 +27,8 @@
 
 <style type="text/css">
 
+
+
     /* clear fix */
     .grid:after {
         content: '';
@@ -36,20 +38,26 @@
 
     /* ---- .grid-item ---- */
     .grid-item {
-        border: 2px solid #fff;
-        border-color: white;
-        width: 25%
+        width: 104px;
+        float: left;
+        margin-right: 3px;
+        margin-bottom: 4px;
+    }
+
+    .grid-item img {
+        display: block;
+        width: 100%;
     }
 
 </style>
 
-<div class="grid">
 
+
+<div class="grid">
     <div id="loading"></div>
     <!-- resultset rows --> 
     {% for row in photos %}
         <div class="grid-item">
-
             <span itemscope itemtype="http://schema.org/Photograph">
                 <meta itemprop="name" content="{{ row.photo_title}}" />
                 <meta itemprop="dateCreated" content="{{ row.photo_created_at|date("Y-m-d") }}" />
@@ -58,16 +66,14 @@
                     <meta itemprop="name" content="{{ row.personal_firstname}} {{ row.personal_middlename}} {{ row.personal_lastname}}" />
                     <meta itemprop="url" content="{{ path('user',  { 'id': row.fos_user_id }) }}" />
                 </span>
-
                 <a href="{{ path('photo_no_slug',  { 'id': row.photo_id }) }}" title="{{ row.photo_title }}">
-                    <img style="width: 125px; margin-bottom: 5px!important;" itemprop="image" alt="{{ row.photo_title }}" src="{{ ('uploads/fotografias/'~row.photo_image) | imagine_filter('sk_widen_265') }}" />
+                    <img style="" itemprop="image" alt="{{ row.photo_title }}" src="{{ ('uploads/fotografias/'~row.photo_image) | imagine_filter('sk_widen_265') }}" />
                 </a>
             </span>
-
         </div>
     {% endfor %}
 </div>
 
+
 <div id="space"></div>
 <a style="margin-top: 2%;" class="btn btn-block btn-outline btn-primary" href="{{ path('photos', parameters) }}">{{ "common.grid.see_all"|trans }}</a>
-
