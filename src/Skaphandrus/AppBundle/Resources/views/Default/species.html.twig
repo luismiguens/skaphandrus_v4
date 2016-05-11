@@ -267,8 +267,8 @@
                                     {% if loop.index == 1 %}
                                         <div>
                                             <a href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
-                                                {#<img  alt="{{photo.species}}" style="max-height: 560px; max-width: 560px;" src="{{ photo.getWebPath | imagine_filter('sk_downscale_max_600_600') }}" />#}
-                                                <img  alt="{{photo.species}}" style="max-height: 560px; max-width: 560px;" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />
+                                                <img  alt="{{photo.species}}" style="max-height: 560px; max-width: 560px;" src="{{ photo.getWebPath | imagine_filter('sk_downscale_max_600_600') }}" />
+                                                {#<img  alt="{{photo.species}}" style="max-height: 560px; max-width: 560px;" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />#}
                                             </a>
                                         </div>
                                     {% endif %}
