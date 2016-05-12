@@ -22,7 +22,7 @@ class AjaxController extends Controller {
 
     public function criteriasForSpeciesAction(Request $request) {
         $criterias = array();
-        
+
         if ($request->query->get('slug')):
             $slug = $request->query->get('slug');
         endif;
@@ -146,6 +146,10 @@ class AjaxController extends Controller {
         elseif ($request->query->get('business_id')):
             $business_id = $request->query->get('business_id');
             $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->findUsersInBusiness($business_id);
+        elseif ($request->query->get('taxon_name')):
+            $taxon_name = $request->query->get('taxon_name');
+            $taxon_id = $request->query->get('taxon_id');
+            $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->findUsersInTaxon(null, $taxon_name, $taxon_id);
         endif;
 
         return $this->render('SkaphandrusAppBundle:Ajax:photographersSeeAll.html.twig', array(

@@ -74,9 +74,9 @@ class SkPhotoRepository extends EntityRepository {
                 join sk_genus as g on g.id = s.genus_id
                 join sk_family as f on f.id = g.family_id
                 join sk_order as o on o.id = f.order_id
-                where o.id = " . $species->getGenus()->getFamily()->getOrder()->getId()."
+                where o.id = " . $species->getGenus()->getFamily()->getOrder()->getId() . "
                 group by ss.name";
-        
+
         $statement = $connection->prepare($sql);
         $statement->execute();
         $array = $statement->fetchAll();
