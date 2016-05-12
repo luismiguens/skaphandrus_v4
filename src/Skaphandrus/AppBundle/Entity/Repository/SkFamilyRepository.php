@@ -12,17 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class SkFamilyRepository extends EntityRepository {
 
-  public function findLikeName($term) {
-    return $this->getEntityManager()->createQuery(
-      "SELECT f
+    public function findLikeName($term) {
+        return $this->getEntityManager()->createQuery(
+                        "SELECT f
       FROM SkaphandrusAppBundle:SkFamily f
       WHERE f.name LIKE :term
       ORDER BY f.name DESC"
-    )->setParameter('term', '%' . $term . '%')->getResult();
-  }
-  
-  
-  public function getSpecies($family_id) {
+                )->setParameter('term', '%' . $term . '%')->getResult();
+    }
+
+    public function getSpecies($family_id) {
         return $this->getEntityManager()
                         ->createQuery(
                                 'SELECT s 
@@ -32,6 +31,5 @@ class SkFamilyRepository extends EntityRepository {
                 WHERE f.id = :family_id'
                         )->setParameter('family_id', $family_id)->getResult();
     }
-  
-  
+
 }

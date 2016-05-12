@@ -316,8 +316,9 @@
 
                 </div>
 
+                                
+<!-- fim imagens dos taxons filhos -->                                
                 <div class="row">
-
                     <div class="ibox">
                         <div class="ibox-title">
                             <h2>Next Taxon Group Photos</h2>
@@ -325,7 +326,31 @@
                         <div class="ibox-content">
                             <ul>
 
-                                {% for group in nextTaxonGroup %}
+                                {% for child in taxon.getChildNodes %}
+                                    
+                                    
+                                    {{child.name}}
+                                    
+                                      {% for photo in child.photos %}
+                                    
+                                    
+                                    {{photo}}
+                                    
+                                    
+                                    
+                                    
+                                    {% endfor %}
+                                    
+                                    
+                                    {% endfor %}
+                                    
+                                
+                                
+                                
+                                
+                                
+                                
+                                {#{% for group in nextTaxonGroup %}
 
                                     {% if taxon.taxonNodeName == 'genus' %}
                                         {% if group.photos|length > 0 %}
@@ -368,11 +393,16 @@
                                         </li>
                                     {% endif %}
 
-                                {% endfor %}
+                                {% endfor %}#}
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div><!-- fim imagens dos taxons filhos -->
+                            
+                            
+                            
+                            
+                            
 
             </div><!-- end container-->
         </div><!-- end row-->

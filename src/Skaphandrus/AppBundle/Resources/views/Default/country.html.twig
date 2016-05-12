@@ -274,13 +274,52 @@
                             {% endif %}
                         </div>
                     </div>
+                </div><!-- fim da row com informações-->
+
+
+                <!-- row com a tree de locations -->
+                <div class="row">
+                    <div class="col col-lg-12">
+                        <div class="ibox">
+
+                            <div class="ibox-title">
+                                <h3>{% trans with {'%country%': country} %}page.country.h3.tree_locations{% endtrans %}</h3>
+                            </div>
+
+                            <div class="ibox-content">
+                                <ul>
+                                    {% for region in country.regions %}
+                                        <li>
+                                            {{region.name}}
+                                            <ul>
+                                                {% for location in region.locations %}
+                                                    
+                                                    {% if location.spots|length > 0 %}
+                                                    
+                                                    <li>
+                                                        {{location.name}}
+                                                    </li>
+                                                    
+                                                    {% endif%}
+                                                {% endfor%}
+                                            </ul>
+                                        </li>
+                                    {% endfor%}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                                <!-- fim da tree de locations -->
+
+
+
 
                 <!--  Mapa de spots start -->
-                <div class="row" style ="margin-top: 2%" >
+                <div class="row" >
                     <div class="col col-lg-12">
                         <div class="ibox-title" >
-                            <h3>{% trans with {'%country%': country} %}page.country.h3.locations{% endtrans %}</h3>
+                            <h3>{% trans with {'%country%': country} %}page.country.h3.photo_locations{% endtrans %}</h3>
                         </div>
                         <div class="row" >
                             <div class="col col-lg-12" >

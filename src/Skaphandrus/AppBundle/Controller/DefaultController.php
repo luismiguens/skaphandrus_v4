@@ -276,6 +276,10 @@ class DefaultController extends Controller {
     public function taxonAction($node, $slug) {
 
         $node = lcfirst($node);
+        $em = $this->getDoctrine()->getManager();
+        
+        
+        
 
         switch ($node) {
             case 'género':
@@ -306,9 +310,17 @@ class DefaultController extends Controller {
 
         $taxon = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:Sk" . $taxon_name)
                 ->findOneBy(array('name' => $slug));
+        
+        
+        
+        
+        
+        
         if ($taxon) {
-            $structure = Utils::taxonomyStructure();
 
+            $structure = Utils::taxonomyStructure();
+            
+            //next taxon é o nome dos nós filhos, ou seja se estamos numa familia = generos(genus)
             $next_taxon = "";
             if (array_key_exists($node, $structure)) {
                 $next_taxon = $structure[$node]['next'];
@@ -316,71 +328,99 @@ class DefaultController extends Controller {
                 $next_taxon = 'phylum';
             }
 
-            $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
-                    ->findUsersInTaxon($next_taxon, $taxon->getTaxonNodeName(), $taxon->getId());
-
-            $em = $this->getDoctrine()->getManager();
-
-            if ($taxon->getTaxonNodeName() == 'genus') {
-                $nextTaxonGroup = $em->createQuery(
-                                'SELECT s 
-                        FROM SkaphandrusAppBundle:SkSpecies s 
-                        WHERE s.genus = ?1'
-                        )->setParameter(1, $taxon->getId())->getResult();
-
-//                select s.*, p.* from sk_species as s
-//                join sk_photo as p on p.species_id = s.id
-//                where s.genus_id = 723
-            } elseif ($taxon->getTaxonNodeName() == 'family') {
-                $nextTaxonGroup = $em->createQuery(
-                                'SELECT g 
-                        FROM SkaphandrusAppBundle:SkGenus g
-                        WHERE g.family = ?1'
-                        )->setParameter(1, $taxon->getId())->getResult();
-
-//                select g.*, p.* from sk_genus as g
-//                join sk_species as s on s.genus_id = g.id
-//                join sk_photo as p on p.species_id = s.id
-//                where g.family_id = 426
-            } elseif ($taxon->getTaxonNodeName() == 'order') {
-                $nextTaxonGroup = null;
-
-//                select f.*, p.* from sk_family as f
-//                join sk_genus as g on g.family_id = f.id
-//                join sk_species as s on s.genus_id = g.id
-//                join sk_photo as p on p.species_id = s.id
-//                where f.order_id = 111
-            } elseif ($taxon->getTaxonNodeName() == 'class') {
-                $nextTaxonGroup = null;
-
-//                select o.*, p.* from sk_order as o
-//                join sk_family as f on f.order_id = o.id
-//                join sk_genus as g on g.family_id = f.id
-//                join sk_species as s on s.genus_id = g.id
-//                join sk_photo as p on p.species_id = s.id
-//                where o.class_id = 30
-            } elseif ($taxon->getTaxonNodeName() == 'phylum') {
-                $nextTaxonGroup = null;
-
-//                select c.*, p.* from sk_class as c
-//                join sk_order as o on o.class_id = c.id
-//                join sk_family as f on f.order_id = o.id
-//                join sk_genus as g on g.family_id = f.id
-//                join sk_species as s on s.genus_id = g.id
-//                join sk_photo as p on p.species_id = s.id
-//                where c.phylum_id = 10
-            } elseif ($taxon->getTaxonNodeName() == 'kingdom') {
-                $nextTaxonGroup = null;
-
-//                select ph.*, p.* from sk_phylum as ph
-//                join sk_class as c on c.phylum_id = ph.id
-//                join sk_order as o on o.class_id = c.id
-//                join sk_family as f on f.order_id = o.id
-//                join sk_genus as g on g.family_id = f.id
-//                join sk_species as s on s.genus_id = g.id
-//                join sk_photo as p on p.species_id = s.id
-//                where ph.kingdom_id = 1
+            
+            //$child = new \Skaphandrus\AppBundle\Entity\SkFamily();
+            
+            foreach ($taxon->getChildNodes() as $child) {
+                
+                $photos = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkPhoto")
+                ->getQueryBuilder4(array($child->getTaxonNodeName() => $child->getId()), 10)->getQuery()->getResult();
+                
+                
+                dump($photos);
+                
+                
+                $child->setPhotos($photos);
             }
+            
+            
+            
+            
+            
+            
+//            $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')
+//                    ->findUsersInTaxon($next_taxon, $taxon->getTaxonNodeName(), $taxon->getId());
+
+        
+            
+            
+            
+            
+            
+            
+            
+            
+
+//            if ($taxon->getTaxonNodeName() == 'genus') {
+//                $nextTaxonGroup = $em->createQuery(
+//                                'SELECT s 
+//                        FROM SkaphandrusAppBundle:SkSpecies s 
+//                        WHERE s.genus = ?1'
+//                        )->setParameter(1, $taxon->getId())->getResult();
+//
+////                select s.*, p.* from sk_species as s
+////                join sk_photo as p on p.species_id = s.id
+////                where s.genus_id = 723
+//            } elseif ($taxon->getTaxonNodeName() == 'family') {
+//                $nextTaxonGroup = $em->createQuery(
+//                                'SELECT g 
+//                        FROM SkaphandrusAppBundle:SkGenus g
+//                        WHERE g.family = ?1'
+//                        )->setParameter(1, $taxon->getId())->getResult();
+//
+////                select g.*, p.* from sk_genus as g
+////                join sk_species as s on s.genus_id = g.id
+////                join sk_photo as p on p.species_id = s.id
+////                where g.family_id = 426
+//            } elseif ($taxon->getTaxonNodeName() == 'order') {
+//                $nextTaxonGroup = null;
+//
+////                select f.*, p.* from sk_family as f
+////                join sk_genus as g on g.family_id = f.id
+////                join sk_species as s on s.genus_id = g.id
+////                join sk_photo as p on p.species_id = s.id
+////                where f.order_id = 111
+//            } elseif ($taxon->getTaxonNodeName() == 'class') {
+//                $nextTaxonGroup = null;
+//
+////                select o.*, p.* from sk_order as o
+////                join sk_family as f on f.order_id = o.id
+////                join sk_genus as g on g.family_id = f.id
+////                join sk_species as s on s.genus_id = g.id
+////                join sk_photo as p on p.species_id = s.id
+////                where o.class_id = 30
+//            } elseif ($taxon->getTaxonNodeName() == 'phylum') {
+//                $nextTaxonGroup = null;
+//
+////                select c.*, p.* from sk_class as c
+////                join sk_order as o on o.class_id = c.id
+////                join sk_family as f on f.order_id = o.id
+////                join sk_genus as g on g.family_id = f.id
+////                join sk_species as s on s.genus_id = g.id
+////                join sk_photo as p on p.species_id = s.id
+////                where c.phylum_id = 10
+//            } elseif ($taxon->getTaxonNodeName() == 'kingdom') {
+//                $nextTaxonGroup = null;
+//
+////                select ph.*, p.* from sk_phylum as ph
+////                join sk_class as c on c.phylum_id = ph.id
+////                join sk_order as o on o.class_id = c.id
+////                join sk_family as f on f.order_id = o.id
+////                join sk_genus as g on g.family_id = f.id
+////                join sk_species as s on s.genus_id = g.id
+////                join sk_photo as p on p.species_id = s.id
+////                where ph.kingdom_id = 1
+//            }
 
 
 //            $photographers = array();
@@ -396,9 +436,9 @@ class DefaultController extends Controller {
             return $this->render('SkaphandrusAppBundle:Default:taxon.html.twig', array(
                         "node" => $node,
                         "taxon" => $taxon,
-                        "nextTaxonGroup" => $nextTaxonGroup,
-                        "next_taxon" => $next_taxon,
-                        "photographers" => $photographers
+//                        "nextTaxonGroup" => $nextTaxonGroup,
+                        "next_taxon" => $next_taxon
+//                        "photographers" => $photographers
             ));
         } else {
             throw $this->createNotFoundException('The ' . $taxon_name . ' "' . $slug . '" does not exist.');

@@ -37,6 +37,14 @@ class SkGenus {
      */
     private $species;
 
+    
+       /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $photos;
+
+    
+    
     /**
      * Constructor
      */
@@ -191,6 +199,44 @@ class SkGenus {
         $this->species->removeElement($species);
     }
 
+    
+    
+           /**
+     * Set photos
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhoto $photos
+     *
+     * @return SkFamily
+     */
+    public function setPhotos($photos) {
+        $this->photos = $photos;
+
+        return $this;
+    }
+
+    /**
+     * Remove photos
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhoto $photos
+     */
+    public function removePhotos(\Skaphandrus\AppBundle\Entity\SkPhoto $photos) {
+        $this->photos->removeElement($photos);
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotos() {
+        return $this->photos;
+    }
+    
+    
+    
+    
+    
+    
     /**
      * Get species
      *

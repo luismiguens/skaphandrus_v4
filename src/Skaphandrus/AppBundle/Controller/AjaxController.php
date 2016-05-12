@@ -507,43 +507,34 @@ class AjaxController extends Controller {
             $common_name = $request->request->get('common_name');
         endif;
 
-        $result = null;
+
 
         $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
         $qb->select('s')->from('SkaphandrusAppBundle:SkSpot', 's');
+        $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
+        $qb->join('l.region', 'r', 'WITH', 'l.region = r.id');
+        $qb->join('r.country', 'c', 'WITH', 'r.country = c.id');
+
 
         //spots, locations and countries
         if ($spot_name) {
             $qb->join('s.translations', 'st');
-            $qb->where('st.name LIKE ?1');
+            $qb->andWhere('st.name LIKE ?1');
             $qb->setParameter(1, "%" . $spot_name . "%");
-
-            $query = $qb->getQuery();
-            $result = $query->getResult();
         }
 
         if ($location_name) {
-            $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
             $qb->join('l.translations', 'lt');
             $qb->andWhere('lt.name LIKE ?2');
             $qb->setParameter(2, "%" . $location_name . "%");
-
-            $query = $qb->getQuery();
-            $result = $query->getResult();
         }
 
         if ($country_name) {
             $country_ids = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')->findCountryDestinations($country_name, $locale);
-
-            $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
-            $qb->join('l.region', 'r', 'WITH', 'l.region = r.id');
-            $qb->join('r.country', 'c', 'WITH', 'r.country = c.id');
             $qb->andWhere('c.id IN( ?3 )');
             $qb->setParameter(3, implode(', ', $country_ids));
-
-            $query = $qb->getQuery();
-            $result = $query->getResult();
         }
+
 
         //species scientific name
         if ($scientific_name) {
@@ -552,9 +543,6 @@ class AjaxController extends Controller {
             $qb->join('sp.scientific_names', 'sn', 'WITH', 'sn.species = sp.id');
             $qb->andWhere('sn.name LIKE ?4');
             $qb->setParameter(4, "%" . $scientific_name . "%");
-
-            $query = $qb->getQuery();
-            $result = $query->getResult();
         }
 
         //species common name
@@ -565,10 +553,11 @@ class AjaxController extends Controller {
             $qb->join('sv.vernacular', 'v', 'WITH', 'sv.vernacular = v.id');
             $qb->andWhere('v.name LIKE ?5');
             $qb->setParameter(5, "%" . $common_name . "%");
-
-            $query = $qb->getQuery();
-            $result = $query->getResult();
         }
+
+        $query = $qb->getQuery();
+        $result = $query->getResult();
+
 
         //mapa em branco
         $map = $this->get('ivory_google_map.map');
@@ -592,7 +581,10 @@ class AjaxController extends Controller {
 
                 //dump($s->getCoordinate());
                 if ($s->getCoordinate()) {
-                    $marker = new Marker();
+                    
+                    
+                    try{
+                        $marker = new Marker();
 
                     //remove white spaces
                     $latitude = preg_replace('/\s+/', '', explode(",", $s->getCoordinate())[0]);
@@ -613,7 +605,10 @@ class AjaxController extends Controller {
                     // Marker options
                     $marker->setInfoWindow($infowindow);
                     $marker->setPrefixJavascriptVariable('marker_');
+                    
+                    
                     $marker->setPosition($latitude, $longitude, true);
+                    
                     $marker->setAnimation(Animation::DROP);
                     $marker->setOption('clickable', true);
                     $marker->setOption('flat', true);
@@ -623,6 +618,12 @@ class AjaxController extends Controller {
                     ));
 
                     $markers[] = $marker;
+                    } catch (\Ivory\GoogleMap\Exception\OverlayException $ex) {
+                        //erro coordenada mal ex: 37.0"a"5846492309772, -8.3441162109375
+                    } catch (\Symfony\Component\Routing\Exception\InvalidParameterException $ex) {
+                        //erro da constraução do url (/etc
+                    }
+                    
                 }
             }
 
