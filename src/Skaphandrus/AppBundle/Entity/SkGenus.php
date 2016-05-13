@@ -37,14 +37,11 @@ class SkGenus {
      */
     private $species;
 
-    
-       /**
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $photos;
 
-    
-    
     /**
      * Constructor
      */
@@ -199,9 +196,7 @@ class SkGenus {
         $this->species->removeElement($species);
     }
 
-    
-    
-           /**
+    /**
      * Set photos
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPhoto $photos
@@ -215,15 +210,6 @@ class SkGenus {
     }
 
     /**
-     * Remove photos
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkPhoto $photos
-     */
-    public function removePhotos(\Skaphandrus\AppBundle\Entity\SkPhoto $photos) {
-        $this->photos->removeElement($photos);
-    }
-
-    /**
      * Get photos
      *
      * @return \Doctrine\Common\Collections\Collection
@@ -231,12 +217,7 @@ class SkGenus {
     public function getPhotos() {
         return $this->photos;
     }
-    
-    
-    
-    
-    
-    
+
     /**
      * Get species
      *
@@ -246,23 +227,16 @@ class SkGenus {
         return $this->species;
     }
 
-    
-    
     public function getChildNodes() {
         return $this->getSpecies();
     }
-    
+
     public function getParentNode() {
         return $this->getFamily();
     }
-    
-    
-    
-    
-    public function getTaxonNodeName(){
+
+    public function getTaxonNodeName() {
         return "genus";
-        
     }
-    
 
 }

@@ -40,6 +40,11 @@ class SkPhylum {
     private $class;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $photos;
+
+    /**
      * Constructor
      */
     public function __construct() {
@@ -169,6 +174,28 @@ class SkPhylum {
      */
     public function getVernaculars() {
         return $this->vernaculars;
+    }
+
+    /**
+     * Set photos
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhoto $photos
+     *
+     * @return SkFamily
+     */
+    public function setPhotos($photos) {
+        $this->photos = $photos;
+
+        return $this;
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotos() {
+        return $this->photos;
     }
 
     /**

@@ -347,7 +347,7 @@
                 <!-- outras especies similares start -->
                 <h2 style="margin-left: 15px">{{ "page.species.h2.similar_species"|trans }}</h2>
                 <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-12">
                         <div class="slider_similar" align="center">
                             {% for similarPhoto in similarSpecies %}
                                 <a class="thumbnail" href="{{ path('species',  { 'slug': similarPhoto.species.name }) }}">

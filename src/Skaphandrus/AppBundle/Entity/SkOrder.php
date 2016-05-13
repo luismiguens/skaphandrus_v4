@@ -7,8 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * SkOrder
  */
-class SkOrder
-{
+class SkOrder {
+
     /**
      * @var string
      */
@@ -34,21 +34,20 @@ class SkOrder
      */
     private $vernaculars;
 
-    
-    
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $family;
 
-    
-    
-    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $photos;
+
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->character = new \Doctrine\Common\Collections\ArrayCollection();
         $this->family = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -60,8 +59,7 @@ class SkOrder
      *
      * @return SkOrder
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -72,8 +70,7 @@ class SkOrder
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -82,8 +79,7 @@ class SkOrder
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -94,8 +90,7 @@ class SkOrder
      *
      * @return SkOrder
      */
-    public function setClass(\Skaphandrus\AppBundle\Entity\SkClass $class = null)
-    {
+    public function setClass(\Skaphandrus\AppBundle\Entity\SkClass $class = null) {
         $this->class = $class;
 
         return $this;
@@ -106,8 +101,7 @@ class SkOrder
      *
      * @return \Skaphandrus\AppBundle\Entity\SkClass
      */
-    public function getClass()
-    {
+    public function getClass() {
         return $this->class;
     }
 
@@ -118,8 +112,7 @@ class SkOrder
      *
      * @return SkOrder
      */
-    public function addCharacter(\Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $character)
-    {
+    public function addCharacter(\Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $character) {
         $this->character[] = $character;
 
         return $this;
@@ -130,8 +123,7 @@ class SkOrder
      *
      * @param \Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $character
      */
-    public function removeCharacter(\Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $character)
-    {
+    public function removeCharacter(\Skaphandrus\AppBundle\Entity\SkIdentificationCharacter $character) {
         $this->character->removeElement($character);
     }
 
@@ -140,8 +132,7 @@ class SkOrder
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCharacter()
-    {
+    public function getCharacter() {
         return $this->character;
     }
 
@@ -152,8 +143,7 @@ class SkOrder
      *
      * @return SkOrder
      */
-    public function addVernacular(\Skaphandrus\AppBundle\Entity\SkOrderVernacular $vernacular)
-    {
+    public function addVernacular(\Skaphandrus\AppBundle\Entity\SkOrderVernacular $vernacular) {
         $this->vernaculars[] = $vernacular;
 
         return $this;
@@ -164,8 +154,7 @@ class SkOrder
      *
      * @param \Skaphandrus\AppBundle\Entity\SkOrderVernacular $vernacular
      */
-    public function removeVernacular(\Skaphandrus\AppBundle\Entity\SkOrderVernacular $vernacular)
-    {
+    public function removeVernacular(\Skaphandrus\AppBundle\Entity\SkOrderVernacular $vernacular) {
         $this->vernaculars->removeElement($vernacular);
     }
 
@@ -174,11 +163,31 @@ class SkOrder
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getVernaculars()
-    {
+    public function getVernaculars() {
         return $this->vernaculars;
     }
 
+    /**
+     * Set photos
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhoto $photos
+     *
+     * @return SkFamily
+     */
+    public function setPhotos($photos) {
+        $this->photos = $photos;
+
+        return $this;
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotos() {
+        return $this->photos;
+    }
 
     /**
      * Add family
@@ -187,8 +196,7 @@ class SkOrder
      *
      * @return SkOrder
      */
-    public function addFamily(\Skaphandrus\AppBundle\Entity\SkFamily $family)
-    {
+    public function addFamily(\Skaphandrus\AppBundle\Entity\SkFamily $family) {
         $this->family[] = $family;
 
         return $this;
@@ -199,8 +207,7 @@ class SkOrder
      *
      * @param \Skaphandrus\AppBundle\Entity\SkFamily $family
      */
-    public function removeFamily(\Skaphandrus\AppBundle\Entity\SkFamily $family)
-    {
+    public function removeFamily(\Skaphandrus\AppBundle\Entity\SkFamily $family) {
         $this->family->removeElement($family);
     }
 
@@ -209,31 +216,22 @@ class SkOrder
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getFamily()
-    {
+    public function getFamily() {
         return $this->family;
     }
-    
-    
-        
+
     public function getChildNodes() {
         return $this->getFamily();
     }
-    
-    
-    
-    public function getTaxonNodeName(){
+
+    public function getTaxonNodeName() {
         return "order";
-        
     }
-    
-    
-        public function getParentNode() {
+
+    public function getParentNode() {
         return $this->getClass();
     }
-    
-    
-    
+
     public function getSpecies() {
         $species = array();
 
@@ -244,6 +242,5 @@ class SkOrder
         }
         return new ArrayCollection($species);
     }
-    
-    
+
 }

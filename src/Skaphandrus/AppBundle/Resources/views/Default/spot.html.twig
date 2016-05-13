@@ -37,17 +37,6 @@
     {#<!-- FooTable -->
     <link href="{{ asset('bundles/skaphandrusapp/css/plugins/footable/footable.core.css') }}" rel="stylesheet">#}
 
-    <style type="text/css">
-
-        .in.collapse+a.btn.showdetails:before {
-            content: "{{"common.hide"|trans}}";
-        }
-        .collapse+a.btn.showdetails:before {
-            content:"{{"common.show_more"|trans}}";
-        }
-
-    </style>
-
 {% endblock %}
 
 {% block javascripts %}
@@ -59,13 +48,6 @@
     {#    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>#}
 
     <script type="text/javascript">
-
-        $('.row .showdetails').on('click', function (e) {
-            e.preventDefault();
-            var $this = $(this);
-            var $collapse = $this.closest('.collapse-group').find('.collapse');
-            $collapse.collapse('toggle');
-        });
 
         $(function () {
             var limit_species = 3;
@@ -195,102 +177,99 @@
 
                 <div class="row" >
                     <div class="col col-lg-12" >
-                        <div class="ibox-title" >
-                            <meta itemprop="isicV4" content="96590" />
-                            <h1 itemprop="name">{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h1.title{% endtrans %}</h1>
-                        </div>
-                        <div class="ibox-content" >
-
-                            <h3>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h3.info{% endtrans %}</h3>
-                            <span itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
-                                {% set coordinate = spot.coordinate|split(',') %}
-                                <meta itemprop="latitude" content="{{coordinate[0]}}" />
-                                <meta itemprop="longitude" content="{{coordinate[1]}}" />
-                            </span>
-                            {% if spot.description is not empty %}
-                                <p itemprop="description">{{ spot.description|raw }}</p>
-                            {% else %}
-                                {{ "page.spot.p.no_description"|trans }}
-                            {% endif %}
+                        <div class="ibox" >
+                            <div class="ibox-title" >
+                                <meta itemprop="isicV4" content="96590" />
+                                <h1 itemprop="name">{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h1.title{% endtrans %}</h1>
+                            </div>
+                            <div class="ibox-content" >
+                                <h3>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h3.info{% endtrans %}</h3>
+                                <span itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+                                    {% set coordinate = spot.coordinate|split(',') %}
+                                    <meta itemprop="latitude" content="{{coordinate[0]}}" />
+                                    <meta itemprop="longitude" content="{{coordinate[1]}}" />
+                                </span>
+                                {% if spot.description is not empty %}
+                                    <p itemprop="description">{{ spot.description|raw }}</p>
+                                {% else %}
+                                    {{ "page.spot.p.no_description"|trans }}
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!--  Mapa de spots start -->
-                <div class="row" style ="margin-top: 2%" >
+                <div class="row">
                     <div class="col col-lg-12">
-                        <div class="ibox-title" >
-                            <h3>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h3.spot{% endtrans %}</h3>
-                        </div>
-                        <div class="row" >
-                            <div class="col col-lg-12" >
-                                <div class="ibox" >
+                        <div class="ibox" >
+                            <div class="ibox-title" >
+                                <h3>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h3.spot{% endtrans %}</h3>
+                            </div>
 
-                                    {% if map %}
-                                        {{ google_map(map) }}
-                                    {% endif %}
+                            {% if map %}
+                                {{ google_map(map) }}
+                            {% endif %}
 
-                                    <div class="ibox-content">
-                                        <div class="row">
-                                            <div class="col-sm-4 col-sx-12">
-                                                <div class="contact-box center-version small_version">
-                                                    <div class="box_content">
-                                                        <div class="box_spacer">
-                                                            <h3 class="m-b-xs">
-                                                                <strong>
-                                                                    {{ spot }}
-                                                                </strong>
-                                                            </h3>
-                                                            <div class="font-bold">
-                                                                <span class="label label-primary">
-                                                                    <a style="color: white" href="{{ path('photos', { 'spot': spot.id }) }}">
-                                                                        {{"common.spot.number_photos"|trans}}: {{spot.photosInSpot}}
-                                                                    </a>
-                                                                </span>
-                                                            </div>
-                                                        </div>
+                            <div class="ibox-content">
+                                <div class="row">
+                                    <div class="col-sm-4 col-sx-12">
+                                        <div class="contact-box center-version small_version">
+                                            <div class="box_content">
+                                                <div class="box_spacer">
+                                                    <h3 class="m-b-xs">
+                                                        <strong>
+                                                            {{ spot }}
+                                                        </strong>
+                                                    </h3>
+                                                    <div class="font-bold">
+                                                        <span class="label label-primary">
+                                                            <a style="color: white" href="{{ path('photos', { 'spot': spot.id }) }}">
+                                                                {{"common.spot.number_photos"|trans}}: {{spot.photosInSpot}}
+                                                            </a>
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-8 col-sx-12">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8 col-sx-12">
 
-                                                <div class="row">
-                                                    <div class="col-lg-11">
-                                                        <div class="ibox">
-                                                            <div class="slider_thumbs" data="{{ path('photos', { 'spot': spot.id }) }}">
-                                                                {% if spot.photosInSpot > 6 %}
-                                                                    {% for photo in spot.photos %}
-                                                                        <div>
-                                                                            <a href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
-                                                                                <img class="img-thumbnail" itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('sk_thumbnail_outbound_100') }}" />
-                                                                            </a>
-                                                                        </div>
-                                                                    {% endfor %}
-                                                                {% elseif spot.photosInSpot > 0 and spot.photosInSpot <= 6  %}
-                                                                    {% for photo in spot.photos %}
-                                                                        <div>
-                                                                            <a href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
-                                                                                <img class="img-thumbnail" itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('sk_thumbnail_outbound_100') }}" />
-                                                                            </a>
-                                                                        </div>
-                                                                    {% endfor %}
-                                                                    <div>
-                                                                        <button onclick="location.href = '{{ path('photo_admin_new') }}';" type="button" class="btn btn-block btn-primary">
-                                                                            {{ "common.grid.add_photo"|trans }}
-                                                                        </button>
-                                                                    </div>
-                                                                {% else %}
-                                                                    <div>
-                                                                        {{"common.location.no_photos"|trans}}
-                                                                    </div>
-                                                                    <div>
-                                                                        <button onclick="location.href = '{{ path('photo_admin_new') }}';" type="button" class="btn btn-primary">
-                                                                            {{ "common.grid.add_photo"|trans }}
-                                                                        </button>
-                                                                    </div>
-                                                                {% endif %}
+                                        <div class="row">
+                                            <div class="col-lg-11">
+                                                <div class="ibox">
+                                                    <div class="slider_thumbs" data="{{ path('photos', { 'spot': spot.id }) }}">
+                                                        {% if spot.photosInSpot > 6 %}
+                                                            {% for photo in spot.photos %}
+                                                                <div>
+                                                                    <a href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
+                                                                        <img class="img-thumbnail" itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('sk_thumbnail_outbound_100') }}" />
+                                                                    </a>
+                                                                </div>
+                                                            {% endfor %}
+                                                        {% elseif spot.photosInSpot > 0 and spot.photosInSpot <= 6  %}
+                                                            {% for photo in spot.photos %}
+                                                                <div>
+                                                                    <a href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
+                                                                        <img class="img-thumbnail" itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('sk_thumbnail_outbound_100') }}" />
+                                                                    </a>
+                                                                </div>
+                                                            {% endfor %}
+                                                            <div>
+                                                                <button onclick="location.href = '{{ path('photo_admin_new') }}';" type="button" class="btn btn-block btn-primary">
+                                                                    {{ "common.grid.add_photo"|trans }}
+                                                                </button>
                                                             </div>
-                                                        </div>
+                                                        {% else %}
+                                                            <div>
+                                                                {{"common.location.no_photos"|trans}}
+                                                            </div>
+                                                            <div>
+                                                                <button onclick="location.href = '{{ path('photo_admin_new') }}';" type="button" class="btn btn-primary">
+                                                                    {{ "common.grid.add_photo"|trans }}
+                                                                </button>
+                                                            </div>
+                                                        {% endif %}
                                                     </div>
                                                 </div>
                                             </div>
@@ -306,47 +285,43 @@
                 <!--  Species start -->
                 <div class="row" >
                     <div class="col col-lg-12">
-                        <div class="ibox-title" >
-                            <h3>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h3.species{% endtrans %}</h3>
-                        </div>
-                        <div class="row" >
-                            <div class="col col-lg-12" >
-                                <div class="ibox" >
+                        <div class="ibox" >
+                            <div class="ibox-title" >
+                                <h3>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h3.species{% endtrans %}</h3>
+                            </div>
 
-                                    <div class="ibox-content">
-                                        <div id="box_species"></div>
-                                    </div>
+                            <div class="ibox-content">
+                                <div id="box_species"></div>
+                            </div>
 
-                                    <!-- Species Modal start -->
-                                    <div class="modal fade" id="speciesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                        <div class="modal-dialog modal-lg" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    <h4 class="modal-title" id="myModalLabel">{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h4.species_modal{% endtrans %}</h4>
-                                                </div>
-                                                <div class="modal-body">
+                            <!-- Species Modal start -->
+                            <div class="modal fade" id="speciesModal" style="margin-top: 30px" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h4.species_modal{% endtrans %}</h4>
+                                        </div>
+                                        <div class="modal-body">
 
-                                                    <div id="speciesInput"></div>
+                                            <div id="speciesInput"></div>
 
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                </div>
-                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
-                                    <!-- Species Modal end -->
+                                </div>
+                            </div>
+                            <!-- Species Modal end -->
 
-                                    <div class="ibox-content" >
-                                        <div class="row" >
-                                            <div class="col-sm-6 col-sx-12">
-                                                <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_species">{{ "page.location.button.show_more_species"|trans }}</button>
-                                            </div>
-                                            <div class="col-sm-6 col-sx-12">
-                                                <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#speciesModal">{{ "page.location.button.see_all_species"|trans }}</button>
-                                            </div>
-                                        </div>
+                            <div class="ibox-content" >
+                                <div class="row" >
+                                    <div class="col-sm-6 col-sx-12">
+                                        <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_species">{{ "page.location.button.show_more_species"|trans }}</button>
+                                    </div>
+                                    <div class="col-sm-6 col-sx-12">
+                                        <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#speciesModal">{{ "page.location.button.see_all_species"|trans }}</button>
                                     </div>
                                 </div>
                             </div>
@@ -358,47 +333,43 @@
                 <!--  Photographers start -->
                 <div class="row" >
                     <div class="col col-lg-12">
-                        <div class="ibox-title" >
-                            <h3>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h3.contributors{% endtrans %}</h3>
-                        </div>
-                        <div class="row" >
-                            <div class="col col-lg-12" >
-                                <div class="ibox" >
+                        <div class="ibox" >
+                            <div class="ibox-title" >
+                                <h3>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h3.contributors{% endtrans %}</h3>
+                            </div>
 
-                                    <div class="ibox-content">
-                                        <div id="box_photographers"></div>
-                                    </div>
+                            <div class="ibox-content">
+                                <div id="box_photographers"></div>
+                            </div>
 
-                                    <!-- Photographers Modal start -->
-                                    <div class="modal fade" id="photographersModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                        <div class="modal-dialog modal-lg" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    <h4 class="modal-title" id="myModalLabel">{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h4.photographers_modal{% endtrans %}</h4>
-                                                </div>
-                                                <div class="modal-body">
+                            <!-- Photographers Modal start -->
+                            <div class="modal fade" id="photographersModal" style="margin-top: 30px" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h4.photographers_modal{% endtrans %}</h4>
+                                        </div>
+                                        <div class="modal-body">
 
-                                                    <div id="photographersInput"></div>
+                                            <div id="photographersInput"></div>
 
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                </div>
-                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
-                                    <!-- Photographers Modal end -->
+                                </div>
+                            </div>
+                            <!-- Photographers Modal end -->
 
-                                    <div class="ibox-content" >
-                                        <div class="row" >
-                                            <div class="col-sm-6 col-sx-12">
-                                                <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_photographers" >{{ "page.location.button.show_more_photographers"|trans }}</button>
-                                            </div>
-                                            <div class="col-sm-6 col-sx-12">
-                                                <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#photographersModal">{{ "page.location.button.see_all_photographers"|trans }}</button>
-                                            </div>
-                                        </div>
+                            <div class="ibox-content" >
+                                <div class="row" >
+                                    <div class="col-sm-6 col-sx-12">
+                                        <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_photographers" >{{ "page.location.button.show_more_photographers"|trans }}</button>
+                                    </div>
+                                    <div class="col-sm-6 col-sx-12">
+                                        <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#photographersModal">{{ "page.location.button.see_all_photographers"|trans }}</button>
                                     </div>
                                 </div>
                             </div>

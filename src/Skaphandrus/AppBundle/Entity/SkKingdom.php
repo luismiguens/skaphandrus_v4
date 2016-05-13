@@ -5,8 +5,8 @@ namespace Skaphandrus\AppBundle\Entity;
 /**
  * SkKingdom
  */
-class SkKingdom
-{
+class SkKingdom {
+
     /**
      * @var string
      */
@@ -21,25 +21,24 @@ class SkKingdom
      * @var \Doctrine\Common\Collections\Collection
      */
     private $vernaculars;
-    
-    
-        /**
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $phylum;
 
-    
-    
-       /**
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $photos;
+
+    /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->vernaculars = new \Doctrine\Common\Collections\ArrayCollection();
         $this->phylum = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
-    
 
     /**
      * Set name
@@ -48,8 +47,7 @@ class SkKingdom
      *
      * @return SkKingdom
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -60,8 +58,7 @@ class SkKingdom
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -70,12 +67,9 @@ class SkKingdom
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
-
- 
 
     /**
      * Add vernacular
@@ -84,8 +78,7 @@ class SkKingdom
      *
      * @return SkKingdom
      */
-    public function addVernacular(\Skaphandrus\AppBundle\Entity\SkKingdomVernacular $vernacular)
-    {
+    public function addVernacular(\Skaphandrus\AppBundle\Entity\SkKingdomVernacular $vernacular) {
         $this->vernaculars[] = $vernacular;
 
         return $this;
@@ -96,8 +89,7 @@ class SkKingdom
      *
      * @param \Skaphandrus\AppBundle\Entity\SkKingdomVernacular $vernacular
      */
-    public function removeVernacular(\Skaphandrus\AppBundle\Entity\SkKingdomVernacular $vernacular)
-    {
+    public function removeVernacular(\Skaphandrus\AppBundle\Entity\SkKingdomVernacular $vernacular) {
         $this->vernaculars->removeElement($vernacular);
     }
 
@@ -106,11 +98,9 @@ class SkKingdom
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getVernaculars()
-    {
+    public function getVernaculars() {
         return $this->vernaculars;
     }
-
 
     /**
      * Add phylum
@@ -119,8 +109,7 @@ class SkKingdom
      *
      * @return SkKingdom
      */
-    public function addPhylum(\Skaphandrus\AppBundle\Entity\SkPhylum $phylum)
-    {
+    public function addPhylum(\Skaphandrus\AppBundle\Entity\SkPhylum $phylum) {
         $this->phylum[] = $phylum;
 
         return $this;
@@ -131,8 +120,7 @@ class SkKingdom
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPhylum $phylum
      */
-    public function removePhylum(\Skaphandrus\AppBundle\Entity\SkPhylum $phylum)
-    {
+    public function removePhylum(\Skaphandrus\AppBundle\Entity\SkPhylum $phylum) {
         $this->phylum->removeElement($phylum);
     }
 
@@ -141,23 +129,38 @@ class SkKingdom
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPhylum()
-    {
+    public function getPhylum() {
         return $this->phylum;
     }
-    
-    
-    
+
     public function getChildNodes() {
         return $this->getPhylum();
     }
-    
-    
-    
-    public function getTaxonNodeName(){
+
+    public function getTaxonNodeName() {
         return "kingdom";
-        
     }
-    
-    
+
+    /**
+     * Set photos
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhoto $photos
+     *
+     * @return SkFamily
+     */
+    public function setPhotos($photos) {
+        $this->photos = $photos;
+
+        return $this;
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotos() {
+        return $this->photos;
+    }
+
 }

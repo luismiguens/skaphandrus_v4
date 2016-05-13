@@ -212,15 +212,6 @@ class SkFamily {
     }
 
     /**
-     * Remove photos
-     *
-     * @param \Skaphandrus\AppBundle\Entity\SkPhoto $photos
-     */
-    public function removePhotos(\Skaphandrus\AppBundle\Entity\SkPhoto $photos) {
-        $this->photos->removeElement($photos);
-    }
-
-    /**
      * Get photos
      *
      * @return \Doctrine\Common\Collections\Collection

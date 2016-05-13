@@ -82,7 +82,7 @@ class SkBusinessRepository extends EntityRepository {
                 JOIN b.type t
                 WHERE t.id in(1)
                 GROUP BY b
-                ORDER BY b.updatedAt DESC')
+                ORDER BY b.createdAt DESC')
                         ->setMaxResults($limit)->setFirstResult($offset)->getResult();
     }
 
@@ -95,7 +95,7 @@ class SkBusinessRepository extends EntityRepository {
                 JOIN b.type t
                 WHERE t.id in(4)
                 GROUP BY b
-                ORDER BY b.updatedAt DESC')
+                ORDER BY b.createdAt DESC')
                         ->setMaxResults($limit)->setFirstResult($offset)->getResult();
     }
 
@@ -108,7 +108,7 @@ class SkBusinessRepository extends EntityRepository {
                 JOIN b.type t
                 WHERE t.id in(7)
                 GROUP BY b
-                ORDER BY b.updatedAt DESC')
+                ORDER BY b.createdAt DESC')
                         ->setMaxResults($limit)->setFirstResult($offset)->getResult();
     }
 

@@ -57,6 +57,71 @@ class FosUserRepository extends EntityRepository {
         return $result;
     }
 
+    public function getMorePhotographersTaxon($taxon_name, $taxon_id, $limit = 3, $offset = 0) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT u.id as id, u.username as username, 
+                up.id as p_id, up.firstname as firstname, up.middlename as middlename, up.lastname as lastname, 
+                st.photo as photo,
+                count(pho.id) as photosInUser 
+                FROM fos_user as u
+                JOIN sk_personal as up
+                on u.id = up.fos_user_id
+                JOIN sk_settings as st
+                on u.id = st.fos_user_id
+                JOIN sk_photo as pho
+                on u.id = pho.fos_user_id
+                JOIN sk_species as sp
+                on sp.id = pho.species_id
+                JOIN sk_genus as g
+                on g.id = sp.genus_id
+                JOIN sk_family as f
+                on f.id = g.family_id
+                JOIN sk_order as o
+                on o.id = f.order_id
+                JOIN sk_class as c
+                on c.id = o.class_id
+                JOIN sk_phylum as p
+                on p.id = c.phylum_id
+                JOIN sk_kingdom as k
+                on k.id = p.kingdom_id
+                where " . substr($taxon_name, 0, 1) . ".id = " . $taxon_id . "
+                group by u.id
+                order by photosInUser desc
+                limit " . $limit . "
+                offset " . $offset;
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+//            $user = $em->getRepository('SkaphandrusAppBundle:FosUser')->find($value['id']);
+
+            $user = new FosUser();
+            $user->setId($value['id']);
+            $user->setUsername($value['username']);
+            $user->setPhotosInUser($value['photosInUser']);
+
+            $personal = new \Skaphandrus\AppBundle\Entity\SkPersonal();
+            $personal->setFirstname($value['firstname']);
+            $personal->setMiddlename($value['middlename']);
+            $personal->setLastname($value['lastname']);
+
+            $settings = new \Skaphandrus\AppBundle\Entity\SkSettings();
+            $settings->setPhoto($value['photo']);
+
+            $user->setPersonal($personal);
+            $user->setSettings($settings);
+
+            $result[] = $user;
+        }
+
+        return $result;
+    }
+
     public function getMorePhotographersBusiness($business_id, $limit = 3, $offset = 0) {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
@@ -326,6 +391,24 @@ class FosUserRepository extends EntityRepository {
         }
 
         return $result;
+    }
+
+    public function findPhotosTaxon($fosUser_id, $taxon_id, $taxon_name) {
+        $query = $this->getEntityManager()->createQuery(
+                        'SELECT p
+            FROM SkaphandrusAppBundle:SkPhoto p
+            JOIN p.species s
+            JOIN s.genus g
+            JOIN g.family f
+            JOIN f.order o
+            JOIN o.class c
+            JOIN c.phylum ph
+            JOIN ph.kingdom k
+            WHERE p.fosUser = :fosUser_id AND ' . substr($taxon_name, 0, 1) . '.id = :taxon_id
+            ORDER BY p.id desc'
+                )->setParameter('fosUser_id', $fosUser_id)->setParameter('taxon_id', $taxon_id)->setMaxResults(10);
+
+        return $query->getResult();
     }
 
     public function findPhotosBusiness($fosUser_id, $busienss_id) {

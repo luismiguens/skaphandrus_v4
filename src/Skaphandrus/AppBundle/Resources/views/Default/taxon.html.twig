@@ -109,7 +109,7 @@
                     $.ajax({
                         type: "get",
                         url: "{{path("ajax_photographers_show_more")}}",
-                        data: 'taxon_id=' + {{ taxon.id }} +'&limit=' + limit_photographers + '&offset=' + offset_photographers,
+                        data: 'taxon_name=' + "{{ taxon.taxonNodeName }}" + '&taxon_id=' + {{ taxon.id }} +'&limit=' + limit_photographers + '&offset=' + offset_photographers,
                         dataType: "text",
                         success: function (response) {
                             $('#box_photographers .slider_thumbs').slick('unslick');
@@ -125,26 +125,22 @@
 
         });
 
-
         /* funçao de load de todos os fotografos */
-        {#        var taxonId = 'species_id= {{ taxon.id }}';#}
-            var loadPhotographersAll = function () {
-                setTimeout(function () {
-                    $.ajax({
-                        type: "get",
-                        url: "{{path("ajax_photographers_see_all")}}",
-                        data: 'taxon_name=' + "{{ taxon.taxonNodeName }}" + '&taxon_id=' + {{ taxon.id }},
-                        dataType: "text",
-                        success: function (response) {
-                            $("#photographersInput").html(response);
-                        }
-                    });
-                }, 100);
-            };
-            $(this).ready(loadPhotographersAll);
-            $('#photographersModal').on('shown.bs.modal', loadPhotographersAll);
-
-
+        var loadPhotographersAll = function () {
+            setTimeout(function () {
+                $.ajax({
+                    type: "get",
+                    url: "{{path("ajax_photographers_see_all")}}",
+                    data: 'taxon_name=' + "{{ taxon.taxonNodeName }}" + '&taxon_id=' + {{ taxon.id }},
+                    dataType: "text",
+                    success: function (response) {
+                        $("#photographersInput").html(response);
+                    }
+                });
+            }, 100);
+        };
+        $(this).ready(loadPhotographersAll);
+        $('#photographersModal').on('shown.bs.modal', loadPhotographersAll);
 
     </script>
 {% endblock %}
@@ -270,6 +266,98 @@
 
                 </div>
 
+
+                <!-- imagens dos taxons filhos -->                                
+                <div class="row">
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h2>Next Taxon Group Photos</h2>
+                        </div>
+                        <div class="ibox-content">
+
+
+                            {% for child in taxon.getChildNodes %}
+                                {% if child.photos|length > 0 %}
+
+                                    <div class="row">
+                                        <div class="col-sm-4 col-sx-12">
+                                            <div class="contact-box center-version small_version">
+                                                {#<a href="{{ path('photos', { 'location': location.id }) }}">#}
+                                                <div class="box_content">
+                                                    <div class="box_spacer">
+                                                        <h3 class="m-b-xs">
+                                                            <strong>
+                                                                {{ link_to_taxon(child.taxonNodeName|trans, child) }}
+                                                            </strong>
+                                                        </h3>
+                                                        <div class="font-bold">
+                                                            <span class="label label-primary">
+                                                                <a style="color: white" href="{{ path('photos', {(child.taxonNodeName) : child.id }) }}">
+                                                                    {{"common.species.number_photos"|trans}}{#: {{ child.photos|length }}#}
+                                                                </a>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {#</a>#}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8 col-sx-12">
+                                            <div class="row">
+                                                <div class="col-lg-11">
+                                                    <div class="ibox">
+                                                        <div class="slider_thumbs" data="{{ path('photos', {(taxon.taxonNodeName) : taxon.id }) }}">
+                                                            {% for photo in child.photos %}
+                                                                <div>
+                                                                    <a href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
+                                                                        <img class="img-thumbnail" itemprop="image" alt="{{ photo.title }}" src="{{ photo.getWebPath | imagine_filter('sk_thumbnail_outbound_100') }}" />
+                                                                    </a>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+
+                            {#<ul class="unstyled">
+                                {% for child in taxon.getChildNodes %}
+                                    {% if child.photos|length > 0 %}
+                                        <li>
+                                            {{child.name}}
+                                            <div class="font-bold">
+                                                <span class="label label-primary">
+                                                    <a style="color: white" href="{{ path('photos', { 'fosUser': p.id }) }}">
+                                                        {{"common.photographers.number_photos"|trans}}: {{ p.photosInUser }}
+                                                    </a>
+                                                </span>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-11">
+                                                    <div class="slider_thumbs" data="{{ path('photos', {(taxon.taxonNodeName) : taxon.id }) }}">
+                                                        {% for p in child.photos %}
+                                                            <a class="thumbnail" href="{{ path('photo_no_slug',  { 'id': p.id }) }}" title="{{ p.title }}">
+                                                                <img alt="{{ p.title }}" style="height: 100px" class="img-responsive back" src="{{ p.getWebPath| imagine_filter('sk_widen_400') }}">
+                                                            </a>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+
+                            </ul>#}
+
+                        </div>
+                    </div>
+                </div>
+                <!-- fim imagens dos taxons filhos -->        
+
                 <div class="row">
 
                     <div class="ibox" >
@@ -315,94 +403,6 @@
                     </div>
 
                 </div>
-
-                                
-<!-- fim imagens dos taxons filhos -->                                
-                <div class="row">
-                    <div class="ibox">
-                        <div class="ibox-title">
-                            <h2>Next Taxon Group Photos</h2>
-                        </div>
-                        <div class="ibox-content">
-                            <ul>
-
-                                {% for child in taxon.getChildNodes %}
-                                    
-                                    
-                                    {{child.name}}
-                                    
-                                      {% for photo in child.photos %}
-                                    
-                                    
-                                    {{photo}}
-                                    
-                                    
-                                    
-                                    
-                                    {% endfor %}
-                                    
-                                    
-                                    {% endfor %}
-                                    
-                                
-                                
-                                
-                                
-                                
-                                
-                                {#{% for group in nextTaxonGroup %}
-
-                                    {% if taxon.taxonNodeName == 'genus' %}
-                                        {% if group.photos|length > 0 %}
-                                            <li>
-                                                {{group.name}}
-                                                {% set i=0 %}
-                                                <div class="row">
-                                                    {% for p in group.photos %}
-                                                        {% if p|length > 0 and i<4 %}
-                                                            <div class="col-lg-2">
-                                                                <a href="{{ path('photo_no_slug',  { 'id': p.id }) }}" title="{{ p.title }}">
-                                                                    <img class="img-thumbnail" alt="{{ p.title }}" src="{{ p.getWebPath | imagine_filter('sk_widen_400') }}" />
-                                                                </a>
-                                                            </div>
-                                                            {% set i=i+1 %}
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </div>
-                                            </li>
-                                        {% endif %}
-                                    {%elseif taxon.taxonNodeName == 'family' %}
-                                        <li>
-                                            {{group.name}}
-                                        </li>
-                                    {%elseif taxon.taxonNodeName == 'order' %}
-                                        <li>
-                                            {{group.name}}
-                                        </li>
-                                    {%elseif taxon.taxonNodeName == 'class' %}
-                                        <li>
-                                            {{group.name}}
-                                        </li>
-                                    {%elseif taxon.taxonNodeName == 'phylum' %}
-                                        <li>
-                                            {{group.name}}
-                                        </li>
-                                    {%elseif taxon.taxonNodeName == 'kingdom' %}
-                                        <li>
-                                            {{group.name}}
-                                        </li>
-                                    {% endif %}
-
-                                {% endfor %}#}
-                            </ul>
-                        </div>
-                    </div>
-                </div><!-- fim imagens dos taxons filhos -->
-                            
-                            
-                            
-                            
-                            
 
             </div><!-- end container-->
         </div><!-- end row-->

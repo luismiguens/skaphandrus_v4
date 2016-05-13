@@ -409,6 +409,13 @@ class AjaxController extends Controller {
             foreach ($photographers as $p):
                 $p->setPhotos($em->getRepository('SkaphandrusAppBundle:FosUser')->findPhotosBusiness($p->getId(), $business_id));
             endforeach;
+        elseif ($request->query->get('taxon_name')):
+            $taxon_name = $request->query->get('taxon_name');
+            $taxon_id = $request->query->get('taxon_id');
+            $photographers = $em->getRepository('SkaphandrusAppBundle:FosUser')->getMorePhotographersTaxon($taxon_name, $taxon_id, $limit, $offset);
+            foreach ($photographers as $p):
+                $p->setPhotos($em->getRepository('SkaphandrusAppBundle:FosUser')->findPhotosTaxon($p->getId(), $taxon_id, $taxon_name));
+            endforeach;
         endif;
 
         return $this->render('SkaphandrusAppBundle:Ajax:photographersPartial.html.twig', array(
@@ -507,14 +514,15 @@ class AjaxController extends Controller {
             $common_name = $request->request->get('common_name');
         endif;
 
+        $result = null;
 
-
-        $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
-        $qb->select('s')->from('SkaphandrusAppBundle:SkSpot', 's');
-        $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
-        $qb->join('l.region', 'r', 'WITH', 'l.region = r.id');
-        $qb->join('r.country', 'c', 'WITH', 'r.country = c.id');
-
+        if (count($request->request) > 0):
+            $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
+            $qb->select('s')->from('SkaphandrusAppBundle:SkSpot', 's');
+            $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
+            $qb->join('l.region', 'r', 'WITH', 'l.region = r.id');
+            $qb->join('r.country', 'c', 'WITH', 'r.country = c.id');
+        endif;
 
         //spots, locations and countries
         if ($spot_name) {
@@ -535,7 +543,6 @@ class AjaxController extends Controller {
             $qb->setParameter(3, implode(', ', $country_ids));
         }
 
-
         //species scientific name
         if ($scientific_name) {
             $qb->join('s.photos', 'p', 'WITH', 'p.spot = s.id');
@@ -555,8 +562,10 @@ class AjaxController extends Controller {
             $qb->setParameter(5, "%" . $common_name . "%");
         }
 
-        $query = $qb->getQuery();
-        $result = $query->getResult();
+        if (count($request->request) > 0):
+            $query = $qb->getQuery();
+            $result = $query->getResult();
+        endif;
 
 
         //mapa em branco
@@ -581,49 +590,47 @@ class AjaxController extends Controller {
 
                 //dump($s->getCoordinate());
                 if ($s->getCoordinate()) {
-                    
-                    
-                    try{
+
+                    try {
                         $marker = new Marker();
 
-                    //remove white spaces
-                    $latitude = preg_replace('/\s+/', '', explode(",", $s->getCoordinate())[0]);
-                    $longitude = preg_replace('/\s+/', '', explode(",", $s->getCoordinate())[1]);
+                        //remove white spaces
+                        $latitude = preg_replace('/\s+/', '', explode(",", $s->getCoordinate())[0]);
+                        $longitude = preg_replace('/\s+/', '', explode(",", $s->getCoordinate())[1]);
 
-                    $infowindow = new InfoWindow();
-                    $spot_url = $this->generateUrl('spot', array(
-                        'slug' => $s->getName(),
-                        'location' => $s->getLocation(),
-                        'country' => $s->getLocation()->getRegion()->getCountry()
-                    ));
+                        $infowindow = new InfoWindow();
+                        $spot_url = $this->generateUrl('spot', array(
+                            'slug' => $s->getName(),
+                            'location' => $s->getLocation(),
+                            'country' => $s->getLocation()->getRegion()->getCountry()
+                        ));
 
-                    $contentString = "<a href=" . $spot_url . ">" . $s->getName() . "</a>";
+                        $contentString = "<a href=" . $spot_url . ">" . $s->getName() . "</a>";
 
-                    $infowindow->setContent($contentString);
-                    $infowindow->setAutoClose(TRUE);
+                        $infowindow->setContent($contentString);
+                        $infowindow->setAutoClose(TRUE);
 
-                    // Marker options
-                    $marker->setInfoWindow($infowindow);
-                    $marker->setPrefixJavascriptVariable('marker_');
-                    
-                    
-                    $marker->setPosition($latitude, $longitude, true);
-                    
-                    $marker->setAnimation(Animation::DROP);
-                    $marker->setOption('clickable', true);
-                    $marker->setOption('flat', true);
-                    $marker->setOptions(array(
-                        'clickable' => true,
-                        'flat' => true,
-                    ));
+                        // Marker options
+                        $marker->setInfoWindow($infowindow);
+                        $marker->setPrefixJavascriptVariable('marker_');
 
-                    $markers[] = $marker;
+
+                        $marker->setPosition($latitude, $longitude, true);
+
+                        $marker->setAnimation(Animation::DROP);
+                        $marker->setOption('clickable', true);
+                        $marker->setOption('flat', true);
+                        $marker->setOptions(array(
+                            'clickable' => true,
+                            'flat' => true,
+                        ));
+
+                        $markers[] = $marker;
                     } catch (\Ivory\GoogleMap\Exception\OverlayException $ex) {
                         //erro coordenada mal ex: 37.0"a"5846492309772, -8.3441162109375
                     } catch (\Symfony\Component\Routing\Exception\InvalidParameterException $ex) {
                         //erro da constraução do url (/etc
                     }
-                    
                 }
             }
 
