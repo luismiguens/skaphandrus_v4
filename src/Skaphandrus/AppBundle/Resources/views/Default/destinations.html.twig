@@ -281,6 +281,37 @@
                 </div>
                 <!-- Destinos end -->
 
+                <!-- Lista dos paises start -->
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h3>{{ "page.destinations.list.countries"|trans }}</h3>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <ul>
+                                {% for continent in continents %}
+                                    <div class="col-md-6">
+                                        <li>
+                                            {{ continent }}
+                                            <ul>
+                                                {% for country in continent.countries %}
+                                                    <div class="col-md-6">
+                                                        <li>
+                                                            {{ link_to_country(country) }}
+                                                        </li>
+                                                    </div>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    </div>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Lista dos paises end -->
+
                 <!-- Map start -->
                 <div class="ibox">
                     <div class="ibox-title">

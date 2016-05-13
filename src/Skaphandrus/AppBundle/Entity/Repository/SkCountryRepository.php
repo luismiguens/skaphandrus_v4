@@ -78,6 +78,16 @@ class SkCountryRepository extends EntityRepository {
         return NULL;
     }
 
+    //usado na pagina dos destinos
+    public function findAllCountries($continent_id) {
+        return $this->getEntityManager()
+                        ->createQuery(
+                                'SELECT DISTINCT c
+                FROM SkaphandrusAppBundle:SkCountry c
+                WHERE c.continent = :continent_id
+                ')->setParameter('continent_id', $continent_id)->getResult();
+    }
+
     //Usado na pagina de destinos
     public function findAllCountriesDestinations() {
         $em = $this->getEntityManager();

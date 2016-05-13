@@ -105,5 +105,4 @@ class SkContinentTranslation {
 //    public function getTranslatable() {
 //        return $this->translatable;
 //    }
-
 }

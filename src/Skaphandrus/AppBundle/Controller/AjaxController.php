@@ -516,13 +516,15 @@ class AjaxController extends Controller {
 
         $result = null;
 
-        if (count($request->request) > 0):
-            $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
-            $qb->select('s')->from('SkaphandrusAppBundle:SkSpot', 's');
-            $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
-            $qb->join('l.region', 'r', 'WITH', 'l.region = r.id');
-            $qb->join('r.country', 'c', 'WITH', 'r.country = c.id');
-        endif;
+        dump($request->request);
+        
+//        if ($request->request):
+//            $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
+//            $qb->select('s')->from('SkaphandrusAppBundle:SkSpot', 's');
+//            $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
+//            $qb->join('l.region', 'r', 'WITH', 'l.region = r.id');
+//            $qb->join('r.country', 'c', 'WITH', 'r.country = c.id');
+//        endif;
 
         //spots, locations and countries
         if ($spot_name) {
@@ -562,11 +564,10 @@ class AjaxController extends Controller {
             $qb->setParameter(5, "%" . $common_name . "%");
         }
 
-        if (count($request->request) > 0):
-            $query = $qb->getQuery();
-            $result = $query->getResult();
-        endif;
-
+//        if ($request->request):
+//            $query = $qb->getQuery();
+//            $result = $query->getResult();
+//        endif;
 
         //mapa em branco
         $map = $this->get('ivory_google_map.map');

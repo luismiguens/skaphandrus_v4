@@ -377,48 +377,56 @@ class DefaultController extends Controller {
 
                     //dump($spot->getCoordinate());
                     if ($spot->getCoordinate()) {
-                        $marker = new Marker();
 
-                        //remove white spaces
-                        $latitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[0]);
-                        $longitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[1]);
+                        try {
 
-                        $infowindow = new InfoWindow();
-                        $spot_url = $this->generateUrl('spot', array(
-                            'slug' => $spot->getName(),
-                            'location' => $spot->getLocation(),
-                            'country' => $spot->getLocation()->getRegion()->getCountry()
-                        ));
+                            $marker = new Marker();
 
-                        $location_url = $this->generateUrl('location', array(
-                            'slug' => $spot->getLocation(),
-                            'country' => $spot->getLocation()->getRegion()->getCountry()
-                        ));
+                            //remove white spaces
+                            $latitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[0]);
+                            $longitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[1]);
 
-                        $country_url = $this->generateUrl('country', array(
-                            'slug' => $spot->getLocation()->getRegion()->getCountry()
-                        ));
+                            $infowindow = new InfoWindow();
+                            $spot_url = $this->generateUrl('spot', array(
+                                'slug' => $spot->getName(),
+                                'location' => $spot->getLocation(),
+                                'country' => $spot->getLocation()->getRegion()->getCountry()
+                            ));
 
-                        $contentString = "<a href=" . $spot_url . ">" . $spot->getName() . ",</a>
+                            $location_url = $this->generateUrl('location', array(
+                                'slug' => $spot->getLocation(),
+                                'country' => $spot->getLocation()->getRegion()->getCountry()
+                            ));
+
+                            $country_url = $this->generateUrl('country', array(
+                                'slug' => $spot->getLocation()->getRegion()->getCountry()
+                            ));
+
+                            $contentString = "<a href=" . $spot_url . ">" . $spot->getName() . ",</a>
                                 <a href=" . $location_url . "> " . $spot->getLocation() . ",</a>
                                 <a href=" . $country_url . "> " . $spot->getLocation()->getRegion()->getCountry() . "</a>";
 
-                        $infowindow->setContent($contentString);
-                        $infowindow->setAutoClose(TRUE);
+                            $infowindow->setContent($contentString);
+                            $infowindow->setAutoClose(TRUE);
 
-                        // Marker options
-                        $marker->setInfoWindow($infowindow);
-                        $marker->setPrefixJavascriptVariable('marker_');
-                        $marker->setPosition($latitude, $longitude, true);
-                        $marker->setAnimation(Animation::DROP);
-                        $marker->setOption('clickable', true);
-                        $marker->setOption('flat', true);
-                        $marker->setOptions(array(
-                            'clickable' => true,
-                            'flat' => true,
-                        ));
+                            // Marker options
+                            $marker->setInfoWindow($infowindow);
+                            $marker->setPrefixJavascriptVariable('marker_');
+                            $marker->setPosition($latitude, $longitude, true);
+                            $marker->setAnimation(Animation::DROP);
+                            $marker->setOption('clickable', true);
+                            $marker->setOption('flat', true);
+                            $marker->setOptions(array(
+                                'clickable' => true,
+                                'flat' => true,
+                            ));
 
-                        $markers[] = $marker;
+                            $markers[] = $marker;
+                        } catch (\Ivory\GoogleMap\Exception\OverlayException $ex) {
+                            //erro coordenada mal ex: 37.0"a"5846492309772, -8.3441162109375
+                        } catch (\Symfony\Component\Routing\Exception\InvalidParameterException $ex) {
+                            //erro da constraução do url (/etc
+                        }
                     }
                 }
 
@@ -567,39 +575,46 @@ class DefaultController extends Controller {
 
                 if (count($business->getAddress()->getLocation()) > 0) {
 
-                    // Get markers from spots for the map
-                    $markers = array();
-                    $marker = new Marker();
+                    try {
 
-                    //remove white spaces
-                    $latitude = preg_replace('/\s+/', '', explode(",", $business->getAddress()->getCoordinate())[0]);
-                    $longitude = preg_replace('/\s+/', '', explode(",", $business->getAddress()->getCoordinate())[1]);
-                    $zoom = $business->getAddress()->getZoom();
+                        // Get markers from spots for the map
+                        $markers = array();
+                        $marker = new Marker();
 
-                    $infowindow = new InfoWindow();
-                    if ($business->getAddress()->getStreet()) {
-                        $contentString = $business->getName() . '<br/> ' . $business->getAddress()->getStreet() . ', ' . $business->getAddress()->getLocation()->getName() . ', ' . $business->getAddress()->getLocation()->getRegion()->getCountry();
-                    } else {
-                        $contentString = $business->getName() . '<br/> ' . $business->getAddress()->getLocation()->getName() . ', ' . $business->getAddress()->getLocation()->getRegion()->getCountry();
+                        //remove white spaces
+                        $latitude = preg_replace('/\s+/', '', explode(",", $business->getAddress()->getCoordinate())[0]);
+                        $longitude = preg_replace('/\s+/', '', explode(",", $business->getAddress()->getCoordinate())[1]);
+                        $zoom = $business->getAddress()->getZoom();
+
+                        $infowindow = new InfoWindow();
+                        if ($business->getAddress()->getStreet()) {
+                            $contentString = $business->getName() . '<br/> ' . $business->getAddress()->getStreet() . ', ' . $business->getAddress()->getLocation()->getName() . ', ' . $business->getAddress()->getLocation()->getRegion()->getCountry();
+                        } else {
+                            $contentString = $business->getName() . '<br/> ' . $business->getAddress()->getLocation()->getName() . ', ' . $business->getAddress()->getLocation()->getRegion()->getCountry();
+                        }
+                        $infowindow->setContent($contentString);
+                        $infowindow->setOption('maxWidth', 250);
+
+                        // Marker options
+                        $marker->setInfoWindow($infowindow);
+                        $marker->setPrefixJavascriptVariable('marker_');
+                        $marker->setPosition($latitude, $longitude, true);
+                        $marker->setAnimation(Animation::DROP);
+                        $marker->setOption('clickable', true);
+                        $marker->setOption('flat', true);
+                        $marker->setOptions(array(
+                            'clickable' => true,
+                            'flat' => true,
+                        ));
+
+                        // $totalLatitude += $latitude;
+                        // $totalLongitude += $longitude;
+                        $markers[] = $marker;
+                    } catch (\Ivory\GoogleMap\Exception\OverlayException $ex) {
+                        //erro coordenada mal ex: 37.0"a"5846492309772, -8.3441162109375
+                    } catch (\Symfony\Component\Routing\Exception\InvalidParameterException $ex) {
+                        //erro da constraução do url (/etc
                     }
-                    $infowindow->setContent($contentString);
-                    $infowindow->setOption('maxWidth', 250);
-
-                    // Marker options
-                    $marker->setInfoWindow($infowindow);
-                    $marker->setPrefixJavascriptVariable('marker_');
-                    $marker->setPosition($latitude, $longitude, true);
-                    $marker->setAnimation(Animation::DROP);
-                    $marker->setOption('clickable', true);
-                    $marker->setOption('flat', true);
-                    $marker->setOptions(array(
-                        'clickable' => true,
-                        'flat' => true,
-                    ));
-
-                    // $totalLatitude += $latitude;
-                    // $totalLongitude += $longitude;
-                    $markers[] = $marker;
                 }
 
 
@@ -650,43 +665,50 @@ class DefaultController extends Controller {
                     //dump($spot->getCoordinate());
 
                     if ($spot->getCoordinate()) {
-                        $markerSpot = new Marker();
 
-                        //remove white spaces
-                        $latitudeSpot = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[0]);
-                        $longitudeSpot = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[1]);
+                        try {
+                            $markerSpot = new Marker();
 
-                        $infowindow = new InfoWindow();
+                            //remove white spaces
+                            $latitudeSpot = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[0]);
+                            $longitudeSpot = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[1]);
 
-                        //$utils = new \Skaphandrus\AppBundle\Twig\UtilsExtension($this->container, $this->get('translator'));
-                        //$contentString = $utils->link_to_spot($spot->getName(), $spot->getLocation(), $spot->getLocation()->getRegion()->getCountry());
-                        //$contentString = $spot->getName();
-                        $spot_url = $this->generateUrl('spot', array(
-                            'slug' => $spot->getName(),
-                            'location' => $spot->getLocation(),
-                            'country' => $spot->getLocation()->getRegion()->getCountry()
-                        ));
+                            $infowindow = new InfoWindow();
 
-                        $contentString = "<a href=" . $spot_url . ">" . $spot->getName() . "</a>";
+                            //$utils = new \Skaphandrus\AppBundle\Twig\UtilsExtension($this->container, $this->get('translator'));
+                            //$contentString = $utils->link_to_spot($spot->getName(), $spot->getLocation(), $spot->getLocation()->getRegion()->getCountry());
+                            //$contentString = $spot->getName();
+                            $spot_url = $this->generateUrl('spot', array(
+                                'slug' => $spot->getName(),
+                                'location' => $spot->getLocation(),
+                                'country' => $spot->getLocation()->getRegion()->getCountry()
+                            ));
 
-                        $infowindow->setContent($contentString);
-                        $infowindow->setAutoClose(TRUE);
+                            $contentString = "<a href=" . $spot_url . ">" . $spot->getName() . "</a>";
 
-                        // Marker options
-                        $markerSpot->setInfoWindow($infowindow);
-                        $markerSpot->setPrefixJavascriptVariable('marker_spot_');
-                        $markerSpot->setPosition($latitudeSpot, $longitudeSpot, true);
-                        $markerSpot->setAnimation(Animation::DROP);
-                        $markerSpot->setOption('clickable', true);
-                        $markerSpot->setOption('flat', true);
-                        $markerSpot->setOptions(array(
-                            'clickable' => true,
-                            'flat' => true,
-                        ));
+                            $infowindow->setContent($contentString);
+                            $infowindow->setAutoClose(TRUE);
 
-                        // $totalLatitude += $latitudeSpot;
-                        // $totalLongitude += $longitudeSpot;
-                        $markersSpot[] = $markerSpot;
+                            // Marker options
+                            $markerSpot->setInfoWindow($infowindow);
+                            $markerSpot->setPrefixJavascriptVariable('marker_spot_');
+                            $markerSpot->setPosition($latitudeSpot, $longitudeSpot, true);
+                            $markerSpot->setAnimation(Animation::DROP);
+                            $markerSpot->setOption('clickable', true);
+                            $markerSpot->setOption('flat', true);
+                            $markerSpot->setOptions(array(
+                                'clickable' => true,
+                                'flat' => true,
+                            ));
+
+                            // $totalLatitude += $latitudeSpot;
+                            // $totalLongitude += $longitudeSpot;
+                            $markersSpot[] = $markerSpot;
+                        } catch (\Ivory\GoogleMap\Exception\OverlayException $ex) {
+                            //erro coordenada mal ex: 37.0"a"5846492309772, -8.3441162109375
+                        } catch (\Symfony\Component\Routing\Exception\InvalidParameterException $ex) {
+                            //erro da constraução do url (/etc
+                        }
                     }
                 }
 
@@ -747,9 +769,18 @@ class DefaultController extends Controller {
      */
 
     public function destinationsAction() {
+//
+        $continents = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkContinent')
+                ->findAll();
+
+        foreach ($continents as $continent) {
+            $country = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')
+                    ->findAllCountries($continent->getId());
+            $continent->setCountries($country);
+        }
 
         return $this->render('SkaphandrusAppBundle:Default:destinations.html.twig', array(
-//                    'destinations' => $destinations,
+                    'continents' => $continents
         ));
     }
 
@@ -817,44 +848,52 @@ class DefaultController extends Controller {
                 //dump($spot->getCoordinate());
 
                 if ($s->getCoordinate()) {
-                    $marker = new Marker();
 
-                    //remove white spaces
-                    $latitude = preg_replace('/\s+/', '', explode(",", $s->getCoordinate())[0]);
-                    $longitude = preg_replace('/\s+/', '', explode(",", $s->getCoordinate())[1]);
+                    try {
 
-                    $infowindow = new InfoWindow();
-                    $s_url = $this->generateUrl('spot', array(
-                        'slug' => $s->getName(),
-                        'location' => $s->getLocation(),
-                        'country' => $s->getLocation()->getRegion()->getCountry()
-                    ));
+                        $marker = new Marker();
 
-                    $contentString = "<a href=" . $s_url . ">" . $s->getName() . "</a>";
+                        //remove white spaces
+                        $latitude = preg_replace('/\s+/', '', explode(",", $s->getCoordinate())[0]);
+                        $longitude = preg_replace('/\s+/', '', explode(",", $s->getCoordinate())[1]);
 
-                    $infowindow->setContent($contentString);
-                    $infowindow->setAutoClose(TRUE);
+                        $infowindow = new InfoWindow();
+                        $s_url = $this->generateUrl('spot', array(
+                            'slug' => $s->getName(),
+                            'location' => $s->getLocation(),
+                            'country' => $s->getLocation()->getRegion()->getCountry()
+                        ));
 
-                    // Marker options
+                        $contentString = "<a href=" . $s_url . ">" . $s->getName() . "</a>";
 
-                    if ($spot == $s):
-                        $marker->setIcon('http://maps.google.com/mapfiles/marker_green.png');
-                    else:
-                        $marker->setIcon('http://maps.google.com/mapfiles/marker.png');
-                    endif;
+                        $infowindow->setContent($contentString);
+                        $infowindow->setAutoClose(TRUE);
 
-                    $marker->setInfoWindow($infowindow);
-                    $marker->setPrefixJavascriptVariable('marker_');
-                    $marker->setPosition($latitude, $longitude, true);
-                    $marker->setAnimation(Animation::DROP);
-                    $marker->setOption('clickable', true);
-                    $marker->setOption('flat', true);
-                    $marker->setOptions(array(
-                        'clickable' => true,
-                        'flat' => true,
-                    ));
+                        // Marker options
 
-                    $markers[] = $marker;
+                        if ($spot == $s):
+                            $marker->setIcon('http://maps.google.com/mapfiles/marker_green.png');
+                        else:
+                            $marker->setIcon('http://maps.google.com/mapfiles/marker.png');
+                        endif;
+
+                        $marker->setInfoWindow($infowindow);
+                        $marker->setPrefixJavascriptVariable('marker_');
+                        $marker->setPosition($latitude, $longitude, true);
+                        $marker->setAnimation(Animation::DROP);
+                        $marker->setOption('clickable', true);
+                        $marker->setOption('flat', true);
+                        $marker->setOptions(array(
+                            'clickable' => true,
+                            'flat' => true,
+                        ));
+
+                        $markers[] = $marker;
+                    } catch (\Ivory\GoogleMap\Exception\OverlayException $ex) {
+                        //erro coordenada mal ex: 37.0"a"5846492309772, -8.3441162109375
+                    } catch (\Symfony\Component\Routing\Exception\InvalidParameterException $ex) {
+                        //erro da constraução do url (/etc
+                    }
                 }
             }
 
@@ -969,42 +1008,50 @@ class DefaultController extends Controller {
                     //dump($spot->getCoordinate());
 
                     if ($spot->getCoordinate()) {
-                        $marker = new Marker();
 
-                        //remove white spaces
-                        $latitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[0]);
-                        $longitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[1]);
+                        try {
 
-                        $infowindow = new InfoWindow();
-                        //$utils = new \Skaphandrus\AppBundle\Twig\UtilsExtension($this->container, $this->get('translator'));
-                        //$contentString = $utils->link_to_spot($spot->getName(), $spot->getLocation(), $spot->getLocation()->getRegion()->getCountry());
-                        //$contentString = $spot->getName();
-                        $spot_url = $this->generateUrl('spot', array(
-                            'slug' => $spot->getName(),
-                            'location' => $spot->getLocation(),
-                            'country' => $spot->getLocation()->getRegion()->getCountry()
-                        ));
+                            $marker = new Marker();
 
-                        $contentString = "<a href=" . $spot_url . ">" . $spot->getName() . "</a>";
+                            //remove white spaces
+                            $latitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[0]);
+                            $longitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[1]);
 
-                        $infowindow->setContent($contentString);
-                        $infowindow->setAutoClose(TRUE);
+                            $infowindow = new InfoWindow();
+                            //$utils = new \Skaphandrus\AppBundle\Twig\UtilsExtension($this->container, $this->get('translator'));
+                            //$contentString = $utils->link_to_spot($spot->getName(), $spot->getLocation(), $spot->getLocation()->getRegion()->getCountry());
+                            //$contentString = $spot->getName();
+                            $spot_url = $this->generateUrl('spot', array(
+                                'slug' => $spot->getName(),
+                                'location' => $spot->getLocation(),
+                                'country' => $spot->getLocation()->getRegion()->getCountry()
+                            ));
 
-                        // Marker options
-                        $marker->setInfoWindow($infowindow);
-                        $marker->setPrefixJavascriptVariable('marker_');
-                        $marker->setPosition($latitude, $longitude, true);
-                        $marker->setAnimation(Animation::DROP);
-                        $marker->setOption('clickable', true);
-                        $marker->setOption('flat', true);
-                        $marker->setOptions(array(
-                            'clickable' => true,
-                            'flat' => true,
-                        ));
+                            $contentString = "<a href=" . $spot_url . ">" . $spot->getName() . "</a>";
 
-                        // $totalLatitude += $latitude;
-                        // $totalLongitude += $longitude;
-                        $markers[] = $marker;
+                            $infowindow->setContent($contentString);
+                            $infowindow->setAutoClose(TRUE);
+
+                            // Marker options
+                            $marker->setInfoWindow($infowindow);
+                            $marker->setPrefixJavascriptVariable('marker_');
+                            $marker->setPosition($latitude, $longitude, true);
+                            $marker->setAnimation(Animation::DROP);
+                            $marker->setOption('clickable', true);
+                            $marker->setOption('flat', true);
+                            $marker->setOptions(array(
+                                'clickable' => true,
+                                'flat' => true,
+                            ));
+
+                            // $totalLatitude += $latitude;
+                            // $totalLongitude += $longitude;
+                            $markers[] = $marker;
+                        } catch (\Ivory\GoogleMap\Exception\OverlayException $ex) {
+                            //erro coordenada mal ex: 37.0"a"5846492309772, -8.3441162109375
+                        } catch (\Symfony\Component\Routing\Exception\InvalidParameterException $ex) {
+                            //erro da constraução do url (/etc
+                        }
                     }
                 }
 
@@ -1406,37 +1453,45 @@ class DefaultController extends Controller {
 
                 //dump($spot->getCoordinate());
                 if ($spot->getCoordinate()) {
-                    $marker = new Marker();
 
-                    //remove white spaces
-                    $latitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[0]);
-                    $longitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[1]);
+                    try {
 
-                    $infowindow = new InfoWindow();
-                    $spot_url = $this->generateUrl('spot', array(
-                        'slug' => $spot->getName(),
-                        'location' => $spot->getLocation(),
-                        'country' => $spot->getLocation()->getRegion()->getCountry()
-                    ));
+                        $marker = new Marker();
 
-                    $contentString = "<a href=" . $spot_url . ">" . $spot->getName() . "</a>";
+                        //remove white spaces
+                        $latitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[0]);
+                        $longitude = preg_replace('/\s+/', '', explode(",", $spot->getCoordinate())[1]);
 
-                    $infowindow->setContent($contentString);
-                    $infowindow->setAutoClose(TRUE);
+                        $infowindow = new InfoWindow();
+                        $spot_url = $this->generateUrl('spot', array(
+                            'slug' => $spot->getName(),
+                            'location' => $spot->getLocation(),
+                            'country' => $spot->getLocation()->getRegion()->getCountry()
+                        ));
 
-                    // Marker options
-                    $marker->setInfoWindow($infowindow);
-                    $marker->setPrefixJavascriptVariable('marker_');
-                    $marker->setPosition($latitude, $longitude, true);
-                    $marker->setAnimation(Animation::DROP);
-                    $marker->setOption('clickable', true);
-                    $marker->setOption('flat', true);
-                    $marker->setOptions(array(
-                        'clickable' => true,
-                        'flat' => true,
-                    ));
+                        $contentString = "<a href=" . $spot_url . ">" . $spot->getName() . "</a>";
 
-                    $markers[] = $marker;
+                        $infowindow->setContent($contentString);
+                        $infowindow->setAutoClose(TRUE);
+
+                        // Marker options
+                        $marker->setInfoWindow($infowindow);
+                        $marker->setPrefixJavascriptVariable('marker_');
+                        $marker->setPosition($latitude, $longitude, true);
+                        $marker->setAnimation(Animation::DROP);
+                        $marker->setOption('clickable', true);
+                        $marker->setOption('flat', true);
+                        $marker->setOptions(array(
+                            'clickable' => true,
+                            'flat' => true,
+                        ));
+
+                        $markers[] = $marker;
+                    } catch (\Ivory\GoogleMap\Exception\OverlayException $ex) {
+                        //erro coordenada mal ex: 37.0"a"5846492309772, -8.3441162109375
+                    } catch (\Symfony\Component\Routing\Exception\InvalidParameterException $ex) {
+                        //erro da constraução do url (/etc
+                    }
                 }
             }
 
