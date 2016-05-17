@@ -5,10 +5,13 @@ namespace Skaphandrus\AppBundle\Controller;
 // Used Entities
 // Used Forms
 
-use Ivory\GoogleMap\Overlays\InfoWindow;
+
+use Ivory\GoogleMap\Exception\MapException;
+use Ivory\GoogleMap\Exception\OverlayException;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\MapTypeId;
 use Ivory\GoogleMap\Overlays\Animation;
+use Ivory\GoogleMap\Overlays\InfoWindow;
 use Ivory\GoogleMap\Overlays\Marker;
 use Skaphandrus\AppBundle\Entity\FosUser;
 use Skaphandrus\AppBundle\Utils\Utils;
@@ -16,6 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse as JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Intl\Intl;
+use Symfony\Component\Routing\Exception\InvalidParameterException;
 
 class DefaultController extends Controller {
 
@@ -422,10 +426,10 @@ class DefaultController extends Controller {
                             ));
 
                             $markers[] = $marker;
-                        } catch (\Ivory\GoogleMap\Exception\OverlayException $ex) {
+                        } catch (OverlayException $ex) {
                             //erro coordenada mal ex: 37.0"a"5846492309772, -8.3441162109375
-                        } catch (\Symfony\Component\Routing\Exception\InvalidParameterException $ex) {
-                            //erro da constraução do url (/etc
+                        } catch (InvalidParameterException $ex) {
+                            //erro da constraução do url
                         }
                     }
                 }
@@ -446,8 +450,6 @@ class DefaultController extends Controller {
                     'disableDefaultUI' => true,
                     'disableDoubleClickZoom' => true,
                 ));
-                $map->setStylesheetOption('width', 'auto');
-                $map->setStylesheetOption('height', '300px');
                 $map->setStylesheetOptions(array(
                     'width' => 'auto',
                     'height' => '300px',
@@ -610,10 +612,10 @@ class DefaultController extends Controller {
                         // $totalLatitude += $latitude;
                         // $totalLongitude += $longitude;
                         $markers[] = $marker;
-                    } catch (\Ivory\GoogleMap\Exception\OverlayException $ex) {
+                    } catch (OverlayException $ex) {
                         //erro coordenada mal ex: 37.0"a"5846492309772, -8.3441162109375
-                    } catch (\Symfony\Component\Routing\Exception\InvalidParameterException $ex) {
-                        //erro da constraução do url (/etc
+                    } catch (InvalidParameterException $ex) {
+                        //erro da constraução do url
                     }
                 }
 
@@ -634,8 +636,6 @@ class DefaultController extends Controller {
                     'disableDefaultUI' => true,
                     'disableDoubleClickZoom' => true,
                 ));
-                $map->setStylesheetOption('width', 'auto');
-                $map->setStylesheetOption('height', '300px');
                 $map->setStylesheetOptions(array(
                     'width' => 'auto',
                     'height' => '300px',
@@ -704,10 +704,10 @@ class DefaultController extends Controller {
                             // $totalLatitude += $latitudeSpot;
                             // $totalLongitude += $longitudeSpot;
                             $markersSpot[] = $markerSpot;
-                        } catch (\Ivory\GoogleMap\Exception\OverlayException $ex) {
+                        } catch (OverlayException $ex) {
                             //erro coordenada mal ex: 37.0"a"5846492309772, -8.3441162109375
-                        } catch (\Symfony\Component\Routing\Exception\InvalidParameterException $ex) {
-                            //erro da constraução do url (/etc
+                        } catch (InvalidParameterException $ex) {
+                            //erro da constraução do url
                         }
                     }
                 }
@@ -734,8 +734,6 @@ class DefaultController extends Controller {
                     'disableDefaultUI' => true,
                     'disableDoubleClickZoom' => true,
                 ));
-                $mapSpot->setStylesheetOption('width', 'auto');
-                $mapSpot->setStylesheetOption('height', '300px');
                 $mapSpot->setStylesheetOptions(array(
                     'width' => 'auto',
                     'height' => '300px',
@@ -889,10 +887,10 @@ class DefaultController extends Controller {
                         ));
 
                         $markers[] = $marker;
-                    } catch (\Ivory\GoogleMap\Exception\OverlayException $ex) {
+                    } catch (OverlayException $ex) {
                         //erro coordenada mal ex: 37.0"a"5846492309772, -8.3441162109375
-                    } catch (\Symfony\Component\Routing\Exception\InvalidParameterException $ex) {
-                        //erro da constraução do url (/etc
+                    } catch (InvalidParameterException $ex) {
+                        //erro da constraução do url
                     }
                 }
             }
@@ -913,8 +911,6 @@ class DefaultController extends Controller {
                 'disableDefaultUI' => true,
                 'disableDoubleClickZoom' => true,
             ));
-            $map->setStylesheetOption('width', 'auto');
-            $map->setStylesheetOption('height', '300px');
             $map->setStylesheetOptions(array(
                 'width' => 'auto',
                 'height' => '300px',
@@ -1047,10 +1043,10 @@ class DefaultController extends Controller {
                             // $totalLatitude += $latitude;
                             // $totalLongitude += $longitude;
                             $markers[] = $marker;
-                        } catch (\Ivory\GoogleMap\Exception\OverlayException $ex) {
+                        } catch (OverlayException $ex) {
                             //erro coordenada mal ex: 37.0"a"5846492309772, -8.3441162109375
-                        } catch (\Symfony\Component\Routing\Exception\InvalidParameterException $ex) {
-                            //erro da constraução do url (/etc
+                        } catch (InvalidParameterException $ex) {
+                            //erro da constraução do url
                         }
                     }
                 }
@@ -1077,8 +1073,6 @@ class DefaultController extends Controller {
                     'disableDefaultUI' => true,
                     'disableDoubleClickZoom' => true,
                 ));
-                $map->setStylesheetOption('width', 'auto');
-                $map->setStylesheetOption('height', '300px');
                 $map->setStylesheetOptions(array(
                     'width' => 'auto',
                     'height' => '300px',
@@ -1487,10 +1481,10 @@ class DefaultController extends Controller {
                         ));
 
                         $markers[] = $marker;
-                    } catch (\Ivory\GoogleMap\Exception\OverlayException $ex) {
+                    } catch (OverlayException $ex) {
                         //erro coordenada mal ex: 37.0"a"5846492309772, -8.3441162109375
-                    } catch (\Symfony\Component\Routing\Exception\InvalidParameterException $ex) {
-                        //erro da constraução do url (/etc
+                    } catch (InvalidParameterException $ex) {
+                        //erro da constraução do url
                     }
                 }
             }
@@ -1514,8 +1508,6 @@ class DefaultController extends Controller {
                 'disableDefaultUI' => true,
                 'disableDoubleClickZoom' => true,
             ));
-            $map->setStylesheetOption('width', 'auto');
-            $map->setStylesheetOption('height', '300px');
             $map->setStylesheetOptions(array(
                 'width' => 'auto',
                 'height' => '300px',

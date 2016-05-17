@@ -232,6 +232,15 @@
                 }
             });
         });
+
+        function clearFields() {
+            document.getElementById("spot").value = "";
+            document.getElementById("location").value = "";
+            document.getElementById("country").value = "";
+            document.getElementById("scientific").value = "";
+            document.getElementById("common").value = "";
+        }
+
     </script>
 
 {% endblock %}
@@ -351,6 +360,7 @@
                                 </fieldset>
 
                                 <div class="form-group">
+                                    <button type="buttom" class="btn btn-primary dim btn-block" onclick="clearFields();">{{ "page.destinations.clear_fields"|trans }}</button>
                                     <button id="find_marker" type="buttom" class="btn btn-primary dim btn-block">{{ "page.destinations.submit"|trans }}</button>
                                 </div>
                             </div>

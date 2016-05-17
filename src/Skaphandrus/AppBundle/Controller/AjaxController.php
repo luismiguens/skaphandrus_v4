@@ -2,13 +2,15 @@
 
 namespace Skaphandrus\AppBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Ivory\GoogleMap\Overlays\InfoWindow;
+use Ivory\GoogleMap\Exception\OverlayException;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\MapTypeId;
 use Ivory\GoogleMap\Overlays\Animation;
+use Ivory\GoogleMap\Overlays\InfoWindow;
 use Ivory\GoogleMap\Overlays\Marker;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Exception\InvalidParameterException;
 
 /**
  * Ajax controller.
@@ -516,58 +518,57 @@ class AjaxController extends Controller {
 
         $result = null;
 
-        dump($request->request);
-        
-//        if ($request->request):
-//            $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
-//            $qb->select('s')->from('SkaphandrusAppBundle:SkSpot', 's');
-//            $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
-//            $qb->join('l.region', 'r', 'WITH', 'l.region = r.id');
-//            $qb->join('r.country', 'c', 'WITH', 'r.country = c.id');
-//        endif;
+//        dump($request->request);
 
-        //spots, locations and countries
-        if ($spot_name) {
-            $qb->join('s.translations', 'st');
-            $qb->andWhere('st.name LIKE ?1');
-            $qb->setParameter(1, "%" . $spot_name . "%");
+        if ($spot_name or $location_name or $common_name or $country_name or $scientific_name) {
+            $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
+            $qb->select('s')->from('SkaphandrusAppBundle:SkSpot', 's');
+            $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
+            $qb->join('l.region', 'r', 'WITH', 'l.region = r.id');
+            $qb->join('r.country', 'c', 'WITH', 'r.country = c.id');
+
+
+            //spots, locations and countries
+            if ($spot_name) {
+                $qb->join('s.translations', 'st');
+                $qb->andWhere('st.name LIKE ?1');
+                $qb->setParameter(1, "%" . $spot_name . "%");
+            }
+
+            if ($location_name) {
+                $qb->join('l.translations', 'lt');
+                $qb->andWhere('lt.name LIKE ?2');
+                $qb->setParameter(2, "%" . $location_name . "%");
+            }
+
+            if ($country_name) {
+                $country_ids = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')->findCountryDestinations($country_name, $locale);
+                $qb->andWhere('c.id IN( ?3 )');
+                $qb->setParameter(3, implode(', ', $country_ids));
+            }
+
+            //species scientific name
+            if ($scientific_name) {
+                $qb->join('s.photos', 'p', 'WITH', 'p.spot = s.id');
+                $qb->join('p.species', 'sp', 'WITH', 'p.species = sp.id');
+                $qb->join('sp.scientific_names', 'sn', 'WITH', 'sn.species = sp.id');
+                $qb->andWhere('sn.name LIKE ?4');
+                $qb->setParameter(4, "%" . $scientific_name . "%");
+            }
+
+            //species common name
+            if ($common_name) {
+                $qb->join('s.photos', 'p', 'WITH', 'p.spot = s.id');
+                $qb->join('p.species', 'sp', 'WITH', 'p.species = sp.id');
+                $qb->join('sp.species_vernaculars', 'sv', 'WITH', 'sv.species = sp.id');
+                $qb->join('sv.vernacular', 'v', 'WITH', 'sv.vernacular = v.id');
+                $qb->andWhere('v.name LIKE ?5');
+                $qb->setParameter(5, "%" . $common_name . "%");
+            }
+
+            $query = $qb->getQuery();
+            $result = $query->getResult();
         }
-
-        if ($location_name) {
-            $qb->join('l.translations', 'lt');
-            $qb->andWhere('lt.name LIKE ?2');
-            $qb->setParameter(2, "%" . $location_name . "%");
-        }
-
-        if ($country_name) {
-            $country_ids = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')->findCountryDestinations($country_name, $locale);
-            $qb->andWhere('c.id IN( ?3 )');
-            $qb->setParameter(3, implode(', ', $country_ids));
-        }
-
-        //species scientific name
-        if ($scientific_name) {
-            $qb->join('s.photos', 'p', 'WITH', 'p.spot = s.id');
-            $qb->join('p.species', 'sp', 'WITH', 'p.species = sp.id');
-            $qb->join('sp.scientific_names', 'sn', 'WITH', 'sn.species = sp.id');
-            $qb->andWhere('sn.name LIKE ?4');
-            $qb->setParameter(4, "%" . $scientific_name . "%");
-        }
-
-        //species common name
-        if ($common_name) {
-            $qb->join('s.photos', 'p', 'WITH', 'p.spot = s.id');
-            $qb->join('p.species', 'sp', 'WITH', 'p.species = sp.id');
-            $qb->join('sp.species_vernaculars', 'sv', 'WITH', 'sv.species = sp.id');
-            $qb->join('sv.vernacular', 'v', 'WITH', 'sv.vernacular = v.id');
-            $qb->andWhere('v.name LIKE ?5');
-            $qb->setParameter(5, "%" . $common_name . "%");
-        }
-
-//        if ($request->request):
-//            $query = $qb->getQuery();
-//            $result = $query->getResult();
-//        endif;
 
         //mapa em branco
         $map = $this->get('ivory_google_map.map');
@@ -575,7 +576,7 @@ class AjaxController extends Controller {
         $map->setCenter(40, 0, true);
         $map->setStylesheetOptions(array(
             'width' => 'auto',
-            'height' => '450px',
+            'height' => '175%',
         ));
         $latitude = 0;
         $longitude = 0;
@@ -627,10 +628,10 @@ class AjaxController extends Controller {
                         ));
 
                         $markers[] = $marker;
-                    } catch (\Ivory\GoogleMap\Exception\OverlayException $ex) {
+                    } catch (OverlayException $ex) {
                         //erro coordenada mal ex: 37.0"a"5846492309772, -8.3441162109375
-                    } catch (\Symfony\Component\Routing\Exception\InvalidParameterException $ex) {
-                        //erro da constraução do url (/etc
+                    } catch (InvalidParameterException $ex) {
+                        //erro da constraução do url
                     }
                 }
             }
@@ -652,11 +653,9 @@ class AjaxController extends Controller {
                 'disableDefaultUI' => true,
                 'disableDoubleClickZoom' => true,
             ));
-            $map->setStylesheetOption('width', 'auto');
-            $map->setStylesheetOption('height', '450px');
             $map->setStylesheetOptions(array(
                 'width' => 'auto',
-                'height' => '450px',
+                'height' => '175%',
             ));
             $map->setLanguage('en');
 
