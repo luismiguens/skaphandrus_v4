@@ -1,12 +1,12 @@
 <div class="footer">
     <div class="pull-right">
-        <a href="{{ path('contest_programs') }}">{{ "footer.view.contest_programs"|trans }}</a>
-        <a href="{{ path('business_programs') }}">{{ "footer.view.business_programs"|trans }}</a>
+{#        <a href="{{ path('contest_programs') }}">{{ "footer.view.contest_programs"|trans }}</a>
+        <a href="{{ path('business_programs') }}">{{ "footer.view.business_programs"|trans }}</a>#}
         <a href="{{ path('terms_and_conditions') }}">{{ "footer.view.terms_and_conditions"|trans }}</a>
     </div>
     <div>
         <meta itemprop="copyrightHolder" content="Skaphandrus" />
-        <meta itemprop="copyrightYear" content="2012-2015" />
-        <strong>Copyright</strong> Skaphandrus Company &copy; 2012-2015
+        <meta itemprop="copyrightYear" content="2012-{{ "now"|date("Y") }}" />
+        <strong>Copyright</strong> Skaphandrus Company &copy; 2012-{{ "now"|date("Y") }}
     </div>
 </div>

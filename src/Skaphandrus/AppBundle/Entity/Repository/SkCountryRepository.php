@@ -79,13 +79,26 @@ class SkCountryRepository extends EntityRepository {
     }
 
     //usado na pagina dos destinos
-    public function findAllCountries($continent_id) {
+    public function findCountriesWithSpots($continent_id) {
         return $this->getEntityManager()
                         ->createQuery(
                                 'SELECT DISTINCT c
                 FROM SkaphandrusAppBundle:SkCountry c
+                JOIN SkaphandrusAppBundle:SkRegion r
+                    WITH IDENTITY(r.country) = c.id
+                JOIN SkaphandrusAppBundle:SkLocation l
+                    WITH IDENTITY(l.region) = r.id
+                JOIN SkaphandrusAppBundle:SkSpot s
+                    WITH IDENTITY(s.location) = l.id
+                
                 WHERE c.continent = :continent_id
                 ')->setParameter('continent_id', $continent_id)->getResult();
+        
+        
+        
+        
+        
+        
     }
 
     //Usado na pagina de destinos

@@ -780,13 +780,35 @@ class DefaultController extends Controller {
 //
         $continents = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkContinent')
                 ->findAll();
-
+        
+        
+        
+        
+        
+        
+        
+//        $continent = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkContinent')
+//                ->find(6);
+//        
+//
+//        
+//        
+//        $country = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')
+//                ->find(166);
+//        
+        
+         
+        
         foreach ($continents as $continent) {
-            $country = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')
-                    ->findAllCountries($continent->getId());
-            $continent->setCountries($country);
+            $countries = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')
+                    ->findCountriesWithSpots($continent->getId());
+            $continent->setCountries($countries);
         }
 
+        
+       // dump($continents);
+        
+        
         return $this->render('SkaphandrusAppBundle:Default:destinations.html.twig', array(
                     'continents' => $continents
         ));
@@ -1122,6 +1144,10 @@ class DefaultController extends Controller {
         $country = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')
                 ->findBySlug($slug, $locale);
 
+        
+        
+//        dump($country);
+        
         if ($country) {
 
             $diveCenters = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')

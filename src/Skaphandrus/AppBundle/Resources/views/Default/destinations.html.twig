@@ -297,26 +297,120 @@
                     </div>
                     <div class="ibox-content">
                         <div class="row">
-                            <ul>
-                                {% for continent in continents %}
-                                    <div class="col-md-6">
-                                        <li>
-                                            {{ continent }}
-                                            <ul>
-                                                {% for country in continent.countries %}
-                                                    <div class="col-md-6">
-                                                        <li>
-                                                            {{ link_to_country(country) }}
-                                                        </li>
-                                                    </div>
-                                                {% endfor %}
-                                            </ul>
-                                        </li>
-                                    </div>
-                                {% endfor %}
-                            </ul>
-                        </div>
 
+                            <div class="col-md-4">
+                                {% set continent = continents[5] %}
+                                {{ continent }}
+                                <ul>
+                                    {% for country in continent.countries %}
+                                        <li>
+                                            {{ link_to_country(country) }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+
+                                {% set continent = continents[2] %}
+                                {{ continent }}
+                                <ul>
+
+                                    {% for country in continent.countries %}
+                                        <li>
+                                            {{ link_to_country(country) }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+
+
+
+                            <div class="col-md-4">
+                                {% set continent = continents[1] %}
+                                {{ continent }}
+                                <ul>
+
+                                    {% for country in continent.countries %}
+                                        <li>
+                                            {{ link_to_country(country) }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+
+                                {% set continent = continents[4] %}
+                                {{ continent }}
+                                <ul>
+
+                                    {% for country in continent.countries %}
+                                        <li>
+                                            {{ link_to_country(country) }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+
+                                {% set continent = continents[6] %}
+                                {{ continent }}
+                                <ul>
+
+                                    {% for country in continent.countries %}
+                                        <li>
+                                            {{ link_to_country(country) }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+
+
+                                {% set continent = continents[8] %}
+                                {{ continent }}
+                                <ul>
+
+                                    {% for country in continent.countries %}
+                                        <li>
+                                            {{ link_to_country(country) }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+
+                            </div>
+
+
+
+                            <div class="col-md-4">
+                                {% set continent = continents[3] %}
+                                {{ continent }}
+                                <ul>
+
+                                    {% for country in continent.countries %}
+                                        <li>
+                                            {{ link_to_country(country) }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+
+                                {% set continent = continents[7] %}
+                                {{ continent }}
+                                <ul>
+
+                                    {% for country in continent.countries %}
+                                        <li>
+                                            {{ link_to_country(country) }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+
+
+                                {% set continent = continents[0] %}
+                                {{ continent }}
+                                <ul>
+
+                                    {% for country in continent.countries %}
+                                        <li>
+                                            {{ link_to_country(country) }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+
+
+                        </div>
                     </div>
                 </div>
                 <!-- Lista dos paises end -->

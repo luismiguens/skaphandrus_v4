@@ -4,6 +4,6 @@
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
         </id>
-        <one-to-many field="countries" target-entity="SkCountry" mapped-by="country"/>
+        <one-to-many field="countries" target-entity="SkCountry" mapped-by="continent"/>
     </entity>
 </doctrine-mapping>

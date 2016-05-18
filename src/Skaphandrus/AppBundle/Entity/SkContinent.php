@@ -64,7 +64,7 @@ class SkContinent {
     }
 
     /**
-     * Get countriess
+     * Get countries
      *
      * @return \Doctrine\Common\Collections\Collection
      */
