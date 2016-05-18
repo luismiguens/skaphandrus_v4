@@ -1,0 +1,48 @@
+{% extends 'SkaphandrusAppBundle::content_layout.html.twig' %}
+
+{% block page_title %}{{ "page.programs.meta_tag.title"|trans }}{% endblock %}
+{% block page_description %}{% endblock %}
+{% block page_keywords %}{% endblock %}
+
+{% block hreflang %}
+    <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('index', {'locale': 'pt'}) }}" />
+    <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('index', {'locale': 'en'}) }}" />
+{% endblock %}
+
+{#{% block heading_title %}
+    {{ "page.programs.h1.title"|trans }}
+{% endblock %}
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
+        <li class="active"><strong>{{ "page.programs.h1.title"|trans }}</strong></li>
+    </ol>
+{% endblock %}#}
+
+{% block heading_breadcrumbs %}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="wrapper wrapper-content">
+        <div class="container">
+            <div class="row">
+
+                
+                
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

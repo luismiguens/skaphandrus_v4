@@ -45,6 +45,15 @@ users-home:
     locales:  { en: "/en/users", pt: "/pt/utilizadores" }
     defaults: { _controller: SkaphandrusAppBundle:Default:usersHome }
 
+contest_programs:
+    locales:  { en: "/en/underwater-photo-contest/programs", pt: "/pt/concurso-fotografia-subaquatica/programas" }
+    defaults: { _controller: SkaphandrusAppBundle:Default:contestPrograms }
+    
+business_programs:
+    locales:  { en: "/en/scuba-diving-center/programs", pt: "/pt/centros-mergulho/programas" }
+    defaults: { _controller: SkaphandrusAppBundle:Default:businessPrograms }
+
+
 terms_and_conditions:
     locales:  { en: "/en/terms-and-conditions", pt: "/pt/termos-e-condicoes" }
     defaults: { _controller: SkaphandrusAppBundle:Default:terms }

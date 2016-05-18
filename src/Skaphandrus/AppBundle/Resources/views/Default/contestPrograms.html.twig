@@ -1,0 +1,411 @@
+{% extends 'SkaphandrusAppBundle::content_layout.html.twig' %}
+
+{% block page_title %}{{ "page.programs.meta_tag.title"|trans }}{% endblock %}
+{% block page_description %}{% endblock %}
+{% block page_keywords %}{% endblock %}
+
+{% block hreflang %}
+    <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('index', {'locale': 'pt'}) }}" />
+    <link rel="alternate" hreflang="en" href="{{ app.request.getSchemeAndHttpHost() ~ path('index', {'locale': 'en'}) }}" />
+{% endblock %}
+
+{#{% block heading_title %}
+    {{ "page.programs.h1.title"|trans }}
+{% endblock %}
+
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
+        <li class="active"><strong>{{ "page.programs.h1.title"|trans }}</strong></li>
+    </ol>
+{% endblock %}#}
+
+{% block heading_breadcrumbs %}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style type="text/css">
+        
+        .faixa1{
+            width:100%;
+            height:25px;
+            background-color:rgb(202,230,224);
+            display:table;
+            margin-top: 2%;
+            margin-bottom: 1%;
+        }
+        .faixa2{
+            width:100%;
+            height:15px;
+            background-color:rgb(202,230,224);
+            display:table;
+            margin-bottom: 3%;
+        }
+
+
+        /* segunda div */
+        .cls_002{
+            font-size:35px;
+            font-weight:bold;
+            color:rgb(254,255,255);
+        }
+        .cls_003{
+            font-size:25px;
+            color:rgb(254,255,255);
+        }
+        .cls_004{
+            font-size:25px;
+            color:rgb(41,173,144);        
+        }
+        /* segunda div */
+
+
+        /* acima das tabelas */
+        .cls_006{
+            font-size:25px; 
+            font-weight:bold;
+            color:rgb(96,96,95);
+        }
+        /* acima das tabelas */
+
+
+        /* usado nas tabelas */
+        .cls_007{
+            font-size:16px;
+            font-weight:bold;
+            color:rgb(96,96,95);
+            text-align: center;
+        }
+
+        .cls_008{
+            font-size:18px;
+            font-weight:bold;
+            color:rgb(254,255,255);
+            text-align: center;
+        }
+
+        .cls_009{
+            font-size:18px; 
+            color:rgb(41,173,144);
+            text-align: center;
+        }    
+        /* usado nas tabelas */
+
+
+        /* usado na barra verde do terceira div */
+        .cls_010{
+            font-size:25px;
+            font-weight:bold;
+            color:rgb(254,255,255);
+        }
+        /* usado nas tabelas */
+
+
+        .cls_011{
+            margin-top:50%;
+            margin-left:7%;
+            font-size:30px;
+            font-weight:bold;
+            color:rgb(254,255,255);
+        }
+
+        .cls_012{
+            margin-top:15%;
+            margin-right:3%;
+            font-size:32px;
+            font-weight:normal;
+            color:rgb(254,255,255);
+        }
+
+    </style>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="wrapper wrapper-content">
+        <div class="container">
+
+            <!-- START PRIMEIRA DIV -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox">
+                        <img style="width:100%" src="{{ asset('uploads/dive_centers_programs/background1.jpg') }}"/>
+                    </div>
+                </div>
+            </div>
+            <!-- END PRIMEIRA DIV -->
+
+            <!-- START SEGUNDA DIV -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox" style="background-color: #1ab394">
+
+                        <!-- start imagem logotipo da skaphandrus -->
+                        <div class="row">
+                            <div class="col-md-12" align="center">
+                                <img src="{{ asset('uploads/dive_centers_programs/logo-skaphandrus.png') }}"/>
+                            </div>
+                        </div>
+                        <!-- end imagem logotipo da skaphandrus -->
+
+                        <!-- start blocos de texto -->
+                        <div class="row">
+                            <div class="col-md-12 cls_002" align="center">
+                                <p>{{ "page.programs.p.welcome_message_program"|trans }}</p>
+                                <p>{{ "page.programs.p.service_program"|trans }}</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 cls_003" align="center">
+                                <p>{{ "page.programs.p.get_your_diving"|trans }}</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                            </div>
+                            <div class="col-md-4 cls_004" style="background-color:white; border-radius:10px;" align="center">
+                                <p style="margin-top:2%;">{{ "page.programs.p.discover_our_new_tool"|trans }}</p>
+                            </div>
+                            <div class="col-md-4">
+                            </div>
+                        </div>
+                        <!-- end blocos de texto -->
+
+                        <!-- start faixas cinza -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="faixa1"></div>
+                                <div class="faixa2"></div>
+                            </div>
+                        </div>
+                        <!-- end faixas cinza -->
+
+                    </div>
+                </div>
+            </div>
+            <!-- END SEGUNDA DIV -->
+
+            <!-- START TERCEIRA DIV -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox">
+                        <div class="ibox-content">
+
+                            <!-- start row das tabelas -->
+                            <div class="row">
+                                <div class="col-md-12" align="center">
+                                    <p class="cls_006">{{ "page.programs.p.flexible_affordable"|trans }}</p>
+
+                                    <!-- start tabela 1 -->
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th class="cls_007" style="width: 50%">{{ "page.programs.th.key_features"|trans|raw|raw }}</th>
+                                                <th class="cls_007" style="width: 25%">{{ "page.programs.th.light"|trans|raw }}</th>
+                                                <th class="cls_007" style="width: 25%">{{ "page.programs.th.full"|trans|raw }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="background-color: #1ab394" class="cls_008">{{ "page.programs.td.contest_duration"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.30_days"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.60_days"|trans|raw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.contest_naming"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.yes"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.yes"|trans|raw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.public_voting"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.yes"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.yes"|trans|raw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.number_of_categories"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.number_3"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.number_10"|trans|raw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.number_of_photos"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.unlimited"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.unlimited"|trans|raw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.sponsors_and_awards"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.client_responsability"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.client_responsability_with_skaphandrus"|trans|raw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.influential_juries"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.client_responsability"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.client_responsability_with_skaphandrus"|trans|raw }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- end tabela 1 -->
+
+                                    <!-- start tabela 2 -->
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th class="cls_007" style="width: 50%">{{ "page.programs.th.development"|trans|raw }}</th>
+                                                <th class="cls_007" style="width: 25%">{{ "page.programs.th.light"|trans|raw }}</th>
+                                                <th class="cls_007" style="width: 25%">{{ "page.programs.th.full"|trans|raw }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="background-color: #1ab394" class="cls_008">{{ "page.programs.td.visual_identity_production"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.yes"|trans|raw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #1ab394" class="cls_008">{{ "page.programs.td.creation_and_content_management"|trans|raw|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.yes"|trans|raw }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- end tabela 2 -->
+
+                                    <!-- start tabela 3 -->
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th class="cls_007" style="width: 50%">{{ "page.programs.th.promotion"|trans|raw }}</th>
+                                                <th class="cls_007" style="width: 25%">{{ "page.programs.th.light"|trans|raw }}</th>
+                                                <th class="cls_007" style="width: 25%">{{ "page.programs.th.full"|trans|raw }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="background-color: #1ab394" class="cls_008">{{ "page.programs.td.featured_in_skaphandrus"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.yes"|trans|raw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.highlight_social_networks"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.yes"|trans|raw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.promotional_newsletter"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.yes"|trans|raw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.creation_event_management"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.yes"|trans|raw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.investment_digital_tools"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.optional"|trans|raw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.digital_campaign_management"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.optional"|trans|raw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.outdoors_billboards_production"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.programs.td.optional"|trans|raw }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- end tabela 3 -->
+
+                                </div>
+                            </div>
+                            <!-- end row das tabelas -->
+
+                            <!-- start row das imagens -->
+                            <div class="row">
+                                <div class="col-md-12" align="center">
+
+                                    <!-- start imagem bolinhas -->
+                                    <img style="width:100%; margin-bottom: 1%" src="{{ asset('uploads/dive_centers_programs/background2.jpg') }}"/>
+                                    <!-- end imagem bolinhas -->
+
+                                    <!-- start texto e div verde -->
+                                    <div class="col-md-2">
+                                    </div>
+                                    <div class="col-md-8 cls_010" style="background-color:#1ab394; border-radius:5px;" align="center">
+                                        <p style="margin-top: 2%">{{ "page.programs.p.become_affiliate"|trans|raw }}</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                    </div>
+                                    <!-- end texto e div verde -->
+
+                                    <!-- start imagem bolinhas -->
+                                    <img style="width:100%; margin-top: 1%" src="{{ asset('uploads/dive_centers_programs/background3.jpg') }}"/>
+                                    <!-- end imagem bolinhas -->
+
+                                </div>
+                            </div>
+                            <!-- end row das imagens -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END TERCEIRA DIV -->
+
+            <!-- START QUARTA DIV -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox">
+                        <img style="width:100%" src="{{ asset('uploads/dive_centers_programs/background4.jpg') }}"/>
+                    </div>
+                </div>
+            </div>
+            <!-- END QUARTA DIV -->
+
+            <!-- START QUINTA DIV -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox" style="background-color: #1ab394">
+
+                            <div class="row">
+                                <div class="col-md-3" align="center" >
+                                    <img src="{{ asset('uploads/dive_centers_programs/logo-metade.png') }}"/>
+                                </div>
+
+                                <div class="col-md-9">
+
+                                    <div class="cls_011" align="center">
+                                        <p>{{ "page.programs.p.dive_into_our_program"|trans|raw }}</p>
+                                        <p>{{ "page.programs.p.service_program"|trans|raw }}</p>
+                                    </div>
+
+                                    <div class="pull-right cls_012" align="right">
+                                        <p>support@skaphandrus.com</p>
+                                        <p><a href="http://www.skaphandrus.com/">www.skaphandrus.com</a></p>
+                                        <p>facebook.com/skaphandrus</p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- END QUINTA DIV -->
+
+        </div>
+    </div>
+
+{% endblock %}
+

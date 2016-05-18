@@ -86,108 +86,110 @@
            *
     */#}
 
-    <div class="wrapper wrapper-content animated fadeInRight" itemscope itemtype="http://schema.org/WebApplication">
-        <div class="container">
+    <div class="wrapper wrapper-content" itemscope itemtype="http://schema.org/WebApplication">
+        <div class="animated fadeInRight">
+            <div class="container">
 
-            <meta itemprop="name" content="{{ "page.modules.title"|trans }}" />
-            <meta itemprop="applicationCategory" content="Reference" />
-            <meta itemprop="operatingSystem" content="Windows, Mac OS, Android, IOS" />
-            <meta itemprop="applicationSuite" content="Skaphandrus" />
+                <meta itemprop="name" content="{{ "page.modules.title"|trans }}" />
+                <meta itemprop="applicationCategory" content="Reference" />
+                <meta itemprop="operatingSystem" content="Windows, Mac OS, Android, IOS" />
+                <meta itemprop="applicationSuite" content="Skaphandrus" />
 
-            <h1>{{ "page.modules.h1.title"|trans }}</h1>
-            <p>{{ "page.modules.p.description"|trans }}</p>
-            <br>
-            <div class="row">
-                {% for module in modules %}
-                    <div class="col-md-3">
-                        <div class="ibox">
-                            <div class="ibox-content product-box">
-                                <div class="product-imitation" style="padding: 0px 0px!important;">
-                                    <img alt="{{module.name}}" class="img-responsive" src="{{ module.getWebPath | imagine_filter('sk_widen_590') }}" />
-                                </div>
-                                <div class="product-desc">
-                                    <span class="product-price">
-
-                                        {% if module.isFree %}
-                                            {{'page.modules.label.is_free'|trans}}
-                                        {% elseif module.createdAt|date("U") > "-30 days"|date("U") %}
-                                            {% set difference = date(module.createdAt).diff(date("-30 days")) %}
-                                            {% set leftDays = difference.days %}
-                                            {{ leftDays ~" "~ "page.modules.label.left_days_free"|trans}}
-                                        {% else %}
-                                            {{module.points}} <i class="fa fa-star"></i>
-                                        {% endif %}
-
-
-                                    </span>
-                                    <small class="text-muted">{{module.master}}</small>
-                                    <a href="{{url_to_module(module)}}" class="product-name"> {{module.name}}</a>
-
-                                    <div class="small m-t-xs">
-                                        <ul>
-                                            {% for group in module.groups %}
-                                                {% if group.isParentModule == TRUE %}
-                                                    <li>{{group.name}}</li>
-                                                    {% endif %}
-                                                {% endfor %}
-                                        </ul>
+                <h1>{{ "page.modules.h1.title"|trans }}</h1>
+                <p>{{ "page.modules.p.description"|trans }}</p>
+                <br>
+                <div class="row">
+                    {% for module in modules %}
+                        <div class="col-md-3">
+                            <div class="ibox">
+                                <div class="ibox-content product-box">
+                                    <div class="product-imitation" style="padding: 0px 0px!important;">
+                                        <img alt="{{module.name}}" class="img-responsive" src="{{ module.getWebPath | imagine_filter('sk_widen_590') }}" />
                                     </div>
-                                    <div class="m-t text-right">
-                                        {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+                                    <div class="product-desc">
+                                        <span class="product-price">
+
                                             {% if module.isFree %}
-                                                <a href="{{url_to_module(module)}}" class="btn btn-xs btn-outline btn-primary">
-                                                    {{'page.modules.label.explore'|trans}} <i class="fa fa-long-arrow-right"></i> 
-                                                </a>
+                                                {{'page.modules.label.is_free'|trans}}
                                             {% elseif module.createdAt|date("U") > "-30 days"|date("U") %}
                                                 {% set difference = date(module.createdAt).diff(date("-30 days")) %}
                                                 {% set leftDays = difference.days %}
-                                                <a href="{{url_to_module(module)}}" class="btn btn-xs btn-outline btn-primary">
-                                                    {{'page.modules.label.explore'|trans}} <i class="fa fa-long-arrow-right"></i> 
-                                                </a>
-                                            {% elseif module in app.user.modules %}
-                                                <a href="{{url_to_module(module)}}" class="btn btn-xs btn-outline btn-primary">
-                                                    {{'page.modules.label.explore'|trans}} <i class="fa fa-long-arrow-right"></i> 
-                                                </a>
+                                                {{ leftDays ~" "~ "page.modules.label.left_days_free"|trans}}
                                             {% else %}
-                                                <a href="{{path('module_admin_edit')}}" class="btn btn-xs btn-outline btn-success">
-                                                    {{'page.modules.label.apply_points'|trans}} <i class="fa fa-long-arrow-right"></i> 
-                                                </a>
+                                                {{module.points}} <i class="fa fa-star"></i>
                                             {% endif %}
-                                        {% else %}
-                                            {% if module.isFree %}
-                                                <a href="{{url_to_module(module)}}" class="btn btn-xs btn-outline btn-primary">
-                                                    {{'page.modules.label.explore'|trans}} <i class="fa fa-long-arrow-right"></i> 
-                                                </a>
-                                            {% elseif module.createdAt|date("U") > "-30 days"|date("U") %}
-                                                {% set difference = date(module.createdAt).diff(date("-30 days")) %}
-                                                {% set leftDays = difference.days %}
-                                                <a href="{{ path('fos_user_security_login') }}" class="btn btn-xs btn-outline btn-default">
-                                                    {{ 'layout.login'|trans({}, 'FOSUserBundle') }} <i class="fa fa-long-arrow-right"></i> 
-                                                </a>
+
+
+                                        </span>
+                                        <small class="text-muted">{{module.master}}</small>
+                                        <a href="{{url_to_module(module)}}" class="product-name"> {{module.name}}</a>
+
+                                        <div class="small m-t-xs">
+                                            <ul>
+                                                {% for group in module.groups %}
+                                                    {% if group.isParentModule == TRUE %}
+                                                        <li>{{group.name}}</li>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                            </ul>
+                                        </div>
+                                        <div class="m-t text-right">
+                                            {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+                                                {% if module.isFree %}
+                                                    <a href="{{url_to_module(module)}}" class="btn btn-xs btn-outline btn-primary">
+                                                        {{'page.modules.label.explore'|trans}} <i class="fa fa-long-arrow-right"></i> 
+                                                    </a>
+                                                {% elseif module.createdAt|date("U") > "-30 days"|date("U") %}
+                                                    {% set difference = date(module.createdAt).diff(date("-30 days")) %}
+                                                    {% set leftDays = difference.days %}
+                                                    <a href="{{url_to_module(module)}}" class="btn btn-xs btn-outline btn-primary">
+                                                        {{'page.modules.label.explore'|trans}} <i class="fa fa-long-arrow-right"></i> 
+                                                    </a>
+                                                {% elseif module in app.user.modules %}
+                                                    <a href="{{url_to_module(module)}}" class="btn btn-xs btn-outline btn-primary">
+                                                        {{'page.modules.label.explore'|trans}} <i class="fa fa-long-arrow-right"></i> 
+                                                    </a>
+                                                {% else %}
+                                                    <a href="{{path('module_admin_edit')}}" class="btn btn-xs btn-outline btn-success">
+                                                        {{'page.modules.label.apply_points'|trans}} <i class="fa fa-long-arrow-right"></i> 
+                                                    </a>
+                                                {% endif %}
                                             {% else %}
-                                                <a href="{{ path('fos_user_security_login') }}" class="btn btn-xs btn-outline btn-default">
-                                                    {{ 'layout.login'|trans({}, 'FOSUserBundle') }} <i class="fa fa-long-arrow-right"></i> 
-                                                </a>
+                                                {% if module.isFree %}
+                                                    <a href="{{url_to_module(module)}}" class="btn btn-xs btn-outline btn-primary">
+                                                        {{'page.modules.label.explore'|trans}} <i class="fa fa-long-arrow-right"></i> 
+                                                    </a>
+                                                {% elseif module.createdAt|date("U") > "-30 days"|date("U") %}
+                                                    {% set difference = date(module.createdAt).diff(date("-30 days")) %}
+                                                    {% set leftDays = difference.days %}
+                                                    <a href="{{ path('fos_user_security_login') }}" class="btn btn-xs btn-outline btn-default">
+                                                        {{ 'layout.login'|trans({}, 'FOSUserBundle') }} <i class="fa fa-long-arrow-right"></i> 
+                                                    </a>
+                                                {% else %}
+                                                    <a href="{{ path('fos_user_security_login') }}" class="btn btn-xs btn-outline btn-default">
+                                                        {{ 'layout.login'|trans({}, 'FOSUserBundle') }} <i class="fa fa-long-arrow-right"></i> 
+                                                    </a>
+                                                {% endif %}
                                             {% endif %}
-                                        {% endif %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    {% if loop.index is divisible by(4) %}
-                        <!-- close row -->
-                    </div>
-                    <!-- open row -->
-                    <div class="row">
-                    {% endif %}
+                        {% if loop.index is divisible by(4) %}
+                            <!-- close row -->
+                        </div>
+                        <!-- open row -->
+                        <div class="row">
+                        {% endif %}
 
-                {% endfor %}
+                    {% endfor %}
 
-                <!-- close row -->
+                    <!-- close row -->
+                </div>
             </div>
-        </div>
+        </div> 
     </div>
 
 {%endblock%}

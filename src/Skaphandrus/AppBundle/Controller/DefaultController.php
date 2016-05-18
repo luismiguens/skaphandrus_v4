@@ -23,6 +23,16 @@ use Symfony\Component\Routing\Exception\InvalidParameterException;
 
 class DefaultController extends Controller {
 
+    public function contestProgramsAction() {
+
+        return $this->render('SkaphandrusAppBundle:Default:contestPrograms.html.twig', array());
+    }
+
+    public function businessProgramsAction() {
+
+        return $this->render('SkaphandrusAppBundle:Default:businessPrograms.html.twig', array());
+    }
+
     public function termsAction() {
         $em = $this->getDoctrine()->getManager();
 
