@@ -5,8 +5,6 @@ namespace Skaphandrus\AppBundle\Controller;
 // Used Entities
 // Used Forms
 
-
-use Ivory\GoogleMap\Exception\MapException;
 use Ivory\GoogleMap\Exception\OverlayException;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\MapTypeId;
@@ -88,8 +86,8 @@ class DefaultController extends Controller {
     }
 
     public function index2Action() {
-        $location = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
-                ->findOneWithTranslations(21);
+//        $location = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkLocation')
+//                ->findOneWithTranslations(21);
 
         return $this->render('SkaphandrusAppBundle:Default:index2.html.twig');
     }
@@ -531,7 +529,7 @@ class DefaultController extends Controller {
      * Users Home page
      */
 
-    public function usersHomeAction(Request $request) {
+    public function usersHomeAction() {
 
         $em = $this->get('doctrine.orm.entity_manager');
         $dql = "SELECT u FROM SkaphandrusAppBundle:SkUserResults u join SkaphandrusAppBundle:FosUser f WITH u.id = f.id order by u.photos desc";
@@ -780,35 +778,19 @@ class DefaultController extends Controller {
 //
         $continents = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkContinent')
                 ->findAll();
-        
-        
-        
-        
-        
-        
-        
+
 //        $continent = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkContinent')
 //                ->find(6);
-//        
-//
-//        
-//        
+//                
 //        $country = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')
 //                ->find(166);
-//        
-        
-         
-        
+
         foreach ($continents as $continent) {
             $countries = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')
                     ->findCountriesWithSpots($continent->getId());
             $continent->setCountries($countries);
         }
 
-        
-       // dump($continents);
-        
-        
         return $this->render('SkaphandrusAppBundle:Default:destinations.html.twig', array(
                     'continents' => $continents
         ));
@@ -1144,10 +1126,10 @@ class DefaultController extends Controller {
         $country = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')
                 ->findBySlug($slug, $locale);
 
-        
-        
+
+
 //        dump($country);
-        
+
         if ($country) {
 
             $diveCenters = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkBusiness')
@@ -1213,7 +1195,7 @@ class DefaultController extends Controller {
      * Locations Home page
      */
 
-    public function locationsHomeAction(Request $request) {
+    public function locationsHomeAction() {
 
         $countries = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkCountry')
                 ->findAllWithSpots();
@@ -1249,14 +1231,16 @@ class DefaultController extends Controller {
 
         $next_photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
                 ->findNextPhoto($id);
-        if ($next_photo)
+        if ($next_photo):
             $next_photo_id = $next_photo->getId();
+        endif;
 
 
         $previous_photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
                 ->findPreviousPhoto($id);
-        if ($previous_photo)
+        if ($previous_photo):
             $previous_photo_id = $previous_photo->getId();
+        endif;
 
         $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
                 ->findOneById($id);
