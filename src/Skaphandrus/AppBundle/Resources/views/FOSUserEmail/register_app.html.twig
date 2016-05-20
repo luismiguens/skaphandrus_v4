@@ -1,0 +1,28 @@
+{% extends 'SkaphandrusAppBundle:Email:_base_register_app_template.html.twig' %}
+
+{% block title %}
+    Welcome, {{ username }}
+{% endblock %}
+
+{#{% block intro %}
+    <p align="center">This is our newsletter</p>
+{% endblock %}#}
+
+{% block content %}
+
+    <p> Obrigado por ter descarregado a aplicação Ocean Life ID e por se ter registado no skaphandrus. </p>
+
+    <p>
+        No Skaphandrus podes partilhar as tuas fotografias, 
+        obtendo pontos para desbloquear os grupos taxonomicos 
+        da aplicação Ocean Life ID. We hope that you will have a great experience on our site. 
+    </p>
+
+{% endblock %}
+
+{#{% block action %}
+    <a href="https://skaphandrus.com" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; width: 100%; box-sizing: border-box; font-size: 14px; color: #FFF; text-decoration: none; line-height: 2; font-weight: bold; text-align: center; cursor: pointer; display: inline-block; border-radius: 5px; text-transform: capitalize; background-color: #1ab394; margin: 0; padding: 0; border-color: #1ab394; border-style: solid; border-width: 5px 10px;">
+        Skaphandrus.com
+    </a>
+{% endblock %}#}
+

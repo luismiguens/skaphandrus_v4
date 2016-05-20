@@ -115,12 +115,14 @@ class IdentificationController extends Controller {
         $character_obj = new \Skaphandrus\AppBundle\Entity\SkIdentificationCharacter();
 
         $species = $request->query->get('species');
-        if (!$species)
+        if (!$species):
             $species = $request->request->get('species');
+        endif;
 
         $module_id = $request->query->get('module_id');
-        if (!$module_id)
+        if (!$module_id):
             $module_id = $request->request->get('module_id');
+        endif;
 
         $view_name = "sk_identification_criteria_matrix_" . $module_id;
 
@@ -198,30 +200,29 @@ class IdentificationController extends Controller {
         $connection = $em->getConnection();
 
         $character_ids = $request->query->get('characters');
-        if (!$character_ids)
+        if (!$character_ids):
             $character_ids = $request->request->get('characters');
+        endif;
 
         $module_id = $request->query->get('module_id');
-        if (!$module_id)
+        if (!$module_id):
             $module_id = $request->request->get('module_id');
+        endif;
 
         $view_name = "sk_identification_criteria_matrix_" . $module_id;
-
-
-
 
         $sql = "SELECT (matrix.species_id) as id, 
 	sk_species_scientific_name.name as name, 
 	sk_species_illustration.image as image_illustration,
 	image_photos.image as image_photo,
         image_google.image_src as image_google
-FROM (select distinct(species_id) as species_id from " . $view_name . ") matrix               
-LEFT JOIN sk_species_scientific_name on matrix.species_id = sk_species_scientific_name.species_id
-LEFT JOIN ( select species_id, image_url, image_src, max(is_primary) 
-        FROM sk_species_image_ref group by species_id ) image_google on image_google.species_id = matrix.species_id
-LEFT JOIN ( select sk_photo_species_validation.species_id, image, max(rating) 
-        FROM sk_photo_species_validation JOIN sk_photo on sk_photo.id = sk_photo_species_validation.photo_id GROUP by species_id ) image_photos on image_photos.species_id = matrix.species_id
-LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration.species_id";
+        FROM (select distinct(species_id) as species_id from " . $view_name . ") matrix               
+        LEFT JOIN sk_species_scientific_name on matrix.species_id = sk_species_scientific_name.species_id
+        LEFT JOIN ( select species_id, image_url, image_src, max(is_primary) 
+                FROM sk_species_image_ref group by species_id ) image_google on image_google.species_id = matrix.species_id
+        LEFT JOIN ( select sk_photo_species_validation.species_id, image, max(rating) 
+                FROM sk_photo_species_validation JOIN sk_photo on sk_photo.id = sk_photo_species_validation.photo_id GROUP by species_id ) image_photos on image_photos.species_id = matrix.species_id
+        LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration.species_id";
 
 
         //especies com base nos characteres já selecionados
@@ -250,13 +251,11 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
 
         //echo $sql;
 
-
         $statement = $connection->prepare($sql);
         $statement->execute();
         $values = $statement->fetchAll();
 
         $speciesJson = array();
-
 
         foreach ($values as $sp) {
             $species = array();
@@ -287,10 +286,6 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
 
             $speciesJson[] = $species;
         }
-
-
-
-
 
 //        foreach ($values as $sp) {
 //            $species = array();
@@ -362,17 +357,19 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
         $module_object = new \Skaphandrus\AppBundle\Entity\SkIdentificationModule();
 
         $user_id = $request->query->get('user_id');
-        if (!$user_id)
+        if (!$user_id):
             $user_id = $request->request->get('user_id');
+        endif;
 
         $app_id = $request->query->get('app_id');
-        if (!$app_id)
+        if (!$app_id):
             $app_id = $request->request->get('app_id');
-
+        endif;
 
         //se não tiver app_id é a app OCEAN LIFE ID
-        if (!$app_id)
+        if (!$app_id):
             $app_id = 1;
+        endif;
 
         //ocean life id = Get all masters
         if ($app_id == 1):
@@ -403,9 +400,7 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
             $masters = $this->getDoctrine()
                     ->getRepository("SkaphandrusAppBundle:SkIdentificationMaster")
                     ->findBy(array('isActive' => TRUE, 'id' => 4));
-
         endif;
-
 
         // Iterate over all masters
         foreach ($masters as $master_object) {
@@ -440,7 +435,6 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
                         //se nao tem user, é a versão antiga então deixamos utilizar o modulo
                         $module['is_enabled'] = "1";
                     }
-
 
                     //O campo “is_active” define de o modulo está pronto ou em desenvolvimento pelos biólogos.
                     //is_active = 0 = “Will be available soon! New groups are added frequently so stay tuned!”,
@@ -499,11 +493,15 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
      */
     public function speciesInfoJsonAction(Request $request) {
         $species_id = $request->query->get('species_id');
-        if (!$species_id)
+        if (!$species_id):
             $species_id = $request->request->get('species_id');
+        endif;
+
         $module_id = $request->query->get('module_id');
-        if (!$module_id)
+        if (!$module_id):
             $module_id = $request->request->get('module_id');
+        endif;
+
         $species = array();
 
         $species_obj = $this->getDoctrine()
@@ -512,9 +510,8 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
 
         //return new JsonResponse($species_obj);
 
-        
         $photos_arr = array();
-        
+
         if ($species_obj) {
             $species['id'] = $species_obj->getId();
             $species['name'] = $species_obj->getName();
@@ -560,9 +557,6 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
             $species['how_to_find'] = $species_obj->translate()->getHowToFind();
 
             //FOTOGRAFIAS
-            
-
-
 
             $limit = 3;
 
@@ -623,9 +617,6 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
 //                        break;
 //                }
 //            }
-
-
-
             //ILUSTRACOES CIENTIFICAS (ir buscar ilustração)
             foreach ($species_obj->getIllustrations() as $key => $illustration) {
 
@@ -650,7 +641,7 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
                 //se existirem fotografias SKAPHANDRUS ou GOOGLE
                 if (count($photos) > 0):
                     foreach ($photos as $key => $photo) {
-                    
+
                         //fotografias SKAPHANDRUS
                         if ($photo['image_type'] == "skaphandrus"):
                             $skPhoto = $this->getDoctrine()
@@ -658,7 +649,7 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
                                     ->findOneById($photo['id']);
 
                             $image_src = $this->get('liip_imagine.cache.manager')->getBrowserPath($skPhoto->getWebPath(), 'sk_downscale_600_400');
-                            
+
                             $licence = "© All rights reserved";
                             $photos_arr[] = array(
                                 'id' => $skPhoto->getId(),
@@ -668,8 +659,6 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
                                 'photographer' => $skPhoto->getFosUser()->getName(),
                                 'license' => $licence
                             );
-
-
 
                         //fotografias GOOGLE
                         elseif ($photo['image_type'] == "google"):
@@ -732,14 +721,13 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
         //$fos_user = new \Skaphandrus\AppBundle\Entity\FosUser();
 
         $user_id = $request->query->get('user_id');
-        if (!$user_id)
+        if (!$user_id):
             $user_id = $request->request->get('user_id');
-
+        endif;
 
         $fos_user = $this->getDoctrine()
                 ->getRepository("SkaphandrusAppBundle:FosUser")
                 ->findOneById($user_id);
-
 
         if ($fos_user) {
             $user['id'] = $fos_user->getId();
@@ -779,10 +767,11 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
      */
     public function taxonListJsonAction(Request $request) {
         $module_id = $request->query->get('module_id');
-        if (!$module_id)
+        if (!$module_id):
             $module_id = $request->request->get('module_id');
-        $module_obj = $this->getDoctrine()
-                ->getRepository("SkaphandrusAppBundle:SkIdentificationModule")
+        endif;
+
+        $module_obj = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkIdentificationModule")
                 ->findOneById($module_id);
 
         $output = array();
@@ -807,16 +796,19 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
         $em = $this->get('doctrine')->getEntityManager();
 
         $email = $request->query->get('email');
-        if (!$email)
+        if (!$email):
             $email = $request->request->get('email');
+        endif;
 
         $password = $request->query->get('password');
-        if (!$password)
+        if (!$password):
             $password = $request->request->get('password');
+        endif;
 
         $facebook_uid = $request->query->get('facebook_uid');
-        if (!$facebook_uid)
+        if (!$facebook_uid):
             $facebook_uid = $request->request->get('facebook_uid');
+        endif;
 
 
         //autenticação por email
@@ -870,12 +862,7 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
                 $response["message"] = "Facebook Account does not exist";
             }
 
-
         endif;
-
-
-
-
 
         header('Access-Control-Allow-Origin: *');
 
@@ -900,26 +887,29 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
         $request = $this->getRequest();
 
         $first_name = $request->query->get('first_name');
-        if (!$first_name)
+        if (!$first_name):
             $first_name = $request->request->get('first_name');
+        endif;
 
         $last_name = $request->query->get('last_name');
-        if (!$last_name)
+        if (!$last_name):
             $last_name = $request->request->get('last_name');
+        endif;
 
         $email = $request->query->get('email');
-        if (!$email)
+        if (!$email):
             $email = $request->request->get('email');
+        endif;
 
         $password = $request->query->get('password');
-        if (!$password)
+        if (!$password):
             $password = $request->request->get('password');
+        endif;
 
         $facebook_uid = $request->query->get('facebook_uid');
-        if (!$facebook_uid)
+        if (!$facebook_uid):
             $facebook_uid = $request->request->get('facebook_uid');
-
-
+        endif;
 
         /*         * *********************************************************************
          * VALIDATIONS START
@@ -1010,6 +1000,17 @@ LEFT JOIN sk_species_illustration on matrix.species_id = sk_species_illustration
           $response->headers->set('Content-Type', 'application/json');
           return $response; */
 
+        // envia email apos registo de utilizador atraves da app
+        $message = \Swift_Message::newInstance()
+                ->setSubject("Welcome " . $user->getPersonal()->getFirstname() . $user->getPersonal()->getLastname())
+                ->setFrom('support-noreply@skaphandrus.com', 'Skaphandrus')
+                ->setTo($user->getEmail())
+                ->setCc('rubensardinha1992@gmail.com')
+                ->setBody($this->renderView('SkaphandrusAppBundle:FOSUserEmail:register_app.html.twig', array(
+                    'username' => $user->getPersonal()->getFirstname() . $user->getPersonal()->getLastname())
+                ), 'text/html');
+
+        $this->get('mailer')->send($message);
 
         $response["result"] = "1";
         $response["user_id"] = $user->getId();
