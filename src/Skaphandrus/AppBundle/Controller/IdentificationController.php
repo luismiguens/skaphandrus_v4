@@ -1002,12 +1002,12 @@ class IdentificationController extends Controller {
 
         // envia email apos registo de utilizador atraves da app
         $message = \Swift_Message::newInstance()
-                ->setSubject("Welcome " . $user->getPersonal()->getFirstname() . $user->getPersonal()->getLastname())
+                ->setSubject("Ocean Life ID: Welcome " . $user->getPersonal()->getFirstname() . ' ' . $user->getPersonal()->getLastname())
                 ->setFrom('support-noreply@skaphandrus.com', 'Skaphandrus')
                 ->setTo($user->getEmail())
-                ->setCc('rubensardinha1992@gmail.com')
+                ->setCc('luis.miguens@skaphandrus.com')
                 ->setBody($this->renderView('SkaphandrusAppBundle:FOSUserEmail:register_app.html.twig', array(
-                    'username' => $user->getPersonal()->getFirstname() . $user->getPersonal()->getLastname())
+                    'username' => $user->getPersonal()->getFirstname() . ' ' . $user->getPersonal()->getLastname())
                 ), 'text/html');
 
         $this->get('mailer')->send($message);

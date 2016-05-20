@@ -35,21 +35,9 @@ email_all:
     path:     /email/send-all-emails
     defaults: { _controller: "SkaphandrusAppBundle:Email:sendAllEmails" }
     
-#teste_teste:
-#    path:     /teste
-#    defaults: { _controller: "SkaphandrusAppBundle:Testes:teste" }
-
-#contest_teste:
-#    path:     /teste/contest
-#    defaults: { _controller: "SkaphandrusAppBundle:Testes:contest" }
-#    
-#spot_teste:
-#    path:     /teste/spot
-#    defaults: { _controller: "SkaphandrusAppBundle:Testes:spot" }
-#    
-#index_teste:
-#    path:     /teste/index
-#    defaults: { _controller: "SkaphandrusAppBundle:Testes:index" }
+teste_registo_app_email:
+    path:      /{_locale}/teste-registo-app-email
+    defaults: { _controller: "SkaphandrusAppBundle:Identification:registerJson" }    
 
 skaphandrus_app_booking_admin:
     resource: "@SkaphandrusAppBundle/Resources/config/routing/skbooking.yml"
