@@ -6,28 +6,12 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/peity/jquery.peity.min.js') }}"></script>
-    <!-- FooTable -->
-    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>
-    <script>
-        $(function () {
-            $("span.pie").peity("pie", {fill: ['#1ab394', '#d7d7d7', '#ffffff']});
-            $(".line").peity("line", {fill: '#1ab394', stroke: '#169c81'});
-            $(".bar").peity("bar", {fill: ["#1ab394", "#d7d7d7"]});
 
-            $('.footable-firstPhoto').footable();
-            $('.footable-validSpeciesPhotos').footable();
-            $('.footable-validSpecies').footable();
-        });
-    </script>
 {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('bundles/skaphandrusapp/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">
-    <!-- FooTable -->
-    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/footable/footable.core.css') }}" rel="stylesheet">
+
 {% endblock %}
 
 {% block heading_title %}
@@ -50,13 +34,11 @@
     <h2>{{ contest.name }}</h2>
 
     {% if firstPhoto %}
-        <br/>
         <h3>{{ "page.taxomonic_result.h3.first_photo"|trans }}</h3>
-        <input type="text" class="form-control input-sm m-b-xs" id="filter-firstPhoto" placeholder="Search in table">
-        <table class="footable footable-firstPhoto table display table-bordered text-center" data-page-size="5" data-filter=#filter-firstPhoto>
+        <table class="table display table-bordered text-center">
             <thead>
                 <tr>
-                    <th>{{ "form.taxomonic_result.label.user"|trans }}</th>
+                    <th style="width:50%">{{ "form.taxomonic_result.label.user"|trans }}</th>
                     <th>{{ "form.taxomonic_result.label.num_first_photo"|trans }}</th>
                 </tr>
             </thead>
@@ -64,7 +46,7 @@
                 {% for f in firstPhoto %}
                     <tr>
                         <td>
-                            {{ link_to_user_profile(f) }}
+                            {{ link_to_user(f) }}
                         </td>
                         <td style="vertical-align: middle;">
                             {{ f.firstPhoto }}
@@ -72,24 +54,15 @@
                     </tr>
                 {% endfor %}
             </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="2">
-                        <ul class="pagination pull-right"></ul>
-                    </td>
-                </tr>
-            </tfoot>
         </table>
     {% endif %}
 
     {% if validSpeciesPhotos %}
-        <br/>
         <h3>{{ "page.taxomonic_result.h3.valid_species_photo"|trans }}</h3>
-        <input type="text" class="form-control input-sm m-b-xs" id="filter-validSpeciesPhotos" placeholder="Search in table">
-        <table class="footable footable-validSpeciesPhotos table display table-bordered text-center" data-page-size="5" data-filter=#filter-validSpeciesPhotos>
+        <table class="table display table-bordered text-center">
             <thead>
                 <tr>
-                    <th>{{ "form.taxomonic_result.label.user"|trans }}</th>
+                    <th style="width:50%">{{ "form.taxomonic_result.label.user"|trans }}</th>
                     <th>{{ "form.taxomonic_result.label.num_valid_species_photos"|trans }}</th>
                 </tr>
             </thead>
@@ -97,7 +70,7 @@
                 {% for vsp in validSpeciesPhotos %}
                     <tr>
                         <td>
-                            {{ link_to_user_profile(vsp) }}
+                            {{ link_to_user(vsp) }}
                         </td>
                         <td style="vertical-align: middle;">
                             {{ vsp.validSpeciesPhoto }}
@@ -105,24 +78,15 @@
                     </tr>
                 {% endfor %}
             </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="2">
-                        <ul class="pagination pull-right"></ul>
-                    </td>
-                </tr>
-            </tfoot>
         </table>
     {% endif %}
 
     {% if validSpecies %}
-        <br/>
         <h3>{{ "page.taxomonic_result.h3.valid_species"|trans }}</h3>
-        <input type="text" class="form-control input-sm m-b-xs" id="filter-validSpecies" placeholder="Search in table">
-        <table class="footable footable-validSpecies table display table-bordered text-center" data-page-size="5" data-filter=#filter-validSpecies>
+        <table class="table display table-bordered text-center">
             <thead>
                 <tr>
-                    <th>{{ "form.taxomonic_result.label.user"|trans }}</th>
+                    <th style="width:50%">{{ "form.taxomonic_result.label.user"|trans }}</th>
                     <th>{{ "form.taxomonic_result.label.num_valid_species"|trans }}</th>
                 </tr>
             </thead>
@@ -130,7 +94,7 @@
                 {% for vs in validSpecies %}
                     <tr>
                         <td>
-                            {{ link_to_user_profile(vs) }}
+                            {{ link_to_user(vs) }}
                         </td>
                         <td style="vertical-align: middle;">
                             {{ vs.validSpecies }}
@@ -138,13 +102,6 @@
                     </tr>
                 {% endfor %}
             </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="2">
-                        <ul class="pagination pull-right"></ul>
-                    </td>
-                </tr>
-            </tfoot>
         </table>
     {% endif %}
 
