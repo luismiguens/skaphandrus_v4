@@ -31,19 +31,21 @@
 {% block javascripts %}
     {{ parent() }}
     <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/imagesloaded.pkgd.min.js') }}"></script>
 
-    {#    <script type="text/javascript">
-            $(function () {
-                var $grid = $('.grid-winners').imagesLoaded(function () {
-                    // init Isotope after all images have loaded
-                    $grid.isotope({
-                        // options
-                        itemSelector: '.grid-item-winners',
-                        layoutMode: 'masonry'
-                    });
+    <script type="text/javascript">
+        $(function () {
+            var $grid = $('.grid-winners').imagesLoaded(function () {
+                // init Isotope after all images have loaded
+                $grid.isotope({
+                    // options
+                    itemSelector: '.grid-item-winners',
+                    layoutMode: 'masonry'
                 });
             });
-        </script>#}
+        });
+    </script>
 
 {% endblock %}
 
@@ -52,7 +54,7 @@
     {{ parent() }}
     <style type="text/css">
         .grid-item-winners{
-            margin: 0 4px 10px ;
+            margin: 0 4px 10px;
             width: 32%
         }
     </style>
@@ -90,8 +92,10 @@
                                         </a>
                                         <ul class="dropdown-menu" role="menu">
                                             {% for cat in contest.categories %}
-                                                <li><a href="{{ url_to_contest_photos(cat) }}">{{ cat.translate(app.request.locale).name }}</a></li>
-                                                {% endfor %}
+                                                <li>
+                                                    <a href="{{ url_to_contest_photos(cat) }}">{{ cat.translate(app.request.locale).name }}</a>
+                                                </li>
+                                            {% endfor %}
                                         </ul>
                                     </li>
                                     <li>
@@ -125,18 +129,20 @@
                                                 {% for category in contest.categories %}
                                                     <div class="row">
                                                         <h2 style="margin-left: 13px">{{category.name}}</h2>
-                                                        {% for photo in category.winnerPhotos%}
-                                                            <div class="col-lg-4 grid-item-winners thumbnail">
-                                                                <div class="ibox-content no-padding border-left-right">
-                                                                    <a href="{{ url_to_photo(photo) }}" title="{{ photo.title }}">
-                                                                        <img alt="{{ photo.title }}" class="img-responsive" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />
-                                                                    </a>
+                                                        <div class="grid-winners">
+                                                            {% for photo in category.winnerPhotos%}
+                                                                <div class="col-lg-4 grid-item-winners thumbnail">
+                                                                    <div class="ibox-content no-padding border-left-right">
+                                                                        <a href="{{ url_to_photo(photo) }}" title="{{ photo.title }}">
+                                                                            <img alt="{{ photo.title }}" class="img-responsive" src="{{ photo.getWebPath | imagine_filter('sk_widen_265') }}" />
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="ibox-content profile-content">
+                                                                        <h4 align="center"  ><strong>{{ photo.points}} {{ "page.winners.label.points"|trans }}</strong></h4>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="ibox-content profile-content">
-                                                                    <h4 align="center"  ><strong>{{ photo.points}} {{ "page.winners.label.points"|trans }}</strong></h4>
-                                                                </div>
-                                                            </div>
-                                                        {% endfor %}
+                                                            {% endfor %}
+                                                        </div>
                                                     </div>
                                                 {% endfor %}
                                             </section>

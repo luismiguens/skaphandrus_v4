@@ -42,11 +42,11 @@
     {{ parent() }}
     <script src='https://www.google.com/recaptcha/api.js'></script>
 
-{#    <script type="text/javascript">
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-    </script>#}
+    {#    <script type="text/javascript">
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>#}
 {% endblock %}
 
 {% block stylesheets %}
@@ -154,17 +154,24 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="col-md-6" style="margin-top:5px;">
-                                        {% if contest.isInProgress %}
-                                            <a class="btn btn-primary btn-xs" href="{{ path('contest_participate', { 'contest_id': contest.id }) }}">{{ "page.contest.label.participate"|trans }}</a>
-                                        {% endif %}
+                                {% if contest.isInProgress %}
+                                    <div class="col-md-3">
+                                        <a class="btn btn-primary btn-xs" href="{{ path('contest_participate', { 'contest_id': contest.id }) }}">{{ "page.contest.label.participate"|trans }}</a>
+                                        <a class="btn btn-primary btn-xs" href="{{ path('contests_photos', { 'contest_slug': contest, 'category_slug': contest.categories[0] }) }}">{{ "page.contest.label.vote"|trans }}</a>
                                     </div>
-                                    <div class="col-md-6" style="margin-top:5px;">
-                                        {% if contest.isInProgress %}
-                                            <a class="btn btn-primary btn-xs" href="{{ path('contests_photos', { 'contest_slug': contest, 'category_slug': contest.categories[0] }) }}">{{ "page.contest.label.vote"|trans }}</a>
+                                {% endif %}
+
+                                {% if (contest.isJudge) or (is_granted("ROLE_ADMIN")) %}
+                                    <div class="col-md-3">
+                                        {% if contest.isInJudgeVotation %}
+                                            <a style="margin:5px 0 5px;" class="btn btn-primary btn-xs" href="{{ path('judge_votation_admin', { 'contest_id': contest.id }) }}">{{"form.contest.votation"|trans}}</a>
                                         {% endif %}
-                                    </div>
+                                        {% if contest.type == 1 %}
+                                            <a class="btn btn-primary btn-xs" href="{{ path('taxonomic_result_admin', { 'contest_id': contest.id }) }}">{{"form.contest.taxonomic_result"|trans}}</a>
+                                        {% else %}
+                                            <a class="btn btn-primary btn-xs" href="{{ path('judge_result_admin', { 'contest_id': contest.id }) }}">{{"form.contest.judge_result"|trans}}</a>
+                                        {% endif %}
+                                    {% endif %}
                                 </div>
                             </div>
 
@@ -216,8 +223,7 @@
                                     {% endfor %}
                                     <a href="{{ url_to_contest_photographers(contest) }}">
                                         {{ "page.contest.link.more_photographers"|trans }}
-                                    </a>    
-    
+                                    </a>
                                 </dd>
                             </dl>
                         </div>
