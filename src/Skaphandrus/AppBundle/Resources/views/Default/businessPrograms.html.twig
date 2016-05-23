@@ -1,6 +1,6 @@
 {% extends 'SkaphandrusAppBundle::content_layout.html.twig' %}
 
-{% block page_title %}{{ "page.programs.meta_tag.title"|trans }}{% endblock %}
+{% block page_title %}{{ "page.business_programs.meta_tag.title"|trans }}{% endblock %}
 {% block page_description %}{% endblock %}
 {% block page_keywords %}{% endblock %}
 
@@ -10,13 +10,13 @@
 {% endblock %}
 
 {#{% block heading_title %}
-    {{ "page.programs.h1.title"|trans }}
+    {{ "page.business_programs.h1.title"|trans }}
 {% endblock %}
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
         <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
-        <li class="active"><strong>{{ "page.programs.h1.title"|trans }}</strong></li>
+        <li class="active"><strong>{{ "page.business_programs.h1.title"|trans }}</strong></li>
     </ol>
 {% endblock %}#}
 
@@ -24,6 +24,113 @@
 
 {% block stylesheets %}
     {{ parent() }}
+
+    <style type="text/css">
+
+        .faixa1{
+            width:100%;
+            height:25px;
+            background-color:rgb(202,230,224);
+            display:table;
+            margin-top: 2%;
+            margin-bottom: 1%;
+        }
+        .faixa2{
+            width:100%;
+            height:15px;
+            background-color:rgb(202,230,224);
+            display:table;
+            margin-bottom: 3%;
+        }
+
+
+        /* segunda div */
+        .cls_002{
+            font-size:35px;
+            font-weight:bold;
+            color:rgb(254,255,255);
+        }
+        .cls_003{
+            font-size:25px;
+            color:rgb(254,255,255);
+        }
+        .cls_004{
+            font-size:25px;
+            color:rgb(41,173,144);        
+        }
+        /* segunda div */
+
+        /* acima das tabelas */
+        .cls_006{
+            font-size:25px; 
+            font-weight:bold;
+            color:rgb(96,96,95);
+        }
+        /* acima das tabelas */
+
+
+        /* usado nas tabelas */
+        .cls_007{
+            font-size:16px;
+            font-weight:bold;
+            color:rgb(96,96,95);
+            text-align: center;
+        }
+
+        .cls_008{
+            font-size:18px;
+            font-weight:bold;
+            color:rgb(254,255,255);
+            text-align: center;
+        }
+
+        .cls_009{
+            font-size:18px;
+            color:rgb(41,173,144);
+            text-align: center;
+        }    
+
+        .cls_010{
+            font-size:18px;
+            color:rgb(254,255,255);
+            text-align: right;
+        }
+        /* usado nas tabelas */
+
+        /* quarta a oitava div */
+        .cls_011{
+            font-size:25px;
+            color:rgb(96,96,95);
+            font-weight:bold;
+        }
+        .cls_012{
+            font-size:22px;
+            color:rgb(158,158,158);
+        }
+        /* quarta a oitava div */
+
+        /* nona div */
+        .cls_013 {
+            margin-top:50%;
+            margin-left:7%;
+            font-size:30px;
+            font-weight:bold;
+            color:rgb(254,255,255);
+        }
+        .cls_014 {
+            margin-top:20%;
+            margin-right:3%;
+            font-size:32px;
+            color:rgb(254,255,255); 
+        }
+
+        .cls_014 a {
+            text-decoration:none;
+            color:rgb(254,255,255);
+        }
+        /* nona div */
+
+    </style>
 
 {% endblock %}
 
@@ -36,11 +143,500 @@
 
     <div class="wrapper wrapper-content">
         <div class="container">
-            <div class="row">
 
-                
-                
+            <!-- START PRIMEIRA DIV -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox">
+                        <img style="width:100%" src="{{ asset('bundles/skaphandrusapp/img/programs/background1.jpg') }}"/>
+                    </div>
+                </div>
             </div>
+            <!-- END PRIMEIRA DIV -->
+
+            <!-- START SEGUNDA DIV -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox" style="background-color: #1ab394">
+
+                        <!-- start imagem logotipo da skaphandrus -->
+                        <div class="row">
+                            <div class="col-md-12" align="center">
+                                <img src="{{ asset('bundles/skaphandrusapp/img/programs/logo-skaphandrus.png') }}"/>
+                            </div>
+                        </div>
+                        <!-- end imagem logotipo da skaphandrus -->
+
+                        <!-- start blocos de texto -->
+                        <div class="row">
+                            <div class="col-md-12 cls_002" align="center">
+                                <p>{{ "page.business_programs.p.welcome_message_program"|trans }}</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 cls_003" align="center">
+                                <p>{{ "page.business_programs.p.get_your_diving"|trans }}</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4 cls_004" style="background-color:white; border-radius:10px;" align="center">
+                                <p style="margin-top:2%;">{{ "page.business_programs.p.discover_our_new_tool"|trans }}</p>
+                            </div>
+                            <div class="col-md-4"></div>
+                        </div>
+                        <!-- end blocos de texto -->
+
+                        <!-- start faixas cinza -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="faixa1"></div>
+                                <div class="faixa2"></div>
+                            </div>
+                        </div>
+                        <!-- end faixas cinza -->
+
+                    </div>
+                </div>
+            </div>
+            <!-- END SEGUNDA DIV -->
+
+            <!-- START TERCEIRA DIV -->
+            <!-- start row das tabelas -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox">
+                        <div class="ibox-content" align="center">
+
+                            <p class="cls_006">{{ "page.business_programs.p.flexible_affordable"|trans }}</p>
+
+                            <!-- start tabela 1 -->
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="cls_007" style="width: 60%">{{ "page.business_programs.th.business_page"|trans }}</th>
+                                        <th class="cls_007" style="width: 13%">{{ "page.business_programs.th.basic"|trans }}</th>
+                                        <th class="cls_007" style="width: 13%">{{ "page.business_programs.th.plus"|trans }}</th>
+                                        <th class="cls_007" style="width: 13%">{{ "page.business_programs.th.premium"|trans }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_008">{{ "page.business_programs.td.genreral_information"|trans }}</td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_010">{{ "page.business_programs.td.currencies"|trans }}</td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_010">{{ "page.business_programs.td.languages"|trans }}</td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_010">{{ "page.business_programs.td.description"|trans }}</td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_010">{{ "page.business_programs.td.mission"|trans }}</td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_008">{{ "page.business_programs.td.address"|trans }}</td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_008">{{ "page.business_programs.td.contact"|trans }}</td>
+                                        <td class="cls_009"><i class="fa fa-times text-danger"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_008">{{ "page.business_programs.td.dive_center_information"|trans }}</td>
+                                        <td class="cls_009"><i class="fa fa-times text-danger"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_010">{{ "page.business_programs.td.dive_sites_map"|trans }}</td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_010">{{ "page.business_programs.td.dive_packages_prices"|trans }}</td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_010">{{ "page.business_programs.td.equipment"|trans }}</td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_010">{{ "page.business_programs.td.dive_sites_access"|trans }}</td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_010">{{ "page.business_programs.td.gases"|trans }}</td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_010">{{ "page.business_programs.td.security"|trans }}</td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_008">{{ "page.business_programs.td.dive_school_information"|trans }}</td>
+                                        <td class="cls_009"><i class="fa fa-times text-danger"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_010">{{ "page.business_programs.td.education_conditions"|trans }}</td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_010">{{ "page.business_programs.td.diving_courses_prices"|trans }}</td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- end tabela 1 -->
+
+                            <!-- start tabela 2 -->
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="cls_007" style="width: 60%">{{ "page.business_programs.th.features"|trans }}</th>
+                                        <th class="cls_007" style="width: 13%">{{ "page.business_programs.th.basic"|trans }}</th>
+                                        <th class="cls_007" style="width: 13%">{{ "page.business_programs.th.plus"|trans }}</th>
+                                        <th class="cls_007" style="width: 13%">{{ "page.business_programs.th.premium"|trans }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_008">{{ "page.business_programs.td.general_information_management_system"|trans }}</td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_008">{{ "page.business_programs.td.administrators_management_system"|trans }}</td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_008">{{ "page.business_programs.td.dive_center_management_system"|trans }}</td>
+                                        <td class="cls_009"><i class="fa fa-times text-danger"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_008">{{ "page.business_programs.td.dive_school_management_system"|trans }}</td>
+                                        <td class="cls_009"><i class="fa fa-times text-danger"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_008">{{ "page.business_programs.td.booking_management_system"|trans }}</td>
+                                        <td class="cls_009"><i class="fa fa-times text-danger"></i></td>
+                                        <td class="cls_009"><i class="fa fa-times text-danger"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- end tabela 2 -->
+
+                            <!-- start tabela 3 -->
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="cls_007" style="width: 60%">{{ "page.business_programs.th.promotion"|trans }}</th>
+                                        <th class="cls_007" style="width: 13%">{{ "page.business_programs.th.basic"|trans }}</th>
+                                        <th class="cls_007" style="width: 13%">{{ "page.business_programs.th.plus"|trans }}</th>
+                                        <th class="cls_007" style="width: 13%">{{ "page.business_programs.th.premium"|trans }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_008">{{ "page.business_programs.td.presentation_business_country_page"|trans }}</td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_008">{{ "page.business_programs.td.presentation_business_location_page"|trans }}</td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_008">{{ "page.business_programs.td.presentation_dive_site_pages_where_the_business_dives"|trans }}</td>
+                                        <td class="cls_009"><i class="fa fa-times text-danger"></i></td>
+                                        <td class="cls_009"><i class="fa fa-times text-danger"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_008">{{ "page.business_programs.td.presentation_species_page"|trans }}</td>
+                                        <td class="cls_009"><i class="fa fa-times text-danger"></i></td>
+                                        <td class="cls_009"><i class="fa fa-times text-danger"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_008">{{ "page.business_programs.td.presentation_app"|trans }}</td>
+                                        <td class="cls_009"><i class="fa fa-times text-danger"></i></td>
+                                        <td class="cls_009"><i class="fa fa-times text-danger"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_008">{{ "page.business_programs.td.sharing_partnership_social_network"|trans }}</td>
+                                        <td class="cls_009"><i class="fa fa-times text-danger"></i></td>
+                                        <td class="cls_009"><i class="fa fa-times text-danger"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_008">{{ "page.business_programs.td.share_social_networks_species_observed_busines"|trans }}</td>
+                                        <td class="cls_009"><i class="fa fa-times text-danger"></i></td>
+                                        <td class="cls_009"><i class="fa fa-times text-danger"></i></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_008">{{ "page.business_programs.td.share_social_networks_new_species_observed"|trans }}</td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- end tabela 3 -->
+
+                            <!-- start tabela 4 -->
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="cls_007" style="width: 60%">{{ "page.business_programs.th.other"|trans }}</th>
+                                        <th class="cls_007" style="width: 13%">{{ "page.business_programs.th.basic"|trans }}</th>
+                                        <th class="cls_007" style="width: 13%">{{ "page.business_programs.th.plus"|trans }}</th>
+                                        <th class="cls_007" style="width: 13%">{{ "page.business_programs.th.premium"|trans }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_008">{{ "page.business_programs.td.providing_photo_contest"|trans }}</td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_008">{{ "page.business_programs.td.user_ocean_life_id"|trans }}</td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                        <td class="cls_009"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #1ab394" class="cls_008">{{ "page.business_programs.td.three_ocean_life_id"|trans }}</td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"></td>
+                                        <td class="cls_009"><i class="fa fa-check text-navy"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- end tabela 4 -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end row das tabelas -->
+            <!-- END TERCEIRA DIV -->
+
+            <!-- START QUARTA DIV -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-md-12 cls_011" align="center">
+                                    <p>{{ "page.business_programs.p.business_page"|trans }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 cls_012" align="center">
+                                    <p>{{ "page.business_programs.p.business_page"|trans }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" align="center">
+                                    <img style="width:auto;height:900px" src="{{ asset('bundles/skaphandrusapp/img/programs/business_page.jpg') }}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END QUARTA DIV -->
+
+            <!-- START QUINTA DIV -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-md-12 cls_011" align="center">
+                                    <p>{{ "page.business_programs.p.business_page_edit"|trans }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 cls_012" align="center">
+                                    <p>{{ "page.business_programs.p.texto_business_page_edit"|trans }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" align="center">
+                                    <img style="width:auto;height:900px" src="{{ asset('bundles/skaphandrusapp/img/programs/business_page_edit.jpg') }}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END QUINTA DIV -->
+
+            <!-- START SEXTA DIV -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-md-12 cls_011" align="center">
+                                    <p>{{ "page.business_programs.p.redes_sociais"|trans }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 cls_012" align="center">
+                                    <p>{{ "page.business_programs.p.texto_redes_sociais"|trans }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" align="center">
+                                    <img style="width:auto;height:500px" src="{{ asset('bundles/skaphandrusapp/img/programs/redes_sociais.jpg') }}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END SEXTA DIV -->
+
+            <!-- START SETIMA DIV -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-md-12 cls_011" align="center">
+                                    <p>{{ "page.business_programs.p.mobile_app"|trans }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 cls_012" align="center">
+                                    <p>{{ "page.business_programs.p.texto_mobile_app"|trans }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" align="center">
+                                    <img style="width:auto;height:700px" src="{{ asset('bundles/skaphandrusapp/img/programs/mobile_app.jpg') }}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END SETIMA DIV -->
+
+            <!-- START OITAVA DIV -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-md-12 cls_011" align="center">
+                                    <p>{{ "page.business_programs.p.destinations"|trans }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 cls_012" align="center">
+                                    <p>{{ "page.business_programs.p.texto_destinations"|trans }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" align="center">
+                                    <img style="width:auto;height:900px" src="{{ asset('bundles/skaphandrusapp/img/programs/destinations.jpg') }}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END OITAVA DIV -->
+
+            <!-- START NONA DIV -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox" style="background-color: #1ab394">
+
+                        <div class="row">
+                            <div class="col-md-3" align="center" >
+                                <img src="{{ asset('bundles/skaphandrusapp/img/programs/logo-metade.png') }}"/>
+                            </div>
+
+                            <div class="col-md-9">
+
+                                <div class="cls_013" align="center">
+                                    <p>{{ "page.business_programs.p.dive_into_our_program"|trans }}</p>
+                                </div>
+
+                                <div class="pull-right cls_014" align="right">
+                                    <p><a href="mailto:support@skaphandrus.com">support@skaphandrus.com</a></p>
+                                    <p><a href="http://www.skaphandrus.com/">skaphandrus.com</a></p>
+                                    <p><a href="http://www.facebook.com/skaphandrus/">facebook.com/skaphandrus</a></p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- END NONA DIV -->
+
         </div>
     </div>
 

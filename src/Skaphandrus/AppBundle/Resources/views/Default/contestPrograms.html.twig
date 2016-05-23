@@ -1,6 +1,6 @@
 {% extends 'SkaphandrusAppBundle::content_layout.html.twig' %}
 
-{% block page_title %}{{ "page.programs.meta_tag.title"|trans }}{% endblock %}
+{% block page_title %}{{ "page.contest_programs.meta_tag.title"|trans }}{% endblock %}
 {% block page_description %}{% endblock %}
 {% block page_keywords %}{% endblock %}
 
@@ -10,13 +10,13 @@
 {% endblock %}
 
 {#{% block heading_title %}
-    {{ "page.programs.h1.title"|trans }}
+    {{ "page.contest_programs.h1.title"|trans }}
 {% endblock %}
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
         <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
-        <li class="active"><strong>{{ "page.programs.h1.title"|trans }}</strong></li>
+        <li class="active"><strong>{{ "page.contest_programs.h1.title"|trans }}</strong></li>
     </ol>
 {% endblock %}#}
 
@@ -26,7 +26,7 @@
     {{ parent() }}
 
     <style type="text/css">
-        
+
         .faixa1{
             width:100%;
             height:25px;
@@ -101,7 +101,20 @@
         }
         /* usado nas tabelas */
 
+        /* quarta div */
+        .cls_013 {
+            font-size:20px;
+            font-weight:bold;
+            color:#1ab394;
+        }
 
+        .cls_014 {
+            font-size:15px;
+            color:#1ab394;
+        }
+        /* quarta div */
+
+        /* quinta div */
         .cls_011{
             margin-top:50%;
             margin-left:7%;
@@ -110,13 +123,18 @@
             color:rgb(254,255,255);
         }
 
-        .cls_012{
+        .cls_012 {
             margin-top:15%;
             margin-right:3%;
             font-size:32px;
-            font-weight:normal;
             color:rgb(254,255,255);
         }
+
+        .cls_012 a{
+            text-decoration:none;
+            color:rgb(254,255,255);
+        }
+        /* quinta div */
 
     </style>
 
@@ -136,7 +154,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="ibox">
-                        <img style="width:100%" src="{{ asset('uploads/dive_centers_programs/background1.jpg') }}"/>
+                        <img style="width:100%;" src="{{ asset('bundles/skaphandrusapp/img/programs/background1.jpg') }}"/>
                     </div>
                 </div>
             </div>
@@ -150,7 +168,7 @@
                         <!-- start imagem logotipo da skaphandrus -->
                         <div class="row">
                             <div class="col-md-12" align="center">
-                                <img src="{{ asset('uploads/dive_centers_programs/logo-skaphandrus.png') }}"/>
+                                <img src="{{ asset('bundles/skaphandrusapp/img/programs/logo-skaphandrus.png') }}"/>
                             </div>
                         </div>
                         <!-- end imagem logotipo da skaphandrus -->
@@ -158,25 +176,23 @@
                         <!-- start blocos de texto -->
                         <div class="row">
                             <div class="col-md-12 cls_002" align="center">
-                                <p>{{ "page.programs.p.welcome_message_program"|trans }}</p>
-                                <p>{{ "page.programs.p.service_program"|trans }}</p>
+                                <p>{{ "page.contest_programs.p.welcome_message_program"|trans }}</p>
+                                <p>{{ "page.contest_programs.p.service_program"|trans }}</p>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-12 cls_003" align="center">
-                                <p>{{ "page.programs.p.get_your_diving"|trans }}</p>
+                                <p>{{ "page.contest_programs.p.get_your_diving"|trans }}</p>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4">
-                            </div>
+                            <div class="col-md-4"></div>
                             <div class="col-md-4 cls_004" style="background-color:white; border-radius:10px;" align="center">
-                                <p style="margin-top:2%;">{{ "page.programs.p.discover_our_new_tool"|trans }}</p>
+                                <p style="margin-top:2%;">{{ "page.contest_programs.p.discover_our_new_tool"|trans }}</p>
                             </div>
-                            <div class="col-md-4">
-                            </div>
+                            <div class="col-md-4"></div>
                         </div>
                         <!-- end blocos de texto -->
 
@@ -203,52 +219,53 @@
                             <!-- start row das tabelas -->
                             <div class="row">
                                 <div class="col-md-12" align="center">
-                                    <p class="cls_006">{{ "page.programs.p.flexible_affordable"|trans }}</p>
+
+                                    <p class="cls_006">{{ "page.contest_programs.p.flexible_affordable"|trans }}</p>
 
                                     <!-- start tabela 1 -->
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th class="cls_007" style="width: 50%">{{ "page.programs.th.key_features"|trans|raw|raw }}</th>
-                                                <th class="cls_007" style="width: 25%">{{ "page.programs.th.light"|trans|raw }}</th>
-                                                <th class="cls_007" style="width: 25%">{{ "page.programs.th.full"|trans|raw }}</th>
+                                                <th class="cls_007" style="width: 50%">{{ "page.contest_programs.th.key_features"|trans|raw|raw }}</th>
+                                                <th class="cls_007" style="width: 25%">{{ "page.contest_programs.th.light"|trans|raw }}</th>
+                                                <th class="cls_007" style="width: 25%">{{ "page.contest_programs.th.full"|trans|raw }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td style="background-color: #1ab394" class="cls_008">{{ "page.programs.td.contest_duration"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.30_days"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.60_days"|trans|raw }}</td>
+                                                <td style="background-color: #1ab394" class="cls_008">{{ "page.contest_programs.td.contest_duration"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.30_days"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.60_days"|trans|raw }}</td>
                                             </tr>
                                             <tr>
-                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.contest_naming"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.yes"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.yes"|trans|raw }}</td>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.contest_programs.td.contest_naming"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.yes"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.yes"|trans|raw }}</td>
                                             </tr>
                                             <tr>
-                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.public_voting"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.yes"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.yes"|trans|raw }}</td>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.contest_programs.td.public_voting"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.yes"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.yes"|trans|raw }}</td>
                                             </tr>
                                             <tr>
-                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.number_of_categories"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.number_3"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.number_10"|trans|raw }}</td>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.contest_programs.td.number_of_categories"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.number_3"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.number_10"|trans|raw }}</td>
                                             </tr>
                                             <tr>
-                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.number_of_photos"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.unlimited"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.unlimited"|trans|raw }}</td>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.contest_programs.td.number_of_photos"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.unlimited"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.unlimited"|trans|raw }}</td>
                                             </tr>
                                             <tr>
-                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.sponsors_and_awards"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.client_responsability"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.client_responsability_with_skaphandrus"|trans|raw }}</td>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.contest_programs.td.sponsors_and_awards"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.client_responsability"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.client_responsability_with_skaphandrus"|trans|raw }}</td>
                                             </tr>
                                             <tr>
-                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.influential_juries"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.client_responsability"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.client_responsability_with_skaphandrus"|trans|raw }}</td>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.contest_programs.td.influential_juries"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.client_responsability"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.client_responsability_with_skaphandrus"|trans|raw }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -258,21 +275,21 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th class="cls_007" style="width: 50%">{{ "page.programs.th.development"|trans|raw }}</th>
-                                                <th class="cls_007" style="width: 25%">{{ "page.programs.th.light"|trans|raw }}</th>
-                                                <th class="cls_007" style="width: 25%">{{ "page.programs.th.full"|trans|raw }}</th>
+                                                <th class="cls_007" style="width: 50%">{{ "page.contest_programs.th.development"|trans|raw }}</th>
+                                                <th class="cls_007" style="width: 25%">{{ "page.contest_programs.th.light"|trans|raw }}</th>
+                                                <th class="cls_007" style="width: 25%">{{ "page.contest_programs.th.full"|trans|raw }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td style="background-color: #1ab394" class="cls_008">{{ "page.programs.td.visual_identity_production"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.no"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.yes"|trans|raw }}</td>
+                                                <td style="background-color: #1ab394" class="cls_008">{{ "page.contest_programs.td.visual_identity_production"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.yes"|trans|raw }}</td>
                                             </tr>
                                             <tr>
-                                                <td style="background-color: #1ab394" class="cls_008">{{ "page.programs.td.creation_and_content_management"|trans|raw|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.no"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.yes"|trans|raw }}</td>
+                                                <td style="background-color: #1ab394" class="cls_008">{{ "page.contest_programs.td.creation_and_content_management"|trans|raw|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.yes"|trans|raw }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -282,46 +299,46 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th class="cls_007" style="width: 50%">{{ "page.programs.th.promotion"|trans|raw }}</th>
-                                                <th class="cls_007" style="width: 25%">{{ "page.programs.th.light"|trans|raw }}</th>
-                                                <th class="cls_007" style="width: 25%">{{ "page.programs.th.full"|trans|raw }}</th>
+                                                <th class="cls_007" style="width: 50%">{{ "page.contest_programs.th.promotion"|trans|raw }}</th>
+                                                <th class="cls_007" style="width: 25%">{{ "page.contest_programs.th.light"|trans|raw }}</th>
+                                                <th class="cls_007" style="width: 25%">{{ "page.contest_programs.th.full"|trans|raw }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td style="background-color: #1ab394" class="cls_008">{{ "page.programs.td.featured_in_skaphandrus"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.no"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.yes"|trans|raw }}</td>
+                                                <td style="background-color: #1ab394" class="cls_008">{{ "page.contest_programs.td.featured_in_skaphandrus"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.yes"|trans|raw }}</td>
                                             </tr>
                                             <tr>
-                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.highlight_social_networks"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.no"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.yes"|trans|raw }}</td>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.contest_programs.td.highlight_social_networks"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.yes"|trans|raw }}</td>
                                             </tr>
                                             <tr>
-                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.promotional_newsletter"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.no"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.yes"|trans|raw }}</td>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.contest_programs.td.promotional_newsletter"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.yes"|trans|raw }}</td>
                                             </tr>
                                             <tr>
-                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.creation_event_management"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.no"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.yes"|trans|raw }}</td>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.contest_programs.td.creation_event_management"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.yes"|trans|raw }}</td>
                                             </tr>
                                             <tr>
-                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.investment_digital_tools"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.no"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.optional"|trans|raw }}</td>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.contest_programs.td.investment_digital_tools"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.optional"|trans|raw }}</td>
                                             </tr>
                                             <tr>
-                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.digital_campaign_management"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.no"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.optional"|trans|raw }}</td>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.contest_programs.td.digital_campaign_management"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.optional"|trans|raw }}</td>
                                             </tr>
                                             <tr>
-                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.programs.td.outdoors_billboards_production"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.no"|trans|raw }}</td>
-                                                <td class="cls_009">{{ "page.programs.td.optional"|trans|raw }}</td>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.contest_programs.td.outdoors_billboards_production"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.optional"|trans|raw }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -336,21 +353,29 @@
                                 <div class="col-md-12" align="center">
 
                                     <!-- start imagem bolinhas -->
-                                    <img style="width:100%; margin-bottom: 1%" src="{{ asset('uploads/dive_centers_programs/background2.jpg') }}"/>
+                                    <div class="row">
+                                        <div class="col-md-12" align="center">
+                                            <img style="width:auto;height:400px" src="{{ asset('bundles/skaphandrusapp/img/programs/bolas1.jpg') }}"/>
+                                        </div>
+                                    </div>
                                     <!-- end imagem bolinhas -->
 
                                     <!-- start texto e div verde -->
-                                    <div class="col-md-2">
-                                    </div>
-                                    <div class="col-md-8 cls_010" style="background-color:#1ab394; border-radius:5px;" align="center">
-                                        <p style="margin-top: 2%">{{ "page.programs.p.become_affiliate"|trans|raw }}</p>
-                                    </div>
-                                    <div class="col-md-2">
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-10 cls_010" style="background-color:#1ab394; border-radius:5px;" align="center">
+                                            <p style="margin-top: 1%">{{ "page.contest_programs.p.become_affiliate"|trans }}</p>
+                                        </div>
+                                        <div class="col-md-1"></div>
                                     </div>
                                     <!-- end texto e div verde -->
 
                                     <!-- start imagem bolinhas -->
-                                    <img style="width:100%; margin-top: 1%" src="{{ asset('uploads/dive_centers_programs/background3.jpg') }}"/>
+                                    <div class="row">
+                                        <div class="col-md-12" align="center">
+                                            <img style="width:auto;height:325px" src="{{ asset('bundles/skaphandrusapp/img/programs/bolas2.jpg') }}"/>
+                                        </div>
+                                    </div>
                                     <!-- end imagem bolinhas -->
 
                                 </div>
@@ -367,7 +392,89 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="ibox">
-                        <img style="width:100%" src="{{ asset('uploads/dive_centers_programs/background4.jpg') }}"/>
+                        <div class="ibox-content" align="center">
+
+                            <!-- start row primeiras vantagens -->
+                            <div class="row">
+                                <div class="col-md-4" align="center">
+                                    <div>
+                                        <p class="cls_013">{{"page.contest_programs.p.vantagens1"|trans|raw}}</p>
+                                        <p class="cls_014">{{"page.contest_programs.p.vantagens1_1"|trans|raw}}</p>
+                                        <p class="cls_013">{{"page.contest_programs.p.vantagens1_2"|trans|raw}}</p>
+                                        <img style="width:auto;height:200px;" src="{{ asset('bundles/skaphandrusapp/img/programs/vantagens1.jpg') }}"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" align="center">
+                                    <div>
+                                        <p class="cls_013">{{"page.contest_programs.p.vantagens2"|trans|raw}}</p>
+                                        <p class="cls_014">{{"page.contest_programs.p.vantagens2_1"|trans|raw}}</p>
+                                        <img style="width:auto;height:150px;" src="{{ asset('bundles/skaphandrusapp/img/programs/vantagens2.jpg') }}"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" align="center">
+                                    <div>
+                                        <p class="cls_013">{{"page.contest_programs.p.vantagens3"|trans|raw}}</p>
+                                        <p class="cls_014">{{"page.contest_programs.p.vantagens3_1"|trans|raw}}</p>
+                                        <p class="cls_013">{{"page.contest_programs.p.vantagens3_2"|trans|raw}}</p>
+                                        <img style="width:auto;height:150px;" src="{{ asset('bundles/skaphandrusapp/img/programs/vantagens3.jpg') }}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end row primeiras vantagens -->
+
+                            <!-- start row segundas vantagens -->
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div>
+                                        <p class="cls_013">{{"page.contest_programs.p.vantagens4"|trans|raw}}</p>
+                                        <p class="cls_014">{{"page.contest_programs.p.vantagens4_1"|trans|raw}}</p>
+                                        <img style="width:auto;height:150px;" src="{{ asset('bundles/skaphandrusapp/img/programs/vantagens4.jpg') }}"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div>
+                                        <p class="cls_013">{{"page.contest_programs.p.underwater_photo_contest"|trans|raw}}</p>
+                                        <img style="" src="{{ asset('bundles/skaphandrusapp/img/landing/webpage-03.jpg') }}"/>
+                                        <p class="cls_013">{{"page.contest_programs.p.skaphandrus"|trans|raw}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div>
+                                        <p class="cls_013">{{"page.contest_programs.p.vantagens5"|trans|raw}}</p>
+                                        <p class="cls_014">{{"page.contest_programs.p.vantagens5_1"|trans|raw}}</p>
+                                        <img style="width:auto;height:150px;" src="{{ asset('bundles/skaphandrusapp/img/programs/vantagens5.jpg') }}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end row segundas vantagens -->
+
+                            <!-- start row terceiras vantagens -->
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div>
+                                        <p class="cls_013">{{"page.contest_programs.p.vantagens6"|trans|raw}}</p>
+                                        <p class="cls_014">{{"page.contest_programs.p.vantagens6_1"|trans|raw}}</p>
+                                        <img style="width:auto;height:150px;" src="{{ asset('bundles/skaphandrusapp/img/programs/vantagens6.jpg') }}"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div>
+                                        <p class="cls_013">{{"page.contest_programs.p.vantagens7"|trans|raw}}</p>
+                                        <p class="cls_014">{{"page.contest_programs.p.vantagens7_1"|trans|raw}}</p>
+                                        <img style="width:auto;height:200px;" src="{{ asset('bundles/skaphandrusapp/img/programs/vantagens7.jpg') }}"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div>
+                                        <p class="cls_013">{{"page.contest_programs.p.vantagens8"|trans|raw}}</p>
+                                        <p class="cls_014">{{"page.contest_programs.p.vantagens8_1"|trans|raw}}</p>
+                                        <img style="width:auto;height:150px;" src="{{ asset('bundles/skaphandrusapp/img/programs/vantagens8.jpg') }}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end row terceiras vantagens -->
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -378,26 +485,26 @@
                 <div class="col-md-12">
                     <div class="ibox" style="background-color: #1ab394">
 
-                            <div class="row">
-                                <div class="col-md-3" align="center" >
-                                    <img src="{{ asset('uploads/dive_centers_programs/logo-metade.png') }}"/>
-                                </div>
-
-                                <div class="col-md-9">
-
-                                    <div class="cls_011" align="center">
-                                        <p>{{ "page.programs.p.dive_into_our_program"|trans|raw }}</p>
-                                        <p>{{ "page.programs.p.service_program"|trans|raw }}</p>
-                                    </div>
-
-                                    <div class="pull-right cls_012" align="right">
-                                        <p>support@skaphandrus.com</p>
-                                        <p><a href="http://www.skaphandrus.com/">www.skaphandrus.com</a></p>
-                                        <p>facebook.com/skaphandrus</p>
-                                    </div>
-
-                                </div>
+                        <div class="row">
+                            <div class="col-md-3" align="center" >
+                                <img src="{{ asset('bundles/skaphandrusapp/img/programs/logo-metade.png') }}"/>
                             </div>
+
+                            <div class="col-md-9">
+
+                                <div class="cls_011" align="center">
+                                    <p>{{ "page.contest_programs.p.dive_into_our_program"|trans }}</p>
+                                    <p>{{ "page.contest_programs.p.service_program"|trans }}</p>
+                                </div>
+
+                                <div class="pull-right cls_012" align="right">
+                                    <p><a href="mailto:support@skaphandrus.com">support@skaphandrus.com</a></p>
+                                    <p><a href="http://www.skaphandrus.com/">skaphandrus.com</a></p>
+                                    <p><a href="http://www.facebook.com/skaphandrus/">facebook.com/skaphandrus</a></p>
+                                </div>
+
+                            </div>
+                        </div>
 
                     </div>
                 </div>
