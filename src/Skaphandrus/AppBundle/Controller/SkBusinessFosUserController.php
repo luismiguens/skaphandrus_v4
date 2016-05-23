@@ -22,9 +22,9 @@ class SkBusinessFosUserController extends Controller {
     public function sendRegistrationEmail(SkBusinessFosUser $businessFosUser, SkBusiness $business) {
         $message = \Swift_Message::newInstance()
                 ->setSubject("Thanks for registering " . $businessFosUser->getBusinessName())
-                ->setFrom('support-noreply@skaphandrus.com', 'Skaphandrus')
+                ->setFrom('noreply-registration@skaphandrus.com', 'Skaphandrus')
                 ->setTo($businessFosUser->getEmail())
-                ->setCc('registration@skaphandrus.com')
+                ->setBcc('partnerships@skaphandrus.com')
                 ->setBody(
                 $this->renderView(
                         'SkaphandrusAppBundle:SkBusinessFosUser:registrationEmail.html.twig', array(

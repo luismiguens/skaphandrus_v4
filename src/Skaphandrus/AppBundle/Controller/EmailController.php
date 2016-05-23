@@ -49,9 +49,9 @@ class EmailController extends Controller {
 
                 $message = \Swift_Message::newInstance()
                         ->setSubject($subject)
-                        ->setFrom('support-noreply@skaphandrus.com', 'Skaphandrus')
+                        ->setFrom('noreply-notification@skaphandrus.com', 'Skaphandrus')
                         ->setTo($address->getEmail())
-                        ->setBcc('luis.t.miguens@gmail.com')
+                        ->setBcc('noreply@skaphandrus.com')
                         ->setBody($this->renderView('SkaphandrusAppBundle:Email:content_email.html.twig', array(
                             'user' => $address->getName()
                         )), 'text/html');
