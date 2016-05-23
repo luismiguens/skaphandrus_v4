@@ -21,6 +21,7 @@
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb">
         <li><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
+        <li><a href="{{ url_to_contest(contest) }}">{{ contest.name }}</a></li>
         <li class="active"><strong>{{ "breadcrumb.taxomonic_result"|trans }}</strong></li>
     </ol>
 {% endblock %}
