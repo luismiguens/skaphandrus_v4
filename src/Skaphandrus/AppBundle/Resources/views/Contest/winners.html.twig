@@ -125,20 +125,129 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            {% if contest.type == 1 %}
+
+                                                {% if firstPhoto %}
+                                                    <h2>{{ "page.taxomonic_result.h3.first_photo"|trans }}</h2>
+                                                    <table class="table display table-bordered text-center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width:50%">{{ "form.taxomonic_result.label.user"|trans }}</th>
+                                                                <th>{{ "form.taxomonic_result.label.num_first_photo"|trans }}</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for f in firstPhoto %}
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="contact-box center-version small_version" style="border:none;margin-bottom:0;">
+                                                                            <div class="box_content">
+                                                                                <img alt="{{f}}" class="img-circle" src="{{ f.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
+                                                                                {{ link_to_user(f) }}
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td style="vertical-align: middle;">
+                                                                        {{ f.firstPhoto }}
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                {% endif %}
+
+                                                {% if validSpeciesPhotos %}
+                                                    <h2>{{ "page.taxomonic_result.h3.valid_species_photo"|trans }}</h2>
+                                                    <table class="table display table-bordered text-center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width:50%">{{ "form.taxomonic_result.label.user"|trans }}</th>
+                                                                <th>{{ "form.taxomonic_result.label.num_valid_species_photos"|trans }}</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for vsp in validSpeciesPhotos %}
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="contact-box center-version small_version" style="border:none;margin-bottom:0;">
+                                                                            <div class="box_content">
+                                                                                <img alt="{{vsp}}" class="img-circle" src="{{ vsp.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
+                                                                                {{ link_to_user(vsp) }}
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td style="vertical-align: middle;">
+                                                                        {{ vsp.validSpeciesPhoto }}
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                {% endif %}
+
+                                                {% if validSpecies %}
+                                                    <h2>{{ "page.taxomonic_result.h3.valid_species"|trans }}</h2>
+                                                    <table class="table display table-bordered text-center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width:50%">{{ "form.taxomonic_result.label.user"|trans }}</th>
+                                                                <th>{{ "form.taxomonic_result.label.num_valid_species"|trans }}</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for vs in validSpecies %}
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="contact-box center-version small_version" style="border:none;margin-bottom:0;">
+                                                                            <div class="box_content">
+                                                                                <img alt="{{vs}}" class="img-circle" src="{{ vs.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
+                                                                                {{ link_to_user(vs) }}
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td style="vertical-align: middle;">
+                                                                        {{ vs.validSpecies }}
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                {% endif %}
+
+                                            {% endif %}
+
                                             <section id="points">
                                                 {% for category in contest.categories %}
                                                     <div class="row">
                                                         <h2 style="margin-left: 13px">{{category.name}}</h2>
                                                         <div class="grid-winners">
                                                             {% for photo in category.winnerPhotos%}
-                                                                <div class="col-lg-4 grid-item-winners thumbnail">
+                                                                <div class="col-lg-4 grid-item-winners thumbnail" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
                                                                     <div class="ibox-content no-padding border-left-right">
                                                                         <a href="{{ url_to_photo(photo) }}" title="{{ photo.title }}">
                                                                             <img alt="{{ photo.title }}" class="img-responsive" src="{{ photo.getWebPath | imagine_filter('sk_widen_265') }}" />
                                                                         </a>
                                                                     </div>
                                                                     <div class="ibox-content profile-content">
-                                                                        <h4 align="center"  ><strong>{{ photo.points}} {{ "page.winners.label.points"|trans }}</strong></h4>
+                                                                        <h4><strong>{{ photo.points}} {{ "page.winners.label.points"|trans }}</strong></h4>
+                                                                        <ul class="list-unstyled">
+                                                                            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                                                                                <meta itemprop="name" content="{{ photo.fosUser.name }}">
+                                                                                {{ "page.photos.label.username"|trans }}: <a href="{{ url_to_user(photo.fosUser) }}">{{ photo.fosUser.name }}</a>
+                                                                            </li>
+                                                                            {% if photo.spot is not null %}
+                                                                                <li itemprop="contentLocation" itemscope itemtype="http://schema.org/TouristAttraction">
+                                                                                    <meta itemprop="name" content="{{ photo.spot.name }}">
+                                                                                    {{ "page.photos.label.spot"|trans }}: <a href="{{ url_to_spot(photo.spot) }}">{{ photo.spot.name }}</a>
+                                                                                </li>
+                                                                            {% endif %}
+                                                                            {% if photo.species is not null %}
+                                                                                <li>
+                                                                                    {{ "page.photos.label.species"|trans }}: <a href="{{ url_to_species(photo.species) }}">{{ photo.species.name }}</a>
+                                                                                </li>
+                                                                            {% endif %}
+                                                                        </ul>
                                                                     </div>
                                                                 </div>
                                                             {% endfor %}

@@ -13,29 +13,29 @@ class ContestController extends Controller {
 
         $contestInProgress = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
                 ->findContestInProgress();
-        
-        $fos_user_id = 0; 
-        
+
+        $fos_user_id = 0;
+
         $securityContext = $this->container->get('security.authorization_checker');
-        if($securityContext->isGranted('IS_AUTHENTICATED_FULLY')):
+        if ($securityContext->isGranted('IS_AUTHENTICATED_FULLY')):
             $fos_user_id = $this->get('security.token_storage')->getToken()->getUser()->getId();
-            
+
         endif;
-         
+
 
         foreach ($contestInProgress as $contest) {
             $contest->setIsJudge($this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->isFosUserJudgeInContest($fos_user_id, $contest->getId()));
         }
-        
+
 
         $contestEnded = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
                 ->findContestEnded();
-        
-        
+
+
         foreach ($contestEnded as $contest) {
             $contest->setIsJudge($this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->isFosUserJudgeInContest($fos_user_id, $contest->getId()));
         }
-        
+
 //        $contests = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
 //                ->findBy(array('isVisible' => true), array('beginAt' => 'DESC'));
 //
@@ -280,8 +280,16 @@ class ContestController extends Controller {
         }
 
         if ($contest) {
+
+            $firstPhoto = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')->findFirstPhotosFromSpeciesInContest($contest->getId());
+            $validSpeciesPhotos = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')->findValidatedSpeciesPhotosInContest($contest->getId());
+            $validSpecies = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')->findValidatedSpeciesInContest($contest->getId());
+
             return $this->render('SkaphandrusAppBundle:Contest:winners.html.twig', array(
                         'contest' => $contest,
+                        'firstPhoto' => $firstPhoto,
+                        'validSpeciesPhotos' => $validSpeciesPhotos,
+                        'validSpecies' => $validSpecies
             ));
         } else {
             throw $this->createNotFoundException('The contest "' . $name . '" does not exist.');

@@ -21,15 +21,18 @@ class SkSettingsType extends AbstractType {
                 ))
                 ->add('emailMessageAtOnce', 'checkbox', array(
                     'attr' => array('class' => 'checkbox'),
-                    'label' => 'form.settings.label.email_message_once'
+                    'label' => 'form.settings.label.email_message_once',
+                    'help' => 'form.settings.help.email_message_at_once'
                 ))
                 ->add('emailCommentAtOnce', 'checkbox', array(
                     'attr' => array('class' => 'checkbox'),
-                    'label' => 'form.settings.label.email_comment_once'
+                    'label' => 'form.settings.label.email_comment_once',
+                    'help' => 'form.settings.help.email_comment_at_once'
                 ))
                 ->add('emailUpdate', 'checkbox', array(
                     'attr' => array('class' => 'checkbox'),
-                    'label' => 'form.settings.label.email_update_skaphandrus'
+                    'label' => 'form.settings.label.email_update_skaphandrus',
+                    'help' => 'form.settings.help.email_update'
                 ))
                 ->add('emailNotificationTime', 'entity', array(
                     'class' => 'SkaphandrusAppBundle:SkEmailNotificationTime',
