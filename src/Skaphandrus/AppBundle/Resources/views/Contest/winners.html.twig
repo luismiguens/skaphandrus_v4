@@ -142,7 +142,7 @@
                                                                 <tr>
                                                                     <td>
                                                                         <div class="contact-box center-version small_version" style="border:none;margin-bottom:0;">
-                                                                            <div class="box_content">
+                                                                            <div class="box_content" style="text-align:left;">
                                                                                 <img alt="{{f}}" class="img-circle" src="{{ f.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
                                                                                 {{ link_to_user(f) }}
                                                                             </div>
@@ -261,9 +261,9 @@
                                                 <table class="table table-striped">
                                                     <thead>
                                                         <tr>
-                                                            <th>{{ "page.winners.th.user"|trans }}</th>
-                                                            <th>{{ "page.winners.th.award"|trans }}</th>
-                                                            <th>{{ "page.winners.th.photo"|trans }}</th>
+                                                            <th style="width:25%">{{ "page.winners.th.user"|trans }}</th>
+                                                            <th style="width:50%">{{ "page.winners.th.award"|trans }}</th>
+                                                            <th style="width:25%">{{ "page.winners.th.photo"|trans }}</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -271,30 +271,38 @@
                                                             <tr>
                                                                 <td>
                                                                     {% if award.winnerFosUser %}
-                                                                        {#    <img class="img-rounded" src="{{ award.winnerFosUser.settings.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ award.winnerFosUser.name }}" title="{{ award.winnerFosUser.name }}">
-                                                                            #}
-                                                                        <a href="{{ url_to_user(award.winnerFosUser) }}">
+                                                                        <div class="contact-box center-version small_version" style="border:none;margin-bottom:0;">
+                                                                            <div class="box_content" style="text-align:left;">
+                                                                                <a href="{{ url_to_user(award.winnerFosUser) }}">
+                                                                                    <img alt="{{award.winnerFosUser.name}}" class="img-circle" src="{{ award.winnerFosUser.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
+                                                                                    {{award.winnerFosUser.name}}
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                        {#<a href="{{ url_to_user(award.winnerFosUser) }}">
                                                                             <img alt="{{award.winnerFosUser.name}}" class="img-circle" src="{{ award.winnerFosUser.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
                                                                         </a>
 
                                                                         <a href="{{ url_to_user(award.winnerFosUser) }}">
                                                                             {{award.winnerFosUser.name}}
-                                                                        </a>
-
-                                                                        {#<h5>{{award.winnerFosUser.name}}</h5>#}
-
-                                                                    {%elseif award.winnerPhoto %}    
-                                                                        {# <img class="img-rounded" src="{{ award.winnerPhoto.fosUser.settings.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{award.winnerPhoto.fosUser.name}}" title="{{award.winnerPhoto.fosUser.name}}">
-                                                                         #}
-                                                                        <a href="{{ url_to_user(award.winnerPhoto.fosUser) }}">
+                                                                        </a>#}
+                                                                    {%elseif award.winnerPhoto %}
+                                                                        <div class="contact-box center-version small_version" style="border:none;margin-bottom:0;">
+                                                                            <div class="box_content" style="text-align:left;">
+                                                                                <a href="{{ url_to_user(award.winnerPhoto.fosUser) }}">
+                                                                                    <img alt="{{award.winnerPhoto.fosUser.name}}" class="img-circle" src="{{ award.winnerPhoto.fosUser.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
+                                                                                    {{award.winnerPhoto.fosUser.name}}
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                        {#<a href="{{ url_to_user(award.winnerPhoto.fosUser) }}">
                                                                             <img alt="{{award.winnerPhoto.fosUser.name}}" class="img-circle" src="{{ award.winnerPhoto.fosUser.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
                                                                         </a>
 
                                                                         <a href="{{ url_to_user(award.winnerPhoto.fosUser) }}">
                                                                             {{award.winnerPhoto.fosUser.name}}
-                                                                        </a>
+                                                                        </a>#}
 
-                                                                        {#<h5>{{award.winnerPhoto.fosUser.name}}</h5>#}
                                                                     {% endif %}
                                                                 </td>
                                                                 <td>
