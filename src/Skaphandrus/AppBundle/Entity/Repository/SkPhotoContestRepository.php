@@ -202,22 +202,36 @@ class SkPhotoContestRepository extends EntityRepository {
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
+
         $statement = $connection->prepare(
                 "SELECT p.fos_user_id as user, count(p.id) as count_photo_species_valid
                 FROM sk_photo AS p
-                INNER JOIN ( 
-                        SELECT photo_id, species_id, count(species_id) as soma 
-                        FROM sk_photo_species_validation group by photo_id, species_id) AS validated_record 
-                ON p.id = validated_record.photo_id 
                 JOIN sk_photo_contest_category_photo AS ca_photo 
                 ON ca_photo.photo_id = p.id
                 JOIN sk_photo_contest_category AS ca 
                 ON ca.id = ca_photo.category_id
-                WHERE ca.contest_id = :contest_id
+                WHERE ca.contest_id = :contest_id AND p.species_id <> 0
                 group by user
                 order by count_photo_species_valid desc
                 limit " . $limit . ""
         );
+
+//        $statement = $connection->prepare(
+//                "SELECT p.fos_user_id as user, count(p.id) as count_photo_species_valid
+//                FROM sk_photo AS p
+//                INNER JOIN ( 
+//                        SELECT photo_id, species_id, count(species_id) as soma 
+//                        FROM sk_photo_species_validation group by photo_id, species_id) AS validated_record 
+//                ON p.id = validated_record.photo_id 
+//                JOIN sk_photo_contest_category_photo AS ca_photo 
+//                ON ca_photo.photo_id = p.id
+//                JOIN sk_photo_contest_category AS ca 
+//                ON ca.id = ca_photo.category_id
+//                WHERE ca.contest_id = :contest_id
+//                group by user
+//                order by count_photo_species_valid desc
+//                limit " . $limit . ""
+//        );
 
         $statement->bindValue('contest_id', $contest_id);
         $statement->execute();
