@@ -171,7 +171,7 @@
                                                                 <tr>
                                                                     <td>
                                                                         <div class="contact-box center-version small_version" style="border:none;margin-bottom:0;">
-                                                                            <div class="box_content">
+                                                                            <div class="box_content" style="text-align:left;">
                                                                                 <img alt="{{vsp}}" class="img-circle" src="{{ vsp.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
                                                                                 {{ link_to_user(vsp) }}
                                                                             </div>
@@ -200,7 +200,7 @@
                                                                 <tr>
                                                                     <td>
                                                                         <div class="contact-box center-version small_version" style="border:none;margin-bottom:0;">
-                                                                            <div class="box_content">
+                                                                            <div class="box_content" style="text-align:left;">
                                                                                 <img alt="{{vs}}" class="img-circle" src="{{ vs.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
                                                                                 {{ link_to_user(vs) }}
                                                                             </div>
@@ -269,10 +269,10 @@
                                                     <tbody>
                                                         {% for award in contest.awards %}
                                                             <tr>
-                                                                <td>
+                                                                <td style="width:25%">
                                                                     {% if award.winnerFosUser %}
                                                                         <div class="contact-box center-version small_version" style="border:none;margin-bottom:0;">
-                                                                            <div class="box_content" style="text-align:left;">
+                                                                            <div class="box_content" style="text-align:left;background-color:#000\9;">
                                                                                 <a href="{{ url_to_user(award.winnerFosUser) }}">
                                                                                     <img alt="{{award.winnerFosUser.name}}" class="img-circle" src="{{ award.winnerFosUser.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
                                                                                     {{award.winnerFosUser.name}}
@@ -288,7 +288,7 @@
                                                                         </a>#}
                                                                     {%elseif award.winnerPhoto %}
                                                                         <div class="contact-box center-version small_version" style="border:none;margin-bottom:0;">
-                                                                            <div class="box_content" style="text-align:left;">
+                                                                            <div class="box_content" style="text-align:left;background-color:#000\9;">
                                                                                 <a href="{{ url_to_user(award.winnerPhoto.fosUser) }}">
                                                                                     <img alt="{{award.winnerPhoto.fosUser.name}}" class="img-circle" src="{{ award.winnerPhoto.fosUser.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
                                                                                     {{award.winnerPhoto.fosUser.name}}
@@ -305,11 +305,11 @@
 
                                                                     {% endif %}
                                                                 </td>
-                                                                <td>
+                                                                <td style="width:50%">
                                                                     <h4>{{ award.translate.name }}</h4>
                                                                     <p>{{ award.translate.description }}</p>
                                                                 </td>
-                                                                <td>
+                                                                <td style="width:25%">
                                                                     {% if award.winnerPhoto %}
                                                                         <img alt="{{ award.winnerPhoto }}" class="img-responsive" src="{{ award.winnerPhoto.getWebPath | imagine_filter('sk_widen_265') }}" />
                                                                     {% endif %}
