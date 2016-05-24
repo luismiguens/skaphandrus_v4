@@ -258,7 +258,7 @@
 
                                             <section id="awards">
                                                 <h2>{{ "page.contest.h2.awards"|trans }}</h2>
-                                                <table class="table table-striped">
+                                                <table class="table">
                                                     <thead>
                                                         <tr>
                                                             <th style="width:25%">{{ "page.winners.th.user"|trans }}</th>
@@ -272,7 +272,7 @@
                                                                 <td style="width:25%">
                                                                     {% if award.winnerFosUser %}
                                                                         <div class="contact-box center-version small_version" style="border:none;margin-bottom:0;">
-                                                                            <div class="box_content" style="text-align:left;background-color:#000\9;">
+                                                                            <div class="box_content" style="text-align:left">
                                                                                 <a href="{{ url_to_user(award.winnerFosUser) }}">
                                                                                     <img alt="{{award.winnerFosUser.name}}" class="img-circle" src="{{ award.winnerFosUser.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
                                                                                     {{award.winnerFosUser.name}}
@@ -288,7 +288,7 @@
                                                                         </a>#}
                                                                     {%elseif award.winnerPhoto %}
                                                                         <div class="contact-box center-version small_version" style="border:none;margin-bottom:0;">
-                                                                            <div class="box_content" style="text-align:left;background-color:#000\9;">
+                                                                            <div class="box_content" style="text-align:left">
                                                                                 <a href="{{ url_to_user(award.winnerPhoto.fosUser) }}">
                                                                                     <img alt="{{award.winnerPhoto.fosUser.name}}" class="img-circle" src="{{ award.winnerPhoto.fosUser.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
                                                                                     {{award.winnerPhoto.fosUser.name}}
