@@ -27,8 +27,14 @@ class SkPhotoContestCategoryTaxonomicResultController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $contest = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')->find($contest_id);
+        
+        //mais primeiras fotografias de especies
         $firstPhoto = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')->findFirstPhotosFromSpeciesInContest($contest_id);
+        
+        //mais fotografias de especies
         $validSpeciesPhotos = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')->findValidatedSpeciesPhotosInContest($contest_id);
+        
+        //mais especies
         $validSpecies = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')->findValidatedSpeciesInContest($contest_id);
 
         return $this->render('SkaphandrusAppBundle:SkPhotoContestCategoryTaxonomicResult:index.html.twig', array(
