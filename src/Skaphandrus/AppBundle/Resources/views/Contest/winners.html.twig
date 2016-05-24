@@ -258,7 +258,14 @@
 
                                             <section id="awards">
                                                 <h2>{{ "page.contest.h2.awards"|trans }}</h2>
-                                                <table class="table">
+                                                
+                                                
+                                                 <div class="table-responsive">
+  
+
+                                                
+                                                
+                                                <table class="table" cellpadding="0" cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
                                                             <th style="width:25%">{{ "page.winners.th.user"|trans }}</th>
@@ -308,15 +315,21 @@
                                                                     <h4>{{ award.translate.name }}</h4>
                                                                     <p>{{ award.translate.description }}</p>
                                                                 </td>
-                                                                <td style="width:25%">
+                                                                <td style="width: 25%">
                                                                     {% if award.winnerPhoto %}
-                                                                        <img alt="{{ award.winnerPhoto }}" class="img-responsive" src="{{ award.winnerPhoto.getWebPath | imagine_filter('sk_widen_265') }}" />
+                                                                        <img style="width:100%; max-width: fit-content" alt="{{ award.winnerPhoto }}" class="img-responsive" src="{{ award.winnerPhoto.getWebPath | imagine_filter('sk_widen_265') }}" />
+                                                                        
                                                                     {% endif %}
+                                                                    
+                                                                    
+                                                                   {# <img   alt="Janolus Cristatus" src="http://skaphandrus.com/media/cache/sk_widen_265/uploads/fotografias/57153b057a871.jpg">
+                                                                    #}
                                                                 </td>
                                                             </tr>
                                                         {% endfor %}
                                                     </tbody>
                                                 </table>
+                                                    </div> 
                                             </section>
                                         </div>
                                     </div>
