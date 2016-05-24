@@ -210,13 +210,11 @@ class SkPhotoContestRepository extends EntityRepository {
                 ON ca_photo.photo_id = p.id
                 JOIN sk_photo_contest_category AS ca 
                 ON ca.id = ca_photo.category_id
-                WHERE ca.contest_id = :contest_id AND p.species_id <> 0
+                WHERE ca.contest_id = :contest_id AND (p.species_id <> 0 OR p.species_id is not null) 
                 group by user
                 order by count_photo_species_valid desc
                 limit " . $limit . ""
-        );
 
-//        $statement = $connection->prepare(
 //                "SELECT p.fos_user_id as user, count(p.id) as count_photo_species_valid
 //                FROM sk_photo AS p
 //                INNER JOIN ( 
@@ -231,7 +229,7 @@ class SkPhotoContestRepository extends EntityRepository {
 //                group by user
 //                order by count_photo_species_valid desc
 //                limit " . $limit . ""
-//        );
+        );
 
         $statement->bindValue('contest_id', $contest_id);
         $statement->execute();
@@ -254,18 +252,29 @@ class SkPhotoContestRepository extends EntityRepository {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
         $statement = $connection->prepare(
-                "SELECT p.fos_user_id as user, count(sv.species_id) AS count_species_validated
-                FROM sk_photo_species_validation AS sv
-                JOIN sk_photo AS p 
-                ON p.id = sv.photo_id
-                JOIN sk_photo_contest_category_photo AS ca_p
-                ON p.id = ca_p.photo_id 
+                "SELECT p.fos_user_id as user, count(distinct(p.species_id)) as count_species_validated
+                FROM sk_photo AS p
+                JOIN sk_photo_contest_category_photo AS ca_photo 
+                ON ca_photo.photo_id = p.id
                 JOIN sk_photo_contest_category AS ca 
-                ON ca_p.category_id = ca.id
-                WHERE ca.contest_id = :contest_id
+                ON ca.id = ca_photo.category_id
+                WHERE ca.contest_id = :contest_id AND (p.species_id <> 0 OR p.species_id is not null) 
                 group by user
                 order by count_species_validated desc
                 limit " . $limit . ""
+
+//                "SELECT p.fos_user_id as user, count(sv.species_id) AS count_species_validated
+//                FROM sk_photo_species_validation AS sv
+//                JOIN sk_photo AS p 
+//                ON p.id = sv.photo_id
+//                JOIN sk_photo_contest_category_photo AS ca_p
+//                ON p.id = ca_p.photo_id 
+//                JOIN sk_photo_contest_category AS ca 
+//                ON ca_p.category_id = ca.id
+//                WHERE ca.contest_id = :contest_id
+//                group by user
+//                order by count_species_validated desc
+//                limit " . $limit . ""
         );
 
         $statement->bindValue('contest_id', $contest_id);
