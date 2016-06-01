@@ -13,6 +13,8 @@
         <thead>
             <tr>
                 <th>{{ "page.destinations.table.accommodations"|trans }}</th>
+                <th>{{ "page.destinations.table.location"|trans }}</th>
+                <th>{{ "page.destinations.table.country"|trans }}</th>
                 <th>{{ "page.destinations.table.business_more_info"|trans }}</th>
                 <th>{{ "page.destinations.table.business_book_now"|trans }}</th>
             </tr>
@@ -21,6 +23,10 @@
             {% for d in accommodations %}
                 <tr>
                     <td> <a href="{{ path('business_no_slug', { 'id': d.id}) }}">{{ d }}</a></td>
+                    <td> {{ d.address.location }}</td>
+                    {% if d.address.location %}
+                        <td> {{ d.address.location.region }}</td>
+                    {% endif %}
                     <td> <a class="btn btn-primary btn-block btn-xs" href="{{ path('business_no_slug', { 'id': d.id}) }}">{{ "page.business.button.more_info"|trans }}</a></td>
                     <td> <a class="btn btn-primary btn-block btn-xs" href="{{ path('booking_admin_new', {'business_id': d.id}) }}">{{ "page.business.button.book_now"|trans }}</a></td>
                 </tr>
@@ -28,7 +34,7 @@
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="3">
+                <td colspan="5">
                     <ul class="pagination pull-right"></ul>
                 </td>
             </tr>
