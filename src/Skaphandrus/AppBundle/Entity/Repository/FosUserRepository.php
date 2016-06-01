@@ -15,6 +15,29 @@ use Skaphandrus\AppBundle\Entity\FosUser;
  */
 class FosUserRepository extends EntityRepository {
 
+    public function countSpeciesValidatedForUsers() {
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT sv.fos_user_id as user, count(distinct(sv.species_id)) as species
+                FROM skaphandrus4.sk_photo_species_validation as sv
+                group by user";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+            $user = $em->getRepository('SkaphandrusAppBundle:FosUser')->find($value['user']);
+            $user->setSpeciesInUser($value['species']);
+            $result[] = $user;
+        }
+
+        return $result;
+    }
+
     public function getUserToSendEmail($param) {
 
         $em = $this->getEntityManager();

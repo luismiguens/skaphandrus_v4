@@ -1,6 +1,7 @@
 ################################################################################
 ### TRANSVERSAL
 ################################################################################
+
 index:
     locales:  { en: "/", pt: "/pt" }
     defaults: { _controller: SkaphandrusAppBundle:Default:index }
@@ -39,26 +40,36 @@ business:
     
 business_no_slug:
     locales:  { en: "/en/business/{id}", pt: "/pt/empresa/{id}" }
-    defaults: { _controller: SkaphandrusAppBundle:Default:business_no_slug }
+    defaults: { _controller: SkaphandrusAppBundle:Default:business_no_slug } 
     
 users-home: 
     locales:  { en: "/en/users", pt: "/pt/utilizadores" }
     defaults: { _controller: SkaphandrusAppBundle:Default:usersHome }
 
+################################################################################
+
+about_experts:
+    locales:  { en: "/en/about/marine-animals/experts", pt: "/pt/sobre/animais-marinhos/especialistas" }
+    defaults: { _controller: SkaphandrusAppBundle:About:experts }  
+
+about_points:
+    locales:  { en: "en/about/ocean-life-identification/points", pt: "/pt/sobre/identificacao-vida-oceanos/pontos" }
+    defaults: { _controller: SkaphandrusAppBundle:About:points }  
+
 contest_programs:
-    locales:  { en: "/en/underwater-photo-contest/programs", pt: "/pt/concurso-fotografia-subaquatica/programas" }
-    defaults: { _controller: SkaphandrusAppBundle:Default:contestPrograms }
+    locales:  { en: "/en/about/underwater-photo-contests/programs", pt: "/pt/concursos-fotografia-subaquatica/programas" }
+    defaults: { _controller: SkaphandrusAppBundle:About:contestPrograms }
     
 business_programs:
-    locales:  { en: "/en/scuba-diving-center/programs", pt: "/pt/centros-mergulho/programas" }
-    defaults: { _controller: SkaphandrusAppBundle:Default:businessPrograms }
-
+    locales:  { en: "/en/about/scuba-diving-centers/programs", pt: "/pt/centros-mergulho/programas" }
+    defaults: { _controller: SkaphandrusAppBundle:About:businessPrograms }
 
 terms_and_conditions:
-    locales:  { en: "/en/terms-and-conditions", pt: "/pt/termos-e-condicoes" }
-    defaults: { _controller: SkaphandrusAppBundle:Default:terms }
+    locales:  { en: "/en/about/terms-and-conditions", pt: "/pt/termos-e-condicoes" }
+    defaults: { _controller: SkaphandrusAppBundle:About:terms }
 
 ################################################################################
+
 spot:
     locales:  { en: "/en/scuba-diving-sites/spot/{country}/{location}/{slug}", pt: "/pt/spots-mergulho/spot/{country}/{location}/{slug}" }
     defaults: { _controller: SkaphandrusAppBundle:Default:spot }
@@ -90,11 +101,13 @@ photos:
     defaults: { _controller: SkaphandrusAppBundle:Default:photos }
 
 ################################################################################
+
 user:
     locales:  { en: "/en/users/username/{id}", pt: "/pt/utilizadores/utilizador/{id}" }
     defaults: { _controller: SkaphandrusAppBundle:Default:user }
 
 ################################################################################
+
 search:
     locales:  { en: "/en/search-results", pt: "/pt/resultados-pesquisa" }
     defaults: { _controller: SkaphandrusAppBundle:Default:search }

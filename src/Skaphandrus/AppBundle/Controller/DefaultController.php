@@ -21,26 +21,6 @@ use Symfony\Component\Routing\Exception\InvalidParameterException;
 
 class DefaultController extends Controller {
 
-    public function contestProgramsAction() {
-
-        return $this->render('SkaphandrusAppBundle:Default:contestPrograms.html.twig', array());
-    }
-
-    public function businessProgramsAction() {
-
-        return $this->render('SkaphandrusAppBundle:Default:businessPrograms.html.twig', array());
-    }
-
-    public function termsAction() {
-        $em = $this->getDoctrine()->getManager();
-
-        $terms = $em->createQuery("SELECT t FROM SkaphandrusAppBundle:SkTermsConditions t ORDER by t.id DESC")->setMaxResults(1)->getOneOrNullResult();
-
-        return $this->render('SkaphandrusAppBundle:Default:terms.html.twig', array(
-                    'terms' => $terms,
-        ));
-    }
-
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 

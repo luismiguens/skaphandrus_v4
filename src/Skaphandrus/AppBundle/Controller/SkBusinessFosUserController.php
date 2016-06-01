@@ -27,7 +27,7 @@ class SkBusinessFosUserController extends Controller {
                 ->setBcc('partnerships@skaphandrus.com')
                 ->setBody(
                 $this->renderView(
-                        'SkaphandrusAppBundle:SkBusinessFosUser:registrationEmail.html.twig', array(
+                        'SkaphandrusAppBundle:SkBusinessFosUser:registrationBusinessFosUser.html.twig', array(
                     'businessFosUser' => $businessFosUser,
                     'business' => $business,
                 )), 'text/html'

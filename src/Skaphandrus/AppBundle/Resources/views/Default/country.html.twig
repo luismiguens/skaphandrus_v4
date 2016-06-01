@@ -201,8 +201,8 @@
             speed: 75,
             heightMargin: 25,
             collapsedHeight: 250,
-            moreLink: '<a style="width: 25%; margin-top:-20px;" class="btn btn-block btn-outline btn-primary pull-right" href="#">{{"common.show_more"|trans}}</a>',
-            lessLink: '<a style="width: 25%; margin-top:-20px;" class="btn btn-block btn-outline btn-primary pull-right" href="#">{{"common.hide"|trans}}</a>'
+            moreLink: '<a style="width: 25%;" class="btn btn-block btn-outline btn-primary pull-right" href="#">{{"common.show_more"|trans}}</a>',
+            lessLink: '<a style="width: 25%;" class="btn btn-block btn-outline btn-primary pull-right" href="#">{{"common.hide"|trans}}</a>'
         });
 
         {#$('.row .showdetails').on('click', function (e) {
@@ -251,44 +251,46 @@
                                 <h3>{% trans with {'%country%': country} %}page.country.h3.info{% endtrans %}</h3>
                                 {% if country.translate(app.request.locale).overview is not empty %}
 
-                                    <div id="readMore">                                
-                                        <p itemprop="description">{{ country.translate(app.request.locale).overview|raw  }}</p>
+                                    <div class="ibox">
+                                        <div id="readMore"> 
 
-                                        {% if country.translate(app.request.locale).geographyAndClimate is not empty %}
-                                            <h5>{{ "page.country.h5.geography_and_climate"|trans }}</h5>
-                                            <p>{{ country.translate(app.request.locale).geographyAndClimate|raw }}</p>
-                                        {% endif %}
+                                            <p itemprop="description">{{ country.translate(app.request.locale).overview|raw  }}</p>
 
-                                        {% if country.translate(app.request.locale).entryRequirements is not empty %}
-                                            <h5>{{ "page.country.h5.entry_requirements"|trans }}</h5>
-                                            <p>{{ country.translate(app.request.locale).entryRequirements|raw }}</p>
-                                        {% endif %}
+                                            {% if country.translate(app.request.locale).geographyAndClimate is not empty %}
+                                                <h5>{{ "page.country.h5.geography_and_climate"|trans }}</h5>
+                                                <p>{{ country.translate(app.request.locale).geographyAndClimate|raw }}</p>
+                                            {% endif %}
 
-                                        {% if country.translate(app.request.locale).healthAndSafety is not empty %}
-                                            <h5>{{ "page.country.h5.health_and_safety"|trans }}</h5>
-                                            <p>{{ country.translate(app.request.locale).healthAndSafety|raw }}</p>
-                                        {% endif %}
+                                            {% if country.translate(app.request.locale).entryRequirements is not empty %}
+                                                <h5>{{ "page.country.h5.entry_requirements"|trans }}</h5>
+                                                <p>{{ country.translate(app.request.locale).entryRequirements|raw }}</p>
+                                            {% endif %}
 
-                                        {% if country.translate(app.request.locale).timeZone is not empty %}
-                                            <h5>{{ "page.country.h5.time_zone"|trans }}</h5>
-                                            <p>{{ country.translate(app.request.locale).timeZone|raw }}</p>
-                                        {% endif %}
+                                            {% if country.translate(app.request.locale).healthAndSafety is not empty %}
+                                                <h5>{{ "page.country.h5.health_and_safety"|trans }}</h5>
+                                                <p>{{ country.translate(app.request.locale).healthAndSafety|raw }}</p>
+                                            {% endif %}
 
-                                        {% if country.translate(app.request.locale).communications is not empty %}
-                                            <h5>{{ "page.country.h5.communications"|trans }}</h5>
-                                            <p>{{ country.translate(app.request.locale).communications|raw }}</p>
-                                        {% endif %}
+                                            {% if country.translate(app.request.locale).timeZone is not empty %}
+                                                <h5>{{ "page.country.h5.time_zone"|trans }}</h5>
+                                                <p>{{ country.translate(app.request.locale).timeZone|raw }}</p>
+                                            {% endif %}
 
-                                        {% if country.translate(app.request.locale).powerAndElectricity is not empty %}
-                                            <h5>{{ "page.country.h5.power_and_electricity"|trans }}</h5>
-                                            <p>{{ country.translate(app.request.locale).powerAndElectricity|raw }}</p>
-                                        {% endif %}
+                                            {% if country.translate(app.request.locale).communications is not empty %}
+                                                <h5>{{ "page.country.h5.communications"|trans }}</h5>
+                                                <p>{{ country.translate(app.request.locale).communications|raw }}</p>
+                                            {% endif %}
 
-                                        {% if country.translate(app.request.locale).otherInformations is not empty %}
-                                            <h5>{{ "page.country.h5.other_informations"|trans }}</h5>
-                                            <p>{{ country.translate(app.request.locale).otherInformations|raw }}</p>
-                                        {% endif %}
+                                            {% if country.translate(app.request.locale).powerAndElectricity is not empty %}
+                                                <h5>{{ "page.country.h5.power_and_electricity"|trans }}</h5>
+                                                <p>{{ country.translate(app.request.locale).powerAndElectricity|raw }}</p>
+                                            {% endif %}
 
+                                            {% if country.translate(app.request.locale).otherInformations is not empty %}
+                                                <h5>{{ "page.country.h5.other_informations"|trans }}</h5>
+                                                <p>{{ country.translate(app.request.locale).otherInformations|raw }}</p>
+                                            {% endif %}
+                                        </div>
                                     </div>
 
                                     {#<p itemprop="description">{{ country.translate(app.request.locale).overview|raw  }}</p>

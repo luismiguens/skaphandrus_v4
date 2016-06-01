@@ -1,7 +1,7 @@
 {% extends 'SkaphandrusAppBundle::content_layout.html.twig' %}
 
 {% block page_title %}{{ "page.contest_programs.meta_tag.title"|trans }}{% endblock %}
-{% block page_description %}{% endblock %}
+{% block page_description %}{{ "page.contest_programs.meta_tag.description"|trans }}{% endblock %}
 {% block page_keywords %}{% endblock %}
 
 {% block hreflang %}
@@ -150,7 +150,7 @@
     <div class="wrapper wrapper-content">
         <div class="container">
 
-            <!-- START PRIMEIRA DIV -->
+            {#<!-- START PRIMEIRA DIV -->
             <div class="row">
                 <div class="col-md-12">
                     <div class="ibox">
@@ -158,7 +158,7 @@
                     </div>
                 </div>
             </div>
-            <!-- END PRIMEIRA DIV -->
+            <!-- END PRIMEIRA DIV -->#}
 
             <!-- START SEGUNDA DIV -->
             <div class="row">
@@ -498,9 +498,9 @@
                                 </div>
 
                                 <div class="pull-right cls_012" align="right">
-                                    <p><a href="mailto:support@skaphandrus.com">support@skaphandrus.com</a></p>
-                                    <p><a href="http://www.skaphandrus.com/">skaphandrus.com</a></p>
-                                    <p><a href="http://www.facebook.com/skaphandrus/">facebook.com/skaphandrus</a></p>
+                                    <p><a href="mailto:support@skaphandrus.com" target="_blank">support@skaphandrus.com</a></p>
+                                    <p><a href="http://www.skaphandrus.com/" target="_blank">skaphandrus.com</a></p>
+                                    <p><a href="http://www.facebook.com/skaphandrus/" target="_blank">facebook.com/skaphandrus</a></p>
                                 </div>
 
                             </div>

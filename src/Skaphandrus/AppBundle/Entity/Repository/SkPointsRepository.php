@@ -12,12 +12,86 @@ use Doctrine\ORM\EntityRepository;
  */
 class SkPointsRepository extends EntityRepository {
 
+    public function findAllPoints($locale) {
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT ptt.name, pt.id
+                from sk_points_type as pt 
+                join sk_points_type_translation as ptt on pt.id = ptt.translatable_id
+                where ptt.locale like '" . $locale . "'";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+            $point = $em->getRepository('SkaphandrusAppBundle:SkPointsType')->find($value['id']);
+            $result[] = $point;
+        }
+
+        return $result;
+    }
+
+    public function getValueOfPoints() {
+
+        $em = $this->getEntityManager();
+
+        $arr = array(
+            1 => array("type" => "user_register", "single" => 50),
+            2 => array("type" => "(photos)_photos_submited", "single" => 1),
+            3 => array("type" => "(photos)_first_photo_species", "single" => 5),
+            4 => array("type" => "(photos)_validated_species", "single" => 1),
+            5 => array("type" => "(photos)_associated_species", "single" => 1),
+            6 => array("type" => "(species)_1_distinct_species_validated", "single" => 1),
+            7 => array("type" => "(species)_10_distinct_species_validated", "single" => 10),
+            8 => array("type" => "(species)_100_distinct_species_validated", "single" => 100),
+            9 => array("type" => "(species)_1000_distinct_species_validated", "single" => 1000),
+            10 => array("type" => "(photos)_first_photo_spot", "single" => 5),
+            11 => array("type" => "(photos)_associated_spot", "single" => 1),
+            12 => array("type" => "(photos)_1_user_species_sugestions", "single" => 1),
+            13 => array("type" => "(photos)_10_user_species_sugestions", "single" => 10),
+            14 => array("type" => "(photos)_100_user_species_sugestions", "single" => 100),
+            15 => array("type" => "(photos)_1000_user_species_sugestions", "single" => 1000),
+            16 => array("type" => "user_expert", "single" => 50),
+            17 => array("type" => "(photos)_1_user_species_validations", "single" => 1),
+            18 => array("type" => "(photos)_10_user_species_validations", "single" => 10),
+            19 => array("type" => "(photos)_100_user_species_validations", "single" => 100),
+            20 => array("type" => "(photos)_1000_user_species_validations", "single" => 1000),
+        );
+
+        //para cada posição do array:
+        //1) cria os tipos de pontos na base de dados
+        //2) calcula os pontos do utilizador para esse mesmo tipo de pontos
+
+        foreach ($arr as $key => $row) {
+
+            $SkPointsType = $em->getRepository('SkaphandrusAppBundle:SkPointsType')->find($key);
+
+            //se nao existir cria o tipo de pontos
+            if (!$SkPointsType):
+                $SkPointsType = new \Skaphandrus\AppBundle\Entity\SkPointsType();
+                $SkPointsType->setId($key);
+            endif;
+
+            //actualizar tabela de tipos de pontos
+            $SkPointsType->translate('pt')->setName($row['type']);
+            $SkPointsType->translate('en')->setName($row['type']);
+            $SkPointsType->mergeNewTranslations();
+            $em->persist($SkPointsType);
+            $em->flush();
+        }
+
+        return $arr;
+    }
+
     public function generatePointsFromUser($fos_user) {
 
         $em = $this->getEntityManager();
         //$repository = $em->getRepository('SkaphandrusAppBundle:SkPoints');
-
-//submited photos
+        //submited photos
         $photos_submited = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->findBy(array('fosUser' => $fos_user->getId()));
 
         //first photo about species
@@ -26,7 +100,7 @@ class SkPointsRepository extends EntityRepository {
         $validated_species = $this->findValidatedSpeciesPhotos($fos_user->getId()); //(is_validated=true)
         //photos with associated species
         $associated_species = $this->findAssociatedSpeciesPhotos($fos_user->getId()); //(species_id <> null)
-//photos with validated species
+        //photos with validated species
 
         $distinct_validated = $this->findDistictValidatedSpeciesPhotos($fos_user->getId());
 
@@ -46,7 +120,7 @@ class SkPointsRepository extends EntityRepository {
             $thousand_distinct_species_validated = 1;
         }
 
-//sugested species by user
+        //sugested species by user
         $user_sugestions = $em->getRepository('SkaphandrusAppBundle:SkPhotoSpeciesSugestion')->findBy(array('fosUser' => $fos_user->getId()));
 
         $ten_user_species_sugestions = 0;
@@ -65,7 +139,7 @@ class SkPointsRepository extends EntityRepository {
             $thousand_user_species_sugestions = 1;
         }
 
-//validated species by user
+        //validated species by user
         $user_validations = $em->getRepository('SkaphandrusAppBundle:SkPhotoSpeciesValidation')->findBy(array('fosUser' => $fos_user->getId()));
         $ten_user_species_validations = 0;
         $hundred_user_species_validations = 0;
@@ -116,22 +190,22 @@ class SkPointsRepository extends EntityRepository {
         //$SkPointsTypes = $em->getRepository('SkaphandrusAppBundle:SkPointsType')->findAll();
         $total_points = 0;
 
-        
+
         //para cada posição do array:
         //1) cria os tipos de pontos na base de dados
         //2) calcula os pontos do utilizador para esse mesmo tipo de pontos
         ///$arr = array();
 
         foreach ($arr as $key => $row) {
-            
-            
+
+
             $SkPointsType = $em->getRepository('SkaphandrusAppBundle:SkPointsType')->find($key);
 
             //se nao existir cria o tipo de pontos
             if (!$SkPointsType):
-//                echo "entrou";
+                //echo "entrou";
                 $SkPointsType = new \Skaphandrus\AppBundle\Entity\SkPointsType();
-//                echo $key;
+                //echo $key;
                 $SkPointsType->setId($key);
             endif;
 

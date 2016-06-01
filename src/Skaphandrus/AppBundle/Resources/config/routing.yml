@@ -16,6 +16,10 @@ testSmartLink:
     defaults: { _controller: SkaphandrusAppBundle:Default:testSmartLink, _locale: en }
     requirements:
         _locale:  en|pt
+      
+teste_email_view:
+    path:     /teste-email-view
+    defaults: { _controller: "SkaphandrusAppBundle:Testes:testeEmail" }       
         
 index2:
     path:     /{_locale}/index2

@@ -2,10 +2,11 @@
 
 namespace Skaphandrus\AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Skaphandrus\AppBundle\Entity\FosUser;
 use Skaphandrus\AppBundle\Entity\SkBusiness;
 use Skaphandrus\AppBundle\Form\SkBusinessType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * SkBusiness controller.
@@ -57,6 +58,25 @@ class SkBusinessController extends Controller {
         ));
     }
 
+    //registo de uma empresa
+    public function sendRegistrationEmail(FosUser $user, SkBusiness $business) {
+        $message = \Swift_Message::newInstance()
+                ->setSubject("Thanks for registering " . $business->getName())
+                ->setFrom('noreply-registration@skaphandrus.com', 'Skaphandrus')
+                ->setTo($user->getEmail())
+                ->setBcc('partnerships@skaphandrus.com')
+                ->setBody(
+                $this->renderView(
+                        'SkaphandrusAppBundle:SkBusiness:registrationBusiness.html.twig', array(
+                    'user' => $user,
+                    'business' => $business,
+                )), 'text/html'
+                )
+        ;
+
+        $this->get('mailer')->send($message);
+    }
+
     /**
      * Lists all SkBusiness entities.
      *
@@ -83,14 +103,7 @@ class SkBusinessController extends Controller {
 
     public function index2Action() {
 
-        //$loggedUser = new \Skaphandrus\AppBundle\Entity\FosUser();
-
-        $loggedUser = $this->getUser();
         $em = $this->getDoctrine()->getManager();
-        $locale = $this->get('request')->getLocale();
-
-        // verifica se o user é admin
-
         $entities = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findAllWithAdmin();
 
         return $this->render('SkaphandrusAppBundle:SkBusiness:index2.html.twig', array(
@@ -108,9 +121,19 @@ class SkBusinessController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+
+            $loggedUser = $this->getUser();
+
+            if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN', $loggedUser)) {
+                $entity->addAdmin($loggedUser);
+            }
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+
+            //enviar email para utilizador com dados de user e da empresa (colocar partnerships@skaphandrus.com em cc)
+            $this->sendRegistrationEmail($loggedUser, $entity);
 
             $this->get('session')->getFlashBag()->add('notice', 'form.common.message.changes_saved');
             return $this->redirect($this->generateUrl('business_admin_edit', array('id' => $entity->getId())));

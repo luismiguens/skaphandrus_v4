@@ -258,78 +258,70 @@
 
                                             <section id="awards">
                                                 <h2>{{ "page.contest.h2.awards"|trans }}</h2>
-                                                
-                                                
-                                                 <div class="table-responsive">
-  
 
-                                                
-                                                
-                                                <table class="table" cellpadding="0" cellspacing="0" width="100%">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="width:25%">{{ "page.winners.th.user"|trans }}</th>
-                                                            <th style="width:50%">{{ "page.winners.th.award"|trans }}</th>
-                                                            <th style="width:25%">{{ "page.winners.th.photo"|trans }}</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {% for award in contest.awards %}
+                                                <div class="table-responsive">
+                                                    <table class="table" cellpadding="0" cellspacing="0" width="100%">
+                                                        <thead>
                                                             <tr>
-                                                                <td style="width:25%">
-                                                                    {% if award.winnerFosUser %}
-                                                                        <div class="contact-box center-version small_version" style="border:none;margin-bottom:0;">
-                                                                            <div class="box_content" style="text-align:left">
-                                                                                <a href="{{ url_to_user(award.winnerFosUser) }}">
-                                                                                    <img alt="{{award.winnerFosUser.name}}" class="img-circle" src="{{ award.winnerFosUser.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
-                                                                                    {{award.winnerFosUser.name}}
-                                                                                </a>
-                                                                            </div>
-                                                                        </div>
-                                                                        {#<a href="{{ url_to_user(award.winnerFosUser) }}">
-                                                                            <img alt="{{award.winnerFosUser.name}}" class="img-circle" src="{{ award.winnerFosUser.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
-                                                                        </a>
-
-                                                                        <a href="{{ url_to_user(award.winnerFosUser) }}">
-                                                                            {{award.winnerFosUser.name}}
-                                                                        </a>#}
-                                                                    {%elseif award.winnerPhoto %}
-                                                                        <div class="contact-box center-version small_version" style="border:none;margin-bottom:0;">
-                                                                            <div class="box_content" style="text-align:left">
-                                                                                <a href="{{ url_to_user(award.winnerPhoto.fosUser) }}">
-                                                                                    <img alt="{{award.winnerPhoto.fosUser.name}}" class="img-circle" src="{{ award.winnerPhoto.fosUser.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
-                                                                                    {{award.winnerPhoto.fosUser.name}}
-                                                                                </a>
-                                                                            </div>
-                                                                        </div>
-                                                                        {#<a href="{{ url_to_user(award.winnerPhoto.fosUser) }}">
-                                                                            <img alt="{{award.winnerPhoto.fosUser.name}}" class="img-circle" src="{{ award.winnerPhoto.fosUser.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
-                                                                        </a>
-
-                                                                        <a href="{{ url_to_user(award.winnerPhoto.fosUser) }}">
-                                                                            {{award.winnerPhoto.fosUser.name}}
-                                                                        </a>#}
-                                                                    {% endif %}
-                                                                </td>
-                                                                <td style="width:50%">
-                                                                    <h4>{{ award.translate.name }}</h4>
-                                                                    <p>{{ award.translate.description }}</p>
-                                                                </td>
-                                                                <td style="width: 25%">
-                                                                    {% if award.winnerPhoto %}
-                                                                        <img style="width:100%; max-width: fit-content" alt="{{ award.winnerPhoto }}" class="img-responsive" src="{{ award.winnerPhoto.getWebPath | imagine_filter('sk_widen_265') }}" />
-                                                                        
-                                                                    {% endif %}
-                                                                    
-                                                                    
-                                                                 {#  <img style="display:block;" alt="Janolus Cristatus" src="http://skaphandrus.com/media/cache/sk_widen_265/uploads/fotografias/57153b057a871.jpg">
-                                                                    #}
-                                                                </td>
+                                                                <th style="width:25%">{{ "page.winners.th.user"|trans }}</th>
+                                                                <th style="width:50%">{{ "page.winners.th.award"|trans }}</th>
+                                                                <th style="width:25%">{{ "page.winners.th.photo"|trans }}</th>
                                                             </tr>
-                                                        {% endfor %}
-                                                    </tbody>
-                                                </table>
-                                                    </div> 
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for award in contest.awards %}
+                                                                <tr>
+                                                                    <td style="width:25%">
+                                                                        {% if award.winnerFosUser %}
+                                                                            <div class="contact-box center-version small_version" style="border:none;margin-bottom:0;">
+                                                                                <div class="box_content" style="text-align:left">
+                                                                                    <a href="{{ url_to_user(award.winnerFosUser) }}">
+                                                                                        <img alt="{{award.winnerFosUser.name}}" class="img-circle" src="{{ award.winnerFosUser.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
+                                                                                        {{award.winnerFosUser.name}}
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                            {#<a href="{{ url_to_user(award.winnerFosUser) }}">
+                                                                                <img alt="{{award.winnerFosUser.name}}" class="img-circle" src="{{ award.winnerFosUser.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
+                                                                            </a>
+    
+                                                                            <a href="{{ url_to_user(award.winnerFosUser) }}">
+                                                                                {{award.winnerFosUser.name}}
+                                                                            </a>#}
+                                                                        {%elseif award.winnerPhoto %}
+                                                                            <div class="contact-box center-version small_version" style="border:none;margin-bottom:0;">
+                                                                                <div class="box_content" style="text-align:left">
+                                                                                    <a href="{{ url_to_user(award.winnerPhoto.fosUser) }}">
+                                                                                        <img alt="{{award.winnerPhoto.fosUser.name}}" class="img-circle" src="{{ award.winnerPhoto.fosUser.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
+                                                                                        {{award.winnerPhoto.fosUser.name}}
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                            {#<a href="{{ url_to_user(award.winnerPhoto.fosUser) }}">
+                                                                                <img alt="{{award.winnerPhoto.fosUser.name}}" class="img-circle" src="{{ award.winnerPhoto.fosUser.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
+                                                                            </a>
+    
+                                                                            <a href="{{ url_to_user(award.winnerPhoto.fosUser) }}">
+                                                                                {{award.winnerPhoto.fosUser.name}}
+                                                                            </a>#}
+                                                                        {% endif %}
+                                                                    </td>
+                                                                    <td style="width:50%">
+                                                                        <h4>{{ award.translate.name }}</h4>
+                                                                        <p>{{ award.translate.description }}</p>
+                                                                    </td>
+                                                                    <td style="width: 25%">
+                                                                        {% if award.winnerPhoto %}
+                                                                            <img style="width:100%; max-width: fit-content" alt="{{ award.winnerPhoto }}" class="img-responsive" src="{{ award.winnerPhoto.getWebPath | imagine_filter('sk_widen_265') }}" />
+                                                                        {% endif %}
+                                                                        {#<img style="display:block;" alt="Janolus Cristatus" src="http://skaphandrus.com/media/cache/sk_widen_265/uploads/fotografias/57153b057a871.jpg">#}
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
                                             </section>
                                         </div>
                                     </div>

@@ -187,8 +187,8 @@
             speed: 75,
             heightMargin: 25,
             collapsedHeight: 250,
-            moreLink: '<a style="width: 25%; margin-top:-20px;" class="btn btn-block btn-outline btn-primary pull-right" href="#">{{"common.show_more"|trans}}</a>',
-            lessLink: '<a style="width: 25%; margin-top:-20px;" class="btn btn-block btn-outline btn-primary pull-right" href="#">{{"common.hide"|trans}}</a>'
+            moreLink: '<a style="width: 25%;" class="btn btn-block btn-outline btn-primary pull-right" href="#">{{"common.show_more"|trans}}</a>',
+            lessLink: '<a style="width: 25%;" class="btn btn-block btn-outline btn-primary pull-right" href="#">{{"common.hide"|trans}}</a>'
         });
 
         {#$('.row .showdetails').on('click', function (e) {
@@ -251,38 +251,41 @@
                                 <h3>{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h3.info{% endtrans %}</h3>
                                 {% if location.description is not empty %}
 
-                                    <div id="readMore">
-                                        <p itemprop="description">{{ location.description|raw }}</p>
+                                    <div class="ibox">
+                                        <div id="readMore">
 
-                                        {% if location.waterTemp is not empty %}
-                                            <h5>{{ "page.location.h5.water_temp"|trans }}</h5>
-                                            <p>{{ location.waterTemp|raw }}</p>
-                                        {% endif %}
+                                            <p itemprop="description">{{ location.description|raw }}</p>
 
-                                        {% if location.suit is not empty %}
-                                            <h5>{{ "page.location.h5.suit"|trans }}</h5>
-                                            <p>{{ location.suit|raw }}</p>
-                                        {% endif %}
+                                            {% if location.waterTemp is not empty %}
+                                                <h5>{{ "page.location.h5.water_temp"|trans }}</h5>
+                                                <p>{{ location.waterTemp|raw }}</p>
+                                            {% endif %}
 
-                                        {% if location.visibility is not empty %}
-                                            <h5>{{ "page.location.h5.visibility"|trans }}</h5>
-                                            <p>{{ location.visibility|raw }}</p>
-                                        {% endif %}
+                                            {% if location.suit is not empty %}
+                                                <h5>{{ "page.location.h5.suit"|trans }}</h5>
+                                                <p>{{ location.suit|raw }}</p>
+                                            {% endif %}
 
-                                        {% if location.climate is not empty %}
-                                            <h5>{{ "page.location.h5.climate"|trans }}</h5>
-                                            <p>{{ location.climate|raw }}</p>
-                                        {% endif %}
+                                            {% if location.visibility is not empty %}
+                                                <h5>{{ "page.location.h5.visibility"|trans }}</h5>
+                                                <p>{{ location.visibility|raw }}</p>
+                                            {% endif %}
 
-                                        {% if location.howToGo is not empty %}
-                                            <h5>{{ "page.location.h5.how_to_go"|trans }}</h5>
-                                            <p>{{ location.howToGo|raw }}</p>
-                                        {% endif %}
+                                            {% if location.climate is not empty %}
+                                                <h5>{{ "page.location.h5.climate"|trans }}</h5>
+                                                <p>{{ location.climate|raw }}</p>
+                                            {% endif %}
 
-                                        {% if location.extraDive is not empty %}
-                                            <h5>{{ "page.location.h5.extra_dive"|trans }}</h5>
-                                            <p>{{ location.extraDive|raw }}</p>
-                                        {% endif %}
+                                            {% if location.howToGo is not empty %}
+                                                <h5>{{ "page.location.h5.how_to_go"|trans }}</h5>
+                                                <p>{{ location.howToGo|raw }}</p>
+                                            {% endif %}
+
+                                            {% if location.extraDive is not empty %}
+                                                <h5>{{ "page.location.h5.extra_dive"|trans }}</h5>
+                                                <p>{{ location.extraDive|raw }}</p>
+                                            {% endif %}
+                                        </div>
                                     </div>
 
                                     {#<p itemprop="description">{{ location.description|raw }}</p>

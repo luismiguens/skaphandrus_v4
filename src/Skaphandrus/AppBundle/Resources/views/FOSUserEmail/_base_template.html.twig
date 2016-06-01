@@ -44,9 +44,9 @@
     </tr>
 </table>#}
 
-                                    
-                                    
-                                    
+
+
+
 <table style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; background-color: #f6f6f6; margin: 0; padding: 0;" bgcolor="#f6f6f6">&#13;
     <tr style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0; padding: 0;">&#13;
         <td style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0;" valign="top"></td>&#13;
@@ -66,14 +66,15 @@
                                         <h3 style="font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; box-sizing: border-box; font-size: 16px !important; color: #000; line-height: 1.2; font-weight: 600 !important; margin: 20px 0 5px; padding: 0;">{% block title %}{% endblock %}</h3>&#13;
                                     </td>&#13;
                                 </tr>&#13;
-{#                                <tr style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0; padding: 0;">&#13;
+                                {#<tr style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0; padding: 0;">&#13;
                                     <td style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">&#13;
-                                        
+
                                     </td>&#13;
                                 </tr>&#13;#}
                                 <tr style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0; padding: 0;">&#13;
                                     <td style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">&#13;
-                                        {% block body %}{% endblock %}
+                                        {% block body %}
+                                        {% endblock %}
                                     </td>&#13;
                                 </tr>&#13;
                                 <tr style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0; padding: 0;">&#13;
@@ -81,12 +82,30 @@
                                         <a href="{% block link_url %}#{% endblock %}" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; color: #FFF; text-decoration: none; line-height: 2; font-weight: bold; text-align: center; cursor: pointer; display: inline-block; border-radius: 5px; text-transform: capitalize; background-color: #1ab394; margin: 0; padding: 0; border-color: #1ab394; border-style: solid; border-width: 5px 10px;">{% block link_text %}{% endblock %}</a>&#13;
                                     </td>&#13;
                                 </tr>&#13;
-                              </table>&#13;
+                            </table>&#13;
                         </td>&#13;
                     </tr>&#13;
                 </table>&#13;
                 <div style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; clear: both; color: #999; margin: 0; padding: 20px;">&#13;
                     <table width="100%" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0; padding: 0;">&#13;
+                        <tr style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0; padding: 0;">&#13;
+                            <td style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 12px; vertical-align: top; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top">
+
+                                <link href="{{ asset('bundles/skaphandrusapp/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+                                <ul class="list-inline social-icon" style="margin: 0; padding: 0;list-style: none;">
+                                    <li style="display: inline-block;padding-right: 5px;padding-left: 5px;">
+                                        <a style="background: #1ab394;color: #fff;padding: 4px 8px;height: 15px;width: 10px;display: block;border-radius: 50%;" href="https://twitter.com/skaphandrus" target="_blank"><i class="fa fa-twitter"></i></a>
+                                    </li>
+                                    <li style="display: inline-block;padding-right: 5px;padding-left: 5px;">
+                                        <a style="background: #1ab394;color: #fff;padding: 4px 8px;height: 15px;width: 10px;display: block;border-radius: 50%;" href="https://www.facebook.com/skaphandrus/" target="_blank"><i class="fa fa-facebook"></i></a>
+                                    </li>
+                                    <li style="display: inline-block;padding-right: 5px;padding-left: 5px;">
+                                        <a style="background: #1ab394;color: #fff;padding: 4px 8px;height: 15px;width: 10px;display: block;border-radius: 50%;" href="https://www.linkedin.com/company/skaphandrus" target="_blank"><i class="fa fa-linkedin"></i></a>
+                                    </li>
+                                </ul>
+
+                            </td>&#13;
+                        </tr>&#13;
                         <tr style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0; padding: 0;">&#13;
                             <td style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 12px; vertical-align: top; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top">Follow <a href="https://www.facebook.com/skaphandrus/" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 12px; color: #999; text-decoration: underline; margin: 0; padding: 0;">Skaphandrus</a> on Facebook.</td>&#13;
                         </tr>&#13;

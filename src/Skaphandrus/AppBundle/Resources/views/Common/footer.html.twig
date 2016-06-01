@@ -1,12 +1,29 @@
+{#<div class="footer">
+    <footer>
+        <div class="pull-right">
+            <a href="{{ path('contest_programs') }}">{{ "footer.view.contest_programs"|trans }}</a>
+            <a href="{{ path('business_programs') }}">{{ "footer.view.business_programs"|trans }}</a>
+            <a href="{{ path('terms_and_conditions') }}">{{ "footer.view.terms_and_conditions"|trans }}</a>
+        </div>
+        <div>
+            <meta itemprop="copyrightHolder" content="Skaphandrus" />
+            <meta itemprop="copyrightYear" content="2012-{{ "now"|date("Y") }}" />
+            <strong>Copyright</strong> Skaphandrus Company &copy; 2012-{{ "now"|date("Y") }}
+        </div>
+    </footer>
+</div>#}
+
 <div class="footer">
-    <div class="pull-right">
-        {#<a href="{{ path('contest_programs') }}">{{ "footer.view.contest_programs"|trans }}</a>
-        <a href="{{ path('business_programs') }}">{{ "footer.view.business_programs"|trans }}</a>#}
-        <a href="{{ path('terms_and_conditions') }}">{{ "footer.view.terms_and_conditions"|trans }}</a>
-    </div>
-    <div>
-        <meta itemprop="copyrightHolder" content="Skaphandrus" />
-        <meta itemprop="copyrightYear" content="2012-{{ "now"|date("Y") }}" />
-        <strong>Copyright</strong> Skaphandrus Company &copy; 2012-{{ "now"|date("Y") }}
+    <div class="container">
+        <footer>
+            <a href="{{ path('about_experts') }}" title="About Experts">{{ "footer.view.about_experts"|trans }}</a>
+            &nbsp;&nbsp;&middot;&nbsp;&nbsp;<a href="{{ path('about_points') }}" title="About Points">{{ "footer.view.about_points"|trans }}</a>
+            &nbsp;&nbsp;&middot;&nbsp;&nbsp;<a href="{{ path('contest_programs') }}" title="Contest Programs">{{ "footer.view.contest_programs"|trans }}</a>
+            &nbsp;&nbsp;&middot;&nbsp;&nbsp;<a href="{{ path('business_programs') }}" title="Centers Programs">{{ "footer.view.business_programs"|trans }}</a>
+            &nbsp;&nbsp;&middot;&nbsp;&nbsp;<a href="{{ path('terms_and_conditions') }}" title="Terms of use">{{ "footer.view.terms_and_conditions"|trans }}</a>
+            <meta itemprop="copyrightHolder" content="Skaphandrus" />
+            <meta itemprop="copyrightYear" content="2012-{{ "now"|date("Y") }}" />
+            <span class="pull-right">&copy; 2012-{{ "now"|date("Y") }} Skaphandrus Company</span>
+        </footer>
     </div>
 </div>
