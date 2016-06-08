@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class SkPointsRepository extends EntityRepository {
 
+    //usado na pagina about points
     public function findAllPoints($locale) {
 
         $em = $this->getEntityManager();
@@ -35,6 +36,7 @@ class SkPointsRepository extends EntityRepository {
         return $result;
     }
 
+    //usado na pagina about points
     public function getValueOfPoints() {
 
         $em = $this->getEntityManager();
@@ -60,6 +62,7 @@ class SkPointsRepository extends EntityRepository {
             18 => array("type" => "(photos)_10_user_species_validations", "single" => 10),
             19 => array("type" => "(photos)_100_user_species_validations", "single" => 100),
             20 => array("type" => "(photos)_1000_user_species_validations", "single" => 1000),
+            21 => array("type" => "(points)_bio_nudis_2016", "single" => 1),
         );
 
         //para cada posição do array:
@@ -163,7 +166,12 @@ class SkPointsRepository extends EntityRepository {
         $associated_spot = $this->findAssociatedSpotsPhotos($fos_user->getId());
 
         //criar funcção que vai buscar pontos para determinado utilizador no concuros (points)_bio_nudis_2016
-        $points_bio_nudis_2016 = 0;
+        $points_bio_nudis_2016 = $em->getRepository('SkaphandrusAppBundle:SkPointsExtra')
+                ->getPointsFromContest($fos_user->getId(), 21);
+
+        if (!$points_bio_nudis_2016):
+            $points_bio_nudis_2016 = 0;
+        endif;
 
         $arr = array(
             1 => array("type" => "user_register", "single" => 50, "number" => 1),

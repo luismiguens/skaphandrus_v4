@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Skaphandrus\AppBundle\Entity\SkPointsExtra" repository-class="Skaphandrus\AppBundle\Entity\Repository\SkPointsExtraRepository"  table="sk_points_extra">
+        <indexes>
+            <index name="fk_sk_points_extra_2_idx" columns="fos_user_id"/>
+            <index name="fk_sk_points_extra_1_idx" columns="points_type_id"/>
+        </indexes>
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="pointsExtra" type="integer" column="points_extra" nullable="false">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <many-to-one field="fosUser" target-entity="FosUser" fetch="LAZY">
+            <join-columns>
+                <join-column name="fos_user_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-one field="pointsType" target-entity="SkPointsType" fetch="LAZY">
+            <join-columns>
+                <join-column name="points_type_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+    </entity>
+</doctrine-mapping>

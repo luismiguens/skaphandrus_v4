@@ -12,7 +12,7 @@
         <one-to-many field="spots" target-entity="SkSpot" mapped-by="fosUser"/>
         <one-to-many field="photos" target-entity="SkPhoto" mapped-by="fosUser"/>
         <one-to-many field="points" target-entity="SkPoints" mapped-by="fosUser"/>
-        
+        <one-to-many field="pointsExtra" target-entity="SkPointsExtra" mapped-by="fosUser"/>
         
         <!--<many-to-many field="modules" target-entity="SkIdentificationModule" inversed-by="users" fetch="LAZY">
             <join-table name="sk_identification_module_username">

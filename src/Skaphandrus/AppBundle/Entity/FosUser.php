@@ -37,6 +37,11 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
+    private $pointsExtra;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
     private $photos;
 
     /**
@@ -146,13 +151,12 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
 //        
 //        $module = new SkIdentificationModule();
 //        $module->getIsActive()
-        
+
         foreach ($this->acquisitions as $acquisition) {
-            
-            if($acquisition->getModule()->getIsActive()==TRUE):
+
+            if ($acquisition->getModule()->getIsActive() == TRUE):
                 $modules[] = $acquisition->getModule();
             endif;
-            
         }
 
         return $modules;
@@ -335,6 +339,37 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
      */
     public function getPoints() {
         return $this->points;
+    }
+
+    /**
+     * Add pointsExtra
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPointsExtra $pointsExtra
+     *
+     * @return FosUser
+     */
+    public function addPointsExtra(\Skaphandrus\AppBundle\Entity\SkPointsExtra $pointsExtra) {
+        $this->pointsExtra[] = $pointsExtra;
+
+        return $this;
+    }
+
+    /**
+     * Remove pointsExtra
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPointsExtra $pointsExtra
+     */
+    public function removePointsExtra(\Skaphandrus\AppBundle\Entity\SkPointsExtra $pointsExtra) {
+        $this->$pointsExtra->removeElement($pointsExtra);
+    }
+
+    /**
+     * Get pointsExtra
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPointsExtra() {
+        return $this->pointsExtra;
     }
 
     /**
