@@ -1230,8 +1230,8 @@ class DefaultController extends Controller {
         $photosUser = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
                 ->getPhotosFromUser($photo->getFosUser());
 
-        $photoInContest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
-                ->getPhotoInContest($photo->getId()/* 24078 */, $locale);
+//        $photoInContest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
+//                ->getPhotoInContest($photo->getId()/* 24078 */, $locale);
 
         $votedPhoto = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestVote')
                 ->findOneBy(array('fosUser' => $photo->getFosUser(), 'category' => "behaviour"));
@@ -1313,13 +1313,24 @@ class DefaultController extends Controller {
             $photo->setViews($views);
             $em->persist($photo);
             $em->flush();
+            
+            
+            //$photo = new \Skaphandrus\AppBundle\Entity\SkPhoto();
+            
+            foreach ($photo->getCategory() as $category):
+                $category->setPointsInPhoto($this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->setPoints($photo->getId(), $category->getId()));
+            endforeach;
+           
+            
+            
+            
 
             return $this->render('SkaphandrusAppBundle:Default:photo.html.twig', array(
                         'photo' => $photo,
                         'previous_photo' => $previous_photo_id,
                         'next_photo' => $next_photo_id,
                         'photosUser' => $photosUser,
-                        'photoInContest' => $photoInContest,
+//                        'photoInContest' => $photoInContest,
                         'votedPhoto' => $votedPhoto,
                         'showValidation' => $showValidation,
                         'showSugestion' => $showSugestion,

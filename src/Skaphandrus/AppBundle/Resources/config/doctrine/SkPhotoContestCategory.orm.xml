@@ -17,7 +17,10 @@
                 <join-column name="contest_id" referenced-column-name="id"/>
             </join-columns>
         </many-to-one>
-        <many-to-many field="photo" target-entity="SkPhoto" inversed-by="category" fetch="LAZY">
+        
+        <many-to-many field="photo" target-entity="SkPhoto" mapped-by="category" fetch="LAZY"/>
+    
+<!--        <many-to-many field="photo" target-entity="SkPhoto" inversed-by="category" fetch="LAZY">
             <order-by>
                 <order-by-field name="id" direction="DESC" />
             </order-by>
@@ -29,7 +32,7 @@
                     <join-column name="photo_id" referenced-column-name="id"/>
                 </inverse-join-columns>
             </join-table>
-        </many-to-many>
+        </many-to-many>-->
         <one-to-many field="awards" target-entity="SkPhotoContestAward" mapped-by="category"/>
         
         <one-to-many field="votations" target-entity="SkPhotoContestCategoryJudgeVotation" mapped-by="category"/>

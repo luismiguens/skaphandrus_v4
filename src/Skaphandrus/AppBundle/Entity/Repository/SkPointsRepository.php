@@ -194,7 +194,7 @@ class SkPointsRepository extends EntityRepository {
             18 => array("type" => "(photos)_10_user_species_validations", "single" => 10, "number" => $ten_user_species_validations),
             19 => array("type" => "(photos)_100_user_species_validations", "single" => 100, "number" => $hundred_user_species_validations),
             20 => array("type" => "(photos)_1000_user_species_validations", "single" => 1000, "number" => $thousand_user_species_validations),
-            21 => array("type" => "(points)_bio_nudis_2016", "single" => 1, "number" => $points_bio_nudis_2016),
+            21 => array("type" => "(points)_bio_nudis_2016", "single" => $points_bio_nudis_2016, "number" => 1),
         );
 
 

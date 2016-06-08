@@ -48,6 +48,16 @@ class SkPhotoContestCategory {
      */
     private $winnerPhotos;
 
+    
+    
+    
+    private $pointsInPhoto;
+    
+    
+    
+    
+    
+    
     /**
      * Constructor
      */
@@ -55,6 +65,28 @@ class SkPhotoContestCategory {
         $this->photo = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    
+    
+      public function setPointsInPhoto($pointsInPhoto) {
+        $this->pointsInPhoto = $pointsInPhoto;
+
+        return $this;
+    }
+
+    /**
+     * Get pointsInPhoto
+     *
+     * @return string
+     */
+    public function getPointsInPhoto() {
+        return $this->pointsInPhoto;
+    }
+    
+    
+    
+    
+    
+    
     public function setWinnerPhotos($winnerPhotos) {
         $this->winnerPhotos = $winnerPhotos;
 

@@ -367,8 +367,22 @@
                         <!-- Social buttons end -->
                     </div>
 
-                    {#<!-- contests area begin-->
-                    <div class="ibox">
+
+
+
+                    
+
+                    {% for category in photo.category %}
+                        {{category.contest}} - {{category.name}} - {{category.id}} - {{category.pointsInPhoto}}<br/>
+
+                    {% endfor %}
+
+
+
+
+
+                    <!-- contests area begin-->
+                    {#<div class="ibox">
                         <div class="ibox-title">
                             <h5>{{ "page.photo.h5.contest"|trans }}</h5>
                         </div>
@@ -422,8 +436,15 @@
                                 {{ "page.photo.contest.no_results"|trans }}
                             {% endif %}
                         </div>
-                    </div>
-                    <!-- contest area end-->#}
+                    </div>#}
+                    <!-- contest area end-->
+
+
+
+
+
+
+
 
                     <!-- Coments start -->
                     <div class="ibox">
