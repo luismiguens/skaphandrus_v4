@@ -125,6 +125,16 @@ class SkPhotoContest {
     private $business;
 
     /**
+     * @var integer
+     */
+    private $totalPrice = 0;
+
+    /**
+     *  variavel auxiliar para que guarda o numero total de views
+     */
+    private $totalViews;
+
+    /**
      * Constructor
      */
     public function __construct() {
@@ -137,6 +147,28 @@ class SkPhotoContest {
         $this->promoAt = new \DateTime();
         $this->winnersAt = new \DateTime();
         $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set totalViews
+     *
+     * @param boolean totalViews
+     *
+     * @return SkPhotoContest
+     */
+    public function setTotalViews($totalViews) {
+        $this->totalViews = $totalViews;
+
+        return $this;
+    }
+
+    /**
+     * Get totalViews
+     *
+     * @return boolean
+     */
+    public function getTotalViews() {
+        return $this->totalViews;
     }
 
     /**
@@ -718,6 +750,28 @@ class SkPhotoContest {
      */
     public function getBusiness() {
         return $this->business;
+    }
+
+    /**
+     * Set totalPrice
+     *
+     * @param string $totalPrice
+     *
+     * @return SkPhotoContest
+     */
+    public function setTotalPrice($totalPrice) {
+        $this->totalPrice = $totalPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get totalPrice
+     *
+     * @return string
+     */
+    public function getTotalPrice() {
+        return $this->totalPrice;
     }
 
     public function isInPromotion() {

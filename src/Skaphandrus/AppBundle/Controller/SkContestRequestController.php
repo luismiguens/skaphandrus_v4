@@ -44,7 +44,6 @@ class SkContestRequestController extends Controller {
                     ->setSubject("Create Photo Contest")
                     ->setFrom('support-noreply@skaphandrus.com', 'Skaphandrus')
                     ->setTo('luis.t.miguens@gmail.com')
-                    ->setCc('rubensardinha1992@gmail.com')
                     ->setBody($this->renderView('SkaphandrusAppBundle:SkContestRequest:content_email.html.twig', array(
                         'user' => $entity->getName(),
                         'email' => $entity->getEmail(),

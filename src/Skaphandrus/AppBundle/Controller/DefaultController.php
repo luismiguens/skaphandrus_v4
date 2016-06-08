@@ -1245,6 +1245,7 @@ class DefaultController extends Controller {
             $request = $this->get('request');
             $securityContext = $this->container->get('security.context');
 
+
             //set species is user dont set, but we have sugestion or validation
             if (!$photo->getSpecies()) {
                 if (count($photo->getSpeciesValidations()) > 0) {
@@ -1307,6 +1308,11 @@ class DefaultController extends Controller {
                     $sugestionAction = 'edit';
                 }
             }
+
+            $views = $photo->getViews() + 1;
+            $photo->setViews($views);
+            $em->persist($photo);
+            $em->flush();
 
             return $this->render('SkaphandrusAppBundle:Default:photo.html.twig', array(
                         'photo' => $photo,

@@ -36,6 +36,27 @@ class SkPhotoContestRepository extends EntityRepository {
         return $query->getResult();
     }
 
+    // conta o numero de view que cada foto tem que pertence a cada concurso
+    public function countTotalViews($contest_id) {
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT SUM(p.views) AS sum
+                FROM sk_photo as p
+                JOIN sk_photo_contest_category_photo AS ca_p 
+                ON ca_p.photo_id = p.id
+                JOIN sk_photo_contest_category AS ca 
+                ON ca_p.category_id = ca.id
+                WHERE ca.contest_id = " . $contest_id;
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchColumn();
+
+        return $values;
+    }
+
     public function getPhotographers($contest_id) {
 
         $em = $this->getEntityManager();

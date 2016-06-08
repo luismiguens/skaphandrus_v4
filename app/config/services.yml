@@ -17,3 +17,9 @@ services:
 #    security.authentication_rest_handler:
 #        class: Skaphandrus\AppBundle\Security\AuthenticationRestHandler    
           
+    skaphandrus_app.upload_listener:
+        class: Skaphandrus\AppBundle\EventListener\UploadListener
+        arguments: ['@doctrine.orm.entity_manager', '@security.context']
+        tags:
+            - { name: kernel.event_listener, event: oneup_uploader.post_persist, method: onUpload }
+          

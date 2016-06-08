@@ -77,6 +77,17 @@
 
                 <!-- Coluna da direita -->
                 <div class="col-md-8">
+
+                    <div class="row" >
+                        <div class="col col-lg-12">
+                            <div class="ibox">
+                                <div class="ibox-content">
+                                    <img alt="{{ contest.name }}" src="{{ contest.getWebPathImage | imagine_filter('sk_widen_900') }}" class="img-responsive">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row" >
                         <div class="col col-lg-12">
                             <div class="tabs-container">
@@ -312,7 +323,9 @@
                                                                     </td>
                                                                     <td style="width: 25%">
                                                                         {% if award.winnerPhoto %}
-                                                                            <img style="width:100%; max-width: fit-content" alt="{{ award.winnerPhoto }}" class="img-responsive" src="{{ award.winnerPhoto.getWebPath | imagine_filter('sk_widen_265') }}" />
+                                                                            <a href="{{ url_to_photo(award.winnerPhoto) }}" title="{{ award.winnerPhoto.title }}">
+                                                                                <img style="width:100%; max-width: fit-content" alt="{{ award.winnerPhoto }}" class="img-responsive" src="{{ award.winnerPhoto.getWebPath | imagine_filter('sk_widen_265') }}" />
+                                                                            </a>
                                                                         {% endif %}
                                                                         {#<img style="display:block;" alt="Janolus Cristatus" src="http://skaphandrus.com/media/cache/sk_widen_265/uploads/fotografias/57153b057a871.jpg">#}
                                                                     </td>

@@ -171,6 +171,11 @@ class SkBusiness {
      */
     private $photos;
 
+    /**
+     * @var \Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor
+     */
+    private $sponsor;
+
     /*     * symfony advanced forms
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the  update. If this
@@ -1051,6 +1056,28 @@ class SkBusiness {
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
         return 'uploads/business';
+    }
+
+    /**
+     * Get sponsor
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor
+     */
+    public function getSponsor() {
+        return $this->sponsor;
+    }
+
+    /**
+     * Set sponsor
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor $sponsor
+     *
+     * @return SkBusiness
+     */
+    public function setSponsor(\Skaphandrus\AppBundle\Entity\SkPhotoContestSponsor $sponsor = null) {
+        $this->sponsor = $sponsor;
+
+        return $this;
     }
 
     public function isPremium() {

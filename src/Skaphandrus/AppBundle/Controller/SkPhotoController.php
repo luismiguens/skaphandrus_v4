@@ -79,13 +79,8 @@ class SkPhotoController extends Controller {
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-
-
             if ($request->request->get('tags') != NULL and $request->request->get('tags') != ""):
 
-
-
-//            $entity->upload();
                 // Add tags from custom field
                 $tags = explode(',', $request->request->get('tags'));
                 foreach ($tags as $tag) {

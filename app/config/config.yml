@@ -426,7 +426,6 @@ fos_message:
         type: skaphandrus_message.new_thread.form.type
         
         
-# app/config/config.yml
 vich_uploader:
     db_driver: orm
     twig:       true
@@ -496,3 +495,11 @@ vich_uploader:
             namer:              vich_uploader.namer_uniqid
             
 be_simple_i18n_routing: ~
+
+#upload multiple files
+oneup_uploader:
+    mappings:
+        gallery:
+            frontend: dropzone
+            storage:
+                directory: %kernel.root_dir%/../web/uploads/fotografias

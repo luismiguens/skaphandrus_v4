@@ -173,6 +173,8 @@
         
         <one-to-many field="photos" target-entity="SkPhoto" mapped-by="spot"/>
         
+        <one-to-one field="sponsor" target-entity="SkPhotoContestSponsor" mapped-by="business" />
+        
         <lifecycle-callbacks>
             <lifecycle-callback type="postLoad" method="doStuffOnPostLoad"/>
             <lifecycle-callback type="postUpdate" method="doStuffOnPostUpdate"/>

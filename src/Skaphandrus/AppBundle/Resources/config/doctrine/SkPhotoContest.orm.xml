@@ -42,6 +42,12 @@
             </options>
         </field>
         
+        <field name="totalPrice" type="string" column="total_price" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        
         <one-to-one field="business" target-entity="SkBusiness" inversed-by="photoContest" nullable="false">
             <join-column name="business_id" referenced-column-name="id" />
         </one-to-one>

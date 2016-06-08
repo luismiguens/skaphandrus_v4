@@ -42,6 +42,12 @@ class SkPhotoContestType extends AbstractType {
                     'allow_delete' => false, // not mandatory, default is true
                     'download_link' => false, // not mandatory, default is true
                 ))
+                ->add('totalPrice', null, array(
+                    'attr' => array('class' => 'form-control', 'min' => 0),
+                    'label' => 'form.photo_contest.label.total_price',
+                    'data' => 0,
+                    'required' => false
+                ))
                 ->add('promoAt', null, array(
                     'years' => range(2010, 2030),
                     'label' => 'form.photo_contest.label.promo_at',

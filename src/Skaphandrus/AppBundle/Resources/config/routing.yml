@@ -1,7 +1,14 @@
 
 ################################################################################  
 ### ADMIN ROUTES
-################################################################################ 
+################################################################################
+oneup_uploader:
+    resource: .
+    type: uploader
+
+photo_multiple_admin:
+    path:     /{_locale}/photo_admin/multiple
+    defaults: { _controller: "SkaphandrusAppBundle:SkPhotoMultiple:upload" }
 
 business_fos_user_regions:
     path:     /{_locale}/select_regions

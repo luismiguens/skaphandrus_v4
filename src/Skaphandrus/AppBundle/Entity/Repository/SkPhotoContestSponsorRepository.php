@@ -14,21 +14,51 @@ use Doctrine\ORM\Query\ResultSetMapping;
 class SkPhotoContestSponsorRepository extends EntityRepository {
 
     public function findSponsorsByContest($contest) {
-        
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "SELECT distinct s.*, s.id as id
+                FROM sk_photo_contest_sponsor s
+                INNER JOIN sk_photo_contest_award_sponsor spon 
+                ON s.id = spon.sponsor_id
+                LEFT JOIN sk_business b 
+                ON s.business_id = b.id
+                INNER JOIN sk_photo_contest_award a 
+                ON a.id = spon.award_id
+                WHERE a.contest_id = " . $contest->getId();
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchAll();
+        $result = array();
+
+        foreach ($values as $value) {
+
+            $sponsor = $em->getRepository('SkaphandrusAppBundle:SkPhotoContestSponsor')->find($value['id']);
+
+            $result[] = $sponsor;
+        }
+
+        return $result;
+    }
+
+    public function findSponsorsByContest_OLD($contest) {
+
 //        $sponsors = $this->getEntityManager()->createQuery(
 //            'SELECT DISTINCT s
 //            FROM SkaphandrusAppBundle:SkPhotoContestSponsor s
 //            INNER JOIN SkaphandrusAppBundle:SkPhotoContestAward a
 //            WHERE a.contest = :contest_id'
 //        )->setParameter('contest_id', $contest)->getResult();
-    
+
         $rsm = new ResultSetMapping();
         $rsm->addEntityResult('SkaphandrusAppBundle:SkPhotoContestSponsor', 's');
         $rsm->addFieldResult('s', 'id', 'id');
         $rsm->addFieldResult('s', 'name', 'name');
         $rsm->addFieldResult('s', 'image', 'image');
 
-        $query = $this->getEntityManager()->createNativeQuery( 
+        $query = $this->getEntityManager()->createNativeQuery(
                 'SELECT distinct s.*
                     FROM sk_photo_contest_sponsor s
                     INNER JOIN sk_photo_contest_award_sponsor spon 
@@ -36,14 +66,12 @@ class SkPhotoContestSponsorRepository extends EntityRepository {
                     INNER JOIN sk_photo_contest_award a 
                     ON a.id = spon.award_id
                     WHERE a.contest_id = ?', $rsm);
-        
 
         $query->setParameter(1, $contest);
-     
+
         $sponsors = $query->getResult();
-        
+
         return $sponsors;
-  
     }
 
 }

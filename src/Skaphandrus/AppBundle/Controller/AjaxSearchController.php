@@ -299,8 +299,8 @@ class AjaxSearchController extends Controller {
         foreach ($skBusiness as $business) {
             $results[] = array(
                 'id' => $business->getId(),
-                'name' => $business->getName() . " - " . $business->getAddress()->getLocation() . " - " . $business->getAddress()->getLocation()->getRegion()->getCountry(),
-                'label' => sprintf("%s", $business->getName() . " - " . $business->getAddress()->getLocation() . " - " . $business->getAddress()->getLocation()->getRegion()->getCountry()),
+                'name' => $business->getId() . " - " . $business->getName() . " - " . $business->getAddress()->getLocation() . " - " . $business->getAddress()->getLocation()->getRegion()->getCountry(),
+                'label' => sprintf("%s", $business->getId() . " - " . $business->getName() . " - " . $business->getAddress()->getLocation() . " - " . $business->getAddress()->getLocation()->getRegion()->getCountry()),
             );
         }
 

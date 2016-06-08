@@ -42,9 +42,15 @@
         <tbody>
             {% for entity in entities %}
                 <tr>
-                    <td>{{ entity.name }}</td>
                     <td>
-{#                        <a class="btn btn-white btn-sm" href="{{ path('photo_contest_sponsor_admin_show', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.view"|trans }}</a>#}
+                        {% if entity.business %}
+                            {{ entity.business.name }}
+                        {% else %}
+                            {{ entity.name }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {#                        <a class="btn btn-white btn-sm" href="{{ path('photo_contest_sponsor_admin_show', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i> {{ "forms.common.btn.view"|trans }}</a>#}
                         <a class="btn btn-white btn-sm" href="{{ path('photo_contest_sponsor_admin_edit', { 'id': entity.id }) }}"><i class="fa fa-eye-slash"></i> {{ "forms.common.btn.edit"|trans }}</a>
                     </td>
                 </tr>
@@ -55,7 +61,7 @@
     <a class="btn btn-primary" href="{{ path('photo_contest_sponsor_admin_new') }}">
         <i class="fa fa-pencil"></i>  {{ "form.photo_contest_sponsor.btn.add"|trans }}
     </a>
-    
+
 {% endblock %}
 
 

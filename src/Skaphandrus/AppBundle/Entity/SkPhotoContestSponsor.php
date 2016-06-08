@@ -39,10 +39,14 @@ class SkPhotoContestSponsor {
     private $award;
 
     /**
+     * @var \Skaphandrus\AppBundle\Entity\SkBusiness
+     */
+    private $business;
+
+    /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->award = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -53,8 +57,7 @@ class SkPhotoContestSponsor {
      *
      * @return SkPhotoContestSponsor
      */
-    public function setImage($image)
-    {
+    public function setImage($image) {
         $this->image = $image;
 
         return $this;
@@ -65,8 +68,7 @@ class SkPhotoContestSponsor {
      *
      * @return string
      */
-    public function getImage()
-    {
+    public function getImage() {
         return $this->image;
     }
 
@@ -77,8 +79,7 @@ class SkPhotoContestSponsor {
      *
      * @return SkPhotoContestSponsor
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -89,8 +90,7 @@ class SkPhotoContestSponsor {
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -99,8 +99,7 @@ class SkPhotoContestSponsor {
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -111,8 +110,7 @@ class SkPhotoContestSponsor {
      *
      * @return SkPhotoContestSponsor
      */
-    public function setContest(\Skaphandrus\AppBundle\Entity\SkPhotoContest $contest = null)
-    {
+    public function setContest(\Skaphandrus\AppBundle\Entity\SkPhotoContest $contest = null) {
         $this->contest = $contest;
 
         return $this;
@@ -123,8 +121,7 @@ class SkPhotoContestSponsor {
      *
      * @return \Skaphandrus\AppBundle\Entity\SkPhotoContest
      */
-    public function getContest()
-    {
+    public function getContest() {
         return $this->contest;
     }
 
@@ -135,8 +132,7 @@ class SkPhotoContestSponsor {
      *
      * @return SkPhotoContestSponsor
      */
-    public function addAward(\Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award)
-    {
+    public function addAward(\Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award) {
         $this->award[] = $award;
 
         return $this;
@@ -147,8 +143,7 @@ class SkPhotoContestSponsor {
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award
      */
-    public function removeAward(\Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award)
-    {
+    public function removeAward(\Skaphandrus\AppBundle\Entity\SkPhotoContestAward $award) {
         $this->award->removeElement($award);
     }
 
@@ -157,12 +152,11 @@ class SkPhotoContestSponsor {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getAward()
-    {
+    public function getAward() {
         return $this->award;
     }
-    
-        public function getAbsolutePath() {
+
+    public function getAbsolutePath() {
         return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
     }
 
@@ -181,14 +175,16 @@ class SkPhotoContestSponsor {
 // when displaying uploaded doc/image in the view.
         return 'uploads/contests';
     }
-        
-    public function __toString() {
-        return $this->getName();
-    }
-    
-    
-    protected $imageFile;
 
+    public function __toString() {
+        if ($this->business) {
+            return $this->business->getName();
+        } else {
+            return $this->getName();
+        }
+    }
+
+    protected $imageFile;
 
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
@@ -199,19 +195,37 @@ class SkPhotoContestSponsor {
      *
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
      */
-    public function setImageFile(File $image = null)
-    {
+    public function setImageFile(File $image = null) {
         $this->imageFile = $image;
     }
 
     /**
      * @return File
      */
-    public function getImageFile()
-    {
+    public function getImageFile() {
         return $this->imageFile;
     }
-    
-    
-}
 
+    /**
+     * Set business
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkBusiness $business
+     *
+     * @return SkAddress
+     */
+    public function setBusiness(\Skaphandrus\AppBundle\Entity\SkBusiness $business = null) {
+        $this->business = $business;
+
+        return $this;
+    }
+
+    /**
+     * Get business
+     *
+     * @return \Skaphandrus\AppBundle\Entity\SkBusiness
+     */
+    public function getBusiness() {
+        return $this->business;
+    }
+
+}

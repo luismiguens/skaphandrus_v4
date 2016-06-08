@@ -40,8 +40,8 @@
         "widop/http-adapter-bundle": "~1.2",
         "friendsofsymfony/message-bundle": "^1.2",
         "vich/uploader-bundle": "^0.14.0",
-        "besimple/i18n-routing-bundle": "dev-master"
-        
+        "besimple/i18n-routing-bundle": "dev-master",
+        "oneup/uploader-bundle": "~1.4"
 
     },
     "require-dev": {

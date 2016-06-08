@@ -38,106 +38,124 @@
 
 {% block body -%}
 
-    <div class="col-lg-3">
-        <div class="ibox float-e-margins">
-            <div class="ibox-content">
-                <div class="file-manager">
-                    <a class="btn btn-success btn-block" href="{{ path('photo_admin') }}">
-                        {{ "form.photo.label.all_photos"|trans }}
-                    </a>
-                    <div class="hr-line-dashed"></div>
-
-                    {#  Contests  #}
-                    <h5>{{ "form.photo.label.contest"|trans }}</h5>
-                    <ul class="list-unstyled" style="padding: 0">
-                        {% for contest in contests %}
-                            {% if contest %}
-                                <li>
-                                    <a href="{{ path('photo_admin', { 'contest': contest.id }) }}" class="file-control">
-                                        {{ contest }}
-                                    </a>
-                                    {% if contest.isInProgress %}
-                                        <a class="btn btn-primary btn-xs" href="{{ path('contest_participate', { 'contest_id': contest.id }) }}">
-                                            {{"form.contest.participate"|trans }}
-                                        </a>
-                                    {% endif %}
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                    <div class="hr-line-dashed"></div>
-
-                    {#  Add Photo  #}
-                    <a class="btn btn-primary btn-block" href="{{ path('photo_admin_new') }}">
-                        {{ "form.photo.upload_photos"|trans }}
-                    </a>
-                    <div class="hr-line-dashed"></div>
-
-                    {#  Species  #}
-                    <h5>{{ "form.photo.label.species_plural"|trans }}</h5>
-                    <div class="full-height-scroll" style="overflow: hidden">
-                        <ul class="list-unstyled" style="padding: 0; height: 250px">
-                            {% for sn in species %}
-                                <li>
-                                    <a class="file-control" href="{{ path('photo_admin', { 'species': sn.species.id }) }}">
-                                        {{ sn.name }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-
-                    {#  Tags  #}
-                    <h5 class="tag-title">{{ "form.photo.label.tags"|trans }}</h5>
-                    <div class="full-height-scroll" style="overflow: hidden">
-                        <ul class="list-unstyled{# tag-list #}" style="padding: 0; height: 250px">
-                            {% for tag in tags %}
-                                <li>
-                                    <a href="{{ path('photo_admin', { 'tag': tag.id }) }}" class="file-control">
-                                        <span class="glyphicon glyphicon-tag"></span> {{ tag.keyword }} 
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-
-                    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox">
+                <div class="ibox-content">
+                    {{ "page.photo.p.support_text"|trans }}
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-lg-9 animated fadeInRight">
-        <div class="row">
-            <div class="col-lg-12">
-                {% for photo in pagination %}
-                    <div class="file-box">
-                        <div class="file">
-                            <a href="{{ path('photo_admin_edit', { 'id': photo.id })}}">
-                                <span class="corner"></span>
-                                <div class="image">
-                                    <img alt="{{ photo.title }}" class="img-responsive"  src="{{ photo.getWebPath | imagine_filter('sk_thumbnail_outbound_198_100') }}">
-                                </div>
-                                <div class="file-name">
-                                    {{ photo.title|title|slice(0, 24)}}{% if photo.title|title|length > 23 %}...{%endif%}
-                                    <br/>
-                                    <small>
-                                        {% if photo.createdAt %}
-                                            {{ "form.photo.label.uploaded_at"|trans }}: {{ photo.createdAt|date('Y-m-d H:i:s') }}
+    <div class="row">
+
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <div class="file-manager">
+                        <a class="btn btn-success btn-block" href="{{ path('photo_admin') }}">
+                            {{ "form.photo.label.all_photos"|trans }}
+                        </a>
+                        <div class="hr-line-dashed"></div>
+
+                        {#  Contests  #}
+                        <h5>{{ "form.photo.label.contest"|trans }}</h5>
+                        <ul class="list-unstyled" style="padding: 0">
+                            {% for contest in contests %}
+                                {% if contest %}
+                                    <li>
+                                        <a href="{{ path('photo_admin', { 'contest': contest.id }) }}" class="file-control">
+                                            {{ contest }}
+                                        </a>
+                                        {% if contest.isInProgress %}
+                                            <a class="btn btn-primary btn-xs" href="{{ path('contest_participate', { 'contest_id': contest.id }) }}">
+                                                {{"form.contest.participate"|trans }}
+                                            </a>
                                         {% endif %}
-                                    </small>
-                                </div>
-                            </a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                        <div class="hr-line-dashed"></div>
+
+                        {#  Add Photo  #}
+                        <a class="btn btn-primary btn-block" href="{{ path('photo_admin_new') }}">
+                            {{ "form.photo.upload_photos"|trans }}
+                        </a>
+                        <div class="hr-line-dashed"></div>
+                        <a class="btn btn-primary btn-block" href="{{ path('photo_multiple_admin') }}">
+                            {{ "form.photo.upload_multile_photos"|trans }}
+                        </a>
+                        <div class="hr-line-dashed"></div>
+
+                        {#  Species  #}
+                        <h5>{{ "form.photo.label.species_plural"|trans }}</h5>
+                        <div class="full-height-scroll" style="overflow: hidden">
+                            <ul class="list-unstyled" style="padding: 0; height: 250px">
+                                {% for sn in species %}
+                                    <li>
+                                        <a class="file-control" href="{{ path('photo_admin', { 'species': sn.species.id }) }}">
+                                            {{ sn.name }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
                         </div>
+                        <div class="hr-line-dashed"></div>
+
+                        {#  Tags  #}
+                        <h5 class="tag-title">{{ "form.photo.label.tags"|trans }}</h5>
+                        <div class="full-height-scroll" style="overflow: hidden">
+                            <ul class="list-unstyled{# tag-list #}" style="padding: 0; height: 250px">
+                                {% for tag in tags %}
+                                    <li>
+                                        <a href="{{ path('photo_admin', { 'tag': tag.id }) }}" class="file-control">
+                                            <span class="glyphicon glyphicon-tag"></span> {{ tag.keyword }} 
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <div class="clearfix"></div>
                     </div>
-                {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="navigation">
-        {{ knp_pagination_render(pagination) }}
+        <div class="col-lg-9 animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    {% for photo in pagination %}
+                        <div class="file-box">
+                            <div class="file">
+                                <a href="{{ path('photo_admin_edit', { 'id': photo.id })}}">
+                                    <span class="corner"></span>
+                                    <div class="image">
+                                        <img alt="{{ photo.title }}" class="img-responsive"  src="{{ photo.getWebPath | imagine_filter('sk_thumbnail_outbound_198_100') }}">
+                                    </div>
+                                    <div class="file-name">
+                                        {{ photo.title|title|slice(0, 24)}}{% if photo.title|title|length > 23 %}...{%endif%}
+                                        <br/>
+                                        <small>
+                                            {% if photo.createdAt %}
+                                                {{ "form.photo.label.uploaded_at"|trans }}: {{ photo.createdAt|date('Y-m-d H:i:s') }}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
     </div>
 
 {% endblock %}

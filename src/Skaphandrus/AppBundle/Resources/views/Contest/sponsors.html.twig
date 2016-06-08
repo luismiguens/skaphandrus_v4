@@ -58,6 +58,17 @@
 
                 <!-- Coluna da direita -->
                 <div class="col-md-8">
+
+                    <div class="row" >
+                        <div class="col col-lg-12">
+                            <div class="ibox">
+                                <div class="ibox-content">
+                                    <img alt="{{ contest.name }}" src="{{ contest.getWebPathImage | imagine_filter('sk_widen_900') }}" class="img-responsive">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row" >
                         <div class="col col-lg-12">
                             <div class="tabs-container">
@@ -116,11 +127,25 @@
                                                             <tr>
                                                                 <td>
                                                                     {% if sponsor.image %}
-                                                                        <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
+                                                                        {% if sponsor.business %}
+                                                                            <a href="{{ path('business_no_slug', {'id': sponsor.business.id}) }}">
+                                                                                <img class="img-rounded" src="{{ sponsor.business.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ sponsor.business.name }}" title="{{ sponsor.business.name }}">
+                                                                            </a>
+                                                                        {% else %}
+                                                                            <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
+                                                                        {% endif %}
                                                                     {% endif %}
                                                                 </td>
                                                                 <td>
-                                                                    <h4>{{ sponsor.name }}</h4>
+                                                                    <h4>
+                                                                        {% if sponsor.business %}
+                                                                            <a href="{{ path('business_no_slug', {'id': sponsor.business.id}) }}">
+                                                                                {{ sponsor.business.name }}
+                                                                            </a>
+                                                                        {% else %}
+                                                                            {{ sponsor.name }}
+                                                                        {% endif %}
+                                                                    </h4>
                                                                     <p>{{ sponsor.translate.description }}</p>
                                                                 </td>
                                                             </tr>

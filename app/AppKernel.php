@@ -6,6 +6,7 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 class AppKernel extends Kernel {
 
     public function registerBundles() {
+
         $bundles = array(
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
@@ -27,8 +28,6 @@ class AppKernel extends Kernel {
             // Then add SonataAdminBundle
             new Sonata\AdminBundle\SonataAdminBundle(),
             new Skaphandrus\AppBundle\SkaphandrusAppBundle(),
-            
-            
             new A2lix\TranslationFormBundle\A2lixTranslationFormBundle(),
             new Lexik\Bundle\TranslationBundle\LexikTranslationBundle(),
             // new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
@@ -37,7 +36,6 @@ class AppKernel extends Kernel {
             // Most of the cases, you'll want to extend FOSUserBundle though ;)
             // extend the ``FOSUserBundle``
             new FOS\UserBundle\FOSUserBundle(),
-            
             //new Skaphandrus\AppBundle\UserBundle(),
             //new FOS\UserBundle\UserBundle(),
             //
@@ -56,10 +54,9 @@ class AppKernel extends Kernel {
             //new Cocur\Slugify\Bridge\Symfony\CocurSlugifyBundle(),
             new Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
             new FOS\MessageBundle\FOSMessageBundle(),
-            
             new Vich\UploaderBundle\VichUploaderBundle(),
             new BeSimple\I18nRoutingBundle\BeSimpleI18nRoutingBundle(),
-            
+            new Oneup\UploaderBundle\OneupUploaderBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

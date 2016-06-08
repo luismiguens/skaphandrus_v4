@@ -244,6 +244,16 @@ class ContestController extends Controller {
         $contest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
                 ->findOneByName($name);
 
+        $totalViews = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
+                ->countTotalViews($contest->getId());
+
+        if ($totalViews):
+            $contest->setTotalViews($totalViews);
+        else:
+            $totalViews = 0;
+            $contest->setTotalViews($totalViews);
+        endif;
+
         $photographers = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
                 ->getPhotographers($contest->getId());
 

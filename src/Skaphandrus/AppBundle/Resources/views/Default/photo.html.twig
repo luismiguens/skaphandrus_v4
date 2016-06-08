@@ -265,6 +265,12 @@
                                         </li>
                                         <li>
                                             <p>
+                                                <strong> {{ "page.photo.label.views"|trans }}: </strong>
+                                                {{ photo.views }}
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p>
                                                 <strong> {{ "page.photo.label.camera"|trans }}: </strong>
                                                 {% if photo.model is not empty %}
                                                     {{ photo.model.name }}

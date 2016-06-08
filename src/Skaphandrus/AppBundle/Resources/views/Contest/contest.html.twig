@@ -92,11 +92,13 @@
                                 <img alt="{{ contest.name }}" src="{{ contest.getWebPathImage | imagine_filter('sk_widen_900') }}" class="img-responsive">
                             </div>
                             <div class="row m-b-md">
-                                <div class="col-md-4">
-                                    <img src="{{ contest.business.getWebPath | imagine_filter('sk_widen_100') }}" class="img-responsive" />
-                                    <div>
-                                        <h2 class="text-navy">{{ contest.business.name }}</h2>
-                                    </div>
+                                <div class="col-md-4" align="center">
+                                    {% if contest.business %}
+                                        <img src="{{ contest.business.getWebPath | imagine_filter('sk_widen_100') }}" class="img-responsive" />
+                                        <div>
+                                            <h2 class="text-navy">{{ contest.business.name }}</h2>
+                                        </div>
+                                    {% endif %}
                                 </div>
                                 <div class="col-md-8">
                                     <div class="row">
@@ -112,7 +114,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th>{{ "page.contest.dt.total_price"|trans }}</th>
-                                                    <td>N/A</td>
+                                                    <td>{{ contest.totalPrice }}</td>
                                                 </tr>
                                             </table>
                                         </div>
@@ -128,7 +130,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th>{{ "page.contest.dt.num_visualizacoes"|trans }}</th>
-                                                    <td>N/A</td>
+                                                    <td>{{ contest.totalViews }}</td>
                                                 </tr>
                                             </table>
                                         </div>
@@ -301,7 +303,9 @@
                                                             <tr>
                                                                 <td>
                                                                     {% if category.image %}
-                                                                        <img class="img-rounded" src="{{ category.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ category.name }}" title="{{ category.name }}">
+                                                                        <a href="{{ url_to_contest_photos(category) }}" title="{{ category }}">
+                                                                            <img class="img-rounded" src="{{ category.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ category.name }}" title="{{ category.name }}">
+                                                                        </a>
                                                                     {% endif %}
                                                                 </td>
                                                                 <td>
@@ -311,8 +315,14 @@
                                                                 <td>
                                                                     {% for award in category.awards %}
                                                                         {% for sponsor in award.sponsor %}
-                                                                            {% if sponsor.getWebPath %}
-                                                                                <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
+                                                                            {% if sponsor.image %}
+                                                                                {% if sponsor.business %}
+                                                                                    <a href="{{ path('business_no_slug', {'id': sponsor.business.id}) }}">
+                                                                                        <img class="img-rounded" src="{{ sponsor.business.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ sponsor.business.name }}" title="{{ sponsor.business.name }}">
+                                                                                    </a>
+                                                                                {% else %}
+                                                                                    <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
+                                                                                {% endif %}
                                                                             {% endif %}
                                                                         {% endfor %}
                                                                     {% endfor %}
@@ -347,8 +357,14 @@
                                                                 </td>
                                                                 <td>
                                                                     {% for sponsor in award.sponsor %}
-                                                                        {% if sponsor.getWebPath %}
-                                                                            <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
+                                                                        {% if sponsor.image %}
+                                                                            {% if sponsor.business %}
+                                                                                <a href="{{ path('business_no_slug', {'id': sponsor.business.id}) }}">
+                                                                                    <img class="img-rounded" src="{{ sponsor.business.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ sponsor.business.name }}" title="{{ sponsor.business.name }}">
+                                                                                </a>
+                                                                            {% else %}
+                                                                                <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
+                                                                            {% endif %}
                                                                         {% endif %}
                                                                     {% endfor %}
                                                                 </td>
@@ -376,10 +392,12 @@
                                                         {% for judge in judges %}
                                                             <tr>
                                                                 <td>
-                                                                    <img class="img-rounded" src="{{ judge.fosUser.settings.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ judge.fosUser.name }}" title="{{ judge.fosUser.name }}">
+                                                                    <a href="{{ url_to_user(judge.fosUser) }}" title="{{ judge.fosUser.name }}">
+                                                                        <img class="img-rounded" src="{{ judge.fosUser.settings.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ judge.fosUser.name }}" title="{{ judge.fosUser.name }}">
+                                                                    </a>
                                                                 </td>
                                                                 <td>
-                                                                    <h4>{{ judge.fosUser.name }}</h4>
+                                                                    <h4>{{ link_to_user(judge.fosUser) }}</h4>
                                                                     {% if judge.description %}
                                                                         <p>{{ judge.description|truncate(250, true) }} 
                                                                             <a href="{{ url_to_user(judge.fosUser) }}">{{ "page.contest.table.read_more"|trans }}</a>
@@ -409,12 +427,26 @@
                                                         {% for sponsor in sponsors %}
                                                             <tr>
                                                                 <td>
-                                                                    {% if sponsor.getWebPath %}
-                                                                        <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_100') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
+                                                                    {% if sponsor.image %}
+                                                                        {% if sponsor.business %}
+                                                                            <a href="{{ path('business_no_slug', {'id': sponsor.business.id}) }}">
+                                                                                <img class="img-rounded" src="{{ sponsor.business.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ sponsor.business.name }}" title="{{ sponsor.business.name }}">
+                                                                            </a>
+                                                                        {% else %}
+                                                                            <img class="img-rounded" src="{{ sponsor.getWebPath | imagine_filter('sk_widen_160') }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}">
+                                                                        {% endif %}
                                                                     {% endif %}
                                                                 </td>
                                                                 <td>
-                                                                    <h4>{{ sponsor.name }}</h4>
+                                                                    <h4>
+                                                                        {% if sponsor.business %}
+                                                                            <a href="{{ path('business_no_slug', {'id': sponsor.business.id}) }}">
+                                                                                {{ sponsor.business.name }}
+                                                                            </a>
+                                                                        {% else %}
+                                                                            {{ sponsor.name }}
+                                                                        {% endif %}
+                                                                    </h4>
                                                                     <p>{{ sponsor.translate.description }}</p>
                                                                 </td>
                                                             </tr>
