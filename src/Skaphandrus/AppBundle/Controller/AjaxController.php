@@ -51,6 +51,21 @@ class AjaxController extends Controller {
         ));
     }
 
+    public function photoIsPrimaryAction(Request $request) {
+
+        $photo_id = $request->query->get('photo_id');
+        $species_id = $request->query->get('species_id');
+
+        $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
+                ->findOneBy(array('id' => $photo_id));
+
+        $isPrimary = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->changePhotoToPrimary($photo_id, $species_id);
+
+        $photo->setIsPrimary($isPrimary);
+
+        return $this->render('SkaphandrusAppBundle:Ajax:photoIsPrimary.html.twig', array());
+    }
+
     /////// See All start \\\\\\\\
 
     public function spotSeeAllAction(Request $request) {

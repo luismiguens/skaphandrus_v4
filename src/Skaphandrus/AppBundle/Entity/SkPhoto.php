@@ -81,6 +81,7 @@ class SkPhoto {
      */
     private $category;
     private $isValidated = '0';
+    private $isPrimary = '0';
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -447,6 +448,28 @@ class SkPhoto {
      */
     public function getIsValidated() {
         return $this->isValidated;
+    }
+
+    /**
+     * Set isPrimary
+     *
+     * @param boolean $isPrimary
+     *
+     * @return SkPhotoContest
+     */
+    public function setIsPrimary($isPrimary) {
+        $this->isPrimary = $isPrimary;
+
+        return $this;
+    }
+
+    /**
+     * Get isPrimary
+     *
+     * @return boolean
+     */
+    public function getIsPrimary() {
+        return $this->isPrimary;
     }
 
     /**

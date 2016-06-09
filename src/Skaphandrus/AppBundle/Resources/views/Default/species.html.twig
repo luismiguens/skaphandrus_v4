@@ -263,16 +263,22 @@
                         <div class="row">
                             <div class="col-md-6">
 
-                                {% for photo in photos %}
+                                {% for photo in species.photos %}
+                                    {% if photo.isPrimary %}
+                                        <a href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
+                                            <img  alt="{{photo.species}}" style="max-height: 560px; max-width: 560px;" src="{{ photo.getWebPath | imagine_filter('sk_downscale_max_600_600') }}" />
+                                        </a>
+                                    {% endif %}
+                                {% endfor %}
+                                {#{% for photo in photos %}
                                     {% if loop.index == 1 %}
                                         <div>
                                             <a href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
                                                 <img  alt="{{photo.species}}" style="max-height: 560px; max-width: 560px;" src="{{ photo.getWebPath | imagine_filter('sk_downscale_max_600_600') }}" />
-                                                {#<img  alt="{{photo.species}}" style="max-height: 560px; max-width: 560px;" src="{{ photo.getWebPath | imagine_filter('sk_widen_590') }}" />#}
                                             </a>
                                         </div>
                                     {% endif %}
-                                {% endfor %}
+                                {% endfor %}#}
 
                                 <h3>{{ "page.species.h5.description"|trans }}</h3>
                                 {% if species.translate(app.request.locale).description is not empty %}
@@ -326,10 +332,9 @@
 
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12">
-                                
-                                
+
                                 <h2>{{ "page.species.h2.similar_species"|trans }}</h2>
-                                
+
                                 <div class="slider_similar">
                                     {% for similarPhoto in similarSpecies %}
                                         <a class="thumbnail" href="{{ path('species',  { 'slug': similarPhoto.species.name }) }}">

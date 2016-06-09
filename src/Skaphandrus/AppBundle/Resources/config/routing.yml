@@ -291,6 +291,10 @@ ajax_photographers_show_more:
     defaults: { _controller: "SkaphandrusAppBundle:Ajax:photographersShowMore" } 
 
 ###
+photo_is_primary:
+    path:     /{_locale}/photo-is-primary
+    defaults: { _controller: "SkaphandrusAppBundle:Ajax:photoIsPrimary" }
+
 destinations_form:
     path:     /{_locale}/destinations_form
     defaults: { _controller: "SkaphandrusAppBundle:Ajax:form" }

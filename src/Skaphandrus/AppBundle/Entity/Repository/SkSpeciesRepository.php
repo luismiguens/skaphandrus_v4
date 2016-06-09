@@ -303,7 +303,7 @@ class SkSpeciesRepository extends EntityRepository {
         $query = $this->getEntityManager()->createQuery(
                         'SELECT p
             FROM SkaphandrusAppBundle:SkPhoto p
-            JOIN p.speciesSuggestions as v  
+            JOIN p.speciesSugestions as v  
             WHERE v.species = :species_id and v.fosUser = :user_id
             ORDER BY p.id desc'
                 )->setParameter('species_id', $species_id)->setParameter('user_id', $user_id)->setMaxResults(10);

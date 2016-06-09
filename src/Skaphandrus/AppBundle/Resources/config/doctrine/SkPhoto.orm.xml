@@ -66,6 +66,11 @@
                 <option name="default">0</option>
             </options>
         </field>
+        <field name="isPrimary" type="boolean" column="is_primary" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
     
         <many-to-one field="fosUser" target-entity="FosUser" fetch="LAZY">
             <join-columns>
@@ -97,7 +102,7 @@
         </many-to-many>
         
         
-<!--        <many-to-many field="category" target-entity="SkPhotoContestCategory" mapped-by="photo" fetch="LAZY"/>-->
+        <!--        <many-to-many field="category" target-entity="SkPhotoContestCategory" mapped-by="photo" fetch="LAZY"/>-->
     
         <lifecycle-callbacks>
             <lifecycle-callback type="preUpdate" method="doStuffOnPreUpdate"/>

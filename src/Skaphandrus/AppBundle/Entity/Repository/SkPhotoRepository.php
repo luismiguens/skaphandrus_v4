@@ -13,17 +13,34 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class SkPhotoRepository extends EntityRepository {
 
+    public function changePhotoToPrimary($photo_id, $species_id) {
+
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = "UPDATE sk_photo as p
+                SET p.is_primary = CASE 1 
+                                   WHEN p.species_id = " . $species_id . " and p.id = " . $photo_id . " THEN 1
+                                   ELSE 0
+                                   END";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $value = $statement->fetchColumn(1);
+
+        return $value;
+    }
+
     public function setPoints($photo_id, $category_id) {
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
-
-        $sql = " SELECT vote.photo_id as photo_id, sum(vote.points) as points 
-                    FROM sk_photo_contest_category_judge_photo_vote as vote 
-                    JOIN sk_photo_contest_category_judge_votation as votation on vote.votation_id = votation.id 
-                    WHERE category_id = " . $category_id . " and photo_id = " . $photo_id . "
-                    group by photo_id";
+        $sql = "SELECT vote.photo_id as photo_id, sum(vote.points) as points 
+                FROM sk_photo_contest_category_judge_photo_vote as vote 
+                JOIN sk_photo_contest_category_judge_votation as votation on vote.votation_id = votation.id 
+                WHERE category_id = " . $category_id . " and photo_id = " . $photo_id . "
+                group by photo_id";
 
         $statement = $connection->prepare($sql);
         $statement->execute();

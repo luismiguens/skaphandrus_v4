@@ -1204,7 +1204,6 @@ class DefaultController extends Controller {
 
     public function photoAction($id, $slug = null) {
         $title = Utils::unslugify($slug);
-        $locale = $this->get('request')->getLocale();
 
         $next_photo_id = $id;
         $previous_photo_id = $id;
@@ -1233,16 +1232,7 @@ class DefaultController extends Controller {
 //        $photoInContest = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
 //                ->getPhotoInContest($photo->getId()/* 24078 */, $locale);
 
-        $votedPhoto = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestVote')
-                ->findOneBy(array('fosUser' => $photo->getFosUser(), 'category' => "behaviour"));
-
-
-//        $categories = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
-//                ->getCategories($photo->getId()/* 24078 */);
-//        dump($photoInContest);
-
         if ($photo) {
-            $request = $this->get('request');
             $securityContext = $this->container->get('security.context');
 
 
@@ -1313,17 +1303,15 @@ class DefaultController extends Controller {
             $photo->setViews($views);
             $em->persist($photo);
             $em->flush();
-            
-            
+
+            $votedPhoto = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestVote')
+                    ->findOneBy(array('fosUser' => $photo->getFosUser(), 'category' => "behaviour"));
+
             //$photo = new \Skaphandrus\AppBundle\Entity\SkPhoto();
-            
+
             foreach ($photo->getCategory() as $category):
                 $category->setPointsInPhoto($this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->setPoints($photo->getId(), $category->getId()));
             endforeach;
-           
-            
-            
-            
 
             return $this->render('SkaphandrusAppBundle:Default:photo.html.twig', array(
                         'photo' => $photo,
