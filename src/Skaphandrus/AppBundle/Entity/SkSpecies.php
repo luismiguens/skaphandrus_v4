@@ -64,6 +64,8 @@ class SkSpecies {
     private $photosCount = 0;
     private $photosInSpecies;
     private $criterias;
+    
+    private $primaryPhoto;
 
     /**
      * Constructor

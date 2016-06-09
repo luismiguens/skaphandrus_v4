@@ -458,6 +458,17 @@ class DefaultController extends Controller {
                 $photo = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkPhoto")->findOneById($ph['id']);
                 $photos[] = $photo;
             }
+            
+            
+            //ir bucar photo com species_id = species_id and is_primary = 1
+            
+            
+            
+            //se não tiver vais buscar a mais recente.
+            
+            
+            
+            
 
             //ir buscar especies da mesma ordem
             $species_ids = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
