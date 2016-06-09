@@ -11,6 +11,10 @@
         <field name="algorithm" column="algorithm" type="string" length="255" />
         <one-to-many field="spots" target-entity="SkSpot" mapped-by="fosUser"/>
         <one-to-many field="photos" target-entity="SkPhoto" mapped-by="fosUser"/>
+        
+        <one-to-many field="votes" target-entity="SkPhotoContestVote" mapped-by="fosUser"/>
+        
+        
         <one-to-many field="points" target-entity="SkPoints" mapped-by="fosUser"/>
         <one-to-many field="pointsExtra" target-entity="SkPointsExtra" mapped-by="fosUser"/>
         

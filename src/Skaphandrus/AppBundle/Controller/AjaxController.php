@@ -9,7 +9,9 @@ use Ivory\GoogleMap\Overlays\Animation;
 use Ivory\GoogleMap\Overlays\InfoWindow;
 use Ivory\GoogleMap\Overlays\Marker;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\InvalidParameterException;
 
 /**
@@ -56,14 +58,15 @@ class AjaxController extends Controller {
         $photo_id = $request->query->get('photo_id');
         $species_id = $request->query->get('species_id');
 
-        $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
-                ->findOneBy(array('id' => $photo_id));
-
         $isPrimary = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->changePhotoToPrimary($photo_id, $species_id);
 
-        $photo->setIsPrimary($isPrimary);
+        $response = json_encode(array('photo' => $photo_id, 'species' => $species_id));
 
-        return $this->render('SkaphandrusAppBundle:Ajax:photoIsPrimary.html.twig', array());
+        $code = $isPrimary == true ? 200 : 404;
+
+        return new Response($response, $code, array(
+            'Content-Type' => 'application/json'
+        ));
     }
 
     /////// See All start \\\\\\\\
@@ -684,7 +687,7 @@ class AjaxController extends Controller {
                     'map' => $map
                 ))->getContent();
 
-        return new \Symfony\Component\HttpFoundation\JsonResponse(array(
+        return new JsonResponse(array(
             'map' => $map_html, 'results' => count($map->getMarkers())
         ));
     }

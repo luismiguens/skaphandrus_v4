@@ -147,35 +147,34 @@
                 data: 'photo_id=' + {{ photo.id }} +'&species_id=' + {{ photo.species.id }} ,
                 dataType: "text",
                 success: function (response) {
+                    alert(response);
                 }
             });
         };
-        $(this).ready(photoIsPrimary);
-        $('#is_primary').click(photoIsPrimary);
+        {#$(this).ready(photoIsPrimary);#}
+            $('#is_primary').click(photoIsPrimary);
 
     </script>
     <!-- EndOff: Slick JQuery -->
-
-    {% for category in photo.category %}
         <script type="text/javascript">
+    {% for category in photo.category %}
 
-            $('.vote-button').click(function () {
-                photo_id = $(this).attr('id');
 
-                if ($(this).hasClass('btn-primary')) {
+            $('#{{ category.id }}').click(function () {
+                
+                
                     $.ajax({
-                        url: "/{{ app.request.locale }}/category/{{ category.id }}/vote-photo/" + $(this).attr('id'),
+                        url: "/{{ app.request.locale }}/category/{{ category.id }}/vote-photo/{{ photo.id }}" ,
                         success: function (data) {
-                            $('.vote-button.btn-success').removeClass('btn-success').addClass('btn-primary').html('<i class="fa fa-check"></i> {{ "page.contest.btn.vote"|trans }}');
-                            $('.vote-button#' + photo_id).removeClass('btn-primary').addClass('btn-success').html('<i class="fa fa-check"></i> {{ "page.contest.btn.voted"|trans }}');
+                            $('#{{ category.id }}').addClass('btn-success').html('<i class="fa fa-check"></i> {{ "page.contest.btn.voted"|trans }}');
                         }
                     });
-                }
+               
             });
 
-        </script>
+        
     {% endfor %}
-
+</script>
 {% endblock %}
 
 {% block heading_title %}
@@ -387,6 +386,7 @@
                         <!-- Social buttons end -->
                     </div>
 
+
                     <!-- contests area begin-->
                     <div class="ibox">
                         <div class="ibox-title">
@@ -408,37 +408,40 @@
                                             <tr>
                                                 <td>{{ link_to_contest(category.contest) }}</td>
                                                 <td><a href="{{ url_to_contest_photos(category) }}">{{ category.translate(app.request.locale).name }}</td>
-
-                                                <!-- se a foto tiver pontos -->
-                                                {% if category.pointsInPhoto > 0 %}
-                                                    <td>
-                                                        <i class="fa fa-trophy"></i><strong class="font-bold"> {{category.pointsInPhoto}}</strong>
-                                                    </td>
-
-                                                    <!-- se a foto nao tiver pontos -->
-                                                {% else %}
-                                                    <td>
+                                                <td>
+                                                    {% if category.contest.isInPublicVotation %}
                                                         {% set class = 'btn-primary' %}
                                                         {% set text = "page.contest.btn.vote"|trans %}
 
-                                                        {% if votedPhoto is not empty and photo.id == votedPhoto.photo.id %}
-                                                            {% set class = 'btn-success' %}
-                                                            {% set text = "page.contest.btn.voted"|trans %}
+                                                        {% for vote in app.user.votes %}
+                                                            {% if vote.photo.id == photo.id and vote.category.id == category.id %}
+                                                                {% set class = 'btn-success' %}
+                                                                {% set text = "page.contest.btn.voted"|trans %}
+                                                            {% endif %}
+                                                        {% endfor %}
+
+
+                                                        {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+                                                            <button type="button" class="vote-button btn-block btn {{ class }}" id="{{ category.id }}">
+                                                                <i class="fa fa-check"></i> {{ text }}
+                                                            </button>
+
+                                                        {% else %}
+                                                            <a class="btn btn-success btn-outline btn-block" href="{{ path('fos_user_security_login') }}">
+                                                                Login to vote <i class="fa fa-long-arrow-right"></i>
+                                                            </a>
                                                         {% endif %}
 
-                                                        {% if category.contest.isInPublicVotation %}
-                                                            {% if is_granted("IS_AUTHENTICATED_FULLY") %}
-                                                                <button type="button" class="vote-button btn-block btn {{ class }}" id="{{ photo.id }}">
-                                                                    <i class="fa fa-check"></i> {{ text }}
-                                                                </button>
-                                                            {% else %}
-                                                                <a class="btn btn-success btn-outline btn-block" href="{{ path('fos_user_security_login') }}">
-                                                                    Login to vote <i class="fa fa-long-arrow-right"></i>
-                                                                </a>
-                                                            {% endif %}
-                                                        {% endif %}
-                                                    </td>
-                                                {% endif %}
+                                                    {% else %} 
+                                                        <i class="fa fa-trophy"></i><strong class="font-bold"> {{category.pointsInPhoto}}</strong>
+                                                    {% endif %}
+
+
+                                                </td>
+
+
+
+
                                             </tr>
                                         </tbody>
                                     {% endfor %}

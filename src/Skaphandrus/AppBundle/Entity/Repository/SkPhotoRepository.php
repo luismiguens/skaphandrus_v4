@@ -17,18 +17,19 @@ class SkPhotoRepository extends EntityRepository {
 
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
-
-        $sql = "UPDATE sk_photo as p
-                SET p.is_primary = CASE 1 
-                                   WHEN p.species_id = " . $species_id . " and p.id = " . $photo_id . " THEN 1
-                                   ELSE 0
-                                   END";
-
+        
+        
+        //update old photo, set is_primary = false
+        $sql = "update sk_photo set is_primary = 0 where species_id = " . $species_id . "";
         $statement = $connection->prepare($sql);
         $statement->execute();
-        $value = $statement->fetchColumn(1);
+        
+        //update new photo, set is_primary = true
+        $sql = "update sk_photo set is_primary = 1 where id = " . $photo_id . "";
+        $statement = $connection->prepare($sql);
+        $statement->execute();
 
-        return $value;
+        return true;
     }
 
     public function setPoints($photo_id, $category_id) {

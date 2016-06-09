@@ -1304,13 +1304,22 @@ class DefaultController extends Controller {
             $em->persist($photo);
             $em->flush();
 
+            $loggeduser = $this->get('security.token_storage')->getToken()->getUser();
+            
             $votedPhoto = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestVote')
-                    ->findOneBy(array('fosUser' => $photo->getFosUser(), 'category' => "behaviour"));
+                    ->findOneBy(array('fosUser' => $loggeduser, 'category' => "behaviour"));
 
             //$photo = new \Skaphandrus\AppBundle\Entity\SkPhoto();
 
             foreach ($photo->getCategory() as $category):
+                
+                //atribuir numero de pontos dos juizes
                 $category->setPointsInPhoto($this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->setPoints($photo->getId(), $category->getId()));
+                
+            //atribuir a fotografia votada pelo utilizador na categoria
+//            $category->setVotedInPhoto($this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->setPoints($photo->getId(), $category->getId()));
+//            
+//            
             endforeach;
 
             return $this->render('SkaphandrusAppBundle:Default:photo.html.twig', array(

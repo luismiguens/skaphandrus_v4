@@ -44,6 +44,13 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
      */
     private $photos;
 
+    
+        /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $votes;
+    
+    
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
@@ -438,6 +445,70 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
         return $this->photos = $photos;
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        /**
+     * Add vote
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestVote $vote
+     *
+     * @return FosUser
+     */
+    public function addVote(\Skaphandrus\AppBundle\Entity\SkPhotoContestVote $vote) {
+        $this->votes[] = $vote;
+
+        return $this;
+    }
+
+    /**
+     * Remove vote
+     *
+     * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestVote $vote
+     */
+    public function removeVote(\Skaphandrus\AppBundle\Entity\SkPhotoContestVote $vote) {
+        $this->votes->removeElement($vote);
+    }
+
+    /**
+     * Get votes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVotes() {
+        return $this->votes;
+    }
+
+    public function setVotes($votes) {
+        return $this->votes = $votes;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * Add photosValidated
      *
