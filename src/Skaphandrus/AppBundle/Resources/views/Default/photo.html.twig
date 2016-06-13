@@ -139,7 +139,7 @@
             });
         });
 
-
+ {% if photo.species is not empty and photo.species is not null  %}
         var photoIsPrimary = function () {
             $.ajax({
                 type: "get",
@@ -153,7 +153,10 @@
         };
         {#$(this).ready(photoIsPrimary);#}
             $('#is_primary').click(photoIsPrimary);
+{% endif%}
 
+    
+    
     </script>
     <!-- EndOff: Slick JQuery -->
     <script type="text/javascript">
