@@ -13,6 +13,21 @@ use Skaphandrus\AppBundle\Utils\Utils;
  */
 class SkSpeciesRepository extends EntityRepository {
 
+    public function isPrimaryPhoto($species_id) {
+
+        $query = $this->getEntityManager()->createQuery(
+                        'SELECT p
+            FROM SkaphandrusAppBundle:SkPhoto p
+            WHERE p.species = :species_id and p.isPrimary = 1'
+                )->setParameter('species_id', $species_id);
+
+        if ($query->getResult()):
+            return $query->getSingleResult();
+        else:
+            return null;
+        endif;
+    }
+
     public function getMoreSpeciesBusiness($business_id, $limit = 3, $offset = 0) {
 
         $em = $this->getEntityManager();
@@ -1220,8 +1235,6 @@ class SkSpeciesRepository extends EntityRepository {
         $connection = $em->getConnection();
         $photos = array();
 
-
-
         if (count($photos) < $limit) {
             $i = 1;
 
@@ -1294,14 +1307,6 @@ class SkSpeciesRepository extends EntityRepository {
                     break;
             }
         }
-
-
-
-
-
-
-
-
 
         //ILUSTRAÇÃO DEFAULT DO MODULO (caso não existam imagens em nenhum dos formatos anteriores)
 //        if (count($photos) < 1) {

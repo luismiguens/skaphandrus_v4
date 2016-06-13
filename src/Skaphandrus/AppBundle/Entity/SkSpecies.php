@@ -46,8 +46,8 @@ class SkSpecies {
      * @var \Doctrine\Common\Collections\Collection
      */
     private $photos;
-    
-        /**
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $illustrations;
@@ -64,7 +64,6 @@ class SkSpecies {
     private $photosCount = 0;
     private $photosInSpecies;
     private $criterias;
-    
     private $primaryPhoto;
 
     /**
@@ -77,6 +76,28 @@ class SkSpecies {
 
     public function setId($param) {
         $this->id = $param;
+    }
+
+    /**
+     * Set primaryPhoto
+     *
+     * @param \DateTime $primaryPhoto
+     *
+     * @return SkSpecies
+     */
+    public function setPrimaryPhoto($primaryPhoto) {
+        $this->primaryPhoto = $primaryPhoto;
+
+        return $this;
+    }
+
+    /**
+     * Get primaryPhoto
+     *
+     * @return \DateTime
+     */
+    public function getPrimaryPhoto() {
+        return $this->primaryPhoto;
     }
 
     /**
@@ -289,14 +310,6 @@ class SkSpecies {
         return $this->photos = $photos;
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
     /**
      * Add illustration
      *
@@ -332,20 +345,6 @@ class SkSpecies {
         return $this->illustrations = $illustrations;
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     /**
      * Add scientificName
      *

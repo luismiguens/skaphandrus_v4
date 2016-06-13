@@ -156,25 +156,25 @@
 
     </script>
     <!-- EndOff: Slick JQuery -->
-        <script type="text/javascript">
-    {% for category in photo.category %}
+    <script type="text/javascript">
+        {% for category in photo.category %}
 
 
             $('#{{ category.id }}').click(function () {
-                
-                
-                    $.ajax({
-                        url: "/{{ app.request.locale }}/category/{{ category.id }}/vote-photo/{{ photo.id }}" ,
-                        success: function (data) {
-                            $('#{{ category.id }}').addClass('btn-success').html('<i class="fa fa-check"></i> {{ "page.contest.btn.voted"|trans }}');
-                        }
-                    });
-               
+
+
+                $.ajax({
+                    url: "/{{ app.request.locale }}/category/{{ category.id }}/vote-photo/{{ photo.id }}",
+                    success: function (data) {
+                        $('#{{ category.id }}').addClass('btn-success').html('<i class="fa fa-check"></i> {{ "page.contest.btn.voted"|trans }}');
+                    }
+                });
+
             });
 
-        
-    {% endfor %}
-</script>
+
+        {% endfor %}
+    </script>
 {% endblock %}
 
 {% block heading_title %}
@@ -420,7 +420,6 @@
                                                             {% endif %}
                                                         {% endfor %}
 
-
                                                         {% if is_granted("IS_AUTHENTICATED_FULLY") %}
                                                             <button type="button" class="vote-button btn-block btn {{ class }}" id="{{ category.id }}">
                                                                 <i class="fa fa-check"></i> {{ text }}
@@ -433,14 +432,12 @@
                                                         {% endif %}
 
                                                     {% else %} 
-                                                        <i class="fa fa-trophy"></i><strong class="font-bold"> {{category.pointsInPhoto}}</strong>
+                                                        <i class="fa fa-trophy"></i>
+                                                        <strong class="font-bold"> 
+                                                            {{category.pointsInPhoto}}
+                                                        </strong>
                                                     {% endif %}
-
-
                                                 </td>
-
-
-
 
                                             </tr>
                                         </tbody>

@@ -450,25 +450,22 @@ class DefaultController extends Controller {
                 }
             }
 
-            //ir buscar ids das melhores fotografias
-            $p = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkSpecies")
-                    ->getPhotosForIdentification($species->getId(), 0, 7);
-            //para cada id ir buscar o object
-            foreach ($p as $key => $ph) {
-                $photo = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkPhoto")->findOneById($ph['id']);
-                $photos[] = $photo;
-            }
-            
-            
+//            //ir buscar ids das melhores fotografias
+//            $p = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkSpecies")
+//                    ->getPhotosForIdentification($species->getId(), 0, 7);
+//            //para cada id ir buscar o object
+//            foreach ($p as $key => $ph) {
+//                $photo = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkPhoto")->findOneById($ph['id']);
+//                $photos[] = $photo;
+//            }
+//            
+//            
+//            
             //ir bucar photo com species_id = species_id and is_primary = 1
-            
-            
-            
-            //se não tiver vais buscar a mais recente.
-            
-            
-            
-            
+            $photoPrimary = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
+                    ->isPrimaryPhoto($species->getId());
+
+            $species->setPrimaryPhoto($photoPrimary);
 
             //ir buscar especies da mesma ordem
             $species_ids = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')
@@ -501,13 +498,13 @@ class DefaultController extends Controller {
 
             return $this->render('SkaphandrusAppBundle:Default:species.html.twig', array(
                         "species" => $species,
-                        "photos" => $photos,
                         "similarSpecies" => $similarSpecies,
-//                        "criterias" => $criterias,
                         "spots" => $spots,
                         'map' => $map,
                         'map_center_lat' => $centerLatitude,
-                        'map_center_lon' => $centerLongitude,
+                        'map_center_lon' => $centerLongitude
+//                        "photos" => $photos,
+//                        "criterias" => $criterias,
 //                        "allCriterias" => $allCriterias
 //                        "users" => $users
             ));
@@ -1316,18 +1313,18 @@ class DefaultController extends Controller {
             $em->flush();
 
             $loggeduser = $this->get('security.token_storage')->getToken()->getUser();
-            
+
             $votedPhoto = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContestVote')
                     ->findOneBy(array('fosUser' => $loggeduser, 'category' => "behaviour"));
 
             //$photo = new \Skaphandrus\AppBundle\Entity\SkPhoto();
 
             foreach ($photo->getCategory() as $category):
-                
+
                 //atribuir numero de pontos dos juizes
                 $category->setPointsInPhoto($this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->setPoints($photo->getId(), $category->getId()));
-                
-            //atribuir a fotografia votada pelo utilizador na categoria
+
+                //atribuir a fotografia votada pelo utilizador na categoria
 //            $category->setVotedInPhoto($this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->setPoints($photo->getId(), $category->getId()));
 //            
 //            

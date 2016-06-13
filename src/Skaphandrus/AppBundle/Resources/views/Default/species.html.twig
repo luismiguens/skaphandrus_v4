@@ -262,14 +262,21 @@
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-md-6">
-
-                                {% for photo in species.photos %}
-                                    {% if photo.isPrimary %}
-                                        <a href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
-                                            <img  alt="{{photo.species}}" style="max-height: 560px; max-width: 560px;" src="{{ photo.getWebPath | imagine_filter('sk_downscale_max_600_600') }}" />
-                                        </a>
+                                <!--  ir bucar photo com is primary = 1  -->
+                                {% if species.primaryPhoto %}
+                                    <a href="{{ path('photo_no_slug',  { 'id': species.primaryPhoto.id }) }}" title="{{ species.primaryPhoto.title }}">
+                                        <img  alt="{{species.primaryPhoto.species}}" style="max-height: 560px; max-width: 560px;" src="{{ species.primaryPhoto.getWebPath | imagine_filter('sk_downscale_max_600_600') }}" />
+                                    </a>
+                                    {% if is_granted("ROLE_ADMIN") %}
+                                        <p>is primary photo</p>
                                     {% endif %}
-                                {% endfor %}
+                                    <!--  se não tiver ir buscar a mais recente  -->
+                                {% else %}
+                                    {% set photo = species.photos|last %}
+                                    <a href="{{ path('photo_no_slug',  { 'id': photo.id }) }}" title="{{ photo.title }}">
+                                        <img  alt="{{photo.species}}" style="max-height: 560px; max-width: 560px;" src="{{ photo.getWebPath | imagine_filter('sk_downscale_max_600_600') }}" />
+                                    </a>
+                                {% endif %}
                                 {#{% for photo in photos %}
                                     {% if loop.index == 1 %}
                                         <div>
