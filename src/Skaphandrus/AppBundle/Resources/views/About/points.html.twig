@@ -56,17 +56,17 @@
                             <table class="table table-striped" >
                                 <thead>
                                     <tr>
-                                        <th>{{ "form.points.label.name"|trans }}</th>
-                                        <th>{{ "form.points.label.point_description"|trans }}</th>
-                                        <th>{{ "form.points.label.single"|trans }}</th>
+                                        <th style="width:40%">{{ "form.points.label.name"|trans }}</th>
+                                        <th style="width:40%">{{ "form.points.label.point_description"|trans }}</th>
+                                        <th style="width:20%">{{ "form.points.label.single"|trans }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for point in points %}
                                         <tr>
                                             <td>{{ point|trans|raw }}</td>
-                                            <td>{{ ("page.points.label.point_description_"~point.id)|trans }}</td>
-                                            <td>{{ arr[point.id].single }}</td>
+                                            <td>{{ ("page.points.label.point_description_"~point.id)|trans|raw }}</td>
+                                            <td>{{ arr[point.id].single|trans }}</td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
