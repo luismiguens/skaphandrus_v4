@@ -43,8 +43,49 @@
             margin-bottom: 3%;
         }
 
-
         /* segunda div */
+
+        .image { 
+            position: relative;
+            width: 100%;
+        }
+        h1 { 
+            position: absolute;
+            bottom: 15%;
+            right: 20%;
+            width: 100%;
+        }
+        h1 span { 
+            color: white;
+            font-weight:bold;
+            background: rgb(0, 0, 0);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+        }
+        h1 span.spacer {
+            padding: 0 2px;
+            background: none;
+        }
+
+        h2 { 
+            position: absolute;
+            bottom: 8%;
+            right: 25%;
+            width: 100%;
+        }
+        h2 span { 
+            color: white;
+            font-weight:bold;
+            background: rgb(0, 0, 0);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+        }
+        h2 span.spacer {
+            padding: 0 2px;
+            background: none;
+        }
+
+
         .cls_002{
             font-size:35px;
             font-weight:bold;
@@ -93,7 +134,7 @@
         /* usado nas tabelas */
 
 
-        /* usado na barra verde do terceira div */
+        /* usado na barra verde da terceira div */
         .cls_010{
             font-size:25px;
             font-weight:bold;
@@ -115,12 +156,21 @@
         /* quarta div */
 
         /* quinta div */
-        .cls_011{
-            margin-top:50%;
-            margin-left:7%;
+        .cls_011 {
+            margin:18% 10% 0;
+            padding-left:8%;
             font-size:30px;
             font-weight:bold;
-            color:rgb(254,255,255);
+        }
+
+        .cls_011 button {
+            background-color: #1c84c6;
+            border-color: #1c84c6;
+            color: #FFFFFF;   
+        }
+
+        .cls_011 button.btn-primary.dim {
+            box-shadow: inset 0 0 0 #1872ab, 0 5px 0 0 #1872ab, 0 10px 5px #999999;
         }
 
         .cls_012 {
@@ -161,7 +211,28 @@
             <!-- END PRIMEIRA DIV -->#}
 
             <!-- START SEGUNDA DIV -->
+
             <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox">
+
+                        <!-- start banner -->
+                        <div class="image" align="center">
+
+                            <img style="width:100%" src="{{ photo.getWebPath | imagine_filter('sk_downscale_max_600_600') }}"/>
+
+                            <h1><span>{{ "page.contest_programs.h1.text_over"|trans|raw }}</span></h1>
+                            <h2><span>{{ "page.contest_programs.h2.text_over"|trans|raw }}</span></h2>
+
+                        </div>
+                        <!-- end banner -->
+
+                    </div>
+                </div>
+            </div>
+
+
+            {#<div class="row">
                 <div class="col-md-12">
                     <div class="ibox" style="background-color: #1ab394">
 
@@ -207,7 +278,7 @@
 
                     </div>
                 </div>
-            </div>
+            </div>#}
             <!-- END SEGUNDA DIV -->
 
             <!-- START TERCEIRA DIV -->
@@ -225,8 +296,8 @@
                                     <!-- start tabela 1 -->
                                     <table class="table table-bordered">
                                         <thead>
-                                            <tr>
-                                                <th class="cls_007" style="width: 50%">{{ "page.contest_programs.th.key_features"|trans|raw|raw }}</th>
+                                            <tr style="background-color: #F5F5F6;height:39.85px">
+                                                <th class="cls_007" style="width: 50%">{#{{ "page.contest_programs.th.key_features"|trans|raw }}#}</th>
                                                 <th class="cls_007" style="width: 25%">{{ "page.contest_programs.th.light"|trans|raw }}</th>
                                                 <th class="cls_007" style="width: 25%">{{ "page.contest_programs.th.full"|trans|raw }}</th>
                                             </tr>
@@ -267,12 +338,79 @@
                                                 <td class="cls_009">{{ "page.contest_programs.td.client_responsability"|trans|raw }}</td>
                                                 <td class="cls_009">{{ "page.contest_programs.td.client_responsability_with_skaphandrus"|trans|raw }}</td>
                                             </tr>
+
+                                            <!-- start tabela 2 -->
+                                            <tr style="background-color: #F5F5F6;height:39.85px">
+                                                <td class="cls_007"></td>
+                                                <td class="cls_007"></td>
+                                                <td class="cls_007"></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #1ab394" class="cls_008">{{ "page.contest_programs.td.visual_identity_production"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.yes"|trans|raw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #1ab394" class="cls_008">{{ "page.contest_programs.td.creation_and_content_management"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.yes"|trans|raw }}</td>
+                                            </tr>
+                                            <!-- end tabela 2 -->
+
+                                            <!-- start tabela 3 -->
+                                            <tr style="background-color: #F5F5F6;height:39.85px">
+                                                <td class="cls_007"></td>
+                                                <td class="cls_007"></td>
+                                                <td class="cls_007"></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #1ab394" class="cls_008">{{ "page.contest_programs.td.creation_and_content_management"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.yes"|trans|raw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #1ab394" class="cls_008">{{ "page.contest_programs.td.featured_in_skaphandrus"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.yes"|trans|raw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.contest_programs.td.highlight_social_networks"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.yes"|trans|raw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.contest_programs.td.promotional_newsletter"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.yes"|trans|raw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.contest_programs.td.creation_event_management"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.yes"|trans|raw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.contest_programs.td.investment_digital_tools"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.optional"|trans|raw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.contest_programs.td.digital_campaign_management"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.optional"|trans|raw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #1ab394"  class="cls_008">{{ "page.contest_programs.td.outdoors_billboards_production"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.no"|trans|raw }}</td>
+                                                <td class="cls_009">{{ "page.contest_programs.td.optional"|trans|raw }}</td>
+                                            </tr>
+                                            <!-- end tabela 3 -->
+
                                         </tbody>
                                     </table>
                                     <!-- end tabela 1 -->
 
                                     <!-- start tabela 2 -->
-                                    <table class="table table-bordered">
+                                    {#<table class="table table-bordered">
                                         <thead>
                                             <tr>
                                                 <th class="cls_007" style="width: 50%">{{ "page.contest_programs.th.development"|trans|raw }}</th>
@@ -287,16 +425,16 @@
                                                 <td class="cls_009">{{ "page.contest_programs.td.yes"|trans|raw }}</td>
                                             </tr>
                                             <tr>
-                                                <td style="background-color: #1ab394" class="cls_008">{{ "page.contest_programs.td.creation_and_content_management"|trans|raw|raw }}</td>
+                                                <td style="background-color: #1ab394" class="cls_008">{{ "page.contest_programs.td.creation_and_content_management"|trans|raw }}</td>
                                                 <td class="cls_009">{{ "page.contest_programs.td.no"|trans|raw }}</td>
                                                 <td class="cls_009">{{ "page.contest_programs.td.yes"|trans|raw }}</td>
                                             </tr>
                                         </tbody>
-                                    </table>
+                                    </table>#}
                                     <!-- end tabela 2 -->
 
                                     <!-- start tabela 3 -->
-                                    <table class="table table-bordered">
+                                    {#<table class="table table-bordered">
                                         <thead>
                                             <tr>
                                                 <th class="cls_007" style="width: 50%">{{ "page.contest_programs.th.promotion"|trans|raw }}</th>
@@ -341,7 +479,7 @@
                                                 <td class="cls_009">{{ "page.contest_programs.td.optional"|trans|raw }}</td>
                                             </tr>
                                         </tbody>
-                                    </table>
+                                    </table>#}
                                     <!-- end tabela 3 -->
 
                                 </div>
@@ -390,6 +528,18 @@
 
             <!-- START QUARTA DIV -->
             <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox">
+
+                        <!-- start advantages -->
+                        <img style="width:100%" src="{{ asset('bundles/skaphandrusapp/img/programs/contests_programs_advantages.jpg') }}"/>
+                        <!-- end advantages -->
+
+                    </div>
+                </div>
+            </div>
+
+            {#<div class="row">
                 <div class="col-md-12">
                     <div class="ibox">
                         <div class="ibox-content" align="center">
@@ -477,7 +627,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>#}
             <!-- END QUARTA DIV -->
 
             <!-- START QUINTA DIV -->
@@ -493,8 +643,21 @@
                             <div class="col-md-9">
 
                                 <div class="cls_011" align="center">
-                                    <p>{{ "page.contest_programs.p.dive_into_our_program"|trans }}</p>
-                                    <p>{{ "page.contest_programs.p.service_program"|trans }}</p>
+
+                                    <p style="color:white">{{ "page.contests.p.fill_form"|trans }}</p>
+
+                                    {% for flashMessage in app.session.flashbag.get('notice') %}
+                                        <div class="alert alert-success alert-dismissable">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                            {{ flashMessage|trans }}
+                                        </div>
+                                    {% endfor %}
+
+                                    {{ render(controller('SkaphandrusAppBundle:SkContestRequest:new')) }}
+
+
+                                    {#<p>{{ "page.contest_programs.p.dive_into_our_program"|trans }}</p>
+                                    <p>{{ "page.contest_programs.p.service_program"|trans }}</p>#}
                                 </div>
 
                                 <div class="pull-right cls_012" align="right">

@@ -30,8 +30,15 @@ class AboutController extends Controller {
     }
 
     public function contestProgramsAction() {
+        $em = $this->getDoctrine()->getManager();
 
-        return $this->render('SkaphandrusAppBundle:About:contestPrograms.html.twig', array());
+        $id =  $this->get('translator')->trans('page.contest_programs.image.id');
+        
+        $photo = $em->getRepository('SkaphandrusAppBundle:SkPhoto')->findOneBy(array('id' => $id));
+        
+        return $this->render('SkaphandrusAppBundle:About:contestPrograms.html.twig', array(
+            'photo' => $photo
+        ));
     }
 
     public function businessProgramsAction() {
