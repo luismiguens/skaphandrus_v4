@@ -1,30 +1,47 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
+{% set title = "" %}
+{% set auxCommon = [] %}
 {% set auxAuthor = "" %}
-{% for author in species.ScientificNames %}
-    {% set auxAuthor = auxAuthor~', '~author.author %}
-{% endfor %}
+
+
+{#se tiver vernaculares criar title com vernaculares #} 
 {% if species.speciesVernaculars is not empty %}
-    {% set title = "" %}
-    {% set auxCommon = "" %}
-    {% set i=0 %}
+
+    
+
     {% for vernacular in species.speciesVernaculars %}
-        {% if (vernacular.locale == app.request.locale) and (i<4) %}
-            {% set auxCommon = auxCommon~', '~vernacular.vernacular.name %}
-        {% set title %}{% trans with {'%specie%': species.name, '%author%': auxAuthor, '%common%': auxCommon } %} page.species.meta_tag.title {% endtrans %}{% endset %}
-        {% set i=i+1 %}
-    {% else %}
-    {% set title %}{% trans with {'%specie%': species.name, '%author%': auxAuthor, '%common%': auxCommon } %} page.species.meta_tag.title {% endtrans %}{% endset %}
-{% endif %}
+
+        {% if (vernacular.locale == app.request.locale)   %}
+            {#adicionar ao array nomes comuns na lingua do utilizador #}
+            {% set auxCommon = auxCommon|merge([vernacular.vernacular.name]) %}
+
+            {#apresentar 3 nomes comuns ao titulo#}
+        {% set title %}{% trans with {'%species%': species.name, '%common_names%': auxCommon|slice(0, 3)|join(', ') } %} page.species.meta_tag.title {% endtrans %}{% endset %}
+
+    {% endif %}
+
 {% endfor %}
+
+{#se não tiver vernaculares, criar title com autor #}
 {% else %}
-{% set title %}{% trans with {'%specie%': species.name, '%author%': auxAuthor, '%common%': "" } %} page.species.meta_tag.title {% endtrans %}{% endset %}
+    
+    {% for author in species.ScientificNames %}
+        {% set auxAuthor = auxAuthor~', '~author.author %}
+    {% endfor %}
+{% set title %}{% trans with {'%species%': species.name, '%author_name%': auxAuthor } %} page.species.meta_tag.title_author {% endtrans %}{% endset %}
 {% endif %}
 
 {% block page_title %}{{title}}{% endblock %}
 
 {% if species.translate(app.request.locale).description is not empty %}
-    {% set description = species.translate(app.request.locale).description [0:160] %}
+    
+    {% set description %}{% trans with {'%species%': species.name, '%author_name%': auxAuthor } %} page.species.meta_tag.description {% endtrans %}{% endset %}
+    
+    {#{% set description = species.translate(app.request.locale).description [0:160] %}#}
+    
+    
+    
 {% endif %}
 
 {% block page_description %}{{description}}{% endblock %}
@@ -255,10 +272,16 @@
                 </div>#}
 
                 <div class="ibox">
-                    <div class="ibox-title">
-                        {#{{ "page.species.h1.title"|trans }}#}
-                        <h2 itemprop="name">{{ species.name }}</h2>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h1 itemprop="name">{{title}}</h1>
+                            </div>
+                        </div>
                     </div>
+                </div>
+
+                <div class="ibox">
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-md-6">
@@ -287,7 +310,7 @@
                                     {% endif %}
                                 {% endfor %}#}
 
-                                <h3>{{ "page.species.h5.description"|trans }}</h3>
+                                <h3>{{ "page.species.h3.description"|trans }}</h3>
                                 {% if species.translate(app.request.locale).description is not empty %}
                                     <p itemprop="description">
                                         {{ species.translate(app.request.locale).description }}
@@ -297,7 +320,7 @@
                                 {% endif %}
 
                                 {% if species.speciesVernaculars|length > 0 %}
-                                    <h3>{{ "page.species.h5.common_names"|trans }}</h3>
+                                    <h3>{{ "page.species.h3.common_names"|trans }}</h3>
                                     <ul class="list-unstyled">
                                         {% for vernacular in species.speciesVernaculars %}
                                             {% if (vernacular.locale == app.request.locale) %}
@@ -309,7 +332,10 @@
                                     </ul>
                                 {% endif %}
 
-                                <h3>{{ "page.species.h5.taxonomic_structure"|trans }}</h3>
+                                <h3>{{ "page.species.h3.taxonomic_structure"|trans }}</h3>
+                                <p>{#{{ "page.species.p.taxonomic_structure"|trans }}#}What type of species is an Octopus Vulgaris?<br/> Bellow, you will find the taxonomic groups the Octopus vulgaris species belongs to.</p>
+                                
+                                
                                 <ul class="list-unstyled" itemscope itemtype="http://schema.org/ListItem">
                                     <li class="tox" itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.kingdom.taxonNodeName|trans, species.genus.family.order.class.phylum.kingdom) }}</li>
                                     <li class="tox" itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.taxonNodeName|trans, species.genus.family.order.class.phylum) }}</li>
@@ -389,6 +415,7 @@
 
                                 <div class="panel-body">
                                     <h3>{% trans with {'%specie%': species.name } %} page.species.h3.species_criteria {% endtrans %}</h3>
+                                    <p>Question? Ansher.</p>
 
                                     <div class="ibox-content">
                                         <div id="loadCriterias"></div>
@@ -402,6 +429,7 @@
                             <div id="tab-2" class="tab-pane">
                                 <div class="panel-body">
                                     <h3>{% trans with {'%specie%': species.name } %} page.species.h3.geo_distribution {% endtrans %}</h3>
+                                       <p>Question? Ansher.</p>
                                     <span itemscope itemtype="http://schema.org/Map">
                                         <meta itemprop="name" content="World Map" />
                                         {% if map %}
@@ -459,6 +487,7 @@
 
                                 <div class="panel-body">
                                     <h3>{% trans with {'%specie%': species.name } %} page.species.h3.contributors {% endtrans %}</h3>
+                                       <p>Question? Ansher.</p>
                                     <div class="row" >
                                         <div class="col col-lg-12" >
                                             <div class="ibox" >

@@ -67,7 +67,20 @@
                     <meta itemprop="url" content="{{ path('user',  { 'id': row.fos_user_id }) }}" />
                 </span>
                 <a href="{{ path('photo_no_slug',  { 'id': row.photo_id }) }}" title="{{ row.photo_title }}">
+                    {% dump(parameters)%}
+                {% if false%}
+                    
+                    
+                    
+                    <img style="" itemprop="image" alt="{{ parameters.species }}" src="{{ ('uploads/fotografias/'~row.photo_image) | imagine_filter('sk_widen_265') }}" />
+                
+                
+                {% else %}
                     <img style="" itemprop="image" alt="{{ row.photo_title }}" src="{{ ('uploads/fotografias/'~row.photo_image) | imagine_filter('sk_widen_265') }}" />
+                
+                {% endif %}    
+                
+                
                 </a>
             </span>
         </div>
