@@ -647,7 +647,7 @@
                                     <p style="color:white">{{ "page.contests.p.fill_form"|trans }}</p>
 
                                     {% for flashMessage in app.session.flashbag.get('notice') %}
-                                        <div class="alert alert-success alert-dismissable">
+                                        <div class="alert alert-success alert-dismissable" style="font-size:15px">
                                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                             {{ flashMessage|trans }}
                                         </div>
