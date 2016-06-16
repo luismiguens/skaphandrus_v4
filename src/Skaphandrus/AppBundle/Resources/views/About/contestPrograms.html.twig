@@ -157,13 +157,20 @@
 
         /* quinta div */
         .cls_011 {
-            margin:18% 10% 0;
-            padding-left:8%;
+            margin:0 5% 0;
+            {#padding-left:8%;#}
             font-size:30px;
             font-weight:bold;
         }
 
-        .cls_011 button {
+        .cls_012 {
+            margin:3% 15% 0;
+            {#padding-left:8%;#}
+            font-size:30px;
+            font-weight:bold;
+        }
+
+        {#.cls_011 button {
             background-color: #1c84c6;
             border-color: #1c84c6;
             color: #FFFFFF;   
@@ -171,9 +178,9 @@
 
         .cls_011 button.btn-primary.dim {
             box-shadow: inset 0 0 0 #1872ab, 0 5px 0 0 #1872ab, 0 10px 5px #999999;
-        }
+        }#}
 
-        .cls_012 {
+        {#.cls_012 {
             margin-top:15%;
             margin-right:3%;
             font-size:32px;
@@ -183,7 +190,7 @@
         .cls_012 a{
             text-decoration:none;
             color:rgb(254,255,255);
-        }
+        }#}
         /* quinta div */
 
     </style>
@@ -192,6 +199,8 @@
 
 {% block javascripts %}
     {{ parent() }}
+
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 
 {% endblock %}
 
@@ -633,8 +642,35 @@
             <!-- START QUINTA DIV -->
             <div class="row">
                 <div class="col-md-12">
-                    <div class="ibox" style="background-color: #1ab394">
+                    <div class="ibox" >
 
+                        <div class="ibox-content">
+
+                            <div class="cls_011" align="center">
+                                <p>{{ "page.contest_programs.p.dive_into_our_program"|trans }} {{ "page.contest_programs.p.service_program"|trans }}</p>
+                            </div>
+
+                            <div class="cls_012" align="center">
+                                {% for flashMessage in app.session.flashbag.get('notice') %}
+                                    <div class="alert alert-success alert-dismissable" style="font-size:15px">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        {{ flashMessage|trans }}
+                                    </div>
+                                {% endfor %}
+
+                                {{ render(controller('SkaphandrusAppBundle:SkContestRequest:new')) }}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END QUINTA DIV -->
+
+            {#<!-- START QUINTA DIV -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox"  style="background-color: #1ab394">
                         <div class="row">
                             <div class="col-md-3" align="center" >
                                 <img src="{{ asset('bundles/skaphandrusapp/img/programs/logo-half.png') }}"/>
@@ -643,21 +679,8 @@
                             <div class="col-md-9">
 
                                 <div class="cls_011" align="center">
-
-                                    <p style="color:white">{{ "page.contests.p.fill_form"|trans }}</p>
-
-                                    {% for flashMessage in app.session.flashbag.get('notice') %}
-                                        <div class="alert alert-success alert-dismissable" style="font-size:15px">
-                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                            {{ flashMessage|trans }}
-                                        </div>
-                                    {% endfor %}
-
-                                    {{ render(controller('SkaphandrusAppBundle:SkContestRequest:new')) }}
-
-
-                                    {#<p>{{ "page.contest_programs.p.dive_into_our_program"|trans }}</p>
-                                    <p>{{ "page.contest_programs.p.service_program"|trans }}</p>#}
+                                    <p>{{ "page.contest_programs.p.dive_into_our_program"|trans }} </p>
+                                    <p> {{ "page.contest_programs.p.service_program"|trans }}</p>
                                 </div>
 
                                 <div class="pull-right cls_012" align="right">
@@ -672,7 +695,7 @@
                     </div>
                 </div>
             </div>
-            <!-- END QUINTA DIV -->
+            <!-- END QUINTA DIV -->#}
 
         </div>
     </div>

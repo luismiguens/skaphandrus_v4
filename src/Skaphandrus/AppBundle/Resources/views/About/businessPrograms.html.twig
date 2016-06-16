@@ -602,6 +602,31 @@
                                     <img style="width:auto;height:900px" src="{{ asset('bundles/skaphandrusapp/img/programs/destinations.jpg') }}"/>
                                 </div>
                             </div>
+
+                            <div class="row">
+                                <div class="col-md-12 cls_011" align="center">
+                                    <p>{{ "page.business_programs.p.dive_into_our_program"|trans }}</p>
+
+                                    {% if app.user %}
+                                        <div class="col-sm-1"></div>
+                                        <div class="col-sm-10">
+                                            <button class="btn btn-primary dim btn-block m-b-md" onclick="location.href = '{{ path('business_admin_new') }}';">
+                                                {{ "page.index.button.logged_become_partner"|trans }}
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-1"></div>
+                                    {% else %}
+                                        <div class="col-sm-1"></div>
+                                        <div class="col-sm-10">
+                                            <button class="btn btn-primary dim btn-block m-b-md" onclick="location.href = '{{ path('business_fos_user_new') }}';">
+                                                {{ "page.index.button.register_become_partner"|trans }}
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-1"></div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -609,7 +634,7 @@
             <!-- END OITAVA DIV -->
 
             <!-- START NONA DIV -->
-            <div class="row">
+            {#<div class="row">
                 <div class="col-md-12">
                     <div class="ibox" style="background-color: #1ab394">
 
@@ -644,7 +669,7 @@
 
                     </div>
                 </div>
-            </div>
+            </div>#}
             <!-- END NONA DIV -->
 
         </div>
