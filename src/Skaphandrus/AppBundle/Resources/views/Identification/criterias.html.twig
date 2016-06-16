@@ -2,7 +2,9 @@
 
 {% block page_title %}{% trans with {'%module_name%': module.name} %}page.criterias.meta_tag.title{% endtrans %}{% endblock %}
 
-{% block page_description %}{% endblock %}
+{% set auxSpecies = "" %}
+{% set auxCharacteristics = "" %}
+{% block page_description %}{% trans with {'%module_name%': module.name, '%species_list%': auxSpecies, '%characteristics_list%': auxCharacteristics, } %}page.criterias.meta_tag.description{% endtrans %}{% endblock %}
 
 {% set keywords = module.name %} 
 {% set keywords = keywords~', '~("meta_tag.keyword.fish"|trans) %}
@@ -218,13 +220,25 @@
 {% block body %}
     <div class="wrapper wrapper-content">
         <div class ="container">
-            <div class="row">
 
+            <div class="ibox">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>{% trans with {'%module_name%': module.name} %}page.criterias.meta_tag.title{% endtrans %}</h1>
+                            <p>{% trans with {'%module_name%': module.name} %}page.criterias.p.title{% endtrans %}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-md-3" >
                     <div  data-spy="affix" data-offset-top="156" style="width: 265px;top: 0;">
                         <div class="ibox" >
                             <div class="ibox-title">
-                                <h5>{{ "page.criterias.h5.species_list"|trans }}</h5>
+                                <h2>{% trans with {'%module_name%': module.name} %}page.criterias.h2.species_list{% endtrans %}</h2>
+                                <p>{% trans with {'%module_name%': module.name|lower, '%module_name_singular%': module.name|lower} %}page.criterias.p.species_list{% endtrans %}</p>
                             </div>
                             <div class="ibox-content ibox-content-species">
                                 <ul class="list-group clear-list ">
@@ -245,7 +259,8 @@
                 <div ng-show="mainCtrl.showCriterias" class="col-md-9" >
                     <div class="ibox" >
                         <div class="ibox-title">
-                            <h5>{{ "page.criterias.h5.criterias_list"|trans }}</h5>
+                            <h2>{% trans with {'%module_name%': module.name} %}page.criterias.h2.criterias_list{% endtrans %}</h2>
+                                <p>{% trans with {'%module_name%': module.name|lower} %}page.criterias.p.criterias_list{% endtrans %}</p>
                         </div>
                         <div class="ibox-content">
                             <form>
@@ -254,7 +269,7 @@
                                         <label ng-bind="criteria.name"></label>
                                         <ul class="list-inline customChList lstn">
                                             <li ng-repeat="character in criteria.characters"  >
-                                                <a href="#" class="thumbnail" >
+                                                <a href="#" class="thumbnail" title="{[{character.name}]}" >
                                                     <input  type="checkbox" id="{[{character.id}]}" ng-model="selected" ng-click="mainCtrl.clickCharacter(character.id,selected)" >
                                                     <label style="background-image: url('{[{character.image_url}]}');" for="{[{character.id}]}" ng-bind="character.name" ></label>
                                                 </a>
@@ -319,23 +334,17 @@
                                 <li>{[{inf.name}]}, {[{inf.culture}]}</li>
                             </ul>
 
-
-                            <!--
-                            <h5>{{ "page.species.h3.species_criteria"|trans }}</h5>
-                            
+                            {#<h5>{{ "page.species.h3.species_criteria"|trans }}</h5>
                             <ul class="list-unstyled">
-                            <li ng-repeat="crit in mainCtrl.infoSpecies.criterias"> 
-                                        {[{crit.name}]}
-                                        <ul class="list-unstyled">
-                                            <li ng-repeat="char in crit.characters"	>
-                                                <img class="thumbnail" ng-src="http://skaphandrus.com/{[{char.image_url}]}" /> 
-                                                {[{char.name}]}
-                                            </li>
-                                        </ul>   
-                                    </ul>
-                            
-                            -->
-
+                                <li ng-repeat="crit in mainCtrl.infoSpecies.criterias"> 
+                                    {[{crit.name}]}
+                                    <ul class="list-unstyled">
+                                        <li ng-repeat="char in crit.characters"	>
+                                            <img class="thumbnail" ng-src="http://skaphandrus.com/{[{char.image_url}]}" /> 
+                                            {[{char.name}]}
+                                        </li>
+                                    </ul>   
+                            </ul>#}
 
                             <button class='btn btn-primary' ng-click="mainCtrl.clickCriterias();"><i class='fa fa-chevron-left'></i>
                                 Back to Criterias

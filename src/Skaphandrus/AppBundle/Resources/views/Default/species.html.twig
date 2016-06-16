@@ -4,28 +4,21 @@
 {% set auxCommon = [] %}
 {% set auxAuthor = "" %}
 
-
 {#se tiver vernaculares criar title com vernaculares #} 
 {% if species.speciesVernaculars is not empty %}
-
-    
-
     {% for vernacular in species.speciesVernaculars %}
+        {% if (vernacular.locale == app.request.locale) %}
 
-        {% if (vernacular.locale == app.request.locale)   %}
             {#adicionar ao array nomes comuns na lingua do utilizador #}
             {% set auxCommon = auxCommon|merge([vernacular.vernacular.name]) %}
 
             {#apresentar 3 nomes comuns ao titulo#}
         {% set title %}{% trans with {'%species%': species.name, '%common_names%': auxCommon|slice(0, 3)|join(', ') } %} page.species.meta_tag.title {% endtrans %}{% endset %}
-
     {% endif %}
-
 {% endfor %}
 
 {#se não tiver vernaculares, criar title com autor #}
 {% else %}
-    
     {% for author in species.ScientificNames %}
         {% set auxAuthor = auxAuthor~', '~author.author %}
     {% endfor %}
@@ -34,17 +27,20 @@
 
 {% block page_title %}{{title}}{% endblock %}
 
+
 {% if species.translate(app.request.locale).description is not empty %}
-    
-    {% set description %}{% trans with {'%species%': species.name, '%author_name%': auxAuthor } %} page.species.meta_tag.description {% endtrans %}{% endset %}
-    
+
     {#{% set description = species.translate(app.request.locale).description [0:160] %}#}
-    
-    
-    
+{% set description %}{% trans with {'%species%': species.name, '%description%': species.translate(app.request.locale).description |truncate(155)} %} page.species.meta_tag.description {% endtrans %}{% endset %}
+
+{% if description|length < 155 %}
+{% set description %}{% trans with {'%species%': species.name, '%description%': species.translate(app.request.locale).description, '%common_names%': auxCommon|slice(0, 3)|join(', '), '%taxonomic_groups%': species.genus.family.order.class.phylum.kingdom.name ~', '~ species.genus.family.order.class.phylum.name ~', '~ species.genus.family.order.class.name ~', '~ species.genus.family.order.name ~', '~ species.genus.family.name ~', '~ species.genus.name } %} page.species.meta_tag.description_complete {% endtrans %}{% endset %}
+{% endif %}
+
 {% endif %}
 
 {% block page_description %}{{description}}{% endblock %}
+
 
 {% block hreflang %}
     <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('species', {'slug':slugify(species.name), 'locale': 'pt'}) }} " />
@@ -310,7 +306,7 @@
                                     {% endif %}
                                 {% endfor %}#}
 
-                                <h3>{{ "page.species.h3.description"|trans }}</h3>
+                                <h3>{% trans with {'%species%': species.name } %} page.species.h3.description {% endtrans %}</h3>
                                 {% if species.translate(app.request.locale).description is not empty %}
                                     <p itemprop="description">
                                         {{ species.translate(app.request.locale).description }}
@@ -320,7 +316,7 @@
                                 {% endif %}
 
                                 {% if species.speciesVernaculars|length > 0 %}
-                                    <h3>{{ "page.species.h3.common_names"|trans }}</h3>
+                                    <h3>{% trans with {'%species%': species.name } %} page.species.h3.common_names {% endtrans %}</h3>
                                     <ul class="list-unstyled">
                                         {% for vernacular in species.speciesVernaculars %}
                                             {% if (vernacular.locale == app.request.locale) %}
@@ -332,10 +328,9 @@
                                     </ul>
                                 {% endif %}
 
-                                <h3>{{ "page.species.h3.taxonomic_structure"|trans }}</h3>
-                                <p>{#{{ "page.species.p.taxonomic_structure"|trans }}#}What type of species is an Octopus Vulgaris?<br/> Bellow, you will find the taxonomic groups the Octopus vulgaris species belongs to.</p>
-                                
-                                
+                                <h3>{% trans with {'%species%': species.name } %} page.species.h3.taxonomic_structure {% endtrans %}</h3>
+                                <p>{% trans with {'%species%': species.name } %} page.species.p.taxonomic_structure {% endtrans %}</p>
+
                                 <ul class="list-unstyled" itemscope itemtype="http://schema.org/ListItem">
                                     <li class="tox" itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.kingdom.taxonNodeName|trans, species.genus.family.order.class.phylum.kingdom) }}</li>
                                     <li class="tox" itemprop="item">{{ "page.species.label.species_phylum"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.taxonNodeName|trans, species.genus.family.order.class.phylum) }}</li>
@@ -347,7 +342,7 @@
                             </div>
                             <div class="col-md-6 species-images">
                                 {% if species.photos is not empty %}
-                                    {#<h3>{% trans with {'%specie%': species.name } %} page.species.h3.photos {% endtrans %}</h3>#}
+                                    {#<h3>{% trans with {'%species%': species.name } %} page.species.h3.photos {% endtrans %}</h3>#}
                                     {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': species.id },'limit':20  } )) }}
                                 {% endif %}
                             </div>
@@ -383,7 +378,7 @@
                 <!-- outras especies similares end -->
 
                 <!-- outras especies similares start -->
-                <h2 style="margin-left: 15px">{{ "page.species.h2.similar_species"|trans }}</h2>
+                <h2 style="margin-left: 15px">{% trans with {'%species%': species.name } %} page.species.h2.similar_species {% endtrans %}</h2>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="slider_similar" align="center">
@@ -414,8 +409,8 @@
                             <div id="tab-1" class="tab-pane active">
 
                                 <div class="panel-body">
-                                    <h3>{% trans with {'%specie%': species.name } %} page.species.h3.species_criteria {% endtrans %}</h3>
-                                    <p>Question? Ansher.</p>
+                                    <h3>{% trans with {'%species%': species.name } %} page.species.h3.species_criteria {% endtrans %}</h3>
+                                    <p>{% trans with {'%species%': species.name } %} page.species.p.species_criteria {% endtrans %}</p>
 
                                     <div class="ibox-content">
                                         <div id="loadCriterias"></div>
@@ -428,8 +423,8 @@
                             <!-- Map start -->
                             <div id="tab-2" class="tab-pane">
                                 <div class="panel-body">
-                                    <h3>{% trans with {'%specie%': species.name } %} page.species.h3.geo_distribution {% endtrans %}</h3>
-                                       <p>Question? Ansher.</p>
+                                    <h3>{% trans with {'%species%': species.name } %} page.species.h3.geo_distribution {% endtrans %}</h3>
+                                    <p>{% trans with {'%species%': species.name } %} page.species.p.geo_distribution {% endtrans %}</p>
                                     <span itemscope itemtype="http://schema.org/Map">
                                         <meta itemprop="name" content="World Map" />
                                         {% if map %}
@@ -486,8 +481,8 @@
                             <div id="tab-3" class="tab-pane">
 
                                 <div class="panel-body">
-                                    <h3>{% trans with {'%specie%': species.name } %} page.species.h3.contributors {% endtrans %}</h3>
-                                       <p>Question? Ansher.</p>
+                                    <h3>{% trans with {'%species%': species.name } %} page.species.h3.contributors {% endtrans %}</h3>
+                                    <p>{% trans with {'%species%': species.name } %} page.species.p.contributors {% endtrans %}</p>
                                     <div class="row" >
                                         <div class="col col-lg-12" >
                                             <div class="ibox" >
@@ -502,7 +497,7 @@
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                <h4 class="modal-title" id="myModalLabel">{% trans with {'%specie%': species.name } %} page.species.h3.contributors_modal {% endtrans %}</h4>
+                                                                <h3 class="modal-title" id="myModalLabel">{% trans with {'%species%': species.name } %} page.species.h3.contributors_modal {% endtrans %}</h3>
                                                             </div>
                                                             <div class="modal-body">
 

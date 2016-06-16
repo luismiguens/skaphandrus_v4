@@ -1597,7 +1597,7 @@ class DefaultController extends Controller {
     public function skGridAction($parameters, $limit, $order = array('id' => 'desc')) {
 
         // ini_set('memory_limit', '64M');
-
+        
         $locale = $this->get('request')->getLocale();
 
         if (isset($parameters['photos'])) {

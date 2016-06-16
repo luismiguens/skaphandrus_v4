@@ -111,12 +111,13 @@
 
         /* nona div */
         .cls_013 {
-            margin-top:50%;
-            margin-left:7%;
+            margin:40% 10% 0;
+            padding-left:8%;
             font-size:30px;
             font-weight:bold;
             color:rgb(254,255,255);
         }
+
         .cls_014 {
             margin-top:20%;
             margin-right:3%;
@@ -621,6 +622,15 @@
 
                                 <div class="cls_013" align="center">
                                     <p>{{ "page.business_programs.p.dive_into_our_program"|trans }}</p>
+                                    {% if app.user %}
+                                        <button class="btn btn-success dim btn-block m-b-md" onclick="location.href = '{{ path('business_admin_new') }}';">
+                                            {{ "page.index.button.logged_become_partner"|trans }}
+                                        </button>
+                                    {% else %}
+                                        <button class="btn btn-success dim btn-block m-b-md" onclick="location.href = '{{ path('business_fos_user_new') }}';">
+                                            {{ "page.index.button.register_become_partner"|trans }}
+                                        </button>
+                                    {% endif %}
                                 </div>
 
                                 <div class="pull-right cls_014" align="right">

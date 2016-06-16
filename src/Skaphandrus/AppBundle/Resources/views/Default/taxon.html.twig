@@ -1,25 +1,58 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
+{% set title = "" %}
+{% set auxCommon = [] %}
+
+{#se tiver vernaculares criar title com vernaculares #} 
 {% if taxon.vernaculars is not empty %}
-    {% set title = "" %}
-    {% set auxCommon = "" %}
-    {% set i=0 %}
     {% for vernacular in taxon.vernaculars %}
-        {% if vernacular.locale == app.request.locale and i<4 %}
-            {% set auxCommon = auxCommon~', '~vernacular.name %}
-        {% set title %}{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%common%': auxCommon } %} page.taxon.meta_tag.title {% endtrans %}{% endset %}
-        {% set i=i+1 %}
-    {% else %}
-    {% set title %}{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%common%': auxCommon } %} page.taxon.meta_tag.title {% endtrans %}{% endset %}
-{% endif %}
+        {% if (vernacular.locale == app.request.locale) %}
+
+            {#adicionar ao array nomes comuns na lingua do utilizador #}
+            {% set auxCommon = auxCommon|merge([vernacular.name]) %}
+
+            {#apresentar 3 nomes comuns ao titulo#}
+        {% set title %}{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%common_names%': auxCommon|slice(0, 3)|join(', '), '%next_taxon%': next_taxon } %} page.taxon.meta_tag.title {% endtrans %}{% endset %}
+    {% endif %}
 {% endfor %}
+
+{#se não tiver vernaculares, criar title com sem os nomes comuns #}
 {% else %}
-{% set title %}{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%common%': "" } %} page.taxon.meta_tag.title {% endtrans %}{% endset %}
+{% set title %}{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%next_taxon%': next_taxon } %} page.taxon.meta_tag.title_no_common_names {% endtrans %}{% endset %}
 {% endif %}
 
 {% block page_title %}{{title}}{% endblock %}
 
-{% block page_description %}{% endblock %}
+{% set auxTaxonGroup = "" %}
+{% set auxChildNode = [] %}
+
+{% for child in taxon.getChildNodes %}
+
+    {% set auxChildNode = auxChildNode|merge([child.name]) %}
+
+{% set description %}{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%taxonomic_groups%': auxTaxonGroup, '%child_taxon%': auxChildNode|join(', ') } %} page.taxon.meta_tag.description {% endtrans %}{% endset %}
+
+{% endfor %}
+
+{% if taxon.taxonNodeName == 'kingdom' %}
+{% set description %}{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%child_taxon%': auxChildNode|join(', ') } %} page.taxon.meta_tag.description_kingdom {% endtrans %}{% endset %}
+{% else %}
+    {% if taxon.taxonNodeName == 'genus' %}
+        {% set auxTaxonGroup = taxon.parentNode.parentNode.parentNode.parentNode.parentNode.name ~', '~ taxon.parentNode.parentNode.parentNode.parentNode.name ~', '~ taxon.parentNode.parentNode.parentNode.name ~', '~ taxon.parentNode.parentNode.name ~', '~ taxon.parentNode.name %}
+    {%elseif taxon.taxonNodeName == 'family' %}
+        {% set auxTaxonGroup = taxon.parentNode.parentNode.parentNode.parentNode.name ~', '~ taxon.parentNode.parentNode.parentNode.name ~', '~ taxon.parentNode.parentNode.name ~', '~ taxon.parentNode.name %}
+    {%elseif taxon.taxonNodeName == 'order' %}
+        {% set auxTaxonGroup = taxon.parentNode.parentNode.parentNode.name ~', '~ taxon.parentNode.parentNode.name ~', '~ taxon.parentNode.name  %}
+    {%elseif taxon.taxonNodeName == 'class' %}
+        {% set auxTaxonGroup = taxon.parentNode.parentNode.name ~', '~ taxon.parentNode.name %}
+    {%elseif taxon.taxonNodeName == 'phylum' %}
+        {% set auxTaxonGroup = taxon.parentNode.name %}
+    {% endif %}
+{% set description %}{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%taxonomic_groups%': auxTaxonGroup, '%child_taxon%': auxChildNode|join(', ') } %} page.taxon.meta_tag.description {% endtrans %}{% endset %}
+
+{% endif %}
+
+{% block page_description %}{{description}}{% endblock %}
 
 {% block hreflang %}
     <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('taxon', {'node':taxon.taxonNodeName | trans({}, "messages", "pt"), 'slug':slugify(taxon.name), 'locale': 'pt'}) }} " />
@@ -197,16 +230,23 @@
                 <div class="row">
 
                     <div class="ibox">
-                        <div class="ibox-title">
-                            <h2>{{("page.taxon.h1.title."~taxon.taxonNodeName)|trans|capitalize }}: {{ taxon.name }}</h2>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h1>{{title}}</h1>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+
+                    <div class="ibox">
                         <div class="ibox-content">
                             <div class="row">
                                 <div class="col-md-6">
 
                                     {#<h3>{% trans with {'%node%': taxon.taxonNodeName|trans|capitalize, '%taxon_name%': taxon.name } %} page.taxon.h3.information {% endtrans %}</h3>#}
                                     {% if taxon.vernaculars is not empty %}
-                                        <h3>{{ "page.taxon.h5.common_names"|trans }}</h3>
+                                        <h2>{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name } %} page.taxon.h2.common_names {% endtrans %}</h2>
                                         <ul class="list-unstyled">
                                             {% for vernacular in taxon.vernaculars %}
                                                 <li>{{ vernacular.name ~ " - " ~ intl_locale_name(vernacular.locale) }}</li>
@@ -217,7 +257,9 @@
                                         </ul>
                                     {% endif %}
 
-                                    <h3>{{ "page.taxon.h5.taxonomic_structure"|trans }}</h3>
+                                    <h2>{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name} %} page.taxon.h2.taxonomic_structure {% endtrans %}</h2>
+                                    <p>{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%next_taxon%': next_taxon } %} page.taxon.p.taxonomic_structure {% endtrans %}</p>
+
                                     <ul class="list-unstyled" itemscope itemtype="http://schema.org/ListItem">
                                         {% if taxon.taxonNodeName == 'genus' %}
                                             <li itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(taxon.parentNode.parentNode.parentNode.parentNode.parentNode.taxonNodeName|trans, taxon.parentNode.parentNode.parentNode.parentNode.parentNode) }}</li>
@@ -271,14 +313,13 @@
                 <div class="row">
                     <div class="ibox">
                         <div class="ibox-title">
-                            <h2>{{ "page.taxon.label.next_taxon_photos"|trans }}</h2>
+                            <h2>{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%next_taxon%': next_taxon } %} page.taxon.h2.next_taxon_photos {% endtrans %}</h2>
+                            <p>{% trans with {'%value%': taxon.name, '%next_taxon%': next_taxon } %} page.taxon.p.next_taxon_photos {% endtrans %}</p>
                         </div>
                         <div class="ibox-content">
 
-
                             {% for child in taxon.getChildNodes %}
                                 {% if child.photos|length > 0 %}
-
                                     <div class="row">
                                         <div class="col-sm-4 col-sx-12">
                                             <div class="contact-box center-version small_version">
@@ -362,7 +403,9 @@
 
                     <div class="ibox" >
                         <div class="ibox-title">
-                            <h3>{% trans with {'%node%': taxon.taxonNodeName|trans|capitalize, '%taxon_name%': taxon.name } %} page.taxon.h3.contributors {% endtrans %}</h3>
+                            <h2>{% trans with {'%node%': taxon.taxonNodeName|trans|capitalize, '%taxon_name%': taxon.name } %} page.taxon.h2.contributors {% endtrans %}</h2>
+                            <p>{% trans with {'%node%': taxon.taxonNodeName|trans|capitalize, '%taxon_name%': taxon.name } %} page.taxon.p.contributors {% endtrans %}</p>
+
                         </div>
 
                         <div class="ibox-content">
@@ -375,7 +418,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h3 class="modal-title" id="myModalLabel">{% trans with {'%node%': taxon.taxonNodeName|trans|capitalize, '%taxon_name%': taxon.name } %} page.taxon.h3.contributors {% endtrans %}</h3>
+                                        <h2 class="modal-title" id="myModalLabel">{% trans with {'%node%': taxon.taxonNodeName|trans|capitalize, '%taxon_name%': taxon.name } %} page.taxon.h2.contributors {% endtrans %}</h2>
                                     </div>
                                     <div class="modal-body">
 

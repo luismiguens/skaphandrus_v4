@@ -44,9 +44,6 @@
 
 {% block heading_breadcrumbs %}{% endblock %}
 
-
-
-
 {% block heading_action %}
     <a href="{{ path('photo_admin_new') }}" class="btn btn-primary">{{ "form.photo.btn.add"|trans }}</a>
 {% endblock %}
@@ -55,6 +52,20 @@
 
 {% block javascripts %}
     {{ parent() }}
+
+    <script src="https://raw.githubusercontent.com/jedfoster/Readmore.js/master/readmore.min.js"></script>
+
+    <script>
+
+        $('#readMore').readmore({
+            speed: 75,
+            heightMargin: 25,
+            collapsedHeight: 0,
+            moreLink: '<a style="width: 25%;" class="btn btn-block btn-outline btn-primary pull-left" href="#">{{"common.show_more"|trans}}</a>',
+            lessLink: '<a style="width: 25%;" class="btn btn-block btn-outline btn-primary pull-left" href="#">{{"common.hide"|trans}}</a>'
+        });
+
+    </script>
 
 {%endblock%}
 
@@ -95,16 +106,30 @@
                 <meta itemprop="operatingSystem" content="Windows, Mac OS, Android, IOS" />
                 <meta itemprop="applicationSuite" content="Skaphandrus" />
 
-                <h1>{{ "page.modules.h1.title"|trans }}</h1>
-                <p>{{ "page.modules.p.description"|trans }}</p>
-                <br>
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h1>{{ "page.modules.h1.title"|trans }}</h1>
+                                <p>{{ "page.modules.p.title"|trans }}</p>
+
+                                <div id="readMore"> 
+                                    <h2>{{ "page.modules.h2.question"|trans }}</h2>
+
+                                    <p>{{ "page.modules.p.answer"|trans }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     {% for module in modules %}
                         <div class="col-md-3">
                             <div class="ibox">
                                 <div class="ibox-content product-box">
                                     <div class="product-imitation" style="padding: 0px 0px!important;">
-                                        <img alt="{{module.name}}" class="img-responsive" src="{{ module.getWebPath | imagine_filter('sk_widen_590') }}" />
+                                        <img alt="{{module.name}}" title="{{module.name}}" class="img-responsive" src="{{ module.getWebPath | imagine_filter('sk_widen_590') }}" />
                                     </div>
                                     <div class="product-desc">
                                         <span class="product-price">
@@ -128,9 +153,11 @@
                                             <ul>
                                                 {% for group in module.groups %}
                                                     {% if group.isParentModule == TRUE %}
-                                                        <li>{{group.name}}</li>
-                                                        {% endif %}
-                                                    {% endfor %}
+                                                        <li>
+                                                            {{group.name}}
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
                                             </ul>
                                         </div>
                                         <div class="m-t text-right">
