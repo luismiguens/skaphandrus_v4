@@ -256,9 +256,6 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <h1>{{ "page.destinations.meta_tag.title"|trans }}</h1>
-                                <br/>
-                                <h2>{{ "page.destinations.h2.title"|trans }}</h2>
-                                <p>{{ "page.destinations.p.title"|trans }}</p>
                             </div>
                         </div>
                     </div>
@@ -266,42 +263,56 @@
 
 
                 <!-- Destinos start -->
-                <div class="dvb-container">
-                    <ul class="dvb-md-list" >
 
-                        <div id="box_countries"></div>
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="dvb-container">
+                                <h2>{{ "page.destinations.h2.title"|trans }}</h2>
+                                <p>{{ "page.destinations.p.title"|trans }}</p>
 
-                        <!-- countries Modal start -->
-                        <div class="modal fade" id="countriesModal" style="margin-top: 30px" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="myModalLabel">{{ "page.destinations.modal.countries_title"|trans }}</h4>
+                                <ul class="dvb-md-list" >
+
+                                    <div id="box_countries"></div>
+
+                                    <!-- countries Modal start -->
+                                    <div class="modal fade" id="countriesModal" style="margin-top: 30px" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">{{ "page.destinations.modal.countries_title"|trans }}</h4>
+                                                </div>
+                                                <div class="modal-body">
+
+                                                    <div id="countriesInput"></div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="modal-body">
+                                    <!-- countries Modal end -->
+                                </ul>
 
-                                        <div id="countriesInput"></div>
+                            </div>
 
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-sm-6 col-sx-12">
+                                        <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_countries" >{{ "page.destinations.button.show_more_countries"|trans }}</button>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <div class="col-sm-6 col-sx-12">
+                                        <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#countriesModal">{{ "page.destinations.button.see_all_countries"|trans }}</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- countries Modal end -->
-
-                    </ul>
-                    <div class="row">
-                        <div class="col-sm-6 col-sx-12">
-                            <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_countries" >{{ "page.destinations.button.show_more_countries"|trans }}</button>
-                        </div>
-                        <div class="col-sm-6 col-sx-12">
-                            <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#countriesModal">{{ "page.destinations.button.see_all_countries"|trans }}</button>
-                        </div>
                     </div>
                 </div>
+
                 <!-- Destinos end -->
 
                 <!-- Lista dos paises start -->
