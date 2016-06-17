@@ -31,7 +31,8 @@
 
 
 {% block heading_title %}
-    {{ module.name }}
+    {#{{ module.name }}#}
+    {% trans with {'%module_name%': module.name} %}page.criterias.meta_tag.title{% endtrans %}
 {% endblock %}
 
 {% block heading_breadcrumbs %}

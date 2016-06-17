@@ -208,7 +208,8 @@
 {% endblock %}
 
 {% block heading_title %}
-    {% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h1.heading_title{% endtrans %}
+    {% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.meta_tag.title{% endtrans %}
+    {#{% trans with {'%location%': location.name, '%country%': location.region.country} %}page.location.h1.heading_title{% endtrans %}#}
 {% endblock %}
 
 

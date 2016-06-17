@@ -210,7 +210,8 @@
 {% endblock %}
 
 {% block heading_title %}
-    {% trans with {'%country%': country} %}page.country.h1.heading_title{% endtrans %}
+    {% trans with {'%country%': country} %}page.country.meta_tag.title{% endtrans %}
+    {#{% trans with {'%country%': country} %}page.country.h1.heading_title{% endtrans %}#}
 {% endblock %}
 
 {% block heading_breadcrumbs %}

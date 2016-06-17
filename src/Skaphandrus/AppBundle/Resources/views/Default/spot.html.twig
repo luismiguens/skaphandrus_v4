@@ -2,7 +2,7 @@
 
 {% block page_title %}{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%region%': spot.location.region.name, '%country%': spot.location.region.country} %}page.spot.meta_tag.title{% endtrans %}{% endblock %}
 
-{% block page_description %}{{spot.description [0:160]}}{% endblock %}
+{% block page_description %}{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%region%': spot.location.region.name, '%country%': spot.location.region.country} %}page.spot.meta_tag.description{% endtrans %}{% endblock %}
 
 {% block hreflang %}
     <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('spot', {'country':slugify(spot.location.region.country.getCountryName('pt')), 'location':slugify(spot.location.translate('pt').name), 'slug':slugify(spot.translate('pt').name), 'locale': 'pt'}) }} " />
@@ -149,7 +149,8 @@
 {% endblock %}
 
 {% block heading_title %}
-    {% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h1.heading_title{% endtrans %}
+    {% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%region%': spot.location.region.name, '%country%': spot.location.region.country} %}page.spot.meta_tag.title{% endtrans %}
+    {#{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%country%': spot.location.region.country} %}page.spot.h1.heading_title{% endtrans %}#}
 {% endblock %}
 
 
