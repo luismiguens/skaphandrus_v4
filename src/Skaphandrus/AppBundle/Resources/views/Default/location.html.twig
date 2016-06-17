@@ -2,7 +2,7 @@
 
 {% block page_title %}{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.meta_tag.title{% endtrans %}{% endblock %}
 
-{% block page_description %}{{location.description[0:160]}}{% endblock %}
+{% block page_description %}{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.meta_tag.description{% endtrans %}{% endblock %}
 
 {% block hreflang %}
     <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('location', {'country':slugify(location.region.country.getCountryName('pt')), 'slug':slugify(location.translate('pt').name), 'locale': 'pt'}) }}" />
@@ -56,7 +56,7 @@
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
 
-    <script src="https://raw.githubusercontent.com/jedfoster/Readmore.js/master/readmore.min.js"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/readmore.min.js') }}"></script>
     <!-- FooTable -->
     {#    <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>#}
 
@@ -241,7 +241,7 @@
                                 <h1 itemprop="name">{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.meta_tag.title{% endtrans %}</h1>
                             </div>
                             <div class="ibox-content" >
-                                <h2>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.h3.info{% endtrans %}</h2>
+                                <h2>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.h2.info{% endtrans %}</h2>
                                 {% if location.description is not empty %}
 
                                     <div class="ibox">
@@ -294,8 +294,8 @@
                     <div class="col col-lg-12">
                         <div class="ibox" >
                             <div class="ibox-title" >
-                                <h2>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country.name} %}page.location.h2.spots_map{% endtrans %}</h2>
-                                <p>{% trans with {'%location%': location.name, '%region%': location.region.name} %}page.location.p.spots_map{% endtrans %}</p>
+                                <h2>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.h2.spots_map{% endtrans %}</h2>
+                                <p>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.spots_map{% endtrans %}</p>
                             </div>
 
                             {% if map %}
@@ -304,8 +304,8 @@
 
                             <div class="ibox-content">
                                 {% if location.spots|length > 0 %}
-                                    <h2>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country.name} %}page.location.h2.spots{% endtrans %}</h2>
-                                    <p>{% trans with {'%location%': location.name, '%region%': location.region.name} %}page.location.p.spots{% endtrans %}</p>
+                                    <h2>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.h2.spots{% endtrans %}</h2>
+                                    <p>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.spots{% endtrans %}</p>
 
                                     <div class="row">
                                         {% for spot in location.spots %}
@@ -316,6 +316,9 @@
                                     </div>
                                 {% endif %}
                                 <br/>
+
+                                <h2>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.h2.spots_photos{% endtrans %}</h2>
+                                <p>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.spots_photos{% endtrans %}</p>
 
                                 <div id="box_spots"></div>
                             </div>
@@ -361,8 +364,8 @@
                     <div class="col col-lg-12">
                         <div class="ibox" >
                             <div class="ibox-title" >
-                                <h2>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country.name} %}page.location.h2.species{% endtrans %}</h2>
-                                <p>{% trans with {'%location%': location.name, '%region%': location.region.name} %}page.location.p.species{% endtrans %}</p>
+                                <h2>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.h2.species{% endtrans %}</h2>
+                                <p>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.species{% endtrans %}</p>
                             </div>
 
                             <div class="ibox-content">
@@ -410,8 +413,8 @@
                     <div class="col col-lg-12">
                         <div class="ibox" >
                             <div class="ibox-title" >
-                                <h2>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country.name} %}page.location.h2.contributors{% endtrans %}</h2>
-                                <p>{% trans with {'%location%': location.name, '%region%': location.region.name} %}page.location.p.contributors{% endtrans %}</p>
+                                <h2>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.h2.contributors{% endtrans %}</h2>
+                                <p>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.contributors{% endtrans %}</p>
                             </div>
 
                             <div class="ibox-content">
@@ -465,8 +468,8 @@
                         <div id="tab-1" class="tab-pane active">
                             <div class="panel-body">
                                 <div class="ibox">
-                                    <h3>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country.name} %}page.location.h3.dive_center{% endtrans %}</h3>
-                                    <p>{% trans with {'%location%': location.name, '%region%': location.region.name} %}page.location.p.dive_center{% endtrans %}</p>
+                                    <h3>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.h3.dive_center{% endtrans %}</h3>
+                                    <p>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.dive_center{% endtrans %}</p>
                                     {#<div class="ibox-content">#}
                                     <div class="row" >
                                         {% if diveCenters %}
@@ -503,8 +506,8 @@
                         <div id="tab-2" class="tab-pane">
                             <div class="panel-body">
                                 <div class="ibox">
-                                    <h3>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country.name} %}page.location.h3.liveaboard{% endtrans %}</h3>
-                                    <p>{% trans with {'%location%': location.name, '%region%': location.region.name} %}page.location.p.liveaboard{% endtrans %}</p>
+                                    <h3>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.h3.liveaboard{% endtrans %}</h3>
+                                    <p>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.liveaboard{% endtrans %}</p>
                                     {#<div class="ibox-content">#}
                                     <div class="row" >
                                         {% if liveaboards %}
@@ -541,8 +544,8 @@
                         <div id="tab-3" class="tab-pane">
                             <div class="panel-body">
                                 <div class="ibox">
-                                    <h3>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country.name} %}page.location.h3.accommodation{% endtrans %}</h3>
-                                    <p>{% trans with {'%location%': location.name, '%region%': location.region.name} %}page.location.p.accommodation{% endtrans %}</p>
+                                    <h3>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.h3.accommodation{% endtrans %}</h3>
+                                    <p>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.accommodation{% endtrans %}</p>
                                     {#<div class="ibox-content">#}
                                     <div class="row" >
                                         {% if accommodations %}

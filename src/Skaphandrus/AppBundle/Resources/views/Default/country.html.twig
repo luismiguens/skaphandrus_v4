@@ -2,7 +2,7 @@
 
 {% block page_title %}{% trans with {'%country%': country} %}page.country.meta_tag.title{% endtrans %}{% endblock %}
 
-{% block page_description %}{{ country.translate.overview [0:160]}}{% endblock %}
+{% block page_description %}{% trans with {'%country%': country} %}page.country.meta_tag.description{% endtrans %}{% endblock %}
 
 
 {% block hreflang %}
@@ -54,8 +54,8 @@
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/dotdotdot/jquery.dotdotdot.min.js') }}"></script>
-
-    <script src="https://raw.githubusercontent.com/jedfoster/Readmore.js/master/readmore.min.js"></script>
+    
+    <script src="{{ asset('bundles/skaphandrusapp/js/readmore.min.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/jstree/dist/jstree.min.js') }}"></script>
     {#<!-- FooTable -->
     <script src="{{ asset('bundles/skaphandrusapp/js/plugins/footable/footable.all.min.js') }}"></script>#}
@@ -238,7 +238,7 @@
                         <div class="ibox">
                             <div class="ibox-title" >
                                 <meta itemprop="isicV4" content="96590" />
-                                <h1 itemprop="name">{% trans with {'%country%': country} %}page.country.meta_tag.title{% endtrans %}    </h1>
+                                <h1 itemprop="name">{% trans with {'%country%': country} %}page.country.meta_tag.title{% endtrans %}</h1>
                             </div>
                             <div class="ibox-content" >
                                 <h2>{% trans with {'%country%': country} %}page.country.h2.info{% endtrans %}</h2>
