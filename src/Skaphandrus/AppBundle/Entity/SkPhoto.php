@@ -81,6 +81,7 @@ class SkPhoto {
      */
     private $category;
     private $isValidated = '0';
+    private $validatedRating = 0;
     private $isPrimary = '0';
 
     /**
@@ -450,6 +451,25 @@ class SkPhoto {
         return $this->isValidated;
     }
 
+    
+    
+       public function setValidatedRating($validatedRating) {
+
+        $this->validatedRating = $validatedRating;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getValidatedRating() {
+        return $this->validatedRating;
+    }
+    
+    
+    
+    
     /**
      * Set isPrimary
      *

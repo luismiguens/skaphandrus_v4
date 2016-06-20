@@ -1397,10 +1397,17 @@ class DefaultController extends Controller {
     public function photosAction(Request $request) {
 
         $params = $request->query->all();
+        $params = array('vernacular' => 'octopus', 'fosUser' => 5);
 
-        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder4($params, 30);
+
+        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilderForGallery($params, 30);
 //        $query = $qb->getQuery();
         //var_dump($params);
+
+
+
+
+
 
 
         $paginator = $this->get('knp_paginator');

@@ -17,7 +17,14 @@ class SkVernacular
      */
     private $id;
 
+    
+     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
 
+    private $species;
+    
+    
     /**
      * Set name
      *
@@ -51,17 +58,15 @@ class SkVernacular
     {
         return $this->id;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $species_vernaculars;
+   
+
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->species_vernaculars = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->species = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -71,9 +76,9 @@ class SkVernacular
      *
      * @return SkVernacular
      */
-    public function addSpeciesVernacular(\Skaphandrus\AppBundle\Entity\SkSpeciesVernacular $speciesVernacular)
+    public function addSpecies(\Skaphandrus\AppBundle\Entity\SkSpecies $species)
     {
-        $this->species_vernaculars[] = $speciesVernacular;
+        $this->species[] = $species;
 
         return $this;
     }
@@ -83,9 +88,9 @@ class SkVernacular
      *
      * @param \Skaphandrus\AppBundle\Entity\SkSpeciesVernacular $speciesVernacular
      */
-    public function removeSpeciesVernacular(\Skaphandrus\AppBundle\Entity\SkSpeciesVernacular $speciesVernacular)
+    public function removeSpecies(\Skaphandrus\AppBundle\Entity\SkSpecies $species)
     {
-        $this->species_vernaculars->removeElement($speciesVernacular);
+        $this->species->removeElement($species);
     }
 
     /**
@@ -93,8 +98,8 @@ class SkVernacular
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getSpeciesVernaculars()
+    public function getSpecies()
     {
-        return $this->species_vernaculars;
+        return $this->species;
     }
 }

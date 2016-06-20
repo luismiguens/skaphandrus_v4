@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Skaphandrus\AppBundle\Entity\SkVernacular" table="sk_vernacular">
+  <entity name="Skaphandrus\AppBundle\Entity\SkVernacular" repository-class="Skaphandrus\AppBundle\Entity\Repository\SkVernacularRepository" table="sk_vernacular">
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
@@ -9,6 +9,9 @@
         <option name="fixed"/>
       </options>
     </field>
-    <one-to-many field="species_vernaculars" target-entity="SkSpeciesVernacular" mapped-by="vernacular"/>
+    <many-to-many field="species" target-entity="SkSpecies" mapped-by="vernaculars" fetch="LAZY"/>
   </entity>
 </doctrine-mapping>
+
+
+

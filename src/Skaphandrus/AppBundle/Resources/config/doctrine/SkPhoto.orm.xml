@@ -66,6 +66,14 @@
                 <option name="default">0</option>
             </options>
         </field>
+        
+         <field name="validatedRating" type="integer" column="validated_rating" nullable="false">
+      <options>
+        <option name="default">0</option>
+      </options>
+    </field>
+        
+        
         <field name="isPrimary" type="boolean" column="is_primary" nullable="true">
             <options>
                 <option name="default">0</option>

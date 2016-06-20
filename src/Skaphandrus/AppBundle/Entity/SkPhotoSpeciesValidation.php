@@ -233,6 +233,35 @@ class SkPhotoSpeciesValidation {
             $entityManager->persist($skSocialNotify);
             $entityManager->flush();
         }
+
+
+
+        //atribuir este rating na fotografia.
+        //$entity = new SkPhotoSpeciesValidation();
+        //$photo = new SkPhoto();
+        $photo = $entity->getPhoto();
+        $photo->setValidatedRating($entity->getRating());
+        $entityManager->persist($photo);
+        $entityManager->flush();
+
+
+
+        
+        
+        //query to update all:
+        //UPDATE sk_photo TableB 
+        //SET TableB.validated_rating = (
+        //SELECT TableA.media 
+        //FROM (select photo_id, floor(avg(rating)) media from sk_photo_species_validation group by photo_id) TableA
+        //WHERE TableA.photo_id = TableB.id
+        //);
+        
+        //TODO
+        // condição: se existirem tres validações com a mesma especie
+        // atribuição 1) sk_photo.species_id = a especie com tres validações
+        // atribuição 2) sk_photo.is_validated = true
+        // atribuição 3) sk_photo.validated_rating = media das tres validacoes
+
     }
 
 }

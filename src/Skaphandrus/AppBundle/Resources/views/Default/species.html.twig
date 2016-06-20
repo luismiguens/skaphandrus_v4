@@ -5,8 +5,8 @@
 {% set auxAuthor = "" %}
 
 {#se tiver vernaculares criar title com vernaculares #} 
-{% if species.speciesVernaculars is not empty %}
-    {% for vernacular in species.speciesVernaculars %}
+{% if species.vernaculars is not empty %}
+    {% for vernacular in species.vernaculars %}
         {% if (vernacular.locale == app.request.locale) %}
 
             {#adicionar ao array nomes comuns na lingua do utilizador #}
@@ -49,9 +49,9 @@
 {% endblock %}
 
 {% set keywords = species.name %}
-{% if species.speciesVernaculars is not empty %}
+{% if species.vernaculars is not empty %}
     {% set i=0 %}
-    {% for vernacular in species.speciesVernaculars %}
+    {% for vernacular in species.vernaculars %}
         {% if (vernacular.locale == app.request.locale) and (i<4) %}
             {% set keywords = keywords~', '~vernacular.vernacular.name %}
             {% set i=i+1 %}
@@ -317,10 +317,10 @@
                                     {{ "page.species.p.no_description"|trans }}
                                 {% endif %}
 
-                                {% if species.speciesVernaculars|length > 0 %}
+                                {% if species.vernaculars|length > 0 %}
                                     <h3>{% trans with {'%species%': species.name } %} page.species.h3.common_names {% endtrans %}</h3>
                                     <ul class="list-unstyled">
-                                        {% for vernacular in species.speciesVernaculars %}
+                                        {% for vernacular in species.vernaculars %}
                                             {% if (vernacular.locale == app.request.locale) %}
                                                 <li>
                                                     {{ vernacular.vernacular.name|title }}
