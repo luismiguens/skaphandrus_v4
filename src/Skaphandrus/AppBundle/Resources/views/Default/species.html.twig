@@ -30,11 +30,12 @@
 
 {% if species.translate(app.request.locale).description is not empty %}
 
-    {#{% set description = species.translate(app.request.locale).description [0:160] %}#}
-{% set description %}{% trans with {'%species%': species.name, '%description%': species.translate(app.request.locale).description |truncate(155)} %} page.species.meta_tag.description {% endtrans %}{% endset %}
+    {% set auxTaxon = species.genus.family.order.class.phylum.kingdom.name ~', '~ species.genus.family.order.class.phylum.name ~', '~ species.genus.family.order.class.name ~', '~ species.genus.family.order.name ~', '~ species.genus.family.name ~', '~ species.genus.name %}
 
-{% if description|length < 155 %}
-{% set description %}{% trans with {'%species%': species.name, '%description%': species.translate(app.request.locale).description, '%common_names%': auxCommon|slice(0, 3)|join(', '), '%taxonomic_groups%': species.genus.family.order.class.phylum.kingdom.name ~', '~ species.genus.family.order.class.phylum.name ~', '~ species.genus.family.order.class.name ~', '~ species.genus.family.order.name ~', '~ species.genus.family.name ~', '~ species.genus.name } %} page.species.meta_tag.description_complete {% endtrans %}{% endset %}
+{% set description %}{% trans with {'%species%': species.name, '%description%': species.translate(app.request.locale).description |truncate(155), '%taxonomic_groups%': auxTaxon } %} page.species.meta_tag.description {% endtrans %}{% endset %}
+
+{% if (auxCommon is not empty)  %}
+{% set description %}{% trans with {'%species%': species.name, '%description%': species.translate(app.request.locale).description, '%common_names%': auxCommon|slice(0, 3)|join(', '), '%taxonomic_groups%': auxTaxon } %} page.species.meta_tag.description_complete {% endtrans %}{% endset %}
 {% endif %}
 
 {% endif %}

@@ -139,32 +139,29 @@
             });
         });
 
- {% if photo.species is not empty and photo.species is not null  %}
-        var photoIsPrimary = function () {
-            $.ajax({
-                type: "get",
-                url: "{{path("photo_is_primary")}}",
-                data: 'photo_id=' + {{ photo.id }} +'&species_id=' + {{ photo.species.id }} ,
-                dataType: "text",
-                success: function (response) {
-                    alert(response);
-                }
-            });
-        };
-        {#$(this).ready(photoIsPrimary);#}
-            $('#is_primary').click(photoIsPrimary);
-{% endif%}
 
-    
-    
+        {% if is_granted("ROLE_ADMIN") and photo.species is not empty and photo.species is not null  %}
+            var photoIsPrimary = function () {
+                $.ajax({
+                    type: "get",
+                    url: "{{path("photo_is_primary")}}",
+                    data: 'photo_id=' + {{ photo.id }} +'&species_id=' + {{ photo.species.id }} ,
+                    dataType: "text",
+                    success: function (response) {
+                        alert(response);
+                    }
+                });
+            };
+            $('#is_primary').click(photoIsPrimary);
+        {% endif%}
+
+
     </script>
     <!-- EndOff: Slick JQuery -->
     <script type="text/javascript">
         {% for category in photo.category %}
 
-
             $('#{{ category.id }}').click(function () {
-
 
                 $.ajax({
                     url: "/{{ app.request.locale }}/category/{{ category.id }}/vote-photo/{{ photo.id }}",
@@ -172,7 +169,6 @@
                         $('#{{ category.id }}').addClass('btn-success').html('<i class="fa fa-check"></i> {{ "page.contest.btn.voted"|trans }}');
                     }
                 });
-
             });
 
 

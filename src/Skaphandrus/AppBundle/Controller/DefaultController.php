@@ -341,7 +341,7 @@ class DefaultController extends Controller {
     public function speciesPageAction($slug) {
 
         $species = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkSpecies')->findBySlug($slug);
-        $photos = array();
+//        $photos = array();
 //        $criterias = array();
 
         if ($species) {
@@ -1597,7 +1597,7 @@ class DefaultController extends Controller {
     public function skGridAction($parameters, $limit, $order = array('id' => 'desc')) {
 
         // ini_set('memory_limit', '64M');
-        
+
         $locale = $this->get('request')->getLocale();
 
         if (isset($parameters['photos'])) {
