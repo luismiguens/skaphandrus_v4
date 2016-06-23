@@ -1399,42 +1399,50 @@ class DefaultController extends Controller {
         $locale = $this->get('request')->getLocale();
         $params = $request->request->get('skaphandrus_filter_gallery');
 
-        //se $params for por POST vier a NULL o $params fica com o valor do GET e vai buscar as fotos todos 
-        //por defeito as fotografias estao sempre organizadas por validationRating DESC
-        //ex: url->country=166 vai buscar as fotos para o pais 166
-        if ($params == null) {
-            $params = $request->query->all();
-            $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilder4($params, 30);
-        }
 
-        //se $params for pelo POST entao vai buscar as fotos daquilo que tiver introduzido 
-        //por defeito as fotografias estao sempre organizadas por validationRating DESC
-        //ex: FORM field country = PORTUGAL vai buscar as fotos para o pais Portugal
-        else {
-            $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilderForGallery($locale, $params, 30);
-        }
 
-        //se o resultado da query vier a null vai se buscar o Default
-        //ex: se introduzir algo mal tanto no form ou no url
-        if ($qb->getQuery()->getResult() == null) {
-            $params = "";
-            $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilderForGallery($locale, $params, 30);
-        }
+        // 1) verificar se é post
+        if ($this->getRequest()->isMethod('POST')):
+            $form = $this->createForm(new \Skaphandrus\AppBundle\Form\SkFilterGalleryType(), array(
+                'action' => 'POST',
+                'method' => 'PUT',
+            ));
+            $form->handleRequest($request);
 
-//        $query = $qb->getQuery();
-//        var_dump($params);
+
+            //1.1 passar todos os parametros para $params
+            $params['vernacular'] = $form->get('vernacular');
+            
+
+            //1.2 redirect
+            return $this->redirect($this->generateUrl('photos', array('params' => $params)));
+
+            //vem por get
+            else:
+             $params = $request->query->all();
+        endif;
+
+
+
+       
+        $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilderForGallery($params, 30);
+
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
                 $qb, $this->get('request')->query->getInt('page', 1)/* page number */, 30/* limit per page */
-//                $query, $this->get('request')->query->getInt('page', 1)/* page number */, 30/* limit per page */
         );
 
-        $form = $this->createForm(new \Skaphandrus\AppBundle\Form\SkFilterGalleryType(), array(
-            'action' => 'POST',
-            'method' => 'PUT',
-        ));
-        $form->handleRequest($request);
+
+
+
+
+
+
+
+
+
+
 
         return $this->render('SkaphandrusAppBundle:Default:photos.html.twig', array(
                     'pagination' => $pagination,

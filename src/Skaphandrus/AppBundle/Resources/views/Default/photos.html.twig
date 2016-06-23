@@ -487,9 +487,7 @@
                         <div class="ibox-title">
                             <h5>Form</h5>
                             <div class="ibox-tools">
-                                {{ knp_pagination_sortable(pagination, 'page.photos.button.better_validated'|trans, 'p.validatedRating', {direction: 'desc'}) }}
-                                {{ knp_pagination_sortable(pagination, 'page.photos.button.id_desc'|trans, 'p.id', {direction: 'desc'}) }}
-                                <a class="collapse-link">
+                                     <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
                                 </a>
                             </div>
@@ -501,6 +499,13 @@
                 </div>
             </div>
 
+                        
+                        {{ knp_pagination_sortable(pagination, 'page.photos.button.better_validated'|trans, 'p.validatedRating', {direction: 'desc'}) }}
+                        | {{ knp_pagination_sortable(pagination, 'page.photos.button.id_desc'|trans, 'p.id', {direction: 'desc'}) }}
+                               
+                        
+                        
+                        
             <div class="row gallery">
                 {% for photo in pagination %}
                     <div class="col-lg-3 col-md-6 col-sm-12 grid-item-gallery">
