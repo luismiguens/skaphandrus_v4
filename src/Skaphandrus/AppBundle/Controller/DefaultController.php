@@ -1405,28 +1405,35 @@ class DefaultController extends Controller {
         ));
         $form->handleRequest($request);
 
+        
+
+        
+       
+        
         // 1) verificar se é post
         if ($this->getRequest()->isMethod('POST')):
 
             //1.1 passar todos os parametros para $params
-            $params['fosUser'] = $form->get('fosUser');
-            $params['spot'] = $form->get('spot');
-            $params['location'] = $form->get('location');
-            $params['region'] = $form->get('region');
-            $params['country'] = $form->get('country');
-            $params['vernacular'] = $form->get('vernacular');
-            $params['species'] = $form->get('species');
-            $params['genus'] = $form->get('genus');
-            $params['family'] = $form->get('family');
-            $params['order'] = $form->get('order');
-            $params['class'] = $form->get('class');
-            $params['phylum'] = $form->get('phylum');
-            $params['kingdom'] = $form->get('kingdom');
+            $params['fosUser'] = $form->get('fosUser')->getData();
+            $params['spot'] = $form->get('spot')->getData();
+            $params['location'] = $form->get('location')->getData();
+            $params['region'] = $form->get('region')->getData();
+            $params['country'] = $form->get('country')->getData();
+            $params['vernacular'] = $form->get('vernacular')->getData();
+            $params['species'] = $form->get('species')->getData();
+            $params['genus'] = $form->get('genus')->getData();
+            $params['family'] = $form->get('family')->getData();
+            $params['order'] = $form->get('order')->getData();
+            $params['class'] = $form->get('class')->getData();
+            $params['phylum'] = $form->get('phylum')->getData();
+            $params['kingdom'] = $form->get('kingdom')->getData();
 
-//            dump($params);
+            dump($params);
             //1.2 redirect
-            return $this->redirect($this->generateUrl('photos', array('params' => $params)));
+            return $this->redirect($this->generateUrl('photos', $params));
 
+           
+            
         //vem por get
         else:
             $params = $request->query->all();
