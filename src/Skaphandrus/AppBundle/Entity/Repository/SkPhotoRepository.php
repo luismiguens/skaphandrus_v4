@@ -390,39 +390,55 @@ class SkPhotoRepository extends EntityRepository {
         }
 
         //-- GEOGRAPHIC --
-        //field text
+        //spot id
         if (array_key_exists('spot', $params)) {
+            $qb->andWhere('p.spot = ?3');
+            $qb->setParameter(3, $params['spot']);
+        }
+
+        //spot name
+        if (array_key_exists('spotName', $params)) {
             $qb->join('p.spot', 's', 'WITH', 'p.spot = s.id');
             $qb->join('s.translations', 'st');
             $qb->andWhere('st.name LIKE ?2');
-            $qb->setParameter(2, "%" . $params['spot'] . "%");
+            $qb->setParameter(2, "%" . $params['spotName'] . "%");
         }
 
         //autocomplete
         elseif (array_key_exists('location', $params)) {
             $qb->join('p.spot', 's', 'WITH', 'p.spot = s.id');
-            $qb->andWhere('s.location = ?3');
-            $qb->setParameter(3, $params['location']);
+            $qb->andWhere('s.location = ?4');
+            $qb->setParameter(4, $params['location']);
         }
 
         //autocomplete
         elseif (array_key_exists('region', $params)) {
             $qb->join('p.spot', 's', 'WITH', 'p.spot = s.id');
             $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
-            $qb->join('l.region', 'r', 'WITH', 'l.region = ?4');
-            $qb->setParameter(4, $params['region']);
+            $qb->join('l.region', 'r', 'WITH', 'l.region = ?5');
+            $qb->setParameter(5, $params['region']);
         }
 
         //autocomplete
-        elseif (array_key_exists('country', $params)) {
+        //country name
+        elseif (array_key_exists('countryName', $params)) {
             $em = $this->getEntityManager();
+            $country_ids = $em->getRepository('SkaphandrusAppBundle:SkCountry')->findCountryDestinations($params['countryName'], $locale);
 
-            $country_ids = $em->getRepository('SkaphandrusAppBundle:SkCountry')->findCountryDestinations($params['country'], $locale);
             $qb->join('p.spot', 's', 'WITH', 'p.spot = s.id');
             $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
             $qb->join('l.region', 'r', 'WITH', 'l.region = r.id');
-            $qb->join('r.country', 'c', 'WITH', 'r.country = ?5');
-            $qb->setParameter(5, implode(', ', $country_ids));
+            $qb->join('r.country', 'c', 'WITH', 'r.country = ?6');
+            $qb->setParameter(6, implode(', ',$country_ids));
+        }
+
+        //country id
+        if (array_key_exists('country', $params)) {
+            $qb->join('p.spot', 's', 'WITH', 'p.spot = s.id');
+            $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
+            $qb->join('l.region', 'r', 'WITH', 'l.region = r.id');
+            $qb->join('r.country', 'c', 'WITH', 'r.country = ?6');
+            $qb->setParameter(6, $params['country']);
         }
 
         //MARINE SPECIES
@@ -431,29 +447,29 @@ class SkPhotoRepository extends EntityRepository {
             $qb->join('p.species', 'sp', 'WITH', 'p.species = sp.id');
             $qb->join('sp.species_vernaculars', 'sv');
             $qb->join('sv.vernacular', 'v');
-            $qb->andWhere('v.name LIKE ?6');
-            $qb->setParameter(6, '%' . $params['vernacular'] . '%');
+            $qb->andWhere('v.name LIKE ?7');
+            $qb->setParameter(7, '%' . $params['vernacular'] . '%');
         }
 
         //autocomplete
         elseif (array_key_exists('species', $params)) {
-            $qb->andWhere('p.species = ?7');
-            $qb->setParameter(7, $params['species']);
+            $qb->andWhere('p.species = ?8');
+            $qb->setParameter(8, $params['species']);
         }
 
         //autocomplete
         elseif (array_key_exists('genus', $params)) {
             $qb->join('p.species', 'sp', 'WITH', 'p.species = sp.id');
-            $qb->join('sp.genus', 'g', 'WITH', 'sp.genus = ?8');
-            $qb->setParameter(8, $params['genus']);
+            $qb->join('sp.genus', 'g', 'WITH', 'sp.genus = ?9');
+            $qb->setParameter(9, $params['genus']);
         }
 
         //autocomplete
         elseif (array_key_exists('family', $params)) {
             $qb->join('p.species', 'sp', 'WITH', 'p.species = sp.id');
             $qb->join('sp.genus', 'g', 'WITH', 'sp.genus = g.id');
-            $qb->join('g.family', 'f', 'WITH', 'g.family = ?9');
-            $qb->setParameter(9, $params['family']);
+            $qb->join('g.family', 'f', 'WITH', 'g.family = ?10');
+            $qb->setParameter(10, $params['family']);
         }
 
         //autocomplete
@@ -461,8 +477,8 @@ class SkPhotoRepository extends EntityRepository {
             $qb->join('p.species', 'sp', 'WITH', 'p.species = sp.id');
             $qb->join('sp.genus', 'g', 'WITH', 'sp.genus = g.id');
             $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
-            $qb->join('f.order', 'o', 'WITH', 'f.order = ?10');
-            $qb->setParameter(10, $params['order']);
+            $qb->join('f.order', 'o', 'WITH', 'f.order = ?11');
+            $qb->setParameter(11, $params['order']);
         }
 
         //autocomplete
@@ -471,8 +487,8 @@ class SkPhotoRepository extends EntityRepository {
             $qb->join('sp.genus', 'g', 'WITH', 'sp.genus = g.id');
             $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
             $qb->join('f.order', 'o', 'WITH', 'f.order = o.id');
-            $qb->join('o.class', 'c', 'WITH', 'o.class = ?11');
-            $qb->setParameter(11, $params['class']);
+            $qb->join('o.class', 'c', 'WITH', 'o.class = ?12');
+            $qb->setParameter(12, $params['class']);
         }
 
         //autocomplete
@@ -482,8 +498,8 @@ class SkPhotoRepository extends EntityRepository {
             $qb->join('g.family', 'f', 'WITH', 'g.family = f.id');
             $qb->join('f.order', 'o', 'WITH', 'f.order = o.id');
             $qb->join('o.class', 'c', 'WITH', 'o.class = c.id');
-            $qb->join('c.phylum', 'ph', 'WITH', 'c.phylum = ?12');
-            $qb->setParameter(12, $params['phylum']);
+            $qb->join('c.phylum', 'ph', 'WITH', 'c.phylum = ?13');
+            $qb->setParameter(13, $params['phylum']);
         }
 
         //autocomplete
@@ -494,8 +510,8 @@ class SkPhotoRepository extends EntityRepository {
             $qb->join('f.order', 'o', 'WITH', 'f.order = o.id');
             $qb->join('o.class', 'c', 'WITH', 'o.class = c.id');
             $qb->join('c.phylum', 'ph', 'WITH', 'c.phylum = ph.id');
-            $qb->join('ph.kingdom', 'k', 'WITH', 'ph.kingdom = ?13');
-            $qb->setParameter(13, $params['kingdom']);
+            $qb->join('ph.kingdom', 'k', 'WITH', 'ph.kingdom = ?14');
+            $qb->setParameter(14, $params['kingdom']);
         }
 
         if ($order) {

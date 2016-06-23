@@ -1,6 +1,29 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
 {#-----title-----#}
+{% set title = "" %}
+
+{#-----fosuser-----#}
+{% if (params.fosUser is defined) and (params.fosUser is not empty) %}
+{% set title %}{% trans with {'%type%': "page.photos.keyword.fosUser"|trans, '%value%': pagination[0].fosUser} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
+{% endif %}
+
+{#-----spots-----#}
+{% if (params.spot is defined) and (params.spot is not empty) %}
+{% set title %}{% trans with {'%type%': "page.photos.keyword.spot"|trans, '%value%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
+{% elseif (params.spotName is defined) and (params.spotName is not empty) %}
+{% set title %}{% trans with {'%type%': "page.photos.keyword.spot"|trans, '%value%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
+{% elseif (params.location is defined) and (params.location is not empty) %}
+{% set title %}{% trans with {'%type%': "page.photos.keyword.location"|trans, '%value%': pagination[0].spot.location.name~", "~pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.title {% endtrans %}{% endset %}    
+{% elseif (params.region is defined) and (params.region is not empty) %}
+{% set title %}{% trans with {'%type%': "page.photos.keyword.region"|trans, '%value%': pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.title {% endtrans %}{% endset %}    
+{% elseif (params.country is defined) and (params.country is not empty) %}
+{% set title %}{% trans with {'%type%': "page.photos.keyword.country"|trans, '%value%': pagination[0].spot.location.region.country} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
+{% elseif (params.countryName is defined) and (params.countryName is not empty) %}
+{% set title %}{% trans with {'%type%': "page.photos.keyword.country"|trans, '%value%': pagination[0].spot.location.region.country} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
+{% endif %}
+
+{#-----marine animals-----#}
 {% if (params.vernacular is defined) and (params.vernacular is not empty) %}
 {% set title %}{% trans with {'%type%': "page.photos.keyword.vernacular"|trans, '%value%': params.vernacular} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
 {% elseif (params.species is defined) and (params.species is not empty) %}
@@ -17,23 +40,10 @@
 {% set title %}{% trans with {'%type%': "page.photos.keyword.phylum"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
 {% elseif (params.kingdom is defined) and (params.kingdom is not empty) %}
 {% set title %}{% trans with {'%type%': "page.photos.keyword.kingdom"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.kingdom.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
-
-{#-----spots-----#}
-{% elseif (params.spot is defined) and (params.spot is not empty) %}
-{% set title %}{% trans with {'%type%': "page.photos.keyword.spot"|trans, '%value%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
-{% elseif (params.location is defined) and (params.location is not empty) %}
-{% set title %}{% trans with {'%type%': "page.photos.keyword.location"|trans, '%value%': pagination[0].spot.location.name~", "~pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.title {% endtrans %}{% endset %}    
-{% elseif (params.region is defined) and (params.region is not empty) %}
-{% set title %}{% trans with {'%type%': "page.photos.keyword.region"|trans, '%value%': pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.title {% endtrans %}{% endset %}    
-{% elseif (params.country is defined) and (params.country is not empty) %}
-{% set title %}{% trans with {'%type%': "page.photos.keyword.country"|trans, '%value%': pagination[0].spot.location.region.country} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
-
-{#-----fosuser-----#}
-{% elseif (params.fosUser is defined) and (params.fosUser is not empty) %}
-{% set title %}{% trans with {'%type%': "page.photos.keyword.fosUser"|trans, '%value%': pagination[0].fosUser} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
+{% endif %}
 
 {#-----someting else-----#}
-{% else %}
+{% if title is empty %}
     {% set title = ("page.photos_something_else.meta_tag.title"|trans) %}
 {% endif %}
 
@@ -221,7 +231,7 @@
 
 
 
-{#-----heading_title-----#}
+{#<!----heading_title----->
 {% if (params.vernacular is defined) and (params.vernacular is not empty) %}
 {% set heading_title %}{% trans with {'%value%': params.vernacular} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
 {% elseif (params.species is defined) and (params.species is not empty) %}
@@ -239,7 +249,7 @@
 {% elseif (params.kingdom is defined) and (params.kingdom is not empty) %}
 {% set heading_title %}{% trans with {'%value%': pagination[0].species.genus.family.order.class.phylum.kingdom.name} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
 
-{#-----spots-----#}
+<!-----spots----->
 {% elseif (params.spot is defined) and (params.spot is not empty) %}
 {% set heading_title %}{% trans with {'%value%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
 {% elseif (params.location is defined) and (params.location is not empty) %}
@@ -249,16 +259,16 @@
 {% elseif (params.country is defined) and (params.country is not empty) %}
 {% set heading_title %}{% trans with {'%value%': pagination[0].spot.location.region.country} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
 
-{#-----fosuser-----#}
+<!-----fosuser----->
 {% elseif (params.fosUser is defined) and (params.fosUser is not empty) %}
 {% set heading_title %}{% trans with {'%value%': pagination[0].fosUser} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
 
-{#-----someting else-----#}
+<!-----someting else----->
 {% else %}
     {% set heading_title = ("page.photos_something_else.h2.heading_title"|trans) %}
-{% endif %}
+{% endif %}#}
 
-{% block heading_title %}{{heading_title}}{% endblock %}
+{% block heading_title %}{#{{heading_title}}#}{{title}}{% endblock %}
 
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
@@ -440,7 +450,9 @@
                 <div class="col-md-12">
                     <div class="ibox">
                         <div class="ibox-content">
-                            {#-----h1 title-----#}
+                            <h1>{{title}}</h1>
+
+                            {#<!-----h1 title----->
                             {% if (params.vernacular is defined) and (params.vernacular is not empty) %}
                                 <h1>{% trans with {'%type%': "page.photos.keyword.vernacular"|trans, '%value%': params.vernacular} %} page.photos.h1.title {% endtrans %}</h1>
                             {% elseif (params.species is defined) and (params.species is not empty) %}
@@ -458,7 +470,7 @@
                             {% elseif (params.kingdom is defined) and (params.kingdom is not empty) %}
                                 <h1>{% trans with {'%type%': "page.photos.keyword.kingdom"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.kingdom.name} %} page.photos.h1.title {% endtrans %}</h1>
 
-                                {#-----spots-----#}
+                                <!-----spots----->
                             {% elseif (params.spot is defined) and (params.spot is not empty) %}
                                 <h1>{% trans with {'%type%': "page.photos.keyword.spot"|trans, '%value%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.h1.title {% endtrans %}</h1>
                             {% elseif (params.location is defined) and (params.location is not empty) %}
@@ -468,14 +480,14 @@
                             {% elseif (params.country is defined) and (params.country is not empty) %}
                                 <h1>{% trans with {'%type%': "page.photos.keyword.country"|trans, '%value%': pagination[0].spot.location.region.country} %} page.photos.h1.title {% endtrans %}</h1>
 
-                                {#-----fosuser-----#}
+                                <!-----fosuser----->
                             {% elseif (params.fosUser is defined) and (params.fosUser is not empty) %}
                                 <h1>{% trans with {'%type%': "page.photos.keyword.fosUser"|trans, '%value%': pagination[0].fosUser} %} page.photos.h1.title {% endtrans %}</h1>
 
-                                {#-----someting else-----#}
+                                <!-----someting else----->
                             {% else %}
                                 <h1>{{ "page.photos_something_else.h1.title"|trans }}</h1>
-                            {% endif %}
+                            {% endif %}#}
                         </div>
                     </div>
                 </div>
@@ -485,7 +497,7 @@
                 <div class="col-md-12">
                     <div class="ibox" id="home_box">
                         <div class="ibox-title">
-                            <h5>Form</h5>
+                            <h5>{{"page.photos.h5.filter_gallery"|trans}}</h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>

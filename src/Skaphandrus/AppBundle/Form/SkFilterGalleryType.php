@@ -20,9 +20,9 @@ class SkFilterGalleryType extends AbstractType {
                     'required' => false,
                     'help' => 'form.filter_gallery.help.fosUser'
                 ))
-                ->add('spot', 'text', array(
+                ->add('spotName', 'text', array(
                     'attr' => array('class' => 'form-control'),
-                    'label' => 'form.filter_gallery.label.spot',
+                    'label' => 'form.filter_gallery.label.spotName',
                     'required' => false
                 ))
                 ->add('location', 'autocomplete', array(
@@ -39,9 +39,9 @@ class SkFilterGalleryType extends AbstractType {
                     'required' => false,
                     'help' => 'form.filter_gallery.help.region'
                 ))
-                ->add('country', 'text', array(
+                ->add('countryName', 'text', array(
                     'attr' => array('class' => 'form-control'),
-                    'label' => 'form.filter_gallery.label.country',
+                    'label' => 'form.filter_gallery.label.countryName',
                     'required' => false
                 ))
 //                ->add('country', 'autocomplete', array(

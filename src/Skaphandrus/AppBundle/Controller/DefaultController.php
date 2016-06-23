@@ -1397,7 +1397,7 @@ class DefaultController extends Controller {
     public function photosAction(Request $request) {
 
         $locale = $this->get('request')->getLocale();
-        $params = $request->request->get('skaphandrus_filter_gallery');
+//        $params = $request->request->get('skaphandrus_filter_gallery');
 
         $form = $this->createForm(new \Skaphandrus\AppBundle\Form\SkFilterGalleryType(), array(
             'action' => 'POST',
@@ -1405,42 +1405,60 @@ class DefaultController extends Controller {
         ));
         $form->handleRequest($request);
 
-        
-
-        
-       
-        
         // 1) verificar se é post
         if ($this->getRequest()->isMethod('POST')):
 
             //1.1 passar todos os parametros para $params
-            $params['fosUser'] = $form->get('fosUser')->getData();
-            $params['spot'] = $form->get('spot')->getData();
-            $params['location'] = $form->get('location')->getData();
-            $params['region'] = $form->get('region')->getData();
-            $params['country'] = $form->get('country')->getData();
-            $params['vernacular'] = $form->get('vernacular')->getData();
-            $params['species'] = $form->get('species')->getData();
-            $params['genus'] = $form->get('genus')->getData();
-            $params['family'] = $form->get('family')->getData();
-            $params['order'] = $form->get('order')->getData();
-            $params['class'] = $form->get('class')->getData();
-            $params['phylum'] = $form->get('phylum')->getData();
-            $params['kingdom'] = $form->get('kingdom')->getData();
+            if ($form->get('fosUser')->getData()) {
+                $params['fosUser'] = $form->get('fosUser')->getData()->getId();
+            }
+            if ($form->get('spotName')->getData()) {
+                $params['spotName'] = $form->get('spotName')->getData();
+            }
+            if ($form->get('location')->getData()) {
+                $params['location'] = $form->get('location')->getData()->getId();
+            }
+            if ($form->get('region')->getData()) {
+                $params['region'] = $form->get('region')->getData()->getId();
+            }
+            if ($form->get('countryName')->getData()) {
+                $params['countryName'] = $form->get('countryName')->getData();
+            }
+            if ($form->get('vernacular')->getData()) {
+                $params['vernacular'] = $form->get('vernacular')->getData();
+            }
+            if ($form->get('species')->getData()) {
+                $params['species'] = $form->get('species')->getData()->getId();
+            }
+            if ($form->get('genus')->getData()) {
+                $params['genus'] = $form->get('genus')->getData()->getId();
+            }
+            if ($form->get('family')->getData()) {
+                $params['family'] = $form->get('family')->getData()->getId();
+            }
+            if ($form->get('order')->getData()) {
+                $params['order'] = $form->get('order')->getData()->getId();
+            }
+            if ($form->get('class')->getData()) {
+                $params['class'] = $form->get('class')->getData()->getId();
+            }
+            if ($form->get('phylum')->getData()) {
+                $params['phylum'] = $form->get('phylum')->getData()->getId();
+            }
+            if ($form->get('kingdom')->getData()) {
+                $params['kingdom'] = $form->get('kingdom')->getData()->getId();
+            }
 
-            dump($params);
             //1.2 redirect
             return $this->redirect($this->generateUrl('photos', $params));
 
-           
-            
         //vem por get
         else:
             $params = $request->query->all();
         endif;
 
         $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilderForGallery($locale, $params, 30);
-
+        
         //se o resultado da query for NULL vai buscar as photos todas
         if ($qb->getQuery()->getResult() == null) {
             $params = [];
