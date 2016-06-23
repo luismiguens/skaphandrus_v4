@@ -5,8 +5,8 @@ namespace Skaphandrus\AppBundle\Entity;
 /**
  * SkSpeciesVernacular
  */
-class SkSpeciesVernacular
-{
+class SkSpeciesVernacular {
+
     /**
      * @var string
      */
@@ -22,7 +22,6 @@ class SkSpeciesVernacular
      */
     private $species;
 
-
     /**
      * Set locale
      *
@@ -30,8 +29,7 @@ class SkSpeciesVernacular
      *
      * @return SkSpeciesVernacular
      */
-    public function setLocale($locale)
-    {
+    public function setLocale($locale) {
         $this->locale = $locale;
 
         return $this;
@@ -42,8 +40,7 @@ class SkSpeciesVernacular
      *
      * @return string
      */
-    public function getLocale()
-    {
+    public function getLocale() {
         return $this->locale;
     }
 
@@ -54,8 +51,7 @@ class SkSpeciesVernacular
      *
      * @return SkSpeciesVernacular
      */
-    public function setVernacular(\Skaphandrus\AppBundle\Entity\SkVernacular $vernacular)
-    {
+    public function setVernacular(\Skaphandrus\AppBundle\Entity\SkVernacular $vernacular) {
         $this->vernacular = $vernacular;
 
         return $this;
@@ -66,8 +62,7 @@ class SkSpeciesVernacular
      *
      * @return \Skaphandrus\AppBundle\Entity\SkVernacular
      */
-    public function getVernacular()
-    {
+    public function getVernacular() {
         return $this->vernacular;
     }
 
@@ -78,8 +73,7 @@ class SkSpeciesVernacular
      *
      * @return SkSpeciesVernacular
      */
-    public function setSpecies(\Skaphandrus\AppBundle\Entity\SkSpecies $species)
-    {
+    public function setSpecies(\Skaphandrus\AppBundle\Entity\SkSpecies $species) {
         $this->species = $species;
 
         return $this;
@@ -90,9 +84,8 @@ class SkSpeciesVernacular
      *
      * @return \Skaphandrus\AppBundle\Entity\SkSpecies
      */
-    public function getSpecies()
-    {
+    public function getSpecies() {
         return $this->species;
     }
-}
 
+}

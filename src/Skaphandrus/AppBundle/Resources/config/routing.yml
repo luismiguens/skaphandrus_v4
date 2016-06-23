@@ -623,14 +623,25 @@ ajax_search_phylum:
     path:     /{_locale}/ajax_search_phylum/
     defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxSearchPhylum }
 
+ajax_search_kingdom:
+    path:     /{_locale}/ajax_search_kingdom/
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxSearchKingdom }
+
 ajax_search_spot:
     path:     /{_locale}/ajax_search_spot/
     defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxSearchSpot }
 
-
 ajax_search_location:
     path:     /{_locale}/ajax_search_location/
     defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxSearchLocation }
+
+ajax_search_region:
+    path:     /{_locale}/ajax_search_region/
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxSearchRegion }
+
+ajax_search_country:
+    path:     /{_locale}/ajax_search_country/
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxSearchCountry }
 
 ajax_search_fosUser:
     path:     /{_locale}/ajax_search_fosUser/
@@ -669,6 +680,10 @@ ajax_get_phylum:
     path:     /{_locale}/ajax_get_phylum/{id}
     defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetPhylum }
 
+ajax_get_kingdom:
+    path:     /{_locale}/ajax_get_kingdom/{id}
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetKingdom }
+
 ajax_get_spot:
     path:     /{_locale}/ajax_get_spot/{id}
     defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetSpot }
@@ -676,6 +691,14 @@ ajax_get_spot:
 ajax_get_location:
     path:     /{_locale}/ajax_get_location/{id}
     defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetLocation }
+    
+ajax_get_region:
+    path:     /{_locale}/ajax_get_region/{id}
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetRegionn }
+    
+ajax_get_country:
+    path:     /{_locale}/ajax_get_country/{id}
+    defaults: { _controller: SkaphandrusAppBundle:AjaxSearch:ajaxGetCountry }
     
 ajax_get_fosUser:
     path:     /{_locale}/ajax_get_fosUser/{id}

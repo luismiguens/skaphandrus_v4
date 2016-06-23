@@ -44,13 +44,11 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
      */
     private $photos;
 
-    
-        /**
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $votes;
-    
-    
+
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
@@ -445,22 +443,7 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
         return $this->photos = $photos;
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        /**
+    /**
      * Add vote
      *
      * @param \Skaphandrus\AppBundle\Entity\SkPhotoContestVote $vote
@@ -494,21 +477,7 @@ class FosUser extends BaseUser implements EncoderAwareInterface, ParticipantInte
     public function setVotes($votes) {
         return $this->votes = $votes;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     /**
      * Add photosValidated
      *

@@ -92,18 +92,13 @@ class SkPersonal {
      */
     private $fosUser;
 
-    
- 
-        
     /**
      * Constructor
      */
     public function __construct() {
         $this->updatedAt = new \DateTime();
     }
-    
-    
-    
+
     /**
      * Set honorific
      *
@@ -123,7 +118,7 @@ class SkPersonal {
      * @return string
      */
     public function getHonorific() {
-        return ( ! $this->honorific ) ? 'Scuba diver' : $this->honorific;
+        return (!$this->honorific ) ? 'Scuba diver' : $this->honorific;
         //return $this->honorific;
     }
 
@@ -467,9 +462,9 @@ class SkPersonal {
     }
 
     public function getName() {
-        
+
         $name = "";
-        
+
         if ($this->getMiddlename() == null && $this->getLastname() == null):
             $name = $this->getFirstname();
         elseif ($this->getMiddlename() != null && $this->getLastname() == null):
@@ -479,14 +474,12 @@ class SkPersonal {
         else:
             $name = $this->getFirstname() . " " . $this->getMiddlename() . " " . $this->getLastname();
         endif;
-        
+
         return ucfirst($name);
     }
 
-    
     public function __toString() {
         return $this->getName();
     }
-    
-    
+
 }

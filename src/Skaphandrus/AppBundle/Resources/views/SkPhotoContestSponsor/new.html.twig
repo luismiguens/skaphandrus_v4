@@ -5,8 +5,8 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
-     <script src="{{ asset('bundles/skaphandrusapp/js/hack/autocompleter-jqueryui.js') }}"></script>
-    
+    <script src="{{ asset('bundles/skaphandrusapp/js/hack/autocompleter-jqueryui.js') }}"></script>
+
 {% endblock %}
 
 
@@ -37,15 +37,13 @@
 
 
 {% block body %}
-    
-    
-    
- <style>
-.ui-autocomplete-loading {
-background: white url("http://jqueryui.com/resources/demos/autocomplete/images/ui-anim_basic_16x16.gif") right center no-repeat;
-}
-</style>
-    
+
+    <style>
+        .ui-autocomplete-loading {
+            background: white url("http://jqueryui.com/resources/demos/autocomplete/images/ui-anim_basic_16x16.gif") right center no-repeat;
+        }
+    </style>
+
     {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
     {{ form_widget(form) }}
     {% include 'SkaphandrusAppBundle:Common:form-group-actions.html.twig' with {'admin_route':'photo_contest_sponsor_admin', 'new_form':false} %}

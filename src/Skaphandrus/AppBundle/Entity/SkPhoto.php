@@ -451,9 +451,7 @@ class SkPhoto {
         return $this->isValidated;
     }
 
-    
-    
-       public function setValidatedRating($validatedRating) {
+    public function setValidatedRating($validatedRating) {
 
         $this->validatedRating = $validatedRating;
     }
@@ -466,10 +464,7 @@ class SkPhoto {
     public function getValidatedRating() {
         return $this->validatedRating;
     }
-    
-    
-    
-    
+
     /**
      * Set isPrimary
      *

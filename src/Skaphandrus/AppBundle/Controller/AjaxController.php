@@ -578,8 +578,8 @@ class AjaxController extends Controller {
             if ($common_name) {
                 $qb->join('s.photos', 'p', 'WITH', 'p.spot = s.id');
                 $qb->join('p.species', 'sp', 'WITH', 'p.species = sp.id');
-                $qb->join('sp.species_vernaculars', 'sv', 'WITH', 'sv.species = sp.id');
-                $qb->join('sv.vernacular', 'v', 'WITH', 'sv.vernacular = v.id');
+                $qb->join('sp.species_vernaculars', 'sv');
+                $qb->join('sv.vernacular', 'v');
                 $qb->andWhere('v.name LIKE ?5');
                 $qb->setParameter(5, "%" . $common_name . "%");
             }
@@ -594,7 +594,7 @@ class AjaxController extends Controller {
         $map->setCenter(40, 0, true);
         $map->setStylesheetOptions(array(
             'width' => 'auto',
-            'height' => '175%',
+            'height' => '190%',
         ));
         $latitude = 0;
         $longitude = 0;
@@ -673,7 +673,7 @@ class AjaxController extends Controller {
             ));
             $map->setStylesheetOptions(array(
                 'width' => 'auto',
-                'height' => '175%',
+                'height' => '190%',
             ));
             $map->setLanguage('en');
 

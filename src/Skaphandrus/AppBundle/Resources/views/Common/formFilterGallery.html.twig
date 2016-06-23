@@ -1,0 +1,51 @@
+
+{% form_theme form 'SkaphandrusAppBundle:Form:rows.html.twig' %}
+
+{{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+
+<div class="row">
+    <div class="col-md-6">
+        <fieldset>
+            <legend style="color:gray">
+                <h4>{{"page.filter_gallery.h4.legend_fos_user"|trans}}</h4>
+            </legend>
+            {{ form_row(form.fosUser) }}
+        </fieldset>   
+        <fieldset>
+            <legend style="color:gray">
+                <h4>{{"page.filter_gallery.h4.legend_geografic"|trans}}</h4>
+            </legend>
+            {{ form_row(form.spot) }}
+            {{ form_row(form.location) }}
+            {{ form_row(form.region) }}
+            {{ form_row(form.country) }}
+        </fieldset>
+    </div>
+    <div class="col-md-6">
+        <fieldset>
+            <legend style="color:gray">
+                <h4>{{"page.filter_gallery.h4.legend_marine_species"|trans}}</h4>
+            </legend>
+            {{ form_row(form.vernacular) }}
+            {{ form_row(form.species) }}
+            {{ form_row(form.genus) }}
+            {{ form_row(form.family) }}
+            {{ form_row(form.order) }}
+            {{ form_row(form.class) }}
+            {{ form_row(form.phylum) }}
+            {{ form_row(form.kingdom) }}
+        </fieldset>
+    </div>
+</div>
+<div class="row">
+    <div class="hr-line-dashed"></div>
+    <div class="form-group">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <button type="submit" onclick="clearFields();" class="btn btn-primary btn-block">{{ "page.photos.button.submit"|trans }}</button>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+
+{{ form_end(form) }}

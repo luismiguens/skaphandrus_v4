@@ -93,12 +93,6 @@ class SkCountryRepository extends EntityRepository {
                 
                 WHERE c.continent = :continent_id
                 ')->setParameter('continent_id', $continent_id)->getResult();
-        
-        
-        
-        
-        
-        
     }
 
     //Usado na pagina de destinos

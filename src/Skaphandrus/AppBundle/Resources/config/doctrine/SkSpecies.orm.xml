@@ -24,9 +24,10 @@
                 </inverse-join-columns>
             </join-table>
         </many-to-many>
-<!--        <one-to-many field="species_vernaculars" target-entity="SkSpeciesVernacular" mapped-by="species"/>-->
+        
+        <one-to-many field="species_vernaculars" target-entity="SkSpeciesVernacular" mapped-by="species"/>
 
-     <many-to-many field="vernaculars" target-entity="SkVernacular" inversed-by="species" fetch="LAZY">
+        <!--<many-to-many field="vernaculars" target-entity="SkVernacular" inversed-by="species" fetch="LAZY">
             <join-table name="sk_species_vernacular">
                 <join-columns>
                     <join-column name="species_id" referenced-column-name="id"/>
@@ -35,8 +36,7 @@
                     <join-column name="vernacular_id" referenced-column-name="id"/>
                 </inverse-join-columns>
             </join-table>
-        </many-to-many>
-
+        </many-to-many>-->
 
         <one-to-many field="photos" target-entity="SkPhoto" mapped-by="species"/>
         <one-to-many field="illustrations" target-entity="SkSpeciesIllustration" mapped-by="species"/>
@@ -47,12 +47,8 @@
             </cascade>
         </one-to-many>
     
-    
         <lifecycle-callbacks>
             <lifecycle-callback type="postLoad" method="doStuffOnPostLoad"/>
         </lifecycle-callbacks>
-    
-    
-    
     </entity>
 </doctrine-mapping>

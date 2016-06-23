@@ -115,7 +115,7 @@ $(document).ready(function () {
     // Formulário SkBusinessSettingsAdmins
     if ($('#skaphandrus_appbundle_skbusiness_adminAutocomplete').length) {
         $('#skaphandrus_appbundle_skbusiness_adminAutocomplete').autocompleterMultiple({form_name: 'skaphandrus_appbundle_skbusiness', field_name: 'adminChoices', url_list: '/en/ajax_search_fosUser/', url_get: '/en/ajax_get_fosUser/'});
-//        $('#skaphandrus_appbundle_skbusiness_adminAutocomplete').attr("Add the users who works and manage your page.");
+        //$('#skaphandrus_appbundle_skbusiness_adminAutocomplete').attr("Add the users who works and manage your page.");
     }
 
     // Formulário SkBooking
@@ -126,6 +126,41 @@ $(document).ready(function () {
     // Formulário SkBooking
     if ($('#skaphandrus_appbundle_skphoto_business').length) {
         $('#skaphandrus_appbundle_skphoto_business').autocompleter({url_list: '/en/ajax_search_business/', url_get: '/en/ajax_get_business/'});
+    }
+
+    // Formulario SKFilterGallery
+    if ($('#skaphandrus_filter_gallery_fosUser').length) {
+        $('#skaphandrus_filter_gallery_fosUser').autocompleter({url_list: '/en/ajax_search_fosUser/', url_get: '/en/ajax_get_fosUser/'});
+    }
+    if ($('#skaphandrus_filter_gallery_location').length) {
+        $('#skaphandrus_filter_gallery_location').autocompleter({url_list: '/en/ajax_search_location/', url_get: '/en/ajax_get_location/'});
+    }
+    if ($('#skaphandrus_filter_gallery_region').length) {
+        $('#skaphandrus_filter_gallery_region').autocompleter({url_list: '/en/ajax_search_region/', url_get: '/en/ajax_get_region/'});
+    }
+//    if ($('#skaphandrus_filter_gallery_country').length) {
+//        $('#skaphandrus_filter_gallery_country').autocompleter({url_list: '/en/ajax_search_country/', url_get: '/en/ajax_get_country/'});
+//    }
+    if ($('#skaphandrus_filter_gallery_species').length) {
+        $('#skaphandrus_filter_gallery_species').autocompleter({url_list: '/en/ajax_search_species/', url_get: '/en/ajax_get_species/'});
+    }
+    if ($('#skaphandrus_filter_gallery_genus').length) {
+        $('#skaphandrus_filter_gallery_genus').autocompleter({url_list: '/en/ajax_search_genus/', url_get: '/en/ajax_get_genus/'});
+    }
+    if ($('#skaphandrus_filter_gallery_family').length) {
+        $('#skaphandrus_filter_gallery_family').autocompleter({url_list: '/en/ajax_search_family/', url_get: '/en/ajax_get_family/'});
+    }
+    if ($('#skaphandrus_filter_gallery_order').length) {
+        $('#skaphandrus_filter_gallery_order').autocompleter({url_list: '/en/ajax_search_order/', url_get: '/en/ajax_get_order/'});
+    }
+    if ($('#skaphandrus_filter_gallery_class').length) {
+        $('#skaphandrus_filter_gallery_class').autocompleter({url_list: '/en/ajax_search_class/', url_get: '/en/ajax_get_class/'});
+    }
+    if ($('#skaphandrus_filter_gallery_phylum').length) {
+        $('#skaphandrus_filter_gallery_phylum').autocompleter({url_list: '/en/ajax_search_phylum/', url_get: '/en/ajax_get_phylum/'});
+    }
+    if ($('#skaphandrus_filter_gallery_kingdom').length) {
+        $('#skaphandrus_filter_gallery_kingdom').autocompleter({url_list: '/en/ajax_search_kingdom/', url_get: '/en/ajax_get_kingdom/'});
     }
 
 });

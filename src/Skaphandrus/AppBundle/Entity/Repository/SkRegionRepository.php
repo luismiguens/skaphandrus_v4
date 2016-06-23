@@ -12,6 +12,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class SkRegionRepository extends EntityRepository {
 
+    public function findLikeName($term, $locale) {
+
+        return $this->getEntityManager()->createQuery(
+                        "SELECT r
+                    FROM SkaphandrusAppBundle:SkRegion r
+                    JOIN r.translations t
+                    WHERE t.name LIKE :term
+                    AND t.locale = :locale
+                    ORDER BY t.name DESC"
+                )->setParameter('term', '%' . $term . '%')->setParameter('locale', $locale)->getResult();
+    }
+
     public function findRegionsJoinTranslations($country_id, $locale) {
         return $this->getEntityManager()
                         ->createQuery(
@@ -19,8 +31,8 @@ class SkRegionRepository extends EntityRepository {
                 FROM SkaphandrusAppBundle:SkRegion r JOIN r.translations t
                 WHERE t.locale =:locale AND r.country =:country_id
                 ')
-               ->setParameter('locale', $locale)
-                ->setParameter('country_id', $country_id)->getResult();
+                        ->setParameter('locale', $locale)
+                        ->setParameter('country_id', $country_id)->getResult();
     }
 
 }

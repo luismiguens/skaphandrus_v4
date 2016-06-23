@@ -23,9 +23,6 @@ class AjaxSearchController extends Controller {
 
     //put your code here
 
-
-
-
     public function ajaxSearchSpotAction(Request $request) {
 
         $locale = $this->get('request')->getLocale();
@@ -82,6 +79,62 @@ class AjaxSearchController extends Controller {
         //return new Response($SkLocation->getName().", ".$SkLocation()->getRegion()->getCountry());
         return new Response($SkLocation->getName() . ", " . $SkLocation->getRegion());
     }
+
+    public function ajaxSearchRegionAction(Request $request) {
+
+        $locale = $this->get('request')->getLocale();
+
+        $q = $request->get('term');
+        $em = $this->getDoctrine()->getManager();
+        $regions = $em->getRepository('SkaphandrusAppBundle:SkRegion')->findLikeName($q, $locale);
+
+        $results = array();
+        foreach ($regions as $region) {
+            $results[] = array(
+                'id' => $region->getId(),
+                'name' => $region->getName(),
+                'label' => sprintf("%s, %s", $region->getName(), $region->getCountry())
+            );
+        }
+
+        return new JsonResponse($results);
+    }
+
+    public function ajaxGetRegionAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $SkRegion = $em->getRepository('SkaphandrusAppBundle:SkRegion')->find($id);
+
+        //return new Response($SkRegion->getName().", ".$SkRegion()->getRegion()->getCountry());
+        return new Response($SkRegion->getName() . ", " . $SkRegion->getCountry());
+    }
+
+//    public function ajaxSearchCountryAction(Request $request) {
+//
+//        $locale = $this->get('request')->getLocale();
+//
+//        $q = $request->get('term');
+//        $em = $this->getDoctrine()->getManager();
+//        $countries = $em->getRepository('SkaphandrusAppBundle:SkCountry')->findLikeName($q, $locale);
+//
+//        $results = array();
+//        foreach ($countries as $country) {
+//            $results[] = array(
+//                'id' => $country->getId(),
+//                'name' => $country->getName(),
+//                'label' => sprintf("%s", $country->getName())
+//            );
+//        }
+//
+//        return new JsonResponse($results);
+//    }
+//
+//    public function ajaxGetCountryAction($id) {
+//        $em = $this->getDoctrine()->getManager();
+//        $SkCountry = $em->getRepository('SkaphandrusAppBundle:SkCountry')->find($id);
+//
+//        //return new Response($SkCountry->getName().", ".$SkCountry()->getCountry()->getCountry());
+//        return new Response($SkCountry->getName());
+//    }
 
     public function ajaxSearchSpeciesAction(Request $request) {
         $q = $request->get('term');
@@ -235,6 +288,31 @@ class AjaxSearchController extends Controller {
         $SkPhylum = $em->getRepository('SkaphandrusAppBundle:SkPhylum')->find($id);
 
         return new Response($SkPhylum->getName());
+    }
+
+    public function ajaxSearchKingdomAction(Request $request) {
+        $q = $request->get('term');
+        $em = $this->getDoctrine()->getManager();
+        $kingdoms = $em->getRepository('SkaphandrusAppBundle:SkKingdom')->findLikeName($q);
+
+
+        $results = array();
+        foreach ($kingdoms as $kingdom) {
+            $results[] = array(
+                'id' => $kingdom->getId(),
+                'name' => $kingdom->getName(),
+                'label' => sprintf("%s", $kingdom->getName())
+            );
+        }
+
+        return new JsonResponse($results);
+    }
+
+    public function ajaxGetKingdomAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $SkKingdom = $em->getRepository('SkaphandrusAppBundle:SkKingdom')->find($id);
+
+        return new Response($SkKingdom->getName());
     }
 
     public function ajaxSearchPhotoMachineModelAction(Request $request) {

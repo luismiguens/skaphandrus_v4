@@ -40,7 +40,8 @@ class SkSpecies {
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $vernaculars;
+    private $species_vernaculars;
+//    private $vernaculars;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -251,8 +252,8 @@ class SkSpecies {
      *
      * @return SkSpecies
      */
-    public function addVernacular(\Skaphandrus\AppBundle\Entity\SkVernacular $vernacular) {
-        $this->vernaculars[] = $vernacular;
+    public function addSpeciesVernacular(\Skaphandrus\AppBundle\Entity\SkSpeciesVernacular $speciesVernacular) {
+        $this->species_vernaculars[] = $speciesVernacular;
 
         return $this;
     }
@@ -262,8 +263,8 @@ class SkSpecies {
      *
      * @param \Skaphandrus\AppBundle\Entity\SkSpeciesVernacular $speciesVernacular
      */
-    public function removeVernacular(\Skaphandrus\AppBundle\Entity\SkVernacular $vernacular) {
-        $this->vernaculars->removeElement($vernacular);
+    public function removeSpeciesVernacular(\Skaphandrus\AppBundle\Entity\SkSpeciesVernacular $speciesVernacular) {
+        $this->species_vernaculars->removeElement($speciesVernacular);
     }
 
     /**
@@ -271,9 +272,40 @@ class SkSpecies {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getVernaculars() {
-        return $this->vernaculars;
+    public function getSpeciesVernaculars() {
+        return $this->species_vernaculars;
     }
+
+//    /**
+//     * Add speciesVernacular
+//     *
+//     * @param \Skaphandrus\AppBundle\Entity\SkSpeciesVernacular $speciesVernacular
+//     *
+//     * @return SkSpecies
+//     */
+//    public function addVernacular(\Skaphandrus\AppBundle\Entity\SkVernacular $vernacular) {
+//        $this->vernaculars[] = $vernacular;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Remove speciesVernacular
+//     *
+//     * @param \Skaphandrus\AppBundle\Entity\SkSpeciesVernacular $speciesVernacular
+//     */
+//    public function removeVernacular(\Skaphandrus\AppBundle\Entity\SkVernacular $vernacular) {
+//        $this->vernaculars->removeElement($vernacular);
+//    }
+//
+//    /**
+//     * Get speciesVernaculars
+//     *
+//     * @return \Doctrine\Common\Collections\Collection
+//     */
+//    public function getVernaculars() {
+//        return $this->vernaculars;
+//    }
 
     /**
      * Add photo

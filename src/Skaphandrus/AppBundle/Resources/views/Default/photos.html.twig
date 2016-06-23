@@ -1,33 +1,35 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
 {#-----title-----#}
-{% if params.species is defined %}
+{% if (params.vernacular is defined) and (params.vernacular is not empty) %}
+{% set title %}{% trans with {'%type%': "page.photos.keyword.vernacular"|trans, '%value%': params.vernacular} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
+{% elseif (params.species is defined) and (params.species is not empty) %}
 {% set title %}{% trans with {'%type%': "page.photos.keyword.species"|trans, '%value%': pagination[0].species.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
-{% elseif params.genus is defined %}
+{% elseif (params.genus is defined) and (params.genus is not empty) %}
 {% set title %}{% trans with {'%type%': "page.photos.keyword.genus"|trans, '%value%': pagination[0].species.genus.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}    
-{% elseif params.family is defined %}
+{% elseif (params.family is defined) and (params.family is not empty) %}
 {% set title %}{% trans with {'%type%': "page.photos.keyword.family"|trans, '%value%': pagination[0].species.genus.family.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
-{% elseif params.order is defined %}
+{% elseif (params.order is defined) and (params.order is not empty) %}
 {% set title %}{% trans with {'%type%': "page.photos.keyword.order"|trans, '%value%': pagination[0].species.genus.family.order.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
-{% elseif params.class is defined %}
+{% elseif (params.class is defined) and (params.class is not empty) %}
 {% set title %}{% trans with {'%type%': "page.photos.keyword.class"|trans, '%value%': pagination[0].species.genus.family.order.class.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
-{% elseif params.phylum is defined %}
+{% elseif (params.phylum is defined) and (params.phylum is not empty) %}
 {% set title %}{% trans with {'%type%': "page.photos.keyword.phylum"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
-{% elseif params.kingdom is defined %}
+{% elseif (params.kingdom is defined) and (params.kingdom is not empty) %}
 {% set title %}{% trans with {'%type%': "page.photos.keyword.kingdom"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.kingdom.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
 
 {#-----spots-----#}
-{% elseif params.spot is defined %}
+{% elseif (params.spot is defined) and (params.spot is not empty) %}
 {% set title %}{% trans with {'%type%': "page.photos.keyword.spot"|trans, '%value%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
-{% elseif params.location is defined %}
+{% elseif (params.location is defined) and (params.location is not empty) %}
 {% set title %}{% trans with {'%type%': "page.photos.keyword.location"|trans, '%value%': pagination[0].spot.location.name~", "~pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.title {% endtrans %}{% endset %}    
-{% elseif params.region is defined %}
+{% elseif (params.region is defined) and (params.region is not empty) %}
 {% set title %}{% trans with {'%type%': "page.photos.keyword.region"|trans, '%value%': pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.title {% endtrans %}{% endset %}    
-{% elseif params.country is defined %}
+{% elseif (params.country is defined) and (params.country is not empty) %}
 {% set title %}{% trans with {'%type%': "page.photos.keyword.country"|trans, '%value%': pagination[0].spot.location.region.country} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
 
 {#-----fosuser-----#}
-{% elseif params.fosUser is defined %}
+{% elseif (params.fosUser is defined) and (params.fosUser is not empty) %}
 {% set title %}{% trans with {'%type%': "page.photos.keyword.fosUser"|trans, '%value%': pagination[0].fosUser} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
 
 {#-----someting else-----#}
@@ -46,33 +48,35 @@
 
 
 {#-----description-----#}
-{% if params.species is defined %}
+{% if (params.vernacular is defined) and (params.vernacular is not empty) %}
+{% set description %}{% trans with {'%type%': "page.photos.keyword.vernacular"|trans, '%value%': params.vernacular} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
+{% elseif (params.species is defined) and (params.species is not empty) %}
 {% set description %}{% trans with {'%type%': "page.photos.keyword.species"|trans, '%value%': pagination[0].species.name} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
-{% elseif params.genus is defined %}
+{% elseif (params.genus is defined) and (params.genus is not empty) %}
 {% set description %}{% trans with {'%type%': "page.photos.keyword.genus"|trans, '%value%': pagination[0].species.genus.name} %} page.photos.meta_tag.description {% endtrans %}{% endset %}    
-{% elseif params.family is defined %}
+{% elseif (params.family is defined) and (params.family is not empty) %}
 {% set description %}{% trans with {'%type%': "page.photos.keyword.family"|trans, '%value%': pagination[0].species.genus.family.name} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
-{% elseif params.order is defined %}
+{% elseif (params.order is defined) and (params.order is not empty) %}
 {% set description %}{% trans with {'%type%': "page.photos.keyword.order"|trans, '%value%': pagination[0].species.genus.family.order.name} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
-{% elseif params.class is defined %}
+{% elseif (params.class is defined) and (params.class is not empty) %}
 {% set description %}{% trans with {'%type%': "page.photos.keyword.class"|trans, '%value%': pagination[0].species.genus.family.order.class.name} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
-{% elseif params.phylum is defined %}
+{% elseif (params.phylum is defined) and (params.phylum is not empty) %}
 {% set description %}{% trans with {'%type%': "page.photos.keyword.phylum"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.name} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
-{% elseif params.kingdom is defined %}
+{% elseif (params.kingdom is defined) and (params.kingdom is not empty) %}
 {% set description %}{% trans with {'%type%': "page.photos.keyword.kingdom"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.kingdom.name} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
 
 {#-----spots-----#}
-{% elseif params.spot is defined %}
+{% elseif (params.spot is defined) and (params.spot is not empty) %}
 {% set description %}{% trans with {'%type%': "page.photos.keyword.spot"|trans, '%value%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.description{% endtrans %}{% endset %}
-{% elseif params.location is defined %}
+{% elseif (params.location is defined) and (params.location is not empty) %}
 {% set description %}{% trans with {'%type%': "page.photos.keyword.location"|trans, '%value%': pagination[0].spot.location.name~", "~pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.description {% endtrans %}{% endset %}    
-{% elseif params.region is defined %}
+{% elseif (params.region is defined) and (params.region is not empty) %}
 {% set description %}{% trans with {'%type%': "page.photos.keyword.region"|trans, '%value%': pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.meta_tag.description {% endtrans %}{% endset %}    
-{% elseif params.country is defined %}
+{% elseif (params.country is defined) and (params.country is not empty) %}
 {% set description %}{% trans with {'%type%': "page.photos.keyword.country"|trans, '%value%': pagination[0].spot.location.region.country} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
 
 {#-----fosuser-----#}
-{% elseif params.fosUser is defined %}
+{% elseif (params.fosUser is defined) and (params.fosUser is not empty) %}
 {% set description %}{% trans with {'%type%': "page.photos.keyword.fosUser"|trans, '%value%': pagination[0].fosUser} %} page.photos.meta_tag.description {% endtrans %}{% endset %}
 
 {#-----someting else-----#}
@@ -83,7 +87,14 @@
 {% block page_description %}{{description}}{% endblock %}
 
 {#-----keywords-----#}
-{% if params.species is defined %}
+{% if (params.vernacular is defined) and (params.vernacular is not empty) %}
+    {% set keywords = ("meta_tag.keyword.vernacular"|trans)~' '~params.vernacular %}
+    {% set keywords = keywords~', '~("meta_tag.keyword.pictures"|trans)%}
+    {% set keywords = keywords~', '~("meta_tag.keyword.images"|trans)%}
+    {% set keywords = keywords~', '~("meta_tag.keyword.photos"|trans)%}
+    {% set keywords = keywords~', '~("meta_tag.keyword.photography"|trans)%}
+    {% set keywords = keywords~', '~("meta_tag.keyword.underwater"|trans)%}
+{% elseif (params.species is defined) and (params.species is not empty) %}
     {% set keywords = ("meta_tag.keyword.species"|trans)~' '~pagination[0].species.name %}
     {% set keywords = keywords~', '~("meta_tag.keyword.genus"|trans)~' '~pagination[0].species.genus.name %}
     {% set keywords = keywords~', '~("meta_tag.keyword.family"|trans)~' '~pagination[0].species.genus.family.name %}
@@ -93,7 +104,7 @@
     {% set keywords = keywords~', '~("meta_tag.keyword.photos"|trans)%}
     {% set keywords = keywords~', '~("meta_tag.keyword.photography"|trans)%}
     {% set keywords = keywords~', '~("meta_tag.keyword.underwater"|trans)%}
-{% elseif params.genus is defined %}
+{% elseif (params.genus is defined) and (params.genus is not empty) %}
     {% set keywords = ("meta_tag.keyword.genus"|trans)~' '~pagination[0].species.genus.name %}
     {% set keywords = keywords~', '~("meta_tag.keyword.family"|trans)~' '~pagination[0].species.genus.family.name %}
     {% set keywords = keywords~', '~("meta_tag.keyword.order"|trans)~' '~pagination[0].species.genus.family.order.name %}
@@ -103,7 +114,7 @@
     {% set keywords = keywords~', '~("meta_tag.keyword.photos"|trans)%}
     {% set keywords = keywords~', '~("meta_tag.keyword.photography"|trans)%}
     {% set keywords = keywords~', '~("meta_tag.keyword.underwater"|trans)%}
-{% elseif params.family is defined %}
+{% elseif (params.family is defined) and (params.family is not empty) %}
     {% set keywords = ("meta_tag.keyword.family"|trans)~' '~pagination[0].species.genus.family.name %}
     {% set keywords = keywords~', '~("meta_tag.keyword.order"|trans)~' '~pagination[0].species.genus.family.order.name %}
     {% set keywords = keywords~', '~("meta_tag.keyword.class"|trans)~' '~pagination[0].species.genus.family.order.class.name %}
@@ -113,7 +124,7 @@
     {% set keywords = keywords~', '~("meta_tag.keyword.photos"|trans)%}
     {% set keywords = keywords~', '~("meta_tag.keyword.photography"|trans)%}
     {% set keywords = keywords~', '~("meta_tag.keyword.underwater"|trans)%}
-{% elseif params.order is defined %}
+{% elseif (params.order is defined) and (params.order is not empty) %}
     {% set keywords = ("meta_tag.keyword.order"|trans)~' '~pagination[0].species.genus.family.order.name %}
     {% set keywords = keywords~', '~("meta_tag.keyword.class"|trans)~' '~pagination[0].species.genus.family.order.class.name %}
     {% set keywords = keywords~', '~("meta_tag.keyword.phylum"|trans)~' '~pagination[0].species.genus.family.order.class.phylum.name %}
@@ -123,7 +134,7 @@
     {% set keywords = keywords~', '~("meta_tag.keyword.photos"|trans)%}
     {% set keywords = keywords~', '~("meta_tag.keyword.photography"|trans)%}
     {% set keywords = keywords~', '~("meta_tag.keyword.underwater"|trans)%}
-{% elseif params.class is defined %}
+{% elseif (params.class is defined) and (params.class is not empty) %}
     {% set keywords = ("meta_tag.keyword.class"|trans)~' '~pagination[0].species.genus.family.order.class.name %}
     {% set keywords = keywords~', '~("meta_tag.keyword.phylum"|trans)~' '~pagination[0].species.genus.family.order.class.phylum.name %}
     {% set keywords = keywords~', '~("meta_tag.keyword.kingdom"|trans)~' '~pagination[0].species.genus.family.order.class.phylum.kingdom.name %}
@@ -132,7 +143,7 @@
     {% set keywords = keywords~', '~("meta_tag.keyword.photos"|trans)%}
     {% set keywords = keywords~', '~("meta_tag.keyword.photography"|trans)%}
     {% set keywords = keywords~', '~("meta_tag.keyword.underwater"|trans)%}
-{% elseif params.phylum is defined %}
+{% elseif (params.phylum is defined) and (params.phylum is not empty) %}
     {% set keywords = ("meta_tag.keyword.phylum"|trans)~' '~pagination[0].species.genus.family.order.class.phylum.name %}
     {% set keywords = keywords~', '~("meta_tag.keyword.kingdom"|trans)~' '~pagination[0].species.genus.family.order.class.phylum.kingdom.name %}
     {% set keywords = keywords~', '~("meta_tag.keyword.pictures"|trans)%}
@@ -140,7 +151,7 @@
     {% set keywords = keywords~', '~("meta_tag.keyword.photos"|trans)%}
     {% set keywords = keywords~', '~("meta_tag.keyword.photography"|trans)%}
     {% set keywords = keywords~', '~("meta_tag.keyword.underwater"|trans)%}
-{% elseif params.kingdom is defined %}
+{% elseif (params.kingdom is defined) and (params.kingdom is not empty) %}
     {% set keywords = ("meta_tag.keyword.kingdom"|trans)~' '~pagination[0].species.genus.family.order.class.phylum.kingdom.name %}
     {% set keywords = keywords~', '~("meta_tag.keyword.pictures"|trans)%}
     {% set keywords = keywords~', '~("meta_tag.keyword.images"|trans)%}
@@ -149,7 +160,7 @@
     {% set keywords = keywords~', '~("meta_tag.keyword.underwater"|trans)%}
 
     {#-----spots-----#}
-{% elseif params.spot is defined %}
+{% elseif (params.spot is defined) and (params.spot is not empty) %}
     {% set keywords = ("meta_tag.keyword.spot"|trans)~' '~pagination[0].spot.name %}
     {% set keywords = keywords~', '~("meta_tag.keyword.location"|trans)~' '~pagination[0].spot.location.name %}
     {% set keywords = keywords~', '~("meta_tag.keyword.region"|trans)~' '~pagination[0].spot.location.region.name %}
@@ -159,7 +170,7 @@
     {% set keywords = keywords~', '~("meta_tag.keyword.photos"|trans)%}
     {% set keywords = keywords~', '~("meta_tag.keyword.photography"|trans)%}
     {% set keywords = keywords~', '~("meta_tag.keyword.underwater"|trans)%}
-{% elseif params.location is defined %}
+{% elseif (params.location is defined) and (params.location is not empty) %}
     {% set keywords = ("meta_tag.keyword.location"|trans)~' '~pagination[0].spot.location.name %}
     {% set keywords = keywords~', '~("meta_tag.keyword.region"|trans)~' '~pagination[0].spot.location.region.name %}
     {% set keywords = keywords~', '~("meta_tag.keyword.country"|trans)~' '~pagination[0].spot.location.region.country %}
@@ -168,7 +179,7 @@
     {% set keywords = keywords~', '~("meta_tag.keyword.photos"|trans)%}
     {% set keywords = keywords~', '~("meta_tag.keyword.photography"|trans)%}
     {% set keywords = keywords~', '~("meta_tag.keyword.underwater"|trans)%}
-{% elseif params.region is defined %}
+{% elseif (params.region is defined) and (params.region is not empty) %}
     {% set keywords = ("meta_tag.keyword.region"|trans)~' '~pagination[0].spot.location.region.name %}
     {% set keywords = keywords~', '~("meta_tag.keyword.country"|trans)~' '~pagination[0].spot.location.region.country %}
     {% set keywords = keywords~', '~("meta_tag.keyword.pictures"|trans)%}
@@ -176,7 +187,7 @@
     {% set keywords = keywords~', '~("meta_tag.keyword.photos"|trans)%}
     {% set keywords = keywords~', '~("meta_tag.keyword.photography"|trans)%}
     {% set keywords = keywords~', '~("meta_tag.keyword.underwater"|trans)%}
-{% elseif params.country is defined %}
+{% elseif (params.country is defined) and (params.country is not empty) %}
     {% set keywords = ("meta_tag.keyword.country"|trans)~' '~pagination[0].spot.location.region.country %}
     {% set keywords = keywords~', '~("meta_tag.keyword.pictures"|trans)%}
     {% set keywords = keywords~', '~("meta_tag.keyword.images"|trans)%}
@@ -185,7 +196,7 @@
     {% set keywords = keywords~', '~("meta_tag.keyword.underwater"|trans)%}
 
     {#-----fosuser-----#}
-{% elseif params.fosUser is defined %}
+{% elseif (params.fosUser is defined) and (params.fosUser is not empty) %}
     {% set keywords = ("meta_tag.keyword.fosUser"|trans)~' '~pagination[0].fosUser %}
     {% set keywords = keywords~', '~("meta_tag.keyword.pictures"|trans)%}
     {% set keywords = keywords~', '~("meta_tag.keyword.images"|trans)%}
@@ -211,33 +222,35 @@
 
 
 {#-----heading_title-----#}
-{% if params.species is defined %}
+{% if (params.vernacular is defined) and (params.vernacular is not empty) %}
+{% set heading_title %}{% trans with {'%value%': params.vernacular} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
+{% elseif (params.species is defined) and (params.species is not empty) %}
 {% set heading_title %}{% trans with {'%value%': pagination[0].species.name} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
-{% elseif params.genus is defined %}
+{% elseif (params.genus is defined) and (params.genus is not empty) %}
 {% set heading_title %}{% trans with {'%value%': pagination[0].species.genus.name} %} page.photos.h2.heading_title {% endtrans %}{% endset %}    
-{% elseif params.family is defined %}
+{% elseif (params.family is defined) and (params.family is not empty) %}
 {% set heading_title %}{% trans with {'%value%': pagination[0].species.genus.family.name} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
-{% elseif params.order is defined %}
+{% elseif (params.order is defined) and (params.order is not empty) %}
 {% set heading_title %}{% trans with {'%value%': pagination[0].species.genus.family.order.name} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
-{% elseif params.class is defined %}
+{% elseif (params.class is defined) and (params.class is not empty) %}
 {% set heading_title %}{% trans with {'%value%': pagination[0].species.genus.family.order.class.name} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
-{% elseif params.phylum is defined %}
+{% elseif (params.phylum is defined) and (params.phylum is not empty) %}
 {% set heading_title %}{% trans with {'%value%': pagination[0].species.genus.family.order.class.phylum.name} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
-{% elseif params.kingdom is defined %}
+{% elseif (params.kingdom is defined) and (params.kingdom is not empty) %}
 {% set heading_title %}{% trans with {'%value%': pagination[0].species.genus.family.order.class.phylum.kingdom.name} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
 
 {#-----spots-----#}
-{% elseif params.spot is defined %}
+{% elseif (params.spot is defined) and (params.spot is not empty) %}
 {% set heading_title %}{% trans with {'%value%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
-{% elseif params.location is defined %}
+{% elseif (params.location is defined) and (params.location is not empty) %}
 {% set heading_title %}{% trans with {'%value%': pagination[0].spot.location.name~", "~pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.h2.heading_title {% endtrans %}{% endset %}    
-{% elseif params.region is defined %}
+{% elseif (params.region is defined) and (params.region is not empty) %}
 {% set heading_title %}{% trans with {'%value%': pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.h2.heading_title {% endtrans %}{% endset %}    
-{% elseif params.country is defined %}
+{% elseif (params.country is defined) and (params.country is not empty) %}
 {% set heading_title %}{% trans with {'%value%': pagination[0].spot.location.region.country} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
 
 {#-----fosuser-----#}
-{% elseif params.fosUser is defined %}
+{% elseif (params.fosUser is defined) and (params.fosUser is not empty) %}
 {% set heading_title %}{% trans with {'%value%': pagination[0].fosUser} %} page.photos.h2.heading_title {% endtrans %}{% endset %}
 
 {#-----someting else-----#}
@@ -250,73 +263,77 @@
 {% block heading_breadcrumbs %}
     <ol class="breadcrumb" itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
         <li itemprop="itemListElement"><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
-            {% if params.species is defined %}
+
+        {% if (params.vernacular is defined) and (params.vernacular is not empty) %}
+            <li itemprop="itemListElement" class="active"><strong>{{ params.vernacular}} </strong></li>
+
+        {% elseif (params.species is defined) and (params.species is not empty) %}
 
             <li itemprop="itemListElement"><a href="{{ url_to_photos( {'order': pagination[0].species.genus.family.order.id}) }}">{{pagination[0].species.genus.family.order.name}}</a></li>
             <li itemprop="itemListElement"><a href="{{ url_to_photos( {'family': pagination[0].species.genus.family.id}) }}">{{pagination[0].species.genus.family.name}}</a></li>
             <li itemprop="itemListElement"><a href="{{ url_to_photos( {'genus': pagination[0].species.genus.id}) }}">{{pagination[0].species.genus.name}}</a></li>
             <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].species.name}} </strong></li>
 
-        {% elseif params.genus is defined %}
+        {% elseif (params.genus is defined) and (params.genus is not empty) %}
 
             <li itemprop="itemListElement"><a href="{{ url_to_photos( {'class': pagination[0].species.genus.family.order.class.id}) }}">{{pagination[0].species.genus.family.order.class.name}}</a></li>
             <li itemprop="itemListElement"><a href="{{ url_to_photos( {'order': pagination[0].species.genus.family.order.id}) }}">{{pagination[0].species.genus.family.order.name}}</a></li>
             <li itemprop="itemListElement"><a href="{{ url_to_photos( {'family': pagination[0].species.genus.family.id}) }}">{{pagination[0].species.genus.family.name}}</a></li>
             <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].species.genus.name}} </strong></li>
 
-        {% elseif params.family is defined %}
+        {% elseif (params.family is defined) and (params.family is not empty) %}
 
             <li itemprop="itemListElement"><a href="{{ url_to_photos( {'phylum': pagination[0].species.genus.family.order.class.phylum.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.name}}</a></li>
             <li itemprop="itemListElement"><a href="{{ url_to_photos( {'class': pagination[0].species.genus.family.order.class.id}) }}">{{pagination[0].species.genus.family.order.class.name}}</a></li>
             <li itemprop="itemListElement"><a href="{{ url_to_photos( {'order': pagination[0].species.genus.family.order.id}) }}">{{pagination[0].species.genus.family.order.name}}</a></li>
             <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].species.genus.family.name}} </strong></li>
 
-        {% elseif params.order is defined %}
+        {% elseif (params.order is defined) and (params.order is not empty) %}
 
             <li itemprop="itemListElement"><a href="{{ url_to_photos( {'kingdom': pagination[0].species.genus.family.order.class.phylum.kingdom.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}</a></li>
             <li itemprop="itemListElement"><a href="{{ url_to_photos( {'phylum': pagination[0].species.genus.family.order.class.phylum.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.name}}</a></li>
             <li itemprop="itemListElement"><a href="{{ url_to_photos( {'class': pagination[0].species.genus.family.order.class.id}) }}">{{pagination[0].species.genus.family.order.class.name}}</a></li>
             <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].species.genus.family.order.name}} </strong></li>
 
-        {% elseif params.class is defined %}
+        {% elseif (params.class is defined) and (params.class is not empty) %}
 
             <li itemprop="itemListElement"><a href="{{ url_to_photos( {'kingdom': pagination[0].species.genus.family.order.class.phylum.kingdom.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}</a></li>
             <li itemprop="itemListElement"><a href="{{ url_to_photos( {'phylum': pagination[0].species.genus.family.order.class.phylum.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.name}}</a></li>
             <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].species.genus.family.order.class.name}} </strong></li>
 
-        {% elseif params.phylum is defined %}
+        {% elseif (params.phylum is defined) and (params.phylum is not empty) %}
 
             <li itemprop="itemListElement"><a href="{{ url_to_photos( {'kingdom': pagination[0].species.genus.family.order.class.phylum.kingdom.id}) }}">{{pagination[0].species.genus.family.order.class.phylum.kingdom.name}}</a></li>
             <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].species.genus.family.order.class.phylum.name}} </strong></li>
 
-        {% elseif params.kingdom is defined %}
+        {% elseif (params.kingdom is defined) and (params.kingdom is not empty) %}
 
             <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].species.genus.family.order.class.phylum.kingdom.name}} </strong></li>
 
             <!-- spots-->
-        {% elseif params.spot is defined %}
+        {% elseif (params.spot is defined) and (params.spot is not empty) %}
 
             <li itemprop="itemListElement"><a href="{{ url_to_photos( {'country': pagination[0].spot.location.region.country.id}) }}">{{pagination[0].spot.location.region.country}}</a></li>
             <li itemprop="itemListElement"><a href="{{ url_to_photos( {'region': pagination[0].spot.location.region.id}) }}">{{pagination[0].spot.location.region.name}}</a></li>
             <li itemprop="itemListElement"><a href="{{ url_to_photos( {'location': pagination[0].spot.location.id}) }}">{{pagination[0].spot.location.name}}</a></li>
             <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].spot.name}} </strong></li>
 
-        {% elseif params.location is defined %}
+        {% elseif (params.location is defined) and (params.location is not empty) %}
 
             <li itemprop="itemListElement"><a href="{{ url_to_photos( {'country': pagination[0].spot.location.region.country.id}) }}">{{pagination[0].spot.location.region.country}}</a></li>
             <li itemprop="itemListElement"><a href="{{ url_to_photos( {'region': pagination[0].spot.location.region.id}) }}">{{pagination[0].spot.location.region.name}}</a></li>
             <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].spot.location.name}} </strong></li>
 
-        {% elseif params.region is defined %}
+        {% elseif (params.region is defined) and (params.region is not empty) %}
 
             <li itemprop="itemListElement"><a href="{{ url_to_photos( {'country': pagination[0].spot.location.region.country.id}) }}">{{pagination[0].spot.location.region.country}}</a></li>
             <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].spot.location.region.name}} </strong></li>
 
-        {% elseif params.country is defined %}
+        {% elseif (params.country is defined) and (params.country is not empty) %}
             <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].spot.location.region.country}} </strong></li>
 
             <!-- fosUser -->
-        {% elseif params.fosUser is defined %}
+        {% elseif (params.fosUser is defined) and (params.fosUser is not empty) %}
 
             <li itemprop="itemListElement" class="active"><strong>{{ pagination[0].fosUser}} </strong></li>
 
@@ -333,8 +350,11 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('bundles/skaphandrusapp/js/jquery-ui-1.10.4.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusapp/js/hack/autocompleter-jqueryui.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/isotope.pkgd.min.js') }}"></script>
     <script src="{{ asset('bundles/skaphandrusapp/js/imagesloaded.pkgd.min.js') }}"></script>
+
     <script type="text/javascript">
 
         var $grid = $('.gallery').imagesLoaded(function () {
@@ -346,6 +366,50 @@
             });
         });
 
+        function clearFields() {
+            var fosUser = document.forms["skaphandrus_filter_gallery"]["fakeskaphandrus_filter_gallery[fosUser]"].value;
+            var location = document.forms["skaphandrus_filter_gallery"]["fakeskaphandrus_filter_gallery[location]"].value;
+            var region = document.forms["skaphandrus_filter_gallery"]["fakeskaphandrus_filter_gallery[region]"].value;
+            var species = document.forms["skaphandrus_filter_gallery"]["fakeskaphandrus_filter_gallery[species]"].value;
+            var genus = document.forms["skaphandrus_filter_gallery"]["fakeskaphandrus_filter_gallery[genus]"].value;
+            var family = document.forms["skaphandrus_filter_gallery"]["fakeskaphandrus_filter_gallery[family]"].value;
+            var order = document.forms["skaphandrus_filter_gallery"]["fakeskaphandrus_filter_gallery[order]"].value;
+            var classField = document.forms["skaphandrus_filter_gallery"]["fakeskaphandrus_filter_gallery[class]"].value;
+            var phylum = document.forms["skaphandrus_filter_gallery"]["fakeskaphandrus_filter_gallery[phylum]"].value;
+            var kingdom = document.forms["skaphandrus_filter_gallery"]["fakeskaphandrus_filter_gallery[kingdom]"].value;
+
+            if (fosUser.length == 0) {
+                document.forms["skaphandrus_filter_gallery"]["skaphandrus_filter_gallery[fosUser]"].value = "";
+            }
+            if (location.length == 0) {
+                document.forms["skaphandrus_filter_gallery"]["skaphandrus_filter_gallery[location]"].value = "";
+            }
+            if (region.length == 0) {
+                document.forms["skaphandrus_filter_gallery"]["skaphandrus_filter_gallery[region]"].value = "";
+            }
+            if (species.length == 0) {
+                document.forms["skaphandrus_filter_gallery"]["skaphandrus_filter_gallery[species]"].value = "";
+            }
+            if (genus.length == 0) {
+                document.forms["skaphandrus_filter_gallery"]["skaphandrus_filter_gallery[genus]"].value = "";
+            }
+            if (family.length == 0) {
+                document.forms["skaphandrus_filter_gallery"]["skaphandrus_filter_gallery[family]"].value = "";
+            }
+            if (order.length == 0) {
+                document.forms["skaphandrus_filter_gallery"]["skaphandrus_filter_gallery[order]"].value = "";
+            }
+            if (classField.length == 0) {
+                document.forms["skaphandrus_filter_gallery"]["skaphandrus_filter_gallery[class]"].value = "";
+            }
+            if (phylum.length == 0) {
+                document.forms["skaphandrus_filter_gallery"]["skaphandrus_filter_gallery[phylum]"].value = "";
+            }
+            if (kingdom.length == 0) {
+                document.forms["skaphandrus_filter_gallery"]["skaphandrus_filter_gallery[kingdom]"].value = "";
+            }
+        }
+
     </script>
 
 {% endblock %}
@@ -353,9 +417,16 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {#    <style type="text/css">
-            .grid-item-gallery{width: 25%}
-        </style>#}
+    <link href="https://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet" />
+    <link href="{{ asset('bundles/skaphandrusapp/css/plugins/jQueryUI/jquery-ui-1.10.4.custom.min.css') }}" rel="stylesheet">
+    <style type="text/css">
+        .ui-autocomplete-loading {
+            background: white url("http://jqueryui.com/resources/demos/autocomplete/images/ui-anim_basic_16x16.gif") right center no-repeat;
+        }
+    </style>
+    {#<style type="text/css">
+        .grid-item-gallery{width: 25%}
+    </style>#}
 {% endblock %}
 
 
@@ -365,42 +436,70 @@
     <div class="wrapper wrapper-content" itemscope itemtype="http://schema.org/ImageGallery">
         <div class="container">
 
-            {#-----h1 title-----#}
-            {% if params.species is defined %}
-                <h1>{% trans with {'%type%': "page.photos.keyword.species"|trans, '%value%': pagination[0].species.name} %} page.photos.h1.title {% endtrans %}</h1>
-            {% elseif params.genus is defined %}
-                <h1>{% trans with {'%type%': "page.photos.keyword.genus"|trans, '%value%': pagination[0].species.genus.name} %} page.photos.h1.title {% endtrans %}</h1>
-            {% elseif params.family is defined %}
-                <h1>{% trans with {'%type%': "page.photos.keyword.family"|trans, '%value%': pagination[0].species.genus.family.name} %} page.photos.h1.title {% endtrans %}</h1>
-            {% elseif params.order is defined %}
-                <h1>{% trans with {'%type%': "page.photos.keyword.order"|trans, '%value%': pagination[0].species.genus.family.order.name} %} page.photos.h1.title {% endtrans %}</h1>
-            {% elseif params.class is defined %}
-                <h1>{% trans with {'%type%': "page.photos.keyword.class"|trans, '%value%': pagination[0].species.genus.family.order.class.name} %} page.photos.h1.title {% endtrans %}</h1>
-            {% elseif params.phylum is defined %}
-                <h1>{% trans with {'%type%': "page.photos.keyword.phylum"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.name} %} page.photos.h1.title {% endtrans %}</h1>
-            {% elseif params.kingdom is defined %}
-                <h1>{% trans with {'%type%': "page.photos.keyword.kingdom"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.kingdom.name} %} page.photos.h1.title {% endtrans %}</h1>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            {#-----h1 title-----#}
+                            {% if (params.vernacular is defined) and (params.vernacular is not empty) %}
+                                <h1>{% trans with {'%type%': "page.photos.keyword.vernacular"|trans, '%value%': params.vernacular} %} page.photos.h1.title {% endtrans %}</h1>
+                            {% elseif (params.species is defined) and (params.species is not empty) %}
+                                <h1>{% trans with {'%type%': "page.photos.keyword.species"|trans, '%value%': pagination[0].species.name} %} page.photos.h1.title {% endtrans %}</h1>
+                            {% elseif (params.genus is defined) and (params.genus is not empty) %}
+                                <h1>{% trans with {'%type%': "page.photos.keyword.genus"|trans, '%value%': pagination[0].species.genus.name} %} page.photos.h1.title {% endtrans %}</h1>
+                            {% elseif (params.family is defined) and (params.family is not empty) %}
+                                <h1>{% trans with {'%type%': "page.photos.keyword.family"|trans, '%value%': pagination[0].species.genus.family.name} %} page.photos.h1.title {% endtrans %}</h1>
+                            {% elseif (params.order is defined) and (params.order is not empty) %}
+                                <h1>{% trans with {'%type%': "page.photos.keyword.order"|trans, '%value%': pagination[0].species.genus.family.order.name} %} page.photos.h1.title {% endtrans %}</h1>
+                            {% elseif (params.class is defined) and (params.class is not empty) %}
+                                <h1>{% trans with {'%type%': "page.photos.keyword.class"|trans, '%value%': pagination[0].species.genus.family.order.class.name} %} page.photos.h1.title {% endtrans %}</h1>
+                            {% elseif (params.phylum is defined) and (params.phylum is not empty) %}
+                                <h1>{% trans with {'%type%': "page.photos.keyword.phylum"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.name} %} page.photos.h1.title {% endtrans %}</h1>
+                            {% elseif (params.kingdom is defined) and (params.kingdom is not empty) %}
+                                <h1>{% trans with {'%type%': "page.photos.keyword.kingdom"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.kingdom.name} %} page.photos.h1.title {% endtrans %}</h1>
 
-                {#-----spots-----#}
-            {% elseif params.spot is defined %}
-                <h1>{% trans with {'%type%': "page.photos.keyword.spot"|trans, '%value%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.h1.title {% endtrans %}</h1>
-            {% elseif params.location is defined %}
-                <h1>{% trans with {'%type%': "page.photos.keyword.location"|trans, '%value%': pagination[0].spot.location.name~", "~pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.h1.title {% endtrans %}</h1>
-            {% elseif params.region is defined %}
-                <h1>{% trans with {'%type%': "page.photos.keyword.region"|trans, '%value%': pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.h1.title {% endtrans %}</h1>  
-            {% elseif params.country is defined %}
-                <h1>{% trans with {'%type%': "page.photos.keyword.country"|trans, '%value%': pagination[0].spot.location.region.country} %} page.photos.h1.title {% endtrans %}</h1>
+                                {#-----spots-----#}
+                            {% elseif (params.spot is defined) and (params.spot is not empty) %}
+                                <h1>{% trans with {'%type%': "page.photos.keyword.spot"|trans, '%value%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.h1.title {% endtrans %}</h1>
+                            {% elseif (params.location is defined) and (params.location is not empty) %}
+                                <h1>{% trans with {'%type%': "page.photos.keyword.location"|trans, '%value%': pagination[0].spot.location.name~", "~pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.h1.title {% endtrans %}</h1>
+                            {% elseif (params.region is defined) and (params.region is not empty) %}
+                                <h1>{% trans with {'%type%': "page.photos.keyword.region"|trans, '%value%': pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.h1.title {% endtrans %}</h1>  
+                            {% elseif (params.country is defined) and (params.country is not empty) %}
+                                <h1>{% trans with {'%type%': "page.photos.keyword.country"|trans, '%value%': pagination[0].spot.location.region.country} %} page.photos.h1.title {% endtrans %}</h1>
 
-                {#-----fosuser-----#}
-            {% elseif params.fosUser is defined %}
-                <h1>{% trans with {'%type%': "page.photos.keyword.fosUser"|trans, '%value%': pagination[0].fosUser} %} page.photos.h1.title {% endtrans %}</h1>
+                                {#-----fosuser-----#}
+                            {% elseif (params.fosUser is defined) and (params.fosUser is not empty) %}
+                                <h1>{% trans with {'%type%': "page.photos.keyword.fosUser"|trans, '%value%': pagination[0].fosUser} %} page.photos.h1.title {% endtrans %}</h1>
 
-                {#-----someting else-----#}
-            {% else %}
-                <h1>{{ "page.photos_something_else.h1.title"|trans }}</h1>
-            {% endif %}
+                                {#-----someting else-----#}
+                            {% else %}
+                                <h1>{{ "page.photos_something_else.h1.title"|trans }}</h1>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox" id="home_box">
+                        <div class="ibox-title">
+                            <h5>Form</h5>
+                            <div class="ibox-tools">
+                                {{ knp_pagination_sortable(pagination, 'page.photos.button.better_validated'|trans, 'p.validatedRating', {direction: 'desc'}) }}
+                                {{ knp_pagination_sortable(pagination, 'page.photos.button.id_desc'|trans, 'p.id', {direction: 'desc'}) }}
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            {% include 'SkaphandrusAppBundle:Common:formFilterGallery.html.twig' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="row gallery">
                 {% for photo in pagination %}
@@ -437,10 +536,9 @@
                             </div>
                         </div>
                     </div>
-
                 {% endfor %}
-
             </div>
+
             <div class="navigation">
                 {{ knp_pagination_render(pagination) }}
             </div>
