@@ -68,7 +68,7 @@
                 <div class="col-md-8">
 
                     <!-- Open Contest start -->
-                    {% if contestInProgress %}
+                    {% if contestsInProgress %}
                         <div class="row" >
                             <div class="col col-lg-12" >
                                 <div class="ibox">
@@ -79,7 +79,7 @@
                                     <div class="row">
                                         <div class="col col-lg-12">
                                             <div class="ibox-content" >
-                                                {% for contest in contestInProgress %}
+                                                {% for contest in contestsInProgress %}
                                                     <div class="row">
                                                         <div class="col-sm-4">
                                                             <a href="{{ url_to_contest(contest) }}">
@@ -146,7 +146,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col col-lg-12">
-                                        {% for contest in contestEnded %}
+                                        {% for contest in contestsEnded %}
                                             <div class="ibox-content" >
                                                 <div class="row">
                                                     <div class="col-md-4">

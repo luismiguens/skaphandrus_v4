@@ -11,8 +11,8 @@ class ContestController extends Controller {
 
     public function landingAction() {
 
-        $contestInProgress = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
-                ->findContestInProgress();
+        $contestsInProgress = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
+                ->findContestsInProgress();
 
         $fos_user_id = 0;
 
@@ -23,16 +23,16 @@ class ContestController extends Controller {
         endif;
 
 
-        foreach ($contestInProgress as $contest) {
+        foreach ($contestsInProgress as $contest) {
             $contest->setIsJudge($this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->isFosUserJudgeInContest($fos_user_id, $contest->getId()));
         }
 
 
-        $contestEnded = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
+        $contestsEnded = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
                 ->findContestEnded();
 
 
-        foreach ($contestEnded as $contest) {
+        foreach ($contestsEnded as $contest) {
             $contest->setIsJudge($this->getDoctrine()->getRepository('SkaphandrusAppBundle:FosUser')->isFosUserJudgeInContest($fos_user_id, $contest->getId()));
         }
 
@@ -47,8 +47,8 @@ class ContestController extends Controller {
 //        }
 
         return $this->render('SkaphandrusAppBundle:Contest:landing.html.twig', array(
-                    'contestInProgress' => $contestInProgress,
-                    'contestEnded' => $contestEnded
+                    'contestsInProgress' => $contestsInProgress,
+                    'contestsEnded' => $contestsEnded
         ));
     }
 
