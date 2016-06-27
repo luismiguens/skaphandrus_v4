@@ -2,10 +2,14 @@
 
 {#-----title-----#}
 {% set title = "" %}
+{% set content = "" %}
+{% set sort = "" %}
+
+
 
 {#-----fosuser-----#}
 {% if (params.fosUser is defined) and (params.fosUser is not empty) %}
-{% set title %}{% trans with {'%type%': "page.photos.keyword.fosUser"|trans, '%value%': pagination[0].fosUser} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
+    {% set content %}{% trans with { '%user%': pagination[0].fosUser} %} page.photos.keyword.fosUser {% endtrans %}{% endset %}
 {% endif %}
 
 {#-----spots-----#}
@@ -42,8 +46,14 @@
 {% set title %}{% trans with {'%type%': "page.photos.keyword.kingdom"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.kingdom.name} %} page.photos.meta_tag.title {% endtrans %}{% endset %}
 {% endif %}
 
+
+    {% set title %}{% trans with {'%sort%': sort , '%content%': content } %} page.photos.meta_tag.title {% endtrans %}{% endset %}
+
 {#-----someting else-----#}
 {% if title is empty %}
+    
+
+    
     {% set title = ("page.photos_something_else.meta_tag.title"|trans) %}
 {% endif %}
 
