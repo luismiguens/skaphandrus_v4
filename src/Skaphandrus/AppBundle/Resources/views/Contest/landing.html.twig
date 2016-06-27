@@ -52,6 +52,18 @@
 
     <div class="wrapper wrapper-content">
         <div class="container">
+
+            <div class="ibox">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>{{ "page.contests.meta_tag.title"|trans }}</h1>
+                            <p>{{ "page.contests.p.title"|trans }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-md-8">
 
@@ -62,6 +74,7 @@
                                 <div class="ibox">
                                     <div class="ibox-title" >
                                         <h2>{{ "page.contests.h2.open_contests"|trans }}</h2>
+                                        <p>{{ "page.contests.p.open_contests"|trans }}</p>
                                     </div>
                                     <div class="row">
                                         <div class="col col-lg-12">
@@ -129,6 +142,7 @@
                             <div class="ibox">
                                 <div class="ibox-title" >
                                     <h2>{{ "page.contests.h2.previous_contests"|trans }}</h2>
+                                    <p>{{ "page.contests.p.previous_contests"|trans }}</p>
                                 </div>
                                 <div class="row">
                                     <div class="col col-lg-12">
@@ -174,7 +188,8 @@
                                                 <!-- BEGIN - winner photos -->
                                                 <div class="row">
                                                     <div class="col-lg-10 col-lg-offset-1">
-                                                        <h3>{{"page.landing.h3.winner_photo_contest"|trans}}</h3>
+                                                        <h3>{% trans with {'%contest%': contest.name} %}page.landing.h3.winner_photo_contest{% endtrans %}</h3>
+                                                        <p>{% trans with {'%contest%': contest.name} %}page.landing.p.winner_photo_contest{% endtrans %}</p>
                                                         <div class="ibox">
                                                             <div class="lista_slides_concurso">
                                                                 {% for category in contest.categories %}

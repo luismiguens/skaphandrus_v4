@@ -1,8 +1,42 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block page_title %}{% trans with {'%business%': business.name|title, '%location%': business.address.location, '%country%': business.address.location.region.country} %}page.business.meta_tag.title{% endtrans %}{% endblock %}
+{% set title = "" %}
+{% set auxType = [] %}
 
-{% block page_description %}{% trans with {'%business%': business.name|title, '%location%': business.address.location, '%country%': business.address.location.region.country} %}page.business.meta_tag.description{% endtrans %}{% endblock %}
+
+{% for type in business.type %}
+
+    {#se o tipo for dive center#} 
+    {% if type.name == "Dive Center" %}
+
+        {#adicionar ao array o tipo dive center #}
+        {% set auxType = auxType|merge([type]) %}
+
+    {% set title %}{% trans with {'%business%': business.name|title, '%business_type%': auxType|join(', '), '%location%': business.address.location, '%country%': business.address.location.region.country} %}page.business.meta_tag.title{% endtrans %}{% endset %}
+
+    {#se o tipo for dive school#} 
+{% elseif type.name == "Dive School" %}
+
+    {#adicionar ao array o tipo dive school #}
+    {% set auxType = auxType|merge([type]) %}
+
+{% set title %}{% trans with {'%business%': business.name|title, '%business_type%': auxType|join(', '), '%location%': business.address.location, '%country%': business.address.location.region.country} %}page.business.meta_tag.title{% endtrans %}{% endset %}
+
+{#se o tipo nao for nenhum dos acima ou mais do que 3 contando com os de cima#} 
+{% else %}
+
+    {# os mesmos sao adicionados ao array mas depois so mostra o primeiro #}
+    {% set auxType = auxType|merge([type]) %}
+
+{% set title %}{% trans with {'%business%': business.name|title, '%business_type%': auxType|slice(0, 1)|join(', '), '%location%': business.address.location, '%country%': business.address.location.region.country} %}page.business.meta_tag.title{% endtrans %}{% endset %}
+
+{% endif %}
+{% endfor %}
+
+{% block page_title %}{{title}}{% endblock %}
+
+
+{% block page_description %}{% trans with {'%business%': business.name|title} %}page.business.meta_tag.description{% endtrans %}{% endblock %}
 
 {% block hreflang %}
     <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('business', {'country':slugify(business.address.location.region.country.getCountryName('pt')), 'location':slugify(business.address.location.translate('pt').name), 'slug':slugify(business.name), 'locale': 'pt'}) }}" />
@@ -180,7 +214,7 @@
 {% endblock %}
 
 {% block heading_title %}
-    {{ business.name|title }}
+    {{ title }}
 {% endblock %}
 
 {#{% block heading_breadcrumbs %}
@@ -188,11 +222,9 @@
         <li itemprop="itemListElement"><a href="{{ path('index') }}">{{ "breadcrumb.home"|trans }}</a></li>
         <li itemprop="itemListElement" class="active"><strong>{{ business.name|title }}</strong></li>
     </ol>
-{% endblock %}
-#}
+{% endblock %}#}
 
 {% block heading_breadcrumbs %}{% endblock %}
-
 
 
 {% block body %}
@@ -209,7 +241,7 @@
                         </div>
                         <div class="profile-info">
                             <div>
-                                <h2 class="no-margins" itemprop="name">{{ business.name }}</h2>
+                                <h1 class="no-margins" itemprop="name">{{ business.name }}</h1>
                                 <h4>{{ business.address.location }}, {{ business.address.location.region.country }}</h4>
                                 <a class="btn btn-sm btn-primary" href="{{ path('booking_admin_new', {'business_id': business.id}) }}" >{{ "page.business.button.book_now"|trans }}</a>
                             </div>
@@ -241,16 +273,17 @@
 
                     <div class="col-md-4">
 
-                        <!-- BEGIN - row about -->
+                        <!-- BEGIN - row address e contact -->
                         <div class="ibox">
                             <div class="ibox-content">
-                                {% if business.about|length > 0 %}
-                                    <h3>{{ "page.business.h4.about"|trans }}</h3>
-                                    <div class="ibox">
-                                        <p class="small"> {{ business.about|raw }} </p>
-                                    </div>
-                                {% endif %}
                                 <div class="ibox">
+                                    {#{% if business.about|length > 0 %}
+                                        <h3>{{ "page.business.h4.about"|trans }}</h3>
+                                        <div class="ibox">
+                                            <p class="small"> {{ business.about|raw }} </p>
+                                        </div>
+                                    {% endif %}#}
+
                                     <h4>{{ "page.business.h4.address"|trans }}</h4>
                                     <dl>
                                         {% if business.address.street %}
@@ -285,7 +318,9 @@
                                         {{ google_map(map) }}
                                     {% endif %}
 
-                                    {#<h4>{{ "page.business.h4.contact"|trans }}</h4>
+                                    <br/>
+
+                                    <h4>{{ "page.business.h4.contact"|trans }}</h4>
                                     <dl>
                                         {% if business.contact.email %}
                                             <dt>{{ "page.business.h5.contact_email"|trans }}:</dt>
@@ -319,19 +354,20 @@
                                             <dd>
                                                 <a href="#" class="text-navy">{{ business.contact.homepage }}</a>
                                             </dd>
-                                        {% endif %}#}
+                                        {% endif %}
                                     </dl>
                                 </div>
                                 {#<div class="btn btn-primary btn-block">Send mail ???</div>#}
                             </div>
                         </div>
-                        <!-- END - row about -->
+                        <!-- END - row address e contact -->
 
                         <!-- BEGIN - row type, currency, languages -->
                         <div class="ibox">
                             <div class="ibox-content">
                                 <div class="m-b-md">
-                                    <h4>{{ "page.business.h4.type"|trans }}</h4>
+                                    <h3>{{ "page.business.h3.type"|trans }}</h3>
+                                    <p>{% trans with {'%business%': business.name} %}page.business.p.type{% endtrans %}</p>
                                     {% if business.type|length > 0 %}
                                         <div>
                                             {% for type in business.type %}
@@ -339,11 +375,12 @@
                                             {% endfor %}
                                         </div>
                                     {% else %}
-                                        {{ "page.business.h4.no_type"|trans }}
+                                        {{ "page.business.p.no_type"|trans }}
                                     {% endif %}
                                 </div>
                                 <div class="m-b-md">
-                                    <h4>{{ "page.business.h4.currency"|trans }}</h4>
+                                    <h3>{{ "page.business.h3.currency"|trans }}</h3>
+                                    <p>{% trans with {'%business%': business.name} %}page.business.p.currency{% endtrans %}</p>
                                     {% if business.currency|length > 0 %}
                                         <div>
                                             {% for currency in business.currency %}
@@ -351,11 +388,12 @@
                                             {% endfor %}
                                         </div>
                                     {% else %}
-                                        {{ "page.business.h4.no_currency"|trans }}
+                                        {{ "page.business.p.no_currency"|trans }}
                                     {% endif %}
                                 </div>
                                 <div class="m-b-md">
-                                    <h4>{{ "page.business.h4.language"|trans }}</h4>
+                                    <h3>{{ "page.business.h3.language"|trans }}</h3>
+                                    <p>{% trans with {'%business%': business.name} %}page.business.p.language{% endtrans %}</p>
                                     {% if business.language|length > 0 %}
                                         <div>
                                             {% for language in business.language %}
@@ -363,11 +401,12 @@
                                             {% endfor %}
                                         </div>
                                     {% else %}
-                                        {{ "page.business.h4.no_language"|trans }}
+                                        {{ "page.business.p.no_language"|trans }}
                                     {% endif %}
                                 </div>
                                 <div class="m-b-md">
-                                    <h4>{{ "page.business.h4.other_activity"|trans }}</h4>
+                                    <h3>{{ "page.business.h3.other_activity"|trans }}</h3>
+                                    <p>{% trans with {'%business%': business.name} %}page.business.p.other_activity{% endtrans %}</p>
                                     {% if business.otherActivity|length > 0 %}
                                         <div>
                                             {% for activity in business.otherActivity %}
@@ -375,7 +414,7 @@
                                             {% endfor %}
                                         </div>
                                     {% else %}
-                                        {{ "page.business.h4.no_other_activity"|trans }}
+                                        {{ "page.business.p.no_other_activity"|trans }}
                                     {% endif %}
                                 </div>
                             </div>
@@ -390,18 +429,22 @@
                         {% if business.description %}
                             <div class="ibox">
                                 <div class="ibox-content">
-                                    <h3>{{ "page.business.h4.description"|trans }}</h3>
                                     <div class="m-b-md">
-                                        <div id="readMore">                                
+                                        <div id="readMore">  
+                                            {% if business.about|length > 0 %}
+                                                <h2>{{ "page.business.h2.about"|trans }}</h2>
+                                                <p> {{ business.about|raw }} </p>
+                                            {% endif %}
                                             {% if business.description %}
+                                                <h2>{{ "page.business.h2.description"|trans }}</h2>
                                                 <p itemprop="description">{{ business.description|raw }}</p>
                                             {% endif %}
                                             {% if business.mission %}
-                                                <h4>{{ "page.business.h4.mission"|trans }}</h4>
+                                                <h2>{{ "page.business.h2.mission"|trans }}</h2>
                                                 <p>{{ business.mission|raw }}</p>
                                             {% endif %}
                                             {% if business.awards %}
-                                                <h4>{{ "page.business.h4.awards"|trans }}</h4>
+                                                <h2>{{ "page.business.h2.awards"|trans }}</h2>
                                                 <p itemprop="awards">{{ business.awards|raw }}</p>
                                             {% endif %}
                                         </div>
@@ -411,9 +454,9 @@
                         {% else %}
                             <div class="ibox">
                                 <div class="ibox-content">
-                                    <h3>{{ "page.business.h4.description"|trans }}</h3>
+                                    <h2>{{ "page.business.h2.description"|trans }}</h2>
                                     <div class="m-b-md">
-                                        {{ "page.business.h4.no_description"|trans }}
+                                        {{ "page.business.p.no_description"|trans }}
                                     </div>
                                 </div>
                             </div>
@@ -434,19 +477,21 @@
                                         <div class="panel-body">
                                             <div class="ibox">
 
-                                                <h3>{% trans with {'%business%': business.name} %}page.business.h3.dive{% endtrans %}</h3>
+                                                <h2>{% trans with {'%business%': business.name} %}page.business.h2.dive{% endtrans %}</h2>
                                                 <br/>
 
                                                 <!-- BEGIN - row spots -->
                                                 {% if mapSpot %}
-                                                    <h4>{{ "page.business.h4.map"|trans }}</h4>
+                                                    <h3>{% trans with {'%business%': business.name} %}page.business.h3.map{% endtrans %}</h3>
+                                                    <p>{% trans with {'%business%': business.name} %}page.business.p.map{% endtrans %}</p>
                                                     {{ google_map(mapSpot) }}
                                                 {% endif %}
                                                 <br/>
 
                                                 <!-- Dive Spots -->
                                                 {% if business.spot|length > 0 %}
-                                                    <h4>{{ "page.business.h4.dive_spot"|trans }}</h4>
+                                                    <h3>{% trans with {'%business%': business.name} %}page.business.h3.dive_spot{% endtrans %}</h3>
+                                                    <p>{% trans with {'%business%': business.name} %}page.business.p.dive_spot{% endtrans %}</p>
                                                     <div class="row">
                                                         {% for spot in business.spot %}
                                                             <div class="col-md-6 col-sm-6 col-xs-6">
@@ -459,46 +504,14 @@
                                                         {% endfor %}
                                                     </div>
                                                 {% endif %}
-                                                <br/>
 
-                                                <h4>{% trans with {'%business%': business.name|title} %}page.business.h4.spots{% endtrans %}</h4>
-                                                <div id="box_spots"></div>
-
-                                                <div class="row" >
-                                                    <div class="col-sm-6 col-sx-12">
-                                                        <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_spots">{{ "page.profile.button.show_more_spots"|trans }}</button>
-                                                    </div>
-                                                    <div class="col-sm-6 col-sx-12">
-                                                        <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#spotModal">{{ "page.profile.button.see_all_spots"|trans }}</button>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Spots Modal start -->
-                                                <div class="modal fade" id="spotModal" style="margin-top: 30px" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                                    <div class="modal-dialog modal-lg" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                <h4 class="modal-title" id="myModalLabel">{% trans with {'%business%': business.name|title} %}page.business.h4.spots{% endtrans %}</h4>
-                                                            </div>
-                                                            <div class="modal-body">
-
-                                                                <div id="spotInput"></div>
-
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- Spots Modal end -->
                                                 <!-- END - row spots  -->
                                                 <br/>
 
                                                 <!-- BEGIN - row dive pack  -->
                                                 {% if business.divePrice %}
-                                                    <h4>{{ "page.business.h4.dive_price"|trans }}</h4>
+                                                    <h3>{% trans with {'%business%': business.name} %}page.business.h3.dive_price{% endtrans %}</h3>
+                                                    <p>{% trans with {'%business%': business.name} %}page.business.p.dive_price{% endtrans %}</p>
                                                     <div class="row">
                                                         {% for pack in business.divePrice %}
                                                             <div class="col-md-3 col-sm-4 col-xs-6">
@@ -564,7 +577,8 @@
 
                                                 <!-- BEGIN - row rentEquipment  -->
                                                 {% if business.rentEquipment %}
-                                                    <h4>{{ "page.business.h4.rent_equipment"|trans }}</h4>
+                                                    <h3>{% trans with {'%business%': business.name} %}page.business.h3.rent_equipment{% endtrans %}</h3>
+                                                    <p>{% trans with {'%business%': business.name} %}page.business.p.rent_equipment{% endtrans %}</p>
                                                     <table class="table table-striped">
                                                         <thead>
                                                             <tr>
@@ -590,7 +604,8 @@
                                                 <!-- BEGIN - row extra informations  -->
                                                 <!-- Dive Access -->
                                                 {% if business.diveAccess %}
-                                                    <h4>{{ "page.business.h4.dive_access"|trans }}</h4>
+                                                    <h3>{% trans with {'%business%': business.name} %}page.business.h3.dive_access{% endtrans %}</h3>
+                                                    <p>{% trans with {'%business%': business.name} %}page.business.p.dive_access{% endtrans %}</p>
                                                     <table class="table">
                                                         <tbody>
                                                             <tr>
@@ -700,7 +715,8 @@
 
                                                 <!-- Gas -->
                                                 {% if business.gas %}
-                                                    <h4>{{ "page.business.h4.gas"|trans }}</h4>
+                                                    <h3>{% trans with {'%business%': business.name} %}page.business.h3.gas{% endtrans %}</h3>
+                                                    <p>{% trans with {'%business%': business.name} %}page.business.p.gas{% endtrans %}</p>
                                                     <table class="table">
                                                         <tbody>
                                                             <tr>
@@ -740,7 +756,8 @@
 
                                                 <!-- Safety -->
                                                 {% if business.safety %}
-                                                    <h4>{{ "page.business.h4.safety"|trans }}</h4>
+                                                    <h3>{% trans with {'%business%': business.name} %}page.business.h3.safety{% endtrans %}</h3>
+                                                    <p>{% trans with {'%business%': business.name} %}page.business.p.safety{% endtrans %}</p>
                                                     <table class="table">
                                                         <tbody>
                                                             <tr>
@@ -787,12 +804,13 @@
                                         <div class="panel-body">
                                             <div class="ibox">
 
-                                                <h3>{% trans with {'%business%': business.name} %}page.business.h3.education{% endtrans %}</h3>
+                                                <h2>{% trans with {'%business%': business.name} %}page.business.h2.education{% endtrans %}</h2>
                                                 <br/>
 
                                                 <!-- Education Counditions -->
                                                 {% if business.educationConditions %}
-                                                    <h4>{{ "page.business.h4.education_counditions"|trans }}</h4>
+                                                    <h3>{% trans with {'%business%': business.name} %}page.business.h3.education_counditions{% endtrans %}</h3>
+                                                    <p>{% trans with {'%business%': business.name} %}page.business.p.education_counditions{% endtrans %}</p>
                                                     <table class="table">
                                                         <tbody>
                                                             <tr>
@@ -845,7 +863,8 @@
 
                                                 <!-- Education Course -->
                                                 {% if business.educationCourse %}
-                                                    <h4>{{ "page.business.h4.education_course"|trans }}</h4>
+                                                    <h3>{% trans with {'%business%': business.name} %}page.business.h3.education_course{% endtrans %}</h3>
+                                                    <p>{% trans with {'%business%': business.name} %}page.business.p.education_course{% endtrans %}</p>
                                                     <table class="table table-striped">
                                                         <thead>
                                                             <tr>
@@ -872,11 +891,50 @@
                                         <div class="panel-body">
                                             <div class="ibox">
 
-                                                <h3>{% trans with {'%business%': business.name} %}page.business.h3.activity{% endtrans %}</h3>
+                                                <h2>{% trans with {'%business%': business.name} %}page.business.h2.activity{% endtrans %}</h2>
+                                                <br/>
+
+                                                <!-- BEGIN - Spots -->
+                                                <h3>{% trans with {'%business%': business.name} %}page.business.h3.spots{% endtrans %}</h3>
+                                                <p>{% trans with {'%business%': business.name} %}page.business.p.spots{% endtrans %}</p>
+
+                                                <div id="box_spots"></div>
+
+                                                <div class="row" >
+                                                    <div class="col-sm-6 col-sx-12">
+                                                        <button type="button" class="btn btn-outline btn-primary btn-block" id="show_more_spots">{{ "page.profile.button.show_more_spots"|trans }}</button>
+                                                    </div>
+                                                    <div class="col-sm-6 col-sx-12">
+                                                        <button type="button" class="btn btn-outline btn-default btn-block" data-toggle="modal" data-target="#spotModal">{{ "page.profile.button.see_all_spots"|trans }}</button>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Spots Modal start -->
+                                                <div class="modal fade" id="spotModal" style="margin-top: 30px" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel">{% trans with {'%business%': business.name|title} %}page.business.h4.spots{% endtrans %}</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+
+                                                                <div id="spotInput"></div>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Spots Modal end -->
+                                                <!-- END - Spots -->
                                                 <br/>
 
                                                 <!-- BEGIN - Species -->
-                                                <h4>{% trans with {'%business%': business.name|title} %}page.business.h4.species{% endtrans %}</h4>
+                                                <h3>{% trans with {'%business%': business.name} %}page.business.h3.species{% endtrans %}</h3>
+                                                <p>{% trans with {'%business%': business.name} %}page.business.p.species{% endtrans %}</p>
 
                                                 <div id="box_species"></div>
 
@@ -913,7 +971,8 @@
                                                 <br/>
 
                                                 <!-- BEGIN - Photographers -->
-                                                <h4>{% trans with {'%business%': business.name|title} %}page.business.h4.photographers{% endtrans %}</h4>
+                                                <h3>{% trans with {'%business%': business.name} %}page.business.h3.photographers{% endtrans %}</h3>
+                                                <p>{% trans with {'%business%': business.name} %}page.business.p.photographers{% endtrans %}</p>
 
                                                 <div id="box_photographers"></div>
 

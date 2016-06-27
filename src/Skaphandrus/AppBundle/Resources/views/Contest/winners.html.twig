@@ -1,8 +1,12 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block page_title %}{% trans with {'%contest%': contest.name} %}page.contest_winners.meta_tag.title{% endtrans %}{% endblock %}
+{#{% block page_title %}{% trans with {'%contest%': contest.name} %}page.contest_winners.meta_tag.title{% endtrans %}{% endblock %}#}
 
-{% block page_description %}{% trans with {'%contest%': contest.name} %}page.contest_winners.meta_tag.description{% endtrans %}{% endblock %}
+{% block page_title %}{% trans with {'%contest%': contest.name} %}page.contest.meta_tag.title{% endtrans %}{% endblock %}
+
+{#{% block page_description %}{% trans with {'%contest%': contest.name} %}page.contest_winners.meta_tag.description{% endtrans %}{% endblock %}#}
+
+{% block page_description %}{% trans with {'%contest%': contest.name, '%description%': contest.translate(app.request.locale).description|raw} %}page.contest.meta_tag.description{% endtrans %}{% endblock %}
 
 {% block hreflang %}
     <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('contests_winners', {'contest_slug': slugify(contest.name), 'locale': 'pt'}) }}" />
@@ -25,7 +29,8 @@
 {% block page_keywords %}{{keywords}}{% endblock %}
 
 {% block heading_title %}
-    {{ contest.name }} - {{ "page.winners.title.winners"|trans }}
+    {#    {{ contest.name }} - {{ "page.winners.title.winners"|trans }}#}
+    {% trans with {'%contest%': contest.name} %}page.contest.meta_tag.title{% endtrans %}
 {% endblock %}
 
 {% block javascripts %}
@@ -132,7 +137,8 @@
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <div class="m-b-md">
-                                                        <h2>{% trans with {'%contest%': contest.name} %}page.contest_winners.h1.title{% endtrans %}</h2>
+                                                        <h3>{% trans with {'%contest%': contest.name} %}page.contest_winners.h3.title{% endtrans %}</h3>
+                                                        <p>{% trans with {'%contest%': contest.name} %}page.contest_winners.p.title{% endtrans %}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -140,7 +146,9 @@
                                             {% if contest.type == 1 %}
 
                                                 {% if firstPhoto %}
-                                                    <h2>{{ "page.taxomonic_result.h3.first_photo"|trans }}</h2>
+                                                    <h3>{% trans with {'%contest%': contest.name} %}page.taxomonic_result.h3.first_photo{% endtrans %}</h3>
+                                                    <p>{% trans with {'%contest%': contest.name} %}page.taxomonic_result.pfirst_photo{% endtrans %}</p>
+
                                                     <table class="table display table-bordered text-center">
                                                         <thead>
                                                             <tr>
@@ -169,7 +177,9 @@
                                                 {% endif %}
 
                                                 {% if validSpeciesPhotos %}
-                                                    <h2>{{ "page.taxomonic_result.h3.valid_species_photo"|trans }}</h2>
+                                                    <h3>{% trans with {'%contest%': contest.name} %}page.taxomonic_result.h3.valid_species_photo{% endtrans %}</h3>
+                                                    <p>{% trans with {'%contest%': contest.name} %}page.taxomonic_result.p.valid_species_photo{% endtrans %}</p>
+
                                                     <table class="table display table-bordered text-center">
                                                         <thead>
                                                             <tr>
@@ -198,7 +208,9 @@
                                                 {% endif %}
 
                                                 {% if validSpecies %}
-                                                    <h2>{{ "page.taxomonic_result.h3.valid_species"|trans }}</h2>
+                                                    <h3>{% trans with {'%contest%': contest.name} %}page.taxomonic_result.h3.valid_species{% endtrans %}</h3>
+                                                    <p>{% trans with {'%contest%': contest.name} %}page.taxomonic_result.p.valid_species{% endtrans %}</p>
+
                                                     <table class="table display table-bordered text-center">
                                                         <thead>
                                                             <tr>
@@ -231,7 +243,7 @@
                                             <section id="points">
                                                 {% for category in contest.categories %}
                                                     <div class="row">
-                                                        <h2 style="margin-left: 13px">{{category.name}}</h2>
+                                                        <h3 style="margin-left: 13px">{{category.name}}</h3>
                                                         <div class="grid-winners">
                                                             {% for photo in category.winnerPhotos%}
                                                                 <div class="col-lg-4 grid-item-winners thumbnail" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
@@ -268,7 +280,8 @@
                                             </section>
 
                                             <section id="awards">
-                                                <h2>{{ "page.contest.h2.awards"|trans }}</h2>
+                                                <h3>{% trans with {'%contest%': contest.name} %}page.contest_winners.h3.awards{% endtrans %}</h3>
+                                                <p>{% trans with {'%contest%': contest.name} %}page.contest_winners.p.awards{% endtrans %}</p>
 
                                                 <div class="table-responsive">
                                                     <table class="table" cellpadding="0" cellspacing="0" width="100%">
@@ -295,7 +308,6 @@
                                                                             {#<a href="{{ url_to_user(award.winnerFosUser) }}">
                                                                                 <img alt="{{award.winnerFosUser.name}}" class="img-circle" src="{{ award.winnerFosUser.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
                                                                             </a>
-    
                                                                             <a href="{{ url_to_user(award.winnerFosUser) }}">
                                                                                 {{award.winnerFosUser.name}}
                                                                             </a>#}
@@ -311,7 +323,6 @@
                                                                             {#<a href="{{ url_to_user(award.winnerPhoto.fosUser) }}">
                                                                                 <img alt="{{award.winnerPhoto.fosUser.name}}" class="img-circle" src="{{ award.winnerPhoto.fosUser.settings.getWebPath | imagine_filter('sk_thumbnail_outbound_130') }}">
                                                                             </a>
-    
                                                                             <a href="{{ url_to_user(award.winnerPhoto.fosUser) }}">
                                                                                 {{award.winnerPhoto.fosUser.name}}
                                                                             </a>#}

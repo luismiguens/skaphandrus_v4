@@ -1,8 +1,30 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block page_title %}{% trans with {'%title%': photo.title|title, '%taken_by%': photo.fosuser } %}page.photo.meta_tag.title{% endtrans %}{% endblock %}
+{% block page_title %}{% trans with {'%title%': photo.title|title, '%created_at%':photo.takenAt|date('Y-m-d'), '%autor%': photo.fosuser } %}page.photo.meta_tag.title{% endtrans %}{% endblock %}
 
-{% block page_description %}{{ photo.description [0:160] }}{% endblock %}
+{% set auxSpecies = "undetermined" %}
+{% set auxSpot = "undetermined" %}
+{% set auxLocation = "undetermined" %}
+{% set auxCountry = "undetermined" %}
+{% set auxDescricao = "undetermined" %}
+
+{% if photo.species %}
+    {% set auxSpecies = photo.species %}
+{% endif %}
+
+{% if photo.spot %}
+    {% set auxSpot = photo.spot %}
+    {% set auxLocation = photo.spot.location %}
+    {% set auxCountry = photo.spot.location.region.country %}
+{% endif %}
+
+{% if photo.description %}
+    {% set auxDescricao = photo.description[0:160] %}
+{% endif %}
+
+{% set description %}{% trans with {'%species%': auxSpecies, '%spot%':auxSpot, '%location%': auxLocation, '%country%': auxCountry, '%description%': auxDescricao } %}page.photo.meta_tag.description{% endtrans %}{% endset%}
+
+{% block page_description %}{{ description }}{% endblock %}
 
 {% block hreflang %}
     <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('photo_no_slug', {'id':photo.id, 'locale': 'pt'}) }}" />
@@ -52,7 +74,7 @@
     <meta property="og:locale"      content="{{ app.request.locale ~ aux }}"/>
     <meta property="og:url"         content="{{ app.request.getSchemeAndHttpHost() ~ url_to_photo(photo) }}" />
 
-    {% set title = "page.photo.meta_tag.title"|trans({'%title%': photo.title|capitalize, '%taken_by%': photo.fosuser}) %}
+    {% set title = "page.photo.meta_tag.title"|trans({'%title%': photo.title|capitalize, '%created_at%':photo.takenAt|date('Y-m-d'), '%autor%': photo.fosuser}) %}
     {% set title = title|split(',') %}
     {% set title = title[0] %}
 
@@ -177,7 +199,8 @@
 {% endblock %}
 
 {% block heading_title %}
-    {{ photo.title }}
+    {#{{ photo.title }}#}
+    {% trans with {'%title%': photo.title|title, '%created_at%':photo.takenAt|date('Y-m-d'), '%autor%': photo.fosuser } %}page.photo.meta_tag.title{% endtrans %}
 {% endblock %}
 
 {% block heading_breadcrumbs %}
@@ -197,6 +220,16 @@
     <div class="wrapper wrapper-content" itemscope itemtype="http://schema.org/Photograph">
         {#<div class="animated fadeInRight">#}
         <div class="container">
+
+            <div class="ibox">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>{% trans with {'%title%': photo.title|title, '%created_at%':photo.takenAt|date('Y-m-d'), '%autor%': photo.fosuser } %}page.photo.meta_tag.title{% endtrans %}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Imagem a ser vista start -->
             <div class="row">
@@ -223,7 +256,9 @@
                 <div class="col-lg-12">
                     <div class="ibox">
                         <h2 style="margin-left: 15px">{% trans with {'%user%': link_to_user(photo.fosuser) } %}page.photo.p.more_photos{% endtrans %}</h2>
-                        {#                        <div class="slider_similar" align="center">#}
+                        {#para ficar com o aspeto do slider da pagina de uma especie 
+                        descomentar esta linha e comentar a de baixo#}
+                        {#<div class="slider_similar" align="center">#}
                         <div class="variable-width" align="center">
                             {% for p in photosUser %}
                                 <a class="thumbnail" href="{{ path('photo_no_slug',  { 'id': p.id }) }}" title="{{ p.title }}">
@@ -240,11 +275,14 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="ibox">
-                        <div class="ibox-title">
-                            <h5>{{ "page.photo.h5.photo_detail"|trans }}</h5>
-                        </div>
+                        {#<div class="ibox-title">
+                            <h2>{% trans with {'%title%': photo.title } %}page.photo.h2.photo_detail{% endtrans %}</h2>
+                            <p>{% trans with {'%title%': photo.title } %}page.photo.p.photo_detail{% endtrans %}</p>
+                        </div>#}
                         <!-- Imagem detalhes start -->
                         <div class="ibox-content">
+                            <h2>{% trans with {'%title%': photo.title } %}page.photo.h2.photo_detail{% endtrans %}</h2>
+                            <p>{% trans with {'%title%': photo.title } %}page.photo.p.photo_detail{% endtrans %}</p>
                             <div class="row">
                                 <div class="col-lg-12">
                                     <ul class="list-unstyled">
@@ -376,8 +414,9 @@
 
                         <!-- Social buttons start -->
                         <div class="ibox-content">
-                            <div class="row" style="text-align: right;">
+                            <div class="row" {#style="text-align: right;"#}>
                                 <div class="col-lg-12">
+                                    <h3>{% trans with {'%title%': photo.title } %}page.photo.h3.social_buttons{% endtrans %}</h3>
                                     {% include 'SkaphandrusAppBundle:Common:addThis.html.twig' with {'photography': photo} %}
                                 </div>
                             </div>
@@ -388,10 +427,14 @@
 
                     <!-- contests area begin-->
                     <div class="ibox">
-                        <div class="ibox-title">
-                            <h5>{{ "page.photo.h5.contest"|trans }}</h5>
-                        </div>
+                        {#<div class="ibox-title">
+                            <h5>{% trans with {'%title%': photo.title } %}page.photo.h5.contest{% endtrans %}</h5>
+                            <p>{% trans with {'%title%': photo.title } %}page.photo.p.contest{% endtrans %}</p>
+                        </div>#}
                         <div  style="display: block;" class="ibox-content">
+                            <h4>{% trans with {'%title%': photo.title } %}page.photo.h4.contest{% endtrans %}</h4>
+                            <p>{% trans with {'%title%': photo.title } %}page.photo.p.contest{% endtrans %}</p>
+
                             <!-- se a foto tiver em alguma categoria -->
                             {% if photo.category|length != null %}
                                 <table class="table">
@@ -451,10 +494,13 @@
 
                     <!-- Coments start -->
                     <div class="ibox">
-                        <div class="ibox-title">
-                            <h5>Comments</h5>
-                        </div>
+                        {#<div class="ibox-title">
+                            <h5>{% trans with {'%title%': photo.title } %}page.photo.h5.comments{% endtrans %}</h5>
+                            <p>{% trans with {'%title%': photo.title } %}page.photo.p.comments{% endtrans %}</p>
+                        </div>#}
                         <div class="ibox-content" style="display: block;">
+                            <h4>{% trans with {'%title%': photo.title } %}page.photo.h4.comments{% endtrans %}</h4>
+                            <p>{% trans with {'%title%': photo.title } %}page.photo.p.comments{% endtrans %}</p>
                             <div class="row" style="text-align: right;">
                                 <div class="col-lg-12">
                                     {% include 'SkaphandrusAppBundle:Comments:async.html.twig' with {'id': 'SkPhoto-' ~ photo.id } %}
@@ -469,14 +515,20 @@
 
                 <div class="col-lg-6">
                     <div class="ibox">
-                        <div class="ibox-title">
-                            <h5>{{ "page.photo.h5.species_identification"|trans }}</h5>
-                        </div>
+                        {#<div class="ibox-title">
+                            <h3>{{ "page.photo.h3.species_identification"|trans }}</h3>
+                            <p>{{ "page.photo.p.species_identification"|trans }}</p>
+                        </div>#}
                         <!-- Validatons/Sugestions start -->
                         <div class="ibox-content">
+                            <h3>{{ "page.photo.h3.species_identification"|trans }}</h3>
+                            <p>{{ "page.photo.p.species_identification"|trans }}</p>
                             <div  style=" margin: 0% 4% 4% 4%;" class="row">
 
                                 {% if photo.speciesValidations|length or photo.speciesSugestions|length %}
+
+                                    <p>{{ "page.photo.p.species_validations"|trans }}</p>
+
                                     {% for flashMessage in app.session.flashbag.get('notice') %}
                                         <div class="alert alert-success alert-dismissable">
                                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -486,7 +538,7 @@
 
                                     <!-- exists validations experts start -->
                                     {% if photo.speciesValidations|length %}
-                                        <strong> {{ "page.photo.h3.species_validations"|trans }} </strong>
+                                        <h5><strong>{{ "page.photo.h5.species_validations"|trans }}</strong></h5>
                                         <div style="margin-top: 2%;"  class="feed-activity-list" >
                                             {% for sv in photo.speciesValidations %}
                                                 <div class="feed-element" >
@@ -507,7 +559,7 @@
                                     <!-- exists suggestions users start -->
                                     {% if photo.speciesSugestions|length %}
                                         <br/>
-                                        <strong> {{ "page.photo.h3.species_sugestions"|trans }} </strong>
+                                        <h5><strong>{{ "page.photo.h5.species_sugestions"|trans }}</strong></h5>
                                         <div style="margin-top: 2%;"  class="feed-activity-list" >
                                             {% for ss in photo.speciesSugestions %}
                                                 <div class="feed-element" >
@@ -525,7 +577,7 @@
                                         </div>
                                     {% endif %}
                                 {% else %}
-                                    {{ "page.photo.label.no_sugestions_validations"|trans }} 
+                                    <p>{{ "page.photo.p.sugestions_validations"|trans }}</p>
                                 {% endif %}
                             </div>
 
@@ -566,10 +618,13 @@
 
                     <div class="ibox">
                         {% if photo.species is not empty %}
-                            <div class="ibox-title">
-                                <h5>{{ "page.photo.h5.photo_grid"|trans }}</h5>
-                            </div>
+                            {#<div class="ibox-title">
+                                <h5>{% trans with {'%species%': photo.species } %}page.photo.h5.photo_grid{% endtrans %}</h5>
+                                <p>{% trans with {'%species%': photo.species } %}page.photo.p.photo_grid{% endtrans %}</p>
+                            </div>#}
                             <div class="ibox-content">
+                                <h4>{% trans with {'%species%': photo.species } %}page.photo.h4.photo_grid{% endtrans %}</h4>
+                                <p>{% trans with {'%species%': photo.species } %}page.photo.p.photo_grid{% endtrans %}</p>
                                 {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': photo.species.id },'limit':25  } )) }}
                             </div>
                         {% endif %}

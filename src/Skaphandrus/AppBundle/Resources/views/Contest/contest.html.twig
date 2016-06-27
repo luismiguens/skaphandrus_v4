@@ -2,7 +2,7 @@
 
 {% block page_title %}{% trans with {'%contest%': contest.name} %}page.contest.meta_tag.title{% endtrans %}{% endblock %}
 
-{% block page_description %}{% trans with {'%contest%': contest.name} %}page.contest.meta_tag.description{% endtrans %}{% endblock %}
+{% block page_description %}{% trans with {'%contest%': contest.name, '%description%': contest.translate(app.request.locale).description|raw} %}page.contest.meta_tag.description{% endtrans %}{% endblock %}
 
 {% block hreflang %}
     <link rel="alternate" hreflang="pt" href="{{ app.request.getSchemeAndHttpHost() ~ path('contests_contest', {'slug': slugify(contest.name), 'locale': 'pt'}) }}" />
@@ -27,7 +27,8 @@
 {% block body_data_attributes %}data-spy="scroll" data-target="#navbar-sidebar"{% endblock %}
 
 {% block heading_title %}
-    {{contest.name}}
+    {#    {{contest.name}}#}
+    {% trans with {'%contest%': contest.name} %}page.contest.meta_tag.title{% endtrans %}
 {% endblock %}
 
 {% block heading_breadcrumbs %}
@@ -139,7 +140,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <h4>{{ "page.contest.dt.participants"|trans }}</h4>
+                                    <h4>{% trans with {'%contest%': contest.name} %}page.contest.h4.participants{% endtrans %}</h4>
                                 </div>
                             </div>
                             <div class="row">
@@ -180,7 +181,12 @@
 
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <h4>{{ "page.contest.label.completed"|trans }}</h4>
+                                    {% if percentage < 100 %}
+                                        <h4>{% trans with {'%contest%': contest.name} %}page.contest.h4.ongoing{% endtrans %}</h4>
+                                    {% endif %}
+                                    {% if percentage == 100 %}
+                                        <h4>{% trans with {'%contest%': contest.name} %}page.contest.h4.completed{% endtrans %}</h4>
+                                    {% endif %}
                                     <div class="progress progress-striped active m-b-sm">
                                         <div style="width: {{ percentage }}%;" class="progress-bar"></div>
                                     </div>
@@ -289,7 +295,11 @@
                                         <div class="panel-body">
 
                                             <section id="categories">
-                                                <h2>{{ "page.contest.h2.categories"|trans }}</h2>
+                                                <h2>{{ contest.translate(app.request.locale).description|raw }}</h2>
+
+                                                <h3>{% trans with {'%contest%': contest.name} %}page.contest.h3.categories{% endtrans %}</h3>
+                                                <p>{% trans with {'%contest%': contest.name} %}page.contest.p.categories{% endtrans %}</p>
+
                                                 <table class="table table-striped">
                                                     <thead>
                                                         <tr>
@@ -334,7 +344,9 @@
                                             </section>
 
                                             <section id="awards">
-                                                <h2>{{ "page.contest.h2.awards"|trans }}</h2>
+                                                <h3>{% trans with {'%contest%': contest.name} %}page.contest.h3.awards{% endtrans %}</h3>
+                                                <p>{% trans with {'%contest%': contest.name} %}page.contest.p.awards{% endtrans %}</p>
+
                                                 <table class="table table-striped">
                                                     <thead>
                                                         <tr>
@@ -375,12 +387,16 @@
                                             </section>
 
                                             <section id="rules">
-                                                <h2>{{ "page.contest.h2.rules"|trans }}</h2>
+                                                <h3>{% trans with {'%contest%': contest.name} %}page.contest.h3.rules{% endtrans %}</h3>
+                                                <p>{% trans with {'%contest%': contest.name} %}page.contest.p.rules{% endtrans %}</p>
+
                                                 {{ contest.translate.rules|raw }}
                                             </section>
 
                                             <section id="judges">
-                                                <h2>{{ "page.contest.h2.judges"|trans }}</h2>
+                                                <h3>{% trans with {'%contest%': contest.name} %}page.contest.h3.judges{% endtrans %}</h3>
+                                                <p>{% trans with {'%contest%': contest.name} %}page.contest.p.judges{% endtrans %}</p>
+
                                                 <table class="table table-striped">
                                                     <thead>
                                                         <tr>
@@ -415,7 +431,9 @@
                                             </section>
 
                                             <section id="sponsors">
-                                                <h2>{{ "page.contest.h2.sponsors"|trans }}</h2>
+                                                <h3>{% trans with {'%contest%': contest.name} %}page.contest.h3.sponsors{% endtrans %}</h3>
+                                                <p>{% trans with {'%contest%': contest.name} %}page.contest.p.sponsors{% endtrans %}</p>
+
                                                 <table class="table table-striped">
                                                     <thead>
                                                         <tr>
