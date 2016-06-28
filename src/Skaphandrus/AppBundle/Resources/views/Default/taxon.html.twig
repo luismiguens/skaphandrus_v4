@@ -262,7 +262,7 @@
                                     {% endif %}
 
                                     <h2>{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name} %} page.taxon.h2.taxonomic_structure {% endtrans %}</h2>
-                                    <p>{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%next_taxon%': next_taxon|trans } %} page.taxon.p.taxonomic_structure {% endtrans %}</p>
+                                    <p class="text-muted">{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%next_taxon%': next_taxon|trans } %} page.taxon.p.taxonomic_structure {% endtrans %}</p>
 
                                     <ul class="list-unstyled" itemscope itemtype="http://schema.org/ListItem">
                                         {% if taxon.taxonNodeName == 'genus' %}
@@ -318,7 +318,7 @@
                     <div class="ibox">
                         <div class="ibox-title">
                             <h2>{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%next_taxon%': next_taxon|trans } %} page.taxon.h2.next_taxon_photos {% endtrans %}</h2>
-                            <p>{% trans with {'%value%': taxon.name, '%next_taxon%': next_taxon|trans } %} page.taxon.p.next_taxon_photos {% endtrans %}</p>
+                            <p class="text-muted">{% trans with {'%value%': taxon.name, '%next_taxon%': next_taxon|trans } %} page.taxon.p.next_taxon_photos {% endtrans %}</p>
                         </div>
                         <div class="ibox-content">
 
@@ -408,7 +408,7 @@
                     <div class="ibox" >
                         <div class="ibox-title">
                             <h2>{% trans with {'%node%': taxon.taxonNodeName|trans|capitalize, '%taxon_name%': taxon.name } %} page.taxon.h2.contributors {% endtrans %}</h2>
-                            <p>{% trans with {'%node%': taxon.taxonNodeName|trans|capitalize, '%taxon_name%': taxon.name } %} page.taxon.p.contributors {% endtrans %}</p>
+                            <p class="text-muted">{% trans with {'%node%': taxon.taxonNodeName|trans|capitalize, '%taxon_name%': taxon.name } %} page.taxon.p.contributors {% endtrans %}</p>
 
                         </div>
 

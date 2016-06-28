@@ -331,7 +331,7 @@
                                 {% endif %}
 
                                 <h3>{% trans with {'%species%': species.name } %} page.species.h3.taxonomic_structure {% endtrans %}</h3>
-                                <p>{% trans with {'%species%': species.name } %} page.species.p.taxonomic_structure {% endtrans %}</p>
+                                <p class="text-muted">{% trans with {'%species%': species.name } %} page.species.p.taxonomic_structure {% endtrans %}</p>
 
                                 <ul class="list-unstyled" itemscope itemtype="http://schema.org/ListItem">
                                     <li class="tox" itemprop="item">{{ "page.species.label.species_kingdom"|trans }}: {{ link_to_taxon(species.genus.family.order.class.phylum.kingdom.taxonNodeName|trans, species.genus.family.order.class.phylum.kingdom) }}</li>
@@ -412,7 +412,7 @@
 
                                 <div class="panel-body">
                                     <h3>{% trans with {'%species%': species.name } %} page.species.h3.species_criteria {% endtrans %}</h3>
-                                    <p>{% trans with {'%species%': species.name } %} page.species.p.species_criteria {% endtrans %}</p>
+                                    <p class="text-muted">{% trans with {'%species%': species.name } %} page.species.p.species_criteria {% endtrans %}</p>
 
                                     <div class="ibox-content">
                                         <div id="loadCriterias"></div>
@@ -426,7 +426,7 @@
                             <div id="tab-2" class="tab-pane">
                                 <div class="panel-body">
                                     <h3>{% trans with {'%species%': species.name } %} page.species.h3.geo_distribution {% endtrans %}</h3>
-                                    <p>{% trans with {'%species%': species.name } %} page.species.p.geo_distribution {% endtrans %}</p>
+                                    <p class="text-muted">{% trans with {'%species%': species.name } %} page.species.p.geo_distribution {% endtrans %}</p>
                                     <span itemscope itemtype="http://schema.org/Map">
                                         <meta itemprop="name" content="World Map" />
                                         {% if map %}
@@ -484,7 +484,7 @@
 
                                 <div class="panel-body">
                                     <h3>{% trans with {'%species%': species.name } %} page.species.h3.contributors {% endtrans %}</h3>
-                                    <p>{% trans with {'%species%': species.name } %} page.species.p.contributors {% endtrans %}</p>
+                                    <p class="text-muted">{% trans with {'%species%': species.name } %} page.species.p.contributors {% endtrans %}</p>
                                     <div class="row" >
                                         <div class="col col-lg-12" >
                                             <div class="ibox" >

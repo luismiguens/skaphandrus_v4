@@ -5,11 +5,13 @@
                 <div class="contact-box" style="height: 165px">
                     <div class="col-sm-4">
                         <div class="text-center">
-                            <img alt="{{ b }}" title="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                            <a href="{{ path('business_no_slug', { 'id': b.id }) }}">
+                                <img alt="{{ b }}" title="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                            </a>
                         </div>
                     </div>
                     <div class="col-sm-8">
-                        <h4><strong>{{b|truncate(40)}}</strong></h4>
+                        <a href="{{ path('business_no_slug', { 'id': b.id }) }}"><h4><strong>{{b|truncate(40)}}</strong></h4></a>
                         <p><i class="fa fa-map-marker"></i> {{ b.address.location }}</p>
                         <div>
                             <a class="btn btn-outline btn-primary btn-block btn-xs" href="{{ path('business_no_slug', { 'id': b.id}) }}">{{ "page.business.button.more_info"|trans }}</a>

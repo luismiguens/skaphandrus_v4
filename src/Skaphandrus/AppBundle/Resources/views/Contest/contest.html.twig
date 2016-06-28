@@ -140,7 +140,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <h4>{% trans with {'%contest%': contest.name} %}page.contest.h4.participants{% endtrans %}</h4>
+                                    <p>{% trans with {'%contest%': contest.name} %}page.contest.p.participants{% endtrans %}</p>
                                 </div>
                             </div>
                             <div class="row">
@@ -182,10 +182,10 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     {% if percentage < 100 %}
-                                        <h4>{% trans with {'%contest%': contest.name} %}page.contest.h4.ongoing{% endtrans %}</h4>
+                                        <p>{% trans with {'%contest%': contest.name} %}page.contest.p.ongoing{% endtrans %}</p>
                                     {% endif %}
                                     {% if percentage == 100 %}
-                                        <h4>{% trans with {'%contest%': contest.name} %}page.contest.h4.completed{% endtrans %}</h4>
+                                        <p>{% trans with {'%contest%': contest.name} %}page.contest.p.completed{% endtrans %}</p>
                                     {% endif %}
                                     <div class="progress progress-striped active m-b-sm">
                                         <div style="width: {{ percentage }}%;" class="progress-bar"></div>
@@ -295,10 +295,10 @@
                                         <div class="panel-body">
 
                                             <section id="categories">
-                                                <h2>{{ contest.translate(app.request.locale).description|raw }}</h2>
+                                                <p>{{ contest.translate(app.request.locale).description|raw }}</p>
 
                                                 <h3>{% trans with {'%contest%': contest.name} %}page.contest.h3.categories{% endtrans %}</h3>
-                                                <p>{% trans with {'%contest%': contest.name} %}page.contest.p.categories{% endtrans %}</p>
+                                                <p class="text-muted">{% trans with {'%contest%': contest.name} %}page.contest.p.categories{% endtrans %}</p>
 
                                                 <table class="table table-striped">
                                                     <thead>
@@ -345,7 +345,7 @@
 
                                             <section id="awards">
                                                 <h3>{% trans with {'%contest%': contest.name} %}page.contest.h3.awards{% endtrans %}</h3>
-                                                <p>{% trans with {'%contest%': contest.name} %}page.contest.p.awards{% endtrans %}</p>
+                                                <p class="text-muted">{% trans with {'%contest%': contest.name} %}page.contest.p.awards{% endtrans %}</p>
 
                                                 <table class="table table-striped">
                                                     <thead>
@@ -388,14 +388,14 @@
 
                                             <section id="rules">
                                                 <h3>{% trans with {'%contest%': contest.name} %}page.contest.h3.rules{% endtrans %}</h3>
-                                                <p>{% trans with {'%contest%': contest.name} %}page.contest.p.rules{% endtrans %}</p>
+                                                <p class="text-muted">{% trans with {'%contest%': contest.name} %}page.contest.p.rules{% endtrans %}</p>
 
                                                 {{ contest.translate.rules|raw }}
                                             </section>
 
                                             <section id="judges">
                                                 <h3>{% trans with {'%contest%': contest.name} %}page.contest.h3.judges{% endtrans %}</h3>
-                                                <p>{% trans with {'%contest%': contest.name} %}page.contest.p.judges{% endtrans %}</p>
+                                                <p class="text-muted">{% trans with {'%contest%': contest.name} %}page.contest.p.judges{% endtrans %}</p>
 
                                                 <table class="table table-striped">
                                                     <thead>
@@ -432,7 +432,7 @@
 
                                             <section id="sponsors">
                                                 <h3>{% trans with {'%contest%': contest.name} %}page.contest.h3.sponsors{% endtrans %}</h3>
-                                                <p>{% trans with {'%contest%': contest.name} %}page.contest.p.sponsors{% endtrans %}</p>
+                                                <p class="text-muted">{% trans with {'%contest%': contest.name} %}page.contest.p.sponsors{% endtrans %}</p>
 
                                                 <table class="table table-striped">
                                                     <thead>

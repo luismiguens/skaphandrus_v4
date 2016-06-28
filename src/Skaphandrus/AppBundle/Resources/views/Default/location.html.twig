@@ -296,7 +296,7 @@
                         <div class="ibox" >
                             <div class="ibox-title" >
                                 <h2>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.h2.spots_map{% endtrans %}</h2>
-                                <p>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.spots_map{% endtrans %}</p>
+                                <p class="text-muted">{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.spots_map{% endtrans %}</p>
                             </div>
 
                             {% if map %}
@@ -306,7 +306,7 @@
                             <div class="ibox-content">
                                 {% if location.spots|length > 0 %}
                                     <h2>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.h2.spots{% endtrans %}</h2>
-                                    <p>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.spots{% endtrans %}</p>
+                                    <p class="text-muted">{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.spots{% endtrans %}</p>
 
                                     <div class="row">
                                         {% for spot in location.spots %}
@@ -319,7 +319,7 @@
                                 <br/>
 
                                 <h2>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.h2.spots_photos{% endtrans %}</h2>
-                                <p>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.spots_photos{% endtrans %}</p>
+                                <p class="text-muted">{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.spots_photos{% endtrans %}</p>
 
                                 <div id="box_spots"></div>
                             </div>
@@ -366,7 +366,7 @@
                         <div class="ibox" >
                             <div class="ibox-title" >
                                 <h2>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.h2.species{% endtrans %}</h2>
-                                <p>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.species{% endtrans %}</p>
+                                <p class="text-muted">{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.species{% endtrans %}</p>
                             </div>
 
                             <div class="ibox-content">
@@ -415,7 +415,7 @@
                         <div class="ibox" >
                             <div class="ibox-title" >
                                 <h2>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.h2.contributors{% endtrans %}</h2>
-                                <p>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.contributors{% endtrans %}</p>
+                                <p class="text-muted">{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.contributors{% endtrans %}</p>
                             </div>
 
                             <div class="ibox-content">
@@ -470,7 +470,7 @@
                             <div class="panel-body">
                                 <div class="ibox">
                                     <h3>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.h3.dive_center{% endtrans %}</h3>
-                                    <p>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.dive_center{% endtrans %}</p>
+                                    <p class="text-muted">{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.dive_center{% endtrans %}</p>
                                     {#<div class="ibox-content">#}
                                     <div class="row" >
                                         {% if diveCenters %}
@@ -479,11 +479,13 @@
                                                     <div class="contact-box" style="height: 165px">
                                                         <div class="col-sm-4">
                                                             <div class="text-center">
-                                                                <img alt="{{ b }}" title="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                                                <a href="{{ path('business_no_slug', { 'id': b.id }) }}">
+                                                                    <img alt="{{ b }}" title="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                                                </a>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-8">
-                                                            <h4><strong>{{b|truncate(40)}}</strong></h4>
+                                                            <a href="{{ path('business_no_slug', { 'id': b.id }) }}"><h4><strong>{{b|truncate(40)}}</strong></h4></a>
                                                             <p><i class="fa fa-map-marker"></i> {{ b.address.location }}</p>
                                                             <div>
                                                                 <a class="btn btn-outline btn-primary btn-block btn-xs" href="{{ path('business_no_slug', { 'id': b.id}) }}">{{ "page.business.button.more_info"|trans }}</a>
@@ -508,7 +510,7 @@
                             <div class="panel-body">
                                 <div class="ibox">
                                     <h3>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.h3.liveaboard{% endtrans %}</h3>
-                                    <p>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.liveaboard{% endtrans %}</p>
+                                    <p class="text-muted">{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.liveaboard{% endtrans %}</p>
                                     {#<div class="ibox-content">#}
                                     <div class="row" >
                                         {% if liveaboards %}
@@ -517,11 +519,13 @@
                                                     <div class="contact-box" style="height: 165px">
                                                         <div class="col-sm-4">
                                                             <div class="text-center">
-                                                                <img alt="{{ b }}" title="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                                                <a href="{{ path('business_no_slug', { 'id': b.id }) }}">
+                                                                    <img alt="{{ b }}" title="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                                                </a>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-8">
-                                                            <h4><strong>{{b|truncate(40)}}</strong></h4>
+                                                            <a href="{{ path('business_no_slug', { 'id': b.id }) }}"><h4><strong>{{b|truncate(40)}}</strong></h4></a>
                                                             <p><i class="fa fa-map-marker"></i> {{ b.address.location }}</p>
                                                             <div>
                                                                 <a class="btn btn-outline btn-primary btn-block btn-xs" href="{{ path('business_no_slug', { 'id': b.id}) }}">{{ "page.business.button.more_info"|trans }}</a>
@@ -546,7 +550,7 @@
                             <div class="panel-body">
                                 <div class="ibox">
                                     <h3>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.h3.accommodation{% endtrans %}</h3>
-                                    <p>{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.accommodation{% endtrans %}</p>
+                                    <p class="text-muted">{% trans with {'%location%': location.name, '%region%': location.region.name, '%country%': location.region.country} %}page.location.p.accommodation{% endtrans %}</p>
                                     {#<div class="ibox-content">#}
                                     <div class="row" >
                                         {% if accommodations %}
@@ -555,11 +559,13 @@
                                                     <div class="contact-box" style="height: 165px">
                                                         <div class="col-sm-4">
                                                             <div class="text-center">
-                                                                <img alt="{{ b }}" title="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                                                <a href="{{ path('business_no_slug', { 'id': b.id }) }}">
+                                                                    <img alt="{{ b }}" title="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                                                </a>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-8">
-                                                            <h4><strong>{{b|truncate(40)}}</strong></h4>
+                                                            <a href="{{ path('business_no_slug', { 'id': b.id }) }}"><h4><strong>{{b|truncate(40)}}</strong></h4></a>
                                                             <p><i class="fa fa-map-marker"></i> {{ b.address.location }}</p>
                                                             <div>
                                                                 <a class="btn btn-outline btn-primary btn-block btn-xs" href="{{ path('business_no_slug', { 'id': b.id}) }}">{{ "page.business.button.more_info"|trans }}</a>

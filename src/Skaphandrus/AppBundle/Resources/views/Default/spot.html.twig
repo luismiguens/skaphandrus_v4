@@ -206,7 +206,7 @@
                         <div class="ibox" >
                             <div class="ibox-title" >
                                 <h2>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%region%': spot.location.region.name, '%country%': spot.location.region.country} %}page.spot.h2.spot{% endtrans %}</h2>
-                                <p>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%region%': spot.location.region.name, '%country%': spot.location.region.country} %}page.spot.p.spot{% endtrans %}</p>
+                                <p class="text-muted">{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%region%': spot.location.region.name, '%country%': spot.location.region.country} %}page.spot.p.spot{% endtrans %}</p>
                             </div>
 
                             {% if map %}
@@ -290,7 +290,7 @@
                         <div class="ibox" >
                             <div class="ibox-title" >
                                 <h2>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%region%': spot.location.region.name, '%country%': spot.location.region.country} %}page.spot.h2.species{% endtrans %}</h2>
-                                <p>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%region%': spot.location.region.name, '%country%': spot.location.region.country} %}page.spot.p.species{% endtrans %}</p>
+                                <p class="text-muted">{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%region%': spot.location.region.name, '%country%': spot.location.region.country} %}page.spot.p.species{% endtrans %}</p>
                             </div>
 
                             <div class="ibox-content">
@@ -339,7 +339,7 @@
                         <div class="ibox" >
                             <div class="ibox-title" >
                                 <h2>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%region%': spot.location.region.name, '%country%': spot.location.region.country} %}page.spot.h2.contributors{% endtrans %}</h2>
-                                <p>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%region%': spot.location.region.name, '%country%': spot.location.region.country} %}page.spot.p.contributors{% endtrans %}</p>
+                                <p class="text-muted">{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%region%': spot.location.region.name, '%country%': spot.location.region.country} %}page.spot.p.contributors{% endtrans %}</p>
                             </div>
 
                             <div class="ibox-content">
@@ -394,7 +394,7 @@
                             <div class="panel-body">
                                 <div class="ibox">
                                     <h3>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%region%': spot.location.region.name, '%country%': spot.location.region.country} %}page.spot.h3.dive_center{% endtrans %}</h3>
-                                    <p>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%region%': spot.location.region.name, '%country%': spot.location.region.country} %}page.spot.p.dive_center{% endtrans %}</p>
+                                    <p class="text-muted">{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%region%': spot.location.region.name, '%country%': spot.location.region.country} %}page.spot.p.dive_center{% endtrans %}</p>
                                     {#<div class="ibox-content">#}
                                     <div class="row" >
                                         {% if diveCenters %}
@@ -403,11 +403,13 @@
                                                     <div class="contact-box" style="height: 165px">
                                                         <div class="col-sm-4">
                                                             <div class="text-center">
-                                                                <img alt="{{ b }}" title="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                                                <a href="{{ path('business_no_slug', { 'id': b.id }) }}">
+                                                                    <img alt="{{ b }}" title="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                                                </a>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-8">
-                                                            <h4><strong>{{b|truncate(40)}}</strong></h4>
+                                                            <a href="{{ path('business_no_slug', { 'id': b.id }) }}"><h4><strong>{{b|truncate(40)}}</strong></h4></a>
                                                             <p><i class="fa fa-map-marker"></i> {{ b.address.location }}</p>
                                                             <div>
                                                                 <a class="btn btn-outline btn-primary btn-block btn-xs" href="{{ path('business_no_slug', { 'id': b.id}) }}">{{ "page.business.button.more_info"|trans }}</a>
@@ -432,7 +434,7 @@
                             <div class="panel-body">
                                 <div class="ibox">
                                     <h3>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%region%': spot.location.region.name, '%country%': spot.location.region.country} %}page.spot.h3.liveaboard{% endtrans %}</h3>
-                                    <p>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%region%': spot.location.region.name, '%country%': spot.location.region.country} %}page.spot.p.liveaboard{% endtrans %}</p>
+                                    <p class="text-muted">{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%region%': spot.location.region.name, '%country%': spot.location.region.country} %}page.spot.p.liveaboard{% endtrans %}</p>
                                     {#<div class="ibox-content">#}
                                     <div class="row" >
                                         {% if liveaboards %}
@@ -441,11 +443,13 @@
                                                     <div class="contact-box" style="height: 165px">
                                                         <div class="col-sm-4">
                                                             <div class="text-center">
-                                                                <img alt="{{ b }}" title="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                                                <a href="{{ path('business_no_slug', { 'id': b.id }) }}">
+                                                                    <img alt="{{ b }}" title="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                                                </a>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-8">
-                                                            <h4><strong>{{b|truncate(40)}}</strong></h4>
+                                                            <a href="{{ path('business_no_slug', { 'id': b.id }) }}"><h4><strong>{{b|truncate(40)}}</strong></h4></a>
                                                             <p><i class="fa fa-map-marker"></i> {{ b.address.location }}</p>
                                                             <div>
                                                                 <a class="btn btn-outline btn-primary btn-block btn-xs" href="{{ path('business_no_slug', { 'id': b.id}) }}">{{ "page.business.button.more_info"|trans }}</a>
@@ -470,7 +474,7 @@
                             <div class="panel-body">
                                 <div class="ibox">
                                     <h3>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%region%': spot.location.region.name, '%country%': spot.location.region.country} %}page.spot.h3.accommodation{% endtrans %}</h3>
-                                    <p>{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%region%': spot.location.region.name, '%country%': spot.location.region.country} %}page.spot.p.accommodation{% endtrans %}</p>
+                                    <p class="text-muted">{% trans with {'%spot%': spot.name, '%location%': spot.location.name, '%region%': spot.location.region.name, '%country%': spot.location.region.country} %}page.spot.p.accommodation{% endtrans %}</p>
                                     {#<div class="ibox-content">#}
                                     <div class="row" >
                                         {% if accommodations %}
@@ -479,11 +483,13 @@
                                                     <div class="contact-box" style="height: 165px">
                                                         <div class="col-sm-4">
                                                             <div class="text-center">
-                                                                <img alt="{{ b }}" title="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                                                <a href="{{ path('business_no_slug', { 'id': b.id }) }}">
+                                                                    <img alt="{{ b }}" title="{{ b }}" class="img-thumbnail m-t-xs img-responsive" src="{{ b.getWebPath | imagine_filter('sk_widen_100') }}"/>
+                                                                </a>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-8">
-                                                            <h4><strong>{{b|truncate(40)}}</strong></h4>
+                                                            <a href="{{ path('business_no_slug', { 'id': b.id }) }}"><h4><strong>{{b|truncate(40)}}</strong></h4></a>
                                                             <p><i class="fa fa-map-marker"></i> {{ b.address.location }}</p>
                                                             <div>
                                                                 <a class="btn btn-outline btn-primary btn-block btn-xs" href="{{ path('business_no_slug', { 'id': b.id}) }}">{{ "page.business.button.more_info"|trans }}</a>

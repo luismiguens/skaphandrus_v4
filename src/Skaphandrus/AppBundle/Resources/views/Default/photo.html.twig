@@ -221,12 +221,10 @@
         {#<div class="animated fadeInRight">#}
         <div class="container">
 
-            <div class="ibox">
-                <div class="ibox-content">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h1>{% trans with {'%title%': photo.title|title, '%created_at%':photo.takenAt|date('Y-m-d'), '%autor%': photo.fosuser } %}page.photo.meta_tag.title{% endtrans %}</h1>
-                        </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox">
+                        <h1>{% trans with {'%title%': photo.title|title, '%created_at%':photo.takenAt|date('Y-m-d'), '%autor%': photo.fosuser } %}page.photo.meta_tag.title{% endtrans %}</h1>
                     </div>
                 </div>
             </div>
@@ -282,7 +280,7 @@
                         <!-- Imagem detalhes start -->
                         <div class="ibox-content">
                             <h2>{% trans with {'%title%': photo.title } %}page.photo.h2.photo_detail{% endtrans %}</h2>
-                            <p>{% trans with {'%title%': photo.title } %}page.photo.p.photo_detail{% endtrans %}</p>
+                            <p class="text-muted">{% trans with {'%title%': photo.title } %}page.photo.p.photo_detail{% endtrans %}</p>
                             <div class="row">
                                 <div class="col-lg-12">
                                     <ul class="list-unstyled">
@@ -433,7 +431,7 @@
                         </div>#}
                         <div  style="display: block;" class="ibox-content">
                             <h4>{% trans with {'%title%': photo.title } %}page.photo.h4.contest{% endtrans %}</h4>
-                            <p>{% trans with {'%title%': photo.title } %}page.photo.p.contest{% endtrans %}</p>
+                            <p class="text-muted">{% trans with {'%title%': photo.title } %}page.photo.p.contest{% endtrans %}</p>
 
                             <!-- se a foto tiver em alguma categoria -->
                             {% if photo.category|length != null %}
@@ -500,7 +498,7 @@
                         </div>#}
                         <div class="ibox-content" style="display: block;">
                             <h4>{% trans with {'%title%': photo.title } %}page.photo.h4.comments{% endtrans %}</h4>
-                            <p>{% trans with {'%title%': photo.title } %}page.photo.p.comments{% endtrans %}</p>
+                            <p class="text-muted">{% trans with {'%title%': photo.title } %}page.photo.p.comments{% endtrans %}</p>
                             <div class="row" style="text-align: right;">
                                 <div class="col-lg-12">
                                     {% include 'SkaphandrusAppBundle:Comments:async.html.twig' with {'id': 'SkPhoto-' ~ photo.id } %}
@@ -522,7 +520,7 @@
                         <!-- Validatons/Sugestions start -->
                         <div class="ibox-content">
                             <h3>{{ "page.photo.h3.species_identification"|trans }}</h3>
-                            <p>{{ "page.photo.p.species_identification"|trans }}</p>
+                            <p class="text-muted">{{ "page.photo.p.species_identification"|trans }}</p>
                             <div  style=" margin: 0% 4% 4% 4%;" class="row">
 
                                 {% if photo.speciesValidations|length or photo.speciesSugestions|length %}
@@ -624,7 +622,7 @@
                             </div>#}
                             <div class="ibox-content">
                                 <h4>{% trans with {'%species%': photo.species } %}page.photo.h4.photo_grid{% endtrans %}</h4>
-                                <p>{% trans with {'%species%': photo.species } %}page.photo.p.photo_grid{% endtrans %}</p>
+                                <p class="text-muted">{% trans with {'%species%': photo.species } %}page.photo.p.photo_grid{% endtrans %}</p>
                                 {{ render(controller('SkaphandrusAppBundle:Default:skGrid', { 'parameters': { 'species': photo.species.id },'limit':25  } )) }}
                             </div>
                         {% endif %}

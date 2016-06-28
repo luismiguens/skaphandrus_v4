@@ -367,7 +367,7 @@
                             <div class="ibox-content">
                                 <div class="m-b-md">
                                     <h3>{{ "page.business.h3.type"|trans }}</h3>
-                                    <p>{% trans with {'%business%': business.name} %}page.business.p.type{% endtrans %}</p>
+                                    <p class="text-muted">{% trans with {'%business%': business.name} %}page.business.p.type{% endtrans %}</p>
                                     {% if business.type|length > 0 %}
                                         <div>
                                             {% for type in business.type %}
@@ -380,7 +380,7 @@
                                 </div>
                                 <div class="m-b-md">
                                     <h3>{{ "page.business.h3.currency"|trans }}</h3>
-                                    <p>{% trans with {'%business%': business.name} %}page.business.p.currency{% endtrans %}</p>
+                                    <p class="text-muted">{% trans with {'%business%': business.name} %}page.business.p.currency{% endtrans %}</p>
                                     {% if business.currency|length > 0 %}
                                         <div>
                                             {% for currency in business.currency %}
@@ -393,7 +393,7 @@
                                 </div>
                                 <div class="m-b-md">
                                     <h3>{{ "page.business.h3.language"|trans }}</h3>
-                                    <p>{% trans with {'%business%': business.name} %}page.business.p.language{% endtrans %}</p>
+                                    <p class="text-muted">{% trans with {'%business%': business.name} %}page.business.p.language{% endtrans %}</p>
                                     {% if business.language|length > 0 %}
                                         <div>
                                             {% for language in business.language %}
@@ -406,7 +406,7 @@
                                 </div>
                                 <div class="m-b-md">
                                     <h3>{{ "page.business.h3.other_activity"|trans }}</h3>
-                                    <p>{% trans with {'%business%': business.name} %}page.business.p.other_activity{% endtrans %}</p>
+                                    <p class="text-muted">{% trans with {'%business%': business.name} %}page.business.p.other_activity{% endtrans %}</p>
                                     {% if business.otherActivity|length > 0 %}
                                         <div>
                                             {% for activity in business.otherActivity %}
@@ -483,7 +483,7 @@
                                                 <!-- BEGIN - row spots -->
                                                 {% if mapSpot %}
                                                     <h3>{% trans with {'%business%': business.name} %}page.business.h3.map{% endtrans %}</h3>
-                                                    <p>{% trans with {'%business%': business.name} %}page.business.p.map{% endtrans %}</p>
+                                                    <p class="text-muted">{% trans with {'%business%': business.name} %}page.business.p.map{% endtrans %}</p>
                                                     {{ google_map(mapSpot) }}
                                                 {% endif %}
                                                 <br/>
@@ -491,7 +491,7 @@
                                                 <!-- Dive Spots -->
                                                 {% if business.spot|length > 0 %}
                                                     <h3>{% trans with {'%business%': business.name} %}page.business.h3.dive_spot{% endtrans %}</h3>
-                                                    <p>{% trans with {'%business%': business.name} %}page.business.p.dive_spot{% endtrans %}</p>
+                                                    <p class="text-muted">{% trans with {'%business%': business.name} %}page.business.p.dive_spot{% endtrans %}</p>
                                                     <div class="row">
                                                         {% for spot in business.spot %}
                                                             <div class="col-md-6 col-sm-6 col-xs-6">
@@ -511,7 +511,7 @@
                                                 <!-- BEGIN - row dive pack  -->
                                                 {% if business.divePrice %}
                                                     <h3>{% trans with {'%business%': business.name} %}page.business.h3.dive_price{% endtrans %}</h3>
-                                                    <p>{% trans with {'%business%': business.name} %}page.business.p.dive_price{% endtrans %}</p>
+                                                    <p class="text-muted">{% trans with {'%business%': business.name} %}page.business.p.dive_price{% endtrans %}</p>
                                                     <div class="row">
                                                         {% for pack in business.divePrice %}
                                                             <div class="col-md-3 col-sm-4 col-xs-6">
@@ -578,7 +578,7 @@
                                                 <!-- BEGIN - row rentEquipment  -->
                                                 {% if business.rentEquipment %}
                                                     <h3>{% trans with {'%business%': business.name} %}page.business.h3.rent_equipment{% endtrans %}</h3>
-                                                    <p>{% trans with {'%business%': business.name} %}page.business.p.rent_equipment{% endtrans %}</p>
+                                                    <p class="text-muted">{% trans with {'%business%': business.name} %}page.business.p.rent_equipment{% endtrans %}</p>
                                                     <table class="table table-striped">
                                                         <thead>
                                                             <tr>
@@ -605,7 +605,7 @@
                                                 <!-- Dive Access -->
                                                 {% if business.diveAccess %}
                                                     <h3>{% trans with {'%business%': business.name} %}page.business.h3.dive_access{% endtrans %}</h3>
-                                                    <p>{% trans with {'%business%': business.name} %}page.business.p.dive_access{% endtrans %}</p>
+                                                    <p class="text-muted">{% trans with {'%business%': business.name} %}page.business.p.dive_access{% endtrans %}</p>
                                                     <table class="table">
                                                         <tbody>
                                                             <tr>
@@ -716,7 +716,7 @@
                                                 <!-- Gas -->
                                                 {% if business.gas %}
                                                     <h3>{% trans with {'%business%': business.name} %}page.business.h3.gas{% endtrans %}</h3>
-                                                    <p>{% trans with {'%business%': business.name} %}page.business.p.gas{% endtrans %}</p>
+                                                    <p class="text-muted">{% trans with {'%business%': business.name} %}page.business.p.gas{% endtrans %}</p>
                                                     <table class="table">
                                                         <tbody>
                                                             <tr>
@@ -757,7 +757,7 @@
                                                 <!-- Safety -->
                                                 {% if business.safety %}
                                                     <h3>{% trans with {'%business%': business.name} %}page.business.h3.safety{% endtrans %}</h3>
-                                                    <p>{% trans with {'%business%': business.name} %}page.business.p.safety{% endtrans %}</p>
+                                                    <p class="text-muted">{% trans with {'%business%': business.name} %}page.business.p.safety{% endtrans %}</p>
                                                     <table class="table">
                                                         <tbody>
                                                             <tr>
@@ -810,7 +810,7 @@
                                                 <!-- Education Counditions -->
                                                 {% if business.educationConditions %}
                                                     <h3>{% trans with {'%business%': business.name} %}page.business.h3.education_counditions{% endtrans %}</h3>
-                                                    <p>{% trans with {'%business%': business.name} %}page.business.p.education_counditions{% endtrans %}</p>
+                                                    <p class="text-muted">{% trans with {'%business%': business.name} %}page.business.p.education_counditions{% endtrans %}</p>
                                                     <table class="table">
                                                         <tbody>
                                                             <tr>
@@ -864,7 +864,7 @@
                                                 <!-- Education Course -->
                                                 {% if business.educationCourse %}
                                                     <h3>{% trans with {'%business%': business.name} %}page.business.h3.education_course{% endtrans %}</h3>
-                                                    <p>{% trans with {'%business%': business.name} %}page.business.p.education_course{% endtrans %}</p>
+                                                    <p class="text-muted">{% trans with {'%business%': business.name} %}page.business.p.education_course{% endtrans %}</p>
                                                     <table class="table table-striped">
                                                         <thead>
                                                             <tr>
@@ -891,12 +891,12 @@
                                         <div class="panel-body">
                                             <div class="ibox">
 
-                                                <h2>{% trans with {'%business%': business.name} %}page.business.h2.activity{% endtrans %}</h2>
-                                                <br/>
+                                                {#<h2>{% trans with {'%business%': business.name} %}page.business.h2.activity{% endtrans %}</h2>
+                                                <br/>#}
 
                                                 <!-- BEGIN - Spots -->
                                                 <h3>{% trans with {'%business%': business.name} %}page.business.h3.spots{% endtrans %}</h3>
-                                                <p>{% trans with {'%business%': business.name} %}page.business.p.spots{% endtrans %}</p>
+                                                <p class="text-muted">{% trans with {'%business%': business.name} %}page.business.p.spots{% endtrans %}</p>
 
                                                 <div id="box_spots"></div>
 
@@ -934,7 +934,7 @@
 
                                                 <!-- BEGIN - Species -->
                                                 <h3>{% trans with {'%business%': business.name} %}page.business.h3.species{% endtrans %}</h3>
-                                                <p>{% trans with {'%business%': business.name} %}page.business.p.species{% endtrans %}</p>
+                                                <p class="text-muted">{% trans with {'%business%': business.name} %}page.business.p.species{% endtrans %}</p>
 
                                                 <div id="box_species"></div>
 
@@ -972,7 +972,7 @@
 
                                                 <!-- BEGIN - Photographers -->
                                                 <h3>{% trans with {'%business%': business.name} %}page.business.h3.photographers{% endtrans %}</h3>
-                                                <p>{% trans with {'%business%': business.name} %}page.business.p.photographers{% endtrans %}</p>
+                                                <p class="text-muted">{% trans with {'%business%': business.name} %}page.business.p.photographers{% endtrans %}</p>
 
                                                 <div id="box_photographers"></div>
 
