@@ -76,7 +76,8 @@
 
 {#-----someting else-----#}
 {% if content is empty %}
-    {% set title = ("page.photos_something_else.meta_tag.title"|trans) %}
+    {#{% set title = ("page.photos_something_else.meta_tag.title"|trans) %}#}
+{# #}{% set title %}{% trans with {'%sort%': sort } %} page.photos_something_else.meta_tag.title {% endtrans %}{% endset %}
 {% else %}
 
 {# #}{% set title %}{% trans with {'%sort%': sort, '%content%': content } %} page.photos.meta_tag.title {% endtrans %}{% endset %}
