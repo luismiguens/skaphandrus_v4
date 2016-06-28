@@ -29,7 +29,7 @@ class ContestController extends Controller {
 
 
         $contestsEnded = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
-                ->findContestEnded();
+                ->findContestsEnded();
 
 
         foreach ($contestsEnded as $contest) {
