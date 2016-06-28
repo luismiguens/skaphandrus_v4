@@ -12,13 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class SkPhotoContestRepository extends EntityRepository {
 
-    public function findContestInProgress() {
+    public function findContestsInProgress() {
 
         $query = $this->getEntityManager()->createQuery(
                         'SELECT c
             FROM SkaphandrusAppBundle:SkPhotoContest c
-            WHERE c.winnersAt >= :today
-            ORDER BY c.beginAt desc'
+            WHERE c.promoAt >= :today
+            ORDER BY c.promoAt desc'
                 )->setParameter('today', new \DateTime());
 
         return $query->getResult();
