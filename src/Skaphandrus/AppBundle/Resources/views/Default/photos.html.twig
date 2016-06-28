@@ -562,41 +562,41 @@
                         <h4>{{"page.photos.h4.selected_fields"|trans}}</h4>
 
                         {% if (params.fosUser is defined) and (params.fosUser is not empty) %}
-                            <p>{% trans with {'%type%': "meta_tag.keyword.fosUser"|trans, '%value%': pagination[0].fosUser} %} page.photos.p.selected_fields {% endtrans %}</p>
+                            <p>{% trans with {'%type%': "meta_tag.keyword.fosUser"|trans, '%value%': pagination[0].fosUser} %} page.photos.p.selected_fields_user {% endtrans %}</p>
                         {% endif %}
 
                         {#-----spots-----#}
                         {% if (params.spot is defined) and (params.spot is not empty) %}
-                            <p>{% trans with {'%type%': "meta_tag.keyword.spot"|trans, '%value%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.p.selected_fields {% endtrans %}</p>
+                            <p>{% trans with {'%type%': "meta_tag.keyword.spot"|trans, '%value%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.p.selected_fields_spot {% endtrans %}</p>
                         {% elseif (params.spotName is defined) and (params.spotName is not empty) %}
-                            {% trans with {'%type%': "meta_tag.keyword.spot"|trans, '%value%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.p.selected_fields {% endtrans %}</p>
+                            {% trans with {'%type%': "meta_tag.keyword.spot"|trans, '%value%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.p.selected_fields_spot {% endtrans %}</p>
                         {% elseif (params.location is defined) and (params.location is not empty) %}
-                            <p>{% trans with {'%type%': "meta_tag.keyword.location"|trans, '%value%': pagination[0].spot.location.name~", "~pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.p.selected_fields {% endtrans %}</p>
+                            <p>{% trans with {'%type%': "meta_tag.keyword.location"|trans, '%value%': pagination[0].spot.location.name~", "~pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.p.selected_fields_location {% endtrans %}</p>
                         {% elseif (params.region is defined) and (params.region is not empty) %}
-                            <p>{% trans with {'%type%': "meta_tag.keyword.region"|trans, '%value%': pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.p.selected_fields {% endtrans %}</p>
+                            <p>{% trans with {'%type%': "meta_tag.keyword.region"|trans, '%value%': pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.p.selected_fields_region {% endtrans %}</p>
                         {% elseif (params.country is defined) and (params.country is not empty) %}
-                            <p>{% trans with {'%type%': "meta_tag.keyword.country"|trans, '%value%': pagination[0].spot.location.region.country} %} page.photos.p.selected_fields {% endtrans %}</p>
+                            <p>{% trans with {'%type%': "meta_tag.keyword.country"|trans, '%value%': pagination[0].spot.location.region.country} %} page.photos.p.selected_fields_country {% endtrans %}</p>
                         {% elseif (params.countryName is defined) and (params.countryName is not empty) %}
-                            <p>{% trans with {'%type%': "meta_tag.keyword.country"|trans, '%value%': pagination[0].spot.location.region.country} %} page.photos.p.selected_fields {% endtrans %}</p>
+                            <p>{% trans with {'%type%': "meta_tag.keyword.country"|trans, '%value%': pagination[0].spot.location.region.country} %} page.photos.p.selected_fields_country {% endtrans %}</p>
                         {% endif %}
 
                         {#-----marine animals-----#}
                         {% if (params.vernacular is defined) and (params.vernacular is not empty) %}
-                            <p>{% trans with {'%type%': "meta_tag.keyword.vernacular"|trans, '%value%': params.vernacular} %} page.photos.p.selected_fields {% endtrans %}</p>
+                            <p>{% trans with {'%type%': "meta_tag.keyword.vernacular"|trans, '%value%': params.vernacular} %} page.photos.p.selected_fields_vernacular {% endtrans %}</p>
                         {% elseif (params.species is defined) and (params.species is not empty) %}
-                            <p>{% trans with {'%type%': "meta_tag.keyword.species"|trans, '%value%': pagination[0].species.name} %} page.photos.p.selected_fields {% endtrans %}</p>
+                            <p>{% trans with {'%type%': "meta_tag.keyword.species"|trans, '%value%': pagination[0].species.name} %} page.photos.p.selected_fields_species {% endtrans %}</p>
                         {% elseif (params.genus is defined) and (params.genus is not empty) %}
-                            <p>{% trans with {'%type%': "meta_tag.keyword.genus"|trans, '%value%': pagination[0].species.genus.name} %} page.photos.p.selected_fields {% endtrans %}</p>
+                            <p>{% trans with {'%type%': "meta_tag.keyword.genus"|trans, '%value%': pagination[0].species.genus.name} %} page.photos.p.selected_fields_genus {% endtrans %}</p>
                         {% elseif (params.family is defined) and (params.family is not empty) %}
-                            <p>{% trans with {'%type%': "meta_tag.keyword.family"|trans, '%value%': pagination[0].species.genus.family.name} %} page.photos.p.selected_fields {% endtrans %}</p>
+                            <p>{% trans with {'%type%': "meta_tag.keyword.family"|trans, '%value%': pagination[0].species.genus.family.name} %} page.photos.p.selected_fields_family {% endtrans %}</p>
                         {% elseif (params.order is defined) and (params.order is not empty) %}
-                            <p>{% trans with {'%type%': "meta_tag.keyword.order"|trans, '%value%': pagination[0].species.genus.family.order.name} %} page.photos.p.selected_fields {% endtrans %}</p>
+                            <p>{% trans with {'%type%': "meta_tag.keyword.order"|trans, '%value%': pagination[0].species.genus.family.order.name} %} page.photos.p.selected_fields_order {% endtrans %}</p>
                         {% elseif (params.class is defined) and (params.class is not empty) %}
-                            <p>{% trans with {'%type%': "meta_tag.keyword.class"|trans, '%value%': pagination[0].species.genus.family.order.class.name} %} page.photos.p.selected_fields {% endtrans %}</p>
+                            <p>{% trans with {'%type%': "meta_tag.keyword.class"|trans, '%value%': pagination[0].species.genus.family.order.class.name} %} page.photos.p.selected_fields_class {% endtrans %}</p>
                         {% elseif (params.phylum is defined) and (params.phylum is not empty) %}
-                            <p>{% trans with {'%type%': "meta_tag.keyword.phylum"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.name} %} page.photos.p.selected_fields {% endtrans %}</p>
+                            <p>{% trans with {'%type%': "meta_tag.keyword.phylum"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.name} %} page.photos.p.selected_fields_phylum {% endtrans %}</p>
                         {% elseif (params.kingdom is defined) and (params.kingdom is not empty) %}
-                            <p>{% trans with {'%type%': "meta_tag.keyword.kingdom"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.kingdom.name} %} page.photos.p.selected_fields {% endtrans %}</p>
+                            <p>{% trans with {'%type%': "meta_tag.keyword.kingdom"|trans, '%value%': pagination[0].species.genus.family.order.class.phylum.kingdom.name} %} page.photos.p.selected_fields_kingdom {% endtrans %}</p>
                         {% endif %}
 
                         {#-----someting else-----#}
