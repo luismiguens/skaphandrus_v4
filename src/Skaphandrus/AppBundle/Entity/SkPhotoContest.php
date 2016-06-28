@@ -32,42 +32,50 @@ class SkPhotoContest {
     //nome da Imagem
     private $image;
 
-    
-    
-    
-    //data de inicio da promoção
+    /**
+     * data de inicio da promoção
+     */
     private $promoAt;
 
-    //data de inicio de submissão de fotografias
+    /**
+     * data de inicio de submissão de fotografias
+     */
     private $beginAt;
 
-    //data de inicio da votação do publico
+    /**
+     * data de inicio da votação do publico
+     */
     private $publicVotationAt;
 
-    //data de fim da submissão de fotografias e votação do publico    
+    /**
+     * data de fim da submissão de fotografias e votação do publico
+     */
     private $endAt;
 
-    //data de anuncio dos vencedores
+    /**
+     * data de anuncio dos vencedores
+     */
     private $winnersAt;
 
-    
-    
-    
-    
+    /**
+     * @var boolean
+     */
     private $isVisible = true;
-    
+
+    /**
+     * data de criaçao do concurso
+     */
     private $createdAt;
 
+    /**
+     * data de update do concurso
+     */
     private $updatedAt;
-    
-    
-    
-    
+
     /**
      * @var boolean
      */
     private $isJudge = false;
-
 
     /**
      * @var integer
@@ -103,11 +111,8 @@ class SkPhotoContest {
      * @var \Doctrine\Common\Collections\Collection
      */
     private $photographers;
-
-
     protected $imageFile;
     protected $logoTipo;
-
 
     /**
      * @var integer
@@ -769,26 +774,18 @@ class SkPhotoContest {
         return $this->totalPrice;
     }
 
-    
-    
-    
-    
-    
-    
-    
     //se hoje é maior que a data de inicio da promoção
     public function isInPromotion() {
 
         $now = new \DateTime();
 
-        if ($this->getPromoAt() < $now ) {
+        if ($this->getPromoAt() < $now) {
             return true;
         }
 
         return false;
     }
 
-    
     //se hoje é maior que begin e menor que end (está no periodo de sunmissão das fotografias)
     public function isInProgress() {
 

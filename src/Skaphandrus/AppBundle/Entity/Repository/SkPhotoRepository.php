@@ -429,7 +429,7 @@ class SkPhotoRepository extends EntityRepository {
             $qb->join('s.location', 'l', 'WITH', 's.location = l.id');
             $qb->join('l.region', 'r', 'WITH', 'l.region = r.id');
             $qb->join('r.country', 'c', 'WITH', 'r.country = ?6');
-            $qb->setParameter(6, implode(', ',$country_ids));
+            $qb->setParameter(6, implode(', ', $country_ids));
         }
 
         //country id
