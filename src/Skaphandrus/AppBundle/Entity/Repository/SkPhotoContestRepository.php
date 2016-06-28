@@ -24,7 +24,7 @@ class SkPhotoContestRepository extends EntityRepository {
         return $query->getResult();
     }
 
-    public function findContestEnded() {
+    public function findContestsEnded() {
 
         $query = $this->getEntityManager()->createQuery(
                         'SELECT c

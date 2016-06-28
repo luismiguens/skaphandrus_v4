@@ -27,11 +27,11 @@ class DefaultController extends Controller {
         $modules = $em->getRepository('SkaphandrusAppBundle:SkIdentificationModule')
                 ->findBy(array('isEnabled' => '1'), array('updatedAt' => 'DESC'), 8);
 
-        $contestInProgress = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
-                ->findContestInProgress();
+        $contestsInProgress = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
+                ->findContestsInProgress();
 
-        $contestEnded = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
-                ->findContestEnded();
+        $contestsEnded = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhotoContest')
+                ->findContestsEnded();
 
 //        $contests = $em->getRepository('SkaphandrusAppBundle:SkPhotoContest')
 //                ->findBy(array('isVisible' => true), array('createdAt' => 'DESC'), 8);
@@ -46,8 +46,8 @@ class DefaultController extends Controller {
 
         return $this->render('SkaphandrusAppBundle:Default:index.html.twig', array(
                     'modules' => $modules,
-                    'contestInProgress' => $contestInProgress,
-                    'contestEnded' => $contestEnded,
+                    'contestsInProgress' => $contestsInProgress,
+                    'contestsEnded' => $contestsEnded,
                     'photos' => $photos,
                     'business' => $business,
         ));

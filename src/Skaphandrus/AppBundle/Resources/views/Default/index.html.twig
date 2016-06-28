@@ -323,8 +323,8 @@
                             <div class="ibox-content">
 
                                 <!-- BEGIN contest in progress -->
-                                {% if contestInProgress %}
-                                    {% for contest in contestInProgress %}
+                                {% if contestsInProgress %}
+                                    {% for contest in contestsInProgress %}
                                         <div class="row">
                                             <div class="col-xs-5">
                                                 <h4>{{link_to_contest(contest)}}</h4>
@@ -412,7 +412,7 @@
                                 <!-- END contest in progress -->
 
                                 <!-- BEGIN contest ended -->
-                                {% for contest in contestEnded %}
+                                {% for contest in contestsEnded %}
                                     <div class="row">
                                         <div class="col-xs-9">
                                             <h4>{{link_to_contest(contest)}}</h4>
