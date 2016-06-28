@@ -37,7 +37,7 @@ class DefaultController extends Controller {
 //                ->findBy(array('isVisible' => true), array('createdAt' => 'DESC'), 8);
 
         $photos = $em->getRepository('SkaphandrusAppBundle:SkPhoto')
-                ->findBy(array(), array('createdAt' => 'DESC'), 15);
+                ->findBy(array(), array('validatedRating' => 'DESC'), 15);
 
         $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')
                 ->findBy(array(), array('createdAt' => 'DESC'), 3);
@@ -1405,6 +1405,8 @@ class DefaultController extends Controller {
         ));
         $form->handleRequest($request);
 
+        $sort = $this->get('translator')->trans('page.photos.label.best');
+
         // 1) verificar se é post
         if ($this->getRequest()->isMethod('POST')):
 
@@ -1455,10 +1457,17 @@ class DefaultController extends Controller {
         //vem por get
         else:
             $params = $request->query->all();
+            if (array_key_exists('sort', $params)) {
+                if ($params['sort'] == "p.validatedRating") {
+                    $sort = $this->get('translator')->trans('page.photos.label.best');
+                } elseif ($params['sort'] == "p.id") {
+                    $sort = $this->get('translator')->trans('page.photos.label.id');
+                }
+            }
         endif;
 
         $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilderForGallery($locale, $params, 30);
-        
+
         //se o resultado da query for NULL vai buscar as photos todas
         if ($qb->getQuery()->getResult() == null) {
             $params = [];
@@ -1473,6 +1482,7 @@ class DefaultController extends Controller {
         return $this->render('SkaphandrusAppBundle:Default:photos.html.twig', array(
                     'pagination' => $pagination,
                     'params' => $params,
+                    'sort' => $sort,
                     'form' => $form->createView(),
         ));
     }
