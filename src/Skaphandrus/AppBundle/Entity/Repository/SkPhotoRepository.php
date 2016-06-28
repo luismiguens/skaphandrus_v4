@@ -514,15 +514,15 @@ class SkPhotoRepository extends EntityRepository {
             $qb->setParameter(14, $params['kingdom']);
         }
 
-        if ($order) {
-            $qb->orderBy('p.' . key($order), $order[key($order)]);
-        }
-
-        if ($offset) {
-            $qb->setFirstResult($offset);
-        }
-
-        $qb->setMaxResults($limit);
+//        if ($order) {
+//            $qb->orderBy('p.' . key($order), $order[key($order)]);
+//        }
+//
+//        if ($offset) {
+//            $qb->setFirstResult($offset);
+//        }
+//
+        //$qb->setMaxResults($limit);
 
         //dump($qb->getQuery());
 

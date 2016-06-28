@@ -37,7 +37,7 @@ class DefaultController extends Controller {
 //                ->findBy(array('isVisible' => true), array('createdAt' => 'DESC'), 8);
 
         $photos = $em->getRepository('SkaphandrusAppBundle:SkPhoto')
-                ->findBy(array(), array('validatedRating' => 'DESC'), 15);
+                ->findBy(array(), array('validatedRating' => 'DESC'), 30);
 
         $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')
                 ->findBy(array(), array('createdAt' => 'DESC'), 3);
@@ -1398,6 +1398,7 @@ class DefaultController extends Controller {
 
         $locale = $this->get('request')->getLocale();
 //        $params = $request->request->get('skaphandrus_filter_gallery');
+        $params = [];
 
         $form = $this->createForm(new \Skaphandrus\AppBundle\Form\SkFilterGalleryType(), array(
             'action' => 'POST',
@@ -1468,15 +1469,18 @@ class DefaultController extends Controller {
 
         $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilderForGallery($locale, $params, 30);
 
-        //se o resultado da query for NULL vai buscar as photos todas
-        if ($qb->getQuery()->getResult() == null) {
-            $params = [];
-            $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilderForGallery($locale, $params, 30);
-        }
+//        //se o resultado da query for NULL vai buscar as photos todas
+//        if ($qb->getQuery()->getResult() == null) {
+//            $params = [];
+//            $qb = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')->getQueryBuilderForGallery($locale, $params, 30);
+//        }
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-                $qb, $this->get('request')->query->getInt('page', 1)/* page number */, 30/* limit per page */
+                $qb, 
+                $this->get('request')->query->getInt('page', 1)/* page number */,
+                30/* limit per page */,
+                array('defaultSortFieldName'=>'p.validatedRating', 'defaultSortDirection'=>'DESC')
         );
 
         return $this->render('SkaphandrusAppBundle:Default:photos.html.twig', array(
