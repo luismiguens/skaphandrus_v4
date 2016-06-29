@@ -1,0 +1,28 @@
+{% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
+
+
+{% block heading_action %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}
+
+
+
+
+{% block body %}
+
+    
+    {{objs.species.genus.family.name}}
+    
+{% endblock %}

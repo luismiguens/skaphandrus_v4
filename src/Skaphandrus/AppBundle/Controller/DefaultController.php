@@ -1477,15 +1477,37 @@ class DefaultController extends Controller {
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-                $qb, 
-                $this->get('request')->query->getInt('page', 1)/* page number */,
-                30/* limit per page */,
-                array('defaultSortFieldName'=>'p.validatedRating', 'defaultSortDirection'=>'DESC')
+                $qb, $this->get('request')->query->getInt('page', 1)/* page number */, 30/* limit per page */, array('defaultSortFieldName' => 'p.validatedRating', 'defaultSortDirection' => 'DESC')
         );
+
+
+//        dump($params);
+
+
+        $objs = new \stdClass();
+
+
+
+
+
+
+        foreach ($params as $key => $value) {
+            if ($key != 'sort' and $key != 'direction'  and $key != 'page' and $key != 'fosUser'):
+                $objs->{$key} = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:Sk" . ucfirst($key))->find($value);
+            elseif ($key == 'fosUser'):
+                $objs->{$key} = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:" . ucfirst($key))->find($value);
+//                elseif ($key == 'vernacular'):
+//                $objs->{$key} = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkSpecies" . ucfirst($key))->find($value);
+            endif;
+        }
+
+//        dump($objs);
+
 
         return $this->render('SkaphandrusAppBundle:Default:photos.html.twig', array(
                     'pagination' => $pagination,
                     'params' => $params,
+                    'objs' => $objs,
                     'sort' => $sort,
                     'form' => $form->createView(),
         ));
