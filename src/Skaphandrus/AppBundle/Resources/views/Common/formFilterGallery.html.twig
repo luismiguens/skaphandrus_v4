@@ -4,38 +4,42 @@
 {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
 
 <div class="row">
+
     <div class="col-md-6">
+        <fieldset>
+            <legend style="color:gray">
+                <h4>{{"page.filter_gallery.h4.legend_marine_species"|trans}}</h4>
+            </legend>
+            {{ form_row(form.kingdom) }}
+            {{ form_row(form.phylum) }}
+            {{ form_row(form.class) }}
+            {{ form_row(form.order) }}
+            {{ form_row(form.family) }}
+            {{ form_row(form.genus) }}
+            {{ form_row(form.species) }}
+            {{ form_row(form.vernacular) }}
+        </fieldset>
+    </div>
+    <div class="col-md-6">
+        <fieldset>
+            <legend style="color:gray">
+                <h4>{{"page.filter_gallery.h4.legend_geografic"|trans}}</h4>
+            </legend>
+            {{ form_row(form.countryName) }}
+            {{ form_row(form.region) }}
+            {{ form_row(form.location) }}
+            {{ form_row(form.spotName) }}
+        </fieldset>
+
         <fieldset>
             <legend style="color:gray">
                 <h4>{{"page.filter_gallery.h4.legend_fos_user"|trans}}</h4>
             </legend>
             {{ form_row(form.fosUser) }}
         </fieldset>   
-        <fieldset>
-            <legend style="color:gray">
-                <h4>{{"page.filter_gallery.h4.legend_geografic"|trans}}</h4>
-            </legend>
-            {{ form_row(form.spotName) }}
-            {{ form_row(form.location) }}
-            {{ form_row(form.region) }}
-            {{ form_row(form.countryName) }}
-        </fieldset>
+
     </div>
-    <div class="col-md-6">
-        <fieldset>
-            <legend style="color:gray">
-                <h4>{{"page.filter_gallery.h4.legend_marine_species"|trans}}</h4>
-            </legend>
-            {{ form_row(form.vernacular) }}
-            {{ form_row(form.species) }}
-            {{ form_row(form.genus) }}
-            {{ form_row(form.family) }}
-            {{ form_row(form.order) }}
-            {{ form_row(form.class) }}
-            {{ form_row(form.phylum) }}
-            {{ form_row(form.kingdom) }}
-        </fieldset>
-    </div>
+
 </div>
 <div class="row">
     <div class="hr-line-dashed"></div>
