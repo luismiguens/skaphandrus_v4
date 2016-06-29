@@ -555,9 +555,9 @@
 
                             <!-----marine animals----->
                             {% if (params.vernacular is defined) and (params.vernacular is not empty) %}
-                                <h5>{% trans with {'%vernacular%': params.vernacular} %} page.photos.p.selected_fields_vernacular {% endtrans %}&nbsp;</h5>
+                                <h5>{% trans with {'%vernacular%': objs.vernacular.name} %} page.photos.p.selected_fields_vernacular {% endtrans %}&nbsp;</h5>
                             {% elseif (params.species is defined) and (params.species is not empty) %}
-                                <h5>{% trans with {'%species%': params.species} %} page.photos.p.selected_fields_species {% endtrans %}&nbsp;</h5>
+                                <h5>{% trans with {'%species%': objs.species.name} %} page.photos.p.selected_fields_species {% endtrans %}&nbsp;</h5>
                             {% elseif (params.genus is defined) and (params.genus is not empty) %}
                                 <h5>{% trans with {'%genus%': objs.species.genus.name} %} page.photos.p.selected_fields_genus {% endtrans %}&nbsp;</h5>
                             {% elseif (params.family is defined) and (params.family is not empty) %}
