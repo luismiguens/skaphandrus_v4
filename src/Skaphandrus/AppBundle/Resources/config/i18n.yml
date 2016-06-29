@@ -19,7 +19,7 @@ criterias:
     defaults: { _controller: SkaphandrusAppBundle:Identification:criterias }
 
 species:
-    locales:  { en: "/en/marine-animals/species/{slug}", pt: "/pt/animais-marinhos/especie/{slug}" }
+    locales:  { en: "/en/marine-animals/species/{slug}", pt: "/pt/animais-marinhos/espécie/{slug}" }
     defaults: { _controller: SkaphandrusAppBundle:Default:speciesPage }
 
 taxonomy:

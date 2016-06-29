@@ -19,7 +19,11 @@
 
 {#se tiver vernaculares mas nao for na lingua do user ex:http://127.0.0.1:8000/pt/animais-marinhos/especie/Eledone%20cirrhosa mas em en tem#}
 {% if auxCommon is empty %}
-{% set title %}{% trans with {'%species%': species.name } %} page.species.meta_tag.title_no_common_in_language {% endtrans %}{% endset %}
+    {% for author in species.ScientificNames %}
+        {% set auxAuthor = auxAuthor~', '~author.author %}
+    {% endfor %}
+{% set title %}{% trans with {'%species%': species.name, '%author_name%': auxAuthor } %} page.species.meta_tag.title_author {% endtrans %}{% endset %}
+{#{% set title %}{% trans with {'%species%': species.name } %} page.species.meta_tag.title_no_common_in_language {% endtrans %}{% endset %}#}
 {% endif %}
 
 {#se não tiver vernaculares, criar title com autor #}
