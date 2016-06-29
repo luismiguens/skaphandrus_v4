@@ -293,7 +293,7 @@
                                 {#<div class="ibox-title">#}
                                 {#</div>#}
                                 <div class="ibox-content">
-                                    <h3>{% trans with {'%name%': user.personal.name} %} page.photos.h3.about_me {% endtrans %}</h3>
+                                    <h3>{% trans with {'%name%': user.personal.name} %} page.user.h3.about_me {% endtrans %}</h3>
                                     <div class="ibox">
                                         <div id="readMore">                                
                                             <p class="small" itemprop="description"> {{user.settings.observations|raw}} </p>
@@ -319,7 +319,7 @@
                                 {#<div class="ibox-title">#}
                                 {#</div>#}
                                 <div class="ibox-content">
-                                    <h3>{% trans with {'%name%': user.personal.name} %} page.photos.h3.friends {% endtrans %}</h3>
+                                    <h3>{% trans with {'%name%': user.personal.name} %} page.user.h3.friends {% endtrans %}</h3>
                                     <div class="user-friends"> 
                                         {% for person in friends %}
                                             {% if person.skaphandrusId != false %}
