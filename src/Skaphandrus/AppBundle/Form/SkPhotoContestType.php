@@ -110,7 +110,7 @@ class SkPhotoContestType extends AbstractType {
                         'rules' => array(
                             'field_type' => 'textarea',
                             'label' => 'form.photo_contest.label.rules',
-                            'attr' => array('class' => 'form-control', 'rows' => '40', 'maxlength'=>false),
+                            'attr' => array('class' => 'form-control', 'rows' => '40', 'maxlength' => false),
                         //                  'locale_options' => array(
                         //                    'en' => array(
                         //                        'label' => 'nom'
