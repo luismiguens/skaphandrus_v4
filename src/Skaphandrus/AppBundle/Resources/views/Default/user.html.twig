@@ -371,10 +371,12 @@
                             <div class="col col-lg-12">
                                 <div class="ibox" >
                                     <div class="ibox-content">
-                                        <h2>{% trans with {'%name%': user.personal.name} %}page.user.h2.spots_map{% endtrans %}</h2>
-                                        <p class="text-muted">{% trans with {'%name%': user.personal.name} %}page.user.p.spots_map{% endtrans %}</p>
 
                                         {% if map %}
+
+                                            <h2>{% trans with {'%name%': user.personal.name} %}page.user.h2.spots_map{% endtrans %}</h2>
+                                            <p class="text-muted">{% trans with {'%name%': user.personal.name} %}page.user.p.spots_map{% endtrans %}</p>
+
                                             <div class="m-b-md">
                                                 {{google_map(map)}}
                                             </div>
