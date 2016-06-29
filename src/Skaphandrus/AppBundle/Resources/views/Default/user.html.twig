@@ -1,6 +1,6 @@
 {% extends '@SkaphandrusAppBundle/Resources/views/content_layout.html.twig' %}
 
-{% block page_title %}{% trans with {'%name%': user.personal.name|title|capitalize } %}page.user.meta_tag.title{% endtrans %}{% endblock %}
+{% block page_title %}{% trans with {'%name%': user.personal.name, '%title%': user.personal.honorific } %}page.user.meta_tag.title{% endtrans %}{% endblock %}
 
 {% block page_description %}{{ user.settings.observations [0:160]}}{% endblock %}
 
@@ -293,7 +293,7 @@
                                 {#<div class="ibox-title">#}
                                 {#</div>#}
                                 <div class="ibox-content">
-                                    <h3>{{ "page.user.h5.about_me"|trans }}</h3>
+                                    <h3>{% trans with {'%name%': user.personal.name} %} page.photos.h3.about_me {% endtrans %}</h3>
                                     <div class="ibox">
                                         <div id="readMore">                                
                                             <p class="small" itemprop="description"> {{user.settings.observations|raw}} </p>
@@ -319,7 +319,7 @@
                                 {#<div class="ibox-title">#}
                                 {#</div>#}
                                 <div class="ibox-content">
-                                    <h3>{{ "page.user.h5.friends"|trans }}</h3>
+                                    <h3>{% trans with {'%name%': user.personal.name} %} page.photos.h3.friends {% endtrans %}</h3>
                                     <div class="user-friends"> 
                                         {% for person in friends %}
                                             {% if person.skaphandrusId != false %}
@@ -339,7 +339,7 @@
                                 <div class="ibox-title">
                                     <h3>Private message</h3>
                                 </div>
-                                <p class="small"> Send a private message to João </p>
+                                <p class="small"> Send a private message to Luis </p>
                                 <div class="form-group">
                                     <label>Subject</label>
                                     <input type="email" class="form-control" placeholder="Message subject">
@@ -362,13 +362,17 @@
                             <div class="col col-lg-12">
                                 <div class="ibox" >
                                     <div class="ibox-content">
-                                        <h3>{% trans with {'%name%': user.personal.name|title} %}page.user.h3.spots{% endtrans %}</h3>
+                                        <h2>{% trans with {'%name%': user.personal.name} %}page.user.h2.spots_map{% endtrans %}</h2>
+                                        <p class="text-muted">{% trans with {'%name%': user.personal.name} %}page.user.p.spots_map{% endtrans %}</p>
 
                                         {% if map %}
                                             <div class="m-b-md">
                                                 {{google_map(map)}}
                                             </div>
                                         {% endif %}
+
+                                        <h2>{% trans with {'%name%': user.personal.name} %}page.user.h2.spots{% endtrans %}</h2>
+                                        <p class="text-muted">{% trans with {'%name%': user.personal.name} %}page.user.p.spots{% endtrans %}</p>
 
                                         <div id="box_spots"></div>
 
@@ -387,7 +391,7 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title" id="myModalLabel">{% trans with {'%name%': user.personal.name|title} %}page.user.h3.spots{% endtrans %}</h4>
+                                                        <h4 class="modal-title" id="myModalLabel">{% trans with {'%name%': user.personal.name} %}page.user.h3.spots{% endtrans %}</h4>
                                                     </div>
                                                     <div class="modal-body">
 
@@ -423,7 +427,8 @@
                                         <div id="tab-1" class="tab-pane active">
                                             <div class="panel-body">
                                                 <div class="ibox">
-                                                    <h4>{% trans with {'%name%': user.personal.name|title} %}page.user.h3.species{% endtrans %}</h4>
+                                                    <h3>{% trans with {'%name%': user.personal.name} %}page.user.h3.species{% endtrans %}</h3>
+                                                    <p class="text-muted">{% trans with {'%name%': user.personal.name} %}page.user.p.species{% endtrans %}</p>
 
                                                     <div id="box_species"></div>
 
@@ -442,7 +447,7 @@
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                    <h4 class="modal-title" id="myModalLabel">{% trans with {'%name%': user.personal.name|title} %}page.user.h3.species{% endtrans %}</h4>
+                                                                    <h4 class="modal-title" id="myModalLabel">{% trans with {'%name%': user.personal.name} %}page.user.h3.species{% endtrans %}</h4>
                                                                 </div>
                                                                 <div class="modal-body">
 
@@ -464,7 +469,8 @@
                                         <div id="tab-2" class="tab-pane">
                                             <div class="panel-body">
                                                 <div class="ibox">
-                                                    <h4>{% trans with {'%name%': user.personal.name|title} %}page.user.h3.photos_validated{% endtrans %}</h4>
+                                                    <h3>{% trans with {'%name%': user.personal.name} %}page.user.h3.photos_validated{% endtrans %}</h3>
+                                                    <p class="text-muted">{% trans with {'%name%': user.personal.name} %}page.user.p.photos_validated{% endtrans %}</p>
 
                                                     <div id="box_validations"></div>
 
@@ -483,7 +489,7 @@
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                    <h4 class="modal-title" id="myModalLabel">{% trans with {'%name%': user.personal.name|title} %}page.user.h3.photos_validated{% endtrans %}</h4>
+                                                                    <h4 class="modal-title" id="myModalLabel">{% trans with {'%name%': user.personal.name} %}page.user.h3.photos_validated{% endtrans %}</h4>
                                                                 </div>
                                                                 <div class="modal-body">
 
@@ -505,7 +511,8 @@
                                         <div id="tab-3" class="tab-pane">
                                             <div class="panel-body">
                                                 <div class="ibox">
-                                                    <h4>{% trans with {'%name%': user.personal.name|title} %}page.user.h3.photos_suggested{% endtrans %}</h4>
+                                                    <h3>{% trans with {'%name%': user.personal.name} %}page.user.h3.photos_suggested{% endtrans %}</h3>
+                                                    <p class="text-muted">{% trans with {'%name%': user.personal.name} %}page.user.p.photos_suggested{% endtrans %}</p>
 
                                                     <div id="box_suggestions"></div>
 
@@ -524,7 +531,7 @@
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                    <h4 class="modal-title" id="myModalLabel">{% trans with {'%name%': user.personal.name|title} %}page.user.h3.photos_suggested{% endtrans %}</h4>
+                                                                    <h4 class="modal-title" id="myModalLabel">{% trans with {'%name%': user.personal.name} %}page.user.h3.photos_suggested{% endtrans %}</h4>
                                                                 </div>
                                                                 <div class="modal-body">
 
@@ -555,7 +562,9 @@
 
                             <div class="row" >
                                 <div class="col col-lg-12">
-                                    <h2>{% trans with {'%name%': user.personal.name|title} %}page.user.h2.modules{% endtrans %}</h2>
+                                    <h2>{% trans with {'%name%': user.personal.name} %}page.user.h2.modules{% endtrans %}</h2>
+                                    <p class="text-muted">{% trans with {'%name%': user.personal.name} %}page.user.p.modules{% endtrans %}</p>
+
                                     <div class="row">
                                         <div class="gridx">
                                             {% for module in acquisitions %}

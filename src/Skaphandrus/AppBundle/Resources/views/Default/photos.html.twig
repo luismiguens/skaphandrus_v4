@@ -531,7 +531,55 @@
                 <div class="col-md-12">
                     <div class="ibox" id="home_box">
                         <div class="ibox-title">
-                            <h5>{{"page.photos.h5.filter_gallery"|trans}}</h5>
+
+                            <h5>{{"page.photos.h5.filter_gallery"|trans}}&nbsp;</h5>
+
+                            {% if (params.fosUser is defined) and (params.fosUser is not empty) %}
+                                <h5>{% trans with {'%user%': pagination[0].fosUser} %} page.photos.p.selected_fields_user {% endtrans %}&nbsp;</h5>
+                            {% endif %}
+
+                            <!-----spots----->
+                            {% if (params.spot is defined) and (params.spot is not empty) %}
+                                <h5>{% trans with {'%spot%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.p.selected_fields_spot {% endtrans %}&nbsp;</h5>
+                            {% elseif (params.spotName is defined) and (params.spotName is not empty) %}
+                                <h5>{% trans with {'%spot%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.p.selected_fields_spot {% endtrans %}&nbsp;</h5>
+                            {% elseif (params.location is defined) and (params.location is not empty) %}
+                                <h5>{% trans with {'%location%': pagination[0].spot.location.name~", "~pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.p.selected_fields_location {% endtrans %}&nbsp;</h5>
+                            {% elseif (params.region is defined) and (params.region is not empty) %}
+                                <h5>{% trans with {'%region%': pagination[0].spot.location.region.name~", "~pagination[0].spot.location.region.country} %} page.photos.p.selected_fields_region {% endtrans %}&nbsp;</h5>
+                            {% elseif (params.country is defined) and (params.country is not empty) %}
+                                <h5>{% trans with {'%country%': pagination[0].spot.location.region.country} %} page.photos.p.selected_fields_country {% endtrans %}&nbsp;</h5>
+                            {% elseif (params.countryName is defined) and (params.countryName is not empty) %}
+                                <h5>{% trans with {'%country%': pagination[0].spot.location.region.country} %} page.photos.p.selected_fields_country {% endtrans %}&nbsp;</h5>
+                            {% endif %}
+
+                            <!-----marine animals----->
+                            {% if (params.vernacular is defined) and (params.vernacular is not empty) %}
+                                <h5>{% trans with {'%vernacular%': params.vernacular} %} page.photos.p.selected_fields_vernacular {% endtrans %}&nbsp;</h5>
+                            {% elseif (params.species is defined) and (params.species is not empty) %}
+                                <h5>{% trans with {'%species%': pagination[0].species.name} %} page.photos.p.selected_fields_species {% endtrans %}&nbsp;</h5>
+                            {% elseif (params.genus is defined) and (params.genus is not empty) %}
+                                <h5>{% trans with {'%genus%': pagination[0].species.genus.name} %} page.photos.p.selected_fields_genus {% endtrans %}&nbsp;</h5>
+                            {% elseif (params.family is defined) and (params.family is not empty) %}
+                                <h5>{% trans with {'%family%': pagination[0].species.genus.family.name} %} page.photos.p.selected_fields_family {% endtrans %}&nbsp;</h5>
+                            {% elseif (params.order is defined) and (params.order is not empty) %}
+                                <h5>{% trans with {'%order%': pagination[0].species.genus.family.order.name} %} page.photos.p.selected_fields_order {% endtrans %}&nbsp;</h5>
+                            {% elseif (params.class is defined) and (params.class is not empty) %}
+                                <h5>{% trans with {'%class%': pagination[0].species.genus.family.order.class.name} %} page.photos.p.selected_fields_class {% endtrans %}&nbsp;</h5>
+                            {% elseif (params.phylum is defined) and (params.phylum is not empty) %}
+                                <h5>{% trans with {'%phylum%': pagination[0].species.genus.family.order.class.phylum.name} %} page.photos.p.selected_fields_phylum {% endtrans %}&nbsp;</h5>
+                            {% elseif (params.kingdom is defined) and (params.kingdom is not empty) %}
+                                <h5>{% trans with {'%kingdom%': pagination[0].species.genus.family.order.class.phylum.kingdom.name} %} page.photos.p.selected_fields_kingdom {% endtrans %}&nbsp;</h5>
+                            {% endif %}
+
+                            <!-----someting else----->
+                            {% if content is empty %}
+                                <h5>{{ "page.photos.p.no_fileds_selected"|trans }}&nbsp;</h5>
+                            {% endif %}
+
+                            <h5>{% trans with {'%sort%': sort} %} page.photos.p.sorting_order {% endtrans %}.&nbsp;</h5>
+
+                            <h5>{{"page.photos.h5.click_arrow"|trans}}</h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
@@ -555,7 +603,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            {#<div class="row">
                 <div class="col-md-6">
                     <div class="ibox">
 
@@ -565,7 +613,7 @@
                             <p>{% trans with {'%user%': pagination[0].fosUser} %} page.photos.p.selected_fields_user {% endtrans %}</p>
                         {% endif %}
 
-                        {#-----spots-----#}
+                        <!-----spots----->
                         {% if (params.spot is defined) and (params.spot is not empty) %}
                             <p>{% trans with {'%spot%': pagination[0].spot.name~", "~pagination[0].spot.location.name~", "~pagination[0].spot.location.region.country} %} page.photos.p.selected_fields_spot {% endtrans %}</p>
                         {% elseif (params.spotName is defined) and (params.spotName is not empty) %}
@@ -580,7 +628,7 @@
                             <p>{% trans with {'%country%': pagination[0].spot.location.region.country} %} page.photos.p.selected_fields_country {% endtrans %}</p>
                         {% endif %}
 
-                        {#-----marine animals-----#}
+                        <!-----marine animals----->
                         {% if (params.vernacular is defined) and (params.vernacular is not empty) %}
                             <p>{% trans with {'%vernacular%': params.vernacular} %} page.photos.p.selected_fields_vernacular {% endtrans %}</p>
                         {% elseif (params.species is defined) and (params.species is not empty) %}
@@ -599,7 +647,7 @@
                             <p>{% trans with {'%kingdom%': pagination[0].species.genus.family.order.class.phylum.kingdom.name} %} page.photos.p.selected_fields_kingdom {% endtrans %}</p>
                         {% endif %}
 
-                        {#-----someting else-----#}
+                        <!-----someting else----->
                         {% if content is empty %}
                             <p>{{"page.photos.p.no_fileds_selected"|trans}}</p>
                         {% endif %}
@@ -616,7 +664,7 @@
 
                     </div>
                 </div>
-            </div>
+            </div>#}
 
             <div class="row gallery">
                 {% for photo in pagination %}

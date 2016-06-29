@@ -17,6 +17,11 @@
     {% endif %}
 {% endfor %}
 
+{#se tiver vernaculares mas nao for na lingua do user ex:http://127.0.0.1:8000/pt/animais-marinhos/especie/Eledone%20cirrhosa mas em en tem#}
+{% if auxCommon is empty %}
+{% set title %}{% trans with {'%species%': species.name } %} page.species.meta_tag.title_no_common_in_language {% endtrans %}{% endset %}
+{% endif %}
+
 {#se não tiver vernaculares, criar title com autor #}
 {% else %}
     {% for author in species.ScientificNames %}
@@ -314,19 +319,21 @@
                                         {{ species.translate(app.request.locale).description }}
                                     </p>
                                 {% else %}
-                                    {{ "page.species.p.no_description"|trans }}
+                                    <p>{{ "page.species.p.no_description"|trans }}</p>
                                 {% endif %}
 
-                                {% if species.speciesVernaculars|length > 0 %}
+                                {% if auxCommon is not empty %}
                                     <h3>{% trans with {'%species%': species.name } %} page.species.h3.common_names {% endtrans %}</h3>
                                     <ul class="list-unstyled">
-                                        {% for vernacular in species.speciesVernaculars %}
-                                            {% if (vernacular.locale == app.request.locale) %}
-                                                <li>
-                                                    {{ vernacular.vernacular.name|title }}
-                                                </li>
-                                            {% endif %}
-                                        {% endfor %}
+                                        {#{% for vernacular in species.speciesVernaculars %}#}
+                                        {#{% if (vernacular.locale == app.request.locale) %}#}
+                                        <li>
+                                            {{ auxCommon|slice(0, 3)|join(', ') }}
+                                        </li>
+                                        {#{% else %}#}
+                                        {#<p>{{ "page.species.p.no_vernacular_in_language"|trans }}</p>#}
+                                        {#{% endif %}#}
+                                        {#{% endfor %}#}
                                     </ul>
                                 {% endif %}
 
