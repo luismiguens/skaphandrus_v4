@@ -310,6 +310,15 @@
                                     </dl>#}
                                 </div>
                             </div>
+                        {% else %}
+                            <div class="ibox">
+                                <div class="ibox-content">
+                                    <h3>{% trans with {'%name%': user.personal.name} %} page.user.h3.about_me {% endtrans %}</h3>
+                                    <div class="ibox">                         
+                                        <p class="small">{% trans with {'%name%': user.personal.name} %} page.user.p.no_about_me {% endtrans %}</p>
+                                    </div>
+                                </div>
+                            </div>
                         {% endif %}
                         <!-- END - row about -->
 
@@ -330,7 +339,7 @@
                                         {% endfor %}
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
                         {% endif %}
 
                         <!-- BEGIN send message -->
