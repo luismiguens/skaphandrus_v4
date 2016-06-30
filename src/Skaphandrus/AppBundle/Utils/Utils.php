@@ -19,7 +19,7 @@ class Utils {
             'phylum' => array('parent' => 'kingdom', 'next' => 'class', 'parent_plural' => 'kingdoms', 'next_plural' => 'classes'),
             'class' => array('parent' => 'phylum', 'next' => 'order', 'parent_plural' => 'phyla', 'next_plural' => 'orders'),
             'order' => array('parent' => 'class', 'next' => 'family', 'parent_plural' => 'classes', 'next_plural' => 'families'),
-            'family' => array('parent' => 'order', 'next' => 'genus', 'parent_plural' => 'orders', 'next_plural' => 'genus'),
+            'family' => array('parent' => 'order', 'next' => 'genus', 'parent_plural' => 'orders', 'next_plural' => 'genuss'),
             'genus' => array('parent' => 'family', 'next' => 'species', 'parent_plural' => 'families', 'next_plural' => 'speciess'),
         );
     }
