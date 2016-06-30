@@ -303,11 +303,18 @@ class DefaultController extends Controller {
 
             //next taxon é o nome dos nós filhos, ou seja se estamos numa familia = generos(genus)
             $next_taxon = "";
+            $next_taxon_plural = "";
+
             if (array_key_exists($node, $structure)) {
                 $next_taxon = $structure[$node]['next'];
+                $next_taxon_plural = $structure[$node]['next_plural'];
+                
             } elseif ($node = 'kingdom') {
                 $next_taxon = 'phylum';
+                
             }
+
+
 
             foreach ($taxon->getChildNodes() as $child) {
                 $photos = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:SkPhoto")
@@ -330,7 +337,8 @@ class DefaultController extends Controller {
             return $this->render('SkaphandrusAppBundle:Default:taxon.html.twig', array(
                         "node" => $node,
                         "taxon" => $taxon,
-                        "next_taxon" => $next_taxon
+                        "next_taxon" => $next_taxon, 
+                "next_taxon_plural" => $next_taxon_plural
 //                        "photographers" => $photographers
             ));
         } else {
