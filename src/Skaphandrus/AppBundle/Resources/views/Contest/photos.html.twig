@@ -30,7 +30,7 @@
 
 {% block heading_title %}
     {#    {% trans with {'%contest%': category.contest.name, '%category%': category.translate.name} %}page.contest_photos.h2.heading_title{% endtrans %}#}
-    {% trans with {'%contest%': category.contest.name} %}page.contest.meta_tag.title{% endtrans %}
+    {% trans with {'%contest%': category.contest.name, '%category%': category.translate.name} %}page.contest_photos.h2.title{% endtrans %}
 {% endblock %}
 
 {% block heading_breadcrumbs %}

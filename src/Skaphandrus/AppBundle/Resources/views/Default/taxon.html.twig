@@ -12,16 +12,16 @@
             {% set auxCommon = auxCommon|merge([vernacular.name]) %}
 
             {#apresentar 3 nomes comuns ao titulo#}
-        {% set title %}{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%common_names%': auxCommon|slice(0, 3)|join(', '), '%next_taxon%': next_taxon|trans } %} page.taxon.meta_tag.title {% endtrans %}{% endset %}
+        {% set title %}{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%common_names%': auxCommon|slice(0, 3)|join(', '), '%next_taxon%': next_taxon_plural|trans } %} page.taxon.meta_tag.title {% endtrans %}{% endset %}
     {% else %}
-    {% set title %}{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%next_taxon%': next_taxon|trans } %} page.taxon.meta_tag.title_no_common_names {% endtrans %}{% endset %}
+    {% set title %}{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%next_taxon%': next_taxon_plural|trans } %} page.taxon.meta_tag.title_no_common_names {% endtrans %}{% endset %}
 
 {% endif %}
 {% endfor %}
 
 {#se não tiver vernaculares, criar title com sem os nomes comuns #}
 {% else %}
-{% set title %}{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%next_taxon%': next_taxon|trans } %} page.taxon.meta_tag.title_no_common_names {% endtrans %}{% endset %}
+{% set title %}{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%next_taxon%': next_taxon_plural|trans } %} page.taxon.meta_tag.title_no_common_names {% endtrans %}{% endset %}
 {% endif %}
 
 {% block page_title %}{{title}}{% endblock %}
@@ -33,12 +33,12 @@
 
     {% set auxChildNode = auxChildNode|merge([child.name]) %}
 
-{% set description %}{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%taxonomic_groups%': auxTaxonGroup, '%child_taxon%': auxChildNode|join(', '), '%next_taxon%': next_taxon|trans } %} page.taxon.meta_tag.description {% endtrans %}{% endset %}
+{% set description %}{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%taxonomic_groups%': auxTaxonGroup, '%child_taxon%': auxChildNode|join(', '), '%next_taxon%': next_taxon_plural|trans } %} page.taxon.meta_tag.description {% endtrans %}{% endset %}
 
 {% endfor %}
 
 {% if taxon.taxonNodeName == 'kingdom' %}
-{% set description %}{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%child_taxon%': auxChildNode|join(', '), '%next_taxon%': next_taxon|trans } %} page.taxon.meta_tag.description_kingdom {% endtrans %}{% endset %}
+{% set description %}{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%child_taxon%': auxChildNode|join(', '), '%next_taxon%': next_taxon_plural|trans } %} page.taxon.meta_tag.description_kingdom {% endtrans %}{% endset %}
 {% else %}
     {% if taxon.taxonNodeName == 'genus' %}
         {% set auxTaxonGroup = taxon.parentNode.parentNode.parentNode.parentNode.parentNode.name ~', '~ taxon.parentNode.parentNode.parentNode.parentNode.name ~', '~ taxon.parentNode.parentNode.parentNode.name ~', '~ taxon.parentNode.parentNode.name ~', '~ taxon.parentNode.name %}
@@ -51,7 +51,7 @@
     {%elseif taxon.taxonNodeName == 'phylum' %}
         {% set auxTaxonGroup = taxon.parentNode.name %}
     {% endif %}
-{% set description %}{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%taxonomic_groups%': auxTaxonGroup, '%child_taxon%': auxChildNode|join(', '), '%next_taxon%': next_taxon|trans } %} page.taxon.meta_tag.description {% endtrans %}{% endset %}
+{% set description %}{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%taxonomic_groups%': auxTaxonGroup, '%child_taxon%': auxChildNode|join(', '), '%next_taxon%': next_taxon_plural|trans } %} page.taxon.meta_tag.description {% endtrans %}{% endset %}
 
 {% endif %}
 
@@ -262,7 +262,7 @@
                                     {% endif %}
 
                                     <h2>{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name} %} page.taxon.h2.taxonomic_structure {% endtrans %}</h2>
-                                    <p class="text-muted">{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%next_taxon%': next_taxon|trans } %} page.taxon.p.taxonomic_structure {% endtrans %}</p>
+                                    <p class="text-muted">{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%next_taxon%': next_taxon_plural|trans } %} page.taxon.p.taxonomic_structure {% endtrans %}</p>
 
                                     <ul class="list-unstyled" itemscope itemtype="http://schema.org/ListItem">
                                         {% if taxon.taxonNodeName == 'genus' %}
@@ -317,8 +317,8 @@
                 <div class="row">
                     <div class="ibox">
                         <div class="ibox-title">
-                            <h2>{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%next_taxon%': next_taxon|trans } %} page.taxon.h2.next_taxon_photos {% endtrans %}</h2>
-                            <p class="text-muted">{% trans with {'%value%': taxon.name, '%next_taxon%': next_taxon|trans } %} page.taxon.p.next_taxon_photos {% endtrans %}</p>
+                            <h2>{% trans with {'%type%': taxon.taxonNodeName|trans|capitalize, '%value%': taxon.name, '%next_taxon%': next_taxon_plural|trans } %} page.taxon.h2.next_taxon_photos {% endtrans %}</h2>
+                            <p class="text-muted">{% trans with {'%value%': taxon.name, '%next_taxon%': next_taxon_plural|trans } %} page.taxon.p.next_taxon_photos {% endtrans %}</p>
                         </div>
                         <div class="ibox-content">
 

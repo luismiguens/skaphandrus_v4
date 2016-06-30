@@ -30,7 +30,7 @@
 
 {% block heading_title %}
     {#    {{ contest.name }} - {{ "page.winners.title.winners"|trans }}#}
-    {% trans with {'%contest%': contest.name} %}page.contest.meta_tag.title{% endtrans %}
+    {% trans with {'%contest%': contest.name} %}page.contest_winners.h3.title{% endtrans %}
 {% endblock %}
 
 {% block javascripts %}

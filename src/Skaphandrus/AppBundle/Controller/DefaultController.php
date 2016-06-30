@@ -308,10 +308,9 @@ class DefaultController extends Controller {
             if (array_key_exists($node, $structure)) {
                 $next_taxon = $structure[$node]['next'];
                 $next_taxon_plural = $structure[$node]['next_plural'];
-                
             } elseif ($node = 'kingdom') {
                 $next_taxon = 'phylum';
-                
+                $next_taxon_plural = 'phyla';
             }
 
 
@@ -337,8 +336,8 @@ class DefaultController extends Controller {
             return $this->render('SkaphandrusAppBundle:Default:taxon.html.twig', array(
                         "node" => $node,
                         "taxon" => $taxon,
-                        "next_taxon" => $next_taxon, 
-                "next_taxon_plural" => $next_taxon_plural
+                        "next_taxon" => $next_taxon,
+                        "next_taxon_plural" => $next_taxon_plural
 //                        "photographers" => $photographers
             ));
         } else {
@@ -1500,7 +1499,7 @@ class DefaultController extends Controller {
 
 
         foreach ($params as $key => $value) {
-            if ($key != 'sort' and $key != 'direction'  and $key != 'page' and $key != 'fosUser'):
+            if ($key != 'sort' and $key != 'direction' and $key != 'page' and $key != 'fosUser'):
                 $objs->{$key} = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:Sk" . ucfirst($key))->find($value);
             elseif ($key == 'fosUser'):
                 $objs->{$key} = $this->getDoctrine()->getRepository("SkaphandrusAppBundle:" . ucfirst($key))->find($value);
