@@ -95,9 +95,11 @@
                             <div class="row m-b-md">
                                 <div class="col-md-4" align="center">
                                     {% if contest.business %}
-                                        <img src="{{ contest.business.getWebPath | imagine_filter('sk_widen_160') }}" class="img-responsive" />
+                                        <a href="{{ path('business_no_slug', { 'id': contest.business.id }) }}">
+                                            <img src="{{ contest.business.getWebPath | imagine_filter('sk_widen_160') }}" class="img-responsive" />
+                                        </a>
                                         <div>
-                                            <h2 class="text-navy">{{ contest.business.name }}</h2>
+                                            <a href="{{ path('business_no_slug', { 'id': contest.business.id }) }}"><h2 class="text-navy">{{ contest.business.name }}</h2></a>
                                         </div>
                                         <div>
                                             <a class="btn btn-primary btn-block btn-xs" href="{{ path('booking_admin_new', {'business_id': contest.business.id}) }}">{{ "page.business.button.book_now"|trans }}</a>
