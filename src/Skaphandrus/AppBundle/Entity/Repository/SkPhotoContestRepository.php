@@ -17,10 +17,12 @@ class SkPhotoContestRepository extends EntityRepository {
         $query = $this->getEntityManager()->createQuery(
                         'SELECT c
             FROM SkaphandrusAppBundle:SkPhotoContest c
-            WHERE c.promoAt >= :today
+            WHERE c.promoAt <= :today
             ORDER BY c.promoAt desc'
                 )->setParameter('today', new \DateTime());
 
+        
+        
         return $query->getResult();
     }
 
