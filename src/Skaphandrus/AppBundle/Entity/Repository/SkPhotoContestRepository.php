@@ -17,7 +17,7 @@ class SkPhotoContestRepository extends EntityRepository {
         $query = $this->getEntityManager()->createQuery(
                         'SELECT c
             FROM SkaphandrusAppBundle:SkPhotoContest c
-            WHERE c.promoAt <= :today
+            WHERE c.promoAt <= :today and c.winnersAt > :today
             ORDER BY c.promoAt desc'
                 )->setParameter('today', new \DateTime());
 
