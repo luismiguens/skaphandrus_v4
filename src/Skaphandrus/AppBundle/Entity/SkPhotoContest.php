@@ -127,7 +127,7 @@ class SkPhotoContest {
     /**
      * @var integer
      */
-    private $totalPrice = 0;
+    private $totalPrize = 0;
 
     /**
      *  variavel auxiliar para que guarda o numero total de views
@@ -753,25 +753,25 @@ class SkPhotoContest {
     }
 
     /**
-     * Set totalPrice
+     * Set totalPrize
      *
-     * @param string $totalPrice
+     * @param string $totalPrize
      *
      * @return SkPhotoContest
      */
-    public function setTotalPrice($totalPrice) {
-        $this->totalPrice = $totalPrice;
+    public function setTotalPrize($totalPrize) {
+        $this->totalPrize = $totalPrize;
 
         return $this;
     }
 
     /**
-     * Get totalPrice
+     * Get totalPrize
      *
      * @return string
      */
-    public function getTotalPrice() {
-        return $this->totalPrice;
+    public function getTotalPrize() {
+        return $this->totalPrize;
     }
 
     //se hoje é maior que a data de inicio da promoção

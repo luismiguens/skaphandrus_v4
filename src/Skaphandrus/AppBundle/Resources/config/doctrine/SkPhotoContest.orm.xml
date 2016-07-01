@@ -42,7 +42,7 @@
             </options>
         </field>
         
-        <field name="totalPrice" type="string" column="total_price" nullable="true">
+        <field name="totalPrize" type="string" column="total_prize" nullable="true">
             <options>
                 <option name="default">0</option>
             </options>
