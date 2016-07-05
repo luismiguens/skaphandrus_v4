@@ -129,17 +129,7 @@ contest_participate:
     locales:  { en: "/en/underwater-photo-contest/participate/{contest_id}", pt: "/pt/concurso-fotografia-subaquatica/participa/{contest_id}" }
     defaults: { _controller: SkaphandrusAppBundle:Contest:participate }
     
-contest_add_photo:
-    locales:  { en: "/en/category/{category_id}/add-photo/{photo_id}", pt: "/pt/categoria/{category_id}/adicionar-fotografia/{photo_id}" }
-    defaults: { _controller: SkaphandrusAppBundle:Contest:addPhoto }
 
-contest_remove_photo:
-    locales:  { en: "/en/category/{category_id}/remove-photo/{photo_id}", pt: "/pt/category/{category_id}/remover-fotografia/{photo_id}" }
-    defaults: { _controller: SkaphandrusAppBundle:Contest:removePhoto }
-
-contest_vote_photo:
-    locales:  { en: "/en/category/{category_id}/vote-photo/{photo_id}", pt: "/pt/category/{category_id}/votar-fotografia/{photo_id}" }
-    defaults: { _controller: SkaphandrusAppBundle:Contest:votePhoto }
 
 contests_photographers:
     locales:  { en: "/en/underwater-photo-contest/photographers/{contest_slug}", pt: "/pt/concurso-fotografia-subaquatica/fotografos/{contest_slug}" }

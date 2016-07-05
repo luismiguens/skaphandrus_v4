@@ -121,10 +121,13 @@ class ContestController extends Controller {
         $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
                 ->findOneById($photo_id);
 
-        $category->addPhoto($photo);
+        //$category->addPhoto($photo);
+        $photo->addCategory($category);
+//        dump($category->getId());
+//        dump($photo->getId());
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($category);
+        $em->persist($photo);
         $em->flush();
 
         return new JsonResponse(array());
@@ -135,10 +138,14 @@ class ContestController extends Controller {
                 ->findOneById($category_id);
         $photo = $this->getDoctrine()->getRepository('SkaphandrusAppBundle:SkPhoto')
                 ->findOneById($photo_id);
-        $category->removePhoto($photo);
+        
+        
+//        $category->removePhoto($photo);
 
+        $photo->removeCategory($category);
+        
         $em = $this->getDoctrine()->getManager();
-        $em->persist($category);
+        $em->persist($photo);
         $em->flush();
 
         return new JsonResponse(array());
