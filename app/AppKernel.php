@@ -58,6 +58,7 @@ class AppKernel extends Kernel {
             new BeSimple\I18nRoutingBundle\BeSimpleI18nRoutingBundle(),
             new Oneup\UploaderBundle\OneupUploaderBundle(),
 //            new Skaphandrus\MadeiraBundle\SkaphandrusMadeiraBundle(),
+            
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
