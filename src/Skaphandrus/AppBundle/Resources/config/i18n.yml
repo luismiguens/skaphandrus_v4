@@ -149,3 +149,27 @@ contests_contest:
 
 
 
+#################################################################################  
+#### MADEIRA CONTESTS
+#################################################################################
+
+madeira_contest:
+    locales:  { en: "/en/{year}", pt: "/pt/{year}" }
+    defaults: { _controller: SkaphandrusMadeiraBundle:Default:contest }
+    host:     "127.0.0.2"
+#    host:     "hello.example.com"
+
+madeira_contest_photos:
+    locales:  { en: "/en/{year}/photos/{category_slug}", pt: "/pt/{year}/fotografias/{category_slug}" }
+    defaults: { _controller: SkaphandrusMadeiraBundle:Default:photos }
+    host:     "127.0.0.2"
+    
+madeira_contest_photographers:
+    locales:  { en: "/en/{year}/photographers", pt: "/pt/{year}/fotografos" }
+    defaults: { _controller: SkaphandrusMadeiraBundle:Default:photographers }
+    host:     "127.0.0.2"
+    
+madeira_contest_sponsors:
+    locales:  { en: "/en/{year}/sponsors", pt: "/pt/{year}/patrocinadores" }
+    defaults: { _controller: SkaphandrusMadeiraBundle:Default:sponsors }
+    host:     "127.0.0.2"

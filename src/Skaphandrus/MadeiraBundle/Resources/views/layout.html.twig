@@ -1,0 +1,203 @@
+{# empty Twig template #}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--favicon icon-->
+    <link rel="icon" type="image/png" href="{{ asset('bundles/skaphandrusmadeira/img/favicon.png') }}">
+
+    <title>Title goes here</title>
+
+   
+
+ <link href='http://fonts.googleapis.com/css?family=Abel|Source+Sans+Pro:400,300,300italic,400italic,600,600italic,700,700italic,900,900italic,200italic,200' rel='stylesheet' type='text/css'>
+<link href="{{ asset('bundles/skaphandrusmadeira/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/skaphandrusmadeira/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/skaphandrusmadeira/css/magnific-popup.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/skaphandrusmadeira/css/shortcodes/shortcodes.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/skaphandrusmadeira/css/owl.carousel.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/skaphandrusmadeira/css/owl.theme.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/skaphandrusmadeira/css/style.css?v=1') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/skaphandrusmadeira/css/style-responsive.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/skaphandrusmadeira/css/default-theme.css') }}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="{{ asset('bundles/skaphandrusmadeira/js/html5shiv.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusmadeira/js/respond.min.js') }}"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+
+<!--  preloader start -->
+<div id="tb-preloader"><div class=" tb-preloader-wave "></div></div>
+<!-- preloader end -->
+
+<div class="wrapper">
+    
+    
+    
+    
+    
+    
+    
+    
+
+            <!--top bar-->
+        <div class="top-bar gray-bg visible-md visible-lg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <ul class="top-link divider pull-left text-uppercase">
+                            <li><a href="#">Sign In</a></li>
+                            <li><a href="#">Register</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <ul class="top-link">
+                            <li><i class="fa fa-phone"></i> +1 212-226-3126</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+
+                        <nav id="primary_nav_wrap">
+                            <ul class="pull-right text-uppercase">
+                                <li><a href="#">My Settings <i class="fa fa-angle-down"></i></a>
+                                    <ul>
+                                        <li><a href="#">User Profile</a></li>
+                                        <li><a href="#">My Account</a></li>
+                                        <li><a href="#">Privacy Policy</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">En <i class="fa fa-angle-down"></i></a>
+                                    <ul>
+                                        <li><a href="#">Franch</a></li>
+                                        <li><a href="#">Spanish</a></li>
+                                        <li><a href="#">German</a></li>
+                                    </ul>
+                                </li>
+                                {#<li><a href="#">Currency USD <i class="fa fa-angle-down"></i></a>
+                                    <ul>
+                                        <li><a href="#">100 USD</a></li>
+                                        <li><a href="#">500 USD</a></li>
+                                        <li><a href="#">1000 USD</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#"><i class="fa fa-shopping-cart"></i> cart (0)</a> </li>#}
+                            </ul>
+                        </nav>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--top bar-->
+        
+        
+        <!--header start-->
+        <header id="header" class=" header-full-width- nav-center-align">
+
+            <div class="light-header">
+
+                <div class="container mainmenu">
+                    <div id="massive-menu" class="menuzord">
+
+                        <!--logo start-->
+                        <a href="index.html" class="logo-brand">
+                            <img class="retina" src="{{ asset('bundles/skaphandrusmadeira/img/logo.png') }}" alt=""/>
+                        </a>
+                        <!--logo end-->
+
+                        <!--mega menu start-->
+                        
+                                
+                                {% block contest_menu %}
+                {% endblock %}
+                                
+                        <!--mega menu end-->
+                    </div>
+                </div>
+
+                <!--alternate menu appear start-->
+                <div class="menu-appear-alt" >
+                    <div class="container">
+                        <div id="massive-menu-alt" class="menuzord" >
+                            <!--alternate menu appearing here ... -->
+                        </div>
+                    </div>
+                </div>
+                <!--alternate menu appear end-->
+
+            </div>
+
+        </header>
+        <!--header end-->
+
+        <!--hero section-->
+        <div class="banner-state text-center vertical-align height-600" >
+            <div class="container-mid">
+                <div class="container">
+                    <div class="banner-box light-box">
+                        <h1 class="text-uppercase"> Massive Studio</h1>
+                        <h3 class="text-uppercase">We Love to design the impossible</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--hero section-->
+
+
+
+    <!--body content start-->
+    <section class="body-content">
+        <div class="page-content">
+            <div class="container">
+                <div class="row">
+                    ...   {% block body %}
+                {% endblock %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--body content end-->
+
+    <!--footer start -->
+    <footer id="footer" class="dark">
+        <!--primary footer-->
+        <div class="primary-footer">
+            ...
+        </div>
+        <!--primary footer end-->
+
+        <!--secondary footer-->
+        <div class="secondary-footer">
+            ...
+        </div>
+        <!--secondary footer end-->
+    </footer>
+    <!--footer end-->
+</div>
+
+
+  <!-- Placed js at the end of the document so the pages load faster -->
+    <script src="{{ asset('bundles/skaphandrusmadeira/js/jquery-1.10.2.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusmadeira/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusmadeira/js/menuzord.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusmadeira/js/jquery.flexslider-min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusmadeira/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusmadeira/js/jquery.isotope.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusmadeira/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusmadeira/js/smooth.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusmadeira/js/wow.min.js') }}"></script>
+    <script src="{{ asset('bundles/skaphandrusmadeira/js/imagesloaded.js') }}"></script>
+    <!--common scripts-->
+    <script src="{{ asset('bundles/skaphandrusmadeira/js/scripts.js?8') }}"></script>
+
+
+</body>
+</html>

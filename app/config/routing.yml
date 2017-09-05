@@ -1,3 +1,10 @@
+#skaphandrus_madeira:
+#    resource: "@SkaphandrusMadeiraBundle/Resources/config/routing.yml"
+#    host:     "hello.example.com"
+
+
+
+
 skaphandrus_app:
     resource: "@SkaphandrusAppBundle/Resources/config/routing.yml"
     prefix:   /

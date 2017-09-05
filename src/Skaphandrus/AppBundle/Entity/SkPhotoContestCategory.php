@@ -279,6 +279,14 @@ class SkPhotoContestCategory {
     public function getName() {
         return $this->translate()->getName();
     }
+    
+    public function getSlugName() {
+        return \Skaphandrus\AppBundle\Utils\Utils::slugify($this->translate()->getName());
+    }
+    
+    
+    
+    
 
 //    public function doStuffOnPostPersist(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
 //
