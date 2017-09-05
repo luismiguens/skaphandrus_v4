@@ -1,4 +1,0 @@
-services:
-#    skaphandrus_madeira.example:
-#        class: Skaphandrus\MadeiraBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,4 +1,0 @@
-skaphandrus_madeira_homepage:
-    path:     /{year}
-    #host:     "127.0.0.2"
-    defaults: { _controller: SkaphandrusAppBundle:Contest:contest }
