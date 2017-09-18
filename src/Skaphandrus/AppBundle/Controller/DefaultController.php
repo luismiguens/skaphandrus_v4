@@ -21,43 +21,23 @@ use Symfony\Component\Routing\Exception\InvalidParameterException;
 
 class DefaultController extends Controller {
 
-    
-    
-    
-    function getUserCountry() {
+    function checkCountry($country) {
 
-        $site_name = "www.skaphandrus.com";
-
-        // create a new cURL resource
-        $ch = curl_init();
-
-        // set URL and other appropriate options
-        curl_setopt($ch, CURLOPT_POST, 0);
+        $ch = curl_init("http://api.wipmania.com");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, Array("Content-Type: text/xml"));
-        curl_setopt($ch, CURLOPT_URL, "http://api.wipmania.com" . $_SERVER['REMOTE_ADDR'] . "?" . $site_name);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
+        $text = curl_exec($ch);
 
-        // grab URL and pass it to the browser
-        $response = curl_exec($ch);
-        $info = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-        if (($response === false) || ($info !== 200)) {
-            throw new \Exception('HTTP Error calling Wipmania API - HTTP Status: ' . $info . ' - cURL Erorr: ' . curl_error($ch));
-        } elseif (curl_errno($ch) > 0) {
-            throw new \Exception('HTTP Error calling Wipmania API - cURL Error: ' . curl_error($ch));
-        }
-
-        //$this->country = $response;
-
-
-        echo "==============" . $response;
-
-        // close cURL resource, and free up system resources
         curl_close($ch);
+
+        $test = strpos($text, $country);
+        if ($test == false) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
-    public function indexAction() {
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
 
         $modules = $em->getRepository('SkaphandrusAppBundle:SkIdentificationModule')
@@ -79,10 +59,13 @@ class DefaultController extends Controller {
                 ->findBy(array(), array('createdAt' => 'DESC'), 3);
 
 //        $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findBusinessPremiumOrPlus();
-        
-//$page = file_get_contents("http://api.wipmania.com");
-//echo "page = " . $page;
-        
+
+        $show = $request->query->get('show', false);
+
+        if ($show == false):
+            $show = $this->checkCountry('PT');
+        endif;
+
 
         return $this->render('SkaphandrusAppBundle:Default:index.html.twig', array(
                     'modules' => $modules,
@@ -90,6 +73,7 @@ class DefaultController extends Controller {
                     'contestsEnded' => $contestsEnded,
                     'photos' => $photos,
                     'business' => $business,
+                    'show' => $show
         ));
     }
 
