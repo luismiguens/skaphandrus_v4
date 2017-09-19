@@ -21,21 +21,7 @@ use Symfony\Component\Routing\Exception\InvalidParameterException;
 
 class DefaultController extends Controller {
 
-    function checkCountry($country) {
-
-        $ch = curl_init("http://api.wipmania.com");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $text = curl_exec($ch);
-
-        curl_close($ch);
-
-        $test = strpos($text, $country);
-        if ($test == false) {
-            return false;
-        } else {
-            return true;
-        }
-    }
+    
 
     public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
@@ -60,11 +46,11 @@ class DefaultController extends Controller {
 
 //        $business = $em->getRepository('SkaphandrusAppBundle:SkBusiness')->findBusinessPremiumOrPlus();
 
-        $show = $request->query->get('show', false);
-
-        if ($show == false):
-            $show = $this->checkCountry('PT');
-        endif;
+//        $show = $request->query->get('show', false);
+//
+//        if ($show == false):
+//            $show = $this->checkCountry('PT');
+//        endif;
 
 
         return $this->render('SkaphandrusAppBundle:Default:index.html.twig', array(
@@ -73,7 +59,7 @@ class DefaultController extends Controller {
                     'contestsEnded' => $contestsEnded,
                     'photos' => $photos,
                     'business' => $business,
-                    'show' => $show
+//                    'show' => $show
         ));
     }
 

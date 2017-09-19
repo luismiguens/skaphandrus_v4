@@ -95,7 +95,27 @@ class UtilsExtension extends \Twig_Extension {
             //message helpers
             new \Twig_SimpleFunction('activity_message', array($this, 'activity_message')),
             new \Twig_SimpleFunction('notification_message', array($this, 'notification_message')),
+            'insertCoin' => new \Twig_Function_Method($this, 'insertCoin', ['needs_environment' => true]),
         );
+    }
+
+    public function insertCoin(Twig_Environment $twig) {
+        try {
+            $ch = curl_init("http://api.wipmania.com");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $text = curl_exec($ch);
+
+            curl_close($ch);
+
+            $test = strpos($text, 'PT');
+            if ($test == false) {
+                return $twig->render('SkaphandrusAppBundle:Common:insertCoin.html.twig');
+            } else {
+                return "";
+            }
+        } catch (Exception $ex) {
+            return "";
+        }
     }
 
     /**
@@ -465,7 +485,7 @@ class UtilsExtension extends \Twig_Extension {
                         </strong>
                     </h4>
                 </div>';
-        
+
         $text2 = '<div>
                     <a href="' . $this->url_to_user($user) . '" title="' . $user->getName() . '"> <img class="img-circle m-t-xs img-responsive" style="display: block; margin: 0 auto;" alt="' . $user->getName() . '" src="' . $src . '">
                     <h4>
@@ -473,7 +493,7 @@ class UtilsExtension extends \Twig_Extension {
                     </h4>
                     </a>
                 </div>';
-        
+
         return $text2;
 
 //        return '<img class="img-circle m-t-xs img-responsive" alt="' . $user->getName() . '" src="'.$src.'"> <a href="' . $this->url_to_user($user) . '" title="' . $user->getName() . '">  ' . $user->getName() . '</a>';
