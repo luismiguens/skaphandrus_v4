@@ -109,7 +109,11 @@ class UtilsExtension extends \Twig_Extension {
 
             $test = strpos($text, 'PT');
             
-            //echo $test;
+            
+            echo "text = " . $text;
+            echo "test = " . $test;
+            
+            
             
             if ($test == false) {
                 return $twig->render('SkaphandrusAppBundle:Common:insertCoin.html.twig');
