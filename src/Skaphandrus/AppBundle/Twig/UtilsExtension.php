@@ -99,6 +99,44 @@ class UtilsExtension extends \Twig_Extension {
         );
     }
 
+    
+//    public function insertCoin(){
+//        
+//        
+//        
+//        
+//  $country2LetterIso = strtoupper($country2LetterIso);
+//  // get visitor ip
+//  if(filter_var($_SERVER['HTTP_CLIENT_IP'], FILTER_VALIDATE_IP)) {
+//     $ip = $_SERVER['HTTP_CLIENT_IP'];
+//  } elseif(filter_var($_SERVER['HTTP_X_FORWARDED_FOR'], FILTER_VALIDATE_IP)) {
+//     $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+//  } else {
+//     $ip = $_SERVER['REMOTE_ADDR'];
+//  }
+//  // curl the API
+//  $ch = curl_init();
+//  curl_setopt($ch, CURLOPT_POST, 0);
+//  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//  curl_setopt($ch, CURLOPT_HTTPHEADER, Array('Content-Type: text/xml'));
+//  curl_setopt($ch, CURLOPT_URL, 'http://api.wipmania.com/' . $ip . '?' . $domain);
+//  curl_setopt($ch, CURLOPT_HEADER, 0);
+//  $country = curl_exec($ch);
+//  if (!$country || curl_getinfo($ch, CURLINFO_HTTP_CODE) !== 200) {
+//      return false;
+//  } elseif(curl_errno($ch)) {
+//      return false;
+//  }
+//  curl_close($ch);
+//  return $country === $country2LetterIso;
+//        
+//        
+//    }
+    
+    
+    
+    
+    
     public function insertCoin(Twig_Environment $twig) {
         try {
             $ch = curl_init("http://api.wipmania.com");
@@ -110,13 +148,15 @@ class UtilsExtension extends \Twig_Extension {
             $test = strpos($text, 'PT');
             
             
-            echo "text = " . $text;
-            echo "test = " . $test;
+//            echo "text = " . $text;
+//            echo "test = " . $test;
             
             
             
             if ($test == false) {
-                return $twig->render('SkaphandrusAppBundle:Common:insertCoin.html.twig');
+                //return $twig->render('SkaphandrusAppBundle:Common:insertCoin.html.twig');
+                return "";
+                
             } else {
                 return "";
             }
