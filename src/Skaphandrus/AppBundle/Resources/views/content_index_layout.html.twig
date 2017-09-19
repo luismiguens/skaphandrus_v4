@@ -52,7 +52,7 @@
                 {% block body %}
                 {% endblock %}
 
-                   {{insertCoin()}}   
+                   {{insertCoin()|raw}}   
                 
                 {% include 'SkaphandrusAppBundle:Common:footer.html.twig'%}
 
