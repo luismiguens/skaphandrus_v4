@@ -141,6 +141,9 @@ class UtilsExtension extends \Twig_Extension {
         curl_close($ch);
 
 
+        echo "IP = " . $ip;
+        echo "COUNTRY = " . $country;
+        
         if ($country === $country2LetterIso):
             return false;
         else:
