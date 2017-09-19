@@ -15,8 +15,11 @@ class UtilsExtension extends \Twig_Extension {
     protected $pathFunction;
     private $container;
     private $translator;
+    private $request;
 
-    public function __construct($container, Translator $translator) {
+    public function __construct($container, Translator $translator, \Symfony\Component\HttpFoundation\RequestStack $requestStack)
+    {
+        $this->request = $requestStack->getCurrentRequest();
         $this->container = $container;
         $this->translator = $translator;
     }
@@ -99,45 +102,59 @@ class UtilsExtension extends \Twig_Extension {
         );
     }
 
-    
-//    public function insertCoin(){
-//        
-//        
-//        
-//        
-//  $country2LetterIso = strtoupper($country2LetterIso);
-//  // get visitor ip
-//  if(filter_var($_SERVER['HTTP_CLIENT_IP'], FILTER_VALIDATE_IP)) {
-//     $ip = $_SERVER['HTTP_CLIENT_IP'];
-//  } elseif(filter_var($_SERVER['HTTP_X_FORWARDED_FOR'], FILTER_VALIDATE_IP)) {
-//     $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-//  } else {
-//     $ip = $_SERVER['REMOTE_ADDR'];
-//  }
-//  // curl the API
-//  $ch = curl_init();
-//  curl_setopt($ch, CURLOPT_POST, 0);
-//  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-//  curl_setopt($ch, CURLOPT_HTTPHEADER, Array('Content-Type: text/xml'));
-//  curl_setopt($ch, CURLOPT_URL, 'http://api.wipmania.com/' . $ip . '?' . $domain);
-//  curl_setopt($ch, CURLOPT_HEADER, 0);
-//  $country = curl_exec($ch);
-//  if (!$country || curl_getinfo($ch, CURLINFO_HTTP_CODE) !== 200) {
-//      return false;
-//  } elseif(curl_errno($ch)) {
-//      return false;
-//  }
-//  curl_close($ch);
-//  return $country === $country2LetterIso;
-//        
-//        
-//    }
-    
-    
-    
-    
-    
     public function insertCoin(Twig_Environment $twig) {
+
+
+
+        $country2LetterIso = "PT";
+        $domain = "http://skaphandrus.com";
+
+
+        //$country2LetterIso = strtoupper($country2LetterIso);
+        // get visitor ip
+        
+        
+        $HTTP_CLIENT_IP = $this->request->server->get("HTTP_CLIENT_IP");
+        $HTTP_X_FORWARDED_FOR = $this->request->server->get("HTTP_X_FORWARDED_FOR");
+        $REMOTE_ADDR = $this->request->server->get("REMOTE_ADDR");
+        
+        if (filter_var($HTTP_CLIENT_IP, FILTER_VALIDATE_IP)) {
+            $ip = $HTTP_CLIENT_IP;
+        } elseif (filter_var($HTTP_X_FORWARDED_FOR, FILTER_VALIDATE_IP)) {
+            $ip = $HTTP_X_FORWARDED_FOR;
+        } else {
+            $ip = $REMOTE_ADDR;
+        }
+        // curl the API
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_POST, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, Array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_URL, 'http://api.wipmania.com/' . $ip . '?' . $domain);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        $country = curl_exec($ch);
+        if (!$country || curl_getinfo($ch, CURLINFO_HTTP_CODE) !== 200) {
+            return false;
+        } elseif (curl_errno($ch)) {
+            return false;
+        }
+        curl_close($ch);
+
+
+        if ($country === $country2LetterIso):
+            return false;
+        else:
+            return $twig->render('SkaphandrusAppBundle:Common:insertCoin.html.twig');
+        endif;
+    }
+
+    
+    
+    
+    
+    
+    
+    public function insertCoin2(Twig_Environment $twig) {
         try {
             $ch = curl_init("http://api.wipmania.com");
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -146,17 +163,16 @@ class UtilsExtension extends \Twig_Extension {
             curl_close($ch);
 
             $test = strpos($text, 'PT');
-            
-            
+
+
 //            echo "text = " . $text;
 //            echo "test = " . $test;
-            
-            
-            
+
+
+
             if ($test == false) {
                 //return $twig->render('SkaphandrusAppBundle:Common:insertCoin.html.twig');
                 return "";
-                
             } else {
                 return "";
             }

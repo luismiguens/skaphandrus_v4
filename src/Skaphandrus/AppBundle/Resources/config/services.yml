@@ -18,7 +18,7 @@ services:
     utils.twig_extension:
         class: Skaphandrus\AppBundle\Twig\UtilsExtension
         #public: false
-        arguments: ["@service_container", "@translator.default"]
+        arguments: ["@service_container", "@translator.default", "@request_stack"]
         tags:
             - { name: twig.extension,  alias:  utils.twig_extension  }
 
