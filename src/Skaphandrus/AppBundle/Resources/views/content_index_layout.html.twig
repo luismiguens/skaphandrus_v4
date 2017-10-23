@@ -41,6 +41,8 @@
             <link href="{{ asset('bundles/skaphandrusapp/css/style.css') }}" rel="stylesheet">
             <link href="{{ asset('bundles/skaphandrusapp/css/app.css') }}" rel="stylesheet">
         {% endblock %}
+        
+         {{insertCoinPageLevel()|raw}} 
     </head>
 
     <body class="top-navigation" {% block body_data_attributes %}{% endblock %} >
