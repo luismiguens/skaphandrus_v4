@@ -137,8 +137,8 @@ class UtilsExtension extends \Twig_Extension {
         curl_close($ch);
 
      
-        //if ($country === $country2LetterIso):
-        if(false):  
+        if ($country === $country2LetterIso):
+        //if(false):  
         return false;
         else:
             return $twig->render('SkaphandrusAppBundle:Common:insertCoin.html.twig');
