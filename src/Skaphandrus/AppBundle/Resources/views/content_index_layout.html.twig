@@ -51,6 +51,7 @@
 
                 {% include 'SkaphandrusAppBundle:Common:navbar-menu.html.twig' with {'bg': 'white-bg'} %}
 
+                {{insertCoin()|raw}}
                 {% block body %}
                 {% endblock %}
 

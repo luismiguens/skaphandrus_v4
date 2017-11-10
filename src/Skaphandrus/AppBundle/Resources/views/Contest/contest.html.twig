@@ -65,7 +65,7 @@
 
 {% block body %}
 
-    {{insertCoin()|raw}} 
+
     
     {# Calculate the project completeness #}
     {% if "now"|date("U") < contest.beginAt|date("U") %}
